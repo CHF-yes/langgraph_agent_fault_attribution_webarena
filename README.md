@@ -5,12 +5,13 @@
 ## 功能特性
 
 - **标准 ReAct Agent**：Thought（推理）→ Action（工具调用）→ Observation（页面反馈）循环，LangGraph 编排
+- **可切换 Agent 架构**：`react` 标准单循环基线；`plan_execute` 先生成高层计划，再由同一 ReAct 执行器逐步执行
 - **可归因轨迹**：每步写入 `action_history` 并持久化为 JSONL trace（`traces/{thread_id}.jsonl`），支持鲁棒性归因分析
 - **双模式运行**：模拟模式（内存 PageState，无需浏览器）/ 浏览器模式（Playwright 真实 Chromium）
 - **9 个 WebArena 标准工具**：click / type_text / scroll / goto / go_back / go_forward / stop / select_option / hover
 - **AX Tree 观测**：解析 Playwright `aria_snapshot()`，生成 `[id=xxx]` 可访问性树供 LLM 使用
 - **故障注入**：Web 层（超时、500/503、DOM 丢失、弹窗）+ GitLab 层（CI 离线、403、合并冲突、配额）+ Agent 层（状态误判、参数错误），seed 可复现
-- **A/B 对照实验**：BenchmarkRunner 对比 control vs fault 的成功率、步数、耗时
+- **A/B 对照实验**：BenchmarkRunner 对比 control vs fault 的成功率、步数、耗时；未接入正式 evaluator 时，成功率表示 Agent 正常完成率
 - **灵活 LLM 配置**：支持任何 OpenAI-compatible API（OpenAI / DeepSeek / Ollama / 阿里百炼等）
 
 ## 快速开始
@@ -58,6 +59,11 @@ python main.py --browser --url file:///root/lang/test_site/index.html \
 # 浏览器模式（WebArena 站点）
 python main.py --browser --site shopping --task "Find the price of MacBook Pro"
 
+# 选择计划-执行架构（后续架构对比用）
+python main.py --browser --site shopping \
+  --architecture plan_execute \
+  --task "Find the price of MacBook Pro"
+
 # 交互模式
 python main.py
 ```
@@ -78,7 +84,7 @@ go          开始执行任务
 ## 项目结构
 
 ```
-lang/
+项目根目录/
 ├── main.py                 # CLI 入口（模拟/浏览器/交互/Benchmark）
 ├── standard_agent/         # 标准 Agent（被测对象，不依赖故障注入）
 │   ├── config.py            # 配置加载（.env）
@@ -117,6 +123,26 @@ __start__ → agent (LLM 推理 + 工具调用决策)
 - 单节点 ReAct 自循环，`tools_condition` 内置路由
 - `MemorySaver` checkpointer 支持多轮会话
 - 达到 `max_steps` 强制结束
+- `max_steps` 只限制 executor 的 LLM 调用次数；`plan_execute` 的 planner 调用不占 executor 步数，但会计入 `llm_calls`
+
+## Agent 架构对比
+
+当前保留两个可复现实验架构，二者共用 WebArena 环境、9 个工具、模型 profile、任务评估和 trace 格式：
+
+```text
+react:
+__start__ → agent → tools → agent → ... → END
+
+plan_execute:
+__start__ → planner → agent → tools → agent → ... → END
+```
+
+`react` 是标准单 Agent ReAct 基线，适合第一阶段 baseline 和故障分类实验。`plan_execute` 是轻量计划-执行变体：任务开始时额外调用一次 LLM 生成高层计划，之后仍由同一个 ReAct executor 根据实时 AX Tree 执行动作。它不是多 Agent，也不是每步重新规划；`max_steps` 只限制 executor 步数，planner 的额外调用通过 `llm_calls` 单独统计。后续架构实验应保持任务、模型、工具、max steps 和 evaluator 一致，只切换 `--architecture`。
+
+```bash
+python3 run_baseline.py --architecture react
+python3 run_baseline.py --architecture plan_execute
+```
 
 ## 故障注入
 
@@ -130,7 +156,16 @@ python main.py --browser --site shopping \
 python main.py --browser --site shopping \
   --task "Find the price of MacBook Pro" \
   --benchmark --trials 3 --fault-intensity medium --fault-web-timeout --fault-web-http-error
+
+# 带答案匹配的 Benchmark：只有正常完成且答案包含期望值才算成功
+python main.py --browser --site shopping \
+  --task "Find the price of MacBook Pro" \
+  --benchmark --trials 3 --fault-intensity medium \
+  --fault-web-timeout --expected-answer '$1,299.00' \
+  --expected-answer '1299'
 ```
+
+`--expected-answer` 可以重复传入多个可接受答案，采用不区分大小写的子串匹配。Baseline 和故障 Benchmark 共用相同的完成与答案匹配逻辑；Baseline 从数据集读取 expected，故障 Benchmark 从 CLI 参数读取 expected。复杂任务或正式实验应接入 WebArena-Verified 的确定性 evaluator。
 
 故障类型：
 
@@ -198,7 +233,7 @@ MODEL_GLM52_TEMPERATURE=0.2
 
 ## WebArena 环境部署
 
-WebArena 站点运行在 Docker 容器中（`shopping` :7770、`shopping_admin` :7780、`reddit` :9999、`gitlab` :8023、`wikipedia` :8888、`map` :3030）。
+WebArena 站点运行在 Docker 容器中（`shopping` :7770、`shopping_admin` :7780、`reddit` :9999、`gitlab` :8023、`wikipedia` :8888、`map` :3000）。
 
 推荐使用 [WebArena-Verified](https://github.com/ServiceNow/webarena-verified) 的优化镜像（比官方镜像小 85-92%）：
 

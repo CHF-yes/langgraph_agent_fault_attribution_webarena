@@ -68,6 +68,17 @@ class Settings:
         profiles = cls.get_model_profiles()
         if profile_name in profiles:
             return profiles[profile_name]
+        if name is not None and name != "default":
+            key = name.upper().replace("-", "_")
+            return ModelProfile(
+                name=name,
+                api_key=os.getenv(f"MODEL_{key}_API_KEY", ""),
+                base_url=os.getenv(f"MODEL_{key}_BASE_URL", ""),
+                model=os.getenv(f"MODEL_{key}_NAME", ""),
+                temperature=float(os.getenv(
+                    f"MODEL_{key}_TEMPERATURE", str(cls.TEMPERATURE)
+                )),
+            )
         return ModelProfile(
             name="default",
             api_key=cls.OPENAI_API_KEY,
@@ -77,10 +88,17 @@ class Settings:
         )
 
     @classmethod
-    def validate(cls) -> bool:
-        """验证必要的配置项是否已设置。"""
-        if not cls.OPENAI_API_KEY:
-            print("⚠️  警告: OPENAI_API_KEY 未设置，请在 .env 文件中配置")
+    def validate(cls, profile_name: str | None = None) -> bool:
+        """验证实际选中的模型 profile，而不是只检查旧式配置。"""
+        profile = cls.get_model_profile(profile_name)
+        if not profile.api_key:
+            print(f"⚠️  警告: model profile '{profile.name}' 的 API key 未设置")
+            return False
+        if not profile.base_url:
+            print(f"⚠️  警告: model profile '{profile.name}' 的 base URL 未设置")
+            return False
+        if not profile.model:
+            print(f"⚠️  警告: model profile '{profile.name}' 的模型名未设置")
             return False
         return True
 

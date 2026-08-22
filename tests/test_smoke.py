@@ -22,6 +22,14 @@ class TestGraphBuild(unittest.TestCase):
         app = build_graph()
         self.assertIsNotNone(app)
 
+    def test_supported_architectures_build(self):
+        from standard_agent.core.graph import build_graph
+
+        self.assertIsNotNone(build_graph("react"))
+        self.assertIsNotNone(build_graph("plan_execute"))
+        with self.assertRaises(ValueError):
+            build_graph("unknown")
+
     def test_agent_state_reducer(self):
         from standard_agent.core.state import add_action_history
         self.assertEqual(
@@ -125,6 +133,54 @@ class TestFaults(unittest.TestCase):
         self.assertTrue(config.agent_state_misjudge)
         self.assertTrue(config.agent_param_error)
 
+    def test_fault_config_rejects_unknown_intensity(self):
+        from fault_injection import FaultConfig
+
+        with self.assertRaises(ValueError):
+            FaultConfig(intensity="typo")
+
+    def test_seeded_random_reset_replays_sequence(self):
+        from fault_injection import SeededRandom
+
+        rng = SeededRandom(42)
+        first = [rng.randint(0, 100) for _ in range(3)]
+        rng.reset()
+        self.assertEqual(first, [rng.randint(0, 100) for _ in range(3)])
+
+    def test_site_url_mapping_includes_cms_and_map(self):
+        from run_baseline import resolve_start_url, site_for_url
+
+        task = {"sites": ["cms"], "start_urls": ["__CMS__/wp-admin"]}
+        url = resolve_start_url(task)
+        self.assertEqual(url, "http://localhost:8080/wp-admin")
+        self.assertEqual(site_for_url(url, task), "cms")
+
+    def test_fault_injector_can_read_element_before_observation(self):
+        from fault_injection import FaultConfig
+        from fault_injection.injector import FaultInjector
+
+        class Env:
+            def click(self, element_id):
+                raise AssertionError("click should not be reached in this test")
+
+        injector = FaultInjector(Env(), FaultConfig.off())
+        self.assertEqual(injector._get_element_name("1"), "")
+
+    def test_benchmark_evaluator_overrides_completion_status(self):
+        from fault_injection import FaultConfig, BenchmarkRunner, TrialResult
+
+        runner = BenchmarkRunner(
+            lambda *args: TrialResult(
+                "task", "wrong", True, 1, 0.1, completed=True,
+                answer="wrong answer",
+            ),
+            evaluator=lambda trial: "expected" in trial.answer,
+        )
+        runner.add_config("control", FaultConfig.off())
+        runner.add_task("task", "find answer", "http://example")
+        report = runner.run(trials_per_config=1)
+        self.assertEqual(report["configs"]["control"].success_rate, 0)
+
 
 class TestConfigSecurity(unittest.TestCase):
     def test_model_profiles_are_independent(self):
@@ -147,6 +203,24 @@ class TestConfigSecurity(unittest.TestCase):
         self.assertIn('os.getenv("SHOPPING_AUTO_LOGIN"', source)
         self.assertNotIn("Password.123", source)
         self.assertNotIn("test1234", source)
+
+
+class TestEvaluation(unittest.TestCase):
+    def test_evaluation_is_shared_for_completed_and_answer(self):
+        from standard_agent.evaluation import evaluate_answer
+
+        self.assertEqual(
+            evaluate_answer(True, "The price is $1299", ["1299"]),
+            (True, True),
+        )
+        self.assertEqual(
+            evaluate_answer(True, "Reached max steps (10)", ["10"]),
+            (False, False),
+        )
+        self.assertEqual(
+            evaluate_answer(True, "No matching value", []),
+            (True, True),
+        )
 
 
 class TestTrace(unittest.TestCase):

@@ -34,6 +34,7 @@ SYSTEM_PROMPT = """You are a standard ReAct (Reasoning + Acting) web automation 
 - URL: {url}
 - Accessibility Tree (AX Tree):
 {page_content}
+{plan_context}
 
 ## Available Actions
 You can use the following tools to interact with the page:
@@ -128,6 +129,14 @@ def agent_node(state: AgentState, config: RunnableConfig) -> dict:
     obs = get_current_observation()
     current_url = obs["url"] if obs["url"] and obs["url"] != "about:blank" else url
     page_content = obs["page_content"] or state.get("page_content", "(empty page)")
+    plan = state.get("plan", "")
+    architecture = state.get("architecture", "react")
+    plan_context = (
+        "\n## High-Level Plan\n"
+        "Follow this plan as a guide, revising it when observations contradict it:\n"
+        f"{plan}\n"
+        if plan else ""
+    )
 
     # ---- 检查 stop 是否已调用（优先级最高，避免 max_steps 覆盖正确结果）----
     # `done` 属于 LangGraph task state，不能依赖模块级页面状态；否则连续
@@ -139,6 +148,7 @@ def agent_node(state: AgentState, config: RunnableConfig) -> dict:
             thought="Task marked done by stop tool.",
             action="stop", args={}, observation="", error=False,
             done=True, answer=answer,
+            extra={"architecture": architecture, "phase": "executor"},
         ))
         return {
             "messages": [AIMessage(content=answer)],
@@ -150,9 +160,12 @@ def agent_node(state: AgentState, config: RunnableConfig) -> dict:
         }
 
     # ---- 步数检查 ----
+    # step_count 只统计 executor LLM 调用；达到上限后不再发起新的调用。
+    if step_count >= max_steps:
+        return _force_stop(
+            messages, step_count, max_steps, thread_id, task, url, architecture
+        )
     new_step_count = step_count + 1
-    if new_step_count > max_steps:
-        return _force_stop(messages, max_steps, thread_id, task, url)
 
     # ---- 构建消息 ----
     # 每轮重新注入任务、最新观测和工具协议。系统消息没有写入 state，避免
@@ -161,6 +174,7 @@ def agent_node(state: AgentState, config: RunnableConfig) -> dict:
         task=task,
         url=current_url,
         page_content=page_content,
+        plan_context=plan_context,
     ))
     task_msg = HumanMessage(content=(
         f"Please continue completing this task: {task}\n"
@@ -177,6 +191,8 @@ def agent_node(state: AgentState, config: RunnableConfig) -> dict:
             "message_roles": [getattr(message, "type", "unknown") for message in full_messages],
             "message_count": len(full_messages),
             **get_llm_metadata(model_profile),
+            "architecture": architecture,
+            "phase": "executor",
         }
         if settings.TRACE_PROMPTS:
             request_data["messages"] = [
@@ -191,7 +207,7 @@ def agent_node(state: AgentState, config: RunnableConfig) -> dict:
     llm = create_llm(profile_name=model_profile)
     llm_with_tools = llm.bind_tools(ALL_TOOLS)
     try:
-            response = llm_with_tools.invoke(full_messages)
+        response = llm_with_tools.invoke(full_messages)
     except Exception as exc:
         append_event(
             thread_id,
@@ -199,11 +215,19 @@ def agent_node(state: AgentState, config: RunnableConfig) -> dict:
             step=new_step_count,
             task=task,
             url=current_url,
-            data={"error": str(exc), **get_llm_metadata(model_profile)},
+            data={
+                "architecture": architecture,
+                "phase": "executor",
+                "error": str(exc),
+                **get_llm_metadata(model_profile),
+            },
         )
         if settings.TRACE_CONSOLE:
             print(f"[ReAct][step={new_step_count}] ERROR {exc}")
         raise
+
+    llm_calls = state.get("llm_calls", 0) + 1
+    executor_calls = state.get("executor_calls", 0) + 1
 
     if settings.TRACE_LLM_IO:
         append_event(
@@ -215,6 +239,8 @@ def agent_node(state: AgentState, config: RunnableConfig) -> dict:
             data={
                 "content": str(getattr(response, "content", "")),
                 "tool_calls": getattr(response, "tool_calls", []) or [],
+                "architecture": architecture,
+                "phase": "executor",
                 **get_llm_metadata(model_profile),
             },
         )
@@ -232,7 +258,12 @@ def agent_node(state: AgentState, config: RunnableConfig) -> dict:
             step=new_step_count,
             task=task,
             url=current_url,
-            data={"rule": "tool_call_requires_THOUGHT_prefix", "content": thought},
+            data={
+                "architecture": architecture,
+                "phase": "executor",
+                "rule": "tool_call_requires_THOUGHT_prefix",
+                "content": thought,
+            },
         )
 
     # ---- 检查是否有 tool_calls ----
@@ -248,7 +279,10 @@ def agent_node(state: AgentState, config: RunnableConfig) -> dict:
         "messages": [response],
         "step_count": new_step_count,
         "url": current_url,
-        "page_content": page_content,
+            "page_content": page_content,
+            "architecture": architecture,
+        "llm_calls": llm_calls,
+        "executor_calls": executor_calls,
     }
 
     if not has_tool_calls:
@@ -268,9 +302,103 @@ def agent_node(state: AgentState, config: RunnableConfig) -> dict:
             thread_id, step=new_step_count, task=task, url=current_url,
             thought=answer, action="final_answer", args={},
             observation="", error=False, done=True, answer=answer,
+            extra={"architecture": architecture, "phase": "executor"},
         ))
 
     return update
+
+
+def planner_node(state: AgentState, config: RunnableConfig) -> dict:
+    """Generate one high-level plan before the executor starts acting."""
+    task = state.get("task", "")
+    model_profile = state.get("model_profile", "")
+    url = state.get("url", "about:blank")
+    architecture = state.get("architecture", "react")
+    obs = get_current_observation()
+    url = obs["url"] if obs.get("url") and obs["url"] != "about:blank" else url
+    page_content = obs["page_content"] or state.get("page_content", "(empty page)")
+    thread_id = _thread_id(config)
+    prompt = SystemMessage(content=(
+        "You are the planning component of a web automation agent.\n"
+        "Create a concise, numbered high-level plan for completing the task.\n"
+        "Do not execute tools and do not answer the task. The executor will "
+        "adapt its next action when observations contradict this plan.\n\n"
+        f"Task: {task}\nURL: {url}\nAccessibility Tree:\n{page_content}"
+    ))
+    llm = create_llm(profile_name=model_profile)
+    request_step = state.get("step_count", 0)
+    if settings.TRACE_LLM_IO:
+        planner_request = {
+            "architecture": "plan_execute",
+            "phase": "planner",
+            "message_roles": ["system"],
+            "message_count": 1,
+            **get_llm_metadata(model_profile),
+        }
+        if settings.TRACE_PROMPTS:
+            planner_request["messages"] = [{
+                "role": "system",
+                "content": prompt.content,
+            }]
+        append_event(
+            thread_id,
+            event="llm_request",
+            step=request_step,
+            task=task,
+            url=url,
+            data=planner_request,
+        )
+    try:
+        plan_response = llm.invoke([prompt])
+    except Exception as exc:
+        append_event(
+            thread_id,
+            event="llm_error",
+            step=request_step,
+            task=task,
+            url=url,
+            data={
+                "architecture": "plan_execute",
+                "phase": "planner",
+                "error": str(exc),
+                **get_llm_metadata(model_profile),
+            },
+        )
+        raise
+    plan = str(getattr(plan_response, "content", "") or "").strip()
+    if settings.TRACE_LLM_IO:
+        append_event(
+            thread_id,
+            event="llm_response",
+            step=request_step,
+            task=task,
+            url=url,
+            data={
+                "architecture": "plan_execute",
+                "phase": "planner",
+                "content": plan,
+                **get_llm_metadata(model_profile),
+            },
+        )
+    append_event(
+        thread_id,
+        event="plan_generated",
+        step=0,
+        task=task,
+        url=url,
+        data={
+            "architecture": "plan_execute",
+            "phase": "planner",
+            "plan": plan,
+            "response": plan,
+            **get_llm_metadata(model_profile),
+        },
+    )
+    return {
+        "plan": plan,
+        "llm_calls": state.get("llm_calls", 0) + 1,
+        "planning_calls": state.get("planning_calls", 0) + 1,
+    }
 
 
 def run_tools(state: AgentState, config: RunnableConfig) -> dict:
@@ -297,6 +425,7 @@ def run_tools(state: AgentState, config: RunnableConfig) -> dict:
     thread_id = _thread_id(config)
     task = state.get("task", "")
     url = state.get("url", "about:blank")
+    architecture = state.get("architecture", "react")
 
     history_entries = []
     done = False
@@ -326,6 +455,7 @@ def run_tools(state: AgentState, config: RunnableConfig) -> dict:
             thought=getattr(ai_msg, "content", "") or "",
             action=action_name, args=args,
             observation=str(obs_text), error=error,
+            extra={"architecture": architecture, "phase": "executor"},
         ))
 
         if action_name == "stop":
@@ -342,19 +472,24 @@ def run_tools(state: AgentState, config: RunnableConfig) -> dict:
     return update
 
 
-def _force_stop(messages: list, max_steps: int, thread_id: str,
-                task: str, url: str) -> dict:
+def _force_stop(messages: list, step: int, max_steps: int, thread_id: str,
+                 task: str, url: str, architecture: str = "react") -> dict:
     """达到最大步数时，追加一条强制 stop 消息并记录 trace。"""
     warning = SystemMessage(content=MAX_STEPS_WARNING.format(max_steps=max_steps))
     answer = f"Reached max steps ({max_steps})"
     append_trace(thread_id, make_entry(
-        thread_id, step=0, task=task, url=url,
+        thread_id, step=step, task=task, url=url,
         thought="", action="force_stop", args={},
         observation="", error=True, done=True, answer=answer,
+        extra={
+            "architecture": architecture,
+            "phase": "executor",
+            "event": "max_steps",
+        },
     ))
     return {
         "messages": list(messages) + [warning],
-        "step_count": max_steps,
+        "step_count": step,
         "done": True,
         "answer": answer,
     }

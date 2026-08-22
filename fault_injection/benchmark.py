@@ -5,9 +5,10 @@ BenchmarkRunner — agent-agnostic A/B 对照实验框架。
 不依赖任何特定 agent 实现，只需提供 (task → result) 的执行函数。
 
 输出指标:
-  - success_rate: 任务成功率
+   - success_rate: 评估器判定的任务成功率；未提供评估器时等同于正常完成率
   - avg_steps: 平均步数
   - avg_time_sec: 平均耗时
+  - avg_llm_calls: 平均 LLM 调用次数（含 planner）
   - degradation: 相对于对照组的性能损失百分比
 """
 
@@ -32,6 +33,11 @@ class TrialResult:
     success: bool
     steps: int
     time_sec: float
+    completed: bool = False      # Agent 是否正常结束，不代表答案正确
+    architecture: str = "react"
+    llm_calls: int = 0
+    planning_calls: int = 0
+    executor_calls: int = 0
     answer: str = ""
     injection_count: int = 0
     total_delay_sec: float = 0.0
@@ -51,6 +57,9 @@ class SummaryMetrics:
     avg_steps: float
     median_steps: float
     avg_time_sec: float
+    avg_llm_calls: float = 0.0
+    avg_planning_calls: float = 0.0
+    avg_executor_calls: float = 0.0
     avg_injections: float = 0.0
     avg_delay_sec: float = 0.0
 
@@ -58,6 +67,7 @@ class SummaryMetrics:
     degradation_success: Optional[float] = None   # 成功率下降 (百分点)
     degradation_steps: Optional[float] = None     # 步数增加 (%)
     degradation_time: Optional[float] = None      # 耗时增加 (%)
+    degradation_llm_calls: Optional[float] = None # LLM 调用增加 (%)
 
     @classmethod
     def from_trials(cls, label: str, trials: list[TrialResult]) -> "SummaryMetrics":
@@ -71,6 +81,9 @@ class SummaryMetrics:
         times = [t.time_sec for t in trials]
         injections = [t.injection_count for t in trials]
         delays = [t.total_delay_sec for t in trials]
+        llm_calls = [t.llm_calls for t in trials]
+        planning_calls = [t.planning_calls for t in trials]
+        executor_calls = [t.executor_calls for t in trials]
 
         return cls(
             config_label=label,
@@ -79,6 +92,9 @@ class SummaryMetrics:
             avg_steps=statistics.mean(steps),
             median_steps=statistics.median(steps),
             avg_time_sec=statistics.mean(times),
+            avg_llm_calls=statistics.mean(llm_calls),
+            avg_planning_calls=statistics.mean(planning_calls),
+            avg_executor_calls=statistics.mean(executor_calls),
             avg_injections=statistics.mean(injections) if any(injections) else 0,
             avg_delay_sec=statistics.mean(delays) if any(delays) else 0,
         )
@@ -105,15 +121,18 @@ class BenchmarkRunner:
         runner.print_report(report)
     """
 
-    def __init__(self, run_fn: Callable, env_factory: Callable = None):
+    def __init__(self, run_fn: Callable, env_factory: Callable = None,
+                 evaluator: Callable[[TrialResult], bool] = None):
         """
         Args:
             run_fn: (task_id, task_desc, url, fault_config, trial_index) → TrialResult
                     执行单次任务并返回结果的函数
             env_factory: () → BrowserEnv, 创建新浏览器环境的工厂函数
+            evaluator: 可选的正式评估器。传入 TrialResult，返回答案是否正确。
         """
         self._run_fn = run_fn
         self._env_factory = env_factory
+        self._evaluator = evaluator
         self._configs: list[tuple[str, FaultConfig]] = []
         self._tasks: list[tuple[str, str, str]] = []  # (id, description, url)
 
@@ -136,6 +155,11 @@ class BenchmarkRunner:
                 "degradation_matrix": {...},
             }
         """
+        if not self._configs:
+            raise ValueError("BenchmarkRunner requires at least one config")
+        if trials_per_config < 1:
+            raise ValueError("trials_per_config must be at least 1")
+
         report = {"configs": {}, "tasks": {}, "degradation": {}}
 
         all_trials_by_config: dict[str, list[TrialResult]] = {
@@ -167,6 +191,14 @@ class BenchmarkRunner:
 
                     print(f"  [{config_label}] {task_id} trial {trial_idx+1}/{trials_per_config} ...", end=" ")
                     result = self._run_fn(task_id, task_desc, url, trial_config, trial_idx)
+                    # run_fn 只负责执行任务，报告分组标签以 runner 配置为准。
+                    result.config_label = config_label
+                    if self._evaluator is not None:
+                        try:
+                            result.success = bool(self._evaluator(result))
+                        except Exception as exc:
+                            result.success = False
+                            result.error = f"evaluator error: {exc}"
                     status = "✅" if result.success else "❌"
                     print(f"{status} steps={result.steps} time={result.time_sec:.1f}s")
                     trials.append(result)
@@ -201,12 +233,18 @@ class BenchmarkRunner:
                 metrics.degradation_time = round(
                     (metrics.avg_time_sec - control_metrics.avg_time_sec) / control_metrics.avg_time_sec * 100, 1
                 )
+            if control_metrics.avg_llm_calls > 0:
+                metrics.degradation_llm_calls = round(
+                    (metrics.avg_llm_calls - control_metrics.avg_llm_calls)
+                    / control_metrics.avg_llm_calls * 100, 1
+                )
 
         report["degradation"] = {
             config_label: {
                 "success_drop_pp": m.degradation_success,
                 "steps_increase_pct": m.degradation_steps,
                 "time_increase_pct": m.degradation_time,
+                "llm_calls_increase_pct": m.degradation_llm_calls,
             }
             for config_label, m in report["configs"].items()
             if config_label != control_label
@@ -231,9 +269,11 @@ class BenchmarkRunner:
                 successes = sum(1 for t in trials if t.success)
                 avg_steps = statistics.mean([t.steps for t in trials])
                 avg_time = statistics.mean([t.time_sec for t in trials])
+                avg_llm_calls = statistics.mean([t.llm_calls for t in trials])
                 marker = " (control)" if config_label == control_label else ""
                 print(f"│  {config_label}{marker}: {successes}/{len(trials)} 成功, "
-                      f"avg {avg_steps:.1f} 步, avg {avg_time:.1f}s")
+                      f"avg {avg_steps:.1f} 步, avg {avg_llm_calls:.1f} LLM calls, "
+                      f"avg {avg_time:.1f}s")
             print(f"└{'─'*50}")
 
         # 汇总
@@ -241,9 +281,9 @@ class BenchmarkRunner:
         print(f"│ 📈 汇总指标")
         print(f"├{'─'*65}")
 
-        headers = ["Config", "成功%", "均步数", "均耗时", "Δ成功↓", "Δ步数↑", "Δ耗时↑"]
-        print(f"│ {'':<12} {'':>6} {'':>7} {'':>7} {'':>8} {'':>7} {'':>7}")
-        print(f"│ {headers[0]:<12} {headers[1]:>6} {headers[2]:>7} {headers[3]:>7} {headers[4]:>8} {headers[5]:>7} {headers[6]:>7}")
+        headers = ["Config", "成功%", "均步数", "均LLM", "均耗时", "Δ成功↓", "Δ步数↑", "Δ耗时↑"]
+        print(f"│ {'':<12} {'':>6} {'':>7} {'':>7} {'':>7} {'':>8} {'':>7} {'':>7}")
+        print(f"│ {headers[0]:<12} {headers[1]:>6} {headers[2]:>7} {headers[3]:>7} {headers[4]:>7} {headers[5]:>8} {headers[6]:>7} {headers[7]:>7}")
         print(f"│{'-'*65}")
 
         for config_label, metrics in report["configs"].items():
@@ -254,6 +294,7 @@ class BenchmarkRunner:
             print(f"│ {config_label+marker:<12} "
                   f"{metrics.success_rate*100:>5.0f}% "
                   f"{metrics.avg_steps:>6.1f} "
+                  f"{metrics.avg_llm_calls:>6.1f} "
                   f"{metrics.avg_time_sec:>6.1f}s "
                   f"{d_succ:>8} "
                   f"{d_step:>7} "
@@ -271,4 +312,6 @@ class BenchmarkRunner:
                 print(f"    步数增加:   {deg['steps_increase_pct']:+.1f}%")
             if deg["time_increase_pct"] is not None:
                 print(f"    耗时增加:   {deg['time_increase_pct']:+.1f}%")
+            if deg["llm_calls_increase_pct"] is not None:
+                print(f"    LLM调用增加: {deg['llm_calls_increase_pct']:+.1f}%")
         print()

@@ -79,14 +79,7 @@ class FaultInjector:
     def observe(self) -> dict:
         """获取当前页面观测（注入 Web 底层 + Agent 连锁故障）。"""
         raw = self._env.observe()
-        obs = raw.__dict__ if hasattr(raw, '__dict__') else raw
-        if isinstance(obs, dict):
-            pass
-        elif hasattr(raw, 'url'):
-            obs = {"url": raw.url, "page_content": raw.ax_tree_text, "elements": raw.element_map}
-        else:
-            return obs
-
+        obs = self._to_dict(raw)
         return self._cache_faulted_observation(obs)
 
     def get_obs(self):
@@ -220,8 +213,6 @@ class FaultInjector:
         """将 BrowserEnv 返回的 PageObservation 转为 dict。"""
         if isinstance(result, dict):
             return result
-        if hasattr(result, '__dict__'):
-            return result.__dict__
         return {
             "url": getattr(result, "url", "about:blank"),
             "page_content": getattr(result, "ax_tree_text", ""),
@@ -246,15 +237,19 @@ class FaultInjector:
         """
         from standard_agent.environment.browser import PageObservation
         if isinstance(original, PageObservation):
-            original.url = obs.get("url", original.url)
-            original.ax_tree_text = obs.get("page_content", original.ax_tree_text)
-            original.element_map = obs.get("elements", original.element_map)
-            return original
+            # 不修改 BrowserEnv 的原始观测。否则 DOM 丢失/弹窗等观测故障
+            # 会污染底层 element_map，导致下一次真实操作也使用篡改后的状态。
+            return PageObservation(
+                url=obs.get("url", original.url),
+                ax_tree_text=obs.get("page_content", original.ax_tree_text),
+                element_map=obs.get("elements", original.element_map),
+                raw_ax=original.raw_ax,
+            )
         return original
 
     def _get_element_name(self, element_id: str) -> str:
         """从当前观测的元素映射中获取元素名。"""
-        obs = self._last_obs
+        obs = self._last_obs or {}
         elements = obs.get("elements", {})
         info = elements.get(str(element_id), {})
         return info.get("name", "") if isinstance(info, dict) else ""

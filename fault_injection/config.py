@@ -22,6 +22,7 @@ class SeededRandom:
     """
 
     def __init__(self, seed: int):
+        self._seed = seed
         self._state = random.Random(seed)
         self._call_count = 0          # 调用计数，用于追踪故障点
 
@@ -46,7 +47,8 @@ class SeededRandom:
         return self._state.randint(low, high)
 
     def reset(self):
-        """重置随机状态（重新设定相同 seed 即可恢复初始状态）。"""
+        """恢复到该实例 seed 对应的初始随机序列。"""
+        self._state = random.Random(self._seed)
         self._call_count = 0
 
     @property
@@ -126,6 +128,11 @@ class FaultConfig:
     _injection_log: list[dict] = field(default_factory=list, repr=False)
 
     def __post_init__(self):
+        if self.intensity not in {"off", *INTENSITY_PRESETS}:
+            raise ValueError(
+                f"Unknown fault intensity '{self.intensity}'. "
+                "Expected one of: off, low, medium, high"
+            )
         self._rng = SeededRandom(self.seed)
         self._intensity_config = INTENSITY_PRESETS.get(
             self.intensity, INTENSITY_PRESETS["low"]

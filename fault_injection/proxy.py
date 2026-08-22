@@ -25,6 +25,7 @@ from fault_injection.gitlab_faults import (
     inject_merge_conflict,
     inject_quota_exceeded,
 )
+from fault_injection.agent_faults import reset_state_misjudge
 
 
 class FaultProxy:
@@ -167,14 +168,16 @@ class FaultProxy:
     def _wrap(self, original, obs: dict):
         from standard_agent.environment.browser import PageObservation
         if isinstance(original, PageObservation):
-            original.url = obs.get("url", original.url)
-            original.ax_tree_text = obs.get("page_content", original.ax_tree_text)
-            original.element_map = obs.get("elements", original.element_map)
-            return original
+            return PageObservation(
+                url=obs.get("url", original.url),
+                ax_tree_text=obs.get("page_content", original.ax_tree_text),
+                element_map=obs.get("elements", original.element_map),
+                raw_ax=original.raw_ax,
+            )
         return original
 
     def _elem_name(self, element_id: str) -> str:
-        info = self._last_obs.get("elements", {}).get(str(element_id), {})
+        info = (self._last_obs or {}).get("elements", {}).get(str(element_id), {})
         return info.get("name", "") if isinstance(info, dict) else ""
 
     # ---- 报告 ----
@@ -203,3 +206,4 @@ class FaultProxy:
         self._step_counter = 0
         self._last_obs = None
         self.config.reset()
+        reset_state_misjudge()

@@ -25,19 +25,24 @@ import uuid
 from standard_agent.core.graph import build_graph
 from standard_agent.environment.browser import SyncBrowserEnv
 from standard_agent.tools.web_tools import use_browser, use_simulation, reset_page_state
-from standard_agent.environment.webarena_config import get_auto_login_headers
+from standard_agent.environment.webarena_config import (
+    WEBARENA_HOST,
+    get_auto_login_headers,
+)
 from standard_agent.config import settings
+from standard_agent.evaluation import evaluate_answer
 
 DEFAULT_DATASET = "/root/webarena-dataset/webarena-verified.json"
 
 # WebArena 占位符 → 本项目站点地址（与 webarena_config.py 保持一致）
 URL_MAP = {
-    "__SHOPPING__": "http://localhost:7770",
-    "__SHOPPING_ADMIN__": "http://localhost:7780/admin",
-    "__REDDIT__": "http://localhost:9999",
-    "__GITLAB__": "http://localhost:8023",
-    "__MAP__": "http://localhost:3030",
-    "__WIKIPEDIA__": "http://localhost:8888/wikipedia_en_all_maxi_2022-05/A/User:The_other_Kiwix_guy/Landing",
+    "__SHOPPING__": f"http://{WEBARENA_HOST}:7770",
+    "__SHOPPING_ADMIN__": f"http://{WEBARENA_HOST}:7780/admin",
+    "__REDDIT__": f"http://{WEBARENA_HOST}:9999",
+    "__GITLAB__": f"http://{WEBARENA_HOST}:8023",
+    "__MAP__": f"http://{WEBARENA_HOST}:3000",
+    "__WIKIPEDIA__": f"http://{WEBARENA_HOST}:8888/wikipedia_en_all_maxi_2022-05/A/User:The_other_Kiwix_guy/Landing",
+    "__CMS__": f"http://{WEBARENA_HOST}:8080",
 }
 
 # 内置示例任务（各站点代表性任务 ID）
@@ -68,6 +73,19 @@ def resolve_start_url(task):
     return urls[0] if urls else "about:blank"
 
 
+def site_for_url(url: str, task: dict | None = None) -> str:
+    """根据起始 URL 确定站点，避免盲目使用 sites[0]。"""
+    if task:
+        sites = task.get("sites", [])
+        if len(sites) == 1:
+            return sites[0]
+    for placeholder, real in URL_MAP.items():
+        if real.split("://", 1)[-1].split("/", 1)[0] in url:
+            return placeholder.strip("_").lower()
+    sites = (task or {}).get("sites", [])
+    return sites[0] if sites else "shopping"
+
+
 def get_expected(task):
     """提取预期答案（宽松匹配用）。"""
     expected = []
@@ -79,7 +97,7 @@ def get_expected(task):
     return expected
 
 
-def run_one_task(task, max_steps, model_profile=None):
+def run_one_task(task, max_steps, model_profile=None, architecture="react"):
     """运行单个任务，返回结果 dict。"""
     task_id = task["task_id"]
     intent = task["intent"]
@@ -89,7 +107,7 @@ def run_one_task(task, max_steps, model_profile=None):
     thread_id = f"base_{profile}_{task_id}_{uuid.uuid4().hex[:6]}"
 
     reset_page_state()
-    site = task.get("sites", ["shopping"])[0]
+    site = site_for_url(start_url, task)
     headers = get_auto_login_headers(site)
     env = SyncBrowserEnv(headless=True, extra_http_headers=headers)
     use_browser(env)
@@ -101,6 +119,11 @@ def run_one_task(task, max_steps, model_profile=None):
         "expected": expected,
         "thread_id": thread_id,
         "model_profile": profile,
+        "architecture": architecture,
+        "completed": False,
+        "llm_calls": 0,
+        "planning_calls": 0,
+        "executor_calls": 0,
         "success": False,
         "done": False,
         "answer": "",
@@ -111,7 +134,7 @@ def run_one_task(task, max_steps, model_profile=None):
     try:
         env.start()
         obs = env.goto(start_url)
-        app = build_graph()
+        app = build_graph(architecture)
         state = app.invoke({
             "task": intent,
             "model_profile": profile,
@@ -122,6 +145,11 @@ def run_one_task(task, max_steps, model_profile=None):
             "done": False,
             "answer": "",
             "action_history": [],
+            "architecture": architecture,
+            "plan": "",
+            "llm_calls": 0,
+            "planning_calls": 0,
+            "executor_calls": 0,
         }, {"configurable": {"thread_id": thread_id}})
 
         answer = str(state.get("answer", "") or "")
@@ -130,17 +158,14 @@ def run_one_task(task, max_steps, model_profile=None):
             "done": done,
             "answer": answer,
             "steps": state.get("step_count", 0),
+            "llm_calls": state.get("llm_calls", 0),
+            "planning_calls": state.get("planning_calls", 0),
+            "executor_calls": state.get("executor_calls", 0),
             "time_sec": round(time.time() - t0, 2),
         })
-        # 宽松匹配：answer 包含任一 expected 值
-        if done and expected:
-            answer_lower = answer.lower()
-            result["success"] = any(
-                str(e).lower() in answer_lower for e in expected if e
-            )
-        elif done and not expected:
-            # 无 expected 的任务，done 即视为完成（需人工核对）
-            result["success"] = True
+        completed, success = evaluate_answer(done, answer, expected)
+        result["completed"] = completed
+        result["success"] = success
     except Exception as e:
         result["error"] = str(e)
         result["time_sec"] = round(time.time() - t0, 2)
@@ -158,11 +183,16 @@ def main():
     parser = argparse.ArgumentParser(description="WebArena baseline runner")
     parser.add_argument("--task-ids", type=int, nargs="*", default=None)
     parser.add_argument("--sites", type=str, nargs="*", default=None,
-                        choices=["shopping", "shopping_admin", "reddit", "gitlab"])
+                        choices=["shopping", "shopping_admin", "reddit", "gitlab",
+                                 "map", "wikipedia", "cms"])
     parser.add_argument("--max-steps", type=int, default=10)
     parser.add_argument("--output", type=str, default="baseline_results.json")
     parser.add_argument("--model-profile", type=str, default=None,
                         help="Named model profile from .env")
+    parser.add_argument(
+        "--architecture", choices=["react", "plan_execute"], default="react",
+        help="Agent architecture (default: react)",
+    )
     parser.add_argument("--all-models", action="store_true",
                         help="Run all MODEL_PROFILES and write one result file per profile")
     args = parser.parse_args()
@@ -196,7 +226,7 @@ def run_profile(model_profile, args, output):
     print(f"\n开始 baseline：profile={profile}, {len(tasks)} 个任务, max_steps={args.max_steps}\n")
     results = []
     for i, task in enumerate(tasks, 1):
-        r = run_one_task(task, args.max_steps, profile)
+        r = run_one_task(task, args.max_steps, profile, args.architecture)
         results.append(r)
         mark = "PASS" if r["success"] else "FAIL"
         print(f"[{i}/{len(tasks)}] task={r['task_id']} {mark} "
@@ -213,7 +243,7 @@ def run_profile(model_profile, args, output):
         json.dump(results, f, ensure_ascii=False, indent=2)
 
     n_succ = sum(1 for r in results if r["success"])
-    n_done = sum(1 for r in results if r["done"])
+    n_done = sum(1 for r in results if r["completed"])
     avg_steps = sum(r["steps"] for r in results) / max(len(results), 1)
     avg_time = sum(r["time_sec"] for r in results) / max(len(results), 1)
     print("=" * 50)

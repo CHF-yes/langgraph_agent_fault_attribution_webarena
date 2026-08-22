@@ -25,6 +25,7 @@ import os
 import time
 
 from standard_agent.config import settings
+from standard_agent.evaluation import evaluate_answer
 from standard_agent.core.graph import build_graph
 from standard_agent.tools.web_tools import (
     use_browser, use_simulation, reset_page_state, set_page_state,
@@ -101,6 +102,10 @@ Examples:
                         help="Slow down browser actions by N ms")
     parser.add_argument("--model-profile", type=str, default=None,
                         help="Named model profile from .env, e.g. glm52 or gemini")
+    parser.add_argument(
+        "--architecture", choices=["react", "plan_execute"], default="react",
+        help="Agent architecture (default: react)",
+    )
 
     # ---- 故障注入参数 ----
     fault_group = parser.add_argument_group("Fault Injection (故障注入)")
@@ -137,7 +142,11 @@ Examples:
     bench_group.add_argument("--benchmark", action="store_true",
                              help="Run A/B benchmark comparing control vs fault")
     bench_group.add_argument("--trials", type=int, default=3,
-                             help="Trials per config (default: 3)")
+                              help="Trials per config (default: 3)")
+    bench_group.add_argument(
+        "--expected-answer", action="append", default=[],
+        help="Expected answer substring; repeat for acceptable alternatives",
+    )
 
     args = parser.parse_args()
 
@@ -161,7 +170,7 @@ Examples:
         return
 
     # 检查配置
-    if not settings.validate():
+    if not settings.validate(args.model_profile):
         print("\n⚠️  请先配置 .env 文件")
         return
 
@@ -175,13 +184,13 @@ Examples:
 
     # ---- 模拟模式：直接执行任务 ----
     if args.task:
-        app = build_graph()
+        app = build_graph(args.architecture)
         run_simulation_task(app, args)
         return
 
     # ---- 交互模式 ----
-    app = build_graph()
-    run_interactive(app)
+    app = build_graph(args.architecture)
+    run_interactive(app, args.architecture)
 
 
 # ============================================================
@@ -257,7 +266,7 @@ def run_browser_mode(args):
             enhanced_task = args.task
 
         # 执行
-        app = build_graph()
+        app = build_graph(args.architecture)
         max_steps = args.max_steps or settings.MAX_STEPS
         tid = str(uuid.uuid4())[:8]
 
@@ -280,6 +289,11 @@ def run_browser_mode(args):
             "done": False,
             "answer": "",
             "action_history": [],
+            "architecture": args.architecture,
+            "plan": "",
+            "llm_calls": 0,
+            "planning_calls": 0,
+            "executor_calls": 0,
         }, {"configurable": {"thread_id": tid}})
 
         # 输出结果
@@ -336,6 +350,11 @@ def run_simulation_task(app, args):
         "done": False,
         "answer": "",
         "action_history": [],
+        "architecture": args.architecture,
+        "plan": "",
+        "llm_calls": 0,
+        "planning_calls": 0,
+        "executor_calls": 0,
     }, {"configurable": {"thread_id": str(uuid.uuid4())[:8]}})
 
     _print_result(result)
@@ -345,7 +364,7 @@ def run_simulation_task(app, args):
 # 交互模式
 # ============================================================
 
-def run_interactive(app):
+def run_interactive(app, architecture="react"):
     """交互式 CLI 模式。"""
     print(WELCOME)
     use_simulation()
@@ -437,6 +456,11 @@ def run_interactive(app):
                 "done": False,
                 "answer": "",
                 "action_history": [],
+                "architecture": architecture,
+                "plan": "",
+                "llm_calls": 0,
+                "planning_calls": 0,
+                "executor_calls": 0,
             }, config)
             _print_result(result)
             continue
@@ -458,11 +482,15 @@ def run_interactive(app):
 def _print_result(result: dict):
     """打印任务执行结果。"""
     print(f"\n{'='*50}")
-    done = result.get("done", False)
+    completed = result.get("completed")
+    if completed is None:
+        done = result.get("done", False)
+        answer = result.get("answer", "")
+        completed = bool(done) and "reached max steps" not in str(answer).casefold()
     steps = result.get("step_count", 0)
     answer = result.get("answer", "")
 
-    status = "✅ 完成" if done else "⚠️ 未完成"
+    status = "✅ 完成" if completed else "⚠️ 未完成"
     print(f"{status} (步数: {steps})")
     if answer:
         print(f"📝 答案: {answer}")
@@ -532,17 +560,23 @@ def run_benchmark(args):
             proxy.goto(page_url)
 
             # 运行 agent
-            app = build_graph()
+            app = build_graph(args.architecture)
+            initial_obs = proxy.get_obs()
             result = app.invoke({
                 "task": task_desc,
                 "model_profile": args.model_profile or settings.MODEL_PROFILE,
-                "url": page_url,
-                "page_content": "",
+                "url": initial_obs.url,
+                "page_content": initial_obs.ax_tree_text,
                 "step_count": 0,
                 "max_steps": args.max_steps or settings.MAX_STEPS,
                 "done": False,
                 "answer": "",
                 "action_history": [],
+                "architecture": args.architecture,
+                "plan": "",
+                "llm_calls": 0,
+                "planning_calls": 0,
+                "executor_calls": 0,
             }, {"configurable": {"thread_id": str(uuid.uuid4())[:8]}})
 
             elapsed = time.time() - t0
@@ -550,8 +584,9 @@ def run_benchmark(args):
             steps = result.get("step_count", 0)
             answer = result.get("answer", "")
 
-            # 判断成功: agent 正常结束且非 max_steps 超限
-            success = done and "Reached max steps" not in answer
+            # 先统一计算完成状态；是否正确由 BenchmarkRunner 的 evaluator 决定。
+            completed, _ = evaluate_answer(done, answer, [])
+            success = completed
 
             log = proxy.get_injection_log()
             total_delay = sum(
@@ -562,6 +597,11 @@ def run_benchmark(args):
                 task_id=task_id,
                 config_label=fault_config.intensity,
                 success=success,
+                completed=completed,
+                architecture=args.architecture,
+                llm_calls=result.get("llm_calls", 0),
+                planning_calls=result.get("planning_calls", 0),
+                executor_calls=result.get("executor_calls", 0),
                 steps=steps,
                 time_sec=elapsed,
                 answer=answer,
@@ -573,6 +613,11 @@ def run_benchmark(args):
                 task_id=task_id,
                 config_label=fault_config.intensity,
                 success=False,
+                completed=False,
+                architecture=args.architecture,
+                llm_calls=0,
+                planning_calls=0,
+                executor_calls=0,
                 steps=0,
                 time_sec=time.time() - t0,
                 error=str(e),
@@ -581,8 +626,19 @@ def run_benchmark(args):
             env.stop()
             use_simulation()
 
-    # 构建 BenchmarkRunner
-    runner = BenchmarkRunner(run_fn=run_one_trial)
+    def evaluate_trial(trial: TrialResult) -> bool:
+        """评估 CLI 传入的答案期望值。"""
+        _, success = evaluate_answer(
+            trial.completed, trial.answer, args.expected_answer
+        )
+        return success
+
+    # 只有显式提供 expected-answer 时才启用答案正确性评估；否则 success
+    # 保持为正常完成率，避免伪造“正确答案”指标。
+    runner = BenchmarkRunner(
+        run_fn=run_one_trial,
+        evaluator=evaluate_trial if args.expected_answer else None,
+    )
 
     # Control
     runner.add_config("control", FaultConfig.off())
@@ -600,6 +656,10 @@ def run_benchmark(args):
     print(f"   任务: {args.task}")
     print(f"   URL: {url}")
     print(f"   每组 {args.trials} 次试验\n")
+    if args.expected_answer:
+        print(f"   评估模式: 答案匹配 ({len(args.expected_answer)} 个可接受答案)\n")
+    else:
+        print("   评估模式: completion rate（未提供 --expected-answer）\n")
     report = runner.run(trials_per_config=args.trials)
     runner.print_report(report)
 
