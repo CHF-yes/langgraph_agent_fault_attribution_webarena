@@ -1,0 +1,245 @@
+{
+  "destinations": [
+    {
+      "name": "舟山",
+      "province": "浙江",
+      "description": "千岛之城，拥有普陀山佛教圣地和众多美丽海岛，是江浙沪最受欢迎的海滨度假胜地。蓝天碧海、金色沙滩、鲜美海鲜，适合海岛度假和佛教文化之旅。",
+      "tags": ["海滩", "海鲜", "佛教文化", "海岛度假"],
+      "best_seasons": ["5月", "6月", "7月", "8月", "9月", "10月"],
+      "attractions": [
+        {
+          "name": "普陀山",
+          "category": "人文古迹",
+          "description": "中国四大佛教名山之一，观音菩萨道场，岛上寺庙林立，梵音缭绕，山海相连景色壮丽。",
+          "ticket_price": 160,
+          "duration_hours": 6,
+          "tags": ["佛教", "海景", "登山", "人文"]
+        },
+        {
+          "name": "朱家尖南沙",
+          "category": "自然景观",
+          "description": "国际沙雕艺术广场所在地，沙滩细腻平缓，海水清澈，是夏季游泳和沙雕观赏的绝佳去处。",
+          "ticket_price": 75,
+          "duration_hours": 3,
+          "tags": ["海滩", "沙雕", "游泳", "亲子"]
+        },
+        {
+          "name": "东极岛",
+          "category": "自然景观",
+          "description": "中国最东端有人居住的岛屿，电影《后会无期》取景地，碧海蓝天间感受第一缕阳光。",
+          "ticket_price": 0,
+          "duration_hours": 8,
+          "tags": ["海岛", "日出", "摄影", "文艺"]
+        },
+        {
+          "name": "嵊泗列岛",
+          "category": "自然景观",
+          "description": "国家级列岛风景名胜区，渔家风情浓郁，可体验出海捕鱼、品尝刚上岸的海鲜大餐。",
+          "ticket_price": 100,
+          "duration_hours": 6,
+          "tags": ["海岛", "海鲜", "渔村", "摄影"]
+        }
+      ],
+      "transportation": {
+        "上海": [
+          {"mode": "高铁", "unit_price": 150, "duration_hours": 2.5},
+          {"mode": "自驾", "unit_price": 200, "duration_hours": 4},
+          {"mode": "大巴", "unit_price": 120, "duration_hours": 5}
+        ],
+        "杭州": [
+          {"mode": "高铁", "unit_price": 100, "duration_hours": 1.5},
+          {"mode": "自驾", "unit_price": 150, "duration_hours": 3}
+        ],
+        "宁波": [
+          {"mode": "高铁", "unit_price": 60, "duration_hours": 0.5},
+          {"mode": "自驾", "unit_price": 80, "duration_hours": 1.5}
+        ]
+      },
+      "accommodation": {
+        "budget":    {"level": "budget",    "label": "经济型", "price_per_night": 150},
+        "standard":  {"level": "standard",  "label": "舒适型", "price_per_night": 350},
+        "luxury":    {"level": "luxury",    "label": "豪华型", "price_per_night": 800}
+      }
+    },
+    {
+      "name": "南通",
+      "province": "江苏",
+      "description": "近代第一城，濠河环绕古城，狼山登高望江海。博物苑承载百年记忆，水绘园诉说才子佳人，是一座低调而富有底蕴的江海名城。",
+      "tags": ["古镇", "园林", "江海美食", "休闲", "博物"],
+      "best_seasons": ["3月", "4月", "5月", "9月", "10月", "11月"],
+      "attractions": [
+        {
+          "name": "狼山",
+          "category": "自然景观",
+          "description": "江海第一山，佛教八小名山之一，登顶可俯瞰长江入海壮阔景象，山上古寺幽静庄严。",
+          "ticket_price": 70,
+          "duration_hours": 4,
+          "tags": ["登山", "佛教", "江景", "自然"]
+        },
+        {
+          "name": "濠河风景区",
+          "category": "自然景观",
+          "description": "千年古护城河，夜游濠河看灯火璀璨，两岸古建倒映水中，被誉为南通的城市项链。",
+          "ticket_price": 0,
+          "duration_hours": 2,
+          "tags": ["夜景", "游船", "古建筑", "漫步"]
+        },
+        {
+          "name": "南通博物苑",
+          "category": "人文古迹",
+          "description": "中国人自办的第一座公共博物馆，由张謇创办，馆藏丰富，建筑中西合璧独具特色。",
+          "ticket_price": 0,
+          "duration_hours": 2,
+          "tags": ["博物馆", "历史", "亲子", "建筑"]
+        },
+        {
+          "name": "水绘园",
+          "category": "人文古迹",
+          "description": "明末清初江南才子冒辟疆与董小宛的故居，园中以水绘景，一步一景尽显江南园林之妙。",
+          "ticket_price": 30,
+          "duration_hours": 2,
+          "tags": ["园林", "历史", "摄影", "人文"]
+        }
+      ],
+      "transportation": {
+        "上海": [
+          {"mode": "高铁", "unit_price": 80, "duration_hours": 1},
+          {"mode": "自驾", "unit_price": 100, "duration_hours": 2}
+        ],
+        "南京": [
+          {"mode": "高铁", "unit_price": 120, "duration_hours": 1.5},
+          {"mode": "自驾", "unit_price": 150, "duration_hours": 3}
+        ],
+        "苏州": [
+          {"mode": "高铁", "unit_price": 60, "duration_hours": 0.5},
+          {"mode": "自驾", "unit_price": 80, "duration_hours": 1}
+        ]
+      },
+      "accommodation": {
+        "budget":    {"level": "budget",    "label": "经济型", "price_per_night": 120},
+        "standard":  {"level": "standard",  "label": "舒适型", "price_per_night": 280},
+        "luxury":    {"level": "luxury",    "label": "豪华型", "price_per_night": 600}
+      }
+    },
+    {
+      "name": "黄山",
+      "province": "安徽",
+      "description": "五岳归来不看山，黄山归来不看岳。奇松、怪石、云海、温泉四绝闻名天下，更有宏村西递等徽派古村落点缀其间，是山水与人文的完美结合。",
+      "tags": ["山景", "云海", "温泉", "徽派文化", "摄影"],
+      "best_seasons": ["4月", "5月", "9月", "10月", "11月"],
+      "attractions": [
+        {
+          "name": "黄山风景区",
+          "category": "自然景观",
+          "description": "世界自然与文化双遗产，奇松怪石云海温泉四绝，光明顶日出和西海大峡谷令人震撼。",
+          "ticket_price": 190,
+          "duration_hours": 10,
+          "tags": ["登山", "云海", "奇松", "摄影", "日出"]
+        },
+        {
+          "name": "宏村",
+          "category": "人文古迹",
+          "description": "世界文化遗产，徽派建筑的代表之作，月沼南湖如画，被誉为画里乡村。",
+          "ticket_price": 104,
+          "duration_hours": 3,
+          "tags": ["古镇", "建筑", "摄影", "写生", "人文"]
+        },
+        {
+          "name": "屯溪老街",
+          "category": "美食街区",
+          "description": "活动着的清明上河图，徽州美食聚集地，毛豆腐、臭鳜鱼、黄山烧饼不可错过。",
+          "ticket_price": 0,
+          "duration_hours": 2,
+          "tags": ["美食", "购物", "古街", "文化"]
+        },
+        {
+          "name": "翡翠谷",
+          "category": "自然景观",
+          "description": "又称情人谷，碧绿池水如翡翠散落山间，是《卧虎藏龙》取景地之一，水色如梦。",
+          "ticket_price": 90,
+          "duration_hours": 3,
+          "tags": ["峡谷", "碧水", "摄影", "自然"]
+        }
+      ],
+      "transportation": {
+        "上海": [
+          {"mode": "高铁", "unit_price": 200, "duration_hours": 2.5},
+          {"mode": "自驾", "unit_price": 300, "duration_hours": 5}
+        ],
+        "杭州": [
+          {"mode": "高铁", "unit_price": 120, "duration_hours": 1.5},
+          {"mode": "自驾", "unit_price": 200, "duration_hours": 3}
+        ],
+        "合肥": [
+          {"mode": "高铁", "unit_price": 100, "duration_hours": 1},
+          {"mode": "自驾", "unit_price": 150, "duration_hours": 3}
+        ]
+      },
+      "accommodation": {
+        "budget":    {"level": "budget",    "label": "经济型", "price_per_night": 100},
+        "standard":  {"level": "standard",  "label": "舒适型", "price_per_night": 250},
+        "luxury":    {"level": "luxury",    "label": "豪华型", "price_per_night": 700}
+      }
+    },
+    {
+      "name": "厦门",
+      "province": "福建",
+      "description": "海上花园，鼓浪屿琴声悠扬，环岛路海风拂面。这里是文艺青年的天堂，也是美食爱好者的乐园，一座来了就不想走的滨海城市。",
+      "tags": ["海滩", "文艺", "美食", "海岛", "小资"],
+      "best_seasons": ["3月", "4月", "5月", "10月", "11月"],
+      "attractions": [
+        {
+          "name": "鼓浪屿",
+          "category": "人文古迹",
+          "description": "世界文化遗产，万国建筑博览，钢琴之岛。日光岩俯瞰全岛，菽庄花园藏海纳景。",
+          "ticket_price": 35,
+          "duration_hours": 6,
+          "tags": ["海岛", "建筑", "音乐", "文艺", "历史"]
+        },
+        {
+          "name": "厦门大学",
+          "category": "人文古迹",
+          "description": "中国最美大学之一，嘉庚风格建筑依山傍海，芙蓉隧道涂鸦墙充满青春气息。",
+          "ticket_price": 0,
+          "duration_hours": 2,
+          "tags": ["校园", "建筑", "拍照", "文艺"]
+        },
+        {
+          "name": "曾厝垵",
+          "category": "美食街区",
+          "description": "文艺渔村改造的小资街区，沙茶面、海蛎煎、土笋冻琳琅满目，手信和文创小店让人流连忘返。",
+          "ticket_price": 0,
+          "duration_hours": 3,
+          "tags": ["美食", "购物", "文艺", "夜市"]
+        },
+        {
+          "name": "环岛路",
+          "category": "自然景观",
+          "description": "最美马拉松赛道，金色沙滩与蓝色大海间骑行，看日出日落，享受海风拂面的惬意时光。",
+          "ticket_price": 0,
+          "duration_hours": 2,
+          "tags": ["骑行", "海滩", "日落", "运动"]
+        }
+      ],
+      "transportation": {
+        "上海": [
+          {"mode": "高铁", "unit_price": 350, "duration_hours": 6},
+          {"mode": "飞机", "unit_price": 500, "duration_hours": 1.5}
+        ],
+        "深圳": [
+          {"mode": "高铁", "unit_price": 200, "duration_hours": 3.5},
+          {"mode": "飞机", "unit_price": 400, "duration_hours": 1}
+        ],
+        "福州": [
+          {"mode": "高铁", "unit_price": 100, "duration_hours": 1.5},
+          {"mode": "自驾", "unit_price": 150, "duration_hours": 3}
+        ]
+      },
+      "accommodation": {
+        "budget":    {"level": "budget",    "label": "经济型", "price_per_night": 130},
+        "standard":  {"level": "standard",  "label": "舒适型", "price_per_night": 300},
+        "luxury":    {"level": "luxury",    "label": "豪华型", "price_per_night": 700}
+      }
+    }
+  ]
+}

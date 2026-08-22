@@ -1,0 +1,53 @@
+"""
+AgentState 定义 - WebArena ReAct Agent 的全局状态。
+
+单节点自循环模式，字段简洁：任务 + 页面 + 动作历史 + 步数控制。
+"""
+
+from typing import TypedDict, Annotated, Sequence
+from langgraph.graph.message import add_messages
+from langchain_core.messages import BaseMessage
+
+
+def add_action_history(existing: list[dict] | None,
+                       update: list[dict] | None) -> list[dict]:
+    """action_history 的 reducer：追加而不是覆盖。"""
+    return (existing or []) + (update or [])
+
+
+class AgentState(TypedDict):
+    """WebArena ReAct Agent 全局状态"""
+
+    # 对话历史 + LLM 推理轨迹，add_messages reducer 自动追加
+    messages: Annotated[Sequence[BaseMessage], add_messages]
+
+    # ---- WebArena 核心字段 ----
+    # 任务描述（WebArena 的 intent_template）
+    task: str
+
+    # Named model profile used for this run, enabling fair cross-model comparison.
+    model_profile: str
+
+    # 当前页面 URL
+    url: str
+
+    # 当前页面可访问性树 (Accessibility Tree) 文本表示
+    # 包含元素 ID、角色、文本、属性等
+    page_content: str
+
+    # ---- 控制字段 ----
+    # 当前已执行步数
+    step_count: int
+
+    # 最大步数上限（达到后强制结束）
+    max_steps: int
+
+    # 任务是否完成（stop 工具被调用时设为 True）
+    done: bool
+
+    # 最终答案（stop 工具传入）
+    answer: str
+
+    # ---- 追踪字段 ----
+    # 动作历史列表: [{"step": 1, "thought": "...", "action": "click(123)", "result": "..."}, ...]
+    action_history: Annotated[list[dict], add_action_history]

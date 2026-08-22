@@ -1,0 +1,18 @@
+{
+  "url": "https://shop.example.com",
+  "content": "[1] header 'Shop Example - Home'\n  [2] link 'Home'\n  [3] link 'Products'\n  [4] link 'Cart (2 items)'\n  [5] textbox 'Search products...'\n  [6] button 'Search'\n[7] main 'Featured Products'\n  [8] heading 'Today's Deals'\n  [9] text 'MacBook Pro 16\" - From $2,499.00'\n  [10] button 'Shop Laptops'\n  [11] text 'iPhone 15 Pro - From $999.00'\n  [12] button 'Shop Phones'",
+  "elements": {
+    "1": "header 'Shop Example - Home'",
+    "2": "link 'Home'",
+    "3": "link 'Products'",
+    "4": "link 'Cart (2 items)'",
+    "5": "textbox 'Search products...'",
+    "6": "button 'Search'",
+    "7": "main 'Featured Products'",
+    "8": "heading 'Today's Deals'",
+    "9": "text 'MacBook Pro 16\" - From $2,499.00'",
+    "10": "button 'Shop Laptops'",
+    "11": "text 'iPhone 15 Pro - From $999.00'",
+    "12": "button 'Shop Phones'"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "url": "https://shop.example.com/products/laptop",
+  "content": "[1] header 'Shop Example - Product Page'\n  [2] link 'Home'\n  [3] link 'Cart (2 items)'\n[4] main 'Product Details'\n  [5] heading 'MacBook Pro 16-inch'\n  [6] text 'Price: $2,499.00'\n  [7] button 'Add to Cart'\n  [8] text 'In Stock - Free Shipping'\n  [9] textbox 'Quantity' value='1'\n  [10] link 'View Cart'\n[11] footer '© 2024 Shop Example'",
+  "elements": {
+    "1": "header 'Shop Example - Product Page'",
+    "2": "link 'Home'",
+    "3": "link 'Cart (2 items)'",
+    "4": "main 'Product Details'",
+    "5": "heading 'MacBook Pro 16-inch'",
+    "6": "text 'Price: $2,499.00'",
+    "7": "button 'Add to Cart'",
+    "8": "text 'In Stock - Free Shipping'",
+    "9": "textbox 'Quantity' value='1'",
+    "10": "link 'View Cart'",
+    "11": "footer '© 2024 Shop Example'"
+  }
+}

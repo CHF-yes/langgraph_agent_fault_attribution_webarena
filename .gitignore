@@ -1,0 +1,11 @@
+.env
+__pycache__/
+*.pyc
+.venv/
+.venv-linux/
+venv/
+.DS_Store
+*.egg-info/
+dist/
+traces/
+baseline_results*.json
