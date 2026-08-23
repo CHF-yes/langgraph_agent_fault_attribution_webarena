@@ -126,6 +126,7 @@ class FaultConfig:
     _rng: Optional[SeededRandom] = field(default=None, repr=False)
     _intensity_config: dict = field(default_factory=dict, repr=False)
     _injection_log: list[dict] = field(default_factory=list, repr=False)
+    _execution_step: int = field(default=0, repr=False)
 
     def __post_init__(self):
         if self.intensity not in {"off", *INTENSITY_PRESETS}:
@@ -138,6 +139,7 @@ class FaultConfig:
             self.intensity, INTENSITY_PRESETS["low"]
         )
         self._injection_log = []
+        self._execution_step = 0
 
     # ---- 属性访问 ----
 
@@ -161,6 +163,42 @@ class FaultConfig:
     def log(self) -> list[dict]:
         """故障注入日志。"""
         return self._injection_log
+
+    @property
+    def enabled_faults(self) -> tuple[str, ...]:
+        """Return explicitly enabled faults in a stable order for experiments."""
+        fault_names = (
+            "web_timeout", "web_http_error", "web_dom_missing", "web_popup_block",
+            "gitlab_ci_offline", "gitlab_permission", "gitlab_conflict", "gitlab_quota",
+            "agent_state_misjudge", "agent_param_error",
+        )
+        return tuple(name for name in fault_names if getattr(self, name, False))
+
+    @property
+    def fault_label(self) -> str:
+        """Return a stable label suitable for trial tables and trace metadata."""
+        faults = self.enabled_faults
+        return "control" if self.intensity == "off" or not faults else "+".join(faults)
+
+    @property
+    def fault_layer(self) -> str:
+        """Classify the configured faults by their experimental injection layer."""
+        layers = {
+            "web_timeout": "environment",
+            "web_http_error": "environment",
+            "web_dom_missing": "observation",
+            "web_popup_block": "observation",
+            "gitlab_ci_offline": "environment",
+            "gitlab_permission": "environment",
+            "gitlab_conflict": "environment",
+            "gitlab_quota": "environment",
+            "agent_state_misjudge": "observation",
+            "agent_param_error": "action",
+        }
+        configured_layers = {layers[name] for name in self.enabled_faults}
+        if not configured_layers:
+            return "none"
+        return next(iter(configured_layers)) if len(configured_layers) == 1 else "mixed"
 
     # ---- 注入判断 ----
 
@@ -193,9 +231,24 @@ class FaultConfig:
 
     def record_injection(self, fault_name: str, detail: dict = None):
         """记录一次故障注入。"""
+        layer = {
+            "web_timeout": "environment",
+            "web_http_error": "environment",
+            "web_dom_missing": "observation",
+            "web_popup_block": "observation",
+            "gitlab_ci_offline": "environment",
+            "gitlab_permission": "environment",
+            "gitlab_conflict": "environment",
+            "gitlab_quota": "environment",
+            "agent_state_misjudge": "observation",
+            "agent_param_error": "action",
+        }.get(fault_name, "unknown")
         entry = {
             "fault": fault_name,
-            "step": len(self._injection_log) + 1,
+            "fault_layer": layer,
+            "fault_seed": self.seed,
+            "step": self._execution_step or len(self._injection_log) + 1,
+            "injection_index": len(self._injection_log) + 1,
             "timestamp": time.time(),
             "detail": detail or {},
         }
@@ -206,6 +259,24 @@ class FaultConfig:
         """重置运行状态（seed 不变，日志清零，rng 重置）。"""
         self._rng = SeededRandom(self.seed)
         self._injection_log = []
+        self._execution_step = 0
+
+    def set_execution_step(self, step: int) -> None:
+        """Attach the current Agent action step to subsequent fault events."""
+        self._execution_step = max(0, int(step))
+
+    @classmethod
+    def single_fault(cls, fault_name: str, intensity: str = "medium",
+                     seed: int = 42) -> "FaultConfig":
+        """Build a config with exactly one enabled fault for ablation studies."""
+        valid_names = {
+            "web_timeout", "web_http_error", "web_dom_missing", "web_popup_block",
+            "gitlab_ci_offline", "gitlab_permission", "gitlab_conflict", "gitlab_quota",
+            "agent_state_misjudge", "agent_param_error",
+        }
+        if fault_name not in valid_names:
+            raise ValueError(f"Unknown fault '{fault_name}'")
+        return cls(intensity=intensity, seed=seed, **{fault_name: True})
 
     # ---- 工厂方法 ----
 

@@ -60,6 +60,16 @@ def parse_aria_snapshot(snapshot_text: str) -> tuple[str, dict]:
         stripped = line.lstrip()
         indent = (len(line) - len(stripped)) // 2
 
+        # Playwright emits URL metadata as a child line. It is an attribute of
+        # the preceding link, not an interactive element of its own.
+        if stripped.startswith("- /url ") or stripped.startswith("- /url:"):
+            if element_map:
+                match = re.search(r"- /url:?\s+['\"]?(.*?)['\"]?$", stripped)
+                if match:
+                    last_id = str(counter)
+                    element_map[last_id].setdefault("attrs", {})["url"] = match.group(1)
+            continue
+
         # 解析行格式: "- role "name" [attrs]" 或 "- text"
         parsed = _parse_aria_line(stripped)
         if parsed is None:
@@ -119,6 +129,12 @@ def _parse_aria_line(line: str) -> tuple:
     else:
         return None
 
+    # Playwright may quote a complete role/name expression, for example:
+    # `'button "Sort by: Submissions":'`.
+    quoted_role = re.match(r"^['\"]([a-zA-Z_-]+)\s+(['\"].*?['\"])['\"]:?$", line)
+    if quoted_role:
+        line = f"{quoted_role.group(1)} {quoted_role.group(2)}"
+
     # 提取属性 [key=value]
     attrs = {}
     attr_match = re.findall(r'\[([^\]]+)\]', line)
@@ -161,6 +177,12 @@ def _parse_aria_line(line: str) -> tuple:
         colon_name = re.sub(r"^'|'$", "", colon_name).strip()
     else:
         role = line.strip()
+
+    # In `button: Sort by 'button'`, the quoted suffix is the role hint, not
+    # the accessible name. Magento-style `button: 搜索 "Search"` still uses
+    # the quoted value as the name.
+    if colon_name and quoted_name.casefold() == role.casefold():
+        quoted_name = ""
 
     # 最终 name 优先级：attrs name > 双引号 name > 冒号后 name
     name = attr_name or quoted_name or colon_name
@@ -210,15 +232,21 @@ class BrowserEnv:
 
     def __init__(self, headless: bool = True, slow_mo: int = 0,
                  viewport_width: int = 1280, viewport_height: int = 720,
-                 extra_http_headers: dict | None = None):
+                 extra_http_headers: dict | None = None,
+                 har_path: str | None = None,
+                 storage_state: str | None = None):
         self.headless = headless
         self.slow_mo = slow_mo            # 操作间延迟（ms），便于观察
         self.viewport = {"width": viewport_width, "height": viewport_height}
         self._extra_http_headers = extra_http_headers or {}
+        self._har_path = har_path
+        self._storage_state = storage_state
         self._playwright = None
         self._browser: Optional[Browser] = None
+        self._context = None
         self._page: Optional[Page] = None
         self._current_obs: Optional[PageObservation] = None
+        self.fallback_events: list[dict] = []
 
     # ---- 生命周期 ----
 
@@ -233,21 +261,33 @@ class BrowserEnv:
             headless=self.headless,
             slow_mo=self.slow_mo,
         )
-        context = await self._browser.new_context(
-            viewport=self.viewport,
-            extra_http_headers=self._extra_http_headers or None,
-        )
-        self._page = await context.new_page()
+        context_options = {
+            "viewport": self.viewport,
+            "extra_http_headers": self._extra_http_headers or None,
+        }
+        if self._har_path:
+            context_options["record_har_path"] = self._har_path
+        if self._storage_state:
+            context_options["storage_state"] = self._storage_state
+        self._context = await self._browser.new_context(**context_options)
+        self._page = await self._context.new_page()
         # 导航到空白页初始化
         await self._page.goto("about:blank")
         self._current_obs = await self._observe()
 
     async def stop(self):
         """关闭浏览器。"""
+        # Playwright writes HAR data when the BrowserContext closes, before the
+        # browser itself is closed.
+        if self._context:
+            await self._context.close()
+            self._context = None
         if self._browser:
             await self._browser.close()
+            self._browser = None
         if self._playwright:
             await self._playwright.stop()
+            self._playwright = None
 
     # ---- 页面观测 ----
 
@@ -310,11 +350,31 @@ class BrowserEnv:
         role = elem_info["role"]
         name = elem_info["name"]
         role_index = elem_info.get("role_index", 0)
+        element_url = elem_info.get("attrs", {}).get("url")
 
         try:
-            locator = self._locate_element("", role, name, role_index)
+            locator = self._locate_element(
+                "", role, name, role_index, element_url=element_url
+            )
             await locator.click(timeout=5000)
         except Exception as e:
+            if element_url and role == "link":
+                from urllib.parse import urljoin
+
+                self.fallback_events.append({
+                    "fallback_used": True,
+                    "requested_action": "click",
+                    "executed_action": "goto",
+                    "element_id": str(element_id),
+                    "role": role,
+                    "name": name,
+                    "url": element_url,
+                    "reason": type(e).__name__,
+                })
+                await self._page.goto(urljoin(self._page.url, element_url),
+                                       wait_until="domcontentloaded")
+                await wait_for_page_stable(self._page)
+                return await self._observe()
             raise RuntimeError(
                 f"Failed to click element [{element_id}] ({role} '{name}'): {e}"
             )
@@ -400,7 +460,8 @@ class BrowserEnv:
             return None
         return self._current_obs.element_map.get(str(element_id))
 
-    def _locate_element(self, uid: str, role: str, name: str, role_index: int = 0):
+    def _locate_element(self, uid: str, role: str, name: str, role_index: int = 0,
+                        element_url: str | None = None):
         """
         通过 role + name 定位 Playwright Locator。
 
@@ -417,6 +478,17 @@ class BrowserEnv:
         """
         if not self._page:
             raise RuntimeError("Browser not started")
+
+        if element_url and role == "link":
+            try:
+                # `has=` matches descendants, not the anchor itself. Use an
+                # href attribute selector so valid links do not time out and
+                # incorrectly enter the fallback path.
+                escaped_url = element_url.replace('\\', '\\\\').replace('"', '\\"')
+                loc = self._page.locator(f'a[href="{escaped_url}"]')
+                return loc.nth(role_index)
+            except Exception:
+                pass
 
         # 策略 1: get_by_role + name（最精确）
         if role and name:
@@ -468,9 +540,12 @@ class SyncBrowserEnv:
     """
 
     def __init__(self, headless: bool = True, slow_mo: int = 0,
-                 extra_http_headers: dict | None = None):
+                 extra_http_headers: dict | None = None,
+                 har_path: str | None = None,
+                 storage_state: str | None = None):
         self._env = BrowserEnv(headless=headless, slow_mo=slow_mo,
-                               extra_http_headers=extra_http_headers)
+                               extra_http_headers=extra_http_headers,
+                               har_path=har_path, storage_state=storage_state)
         self._loop: Optional[asyncio.AbstractEventLoop] = None
         self._lock = threading.Lock()
 
@@ -500,6 +575,10 @@ class SyncBrowserEnv:
     def get_obs(self) -> Optional[PageObservation]:
         """获取最近观测。"""
         return self._env.get_current_observation()
+
+    @property
+    def fallback_events(self) -> list[dict]:
+        return self._env.fallback_events
 
     def goto(self, url: str) -> PageObservation:
         return self._run(self._env.goto(url))

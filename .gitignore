@@ -3,9 +3,18 @@ __pycache__/
 *.pyc
 .venv/
 .venv-linux/
+.venv311/
+.venv311-stable/
+.venv311-rc1/
 venv/
 .DS_Store
 *.egg-info/
 dist/
 traces/
 baseline_results*.json
+experiments/results/
+experiments/traces/
+experiments/official_outputs/
+experiments/auth/
+
+# Curated, reviewable experiment artifacts are explicitly force-added.

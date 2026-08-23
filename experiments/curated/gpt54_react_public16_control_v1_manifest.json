@@ -1,0 +1,44 @@
+{
+  "dataset_name": "gpt54_react_public16_control_v1",
+  "source_file": "experiments/results/gpt54_react_public16_corrected_control_3trials.json",
+  "curated_file": "experiments/curated/gpt54_react_public16_control_v1.json",
+  "summary_file": "experiments/curated/gpt54_react_public16_control_v1_summary.csv",
+  "condition": {
+    "model_profile": "gpt54",
+    "architecture": "react",
+    "fault_type": "control",
+    "fault_layer": "none",
+    "max_steps": 20,
+    "task_count": 16,
+    "trials_per_task": 3,
+    "total_trials": 48,
+    "run_seeds": [1, 2, 3]
+  },
+  "evaluation": {
+    "evaluator": "WebArena-Verified",
+    "evaluator_errors": 0,
+    "official_successes": 25,
+    "official_success_rate": 0.5208333333,
+    "fallback_trials": 28,
+    "fallback_events": 29,
+    "fallback_reason_counts": {
+      "TimeoutError": 29
+    },
+    "schema_compatibility_fallback_trials": 3,
+    "note": "Fallback records have an explicit success/failure status and must be reported separately from native evaluator results."
+  },
+  "provenance": {
+    "python_version": "3.11.9",
+    "playwright_version": "1.62.0",
+    "langgraph_version": "1.2.11",
+    "webarena_verified_version": "1.2.3.post1.dev0",
+    "dataset_path": "/root/webarena-dataset/webarena-verified.json",
+    "evaluator_config": "experiments/webarena_local_config.json",
+    "batch_note": "The source JSON combines corrected per-task runs and contains multiple source experiment_id values. The curated experiment_id is a reporting label, not a claim that all 48 trials ran in one process batch."
+  },
+  "limitations": [
+    "The provider sampling seed is recorded but not enforced by the LLM provider.",
+    "Twenty-eight trials use compatibility fallback and should be stratified in formal reporting.",
+    "This is a control dataset only; it contains no fault-injection trials or recovery comparison."
+  ]
+}

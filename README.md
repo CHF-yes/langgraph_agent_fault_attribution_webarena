@@ -5,8 +5,8 @@
 ## 功能特性
 
 - **标准 ReAct Agent**：Thought（推理）→ Action（工具调用）→ Observation（页面反馈）循环，LangGraph 编排
-- **可切换 Agent 架构**：`react` 标准单循环基线；`plan_execute` 先生成高层计划，再由同一 ReAct 执行器逐步执行
-- **可归因轨迹**：每步写入 `action_history` 并持久化为 JSONL trace（`traces/{thread_id}.jsonl`），支持鲁棒性归因分析
+- **可切换 Agent 架构**：`react` 标准单循环基线；`plan_execute` 使用 Planner → Executor → Replanner 分阶段循环
+- **可归因轨迹**：每步写入 `action_history` 并持久化为 JSONL trace（`experiments/traces/{thread_id}.jsonl`），支持鲁棒性归因分析
 - **双模式运行**：模拟模式（内存 PageState，无需浏览器）/ 浏览器模式（Playwright 真实 Chromium）
 - **9 个 WebArena 标准工具**：click / type_text / scroll / goto / go_back / go_forward / stop / select_option / hover
 - **AX Tree 观测**：解析 Playwright `aria_snapshot()`，生成 `[id=xxx]` 可访问性树供 LLM 使用
@@ -53,7 +53,7 @@ python main.py --list-sites
 python main.py --task "What is the price of the MacBook Pro?" --page scenario_example.json
 
 # 浏览器模式（真实 Chromium 打开本地测试站点）
-python main.py --browser --url file:///root/lang/test_site/index.html \
+python main.py --browser --url file:///root/langgraph_agent_fault_attribution_webarena/test_site/index.html \
   --task "What is the price of iPhone 15 Pro?"
 
 # 浏览器模式（WebArena 站点）
@@ -90,15 +90,18 @@ go          开始执行任务
 │   ├── config.py            # 配置加载（.env）
 │   ├── core/                # AgentState、图、节点、trace
 │   │   ├── state.py         # AgentState + reducer
-│   │   ├── graph.py         # StateGraph 构建（agent → tools 自循环）
-│   │   ├── nodes.py         # ReAct 节点（Thought/Action/Observation）
+│   │   ├── graph.py         # StateGraph 构建（ReAct 或计划-执行）
+│   │   ├── nodes.py         # ReAct、Planner、Executor、Replanner 节点
 │   │   └── trace.py         # JSONL trace 记录（鲁棒性归因数据）
 │   ├── environment/         # 浏览器环境与 WebArena 配置
 │   │   ├── browser.py       # Playwright 封装 + aria_snapshot 解析
 │   │   └── webarena_config.py
 │   ├── tools/web_tools.py   # 9 个 WebArena 标准工具
 │   └── llm/provider.py      # ChatOpenAI 工厂
-├── traces/                 # 运行轨迹输出（自动生成）
+├── experiments/            # 实验结果和运行产物（自动生成）
+│   ├── results/             # baseline JSON 结果
+│   ├── traces/              # JSONL 执行轨迹
+│   └── official_outputs/    # WebArena-Verified response/HAR/eval 文件
 ├── fault_injection/        # 独立故障注入与 A/B benchmark 层
 │   ├── config.py            # FaultConfig + SeededRandom
 │   ├── proxy.py             # FaultProxy 透明环境代理
@@ -123,7 +126,7 @@ __start__ → agent (LLM 推理 + 工具调用决策)
 - 单节点 ReAct 自循环，`tools_condition` 内置路由
 - `MemorySaver` checkpointer 支持多轮会话
 - 达到 `max_steps` 强制结束
-- `max_steps` 只限制 executor 的 LLM 调用次数；`plan_execute` 的 planner 调用不占 executor 步数，但会计入 `llm_calls`
+- `max_steps` 只限制 executor 的 LLM 调用次数；`plan_execute` 的 planner/replanner 调用不占 executor 步数，但会计入 `llm_calls`
 
 ## Agent 架构对比
 
@@ -134,10 +137,12 @@ react:
 __start__ → agent → tools → agent → ... → END
 
 plan_execute:
-__start__ → planner → agent → tools → agent → ... → END
+__start__ → planner → executor → tools → replanner
+                         ↑                 │
+                         └──── planner ◄──┘（需要重规划时）
 ```
 
-`react` 是标准单 Agent ReAct 基线，适合第一阶段 baseline 和故障分类实验。`plan_execute` 是轻量计划-执行变体：任务开始时额外调用一次 LLM 生成高层计划，之后仍由同一个 ReAct executor 根据实时 AX Tree 执行动作。它不是多 Agent，也不是每步重新规划；`max_steps` 只限制 executor 步数，planner 的额外调用通过 `llm_calls` 单独统计。后续架构实验应保持任务、模型、工具、max steps 和 evaluator 一致，只切换 `--architecture`。
+`react` 是标准单 Agent ReAct 基线，适合第一阶段 baseline 和故障分类实验。`plan_execute` 将规划、执行和重规划拆成独立 LangGraph 节点：Planner 生成结构化子目标，Executor 每轮只处理当前子目标，Replanner 根据工具结果选择推进、结束或重新生成计划。它仍然是单模型的多阶段工作流，不是多模型多 Agent 系统；`max_steps` 只限制 executor 步数，planner/replanner 的额外调用通过 `llm_calls`、`planning_calls` 和 `replanning_calls` 单独统计。后续架构实验应保持任务、模型、工具、max steps 和 evaluator 一致，只切换 `--architecture`。
 
 ```bash
 python3 run_baseline.py --architecture react
@@ -190,6 +195,20 @@ python -m unittest discover -s tests -v
 
 最小 smoke tests 不依赖外部网络和 LLM API，覆盖：标准 Agent 图构建、工具列表、aria 解析、故障模块导入、reducer、配置安全。
 
+## 当前实验数据
+
+仓库只提交经过筛选的实验汇总，不提交完整 trace、HAR 或认证状态文件。当前可复核的 control 数据位于：
+
+```text
+experiments/curated/gpt54_react_public16_control_v1.json
+experiments/curated/gpt54_react_public16_control_v1_summary.csv
+experiments/curated/gpt54_react_public16_control_v1_manifest.json
+```
+
+该数据集包含 16 个 WebArena-Verified 任务、每个任务 3 次试验，共 48 条 `gpt54 + react + control` 记录。48 条记录均有明确的 evaluator success/failure 判定，官方成功 25 条。由于其中 28 条使用了项目的兼容 fallback，manifest 中单独记录了 fallback 覆盖率；这些数据适合用于 control 任务筛选和后续单故障实验的协议验证，不应与未统一批次的历史结果混合计算。
+
+结果 JSON 中保留 `fallback_used`、`fallback_events`、`evaluator_status` 和 `experiment_id` 等审计字段。正式统计时，`evaluator_status=error` 的记录不进入成功率分母；`fallback` 记录应单独报告。
+
 ## 标准 Agent 观测与模型配置
 
 当前 Agent 使用 LangGraph 编排的单 Agent ReAct 循环：
@@ -199,7 +218,7 @@ python -m unittest discover -s tests -v
                                               └→ stop(answer) / final answer
 ```
 
-每次运行的工具轨迹保存在 `traces/{thread_id}.jsonl`，包括任务、URL、步骤、动作参数、观察结果、错误和最终答案。为了支持模型级归因，可在 `.env` 开启：
+每次运行的工具轨迹保存在 `experiments/traces/{thread_id}.jsonl`，包括任务、URL、步骤、动作参数、观察结果、错误和最终答案。为了支持模型级归因，可在 `.env` 开启：
 
 ```ini
 TRACE_LLM_IO=1       # 记录每轮模型请求/响应元数据
@@ -227,7 +246,7 @@ MODEL_GLM52_NAME=glm-5.2
 MODEL_GLM52_TEMPERATURE=0.2
 ```
 
-运行 `python3 main.py --list-models` 查看已配置 profile。单次运行用 `--model-profile glm52`；baseline 全部运行用 `python3 run_baseline.py --all-models`，结果会分别写入 `baseline_results_deepseek.json` 等文件。
+运行 `python3 main.py --list-models` 查看已配置 profile。单次运行用 `--model-profile glm52`；baseline 全部运行用 `python3 run_baseline.py --all-models`，结果会分别写入 `experiments/results/baseline_results_deepseek.json` 等文件。
 
 代码入口是 `standard_agent/llm/provider.py:create_llm`，配置读取在 `standard_agent/config.py`。因此切换 OpenAI、DeepSeek、Qwen、智谱或本地 Ollama，通常只需更换这四个环境变量，不要修改 Agent 核心逻辑。API key 不会写入 trace。
 

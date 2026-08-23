@@ -101,6 +101,7 @@ class FaultInjector:
     def goto(self, url: str):
         """导航 + 故障注入。"""
         self._step_counter += 1
+        self.config.set_execution_step(self._step_counter)
 
         # 注入点B: 超时
         inject_timeout(self.config)
@@ -119,6 +120,7 @@ class FaultInjector:
     def click(self, element_id: str):
         """点击 + 故障注入。"""
         self._step_counter += 1
+        self.config.set_execution_step(self._step_counter)
 
         # 注入点B: 超时 + 参数错误
         inject_timeout(self.config)
@@ -149,6 +151,7 @@ class FaultInjector:
     def type_text(self, element_id: str, text: str):
         """输入文本 + 故障注入。"""
         self._step_counter += 1
+        self.config.set_execution_step(self._step_counter)
 
         # 注入点B: 超时 + 参数错误
         inject_timeout(self.config)
@@ -164,6 +167,7 @@ class FaultInjector:
     def scroll(self, direction: str):
         """滚动 + 故障注入（超时）。"""
         self._step_counter += 1
+        self.config.set_execution_step(self._step_counter)
         inject_timeout(self.config)
         result = self._env.scroll(direction)
         obs = self._cache_faulted_observation(self._to_dict(result))
@@ -172,6 +176,7 @@ class FaultInjector:
     def go_back(self):
         """后退 + 故障注入（超时）。"""
         self._step_counter += 1
+        self.config.set_execution_step(self._step_counter)
         inject_timeout(self.config)
         result = self._env.go_back()
         obs = self._cache_faulted_observation(self._to_dict(result))
@@ -180,6 +185,7 @@ class FaultInjector:
     def go_forward(self):
         """前进 + 故障注入（超时）。"""
         self._step_counter += 1
+        self.config.set_execution_step(self._step_counter)
         inject_timeout(self.config)
         result = self._env.go_forward()
         obs = self._cache_faulted_observation(self._to_dict(result))
@@ -188,6 +194,7 @@ class FaultInjector:
     def select_option(self, element_id: str, option: str):
         """选择 + 故障注入。"""
         self._step_counter += 1
+        self.config.set_execution_step(self._step_counter)
         inject_timeout(self.config)
         new_eid, _ = inject_param_error(
             self.config, "select_option", element_id=element_id
@@ -199,6 +206,7 @@ class FaultInjector:
     def hover(self, element_id: str):
         """悬停 + 故障注入（超时）。"""
         self._step_counter += 1
+        self.config.set_execution_step(self._step_counter)
         inject_timeout(self.config)
         new_eid, _ = inject_param_error(
             self.config, "hover", element_id=element_id

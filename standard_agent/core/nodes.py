@@ -14,6 +14,10 @@ ReAct Agent 节点 - 标准 ReAct 循环：Thought → Action → Observation �
 - 将每一步持久化为 JSONL trace（agent/trace.py）
 """
 
+import json
+import os
+import re
+
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage, ToolMessage
 from langchain_core.runnables import RunnableConfig
 
@@ -35,6 +39,8 @@ SYSTEM_PROMPT = """You are a standard ReAct (Reasoning + Acting) web automation 
 - Accessibility Tree (AX Tree):
 {page_content}
 {plan_context}
+{retrieval_context}
+{output_format_context}
 
 ## Available Actions
 You can use the following tools to interact with the page:
@@ -101,6 +107,48 @@ THOUGHT_REMINDER = SystemMessage(
 )
 
 
+def _retrieval_completeness_context(task: str) -> str:
+    """Add conservative completeness guidance for likely multi-answer queries."""
+    if os.getenv("RETRIEVAL_REPAIR", "0") != "1":
+        return ""
+    text = str(task or "").casefold()
+    multi_answer = any(marker in text for marker in (
+        "name(s)", "username(s)", "reviewer(s)", "all ", "top ",
+        "list of", "each", "any", "how many",
+    ))
+    if not multi_answer:
+        return ""
+    return (
+        "\n## Retrieval Completeness\n"
+        "This retrieval task may have multiple matching results. Do not stop "
+        "after finding the first match. Inspect all visible result pages, "
+        "pagination links, and relevant sections before calling stop. If a page "
+        "has a pagination control, record the current page and visit every relevant "
+        "page or explicitly verify that no next page exists. Deduplicate items and "
+        "return every matching value as separate elements in the requested list/object format. "
+        "If exhaustive inspection finds no match, explicitly state that no matching "
+        "result was found.\n"
+    )
+
+
+def _output_format_context(task: str) -> str:
+    """Require JSON only when the task itself requests structured output."""
+    text = str(task or "").casefold()
+    structured_markers = (
+        "return a list", "return an object", "return the value as",
+        "return true", "return false", "keys \\\"", "json",
+        "how many", "what is the number", "what is the count",
+    )
+    if not any(marker in text for marker in structured_markers):
+        return ""
+    return (
+        "\n## Final Answer Format\n"
+        "The task explicitly requests structured output. When calling stop, "
+        "put ONLY valid JSON in answer, with no prose, Markdown, explanation, "
+        "or THOUGHT prefix. Use the exact requested list/object/scalar shape.\n"
+    )
+
+
 def _thread_id(config: RunnableConfig | None) -> str:
     """从 LangGraph config 中提取 thread_id。"""
     try:
@@ -137,6 +185,8 @@ def agent_node(state: AgentState, config: RunnableConfig) -> dict:
         f"{plan}\n"
         if plan else ""
     )
+    retrieval_context = _retrieval_completeness_context(task)
+    output_format_context = _output_format_context(task)
 
     # ---- 检查 stop 是否已调用（优先级最高，避免 max_steps 覆盖正确结果）----
     # `done` 属于 LangGraph task state，不能依赖模块级页面状态；否则连续
@@ -175,6 +225,8 @@ def agent_node(state: AgentState, config: RunnableConfig) -> dict:
         url=current_url,
         page_content=page_content,
         plan_context=plan_context,
+        retrieval_context=retrieval_context,
+        output_format_context=output_format_context,
     ))
     task_msg = HumanMessage(content=(
         f"Please continue completing this task: {task}\n"
@@ -309,7 +361,7 @@ def agent_node(state: AgentState, config: RunnableConfig) -> dict:
 
 
 def planner_node(state: AgentState, config: RunnableConfig) -> dict:
-    """Generate one high-level plan before the executor starts acting."""
+    """Generate an executable ordered plan for the plan-and-execute graph."""
     task = state.get("task", "")
     model_profile = state.get("model_profile", "")
     url = state.get("url", "about:blank")
@@ -319,11 +371,15 @@ def planner_node(state: AgentState, config: RunnableConfig) -> dict:
     page_content = obs["page_content"] or state.get("page_content", "(empty page)")
     thread_id = _thread_id(config)
     prompt = SystemMessage(content=(
-        "You are the planning component of a web automation agent.\n"
-        "Create a concise, numbered high-level plan for completing the task.\n"
-        "Do not execute tools and do not answer the task. The executor will "
-        "adapt its next action when observations contradict this plan.\n\n"
-        f"Task: {task}\nURL: {url}\nAccessibility Tree:\n{page_content}"
+        "You are the planner in a plan-and-execute web automation agent.\n"
+        "Create an executable ordered plan. Return ONLY valid JSON with this shape:\n"
+        '{"steps":[{"id":1,"goal":"...","success_condition":"..."}]}\n'
+        "Each step must describe one meaningful sub-goal, not a tool call. "
+        "Do not execute tools or provide the final answer. Re-plan from the "
+        "current page when the previous plan is stale.\n\n"
+        f"Task: {task}\nURL: {url}\nAccessibility Tree:\n{page_content}\n"
+        f"Previous plan:\n{state.get('plan', '')}\n"
+        f"Completed plan step: {state.get('current_plan_step', 0)}"
     ))
     llm = create_llm(profile_name=model_profile)
     request_step = state.get("step_count", 0)
@@ -365,7 +421,9 @@ def planner_node(state: AgentState, config: RunnableConfig) -> dict:
             },
         )
         raise
-    plan = str(getattr(plan_response, "content", "") or "").strip()
+    raw_plan = str(getattr(plan_response, "content", "") or "").strip()
+    plan_steps = _parse_plan_steps(raw_plan)
+    plan = json.dumps({"steps": plan_steps}, ensure_ascii=False)
     if settings.TRACE_LLM_IO:
         append_event(
             thread_id,
@@ -376,7 +434,7 @@ def planner_node(state: AgentState, config: RunnableConfig) -> dict:
             data={
                 "architecture": "plan_execute",
                 "phase": "planner",
-                "content": plan,
+                "content": raw_plan,
                 **get_llm_metadata(model_profile),
             },
         )
@@ -390,15 +448,157 @@ def planner_node(state: AgentState, config: RunnableConfig) -> dict:
             "architecture": "plan_execute",
             "phase": "planner",
             "plan": plan,
-            "response": plan,
+            "plan_steps": plan_steps,
+            "response": raw_plan,
             **get_llm_metadata(model_profile),
         },
     )
     return {
         "plan": plan,
+        "plan_steps": plan_steps,
+        "current_plan_step": 0,
+        "plan_revision": state.get("plan_revision", 0) + 1,
+        "replan_required": False,
         "llm_calls": state.get("llm_calls", 0) + 1,
         "planning_calls": state.get("planning_calls", 0) + 1,
     }
+
+
+def _parse_plan_steps(raw_plan: str) -> list[dict]:
+    """Parse planner JSON while tolerating a fenced response from older models."""
+    candidate = raw_plan.strip()
+    fenced = re.search(r"```(?:json)?\s*(.*?)\s*```", candidate, re.DOTALL | re.IGNORECASE)
+    if fenced:
+        candidate = fenced.group(1).strip()
+    try:
+        payload = json.loads(candidate)
+    except json.JSONDecodeError:
+        return [{"id": 1, "goal": candidate[:500], "success_condition": "Task is complete"}]
+    steps = payload.get("steps", []) if isinstance(payload, dict) else []
+    normalized = []
+    for index, step in enumerate(steps, 1):
+        if not isinstance(step, dict):
+            continue
+        goal = str(step.get("goal", "")).strip()
+        if not goal:
+            continue
+        normalized.append({
+            "id": index,
+            "goal": goal[:500],
+            "success_condition": str(step.get("success_condition", "")).strip()[:500],
+        })
+    return normalized or [{"id": 1, "goal": "Complete the task", "success_condition": "Task is complete"}]
+
+
+def plan_executor_node(state: AgentState, config: RunnableConfig) -> dict:
+    """Execute exactly one action toward the current planner-owned sub-goal."""
+    task = state.get("task", "")
+    model_profile = state.get("model_profile", "")
+    architecture = state.get("architecture", "plan_execute")
+    step_count = state.get("step_count", 0)
+    max_steps = state.get("max_steps", 30)
+    messages = state.get("messages", [])
+    thread_id = _thread_id(config)
+    obs = get_current_observation()
+    url = obs.get("url") or state.get("url", "about:blank")
+    page_content = obs.get("page_content") or state.get("page_content", "(empty page)")
+    plan_steps = state.get("plan_steps", [])
+    current = state.get("current_plan_step", 0)
+    current_step = plan_steps[current] if current < len(plan_steps) else {
+        "id": current + 1, "goal": "Complete the task", "success_condition": "Task is complete"
+    }
+    if state.get("done", False):
+        return {"done": True}
+    if step_count >= max_steps:
+        return _force_stop(messages, step_count, max_steps, thread_id, task, url, architecture)
+
+    prompt = SystemMessage(content=(
+        "You are the executor in a plan-and-execute web agent.\n"
+        "Execute ONLY the current sub-goal below. Use exactly one tool call, "
+        "or call stop when the overall task is complete. Do not redesign the "
+        "whole plan; the replanner will do that after the observation.\n\n"
+        f"Overall task: {task}\nCurrent sub-goal: {current_step['goal']}\n"
+        f"Success condition: {current_step.get('success_condition', '')}\n"
+        f"URL: {url}\nAccessibility Tree:\n{page_content}\n"
+        "Your response must begin with THOUGHT:."
+    ))
+    full_messages = [prompt, *list(messages), THOUGHT_REMINDER]
+    llm = create_llm(profile_name=model_profile).bind_tools(ALL_TOOLS)
+    response = llm.invoke(full_messages)
+    new_step = step_count + 1
+    llm_calls = state.get("llm_calls", 0) + 1
+    executor_calls = state.get("executor_calls", 0) + 1
+    tool_calls = getattr(response, "tool_calls", []) or []
+    if len(tool_calls) > 1:
+        response = response.model_copy(update={"tool_calls": tool_calls[:1]})
+    if not getattr(response, "tool_calls", None):
+        answer = str(getattr(response, "content", "") or "")
+        append_trace(thread_id, make_entry(
+            thread_id, step=new_step, task=task, url=url,
+            thought=answer, action="final_answer", args={}, observation="",
+            error=False, done=True, answer=answer,
+            extra={"architecture": architecture, "phase": "executor", "plan_step": current},
+        ))
+        return {
+            "messages": [response], "step_count": new_step, "done": True,
+            "answer": answer, "url": url, "page_content": page_content,
+            "llm_calls": llm_calls, "executor_calls": executor_calls,
+        }
+    return {
+        "messages": [response], "step_count": new_step,
+        "url": url, "page_content": page_content,
+        "llm_calls": llm_calls, "executor_calls": executor_calls,
+    }
+
+
+def replanner_node(state: AgentState, config: RunnableConfig) -> dict:
+    """Evaluate the latest tool result and advance, revise, or finish the plan."""
+    if state.get("done", False):
+        return {"replan_required": "end"}
+    task = state.get("task", "")
+    model_profile = state.get("model_profile", "")
+    architecture = state.get("architecture", "plan_execute")
+    thread_id = _thread_id(config)
+    step_count = state.get("step_count", 0)
+    current = state.get("current_plan_step", 0)
+    plan_steps = state.get("plan_steps", [])
+    messages = list(state.get("messages", []))
+    latest = str(getattr(messages[-1], "content", "") if messages else "")[:3000]
+    # Replanning is an LLM decision, not an unconditional loop back.
+    prompt = SystemMessage(content=(
+        "You are the replanner for a web automation agent. Return ONLY JSON: "
+        '{"decision":"continue"|"replan"|"finish","reason":"..."}.\n'
+        "Choose continue when the current sub-goal succeeded and another plan "
+        "step remains. Choose finish only when the overall task is complete. "
+        "Choose replan when the current plan is stale, failed, or exhausted.\n"
+        f"Task: {task}\nPlan: {state.get('plan', '')}\n"
+        f"Current plan step index: {current}/{len(plan_steps)}\n"
+        f"Latest tool result: {latest}"
+    ))
+    llm = create_llm(profile_name=model_profile)
+    response = llm.invoke([prompt])
+    raw = str(getattr(response, "content", "") or "")
+    try:
+        candidate = re.search(r"\{.*\}", raw, re.DOTALL)
+        decision_data = json.loads(candidate.group(0) if candidate else "{}")
+        decision = decision_data.get("decision", "replan")
+    except (json.JSONDecodeError, AttributeError):
+        decision = "replan"
+    append_event(thread_id, event="replan_decision", step=step_count,
+                 task=task, url=state.get("url", "about:blank"), data={
+                     "architecture": architecture, "phase": "replanner",
+                     "decision": decision, "reason": raw[:500],
+                 })
+    calls = state.get("llm_calls", 0) + 1
+    replanning_calls = state.get("replanning_calls", 0) + 1
+    if decision == "finish":
+        return {"done": True, "replan_required": "end", "llm_calls": calls,
+                "replanning_calls": replanning_calls}
+    if decision == "continue":
+        return {"current_plan_step": current + 1, "replan_required": False,
+                "llm_calls": calls, "replanning_calls": replanning_calls}
+    return {"replan_required": True, "llm_calls": calls,
+            "replanning_calls": replanning_calls}
 
 
 def run_tools(state: AgentState, config: RunnableConfig) -> dict:

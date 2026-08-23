@@ -30,6 +30,18 @@ class TestGraphBuild(unittest.TestCase):
         with self.assertRaises(ValueError):
             build_graph("unknown")
 
+    def test_plan_steps_are_structured(self):
+        from standard_agent.core.nodes import _parse_plan_steps
+
+        steps = _parse_plan_steps(
+            '{"steps":[{"id":9,"goal":"Search product","success_condition":"Result visible"}]}'
+        )
+        self.assertEqual(steps, [{
+            "id": 1,
+            "goal": "Search product",
+            "success_condition": "Result visible",
+        }])
+
     def test_agent_state_reducer(self):
         from standard_agent.core.state import add_action_history
         self.assertEqual(
@@ -74,6 +86,41 @@ class TestAriaParser(unittest.TestCase):
         self.assertEqual(element_map["4"]["role_index"], 1)
         self.assertEqual(element_map["5"]["role"], "textbox")
 
+    def test_url_metadata_is_attached_to_link(self):
+        from standard_agent.environment.browser import parse_aria_snapshot
+
+        text, element_map = parse_aria_snapshot(
+            "- link 'Project'\n  - /url '/a11y/project'"
+        )
+        self.assertNotIn("/url", text)
+        self.assertEqual(len(element_map), 1)
+        self.assertEqual(element_map["1"]["attrs"]["url"], "/a11y/project")
+
+        _, live_style_map = parse_aria_snapshot(
+            '- link "space — space"\n  - /url: /f/space'
+        )
+        self.assertEqual(len(live_style_map), 1)
+        self.assertEqual(live_style_map["1"]["attrs"]["url"], "/f/space")
+
+    def test_sync_browser_exposes_fallback_events(self):
+        from standard_agent.environment.browser import SyncBrowserEnv
+
+        env = SyncBrowserEnv()
+        self.assertEqual(env.fallback_events, [])
+
+    def test_colon_role_hint_does_not_become_button_name(self):
+        from standard_agent.environment.browser import parse_aria_snapshot
+
+        _, element_map = parse_aria_snapshot("- button: Sort by 'button'")
+        self.assertEqual(element_map["1"]["role"], "button")
+        self.assertEqual(element_map["1"]["name"], "Sort by")
+
+        _, live_style_map = parse_aria_snapshot(
+            '- \'button "Sort by: Submissions"\':'
+        )
+        self.assertEqual(live_style_map["1"]["role"], "button")
+        self.assertEqual(live_style_map["1"]["name"], "Sort by: Submissions")
+
     def test_parse_aria_line_variants(self):
         from standard_agent.environment.browser import _parse_aria_line
         # 标准双引号
@@ -117,10 +164,48 @@ class TestFaults(unittest.TestCase):
         self.assertEqual(FaultConfig.low_all_web().web_timeout, True)
         self.assertEqual(FaultConfig.high_all().gitlab_quota, True)
 
+    def test_fault_config_exposes_single_fault_metadata(self):
+        from fault_injection import FaultConfig
+
+        config = FaultConfig.single_fault("web_dom_missing", seed=7)
+        self.assertEqual(config.enabled_faults, ("web_dom_missing",))
+        self.assertEqual(config.fault_label, "web_dom_missing")
+        self.assertEqual(config.fault_layer, "observation")
+        self.assertEqual(FaultConfig.off().fault_label, "control")
+        entry = config.record_injection("web_dom_missing", {"removed_ids": ["1"]})
+        self.assertEqual(entry["fault_layer"], "observation")
+        self.assertEqual(entry["fault_seed"], 7)
+        config.set_execution_step(4)
+        entry = config.record_injection("web_dom_missing")
+        self.assertEqual(entry["step"], 4)
+        self.assertEqual(entry["injection_index"], 2)
+
+        with self.assertRaises(ValueError):
+            FaultConfig.single_fault("unknown_fault")
+
     def test_agent_faults_module(self):
         from fault_injection import agent_faults
         self.assertTrue(callable(agent_faults.inject_state_misjudge))
         self.assertTrue(callable(agent_faults.inject_param_error))
+
+    def test_fault_taxonomy_classifies_recovery(self):
+        from fault_injection.taxonomy import classify_behavior, catalog_rows
+
+        labels = classify_behavior(
+            fault_type="web_dom_missing",
+            injection_log=[{"fault": "web_dom_missing", "step": 2}],
+            action_history=[
+                {"step": 1, "action": "click", "error": True},
+                {"step": 2, "action": "goto", "error": False},
+                {"step": 3, "action": "stop", "error": False},
+            ],
+            success=True,
+            completed=True,
+        )
+        self.assertEqual(labels["behavior_category"], "observation_refreshed")
+        self.assertEqual(labels["tolerance_layer"], "mechanism_level")
+        self.assertGreater(labels["recovery_steps"], 0)
+        self.assertTrue(any(row["fault_type"] == "web_timeout" for row in catalog_rows()))
 
     def test_agent_fault_flags_are_copied(self):
         from fault_injection import FaultConfig
@@ -181,6 +266,28 @@ class TestFaults(unittest.TestCase):
         report = runner.run(trials_per_config=1)
         self.assertEqual(report["configs"]["control"].success_rate, 0)
 
+    def test_benchmark_attaches_experiment_metadata(self):
+        from fault_injection import FaultConfig, BenchmarkRunner, TrialResult
+
+        runner = BenchmarkRunner(
+            lambda *args: TrialResult("task", "wrong", True, 1, 0.1),
+            experiment_id="exp_test",
+            model_profile="model_a",
+        )
+        runner.add_config("control", FaultConfig.off())
+        runner.add_config("dom", FaultConfig.single_fault("web_dom_missing", seed=9))
+        runner.add_task("task", "find answer", "http://example")
+        report = runner.run(trials_per_config=1)
+        control = report["tasks"]["task"]["control"][0]
+        fault = report["tasks"]["task"]["dom"][0]
+        self.assertEqual(control.experiment_id, "exp_test")
+        self.assertEqual(control.model_profile, "model_a")
+        self.assertEqual(control.fault_type, "control")
+        self.assertEqual(fault.fault_type, "web_dom_missing")
+        self.assertEqual(fault.fault_layer, "observation")
+        self.assertEqual(fault.fault_seed, 9)
+        self.assertEqual(fault.to_dict()["experiment_id"], "exp_test")
+
 
 class TestConfigSecurity(unittest.TestCase):
     def test_model_profiles_are_independent(self):
@@ -204,8 +311,60 @@ class TestConfigSecurity(unittest.TestCase):
         self.assertNotIn("Password.123", source)
         self.assertNotIn("test1234", source)
 
+    def test_health_check_does_not_require_credentials_by_default(self):
+        from scripts.health_check import check_all_sites
+
+        result = check_all_sites(require_auth=False, sites=["shopping"])
+        self.assertTrue(result["ok"] or "error" in result)
+
 
 class TestEvaluation(unittest.TestCase):
+    def test_failure_classification_separates_evaluator_and_format_failures(self):
+        from standard_agent.failure_classification import classify_trial
+
+        evaluator_error = classify_trial({"official_success": False, "evaluator_status": "error"})
+        self.assertEqual(evaluator_error["failure_category"], "evaluator_failure")
+        self.assertFalse(evaluator_error["attributable_to_research"])
+
+        format_error = classify_trial({
+            "official_success": False,
+            "evaluator_status": "failure",
+            "evaluator_assertions": [{"actual_normalized": {"retrieved_data": ["1 commit"]}}],
+        }, {"eval": [{
+            "expected": {"retrieved_data": [1]},
+            "results_schema": {"type": "array", "items": {"type": "number"}},
+        }]})
+        self.assertEqual(format_error["failure_category"], "answer_format_failure")
+        self.assertFalse(format_error["attributable_to_research"])
+    def test_official_evaluator_adapter_is_importable(self):
+        from standard_agent.webarena_evaluator import evaluate_task_safe
+
+        result = evaluate_task_safe(
+            21,
+            agent_response_path="/nonexistent/agent_response.json",
+        )
+        self.assertFalse(result["official_success"])
+        self.assertEqual(result["status"], "error")
+
+    def test_null_retrieval_schema_fallback_compares_response(self):
+        import json
+        import tempfile
+        from pathlib import Path
+        from standard_agent.webarena_evaluator import _evaluate_null_retrieval_schema
+
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "response.json"
+            path.write_text(json.dumps({
+                "task_type": "RETRIEVE",
+                "status": "NOT_FOUND_ERROR",
+                "retrieved_data": None,
+            }))
+            result = _evaluate_null_retrieval_schema(
+                22, path, "Schema type must be 'array', got: 'null'"
+            )
+            self.assertIsNotNone(result)
+            self.assertTrue(result["official_success"])
+
     def test_evaluation_is_shared_for_completed_and_answer(self):
         from standard_agent.evaluation import evaluate_answer
 
@@ -221,6 +380,111 @@ class TestEvaluation(unittest.TestCase):
             evaluate_answer(True, "No matching value", []),
             (True, True),
         )
+
+
+class TestWebArenaVerifiedAdapter(unittest.TestCase):
+    def test_response_adapter_preserves_structured_retrieval(self):
+        from standard_agent.webarena_verified import make_agent_response
+
+        task = {
+            "eval": [{"expected": {"task_type": "RETRIEVE"}}],
+        }
+        response = make_agent_response(
+            task,
+            completed=True,
+            answer='[{"count": 1}]',
+        )
+        self.assertEqual(response["task_type"], "RETRIEVE")
+        self.assertEqual(response["status"], "SUCCESS")
+        self.assertEqual(response["retrieved_data"], [{"count": 1}])
+        self.assertIsNone(response["error_details"])
+
+    def test_response_adapter_preserves_unstructured_numeric_answer(self):
+        from standard_agent.webarena_verified import make_agent_response
+
+        task = {"eval": [{
+            "results_schema": {"type": "array", "items": {"type": "number"}},
+            "expected": {"task_type": "RETRIEVE"},
+        }]}
+        response = make_agent_response(
+            task,
+            completed=True,
+            answer="Kilian made 1 commit on March 5, 2023.",
+        )
+        self.assertEqual(
+            response["retrieved_data"],
+            ["Kilian made 1 commit on March 5, 2023."],
+        )
+
+    def test_response_adapter_preserves_unstructured_string_array_answer(self):
+        from standard_agent.webarena_verified import make_agent_response
+
+        task = {"eval": [{
+            "results_schema": {"type": "array", "items": {"type": "string"}},
+            "expected": {"task_type": "RETRIEVE"},
+        }]}
+        response = make_agent_response(task, completed=True, answer="Dibbins, Catso")
+        self.assertEqual(response["retrieved_data"], ["Dibbins, Catso"])
+
+    def test_response_adapter_marks_incomplete_tasks(self):
+        from standard_agent.webarena_verified import make_agent_response
+
+        task = {"eval": [{"expected": {"task_type": "NAVIGATE"}}]}
+        response = make_agent_response(task, completed=False, answer="timeout")
+        self.assertEqual(response["task_type"], "NAVIGATE")
+        self.assertEqual(response["status"], "UNKNOWN_ERROR")
+        self.assertIsNone(response["retrieved_data"])
+        self.assertEqual(response["error_details"], "timeout")
+
+    def test_response_adapter_maps_explicit_not_found(self):
+        from standard_agent.webarena_verified import make_agent_response
+
+        task = {"eval": [{"expected": {
+            "task_type": "RETRIEVE",
+            "status": "not_found_error",
+            "retrieved_data": None,
+        }}]}
+        response = make_agent_response(
+            task,
+            completed=True,
+            answer="No reviewer on the current page mentions an under water photo.",
+        )
+        self.assertEqual(response["status"], "NOT_FOUND_ERROR")
+        self.assertIsNone(response["retrieved_data"])
+        self.assertIsNotNone(response["error_details"])
+
+    def test_response_adapter_does_not_read_expected_status(self):
+        from standard_agent.webarena_verified import make_agent_response
+
+        task = {"eval": [{"expected": {
+            "task_type": "RETRIEVE",
+            "status": "success",
+            "retrieved_data": ["actual"],
+        }}]}
+        response = make_agent_response(
+            task, completed=True, answer="No matching reviewer was found."
+        )
+        self.assertEqual(response["status"], "NOT_FOUND_ERROR")
+        self.assertIsNone(response["retrieved_data"])
+
+    def test_numeric_queries_require_structured_output(self):
+        from standard_agent.core.nodes import _output_format_context
+
+        self.assertIn("ONLY valid JSON", _output_format_context(
+            "How many commits did Kilian make on March 5?"
+        ))
+
+    def test_response_adapter_does_not_mark_unrelated_text_not_found(self):
+        from standard_agent.webarena_verified import make_agent_response
+
+        task = {"eval": [{"expected": {
+            "task_type": "RETRIEVE",
+            "status": "not_found_error",
+            "retrieved_data": None,
+        }}]}
+        response = make_agent_response(task, completed=True, answer="Dibbins")
+        self.assertEqual(response["status"], "SUCCESS")
+        self.assertEqual(response["retrieved_data"], ["Dibbins"])
 
 
 class TestTrace(unittest.TestCase):

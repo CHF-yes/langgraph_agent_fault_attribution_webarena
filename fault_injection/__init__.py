@@ -28,3 +28,4 @@ from fault_injection.config import FaultConfig, SeededRandom, INTENSITY_PRESETS
 from fault_injection.proxy import FaultProxy
 from fault_injection.injector import FaultInjector
 from fault_injection.benchmark import BenchmarkRunner, TrialResult, SummaryMetrics
+from fault_injection.taxonomy import FAULT_CATALOG, classify_behavior, catalog_rows

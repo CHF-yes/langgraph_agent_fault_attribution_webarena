@@ -80,6 +80,7 @@ class FaultProxy:
 
     def goto(self, url: str):
         self._step_counter += 1
+        self.config.set_execution_step(self._step_counter)
         inject_timeout(self.config)               # B: 网络延迟
         result = self._env.goto(url)
         obs = self._to_dict(result)
@@ -90,6 +91,7 @@ class FaultProxy:
 
     def click(self, element_id: str):
         self._step_counter += 1
+        self.config.set_execution_step(self._step_counter)
         inject_timeout(self.config)               # B: 网络延迟
         elem_name = self._elem_name(element_id)
         result = self._env.click(element_id)
@@ -105,6 +107,7 @@ class FaultProxy:
 
     def type_text(self, element_id: str, text: str):
         self._step_counter += 1
+        self.config.set_execution_step(self._step_counter)
         inject_timeout(self.config)               # B: 网络延迟
         result = self._env.type_text(element_id, text)
         obs = self._to_dict(result)
@@ -113,6 +116,7 @@ class FaultProxy:
 
     def scroll(self, direction: str):
         self._step_counter += 1
+        self.config.set_execution_step(self._step_counter)
         inject_timeout(self.config)
         result = self._env.scroll(direction)
         obs = self._cache_faulted_observation(self._to_dict(result))
@@ -120,6 +124,7 @@ class FaultProxy:
 
     def go_back(self):
         self._step_counter += 1
+        self.config.set_execution_step(self._step_counter)
         inject_timeout(self.config)
         result = self._env.go_back()
         obs = self._cache_faulted_observation(self._to_dict(result))
@@ -127,6 +132,7 @@ class FaultProxy:
 
     def go_forward(self):
         self._step_counter += 1
+        self.config.set_execution_step(self._step_counter)
         inject_timeout(self.config)
         result = self._env.go_forward()
         obs = self._cache_faulted_observation(self._to_dict(result))
@@ -134,6 +140,7 @@ class FaultProxy:
 
     def select_option(self, element_id: str, option: str):
         self._step_counter += 1
+        self.config.set_execution_step(self._step_counter)
         inject_timeout(self.config)
         result = self._env.select_option(element_id, option)
         obs = self._cache_faulted_observation(self._to_dict(result))
@@ -141,6 +148,7 @@ class FaultProxy:
 
     def hover(self, element_id: str):
         self._step_counter += 1
+        self.config.set_execution_step(self._step_counter)
         inject_timeout(self.config)
         result = self._env.hover(element_id)
         obs = self._cache_faulted_observation(self._to_dict(result))

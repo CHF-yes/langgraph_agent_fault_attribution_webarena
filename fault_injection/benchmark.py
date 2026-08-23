@@ -14,11 +14,14 @@ BenchmarkRunner — agent-agnostic A/B 对照实验框架。
 
 import time
 import statistics
+import uuid
+from dataclasses import asdict
 from dataclasses import dataclass, field
 from typing import Callable, Optional
 
 from fault_injection.config import FaultConfig
 from fault_injection.proxy import FaultProxy
+from fault_injection.taxonomy import classify_behavior
 
 
 # ============================================================
@@ -38,10 +41,25 @@ class TrialResult:
     llm_calls: int = 0
     planning_calls: int = 0
     executor_calls: int = 0
+    replanning_calls: int = 0
     answer: str = ""
     injection_count: int = 0
     total_delay_sec: float = 0.0
     error: Optional[str] = None
+    experiment_id: str = ""
+    model_profile: str = ""
+    fault_layer: str = "none"
+    fault_type: str = "control"
+    fault_seed: Optional[int] = None
+    behavior_category: str = ""
+    tolerance_layer: str = ""
+    recovery_steps: int = 0
+    action_history: list[dict] = field(default_factory=list)
+    injection_log: list[dict] = field(default_factory=list)
+
+    def to_dict(self) -> dict:
+        """Return a JSON/CSV-friendly record for one experiment trial."""
+        return asdict(self)
 
 
 # ============================================================
@@ -60,6 +78,7 @@ class SummaryMetrics:
     avg_llm_calls: float = 0.0
     avg_planning_calls: float = 0.0
     avg_executor_calls: float = 0.0
+    avg_replanning_calls: float = 0.0
     avg_injections: float = 0.0
     avg_delay_sec: float = 0.0
 
@@ -84,6 +103,7 @@ class SummaryMetrics:
         llm_calls = [t.llm_calls for t in trials]
         planning_calls = [t.planning_calls for t in trials]
         executor_calls = [t.executor_calls for t in trials]
+        replanning_calls = [t.replanning_calls for t in trials]
 
         return cls(
             config_label=label,
@@ -95,6 +115,7 @@ class SummaryMetrics:
             avg_llm_calls=statistics.mean(llm_calls),
             avg_planning_calls=statistics.mean(planning_calls),
             avg_executor_calls=statistics.mean(executor_calls),
+            avg_replanning_calls=statistics.mean(replanning_calls),
             avg_injections=statistics.mean(injections) if any(injections) else 0,
             avg_delay_sec=statistics.mean(delays) if any(delays) else 0,
         )
@@ -122,7 +143,8 @@ class BenchmarkRunner:
     """
 
     def __init__(self, run_fn: Callable, env_factory: Callable = None,
-                 evaluator: Callable[[TrialResult], bool] = None):
+                 evaluator: Callable[[TrialResult], bool] = None,
+                 experiment_id: str = "", model_profile: str = ""):
         """
         Args:
             run_fn: (task_id, task_desc, url, fault_config, trial_index) → TrialResult
@@ -133,6 +155,8 @@ class BenchmarkRunner:
         self._run_fn = run_fn
         self._env_factory = env_factory
         self._evaluator = evaluator
+        self._experiment_id = experiment_id or f"exp_{uuid.uuid4().hex[:10]}"
+        self._model_profile = model_profile
         self._configs: list[tuple[str, FaultConfig]] = []
         self._tasks: list[tuple[str, str, str]] = []  # (id, description, url)
 
@@ -193,12 +217,29 @@ class BenchmarkRunner:
                     result = self._run_fn(task_id, task_desc, url, trial_config, trial_idx)
                     # run_fn 只负责执行任务，报告分组标签以 runner 配置为准。
                     result.config_label = config_label
+                    result.experiment_id = self._experiment_id
+                    result.model_profile = result.model_profile or self._model_profile
+                    result.fault_layer = trial_config.fault_layer
+                    result.fault_type = trial_config.fault_label
+                    result.fault_seed = trial_config.seed
                     if self._evaluator is not None:
                         try:
                             result.success = bool(self._evaluator(result))
                         except Exception as exc:
                             result.success = False
                             result.error = f"evaluator error: {exc}"
+                    labels = classify_behavior(
+                        fault_type=result.fault_type,
+                        injection_log=result.injection_log,
+                        action_history=result.action_history,
+                        success=result.success,
+                        completed=result.completed,
+                        architecture=result.architecture,
+                        replanning_calls=result.replanning_calls,
+                    )
+                    result.behavior_category = labels["behavior_category"]
+                    result.tolerance_layer = labels["tolerance_layer"]
+                    result.recovery_steps = labels["recovery_steps"]
                     status = "✅" if result.success else "❌"
                     print(f"{status} steps={result.steps} time={result.time_sec:.1f}s")
                     trials.append(result)

@@ -7,3 +7,21 @@ pydantic>=2.0.0
 # 浏览器模式（可选，对接 Playwright 真实浏览器）
 # 安装后还需: playwright install chromium
 playwright>=1.48.0
+
+# WebArena-Verified official evaluator dependency
+jsonpath-ng>=1.7.0
+compact-json>=1.8.1
+geopy>=2.4.1
+geographiclib>=2.1
+price-parser>=0.5.0
+pytimeparse2>=1.7.1
+unidecode>=1.4.0
+url-normalize>=2.2.1
+word2number>=1.1
+usaddress>=0.5.16
+us>=3.2.0
+usaddress-scourgify>=0.6.0
+beautifulsoup4>=4.14.2
+thefuzz>=0.22.1
+python-dateutil>=2.9.0
+pint>=0.25

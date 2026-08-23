@@ -147,6 +147,14 @@ Examples:
         "--expected-answer", action="append", default=[],
         help="Expected answer substring; repeat for acceptable alternatives",
     )
+    bench_group.add_argument(
+        "--fault-type", choices=[
+            "web_timeout", "web_http_error", "web_dom_missing", "web_popup_block",
+            "gitlab_ci_offline", "gitlab_permission", "gitlab_conflict", "gitlab_quota",
+            "agent_state_misjudge", "agent_param_error",
+        ], default=None,
+        help="Run one named fault only; equivalent to enabling its fault flag",
+    )
 
     args = parser.parse_args()
 
@@ -291,9 +299,14 @@ def run_browser_mode(args):
             "action_history": [],
             "architecture": args.architecture,
             "plan": "",
+            "plan_steps": [],
+            "current_plan_step": 0,
+            "plan_revision": 0,
+            "replan_required": False,
             "llm_calls": 0,
             "planning_calls": 0,
             "executor_calls": 0,
+            "replanning_calls": 0,
         }, {"configurable": {"thread_id": tid}})
 
         # 输出结果
@@ -352,9 +365,14 @@ def run_simulation_task(app, args):
         "action_history": [],
         "architecture": args.architecture,
         "plan": "",
+        "plan_steps": [],
+        "current_plan_step": 0,
+        "plan_revision": 0,
+        "replan_required": False,
         "llm_calls": 0,
         "planning_calls": 0,
         "executor_calls": 0,
+        "replanning_calls": 0,
     }, {"configurable": {"thread_id": str(uuid.uuid4())[:8]}})
 
     _print_result(result)
@@ -458,9 +476,14 @@ def run_interactive(app, architecture="react"):
                 "action_history": [],
                 "architecture": architecture,
                 "plan": "",
+                "plan_steps": [],
+                "current_plan_step": 0,
+                "plan_revision": 0,
+                "replan_required": False,
                 "llm_calls": 0,
                 "planning_calls": 0,
                 "executor_calls": 0,
+                "replanning_calls": 0,
             }, config)
             _print_result(result)
             continue
@@ -574,9 +597,14 @@ def run_benchmark(args):
                 "action_history": [],
                 "architecture": args.architecture,
                 "plan": "",
+                "plan_steps": [],
+                "current_plan_step": 0,
+                "plan_revision": 0,
+                "replan_required": False,
                 "llm_calls": 0,
                 "planning_calls": 0,
                 "executor_calls": 0,
+                "replanning_calls": 0,
             }, {"configurable": {"thread_id": str(uuid.uuid4())[:8]}})
 
             elapsed = time.time() - t0
@@ -602,11 +630,14 @@ def run_benchmark(args):
                 llm_calls=result.get("llm_calls", 0),
                 planning_calls=result.get("planning_calls", 0),
                 executor_calls=result.get("executor_calls", 0),
+                replanning_calls=result.get("replanning_calls", 0),
                 steps=steps,
                 time_sec=elapsed,
                 answer=answer,
                 injection_count=len(log),
                 total_delay_sec=total_delay,
+                action_history=result.get("action_history", []),
+                injection_log=list(log),
             )
         except Exception as e:
             return TrialResult(
@@ -618,6 +649,7 @@ def run_benchmark(args):
                 llm_calls=0,
                 planning_calls=0,
                 executor_calls=0,
+                replanning_calls=0,
                 steps=0,
                 time_sec=time.time() - t0,
                 error=str(e),
@@ -667,6 +699,11 @@ def run_benchmark(args):
 def _build_fault_config(args) -> "FaultConfig":
     """从 CLI args 构建 FaultConfig（不含代理包装）。"""
     from fault_injection import FaultConfig
+
+    if args.fault_type:
+        return FaultConfig.single_fault(
+            args.fault_type, intensity=args.fault_intensity, seed=args.fault_seed
+        )
 
     if args.fault_all:
         return FaultConfig(
