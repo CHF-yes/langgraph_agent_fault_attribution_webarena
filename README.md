@@ -205,7 +205,7 @@ experiments/curated/gpt54_react_public16_control_v1_summary.csv
 experiments/curated/gpt54_react_public16_control_v1_manifest.json
 ```
 
-该数据集包含 16 个 WebArena-Verified 任务、每个任务 3 次试验，共 48 条 `gpt54 + react + control` 记录。48 条记录均有明确的 evaluator success/failure 判定，官方成功 25 条。由于其中 28 条使用了项目的兼容 fallback，manifest 中单独记录了 fallback 覆盖率；这些数据适合用于 control 任务筛选和后续单故障实验的协议验证，不应与未统一批次的历史结果混合计算。
+该数据集包含 16 个 WebArena-Verified 任务、每个任务 3 次试验，共 48 条 `gpt54 + react + control` 记录。48 条记录均有明确的 evaluator success/failure 判定，官方成功 25 条。该批次使用当前仓库代码版本、`gpt-5.4`、`https://hapiopen.cc/v1` 和 temperature `0.2`，具体 hash 与参数见 manifest。由于其中 28 条使用了项目的兼容 fallback，manifest 中单独记录了 fallback 覆盖率；由于历史补跑，source `experiment_id` 不统一，这一批次限制也在 manifest 中保留并在后续实验中修正。
 
 结果 JSON 中保留 `fallback_used`、`fallback_events`、`evaluator_status` 和 `experiment_id` 等审计字段。正式统计时，`evaluator_status=error` 的记录不进入成功率分母；`fallback` 记录应单独报告。
 

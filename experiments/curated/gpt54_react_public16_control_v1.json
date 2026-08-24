@@ -139,7 +139,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 21,
@@ -260,7 +266,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 21,
@@ -402,7 +414,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 22,
@@ -557,7 +575,13 @@
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v2",
     "replacement_source": "task22_final_v2",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 22,
@@ -703,7 +727,13 @@
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v2",
     "replacement_source": "task22_final_v2",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 22,
@@ -839,7 +869,13 @@
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v2",
     "replacement_source": "task22_final_v2",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 23,
@@ -980,7 +1016,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 23,
@@ -1111,7 +1153,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 23,
@@ -1231,7 +1279,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 24,
@@ -1343,7 +1397,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 24,
@@ -1445,7 +1505,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 24,
@@ -1537,7 +1603,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 25,
@@ -1759,7 +1831,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 25,
@@ -1991,7 +2069,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 25,
@@ -2213,7 +2297,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 26,
@@ -2380,7 +2470,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 26,
@@ -2692,7 +2788,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 26,
@@ -2848,7 +2950,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 27,
@@ -2998,7 +3106,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 27,
@@ -3198,7 +3312,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 27,
@@ -3348,7 +3468,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 28,
@@ -3508,7 +3634,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 28,
@@ -3668,7 +3800,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 28,
@@ -3828,7 +3966,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 29,
@@ -3978,7 +4122,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 29,
@@ -4128,7 +4278,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 29,
@@ -4288,7 +4444,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 30,
@@ -4446,7 +4608,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 30,
@@ -4586,7 +4754,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 30,
@@ -4736,7 +4910,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 31,
@@ -4916,7 +5096,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 31,
@@ -5066,7 +5252,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 31,
@@ -5326,7 +5518,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 132,
@@ -5455,7 +5653,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 132,
@@ -5584,7 +5788,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 132,
@@ -5713,7 +5923,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 133,
@@ -5842,7 +6058,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 133,
@@ -5983,7 +6205,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 133,
@@ -6185,7 +6413,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 134,
@@ -6377,7 +6611,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 134,
@@ -6557,7 +6797,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 134,
@@ -6748,7 +6994,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 135,
@@ -6890,7 +7142,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 135,
@@ -7032,7 +7290,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 135,
@@ -7174,7 +7438,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 136,
@@ -7315,7 +7585,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 136,
@@ -7454,7 +7730,13 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   },
   {
     "task_id": 136,
@@ -7593,6 +7875,12 @@
     "evaluator_error": null,
     "attributable_to_research": true,
     "baseline_protocol": "gpt54_react_public16_repaired_adapter_v1",
-    "curated_dataset": "gpt54_react_public16_control_v1"
+    "curated_dataset": "gpt54_react_public16_control_v1",
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a"
   }
 ]
