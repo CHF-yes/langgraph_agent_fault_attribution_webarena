@@ -167,7 +167,6 @@ Examples:
         return
 
     if args.list_models:
-        from standard_agent.config import settings
         profiles = settings.get_model_profiles()
         print("\nConfigured model profiles:\n")
         for name, profile in profiles.items():
@@ -620,6 +619,14 @@ def run_benchmark(args):
             total_delay = sum(
                 e.get("detail", {}).get("delay_sec", 0) for e in log
             )
+            print(
+                f"        injection_count={len(log)} "
+                f"fault_seed={fault_config.seed} "
+                f"faults={[entry.get('fault') for entry in log]} "
+                f"steps={[entry.get('step') for entry in log]}"
+            )
+            for entry in log:
+                print(f"        injection={entry}")
 
             return TrialResult(
                 task_id=task_id,
