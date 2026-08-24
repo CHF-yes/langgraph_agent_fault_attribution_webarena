@@ -250,6 +250,37 @@ MODEL_GLM52_TEMPERATURE=0.2
 
 代码入口是 `standard_agent/llm/provider.py:create_llm`，配置读取在 `standard_agent/config.py`。因此切换 OpenAI、DeepSeek、Qwen、智谱或本地 Ollama，通常只需更换这四个环境变量，不要修改 Agent 核心逻辑。API key 不会写入 trace。
 
+## 运行确定性故障矩阵
+
+正式 fault 实验使用独立进程、固定 action step 和可停止的矩阵调度器。baseline 数据目录只读，不会被实验结果覆盖。默认矩阵锁定 baseline 的 16 个任务，每个任务 5 个 seed，control 与 fault 各运行一次，共 160 trials。
+
+```bash
+PYTHONPATH=. .venv311/bin/python scripts/run_fault_matrix.py \
+  --output-dir experiments/formal_gpt54_react_web_dom_missing \
+  --workers 6 \
+  --max-steps 20 \
+  --trials 5 \
+  --fault-type web_dom_missing \
+  --fault-intensity high \
+  --fault-injection-step 2 \
+  --fault-seed 1 \
+  --model-profile gpt54 \
+  --architecture react
+```
+
+每个 fault trial 必须在指定 step 恰好注入一次；control 不注入。调度器会记录每个 job 的日志和状态，并在基础设施错误、任务错误或 fault 注入无效达到阈值时停止。中断后可用 `--resume` 跳过已有 `.status.json` 的 job，继续补跑未完成任务：
+
+```bash
+PYTHONPATH=. .venv311/bin/python scripts/run_fault_matrix.py \
+  --output-dir experiments/formal_gpt54_react_web_dom_missing \
+  --resume --workers 6 --max-steps 20 --trials 5 \
+  --fault-type web_dom_missing --fault-intensity high \
+  --fault-injection-step 2 --fault-seed 1 \
+  --model-profile gpt54 --architecture react
+```
+
+该调度器使用多进程而不是共享状态的 Python 多线程。正式结果应从独立输出目录整理，不能写入 `experiments/curated/` 下的冻结 baseline。
+
 ## WebArena 环境部署
 
 WebArena 站点运行在 Docker 容器中（`shopping` :7770、`shopping_admin` :7780、`reddit` :9999、`gitlab` :8023、`wikipedia` :8888、`map` :3000）。

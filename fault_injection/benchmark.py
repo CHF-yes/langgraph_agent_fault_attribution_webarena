@@ -201,6 +201,7 @@ class BenchmarkRunner:
                         intensity=fault_config.intensity,
                         seed=fault_config.seed + trial_idx,  # 不同 trial 不同 seed
                         enabled=fault_config.enabled,
+                        injection_step=fault_config.injection_step,
                         web_timeout=fault_config.web_timeout,
                         web_http_error=fault_config.web_http_error,
                         web_dom_missing=fault_config.web_dom_missing,

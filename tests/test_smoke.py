@@ -170,6 +170,20 @@ class TestFaults(unittest.TestCase):
         config = FaultConfig.single_fault("web_dom_missing", seed=7)
         self.assertEqual(config.enabled_faults, ("web_dom_missing",))
         self.assertEqual(config.fault_label, "web_dom_missing")
+
+    def test_fixed_injection_step_triggers_once(self):
+        from fault_injection import FaultConfig
+
+        config = FaultConfig.single_fault(
+            "web_dom_missing", intensity="high", seed=7, injection_step=2
+        )
+        config.set_execution_step(1)
+        self.assertFalse(config.should_inject("web_dom_missing"))
+        config.set_execution_step(2)
+        self.assertTrue(config.should_inject("web_dom_missing"))
+        self.assertFalse(config.should_inject("web_dom_missing"))
+        config.set_execution_step(3)
+        self.assertFalse(config.should_inject("web_dom_missing"))
         self.assertEqual(config.fault_layer, "observation")
         self.assertEqual(FaultConfig.off().fault_label, "control")
         entry = config.record_injection("web_dom_missing", {"removed_ids": ["1"]})

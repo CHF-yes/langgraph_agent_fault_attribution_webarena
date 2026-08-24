@@ -114,6 +114,8 @@ Examples:
                              help="Fault intensity level (default: off)")
     fault_group.add_argument("--fault-seed", type=int, default=42,
                              help="Random seed for reproducible faults (default: 42)")
+    fault_group.add_argument("--fault-injection-step", type=int, default=None,
+                             help="Inject the selected fault exactly once at this action step")
     fault_group.add_argument("--fault-web-timeout", action="store_true",
                              help="Inject network timeout delays")
     fault_group.add_argument("--fault-web-http-error", action="store_true",
@@ -553,7 +555,7 @@ def run_benchmark(args):
         return
 
     url = args.url
-    if args.site:
+    if args.site and url == "about:blank":
         from standard_agent.environment.webarena_config import get_site_config
         url = get_site_config(args.site)["base_url"]
 
@@ -709,12 +711,14 @@ def _build_fault_config(args) -> "FaultConfig":
 
     if args.fault_type:
         return FaultConfig.single_fault(
-            args.fault_type, intensity=args.fault_intensity, seed=args.fault_seed
+            args.fault_type, intensity=args.fault_intensity, seed=args.fault_seed,
+            injection_step=args.fault_injection_step,
         )
 
     if args.fault_all:
         return FaultConfig(
             intensity=args.fault_intensity, seed=args.fault_seed,
+            injection_step=args.fault_injection_step,
             web_timeout=True, web_http_error=True,
             web_dom_missing=True, web_popup_block=True,
             gitlab_ci_offline=True, gitlab_permission=True,
@@ -723,6 +727,7 @@ def _build_fault_config(args) -> "FaultConfig":
         )
     return FaultConfig(
         intensity=args.fault_intensity, seed=args.fault_seed,
+        injection_step=args.fault_injection_step,
         web_timeout=args.fault_web_timeout,
         web_http_error=args.fault_web_http_error,
         web_dom_missing=args.fault_web_dom_missing,

@@ -105,6 +105,7 @@ class FaultConfig:
     intensity: str = "off"           # "off" | "low" | "medium" | "high"
     seed: int = 42                   # 可复现种子
     enabled: bool = True             # 总开关
+    injection_step: Optional[int] = None  # 固定 action step；None 保持概率模式
 
     # ---- ① Web底层故障 ----
     web_timeout: bool = False        # 接口超时（动作前注入延迟）
@@ -127,6 +128,7 @@ class FaultConfig:
     _intensity_config: dict = field(default_factory=dict, repr=False)
     _injection_log: list[dict] = field(default_factory=list, repr=False)
     _execution_step: int = field(default=0, repr=False)
+    _deterministic_injected: bool = field(default=False, repr=False)
 
     def __post_init__(self):
         if self.intensity not in {"off", *INTENSITY_PRESETS}:
@@ -140,6 +142,7 @@ class FaultConfig:
         )
         self._injection_log = []
         self._execution_step = 0
+        self._deterministic_injected = False
 
     # ---- 属性访问 ----
 
@@ -221,7 +224,14 @@ class FaultConfig:
         if not getattr(self, fault_name, False):
             return False
 
-        # 按概率决定
+        # Formal trials may request exactly one injection at a fixed action step.
+        if self.injection_step is not None:
+            if self._deterministic_injected or self._execution_step != self.injection_step:
+                return False
+            self._deterministic_injected = True
+            return True
+
+        # Legacy exploratory mode: inject according to the configured probability.
         return self._rng.should_inject(self.probability)
 
     def get_delay(self, fault_name: str = None) -> float:
@@ -260,6 +270,7 @@ class FaultConfig:
         self._rng = SeededRandom(self.seed)
         self._injection_log = []
         self._execution_step = 0
+        self._deterministic_injected = False
 
     def set_execution_step(self, step: int) -> None:
         """Attach the current Agent action step to subsequent fault events."""
@@ -267,7 +278,7 @@ class FaultConfig:
 
     @classmethod
     def single_fault(cls, fault_name: str, intensity: str = "medium",
-                     seed: int = 42) -> "FaultConfig":
+                     seed: int = 42, injection_step: Optional[int] = None) -> "FaultConfig":
         """Build a config with exactly one enabled fault for ablation studies."""
         valid_names = {
             "web_timeout", "web_http_error", "web_dom_missing", "web_popup_block",
@@ -276,7 +287,8 @@ class FaultConfig:
         }
         if fault_name not in valid_names:
             raise ValueError(f"Unknown fault '{fault_name}'")
-        return cls(intensity=intensity, seed=seed, **{fault_name: True})
+        return cls(intensity=intensity, seed=seed, injection_step=injection_step,
+                   **{fault_name: True})
 
     # ---- 工厂方法 ----
 
