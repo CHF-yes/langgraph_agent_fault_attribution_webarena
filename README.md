@@ -270,6 +270,8 @@ PYTHONPATH=. .venv311/bin/python scripts/run_fault_matrix.py \
 
 每个 fault trial 必须在指定 step 恰好注入一次；control 不注入。调度器会记录每个 job 的日志和状态，并在基础设施错误、任务错误或 fault 注入无效达到阈值时停止。中断后可用 `--resume` 跳过已有 `.status.json` 的 job，继续补跑未完成任务：
 
+对于 `agent_param_error`，默认注入位置是第 1 个可参数化 action；其他 fault 默认使用第 2 个 browser action。也可以通过 `--fault-injection-step` 显式覆盖默认值。
+
 ```bash
 PYTHONPATH=. .venv311/bin/python scripts/run_fault_matrix.py \
   --output-dir experiments/formal_gpt54_react_web_dom_missing \

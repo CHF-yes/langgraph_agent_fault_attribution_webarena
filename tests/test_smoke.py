@@ -197,6 +197,41 @@ class TestFaults(unittest.TestCase):
         with self.assertRaises(ValueError):
             FaultConfig.single_fault("unknown_fault")
 
+    def test_param_fault_targets_parameter_action_index(self):
+        from fault_injection import FaultConfig
+        from fault_injection.agent_faults import inject_param_error
+
+        config = FaultConfig.single_fault(
+            "agent_param_error", intensity="high", seed=7, injection_step=2
+        )
+        first_id, _ = inject_param_error(config, "click", element_id="1")
+        second_id, _ = inject_param_error(config, "click", element_id="2")
+        third_id, _ = inject_param_error(config, "click", element_id="3")
+        self.assertEqual(first_id, "1")
+        self.assertTrue(second_id.startswith("invalid_"))
+        self.assertEqual(third_id, "3")
+        self.assertEqual(len(config.log), 1)
+        self.assertEqual(config.log[0]["parameter_action_index"], 2)
+
+    def test_param_fault_default_matrix_step_is_first_action(self):
+        from scripts.run_fault_matrix import command_for
+
+        class Args:
+            fault_type = "agent_param_error"
+            fault_injection_step = None
+            model_profile = "gpt54"
+            architecture = "react"
+            max_steps = 20
+            fault_intensity = "high"
+
+        command = command_for(Args(), {
+            "site": "shopping",
+            "start_url": "http://localhost:7770",
+            "intent": "test",
+            "seed": 1,
+        })
+        self.assertEqual(command[command.index("--fault-injection-step") + 1], "1")
+
     def test_agent_faults_module(self):
         from fault_injection import agent_faults
         self.assertTrue(callable(agent_faults.inject_state_misjudge))

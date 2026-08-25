@@ -29,12 +29,14 @@ def parse_args():
     parser.add_argument("--fault-type", default="web_dom_missing")
     parser.add_argument("--fault-intensity", default="high")
     parser.add_argument("--fault-seed", type=int, default=1)
-    parser.add_argument("--fault-injection-step", type=int, default=2)
+    parser.add_argument("--fault-injection-step", type=int, default=None)
     parser.add_argument("--model-profile", default="gpt54")
     parser.add_argument("--architecture", default="react")
     parser.add_argument("--task-ids", type=int, nargs="*", default=None)
     parser.add_argument("--resume", action="store_true",
                         help="Skip jobs with an existing status JSON in output-dir")
+    parser.add_argument("--job-timeout-minutes", type=int, default=30,
+                        help="Stop the matrix if one job exceeds this duration")
     return parser.parse_args()
 
 
@@ -61,6 +63,9 @@ def task_jobs(args):
 
 
 def command_for(args, job):
+    injection_step = args.fault_injection_step
+    if injection_step is None:
+        injection_step = 1 if args.fault_type == "agent_param_error" else 2
     return [
         sys.executable, "main.py", "--benchmark",
         "--site", job["site"], "--url", job["start_url"],
@@ -71,7 +76,7 @@ def command_for(args, job):
         "--fault-type", args.fault_type,
         "--fault-intensity", args.fault_intensity,
         "--fault-seed", str(job["seed"]),
-        "--fault-injection-step", str(args.fault_injection_step),
+        "--fault-injection-step", str(injection_step),
     ]
 
 
@@ -82,6 +87,10 @@ def classify_log(text):
         r"(?:429|502|503) (?:Too Many Requests|Bad Gateway|Service Unavailable)",
         r"Connection refused",
         r"net::ERR_[A-Z_]+",
+        r"EPIPE",
+        r"write after end",
+        r"Target (?:page|context|browser) has been closed",
+        r"Browser has been closed",
     )
     task_error = ("浏览器模式出错", "❌ steps=", "ERROR")
     fault_lines = re.findall(r"injection_count=(\d+) fault_seed=(\d+) faults=\[(.*?)\]", text)
@@ -90,11 +99,20 @@ def classify_log(text):
         for count, seed, faults in fault_lines
         if seed != 0
     ]
-    fault_counts = [count for count, _, faults in fault_records if "web_" in faults]
+    fault_counts = [count for count, _, faults in fault_records if faults.strip()]
+    fault_labels = [faults for _, _, faults in fault_records]
     fault_triggered = any(count == 1 for count in fault_counts)
     fault_invalid = not fault_counts or any(count != 1 for count in fault_counts)
+    infrastructure_error = any(
+        re.search(pattern, text, re.IGNORECASE)
+        for pattern in infrastructure_patterns
+    )
+    # A synthetic 500/503 is the expected payload of web_http_error, not an
+    # external service failure. Keep genuine connection/API errors detectable.
+    if fault_triggered and any("web_http_error" in label for label in fault_labels):
+        infrastructure_error = False
     return {
-        "infrastructure_error": any(re.search(pattern, text, re.IGNORECASE) for pattern in infrastructure_patterns),
+        "infrastructure_error": infrastructure_error,
         "task_error": any(marker in text for marker in task_error),
         "fault_missing": fault_invalid,
         "fault_count": fault_counts[-1] if fault_counts else 0,
@@ -110,6 +128,8 @@ def stop_all(active):
                 os.killpg(process.pid, signal.SIGTERM)
             except ProcessLookupError:
                 pass
+    for _, log_file, _ in active.values():
+        log_file.close()
     deadline = time.time() + 10
     while active and time.time() < deadline:
         for key, (process, _, _) in list(active.items()):
@@ -131,11 +151,22 @@ def main():
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     jobs = task_jobs(args)
+    effective_injection_step = args.fault_injection_step
+    if effective_injection_step is None:
+        effective_injection_step = 1 if args.fault_type == "agent_param_error" else 2
     if args.resume:
-        completed_keys = {
-            path.name.removesuffix(".status.json")
-            for path in output_dir.glob("*.status.json")
-        }
+        completed_keys = set()
+        for path in output_dir.glob("*.status.json"):
+            try:
+                status = json.loads(path.read_text(encoding="utf-8"))
+            except (OSError, json.JSONDecodeError):
+                continue
+            if (
+                status.get("returncode") == 0
+                and not status.get("infrastructure_error")
+                and not status.get("fault_invalid")
+            ):
+                completed_keys.add(path.name.removesuffix(".status.json"))
         jobs = [
             job for job in jobs
             if f"task{job['task_id']}_seed{job['seed']}" not in completed_keys
@@ -146,7 +177,7 @@ def main():
         "max_steps": args.max_steps,
         "fault_type": args.fault_type,
         "fault_intensity": args.fault_intensity,
-        "fault_injection_step": args.fault_injection_step,
+        "fault_injection_step": effective_injection_step,
         "workers": args.workers,
         "trials_per_task": args.trials,
         "total_jobs": len(jobs),
@@ -154,8 +185,8 @@ def main():
         "task_ids": sorted({job["task_id"] for job in jobs}),
         "stop_policy": {
             "infrastructure_errors": 2,
-            "task_errors_in_last_8": 3,
-        "fault_missing_in_last_8": 2,
+            "fault_missing_in_last_8": 2,
+            "task_errors": "record_only",
         },
         "jobs": jobs,
         "resume": args.resume,
@@ -171,7 +202,7 @@ def main():
     recent = deque(maxlen=8)
     stopped = False
     started_at = {}
-    job_timeout_sec = 20 * 60
+    job_timeout_sec = args.job_timeout_minutes * 60
 
     while pending or active:
         while pending and len(active) < args.workers and not stopped:
@@ -190,17 +221,45 @@ def main():
 
         for key, (process, log_file, job) in list(active.items()):
             if process.poll() is None and time.time() - started_at[key] > job_timeout_sec:
-                print(f"TIMEOUT {key}; stopping matrix.", flush=True)
-                stopped = True
-                pending.clear()
-                stop_all(active)
-                break
+                print(f"TIMEOUT {key}; recording timeout and continuing.", flush=True)
+                try:
+                    os.killpg(process.pid, signal.SIGTERM)
+                except ProcessLookupError:
+                    pass
+                time.sleep(0.2)
+                if process.poll() is None:
+                    try:
+                        os.killpg(process.pid, signal.SIGKILL)
+                    except ProcessLookupError:
+                        pass
+                log_file.close()
+                result = {
+                    "job": job,
+                    "returncode": process.returncode,
+                    "infrastructure_error": True,
+                    "task_error": False,
+                    "fault_missing": True,
+                    "fault_count": 0,
+                    "fault_triggered": False,
+                    "fault_invalid": True,
+                    "timed_out": True,
+                }
+                (output_dir / f"{key}.status.json").write_text(
+                    json.dumps(result, ensure_ascii=False, indent=2) + "\n",
+                    encoding="utf-8",
+                )
+                active.pop(key)
+                started_at.pop(key, None)
+                completed += 1
+                infrastructure_errors += 1
+                continue
             if process.poll() is None:
                 continue
             log_file.close()
             text = (output_dir / f"{key}.log").read_text(encoding="utf-8", errors="replace")
             status = classify_log(text)
-            result = {"job": job, "returncode": process.returncode, **status}
+            result = {"job": job, "returncode": process.returncode, **status,
+                      "timed_out": False}
             (output_dir / f"{key}.status.json").write_text(
                 json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
             )
@@ -209,7 +268,6 @@ def main():
             completed += 1
             recent.append(status)
             infrastructure_errors += int(status["infrastructure_error"])
-            recent_task_errors = sum(item["task_error"] for item in recent)
             recent_missing = sum(item["fault_missing"] for item in recent)
             print(
                 f"DONE {key} rc={process.returncode} "
@@ -217,7 +275,7 @@ def main():
                 f"infra={status['infrastructure_error']} task_error={status['task_error']}",
                 flush=True,
             )
-            if infrastructure_errors >= 2 or recent_task_errors >= 3 or recent_missing >= 2:
+            if infrastructure_errors >= 2 or recent_missing >= 2:
                 print("STOP policy threshold reached; terminating active jobs.", flush=True)
                 stopped = True
                 pending.clear()

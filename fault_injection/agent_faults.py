@@ -113,7 +113,7 @@ def inject_param_error(config: FaultConfig, action: str,
     Returns:
         (element_id, text) 可能被篡改后的参数
     """
-    if not config.should_inject("agent_param_error"):
+    if not config.should_inject_parameter_action("agent_param_error"):
         return element_id, text
 
     detail = {"action": action}

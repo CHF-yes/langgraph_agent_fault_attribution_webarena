@@ -128,6 +128,8 @@ class FaultConfig:
     _intensity_config: dict = field(default_factory=dict, repr=False)
     _injection_log: list[dict] = field(default_factory=list, repr=False)
     _execution_step: int = field(default=0, repr=False)
+    _parameter_action_count: int = field(default=0, repr=False)
+    _parameter_action_index: int = field(default=0, repr=False)
     _deterministic_injected: bool = field(default=False, repr=False)
 
     def __post_init__(self):
@@ -142,6 +144,8 @@ class FaultConfig:
         )
         self._injection_log = []
         self._execution_step = 0
+        self._parameter_action_count = 0
+        self._parameter_action_index = 0
         self._deterministic_injected = False
 
     # ---- 属性访问 ----
@@ -234,6 +238,21 @@ class FaultConfig:
         # Legacy exploratory mode: inject according to the configured probability.
         return self._rng.should_inject(self.probability)
 
+    def should_inject_parameter_action(self, fault_name: str) -> bool:
+        """Decide injection for the next tool action that accepts parameters."""
+        self._parameter_action_count += 1
+        self._parameter_action_index = self._parameter_action_count
+        if not self.enabled or self.intensity == "off":
+            return False
+        if not getattr(self, fault_name, False):
+            return False
+        if self.injection_step is not None:
+            if self._deterministic_injected or self._parameter_action_count != self.injection_step:
+                return False
+            self._deterministic_injected = True
+            return True
+        return self._rng.should_inject(self.probability)
+
     def get_delay(self, fault_name: str = None) -> float:
         """获取当前强度的随机延迟（秒）。"""
         low, high = self.delay_range
@@ -258,6 +277,7 @@ class FaultConfig:
             "fault_layer": layer,
             "fault_seed": self.seed,
             "step": self._execution_step or len(self._injection_log) + 1,
+            "parameter_action_index": self._parameter_action_index or None,
             "injection_index": len(self._injection_log) + 1,
             "timestamp": time.time(),
             "detail": detail or {},
@@ -270,6 +290,8 @@ class FaultConfig:
         self._rng = SeededRandom(self.seed)
         self._injection_log = []
         self._execution_step = 0
+        self._parameter_action_count = 0
+        self._parameter_action_index = 0
         self._deterministic_injected = False
 
     def set_execution_step(self, step: int) -> None:
