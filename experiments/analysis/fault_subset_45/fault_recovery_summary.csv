@@ -1,0 +1,6 @@
+fault_type,trials,fault_detected,fault_ignored,observation_refreshed,retry_executed,goto_fallback,tool_changed,plan_revised,stale_action_repeated,premature_stop,recovered,official_success_rate
+agent_param_error,9,1,0,9,0,0,9,not_observable_for_react,0,0,8,0.8888888888888888
+web_dom_missing,9,2,0,9,0,0,9,not_observable_for_react,0,0,7,0.7777777777777778
+web_http_error,9,3,0,9,0,2,9,not_observable_for_react,0,0,6,0.6666666666666666
+web_popup_block,9,1,0,9,0,0,9,not_observable_for_react,0,0,8,0.8888888888888888
+web_timeout,9,2,0,9,0,0,9,not_observable_for_react,0,0,7,0.7777777777777778
