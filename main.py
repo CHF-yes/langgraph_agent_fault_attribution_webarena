@@ -116,6 +116,11 @@ Examples:
                              help="Random seed for reproducible faults (default: 42)")
     fault_group.add_argument("--fault-injection-step", type=int, default=None,
                              help="Inject the selected fault exactly once at this action step")
+    benchmark_group = parser.add_argument_group("benchmark outputs")
+    benchmark_group.add_argument("--webarena-output-dir", default=None,
+                                 help="Write per-trial agent_response.json, network.har, and evaluator result")
+    benchmark_group.add_argument("--task-id", type=int, default=None,
+                                 help="Official WebArena task id for benchmark output/evaluation")
     fault_group.add_argument("--fault-web-timeout", action="store_true",
                              help="Inject network timeout delays")
     fault_group.add_argument("--fault-web-http-error", action="store_true",
@@ -157,6 +162,7 @@ Examples:
         ], default=None,
         help="Run one named fault only; equivalent to enabling its fault flag",
     )
+    bench_group.add_argument("--condition", choices=["control", "fault"], default=None)
 
     args = parser.parse_args()
 
@@ -572,7 +578,15 @@ def run_benchmark(args):
 
         reset_page_state()
         headers = get_auto_login_headers(args.site) if args.site else {}
-        env = SyncBrowserEnv(headless=True, extra_http_headers=headers)
+        output_dir = None
+        if args.webarena_output_dir and args.task_id is not None:
+            output_dir = os.path.join(
+                args.webarena_output_dir, str(args.task_id),
+                f"{fault_config.fault_label}_seed_{fault_config.seed}",
+            )
+            os.makedirs(output_dir, exist_ok=True)
+        har_path = os.path.join(output_dir, "network.har") if output_dir else None
+        env = SyncBrowserEnv(headless=True, extra_http_headers=headers, har_path=har_path)
         t0 = time.time()
 
         try:
@@ -630,7 +644,7 @@ def run_benchmark(args):
             for entry in log:
                 print(f"        injection={entry}")
 
-            return TrialResult(
+            trial = TrialResult(
                 task_id=task_id,
                 config_label=fault_config.intensity,
                 success=success,
@@ -648,6 +662,16 @@ def run_benchmark(args):
                 action_history=result.get("action_history", []),
                 injection_log=list(log),
             )
+            if output_dir and args.task_id is not None:
+                from standard_agent.webarena_verified import make_agent_response
+                response_path = os.path.join(output_dir, "agent_response.json")
+                with open(response_path, "w", encoding="utf-8") as response_file:
+                    json.dump(make_agent_response(
+                        {"task_id": args.task_id, "eval": []},
+                        completed=completed, answer=answer,
+                    ), response_file, ensure_ascii=False, indent=2)
+                    response_file.write("\n")
+            return trial
         except Exception as e:
             return TrialResult(
                 task_id=task_id,
@@ -681,13 +705,14 @@ def run_benchmark(args):
         evaluator=evaluate_trial if args.expected_answer else None,
     )
 
-    # Control
-    runner.add_config("control", FaultConfig.off())
+    if args.condition != "fault":
+        runner.add_config("control", FaultConfig.off())
 
     # 实验组
     exp_label = f"fault_{args.fault_intensity}"
     exp_config = _build_fault_config(args)
-    runner.add_config(exp_label, exp_config)
+    if args.condition != "control":
+        runner.add_config(exp_label, exp_config)
 
     # 任务
     runner.add_task("task", args.task, url)

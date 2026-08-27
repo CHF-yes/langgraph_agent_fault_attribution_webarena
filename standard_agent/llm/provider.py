@@ -31,6 +31,8 @@ def create_llm(temperature: float = None, profile_name: str = None) -> ChatOpenA
         "model": profile.model,
         "temperature": temperature,
         "api_key": profile.api_key,
+        "timeout": profile.request_timeout,
+        "max_retries": profile.max_retries,
     }
 
     # 如果设置了自定义 base_url，使用它
@@ -48,6 +50,8 @@ def get_llm_metadata(profile_name: str = None) -> dict:
         "provider_base_url": profile.base_url,
         "model": profile.model,
         "temperature": profile.temperature,
+        "request_timeout": profile.request_timeout,
+        "max_retries": profile.max_retries,
     }
 
 

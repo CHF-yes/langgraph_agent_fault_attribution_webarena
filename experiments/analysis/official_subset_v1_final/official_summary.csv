@@ -1,0 +1,11 @@
+fault_type,condition,trials,official_successes,official_success_rate,evaluator_errors
+web_dom_missing,control,40,27,0.675,0
+web_dom_missing,fault,40,26,0.65,0
+web_popup_block,control,40,23,0.575,0
+web_popup_block,fault,40,24,0.6,0
+web_http_error,control,40,23,0.575,0
+web_http_error,fault,40,25,0.625,0
+web_timeout,control,40,26,0.65,0
+web_timeout,fault,40,26,0.65,0
+agent_param_error,control,40,31,0.775,0
+agent_param_error,fault,40,25,0.625,0

@@ -1,0 +1,32 @@
+{
+  "trials": 400,
+  "tasks": [
+    22,
+    24,
+    27,
+    28,
+    30,
+    132,
+    133,
+    134
+  ],
+  "faults": [
+    "web_dom_missing",
+    "web_popup_block",
+    "web_http_error",
+    "web_timeout",
+    "agent_param_error"
+  ],
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "conditions": [
+    "control",
+    "fault"
+  ],
+  "evaluator_errors": 0
+}

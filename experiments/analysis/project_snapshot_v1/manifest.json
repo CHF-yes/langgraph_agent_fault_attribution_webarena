@@ -1,0 +1,23 @@
+{
+  "snapshot": "project_experiment_snapshot_v1",
+  "git_commit": "6e0e99f12f3fcb5b4422d82bb039dbeee4378e21",
+  "baseline": {
+    "path": "experiments/curated/gpt54_react_public16_control_v1.json",
+    "sha256": "fb8be8efd81b268aef65d006d2cbfabd6e68bb2dc16e79a072e429a0045e8ff2",
+    "records": 48
+  },
+  "behavioral_matrices": {
+    "web_dom_missing": "experiments/formal_20260824_gpt54_react_web_dom_missing_deterministic",
+    "web_popup_block": "experiments/formal_gpt54_react_web_popup_block_6workers_20260825",
+    "web_http_error": "experiments/formal_gpt54_react_web_http_error_6workers_20260825",
+    "web_timeout": "experiments/formal_gpt54_react_web_timeout_6workers_20260825",
+    "agent_param_error": "experiments/formal_gpt54_react_agent_param_error_6workers_20260825_foreground"
+  },
+  "official_subset": "experiments/analysis/official_subset_v1_final/official_trials.json",
+  "index": "experiments/analysis/project_snapshot_v1/experiment_index.csv",
+  "notes": [
+    "Behavioral matrix records are indexed as NOT_EVALUATED_NO_HAR; use them for completion/efficiency/behavior analysis, not official success.",
+    "Official subset contains 400 unique fault/task/seed/condition records with HAR and evaluator outputs.",
+    "Baseline remains a separate frozen 16-task, 3-seed dataset."
+  ]
+}

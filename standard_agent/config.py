@@ -18,6 +18,8 @@ class ModelProfile:
     base_url: str
     model: str
     temperature: float
+    request_timeout: float
+    max_retries: int
 
     def validate(self) -> bool:
         return bool(self.api_key and self.base_url and self.model)
@@ -32,6 +34,8 @@ class Settings:
     OPENAI_BASE_URL: str = os.getenv("OPENAI_BASE_URL", "https://api.deepseek.com")
     MODEL_NAME: str = os.getenv("MODEL_NAME", "deepseek-v4-pro")
     TEMPERATURE: float = float(os.getenv("TEMPERATURE", "0.7"))
+    LLM_REQUEST_TIMEOUT: float = float(os.getenv("LLM_REQUEST_TIMEOUT", "120"))
+    LLM_MAX_RETRIES: int = int(os.getenv("LLM_MAX_RETRIES", "1"))
     MODEL_PROFILE: str = os.getenv("MODEL_PROFILE", "default")
     MODEL_PROFILES: tuple[str, ...] = tuple(
         name.strip() for name in os.getenv("MODEL_PROFILES", "").split(",") if name.strip()
@@ -58,6 +62,10 @@ class Settings:
                 base_url=os.getenv(f"MODEL_{key}_BASE_URL", ""),
                 model=os.getenv(f"MODEL_{key}_NAME", ""),
                 temperature=float(os.getenv(f"MODEL_{key}_TEMPERATURE", str(cls.TEMPERATURE))),
+                request_timeout=float(os.getenv(
+                    f"MODEL_{key}_REQUEST_TIMEOUT", str(cls.LLM_REQUEST_TIMEOUT)
+                )),
+                max_retries=int(os.getenv(f"MODEL_{key}_MAX_RETRIES", str(cls.LLM_MAX_RETRIES))),
             )
         return profiles
 
@@ -78,6 +86,10 @@ class Settings:
                 temperature=float(os.getenv(
                     f"MODEL_{key}_TEMPERATURE", str(cls.TEMPERATURE)
                 )),
+                request_timeout=float(os.getenv(
+                    f"MODEL_{key}_REQUEST_TIMEOUT", str(cls.LLM_REQUEST_TIMEOUT)
+                )),
+                max_retries=int(os.getenv(f"MODEL_{key}_MAX_RETRIES", str(cls.LLM_MAX_RETRIES))),
             )
         return ModelProfile(
             name="default",
@@ -85,6 +97,8 @@ class Settings:
             base_url=cls.OPENAI_BASE_URL,
             model=cls.MODEL_NAME,
             temperature=cls.TEMPERATURE,
+            request_timeout=cls.LLM_REQUEST_TIMEOUT,
+            max_retries=cls.LLM_MAX_RETRIES,
         )
 
     @classmethod

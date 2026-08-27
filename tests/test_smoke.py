@@ -225,10 +225,12 @@ class TestFaults(unittest.TestCase):
             fault_intensity = "high"
 
         command = command_for(Args(), {
+            "task_id": 132,
             "site": "shopping",
             "start_url": "http://localhost:7770",
             "intent": "test",
             "seed": 1,
+            "fault_type": "agent_param_error",
         })
         self.assertEqual(command[command.index("--fault-injection-step") + 1], "1")
 
@@ -368,6 +370,30 @@ class TestConfigSecurity(unittest.TestCase):
 
 
 class TestEvaluation(unittest.TestCase):
+    def test_plan_execute_subset120_is_a_paired_120_trial_matrix(self):
+        from scripts.run_plan_execute_subset120 import FAULTS, SEEDS, TASKS
+
+        self.assertEqual(TASKS, [22, 27, 28, 30, 132])
+        self.assertEqual(len(FAULTS), 4)
+        self.assertEqual(SEEDS, [1, 2, 3])
+        self.assertEqual(len(TASKS) * len(FAULTS) * len(SEEDS) * 2, 120)
+
+    def test_official_subset_audit_defines_the_complete_trial_grid(self):
+        from scripts.audit_official_subset import expected_keys
+
+        keys = expected_keys()
+        self.assertEqual(len(keys), 400)
+        self.assertIn(("web_http_error", 24, 3, "control"), keys)
+        self.assertIn(("web_http_error", 24, 3, "fault"), keys)
+
+    def test_official_subset_audit_marks_compatibility_results_as_fallback(self):
+        from scripts.audit_official_subset import evaluation_source
+
+        self.assertEqual(evaluation_source({"evaluators_results": []}), "native")
+        self.assertEqual(evaluation_source({"evaluators_results": [{
+            "assertion_name": "null_retrieval_schema_compatibility",
+        }]}), "fallback")
+
     def test_failure_classification_separates_evaluator_and_format_failures(self):
         from standard_agent.failure_classification import classify_trial
 

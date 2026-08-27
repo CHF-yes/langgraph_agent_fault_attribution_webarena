@@ -1,0 +1,58 @@
+{
+  "dataset": "gpt54_react_public16_fault_matrices_v1",
+  "matrix_count": 5,
+  "fault_types": [
+    "web_dom_missing",
+    "web_popup_block",
+    "web_http_error",
+    "web_timeout",
+    "agent_param_error"
+  ],
+  "tasks": [
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    132,
+    133,
+    134,
+    135,
+    136
+  ],
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "conditions": [
+    "control",
+    "fault"
+  ],
+  "expected_trials": 800,
+  "actual_trial_records": 800,
+  "source_matrices": {
+    "web_dom_missing": "experiments/formal_20260824_gpt54_react_web_dom_missing_deterministic",
+    "web_popup_block": "experiments/formal_gpt54_react_web_popup_block_6workers_20260825",
+    "web_http_error": "experiments/formal_gpt54_react_web_http_error_6workers_20260825",
+    "web_timeout": "experiments/formal_gpt54_react_web_timeout_6workers_20260825",
+    "agent_param_error": "experiments/formal_gpt54_react_agent_param_error_6workers_20260825_foreground"
+  },
+  "git_commit": "6e0e99f12f3fcb5b4422d82bb039dbeee4378e21",
+  "baseline_path": "experiments/curated/gpt54_react_public16_control_v1.json",
+  "dataset_sha256": "fb8be8efd81b268aef65d006d2cbfabd6e68bb2dc16e79a072e429a0045e8ff2",
+  "evaluator": "NOT_RUN: matrix logs do not include HAR/network_trace",
+  "limitations": [
+    "Fault logs do not contain original HAR files; responses are reconstructed from final answers.",
+    "official_success is null because the official evaluator requires network_trace/HAR, which these matrices did not retain.",
+    "This dataset is for sensitivity analysis; it is not yet a model or architecture responsibility experiment."
+  ]
+}

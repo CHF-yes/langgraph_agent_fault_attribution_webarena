@@ -27,6 +27,8 @@ def parse_args():
     parser.add_argument("--max-steps", type=int, default=20)
     parser.add_argument("--trials", type=int, default=5)
     parser.add_argument("--fault-type", default="web_dom_missing")
+    parser.add_argument("--fault-types", nargs="+", default=None,
+                        help="Run multiple fault types in one matrix")
     parser.add_argument("--fault-intensity", default="high")
     parser.add_argument("--fault-seed", type=int, default=1)
     parser.add_argument("--fault-injection-step", type=int, default=None)
@@ -37,6 +39,8 @@ def parse_args():
                         help="Skip jobs with an existing status JSON in output-dir")
     parser.add_argument("--job-timeout-minutes", type=int, default=30,
                         help="Stop the matrix if one job exceeds this duration")
+    parser.add_argument("--official-output-root", default=None,
+                        help="Root for per-job HAR/agent_response/evaluator outputs")
     return parser.parse_args()
 
 
@@ -47,7 +51,9 @@ def task_jobs(args):
         order = {task_id: index for index, task_id in enumerate(args.task_ids)}
         tasks.sort(key=lambda task: order[task["task_id"]])
     jobs = []
-    for task in tasks:
+    fault_types = args.fault_types or [args.fault_type]
+    for fault_type in fault_types:
+      for task in tasks:
         site = (task.get("sites") or [None])[0]
         start_url = resolve_start_url(task)
         for seed_index in range(args.trials):
@@ -58,26 +64,35 @@ def task_jobs(args):
                 "site": site,
                 "start_url": start_url,
                 "intent": task["intent"],
+                "fault_type": fault_type,
             })
     return jobs
 
 
 def command_for(args, job):
+    fault_type = job.get("fault_type", args.fault_type)
     injection_step = args.fault_injection_step
     if injection_step is None:
-        injection_step = 1 if args.fault_type == "agent_param_error" else 2
-    return [
+        injection_step = 1 if fault_type == "agent_param_error" else 2
+    command = [
         sys.executable, "main.py", "--benchmark",
         "--site", job["site"], "--url", job["start_url"],
         "--task", job["intent"],
+        "--task-id", str(job["task_id"]),
         "--model-profile", args.model_profile,
         "--architecture", args.architecture,
         "--max-steps", str(args.max_steps), "--trials", "1",
-        "--fault-type", args.fault_type,
+        "--fault-type", fault_type,
         "--fault-intensity", args.fault_intensity,
         "--fault-seed", str(job["seed"]),
         "--fault-injection-step", str(injection_step),
     ]
+    if getattr(args, "official_output_root", None):
+        output = Path(args.official_output_root) / (
+            f"{fault_type}_task{job['task_id']}_seed{job['seed']}"
+        )
+        command += ["--webarena-output-dir", str(output)]
+    return command
 
 
 def classify_log(text):
@@ -151,9 +166,15 @@ def main():
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     jobs = task_jobs(args)
-    effective_injection_step = args.fault_injection_step
-    if effective_injection_step is None:
-        effective_injection_step = 1 if args.fault_type == "agent_param_error" else 2
+    fault_types = args.fault_types or [args.fault_type]
+    injection_steps = {
+        fault_type: (
+            args.fault_injection_step
+            if args.fault_injection_step is not None
+            else (1 if fault_type == "agent_param_error" else 2)
+        )
+        for fault_type in fault_types
+    }
     if args.resume:
         completed_keys = set()
         for path in output_dir.glob("*.status.json"):
@@ -169,15 +190,15 @@ def main():
                 completed_keys.add(path.name.removesuffix(".status.json"))
         jobs = [
             job for job in jobs
-            if f"task{job['task_id']}_seed{job['seed']}" not in completed_keys
+            if f"{job['fault_type']}_task{job['task_id']}_seed{job['seed']}" not in completed_keys
         ]
     manifest = {
         "model_profile": args.model_profile,
         "architecture": args.architecture,
         "max_steps": args.max_steps,
-        "fault_type": args.fault_type,
+        "fault_types": fault_types,
         "fault_intensity": args.fault_intensity,
-        "fault_injection_step": effective_injection_step,
+        "fault_injection_steps": injection_steps,
         "workers": args.workers,
         "trials_per_task": args.trials,
         "total_jobs": len(jobs),
@@ -207,7 +228,7 @@ def main():
     while pending or active:
         while pending and len(active) < args.workers and not stopped:
             job = pending.popleft()
-            key = f"task{job['task_id']}_seed{job['seed']}"
+            key = f"{job['fault_type']}_task{job['task_id']}_seed{job['seed']}"
             log_path = output_dir / f"{key}.log"
             log_file = log_path.open("w", encoding="utf-8")
             process = subprocess.Popen(

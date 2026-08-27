@@ -1,0 +1,56 @@
+{
+  "dataset": "gpt54_react_official_subset_v1_final",
+  "role": "primary_official_result_dataset",
+  "input": "experiments/analysis/official_subset_v1_final/official_trials.json",
+  "input_sha256": "2e18fcbca9cc664d5998926eef1e4fd827964ee0d3eb25601802215ed96489d8",
+  "trials": 400,
+  "tasks": [
+    22,
+    24,
+    27,
+    28,
+    30,
+    132,
+    133,
+    134
+  ],
+  "faults": [
+    "web_dom_missing",
+    "web_popup_block",
+    "web_http_error",
+    "web_timeout",
+    "agent_param_error"
+  ],
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "conditions": [
+    "control",
+    "fault"
+  ],
+  "required_fields": [
+    "official_success",
+    "evaluator_status",
+    "evaluator_error",
+    "evaluation_source"
+  ],
+  "evaluation_source_counts": {
+    "fallback": 76,
+    "native": 324
+  },
+  "evaluator_error_count": 0,
+  "fault_trials_with_exactly_one_injection": 200,
+  "audit": {
+    "expected_trials": 400,
+    "duplicate_trials": 0,
+    "missing_trials": 0,
+    "unexpected_trials": 0,
+    "failed_trial_audits": 0,
+    "trial_audit": "experiments/analysis/official_subset_v1_final/official_trial_audit.csv"
+  },
+  "scope_exclusion": "Do not combine this official dataset with fault_matrices_v1 in official success-rate statistics because the matrix has no HAR."
+}

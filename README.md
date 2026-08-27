@@ -209,6 +209,16 @@ experiments/curated/gpt54_react_public16_control_v1_manifest.json
 
 结果 JSON 中保留 `fallback_used`、`fallback_events`、`evaluator_status` 和 `experiment_id` 等审计字段。正式统计时，`evaluator_status=error` 的记录不进入成功率分母；`fallback` 记录应单独报告。
 
+完整的项目设计、实验范围、汇总数据口径和复现命令见
+[`docs/project_overview.md`](docs/project_overview.md)。本次发布的跨实验索引位于：
+
+```text
+experiments/analysis/project_snapshot_v1/
+experiments/analysis/official_subset_v1_final/
+experiments/analysis/fault_matrices_v1/
+experiments/analysis/architecture_gpt54_react_planexecute_v1/
+```
+
 ## 标准 Agent 观测与模型配置
 
 当前 Agent 使用 LangGraph 编排的单 Agent ReAct 循环：

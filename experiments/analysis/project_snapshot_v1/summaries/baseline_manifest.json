@@ -1,0 +1,51 @@
+{
+  "dataset_name": "gpt54_react_public16_control_v1",
+  "source_file": "experiments/results/gpt54_react_public16_corrected_control_3trials.json",
+  "curated_file": "experiments/curated/gpt54_react_public16_control_v1.json",
+  "summary_file": "experiments/curated/gpt54_react_public16_control_v1_summary.csv",
+  "condition": {
+    "model_profile": "gpt54",
+    "architecture": "react",
+    "fault_type": "control",
+    "fault_layer": "none",
+    "max_steps": 20,
+    "task_count": 16,
+    "trials_per_task": 3,
+    "total_trials": 48,
+    "run_seeds": [1, 2, 3]
+  },
+  "evaluation": {
+    "evaluator": "WebArena-Verified",
+    "evaluator_errors": 0,
+    "official_successes": 25,
+    "official_success_rate": 0.5208333333,
+    "fallback_trials": 28,
+    "fallback_events": 29,
+    "fallback_reason_counts": {
+      "TimeoutError": 29
+    },
+    "schema_compatibility_fallback_trials": 3,
+    "note": "Fallback records have an explicit success/failure status and must be reported separately from native evaluator results."
+  },
+  "provenance": {
+    "git_commit": "5d4ffa7667c85bacb968004020aaed890c57b497",
+    "model_name": "gpt-5.4",
+    "model_base_url": "https://hapiopen.cc/v1",
+    "temperature": 0.2,
+    "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "prompt_sha256": "25cf15594bb73d1508cbd39201ff273c1bf377d911cdca449811a6932214e50a",
+    "evaluator_adapter": "standard_agent/webarena_verified.py + standard_agent/webarena_evaluator.py",
+    "python_version": "3.11.9",
+    "playwright_version": "1.62.0",
+    "langgraph_version": "1.2.11",
+    "webarena_verified_version": "1.2.3.post1.dev0",
+    "dataset_path": "/root/webarena-dataset/webarena-verified.json",
+    "evaluator_config": "experiments/webarena_local_config.json",
+    "batch_note": "The source JSON combines corrected per-task runs and contains multiple source experiment_id values. The curated experiment_id is a reporting label, not a claim that all 48 trials ran in one process batch. This is retained as a known limitation; later runs should use one batch ID."
+  },
+  "limitations": [
+    "The provider sampling seed is recorded but not enforced by the LLM provider.",
+    "Twenty-eight trials use compatibility fallback and should be stratified in formal reporting.",
+    "This is a control dataset only; it contains no fault-injection trials or recovery comparison."
+  ]
+}
