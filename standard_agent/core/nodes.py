@@ -529,6 +529,14 @@ def plan_executor_node(state: AgentState, config: RunnableConfig) -> dict:
     llm_calls = state.get("llm_calls", 0) + 1
     executor_calls = state.get("executor_calls", 0) + 1
     tool_calls = getattr(response, "tool_calls", []) or []
+    thought = str(getattr(response, "content", "") or "")
+    if tool_calls and not thought.lstrip().startswith("THOUGHT:"):
+        append_event(thread_id, event="protocol_violation", step=new_step,
+                     task=task, url=url, data={
+                         "architecture": architecture, "phase": "executor",
+                         "rule": "tool_call_requires_THOUGHT_prefix",
+                         "content": thought,
+                     })
     if len(tool_calls) > 1:
         response = response.model_copy(update={"tool_calls": tool_calls[:1]})
     if not getattr(response, "tool_calls", None):
@@ -581,9 +589,23 @@ def replanner_node(state: AgentState, config: RunnableConfig) -> dict:
     try:
         candidate = re.search(r"\{.*\}", raw, re.DOTALL)
         decision_data = json.loads(candidate.group(0) if candidate else "{}")
-        decision = decision_data.get("decision", "replan")
+        raw_decision = decision_data.get("decision", "")
     except (json.JSONDecodeError, AttributeError):
-        decision = "replan"
+        raw_decision = ""
+    decision_key = raw_decision.strip().lower() if isinstance(raw_decision, str) else ""
+    aliases = {
+        "continue": "continue", "next": "continue", "proceed": "continue",
+        "advance": "continue", "finish": "finish", "done": "finish",
+        "complete": "finish", "stop": "finish", "replan": "replan",
+        "retry": "replan", "revise": "replan",
+    }
+    decision = aliases.get(decision_key, "replan")
+    if decision_key not in aliases:
+        append_event(thread_id, event="replanner_contract_violation", step=step_count,
+                     task=task, url=state.get("url", "about:blank"), data={
+                         "architecture": architecture, "phase": "replanner",
+                         "raw_decision": str(raw_decision)[:200], "fallback": decision,
+                     })
     append_event(thread_id, event="replan_decision", step=step_count,
                  task=task, url=state.get("url", "about:blank"), data={
                      "architecture": architecture, "phase": "replanner",
