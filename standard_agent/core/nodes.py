@@ -586,12 +586,7 @@ def replanner_node(state: AgentState, config: RunnableConfig) -> dict:
     llm = create_llm(profile_name=model_profile)
     response = llm.invoke([prompt])
     raw = str(getattr(response, "content", "") or "")
-    try:
-        candidate = re.search(r"\{.*\}", raw, re.DOTALL)
-        decision_data = json.loads(candidate.group(0) if candidate else "{}")
-        raw_decision = decision_data.get("decision", "")
-    except (json.JSONDecodeError, AttributeError):
-        raw_decision = ""
+    raw_decision = _parse_replanner_decision(raw)
     decision_key = raw_decision.strip().lower() if isinstance(raw_decision, str) else ""
     aliases = {
         "continue": "continue", "next": "continue", "proceed": "continue",
@@ -621,6 +616,21 @@ def replanner_node(state: AgentState, config: RunnableConfig) -> dict:
                 "llm_calls": calls, "replanning_calls": replanning_calls}
     return {"replan_required": True, "llm_calls": calls,
             "replanning_calls": replanning_calls}
+
+
+def _parse_replanner_decision(raw: str) -> object:
+    """Extract the first valid decision value from a model response."""
+    decoder = json.JSONDecoder()
+    for index, char in enumerate(raw):
+        if char != "{":
+            continue
+        try:
+            payload, _ = decoder.raw_decode(raw[index:])
+        except json.JSONDecodeError:
+            continue
+        if isinstance(payload, dict):
+            return payload.get("decision", "")
+    return ""
 
 
 def run_tools(state: AgentState, config: RunnableConfig) -> dict:

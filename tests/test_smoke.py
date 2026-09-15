@@ -42,6 +42,24 @@ class TestGraphBuild(unittest.TestCase):
             "success_condition": "Result visible",
         }])
 
+    def test_replanner_parser_uses_first_valid_json_object(self):
+        from standard_agent.core.nodes import _parse_replanner_decision
+
+        self.assertEqual(
+            _parse_replanner_decision('{"decision":"next"} and {"x":1}'),
+            "next",
+        )
+        self.assertEqual(
+            _parse_replanner_decision('Set {a} then {"decision":"finish"}'),
+            "finish",
+        )
+
+    def test_replanner_parser_handles_invalid_and_non_object_values(self):
+        from standard_agent.core.nodes import _parse_replanner_decision
+
+        self.assertEqual(_parse_replanner_decision('{"decision":true}'), True)
+        self.assertEqual(_parse_replanner_decision('not JSON'), "")
+
     def test_agent_state_reducer(self):
         from standard_agent.core.state import add_action_history
         self.assertEqual(
