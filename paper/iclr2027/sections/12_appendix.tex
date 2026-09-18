@@ -1,0 +1,178 @@
+\section{Statistical procedure in full}
+\label{app:stats}
+
+\paragraph{Success rate.}
+The primary test is the two-sided \emph{exact} McNemar (binomial) test on the
+discordant counts, computed from the exact binomial tail rather than the
+$\chi^2$ approximation, because the discordant counts here are small ($b+c \le
+10$ per fault). We also report the mid-$p$ variant, which is less conservative at
+these sizes, and the Haldane--Anscombe corrected matched odds ratio. Multiplicity
+across the five faults is controlled by Holm--Bonferroni; Benjamini--Hochberg is
+implemented and reported in the released code for comparison.
+
+\paragraph{Intervals.}
+Confidence intervals for $D(F)$ come from a percentile bootstrap that resamples
+\emph{pair units} --- the correct resampling unit for a paired design, as opposed
+to resampling trials, and the seed is fixed (\texttt{BootSeed}$=$\BootSeed{},
+\BootIters{} resamples) so the interval is reproducible. Because a single
+bootstrap seed can be selected to flatter a result, we also compute the interval
+under five additional seeds and report the envelope in the released artifacts. We
+additionally computed a task-clustered sensitivity interval, which is wider than
+the pair-level interval when the same task is correlated across seeds; both are in
+the released statistics files.
+
+\paragraph{Process measures.}
+Deltas in step count and wall-clock time are not binary, so we use the two-sided
+Wilcoxon signed-rank test with the Hodges--Lehmann estimator of the shift; the
+distributions are heavy-tailed and contain ties, which is why we do not report a
+paired $t$-test. These tests are run on the behavioural matrix, which is
+\emph{not} the same data as the official subset (\secref{sec:setup}).
+
+\paragraph{Power.}
+The minimum detectable effect for a paired proportion design is obtained by
+solving
+
+\begin{equation}
+  n \;=\; \frac{\bigl(z_{1-\alpha/2}\sqrt{\pi_d}
+        + z_{\text{power}}\sqrt{\pi_d - \delta^2}\bigr)^2}{\delta^2}
+\end{equation}
+
+for $\delta$, where $\pi_d = \mathbb{P}(\text{arms disagree})$. Two subtleties we
+had to get right, and that we suspect are easy to get wrong: the risk difference
+is bounded by $\pi_d$, not by $1$, so the search must be bracketed on
+$(0, \pi_d]$; and when the bracket is wrong the equation silently returns
+undefined rather than failing loudly. We use the \emph{observed} discordance
+$\pi_d = \PiDNative{}$ rather than a round number, and we report cases where the
+target power is unreachable at any effect size as \emph{undefined} rather than
+quoting a number.
+
+\input{tables/T8_power}
+
+\section{Pooled-evaluator table}
+\label{app:pooled}
+
+For completeness, Table~\ref{tab:official_all} reports the same analysis with the
+evaluator paths pooled. It is not a robustness result and we do not use it as one;
+we include it to show how much the conclusion moves when the fallback
+contamination is left in, and to demonstrate why any published number of this form
+should be accompanied by its stratified version.
+
+\input{tables/T3_official_all}
+
+\section{Architecture pilot table}
+\label{app:arch}
+
+Table~\ref{tab:architecture} gives the raw architecture pilot discussed in
+\secref{sec:res-arch}. Rows are broken out by fault rather than by the artifact's
+coarse \texttt{condition} column, which pools two different faults into one
+bucket.
+
+\input{tables/T6_architecture_pilot}
+
+\section{The recovery artifact in full}
+\label{app:recovery}
+
+The recovery artifact records behavioural flags --- whether the observation was
+refreshed, whether the tool changed, whether a stale action was repeated --- which
+is exactly the process-level evidence one would want for attribution. In practice
+\RecDegenerateCount{} of its columns are constant across all \RecN{} rows and
+carry no information; \texttt{plan\_revised} was never recorded at all; and
+\texttt{recovered} is row-for-row identical to \texttt{official\_success}, so it
+is not an independent measurement of recovery but a restatement of the outcome it
+would be used to explain. The \texttt{behavior\_labels} column is a deterministic
+function of \texttt{recovered} (recovered $\Rightarrow$
+\texttt{observation\_refreshed}, otherwise \texttt{fault\_detected}), so
+correlations between the two are tautological. Two further columns are the same
+predicate under different names (\texttt{stale\_action\_repeated} and
+\texttt{retry}), and \texttt{fault\_detected} is recorded only on the
+not-recovered subset, so it is computed over a different denominator from the
+rest of the table.
+
+We report the table rather than silently dropping it because the failure mode is
+instructive: a recovery-behaviour artifact can look rich --- a dozen behavioural
+columns --- while containing two varying quantities, one of which is the outcome.
+Process-level attribution needs columns that vary \emph{independently} of the
+outcome, and that has to be checked before the analysis, not after.
+
+\input{tables/T7_recovery}
+
+\section{Reproducibility of the runs}
+\label{app:runs}
+
+Every trial records its fault seed, injection step, model profile, architecture,
+and git commit. The provider does not guarantee bit-identical sampling for a fixed
+seed, so our reproducibility claim is at the level of the design (same fault, same
+step, same task/seed pairing) rather than the token sequence; we state this
+explicitly rather than claiming seed determinism we cannot verify. Wall-clock is
+host- and load-dependent, which is why process-cost claims are made on within-pair
+deltas only --- the five per-fault control arms are the \emph{same} configuration
+yet differ by a factor of \NoiseFloorRatio{} in mean wall-clock
+(\NoiseFloorLo--\NoiseFloorHi{}~s), so cross-arm absolute timings are dominated by
+machine-level drift and are not interpretable.
+
+\section{Candidate repairs and what an ablation would need}
+\label{app:repair}
+
+Four policy changes follow from the mechanisms in \secref{sec:repair}: error-aware
+retry with backoff instead of re-deriving the whole plan; argument validation
+against the current observation before dispatch; stale-observation detection that
+forces a re-observation; and a termination policy for unobservable state. The last
+is a judgement call rather than an automatic improvement --- the DOM-omission and
+popup arms are \emph{faster} than control (\BehWebDomMissingTimeDelta{}~s and
+\BehWebPopupBlockTimeDelta{}~s), which we read as early termination, so the
+objective could be either to shorten that path further or to have the agent report
+the blockage instead of silently failing. Each is testable in the existing harness
+by running the same paired design with the repair enabled in both arms. None has
+been run.
+
+One fix \emph{was} made during this work --- correcting the task schema and
+completion check, and detecting the compatibility fallback contaminating the
+evaluator (\secref{sec:fallback}) --- and it must be classified correctly: it
+raises the measured success rate by up to \BaselineSwing{}~pp, more than any fault
+effect in this paper, and it improves the \emph{measurement}, not the \emph{agent}.
+Reporting it as a robustness improvement would be precisely the error this paper is
+about; any web-agent robustness claim drawn from a pipeline with a fallback path, a
+schema mismatch, or an unvalidated completion check is measuring the harness.
+
+A credible before/after comparison would therefore need to (i)~re-use the paired
+design and the native-only stratum, (ii)~be sized against \secref{sec:res-power}
+rather than against available compute --- at the observed discordance a $10$~pp
+success-rate improvement needs roughly \PairsForTenPPObserved{} pairs per arm, so a
+process-cost improvement is the realistic target at smaller $n$ --- and (iii)~run
+the repaired arm concurrently with the unrepaired one, so that machine-level drift,
+which spans a factor of \NoiseFloorRatio{} across nominally identical arms, does
+not masquerade as an effect.
+
+\section{Graphical summaries}
+\label{app:figs}
+
+Figures~\ref{fig:forest}, \ref{fig:behavior} and \ref{fig:noisefloor} show the
+three quantitative summaries in graphical form. They are generated by the same
+command as the tables, from the same statistics, so they cannot drift from them.
+
+\input{figures/tex/fig_forest}
+\input{figures/tex/fig_behavior}
+\input{figures/tex/fig_noisefloor}
+
+\section{Supplementary experiment plan}
+\label{app:plan}
+
+The staged design that would make the attribution question answerable is released
+with this paper. It is ordered by its ability to change the numbers reported here,
+not by novelty. \textbf{Stage A} first repairs the evaluator's null-retrieval
+schema path and re-evaluates the existing 400 response/HAR pairs offline. Every
+frozen row already retains HAR, so repeating the same agent trials would not
+remove the schema-triggered fallback; new runs are needed only for artifacts that
+the repaired evaluator cannot consume or for deliberately replaced tasks.
+\textbf{Stage C} crosses three categorical model levels with three architectures
+and three faults. We do not impose an ordinal model-capability contrast: current
+provider claims invalidate the earlier Flash--Pro ordering, and the cross-provider
+ordering is not independently identified. The confirmatory target is therefore
+the omnibus model$\times$architecture interaction followed by preregistered
+pairwise and simple-effect contrasts.
+\textbf{Stages E and F} add injection-step sensitivity and the repair ablation,
+respectively; the former Stage B and D expansions are folded into Stage C. Injection-step sensitivity is
+the confound we would press on hardest as a reviewer, since our injector holds the
+step fixed throughout. The plan gives exact command lines, the six-worker
+wall-clock budget measured from the runs reported here, and the per-trial timings
+that size each stage.
