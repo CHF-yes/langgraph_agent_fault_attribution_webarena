@@ -1,0 +1,73 @@
+\section{Introduction}
+\label{sec:intro}
+
+Web agents --- language models that drive a real browser through a ReAct-style
+loop of reasoning, tool calls, and page observations --- are now benchmarked
+almost exclusively by one number: the fraction of tasks whose final environment
+state satisfies the benchmark's functional evaluator
+\citep{zhou2024webarena, koh2024visualwebarena}. That number is then compared
+across models, across prompting strategies, and --- increasingly --- across
+fault-injection conditions, on the implicit assumption that a small drop in
+success rate means the agent is robust and a large drop means it is fragile.
+
+This paper asks whether that assumption holds. We take a single agent
+configuration (a LangGraph ReAct agent, \ToolCount{} WebArena tools, an
+accessibility-tree observation channel) on the WebArena shopping, Reddit, and
+GitLab sites, and subject it to a paired fault-injection experiment: for each of
+five non-adversarial faults, every (task, seed) cell is run twice, once clean and
+once with the fault injected at a fixed step, and both runs are scored by the
+official evaluator. The pairing is what makes the design informative --- it
+removes task difficulty and per-seed variance from the comparison, and it lets us
+run an exact McNemar test rather than comparing two independent proportions.
+
+The headline result is negative, and that is the point. After Holm correction,
+\emph{no fault has a detectable effect on official success}
+($p_{\text{Holm}}=1.000$ for all five). The single largest point estimate,
+\ResAgentParamErrorDeltaNat{}~pp for tool parameter errors, is comfortably inside a
+bootstrap interval that spans zero. Read the usual way, this would be reported as
+``the agent is robust to these faults.'' We show that reading is not supported:
+with only \ResWebDomMissingNNat--\ResWebTimeoutNNat{} native-evaluator pairs per
+fault, the design has essentially no power, and the honest statement is that the
+experiment could not have detected a moderate effect had one existed.
+
+Where the faults \emph{are} visible is one level below the task outcome. In a
+\TotalTrials{}-trial behavioural record that trades the evaluator for step and
+wall-clock instrumentation, HTTP errors add \ResHttpErrorStepDelta{} ReAct steps
+and \ResHttpErrorTimeDelta{}~s per pair, and tool parameter errors add
+\ResParamErrStepDelta{} steps --- both far beyond noise. End-to-end success is
+blind to these effects; process-level measurement is not. This is the paper's
+central methodological claim: for web agents, task success is a blunt and
+high-variance instrument, and robustness conclusions drawn from it alone are
+under-determined.
+
+Two further results shape how such experiments should be run. First, the
+evaluator path matters more than any fault we inject: a compatibility fallback
+handling \OfficialFallbackN{} of the \OfficialN{} official evaluations fails by
+construction, and pooling rather than stratifying those trials moves the frozen
+baseline's success rate from \BaseNativeRate{} to \BasePooledRate{} --- a
+\BaselineSwing{}~pp swing driven purely by instrumentation. Second, we document
+degeneracies in the auxiliary artifacts (a recovery table whose columns are
+constant or defined by the outcome it claims to explain; behavioural counts whose
+``\TotalTrials{} trials'' are in fact \MatrixPairs{} pairs), which are easy to
+introduce and, once in a pipeline, easy to read as evidence.
+
+We make three contributions:
+\begin{itemize}
+  \item \textbf{A paired, evaluator-stratified attribution protocol} for web-agent
+  fault injection, with exact and mid-$p$ McNemar tests, pair-unit bootstrap
+  intervals, Wilcoxon/Hodges--Lehmann tests on process deltas, and explicit
+  multiplicity control (\secref{sec:method}).
+  \item \textbf{An empirical demonstration that the standard outcome measure is
+  underpowered} at realistic sample sizes, quantified with minimum detectable
+  effects and the sample sizes that would actually be needed
+  (\secref{sec:results}).
+  \item \textbf{Evidence that the measurement instrument can dominate the effect
+  being measured}, together with a stratified analysis that removes the
+  confound, and a staged design that would make the model-versus-architecture
+  question answerable (\secref{sec:discussion}).
+\end{itemize}
+
+We are explicit about scope: the data cover one model and one architecture, so we
+make \emph{no} claim about how much of the robustness gap is attributable to the
+model versus the architecture, which was the motivating question.
+\secref{sec:discussion} states what the present design can and cannot identify.

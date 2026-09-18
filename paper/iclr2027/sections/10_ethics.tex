@@ -1,0 +1,28 @@
+This work studies the reliability of autonomous web agents and therefore touches
+on the risks of deploying them.
+
+\emph{Automated browsing.} All experiments ran against self-hosted WebArena
+replicas with synthetic data on isolated infrastructure. No live third-party site
+was traversed, no real account was used, and no external service was affected.
+The authentication state used by the agent exists only inside that sandbox.
+
+\emph{Fault injection.} The injected faults --- dropped DOM nodes, blocking
+overlays, HTTP errors, timeouts, and corrupted tool arguments --- are
+non-adversarial: they degrade the agent's own inputs and do not target, probe, or
+exfiltrate anything. The injection harness is deterministic and seeded, and it is
+released so that its effects can be reproduced rather than speculated about.
+
+\emph{Dual use.} A systematic account of which faults a web agent fails to notice
+could in principle inform an attacker seeking to induce failures, or a site
+operator seeking to block agents. We judge the risk low relative to the benefit:
+the faults are already ubiquitous in ordinary web operation, the findings are
+mostly about measurement rather than about exploitable weaknesses, and the
+mitigation we argue for --- process-level monitoring and evaluator hygiene ---
+helps defenders. We release no attack tooling and no adversarial payloads.
+
+\emph{Evaluation integrity.} The paper's central methodological claim is that a
+widely used evaluation setup can be wrong in a way that flatters the system being
+measured, and that a structurally failure-biased evaluator path went undetected.
+We report this because it affects how published numbers should be read, not to
+single out a particular benchmark; the failure is in the reporting convention, not
+in the benchmark's design.

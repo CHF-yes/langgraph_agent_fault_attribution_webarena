@@ -1,0 +1,6 @@
+fault,control_mean_time_s
+web_dom_missing,195.74
+web_popup_block,114.26
+web_http_error,224.55
+web_timeout,103.67
+agent_param_error,124.90

@@ -1,0 +1,27 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+We ran a paired fault-injection study of a LangGraph ReAct agent on WebArena under
+the official evaluator, and its most useful product is a negative result about the
+measurement rather than about the agent.
+
+End-to-end success is a blunt, high-variance instrument. With
+\ResWebDomMissingNNat--\ResWebTimeoutNNat{} native pairs per fault and an observed
+discordance of \PiDNative{}, no minimum detectable effect is defined at \Power{}
+power, no fault is significant after Holm correction, and detecting a $10$~pp
+difference would need on the order of \PairsForTenPPObserved{} pairs per fault. The
+same faults are unambiguous at the process level --- HTTP errors alone add
+\BehWebHttpErrorStepDelta{} steps and \BehWebHttpErrorTimeDelta{}~s per pair ---
+which is where robustness measurement should look. Layered on top of that is a
+warning about instruments: a compatibility fallback failed by construction on all
+\OfficialFallbackN{} trials it handled and shifted the frozen baseline's headline
+rate by \BaselineSwing{}~pp, more than any effect we set out to measure, while the
+recovery artifact consisted mostly of constant columns and an outcome restated as a
+behavioural label. Neither would have been visible from a single success number.
+
+The model-versus-architecture question remains open: answering it requires a
+crossed design under the same paired protocol, and we release the staged plan for it
+alongside this paper. What we can say now is narrower and, we think, more durable:
+for web agents, report the paired design, stratify the evaluator, state the power,
+and measure the process --- because the success rate alone will not tell you whether
+your agent is robust or merely unmeasured.

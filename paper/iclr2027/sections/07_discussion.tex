@@ -1,0 +1,76 @@
+\section{Discussion}
+\label{sec:discussion}
+
+\subsection{What this design can and cannot identify}
+\label{sec:identifiability}
+
+The question that motivated this work --- how much of a web agent's robustness is
+attributable to the model versus to the architecture --- cannot be answered by
+these data, and we want to be precise about why rather than gesturing at
+``small $n$.''
+
+Identifying a model effect requires the model to vary. In the official subset and
+the behavioural matrix the model is constant; in the architecture pilot it is also
+constant. A variance decomposition over these factors would partition variance
+into a term that is zero by construction, and any numeric ``share'' it produced
+would be an artefact of which factor happened to be varied. The same argument
+applies to the model$\times$architecture interaction.
+
+What \emph{is} identified here is the fault effect, within one
+(model, architecture) configuration, and --- more usefully --- the properties of
+the measurement. Both of those are estimated with a paired design and reported
+with the power to interpret them.
+
+The design that would identify the attribution question is a crossed one:
+$\mathrm{Model} \times \mathrm{Architecture} \times \mathrm{Fault}$, with the same
+paired control/fault structure inside each cell, evaluated natively. Two models
+and two architectures over the five faults on the same \OfficialTasks{} tasks
+would be enough to estimate main effects and the interaction; more models would be
+needed to separate a model effect from an idiosyncratic one. We give the concrete
+staged plan, with the measured per-trial wall-clock that sizes it, in the
+supplementary experiment plan released with this paper.
+
+\subsection{Why the nulls are the finding}
+
+It would be easy to read \secref{sec:res-main} as a failed experiment and either
+bury it or explain it away. We argue the opposite: the nulls are reproducible and
+they have a structural cause. The success outcome is binary, the tasks are
+heterogeneous, the per-fault discordance is only \PiDNative{}, and the plausible
+effect sizes (a few percentage points) are far below what the design can resolve.
+Any underpowered fault-injection study on WebArena will produce this pattern, and
+because the pattern admits a flattering reading --- ``no significant degradation,
+therefore robust'' --- it is likely to be published as a positive result. Naming
+the failure mode seems more useful than adding one more underpowered table.
+
+The constructive version of the same point is that the process measures
+\emph{do} have power here. Step deltas of $2$--$4$ are large relative to their
+within-pair variance, and they are significant at $n=\BehWebHttpErrorN{}$ pairs
+where the binary outcome is not. If robustness is the object of study, the
+measurement should be chosen with that in mind.
+
+\subsection{Threats to validity}
+\label{sec:threats}
+
+\paragraph{Instrumentation.} The dominant threat is the evaluator fallback
+(\secref{sec:fallback}), which we handle by stratification rather than by
+correction. A second risk is that the native path may itself mis-score tasks in
+ways we have not audited; the behavioural matrix, which has no official verdict at
+all, is reported separately for exactly this reason.
+
+\paragraph{Synthetic faults.} Our faults are injected at a fixed step by a seeded
+injector: deterministic and reproducible, which is what makes the paired analysis
+possible, but not draws from a real fault distribution. The injection \emph{step}
+in particular is a free parameter we held fixed, and an agent's robustness
+plausibly depends on when the fault arrives. This is the confound a reviewer
+should press on hardest, and the first thing our staged plan adds.
+
+\paragraph{Scope.} The behavioural matrix uses \MatrixTasks{} tasks and
+\TrialsPerCell{} seeds --- a larger and different task set than the
+\OfficialTasks{}-task official subset, and not joinable to it. The process results
+therefore generalise over more tasks than the success results do. As shown in
+\secref{sec:res-recovery}, the recovery artifact is degenerate and we draw no
+recovery conclusions from it; a credible analysis would need newly defined,
+outcome-independent labels, which is a contribution in its own right. Finally,
+one model, one architecture, one temperature, one provider: our claims are about
+the measurement protocol and this configuration's fault sensitivity, not about web
+agents in general.

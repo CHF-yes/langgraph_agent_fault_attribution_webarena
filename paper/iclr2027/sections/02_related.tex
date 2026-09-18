@@ -1,0 +1,52 @@
+\section{Related Work}
+\label{sec:related}
+
+\paragraph{Web agent benchmarks.}
+WebArena \citep{zhou2024webarena} provides self-hosted replicas of four web
+applications with \num{812} long-horizon tasks and a functional evaluator that
+scores the resulting environment state rather than the action sequence. Its
+reported GPT-4 agent success rate of \SI{14.41}{\percent} against a human
+\SI{78.24}{\percent} established the long-horizon gap that motivates this line of
+work. VisualWebArena \citep{koh2024visualwebarena} adds visually grounded tasks
+and shows that a multimodal agent reaches only \SI{16.4}{\percent} against a human
+\SI{88.7}{\percent}. Both benchmark agent \emph{capability} under clean
+conditions; neither injects faults, and both report a single success number per
+configuration.
+
+\paragraph{Safety and prompt-injection evaluation.}
+WASP \citep{evtimov2025wasp} and SecureWebArena \citep{levy2025securewebarena}
+treat the page as an adversarial surface, measuring intermediate attack success
+separately from end-to-end goal success and introducing process-level rates such
+as reasoning-compromise and payload-delivery. Their lesson --- that a
+single outcome number cannot describe a multi-step agent's failure modes ---
+applies directly to non-adversarial settings, which is where our work sits.
+
+\paragraph{Fault injection for tool-using agents.}
+ChaosLLM \citep{zhang2024chaosllm} interposes a middleware between an agent and
+its tools to inject unreachability, slowness, and error responses, and finds
+hangs the most damaging of the fault types it studies. WAREX
+\citep{zhang2025warex} uses a transparent HTTP proxy to inject network faults and
+popups into WebArena itself without modifying agent or benchmark, and reports
+success-rate drops above \SI{70}{\percent} under network errors. ReliabilityBench
+\citep{gupta2025reliabilitybench} combines repeatability, input perturbation, and
+infrastructure-fault tolerance into a single reliability surface and compares
+ReAct with Reflexion. These systems establish that faults matter; our focus is
+different --- we ask what the \emph{measurement} can and cannot resolve, and we
+show that the paired design and the evaluator stratum, not the effect size alone,
+determine whether a conclusion is warranted.
+
+\paragraph{Multi-agent fault attribution.}
+MAS-FIRE \citep{wang2025masfire} catalogues fifteen fault classes across planning,
+memory, reasoning, action, and communication, and injects them non-invasively
+into MetaGPT, CAMEL, and Table-Critic. It distinguishes fault detection, local
+repair, and final task success --- a process-level decomposition we adopt in
+spirit but cannot replicate empirically here, because the recovery labels
+available in our artifacts are degenerate (\secref{sec:results}).
+
+\paragraph{Gap.}
+What is missing is a study that (i) injects non-adversarial faults into WebArena
+while keeping the \emph{official} evaluator as the outcome, (ii) uses a paired
+design so that the comparison is not swamped by task heterogeneity, and
+(iii) reports the power of that design rather than interpreting its nulls as
+robustness. We provide exactly that, and the answer we get is methodological: the
+outcome measure is the bottleneck.

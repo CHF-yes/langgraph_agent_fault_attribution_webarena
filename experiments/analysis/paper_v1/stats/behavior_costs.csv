@@ -1,0 +1,6 @@
+fault,n,step_delta_mean,step_delta_hl,step_p,time_delta_mean,time_delta_hl,time_p
+web_dom_missing,80,-0.100,0.000,0.95644,-66.06,-46.05,0.06832
+web_popup_block,80,-0.438,0.000,0.50909,-27.53,-21.82,0.00400
+web_http_error,80,4.225,4.000,0.00000,149.86,132.32,0.00028
+web_timeout,80,-0.725,-0.500,0.02136,-13.17,-8.90,0.31614
+agent_param_error,80,2.300,1.500,0.00002,20.58,7.10,0.46013

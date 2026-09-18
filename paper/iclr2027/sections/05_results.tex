@@ -1,0 +1,142 @@
+\section{Results}
+\label{sec:results}
+
+\subsection{The evaluator path moves the headline number more than any fault}
+\label{sec:res-fallback}
+
+Table~\ref{tab:baseline} stratifies the frozen control baseline by evaluator
+path. On the native path the agent succeeds in \BaseNativeRate{} of
+\BaseNativeN{} trials; on the compatibility fallback it succeeds in
+\BaseFallbackRate{} of \BaseFallbackN{}. Every one of the fallback failures is
+structural --- the fallback's null-retrieval branch is unreachable for these
+tasks --- not a property of the agent. Pooling the two paths yields
+\BasePooledRate{}, and that pooled number is what a pipeline without
+stratification would report as ``the baseline.''
+
+This is a \BaselineSwing{}~pp artefact of instrumentation, and it is larger than
+any fault effect measured anywhere in this paper. Two rules follow, and we apply
+them throughout: never pool the paths, and never compare an arm scored on one
+path against an arm scored on the other.
+
+\input{tables/T2_baseline_strata}
+
+\subsection{No fault has a detectable effect on official success}
+\label{sec:res-main}
+
+Table~\ref{tab:official_native} gives the primary result on native-evaluator
+pairs, and Figure~\ref{fig:forest} in \appref{app:figs} plots it. Reading the
+point estimates alone, the picture is mixed and slightly
+absurd: DOM omission is \ResWebDomMissingDeltaNat{}~pp, parameter errors
+\ResAgentParamErrorDeltaNat{}~pp, but popups are
+\emph{\ResWebPopupBlockDeltaNat{}~pp} and timeouts
+\ResWebTimeoutDeltaNat{}~pp --- the fault arms doing \emph{better} than control.
+Those signs are not evidence that popups help. They are what sampling noise looks
+like at this sample size, and the exact McNemar tests say so: no fault reaches
+significance (\ResAgentParamErrorPNat{} at the smallest, for parameter errors),
+and after Holm correction every adjusted $p$ is exactly $1.000$.
+
+The bootstrap intervals tell the same story. The interval for parameter errors,
+the largest point estimate, spans
+\ResAgentParamErrorDeltaNat{}~pp $\in$ $[-29.0, +0.0]$~pp --- a range that
+includes both a substantial degradation and no effect at all. Reporting
+``parameter errors do not significantly hurt the agent'' would be reporting the
+width of that interval, not a property of the agent.
+
+\input{tables/T4_official_native}
+
+For completeness, Table~\ref{tab:official_all} in \appref{app:pooled} reports the
+same analysis with the evaluator paths pooled. It is not a robustness result and
+we do not use it as one; we include it to show how much the conclusion moves when
+the fallback contamination is left in.
+
+\subsection{The design could not have detected a moderate effect}
+\label{sec:res-power}
+
+A null on its own is uninformative; what makes these nulls interpretable is the
+power analysis. With \ResWebDomMissingNNat--\ResWebTimeoutNNat{} pairs per fault
+and an observed discordance of \PiDNative{}, the paired design cannot reach
+\Power{} power at \emph{any} effect size it can express --- the minimum detectable
+effect is undefined, not merely large. At the observed discordance, detecting a
+$10$~pp difference would require on the order of \PairsForTenPPObserved{} pairs
+per fault, roughly \emph{six times} the \ResWebTimeoutNNat{} we have. Even a
+counterfactual $n=40$ design reaches only \MdePairedNForty{}~pp. The full
+power table, including the sample sizes implied by other discordances, is
+Table~\ref{tab:power} in \appref{app:stats}.
+
+The methodological consequence is that this family of null results is the default
+outcome at realistic WebArena sample sizes, and should be reported as an
+underpowered design rather than as evidence of robustness.
+
+\subsection{The same faults are sharply visible at the process level}
+\label{sec:res-behavior}
+
+Table~\ref{tab:behavior} turns to the behavioural matrix, where the same five
+faults are applied to \MatrixTasks{} tasks over \TrialsPerCell{} seeds, giving
+\MatrixPairs{} pairs with step and timing instrumentation. Here the effects are
+unambiguous, and they line up with mechanism rather than with layer:
+
+\begin{itemize}
+  \item \textbf{HTTP errors} add \BehWebHttpErrorStepDelta{} ReAct steps and
+  \BehWebHttpErrorTimeDelta{}~s per pair (both $p<0.001$). An agent that
+  encounters a server error re-navigates and retries; the cost is real and
+  consistent.
+  \item \textbf{Parameter errors} add \BehAgentParamErrorStepDelta{} steps
+  ($p<0.001$): a corrupted argument costs a wasted action, the agent re-issues it,
+  and the task usually still completes --- which is exactly why the success-rate
+  effect is hard to see.
+  \item \textbf{DOM omission} and \textbf{popup blocking} make the agent
+  \emph{faster}, not slower (\BehWebDomMissingTimeDelta{}~s and
+  \BehWebPopupBlockTimeDelta{}~s; the latter at $p=\BehWebPopupBlockTimeP{}$).
+  We read this as fault-induced early termination rather than as a benefit: an
+  agent that cannot see the page it needs gives up sooner.
+\end{itemize}
+
+Two cautions are built into how we report this. First, these rows carry no
+official verdict --- no HAR was retained for this batch --- so ``cost'' and
+``success'' in this paper come from different experiments over different task
+sets, and we never combine them into a statement about cost per successful task.
+Second, absolute cross-arm timings are not interpretable: the five per-fault
+control arms are the same configuration, yet their mean wall-clock spans
+\NoiseFloorLo--\NoiseFloorHi{}~s, a factor of \NoiseFloorRatio{}. Only
+\emph{within-pair} deltas, which share the machine state, are reported.
+
+\input{tables/T5_behavior_costs}
+
+\subsection{The architecture pilot cannot rank architectures}
+\label{sec:res-arch}
+
+Table~\ref{tab:architecture} in \appref{app:arch} gives the only architecture
+comparison available. It is a pilot: $n=\ArchCellN$ per cell, three tasks, and ---
+we established by inspection --- the committed runner does not reproduce these
+rows, so the artifact and the script that supposedly produced it disagree. We
+report it for completeness with two observations that survive even at this size.
+
+First, the coarse \texttt{condition} column in the artifact pools
+\emph{both} injected faults into a single 18-row bucket; grouping on it produces a
+``fault'' row that is really two different faults averaged together, which we
+avoid by breaking rows out by fault. Second, plan-and-execute succeeds in
+\ArchPlanCtl{} of \ArchCellN{} control trials against \ArchReactCtl{} for ReAct,
+while taking \ArchPlanTime{}~s against \ArchReactTime{}~s --- a $4.7\times$
+wall-clock difference. A comparison at equal \emph{step} budgets is therefore not
+a comparison at equal \emph{time} budgets, and the artifact records no per-role
+call counters, so the two arms cannot be shown to have had equal LLM budgets. No
+architecture ranking follows from this, in either direction.
+
+\subsection{The recovery artifact is degenerate}
+\label{sec:res-recovery}
+
+The recovery artifact is the paper's second methodological warning, with the
+column-by-column detail in \appref{app:recovery}. It records behavioural flags ---
+whether the observation was refreshed, whether the tool changed, whether a stale
+action was repeated --- which is exactly the process-level evidence one would want
+for attribution. In practice \RecDegenerateCount{} of its columns are constant
+across all \RecN{} rows and carry no information, \texttt{plan\_revised} was never
+recorded at all, and \texttt{recovered} is row-for-row identical to
+\texttt{official\_success}: not an independent measurement of recovery, but a
+restatement of the outcome it would be used to explain.
+
+We report it rather than silently dropping it because the failure mode is
+instructive: a recovery-behaviour artifact can look rich --- a dozen behavioural
+columns --- while containing two varying quantities, one of which is the outcome.
+Process-level attribution needs columns that vary \emph{independently} of the
+outcome, and that has to be checked before the analysis, not after.

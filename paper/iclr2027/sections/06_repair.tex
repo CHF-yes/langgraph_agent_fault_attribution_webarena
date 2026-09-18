@@ -1,0 +1,19 @@
+\section{Repairs: Designed, Not Yet Evaluated}
+\label{sec:repair}
+
+The motivating goal was to close the loop: attribute failures, apply targeted
+repairs, show a before/after improvement. \textbf{We have not run that ablation},
+and nothing here should be read as a measurement.
+
+The behavioural results do say where to aim. HTTP errors and parameter errors are
+\emph{recoverable} faults --- the success rate barely moves because the agent
+eventually gets there, at a cost of \BehWebHttpErrorStepDelta{} steps and
+\BehWebHttpErrorTimeDelta{}~s per pair for the former, and
+\BehAgentParamErrorStepDelta{} steps for the latter --- so a repair targeting either
+would be judged on process cost, which given \secref{sec:res-power} is the only
+measure with the power to detect it at this scale. Repair evaluation should
+therefore inherit the paired, process-level protocol, not the success-rate one.
+\appref{app:repair} lists four candidate repairs that follow from these mechanisms,
+the one fix that \emph{was} made during this work and why it improves the
+\emph{measurement} rather than the \emph{agent}, and what a credible before/after
+ablation would have to satisfy.

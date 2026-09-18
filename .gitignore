@@ -23,6 +23,11 @@ experiments/auth/
 # LaTeX build intermediates. Keep source, generated tables/figures, and the
 # review PDF; regenerate these files with pdflatex/bibtex when needed.
 *.aux
+*.bbl
 *.blg
 *.log
 *.out
+
+# Unused sample bibliography shipped with the ICLR template. The paper uses
+# paper/iclr2027/references.bib.
+paper/iclr2027/iclr2027_conference.bib

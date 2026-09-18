@@ -1,0 +1,80 @@
+\documentclass{article}
+
+% ICLR 2027 submission.  \iclrfinalcopy MUST stay commented out: the style file
+% hardcodes "Anonymous authors / Paper under double-blind review" in the
+% non-final branch, so author identity never reaches the compiled PDF.
+\usepackage{iclr2027_conference,times}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{adjustbox}
+\usepackage{amsfonts}
+\usepackage{nicefrac}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{arrows.meta,positioning,calc,patterns}
+
+\usepackage{multirow}
+\usepackage{siunitx}
+\sisetup{detect-weight=true,detect-inline-weight=math}
+
+\input{math_commands.tex}
+
+% Appendix-aware cross-reference: \secref would print "section A" for an appendix
+% label, which reads wrong.
+\newcommand{\appref}[1]{Appendix~\ref{#1}}
+
+% Every number in the prose is a macro defined here.  This must be read in the
+% PREAMBLE: \newcommand has to be defined before the section files that use it
+% are tokenised, otherwise the references resolve to undefined control sequences.
+\input{tables/macros}
+
+\hypersetup{colorlinks=false, pdfborder={0 0 0}}
+
+\title{End-to-End Success Rate Is a Blunt Instrument:\\
+Process-Level Attribution of Fault Sensitivity in a Web Agent}
+
+\author{Anonymous authors\\
+Paper under double-blind review}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\input{sections/00_abstract}
+\end{abstract}
+
+\input{sections/01_intro}
+\input{sections/02_related}
+\input{sections/03_method}
+\input{sections/04_setup}
+\input{sections/05_results}
+\input{sections/06_repair}
+\input{sections/07_discussion}
+\input{sections/08_conclusion}
+
+\subsubsection*{Reproducibility statement}
+\input{sections/09_reproducibility}
+
+\subsubsection*{Ethics statement}
+\input{sections/10_ethics}
+
+\subsubsection*{AI use statement}
+\input{sections/11_ai_use}
+
+\bibliography{references}
+\bibliographystyle{iclr2027_conference}
+
+% Appendices follow the bibliography (unlimited pages, not part of the 9-page
+% main-text limit).
+\appendix
+\input{sections/12_appendix}
+
+\end{document}

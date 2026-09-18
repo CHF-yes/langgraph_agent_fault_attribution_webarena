@@ -1,0 +1,6 @@
+dataset_layer,source_file,trials,pairs,evaluation,in_official_denominator
+curated_baseline_control,experiments/curated/gpt54_react_public16_control_v1.json,48,,official (native/fallback stratified),yes
+behavioral_matrix,experiments/analysis/fault_matrices_v1/trials.json,800,400,NOT_EVALUATED_NO_HAR,no
+official_subset,official_subset_v1_final/official_trials.json + official_trial_audit.csv,400,200,official (native/fallback stratified),yes
+architecture_pilot,architecture_gpt54_react_planexecute_v1/architecture_trial_results.csv,54,,official,yes
+recovery_subset,fault_subset_45/fault_recovery_behavior.csv,45,,official subset of the frozen 400,no (subset)

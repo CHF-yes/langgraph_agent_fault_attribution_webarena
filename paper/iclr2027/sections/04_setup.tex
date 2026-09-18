@@ -1,0 +1,81 @@
+\section{Experimental Setup}
+\label{sec:setup}
+
+\subsection{Artifacts, and what each may be used for}
+\label{sec:artifacts}
+
+The evidence in this paper comes from five committed artifacts that are \emph{not}
+interchangeable. Table~\ref{tab:datasets} lists them; we describe the
+distinctions that matter, because conflating them is the single easiest way to
+produce a wrong number.
+
+\input{tables/T1_datasets}
+
+Three distinctions carry real weight. The \textbf{official fault subset}
+(\OfficialN{} evaluations) is the only source for success-rate claims, and it
+contains no step or timing columns. The \textbf{behavioural fault matrix}
+(\TotalTrials{} records) retained no HAR, so it carries no official verdict at
+all --- every row is marked \texttt{NOT\_EVALUATED\_NO\_HAR} --- and it supports
+process-measure claims and nothing else; note also that its \TotalTrials{}
+records are \MatrixPairs{} pairs logged twice, not independent samples. The
+\textbf{official control baseline} (\BaselineN{} trials) is the only
+clean-condition artifact carrying both an official verdict and process measures.
+The \textbf{architecture pilot} (\ArchN{} rows) and \textbf{recovery subset}
+(\RecN{} rows) are small exploratory artifacts, treated as pilots throughout.
+
+Two consequences we enforce mechanically rather than by convention. First,
+official success is never aggregated across artifacts: the behavioural matrix
+cannot enter a success-rate denominator, which is why the process results and the
+success results below are reported from different data and never combined into a
+single sentence about ``cost per unit of success.'' Second, the baseline and the
+official subset share a column schema but not a design (\BaselineTasks{} tasks
+$\times$ \BaselineSeeds{} seeds versus \OfficialTasks{} $\times$ \TrialsPerCell{}),
+so rows are tagged with their source artifact and the two are never concatenated.
+
+\subsection{The evaluator has two paths, and they are not equivalent}
+\label{sec:fallback}
+
+The official evaluator in this stack has a native path and a compatibility
+fallback used when the native retrieval check cannot be applied. The fallback is
+\emph{structurally} failure-biased: its null-retrieval schema branch returns
+success only when the state matches \emph{and} both retrieved values are null,
+which our runs almost never satisfy. Empirically, of the \OfficialFallbackN{}
+evaluations it processed in the official subset, \textbf{zero} succeeded, and the
+same pattern holds in the baseline (\BaseFallbackRate{} against
+\BaseNativeRate{} on the native path).
+
+We therefore stratify every official result by evaluator path and treat the
+native stratum as primary. Table~\ref{tab:baseline} shows the effect on the
+frozen baseline: the pooled rate is \BasePooledRate{}, the native rate is
+\BaseNativeRate{}, a \BaselineSwing{}~pp gap produced entirely by which trials
+happened to be scored by which path. Reported without stratification, that gap
+would be attributed to the agent.
+
+Because each arm of a pair may be scored by a different path, the native
+analysis restricts to pairs where \emph{both} arms were scored natively. This is
+why the per-fault $n$ drops from \TrialsPerCell{} seeds $\times$
+\OfficialTasks{} tasks $= 40$ to \ResWebDomMissingNNat--\ResWebTimeoutNNat{}. We
+report both the pair-restricted rates (the quantity $\Delta$ and McNemar refer
+to) and the per-arm marginal native rates, and we label them separately in
+Table~\ref{tab:official_native} because they are computed over different subsets
+and are not interchangeable.
+
+\subsection{Metrics}
+\label{sec:metrics}
+
+\emph{Success rate} is the official evaluator's verdict. \emph{Paired risk
+difference} $\Delta$ is in percentage points, fault minus control, on the
+pair-restricted subset. \emph{Process cost} is the within-pair delta in
+\texttt{step\_count} and wall-clock seconds. \emph{Discordance} $\pi_d$ is the
+fraction of pairs in which the two arms disagree; it is the quantity that governs
+power, and it is reported rather than assumed.
+
+\subsection{Reproducibility of the runs}
+\label{sec:runs}
+
+Every trial records its fault seed, injection step, model profile, architecture,
+and git commit, so a fault condition is reproducible at the level of the design
+rather than the token sequence --- the provider does not guarantee bit-identical
+sampling for a fixed seed. Wall-clock is host- and load-dependent, which is why
+process-cost claims use within-pair deltas only; \appref{app:runs} quantifies the
+drift.

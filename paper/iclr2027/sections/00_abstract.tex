@@ -1,0 +1,26 @@
+Web agents are evaluated almost exclusively by end-to-end task success, and that
+number is routinely read as a measure of robustness. We test how far this reading
+survives a controlled fault-injection study. Using a LangGraph ReAct agent on
+WebArena with the official functional-correctness evaluator, we inject five
+non-adversarial faults (DOM omission, popup blocking, HTTP errors, timeouts, and
+tool parameter errors) in a paired control/fault design, and analyse \OfficialN{}
+official evaluations alongside a \TotalTrials{}-trial behavioural record. Three
+findings emerge. First, end-to-end success is a blunt, high-variance instrument:
+with $n=\ResWebDomMissingNNat$--$\ResWebTimeoutNNat$ native-evaluator pairs per
+fault and an observed discordance of \PiDNative{}, the paired design cannot reach
+\Power{} power at \emph{any} effect size the data can express, and no fault is
+significant after Holm correction (all $p_{\text{Holm}}=1.000$). Detecting a
+$10$~pp difference --- the smallest we would consider practically interesting ---
+needs on the order of \PairsForTenPPObserved{} pairs per fault, several times more
+than we have.
+Second, the same faults are sharply visible one level down: HTTP errors add
+\ResHttpErrorStepDelta{} ReAct steps and \ResHttpErrorTimeDelta{}~s of wall-clock
+time per pair ($p<0.001$), even though their success-rate effect is
+indistinguishable from zero. Third, the measuring instrument is itself a confound:
+a compatibility fallback in the evaluator path fails by construction on all
+\OfficialFallbackN{} trials it handles, moving the frozen baseline's headline rate
+from \BaseNativeRate{} to \BasePooledRate{} depending only on whether those trials
+are stratified or pooled. We conclude that robustness claims for web agents should
+rest on paired, process-level measurements under an explicitly stratified
+evaluator, and we give a staged design that would make the
+model-versus-architecture attribution question answerable.

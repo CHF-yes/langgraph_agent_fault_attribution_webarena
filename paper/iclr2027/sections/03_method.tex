@@ -1,0 +1,100 @@
+\section{Method}
+\label{sec:method}
+
+\subsection{Agent and environment}
+\label{sec:agent}
+
+The agent is a LangGraph state-graph ReAct loop
+\citep{yao2023react, langgraph2024}: \texttt{START} $\rightarrow$ agent
+$\rightarrow$ tools $\rightarrow$ agent $\rightarrow \cdots \rightarrow$
+\texttt{END}. At each turn the agent receives a text rendering of the page's
+accessibility tree and emits either a tool call or a final answer. The tool set
+comprises \ToolCount{} WebArena actions (click, type, hover, scroll, go-back,
+go-forward, tab-focus, new-tab, and a no-op wait) dispatched over Playwright.
+
+Two counter conventions matter for interpreting the cost columns later, so we fix
+them now. \texttt{step\_count} counts \emph{executor} ReAct turns only;
+planner and replanner invocations are counted in \texttt{llm\_calls} but not in
+\texttt{steps}. In the ReAct configuration studied here the two coincide, but
+they diverge under plan-and-execute, which is one reason the architecture
+comparison in \secref{sec:results} is reported as a pilot rather than a ranking.
+
+\subsection{Fault model}
+\label{sec:faults}
+
+We inject five faults, chosen to span the observation, network, and action
+layers while remaining non-adversarial:
+
+\begin{itemize}
+  \item \textbf{DOM omission} (\texttt{web\_dom\_missing}) --- elements are dropped
+  from the accessibility tree, so the agent observes a page that does not match
+  the one it is acting on (observation layer).
+  \item \textbf{Popup block} (\texttt{web\_popup\_block}) --- a blocking overlay
+  occludes actionable content (observation layer).
+  \item \textbf{HTTP error} (\texttt{web\_http\_error}) --- navigations return a
+  server error (network layer).
+  \item \textbf{Timeout} (\texttt{web\_timeout}) --- requests stall to the client
+  deadline (network layer).
+  \item \textbf{Parameter error} (\texttt{agent\_param\_error}) --- a tool call is
+  executed with a corrupted argument, so it fails at the action layer and the
+  agent must recover.
+\end{itemize}
+
+Each fault is injected at a fixed step index through a seeded
+\texttt{FaultInjector}. The seed and the injection step are recorded per trial, so
+a fault condition is reproducible exactly. Injection intensity is held at
+\FaultIntensity{} throughout. The implementation contains ten fault
+definitions in total; the five above are the ones with committed official
+evaluations, and we restrict every empirical claim in this paper to those five.
+The remaining five (targeting GitLab-specific state) are implemented but not part
+of the main result, and we do not claim anything about them.
+
+\subsection{Paired design and attribution quantities}
+\label{sec:attribution}
+
+For a fault $F$ and a (task, seed) cell $u$, let
+$Y_u^{(0)}, Y_u^{(1)} \in \{0,1\}$ be official success in the control and fault
+arms. The design runs both arms of every cell, so the unit of analysis is the
+pair, and the estimand is the paired risk difference
+
+\begin{equation}
+  D(F) \;=\; \mathbb{P}\bigl(Y^{(1)} = 1\bigr) - \mathbb{P}\bigl(Y^{(0)} = 1\bigr),
+\end{equation}
+
+estimated by the mean of the within-pair differences
+$d_u = Y_u^{(1)} - Y_u^{(0)}$. Because $d_u \in \{-1,0,+1\}$, the sample mean is
+exactly the difference of the two marginal rates on the paired subset, and its
+sign is determined by the two discordant counts $b$ (control passes, fault fails)
+and $c$ (fault passes, control fails). We therefore report $b$, $c$, and an exact
+McNemar test on them.
+
+We deliberately do \emph{not} define a ``responsibility share'' between model and
+architecture. Doing so requires a design in which both factors vary ---
+$\mathrm{Model} \times \mathrm{Architecture} \times \mathrm{Fault}$ --- and ours
+varies only the fault. A variance decomposition applied to these data would
+attribute to ``model'' a quantity that is constant by construction.
+\secref{sec:discussion} specifies the design that would identify it.
+
+\subsection{Statistical procedure}
+\label{sec:stats}
+
+All tests are implemented in the Python standard library, with no SciPy
+dependency, and are unit-tested against hand-computed values (see the
+Reproducibility statement).
+
+This section states the procedure in outline; \appref{app:stats} gives the full
+derivations, the seed-sensitivity envelope, and the power table.
+
+The primary test is the two-sided \emph{exact} McNemar test on the discordant
+counts, reported with its mid-$p$ variant and a Haldane--Anscombe corrected
+matched odds ratio, and with Holm--Bonferroni multiplicity control across the five
+faults. Intervals for $D(F)$ are percentile bootstraps that resample \emph{pair
+units} --- the correct unit for a paired design --- under a fixed seed, with a
+task-clustered sensitivity interval and a multi-seed envelope as checks. Process
+measures use the two-sided Wilcoxon signed-rank test with the Hodges--Lehmann
+shift estimator, since the deltas are heavy-tailed and tied. Power is obtained by
+solving the paired-proportion equation for $\delta$ at the \emph{observed}
+discordance $\pi_d = \PiDNative{}$; because the risk difference is bounded by
+$\pi_d$ rather than by $1$, the search must be bracketed on $(0, \pi_d]$, and
+targets that are unreachable at any effect size are reported as \emph{undefined}
+rather than as a number.

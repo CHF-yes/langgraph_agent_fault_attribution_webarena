@@ -1,0 +1,28 @@
+A large language model was used in the preparation of this work, and we describe
+its role precisely.
+
+\emph{Where it was used.} (i)~Writing and editing the manuscript, including
+restructuring, translation, and prose revision. (ii)~Writing the analysis code in
+\texttt{scripts/paper/} --- the statistics module, the artifact loaders, and the
+table generator. (iii)~Auditing the committed experiment artifacts, where it
+surfaced the evaluator-fallback contamination, the degenerate recovery columns,
+the 800-record matrix being 400 pairs, and the architecture table's pooled
+fault bucket.
+
+\emph{Where it was not used.} The fault-injection harness, the agent
+implementation, and the experiment runs themselves predate this assistance. The
+model did not design the experiments, select the tasks, or produce any
+experimental result. It did not fabricate, interpolate, or adjust any number: every
+quantity in the paper is computed by \texttt{scripts/paper\_tables.py} from the
+committed artifacts, and that script is released.
+
+\emph{Verification.} Two safeguards apply to the analysis code, which is the part
+where an error would silently change a result. First, the statistical routines
+carry unit tests with hand-computed expected values, and one such test caught a
+real defect during preparation --- an incorrect search bracket in the minimum
+detectable effect calculation that made the function return an undefined value for
+every input. Second, the main tables are checked against independently committed
+summaries: the pooled paired success rates reproduce
+\texttt{experiments/analysis/official\_subset\_v1\_final/official\_summary.csv}
+cell for cell. The author reviewed and verified all generated output and takes
+responsibility for the content.
