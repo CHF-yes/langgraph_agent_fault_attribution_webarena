@@ -17,14 +17,20 @@ ReAct Agent 节点 - 标准 ReAct 循环：Thought → Action → Observation �
 import json
 import os
 import re
+import time
 
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage, ToolMessage
 from langchain_core.runnables import RunnableConfig
 
+from standard_agent.core.plan_decision import normalize_decision
 from standard_agent.core.state import AgentState
 from standard_agent.core.trace import append_event, append_trace, make_entry
 from standard_agent.config import settings
-from standard_agent.llm.provider import create_llm, get_llm_metadata
+from standard_agent.llm.provider import (
+    create_llm,
+    extract_served_metadata,
+    get_llm_metadata,
+)
 from standard_agent.tools.web_tools import ALL_TOOLS, get_current_observation
 
 
@@ -157,6 +163,39 @@ def _thread_id(config: RunnableConfig | None) -> str:
         return ""
 
 
+def _trace_provenance(thread_id: str, step: int, task: str, url: str,
+                      response: object, model_profile: str, architecture: str,
+                      phase: str, latency_s: float | None = None) -> None:
+    """记录本次调用**端点实际返回的**模型标识。
+
+    ``get_llm_metadata`` 只记录我们**请求**的模型 id，因而无法区分"旗舰模型作答"
+    与"供应商静默路由到了更小的后端"——而这正是本项目已经踩过的坑：第三方 GPT 端点
+    可能以次充好，DeepSeek 自身的 id 也会跨模型别名（``deepseek-chat`` /
+    ``deepseek-reasoner`` 已于 2026-07-24 停服并改为报错；``deepseek-v4-pro`` 在
+    2026-09 的下线反复中一度计划被静默重路由到 V4.1 Flash）。若产物只留下请求 id，
+    一场"模型对比"有可能其实是同一个模型与它自己对比。
+
+    该事件**无条件**发射（不像 ``TRACE_LLM_IO`` 默认关闭）：只在需要时才记录的
+    来源信息，在需要它的时候是拿不到的。记录本身是诊断性的，任何异常都被吞掉，
+    绝不能让一次 trial 因为记日志而失败。
+    """
+    try:
+        requested = get_llm_metadata(model_profile).get("model", "")
+        data = {
+            **get_llm_metadata(model_profile),
+            **extract_served_metadata(response, requested_model=requested),
+            "architecture": architecture,
+            "phase": phase,
+        }
+        if latency_s is not None:
+            data["latency_s"] = round(latency_s, 3)
+        append_event(thread_id, event="llm_provenance", step=step,
+                     task=task, url=url, data=data)
+    except Exception:
+        # 来源信息是诊断用途，绝不能因为它让一次 trial 失败。
+        pass
+
+
 def agent_node(state: AgentState, config: RunnableConfig) -> dict:
     """
     ReAct agent 节点：读取当前状态 → LLM 决策 → 返回 tool_call 或最终回复。
@@ -258,6 +297,7 @@ def agent_node(state: AgentState, config: RunnableConfig) -> dict:
     # ---- LLM 推理 ----
     llm = create_llm(profile_name=model_profile)
     llm_with_tools = llm.bind_tools(ALL_TOOLS)
+    _t0 = time.time()
     try:
         response = llm_with_tools.invoke(full_messages)
     except Exception as exc:
@@ -277,6 +317,9 @@ def agent_node(state: AgentState, config: RunnableConfig) -> dict:
         if settings.TRACE_CONSOLE:
             print(f"[ReAct][step={new_step_count}] ERROR {exc}")
         raise
+
+    _trace_provenance(thread_id, new_step_count, task, current_url, response,
+                      model_profile, architecture, "executor", time.time() - _t0)
 
     llm_calls = state.get("llm_calls", 0) + 1
     executor_calls = state.get("executor_calls", 0) + 1
@@ -404,6 +447,7 @@ def planner_node(state: AgentState, config: RunnableConfig) -> dict:
             url=url,
             data=planner_request,
         )
+    _t0 = time.time()
     try:
         plan_response = llm.invoke([prompt])
     except Exception as exc:
@@ -421,6 +465,8 @@ def planner_node(state: AgentState, config: RunnableConfig) -> dict:
             },
         )
         raise
+    _trace_provenance(thread_id, request_step, task, url, plan_response,
+                      model_profile, "plan_execute", "planner", time.time() - _t0)
     raw_plan = str(getattr(plan_response, "content", "") or "").strip()
     plan_steps = _parse_plan_steps(raw_plan)
     plan = json.dumps({"steps": plan_steps}, ensure_ascii=False)
@@ -524,19 +570,32 @@ def plan_executor_node(state: AgentState, config: RunnableConfig) -> dict:
     ))
     full_messages = [prompt, *list(messages), THOUGHT_REMINDER]
     llm = create_llm(profile_name=model_profile).bind_tools(ALL_TOOLS)
+    _t0 = time.time()
     response = llm.invoke(full_messages)
     new_step = step_count + 1
+    _trace_provenance(thread_id, new_step, task, url, response,
+                      model_profile, "plan_execute", "executor", time.time() - _t0)
     llm_calls = state.get("llm_calls", 0) + 1
     executor_calls = state.get("executor_calls", 0) + 1
+    # Same protocol instrumentation as the ReAct arm (agent_node). Without it
+    # the two architectures are not measured on the same rubric, so a format
+    # deviation in one arm cannot be told apart from an architecture deficit.
+    executor_thought = str(getattr(response, "content", "") or "")
+    if getattr(response, "tool_calls", None) and not executor_thought.lstrip().startswith("THOUGHT:"):
+        append_event(
+            thread_id,
+            event="protocol_violation",
+            step=new_step,
+            task=task,
+            url=url,
+            data={
+                "architecture": architecture,
+                "phase": "executor",
+                "rule": "tool_call_requires_THOUGHT_prefix",
+                "content": executor_thought,
+            },
+        )
     tool_calls = getattr(response, "tool_calls", []) or []
-    thought = str(getattr(response, "content", "") or "")
-    if tool_calls and not thought.lstrip().startswith("THOUGHT:"):
-        append_event(thread_id, event="protocol_violation", step=new_step,
-                     task=task, url=url, data={
-                         "architecture": architecture, "phase": "executor",
-                         "rule": "tool_call_requires_THOUGHT_prefix",
-                         "content": thought,
-                     })
     if len(tool_calls) > 1:
         response = response.model_copy(update={"tool_calls": tool_calls[:1]})
     if not getattr(response, "tool_calls", None):
@@ -584,28 +643,44 @@ def replanner_node(state: AgentState, config: RunnableConfig) -> dict:
         f"Latest tool result: {latest}"
     ))
     llm = create_llm(profile_name=model_profile)
+    _t0 = time.time()
     response = llm.invoke([prompt])
+    _trace_provenance(thread_id, step_count, task, state.get("url", "about:blank"),
+                      response, model_profile, architecture, "replanner",
+                      time.time() - _t0)
     raw = str(getattr(response, "content", "") or "")
-    raw_decision = _parse_replanner_decision(raw)
-    decision_key = raw_decision.strip().lower() if isinstance(raw_decision, str) else ""
-    aliases = {
-        "continue": "continue", "next": "continue", "proceed": "continue",
-        "advance": "continue", "finish": "finish", "done": "finish",
-        "complete": "finish", "stop": "finish", "replan": "replan",
-        "retry": "replan", "revise": "replan",
-    }
-    decision = aliases.get(decision_key, "replan")
-    if decision_key not in aliases:
-        append_event(thread_id, event="replanner_contract_violation", step=step_count,
-                     task=task, url=state.get("url", "about:blank"), data={
-                         "architecture": architecture, "phase": "replanner",
-                         "raw_decision": str(raw_decision)[:200], "fallback": decision,
-                     })
+    # Normalise before routing. Reading the field verbatim meant a model that
+    # answered "next" instead of "continue" fell through to an unconditional
+    # replan, charging its phrasing to the architecture. See
+    # standard_agent/core/plan_decision.py for the full rationale.
+    decision_result = normalize_decision(raw)
+    decision = decision_result.decision
     append_event(thread_id, event="replan_decision", step=step_count,
                  task=task, url=state.get("url", "about:blank"), data={
                      "architecture": architecture, "phase": "replanner",
-                     "decision": decision, "reason": raw[:500],
+                     "decision": decision,
+                     "decision_matched_by": decision_result.matched_by,
+                     "decision_raw": decision_result.raw_value,
+                     "decision_json_found": decision_result.json_found,
+                     "contract_violation": decision_result.contract_violation,
+                     "reason": raw[:500],
                  })
+    if decision_result.contract_violation:
+        append_event(
+            thread_id,
+            event="replanner_contract_violation",
+            step=step_count,
+            task=task,
+            url=state.get("url", "about:blank"),
+            data={
+                "architecture": architecture,
+                "phase": "replanner",
+                "rule": "decision_must_be_continue_replan_or_finish",
+                "raw_value": decision_result.raw_value,
+                "matched_by": decision_result.matched_by,
+                "routed_to": decision,
+            },
+        )
     calls = state.get("llm_calls", 0) + 1
     replanning_calls = state.get("replanning_calls", 0) + 1
     if decision == "finish":
@@ -616,21 +691,6 @@ def replanner_node(state: AgentState, config: RunnableConfig) -> dict:
                 "llm_calls": calls, "replanning_calls": replanning_calls}
     return {"replan_required": True, "llm_calls": calls,
             "replanning_calls": replanning_calls}
-
-
-def _parse_replanner_decision(raw: str) -> object:
-    """Extract the first valid decision value from a model response."""
-    decoder = json.JSONDecoder()
-    for index, char in enumerate(raw):
-        if char != "{":
-            continue
-        try:
-            payload, _ = decoder.raw_decode(raw[index:])
-        except json.JSONDecodeError:
-            continue
-        if isinstance(payload, dict):
-            return payload.get("decision", "")
-    return ""
 
 
 def run_tools(state: AgentState, config: RunnableConfig) -> dict:

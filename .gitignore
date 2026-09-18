@@ -1,6 +1,7 @@
 .env
 __pycache__/
 *.pyc
+.pytest_cache/
 .venv/
 .venv-linux/
 .venv311/
@@ -18,3 +19,10 @@ experiments/official_outputs/
 experiments/auth/
 
 # Curated, reviewable experiment artifacts are explicitly force-added.
+
+# LaTeX build intermediates. Keep source, generated tables/figures, and the
+# review PDF; regenerate these files with pdflatex/bibtex when needed.
+*.aux
+*.blg
+*.log
+*.out

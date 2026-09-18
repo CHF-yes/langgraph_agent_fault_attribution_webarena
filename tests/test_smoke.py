@@ -42,23 +42,12 @@ class TestGraphBuild(unittest.TestCase):
             "success_condition": "Result visible",
         }])
 
-    def test_replanner_parser_uses_first_valid_json_object(self):
-        from standard_agent.core.nodes import _parse_replanner_decision
-
-        self.assertEqual(
-            _parse_replanner_decision('{"decision":"next"} and {"x":1}'),
-            "next",
-        )
-        self.assertEqual(
-            _parse_replanner_decision('Set {a} then {"decision":"finish"}'),
-            "finish",
-        )
-
-    def test_replanner_parser_handles_invalid_and_non_object_values(self):
-        from standard_agent.core.nodes import _parse_replanner_decision
-
-        self.assertEqual(_parse_replanner_decision('{"decision":true}'), True)
-        self.assertEqual(_parse_replanner_decision('not JSON'), "")
+    # NOTE: the two `_parse_replanner_decision` tests that lived here were dropped
+    # when that helper was replaced by `normalize_decision`
+    # (standard_agent/core/plan_decision.py). Everything they covered -- "first
+    # valid JSON object wins", prose braces skipped, non-string decision values,
+    # non-JSON input -- is covered in more detail by tests/test_plan_decision.py,
+    # which is pure stdlib and therefore runs even without langgraph installed.
 
     def test_agent_state_reducer(self):
         from standard_agent.core.state import add_action_history
