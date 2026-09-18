@@ -1,0 +1,32 @@
+{
+  "manifest_version": 1,
+  "dataset": "ServiceNow/WebArena-Verified",
+  "selection_policy": {
+    "frozen_before_formal_results": true,
+    "requires_interactive_login": false,
+    "mutates_site_state": false,
+    "single_site_only": true,
+    "task_types": {"retrieve": 10, "navigate": 6},
+    "sites": {"shopping": 5, "reddit": 2, "map": 5, "gitlab": 4}
+  },
+  "tasks": [
+    {"task_id": 21, "site": "shopping", "task_type": "retrieve", "stratum": "review extraction"},
+    {"task_id": 118, "site": "shopping", "task_type": "navigate", "stratum": "semantic product navigation"},
+    {"task_id": 124, "site": "shopping", "task_type": "retrieve", "stratum": "search and numeric aggregation"},
+    {"task_id": 163, "site": "shopping", "task_type": "retrieve", "stratum": "filtered review extraction"},
+    {"task_id": 274, "site": "shopping", "task_type": "navigate", "stratum": "search-results navigation"},
+    {"task_id": 27, "site": "reddit", "task_type": "retrieve", "stratum": "post and comment aggregation"},
+    {"task_id": 66, "site": "reddit", "task_type": "retrieve", "stratum": "ranked-feed semantic filtering"},
+    {"task_id": 7, "site": "map", "task_type": "retrieve", "stratum": "nearby-place and route retrieval"},
+    {"task_id": 16, "site": "map", "task_type": "retrieve", "stratum": "multi-mode route duration"},
+    {"task_id": 248, "site": "map", "task_type": "retrieve", "stratum": "coordinate retrieval"},
+    {"task_id": 356, "site": "map", "task_type": "navigate", "stratum": "route navigation"},
+    {"task_id": 369, "site": "map", "task_type": "navigate", "stratum": "place-page navigation"},
+    {"task_id": 102, "site": "gitlab", "task_type": "navigate", "stratum": "public issue filtering"},
+    {"task_id": 132, "site": "gitlab", "task_type": "retrieve", "stratum": "public commit counting"},
+    {"task_id": 258, "site": "gitlab", "task_type": "navigate", "stratum": "public project listing"},
+    {"task_id": 308, "site": "gitlab", "task_type": "retrieve", "stratum": "public contributor aggregation"}
+  ],
+  "preflight_rule": "Run each task once without credentials. Replace a task only if it redirects to login or the official evaluator cannot score it; record the replacement before T0.",
+  "scope_limit": "The sample supports claims about public, read-only WebArena-Verified retrieval and navigation tasks, not authenticated or state-mutating tasks."
+}

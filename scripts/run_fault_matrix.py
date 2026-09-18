@@ -17,7 +17,15 @@ sys.path.insert(0, str(ROOT))
 
 from run_baseline import load_tasks, resolve_start_url
 
-BASELINE_TASK_IDS = [21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 132, 133, 134, 135, 136]
+# Frozen no-login Stage C sample.  The tasks cover four public site surfaces,
+# six navigation outcomes and ten retrieval outcomes.  Keep this list aligned
+# with docs/task_manifest_noauth16.json.
+BASELINE_TASK_IDS = [
+    21, 118, 124, 163, 274,       # shopping: public product/search pages
+    27, 66,                       # reddit: public read-only pages
+    7, 16, 248, 356, 369,         # map: retrieval and navigation
+    102, 132, 258, 308,           # gitlab: public project pages only
+]
 
 
 def parse_args():
@@ -37,7 +45,7 @@ def parse_args():
     parser.add_argument("--task-ids", type=int, nargs="*", default=None)
     parser.add_argument("--resume", action="store_true",
                         help="Skip jobs with an existing status JSON in output-dir")
-    parser.add_argument("--job-timeout-minutes", type=int, default=30,
+    parser.add_argument("--job-timeout-minutes", type=int, default=45,
                         help="Stop the matrix if one job exceeds this duration")
     parser.add_argument("--official-output-root", default=None,
                         help="Root for per-job HAR/agent_response/evaluator outputs")

@@ -78,37 +78,19 @@ grep -rn 'TRACE_DIR' scripts/ main.py 2>/dev/null
 | 陷阱 | 事实 |
 |---|---|
 | `--fault-injection-step` | **绝不传**（会把 `agent_param_error` 从 step 1 挪走）。仅 Stage E 有意扫步时用 |
-| `--job-timeout-minutes` | 用 **45**。默认 30 会**非随机**地杀掉约 1/5 最慢的 plan_execute 作业 |
+| `--job-timeout-minutes` | 默认 **45**。30 分钟只会节省超过 30 分钟的异常/慢作业，并不会降低正常 trial 的 token；却会选择性截断较慢的 `plan_execute`。token 上限由 `max_steps=20` 控制 |
 | `--fault-intensity high` | 在确定性模式下对 **10 个故障里的 8 个是空操作**（只有 `web_timeout` 的延迟和 `web_dom_missing` 的删除数真正消费它）。**不要在正文里把强度当自变量** |
 | 故障注入记录 | `injection_log` **从未落盘**；权威记录是 stdout 上的正则（`injection_count=(\d+)`）。这是量具的弱点，别把它说成强记录 |
 | `agent_param_error` 步号 | 配置的 step 与记录的 step 差一（`config.py:279`）。与上一条同源 |
 
-### 0.5 实现第三级架构 `plan_only` ⚠️ 新增阻塞项
+### 0.5 冻结两架构主设计 ✅
 
-范式要求架构轴**有序**（§2.1）。现在只有 `react` / `plan_execute` 两级，M×A 只有 **1 df**——
-只能说"这两个实现差多少"，说不了"架构的价值随能力如何变化"。而后者才是你要的那个范式。
+主实验只比较项目中已经定义清楚的 `react` 与 `plan_execute`。两水平架构因子足以检验
+Model × Architecture 交互；不再为了增加自由度而构造有序的 `plan_only`。后者若以后实现，
+只能作为机制消融，不能事后加入主实验。
 
-**`plan_only` = `plan_execute`，但 replanner 节点换成确定性策略**（不调 LLM，直接推进
-`current_plan_step`）。三级于是落在**每次环境动作的 LLM 调用数**这条先验已知的轴上：
-
-| 级 | 架构 | 每次动作的 LLM 调用 | 状态 |
-|---|---|---|---|
-| 1 | `react` | 1 | 已有 |
-| 2 | **`plan_only`** | ~1 + 摊销 planner | **待实现** |
-| 3 | `plan_execute` | ~2 + 摊销 | 已有 |
-
-额外好处：`plan_execute − plan_only` 恰好隔离出 **replanner 那一次 LLM 调用的净贡献**。
-
-**风险点**：`graph.py` 现在是 `tools → replanner`，拿掉 replanner 后 `current_plan_step`
-的推进必须另有出处。**若计划卡在原地，它会伪装成"架构无效"**——这是本次最危险的实现陷阱。
-
-**通过标准**（1 task × 1 seed × 1 fault 冒烟）：
-
-- `current_plan_step` 单调推进到计划末尾，不退化为原地重试；
-- per-role 计数器（`planning_calls` / `executor_calls` / `replanning_calls`）都记到了；
-- **实测 s/trial 落在 `react`(159 s) 与 `plan_execute`(~500 s) 之间**。
-
-**实测值要回填进 §5**，替换本文暂用的 **250 s** 估算（该值**未实测**，只用于占位）。
+正式运行前仍须用同一任务各做一次冒烟，并确认 per-role 计数器
+（`planning_calls` / `executor_calls` / `replanning_calls`）完整落盘。
 
 ---
 
@@ -116,12 +98,12 @@ grep -rn 'TRACE_DIR' scripts/ main.py 2>/dev/null
 
 ```
 M  模型    4o-mini / V4 Pro / V4.1 Flash            3 水平，**分类因子**
-A  架构    react  <  plan_only  <  plan_execute      3 级，**先验有序**（每次动作的 LLM 调用数）
+A  架构    react / plan_execute                        2 水平，**分类因子**
 F  故障    3 种机制多样性三元组（Stage C 用）；已有 5 故障数据 + Stage E 支撑
 ```
 
-**A 轴必须有序，这是本轮最重要的设计修改。** 两级无序架构只能给出 M×A 的 1 df；
-三级有序架构给出 **2 df**，才谈得上"趋势"而不是"一点之差"。
+架构不编码为有序强度。两水平设计的 M×A 交互直接回答：具体模型在 ReAct 与
+Plan-and-Execute 之间的鲁棒性差异是否不同。计算量差异通过 LLM 调用、token、墙钟和成本单独报告。
 
 **Stage C 是唯一能同时估计 M、A 与 M×A 的阶段**，也就是课题立项时要测的那个责任划分。
 
@@ -179,24 +161,36 @@ DeepSeek 官方已报告 V4.1 Flash 在基准、性能、成本和总用时上�
 ## 3. 阶段（按"改变已有数字的能力"排序，不按新颖度）
 
 ### Stage A — evaluator 重评（**0 个新 agent trial**）
-- 冻结的 400 条已有完整 HAR；重跑不会自动修复按任务 schema 触发的 fallback。
-- 先修复或升级 evaluator 对 `retrieved_data=null` 的处理，再对现有
+- 第一选择始终是锁定版本和校验和的官方 WebArena-Verified evaluator。
+- 冻结的 400 条已有完整 HAR；先用最新版官方 evaluator 对
   `agent_response.json + network.har` 离线重评，并比较新旧 verdict。
-- 只有新 evaluator 无法消费旧产物，或者决定替换 task 22/24 时，才生成补跑清单；不预留整体 400 条预算。
+- 仅当官方 evaluator 对已知 `retrieved_data=null` schema 仍无法执行时，才启用本仓库的
+  compatibility fallback。输出必须记录 `evaluator_path=native|compatibility`；论文不得把 fallback
+  称为官方评分，并分别报告 native 与 compatibility 结果及敏感性分析。
+- 只有 evaluator 无法消费旧产物时才生成定向补跑清单；不预留整体 400 条预算。
+
+### Stage C 任务样本（冻结的免登录公开任务）
+
+任务清单见 [`task_manifest_noauth16.json`](task_manifest_noauth16.json)：Shopping 5、Reddit 2、
+Map 5、GitLab 公共页面 4；其中 retrieval 10、navigate 6。排除 Shopping Admin、个人订单、发帖、
+购物车、账号设置、仓库写入等需要认证或改变站点状态的任务。
+
+该选择降低认证失效和跨 trial 状态污染，但同时限定外推范围：正文只能声称结论适用于
+**公开、只读的 WebArena-Verified 检索与导航任务**，不能外推到登录后 mutation 任务。
 
 ### Stage C — Model × Architecture（**范式主实验**）
-- **3 模型 × 3 架构** × 3 故障（`web_http_error` / `agent_param_error` / `web_dom_missing`），
-  16 任务 × 3 种子 × (故障臂 + 配对控制臂)。
-- trials **2592** / ≈**45.4 h**
+- **3 模型 × 2 架构** × 3 故障（`web_http_error` / `agent_param_error` / `web_dom_missing`），
+  16 任务 × 3 次独立重复 × (故障臂 + 配对控制臂)。任务冻结在
+  [`task_manifest_noauth16.json`](task_manifest_noauth16.json)。
+- trials **1728** / ≈**32.9 h**
 - 模型：**三个都要**。它们是三水平分类因子，用来检验交互是否只属于某一对模型。
 
 | 架构 | s/trial | trials | ≈wall |
 |---|---|---|---|
 | `react` | 159（实测） | 864 | 7.9 h |
-| `plan_only` | **250（估算，待 §0.5 实测回填）** | 864 | 12.5 h |
 | `plan_execute` | 500（实测推导） | 864 | 25.0 h |
 
-**要砍按 seed → task → fault：** seed 3→2 得 1728 trials ≈ **30.3 h**。
+**要砍按重复次数 → task → fault：** 3→2 得 1152 trials ≈ **21.9 h**。
 
 **故障是最后才动的**：它虽不进入 §2.2 的确证性对比，却是 M×A 效应得以**泛化**的 replicate 维度。
 砍到 1 个，"模型-架构责任划分"就降格成"在 `web_http_error` 下的责任划分"。
@@ -278,35 +272,36 @@ DeepSeek 官方报告 V4.1 Flash 超过 V4 Pro，所以旧文档中 `Flash < Pro
 
 ### 4.4 三条硬约束（违反则这批数据不可用）
 
-1. **配对是刚需**——同一 `(fault, task, seed, architecture)` 下三个模型必须都有 trial。
+1. **配对是刚需**——同一 `(fault, task, replicate_id, architecture)` 下三个模型必须都有 trial。
    所有 Δ 与 McNemar 都在**配对单元**上算。
 2. **削减必须跨模型一致**——可以全体 5 故障减到 3（那就是 Stage C），不可以只给某个模型减。
-3. **削减顺序：seed → task → fault，不可颠倒。** 故障是 replicate 维度，砍它等于换研究问题。
+3. **削减顺序：重复次数 → task → fault，不可颠倒。** `fault_seed` 只控制故障机制；模型供应商
+   未必接受随机 seed，所以论文将这些运行称为独立重复，而不是模型随机种子。
 
 ---
 
 ## 5. 预算
 
-### 主方案（3 种子）
+### 主方案（3 次独立重复）
 
 | Stage | 买什么 | trials | ≈wall |
 |---|---|---|---|
-| **T0** | 三模型控制锚（§2.3 闸门的输入；**是 C 的子集，`--resume` 复用**） | 120 | 1.1 h |
+| **T0** | 3模型×2架构×16任务×1次控制冒烟（§2.3 闸门输入） | 96 | 约 1.8 h |
 | A | 修 evaluator + 对已有 400 条离线重评 | **0 新 trial** | 评估开销，不计 agent wall-clock |
-| **C** | **M×A 范式主实验**（3模型×3架构×3故障×16任务×3种子×2臂） | **2 592** | **45.4 h** |
+| **C** | **M×A 范式主实验**（3模型×2架构×3故障×16任务×3重复×2臂） | **1 728** | **32.9 h** |
 | E | 注入步敏感性（仍只在 `react`） | 480 | 4.4 h |
 | F | 修复消融 | 800 | 7.4 h |
 | ~~B / D~~ | ~~已并入 C（§3）~~ | — | — |
-| | **合计（不含 T0，它是子集）** | **3 872 新 trials** | **≈57 h** |
+| | **合计（不含 T0；其控制运行可纳入 C）** | **3 008 新 trials** | **≈44.7 h** |
 
 ### 唯一被批准的削减：seed 3 → 2
 
 | | trials | ≈wall |
 |---|---|---|
-| 主方案（C 用 3 种子） | 3 872 新 trials | **≈57 h** |
-| **削减方案（C 用 2 种子）** | **3 008 新 trials** | **≈42 h** |
+| 主方案（C 用 3 次重复） | 3 008 新 trials | **≈44.7 h** |
+| **削减方案（C 用 2 次重复）** | **2 432 新 trials** | **≈33.7 h** |
 
-削减**只动种子**（`model_budget_policy.md` §1.3 的顺序：seed → task → fault）。
+削减**只动独立重复次数**（顺序：replicate → task → fault）。
 代价是 MDE 变宽，**必须如实报告**——这正是 §9 那条"每个零结果都配功效分析"的适用场合。
 
 **不要只因为事后控制成功率高/低就删掉某个模型。** 若 T0 显示端点健康，
@@ -367,7 +362,7 @@ python3 -m pytest tests/test_stats_core.py # 统计行为不变
   跨厂商若不显著，那是**设计的性质**，不是"两厂商无差异"。
 - **计时声明只用配对内差值。**
 - **不把成本混进成功率声明**（`(fault, task, seed)` 键不同的两批不能 join 成 cost-per-success）。
-- **削减规则预注册**：看到数据**之前**把"seed 3→2"这条写进 manifest 或带日期的笔记。
+- **削减规则预注册**：看到数据**之前**把"独立重复 3→2"这条写进 manifest 或带日期的笔记。
 
 本轮新增三条（以下以 2026-09-18 修订为准）：
 
@@ -385,9 +380,8 @@ python3 -m pytest tests/test_stats_core.py # 统计行为不变
 
 ## 10. 现在立刻可做的四件事
 
-0. **实现 `plan_only`**（Stage 0.5）。**它有最长前置期**：实现 → 冒烟 → 测 s/trial → 回填 §5。
-   而 `plan_only` 的实现质量决定 C 里 **12.5 h** 的产出是否是废数据。
-   风险集中在 `current_plan_step` 的推进（§0.5）。
+0. 对冻结的 16 个任务做无凭据预检；任何登录重定向或 official evaluator 不可评分都必须在
+   T0 前替换并记录，T0 后不得再改任务集。
 1. `find` 定位 trace 落盘目录（Stage 0.1）——**它阻塞 provenance 证据，压过一切**
 2. 对已有数据跑一次审计：
    ```bash
