@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Launch the paired 120-trial GPT-5.4 Plan-and-Execute comparison subset."""
+"""Historical 120-trial GPT-5.4 subset; not a current experiment launcher.
+
+For new runs use scripts/run_fault_matrix.py and docs/experiment_roadmap.md.
+"""
 
 import argparse
 import subprocess
@@ -46,7 +49,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output-dir", default=DEFAULT_OUTPUT)
     parser.add_argument("--workers", type=int, default=3)
-    parser.add_argument("--job-timeout-minutes", type=int, default=30)
+    parser.add_argument("--job-timeout-minutes", type=int, default=45)
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--dry-run", action="store_true")
     options = parser.parse_args()

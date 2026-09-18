@@ -1,7 +1,7 @@
 # Supplementary experiment plan
 
 > **2026-09-18 execution correction:** this document preserves the original staged plan for
-> paper provenance, but its Stage A rerun and two-model/two-architecture Stage C are superseded
+> paper provenance, but all task lists, timeout defaults, Stage A reruns and Stage C matrices are superseded
 > by [`experiment_roadmap.md`](experiment_roadmap.md). Do not launch commands from this file
 > without reconciling them with the roadmap. The frozen 400-trial official subset already has
 > 400/400 HAR files; Stage A is now an evaluator repair plus offline re-evaluation, not a rerun.

@@ -51,20 +51,16 @@ find / -name '*.jsonl' -not -path '*/site-packages/*' -not -path '*/node_modules
 grep -rn 'TRACE_DIR' scripts/ main.py 2>/dev/null
 ```
 
-**通过标准**：跑 1 task × 1 seed 之后，`TRACE_DIR` 下确实多出一个 `.jsonl`，且里面能 grep 到
+**通过标准**：跑 1 task × 1 replicate 之后，`TRACE_DIR` 下确实多出一个 `.jsonl`，且里面能 grep 到
 `llm_provenance` 事件。
 
-### 0.2 provenance 层上远端
+### 0.2 provenance 层 ✅ 已合入
 
-远端 `origin/main`（`300e9e7` → `6277b1c`）已修好 replanner 解析，但**没有**来源记录层。
-本机有全套未提交改动：`_trace_provenance` + 4 个调用点 + `provider.extract_served_metadata`
-+ `tests/test_provenance.py`。
-
-**动作**：整理成对着 `6277b1c` 的 patch 推上去。**不要用本机 `nodes.py` 覆盖远端**——
-本机基于 `388d0d1`，会冲掉那两个提交。
+提交 `fa55e9e` 已加入 `_trace_provenance`、调用点、`provider.extract_served_metadata`
+和相应测试。服务器仍须用来源探针和一条真实 trial 验证 trace 实际落盘。
 
 **为什么必须在换模型前完成**：DeepSeek 的模型 id 今年反复横跳（`deepseek-chat`/`deepseek-reasoner`
-已停服、V4 Pro 下线又反转）。**没有 `served_model` 字段，"两个模型"这件事无从证明。**
+已停服、V4 Pro 下线又反转）。**没有 `served_model` 字段，三个 profile 是否对应三个目标模型无从证明。**
 
 ### 0.3 量具可信化（两个已知缺陷）
 
@@ -226,7 +222,7 @@ Map 5、GitLab 公共页面 4；其中 retrieval 10、navigate 6。排除 Shoppi
 省下约 1160 trials。**这个框架的前提在 `Pro / Flash / 4o-mini` 这个模型集下已经不成立：**
 
 - `4o-mini` 不是可选的 vendor 附加项，而是第三个模型分类水平；
-- 它必须与另外两个模型**完全交叉**（同 task、同 seed、同故障、同架构），
+- 它必须与另外两个模型**完全交叉**（同 task、同 replicate、同故障、同架构），
   否则 `M×A` 的估计对象会改变；
 - 于是**"省下 GPT 只跑脊柱"这个省法，省掉的正是主实验的一整个能力层级。**
 
@@ -294,7 +290,7 @@ DeepSeek 官方报告 V4.1 Flash 超过 V4 Pro，所以旧文档中 `Flash < Pro
 | ~~B / D~~ | ~~已并入 C（§3）~~ | — | — |
 | | **合计（不含 T0；其控制运行可纳入 C）** | **3 008 新 trials** | **≈44.7 h** |
 
-### 唯一被批准的削减：seed 3 → 2
+### 唯一被批准的削减：独立重复 3 → 2
 
 | | trials | ≈wall |
 |---|---|---|
@@ -361,7 +357,7 @@ python3 -m pytest tests/test_stats_core.py # 统计行为不变
 - **每个零结果都配功效分析。** 30–31 对 native 上 MDE 是**无定义**，不是"大"。
   跨厂商若不显著，那是**设计的性质**，不是"两厂商无差异"。
 - **计时声明只用配对内差值。**
-- **不把成本混进成功率声明**（`(fault, task, seed)` 键不同的两批不能 join 成 cost-per-success）。
+- **不把成本混进成功率声明**（`(fault, task, replicate_id)` 键不同的两批不能 join 成 cost-per-success）。
 - **削减规则预注册**：看到数据**之前**把"独立重复 3→2"这条写进 manifest 或带日期的笔记。
 
 本轮新增三条（以下以 2026-09-18 修订为准）：

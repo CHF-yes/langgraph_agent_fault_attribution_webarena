@@ -1,5 +1,9 @@
 # Web Agent 鲁棒性归因与架构优化实验设计
 
+> 本文是通用设计说明。当前可执行矩阵、冻结任务和预算以
+> [`experiment_roadmap.md`](experiment_roadmap.md) 与
+> [`task_manifest_noauth16.json`](task_manifest_noauth16.json) 为准。
+
 ## 1. 研究目标
 
 本课题研究 Web Agent 在 WebArena 任务中的故障敏感性、恢复行为和责任归因。核心问题：
@@ -12,10 +16,10 @@
 核心实验变量为：
 
 ```text
-Model × Architecture × Fault × Task × Seed
+Model × Architecture × Fault × Task × Replicate
 ```
 
-正式结论必须基于同一任务、同一故障、同一 seed 下的对照结果。
+正式结论必须基于同一任务、同一故障、同一独立重复下的配对结果；`fault_seed` 仅描述故障机制的随机状态，不等同于模型生成 seed。
 
 ## 2. 标准 Agent 基线
 
@@ -309,7 +313,7 @@ interaction_effect
 fault_effect
 ```
 
-每个条件至少使用 5 个 seed；正式结果报告均值、标准差和 95% 置信区间。相同任务上的模型/架构对比优先使用配对统计或 bootstrap。
+当前正式矩阵每格使用 3 次独立重复；正式结果报告效应量和 95% 置信区间。相同任务上的模型/架构对比使用配对统计，并按 task 聚类或 bootstrap。
 
 ## 8. 实验数据格式
 

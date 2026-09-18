@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Run the 54-trial ReAct vs Plan-and-Execute comparison."""
+"""Reproduce the historical 54-trial architecture pilot only.
+
+This task list is intentionally frozen to the published artifact.  For new
+runs use scripts/run_fault_matrix.py and docs/experiment_roadmap.md.
+"""
 import argparse, json, subprocess, sys, time
 from collections import deque
 from pathlib import Path

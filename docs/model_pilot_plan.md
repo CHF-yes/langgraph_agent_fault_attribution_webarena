@@ -1,5 +1,10 @@
 # 模型来源核验与基线 pilot
 
+> **2026-09-18 当前执行口径：** 本文只负责模型来源和 T0 健康检查；任务、架构、重复次数与
+> evaluator 政策以 [`experiment_roadmap.md`](experiment_roadmap.md) 和
+> [`task_manifest_noauth16.json`](task_manifest_noauth16.json) 为准。下文命令已同步为三模型、
+> 两架构、16 个免登录任务、每格一次控制运行，共 96 trials。
+
 ## 为什么先做这一步
 
 有三件事在花大算力之前必须先确认，而且都很便宜：
@@ -61,31 +66,36 @@ grep -ho '"served_model": "[^"]*"' experiments/<run>/**/*.jsonl | sort | uniq -c
 
 ---
 
-## 第 1 步：控制臂 pilot（每个模型约 1 小时）
+## 第 1 步：T0 控制臂（共 96 trials）
 
 **只跑控制臂（不注入故障）**，用 `run_baseline.py`。目的不是产出论文数字，而是回答三个问题：端点是否健康、每个模型的控制成功率是多少、模型间差距是否大到值得投入 Stage C。
 
 ```bash
-python3 run_baseline.py \
-  --task-ids 22 24 27 28 30 132 133 134 \
-  --model-profile deepseek-flash \
-  --architecture react \
-  --max-steps 20 \
-  --trials 3 --run-seed 42 \
-  --official-eval \
-  --storage-state-dir <storage-state 目录> \
-  --webarena-output-dir experiments/pilot_<date>/har_deepseek-flash \
-  --output experiments/pilot_<date>/baseline_deepseek-flash.json
+for model in openai_4o_mini deepseek_v4_pro deepseek_v41_flash; do
+  for arch in react plan_execute; do
+    python3 run_baseline.py \
+      --task-ids 21 118 124 163 274 27 66 7 16 248 356 369 102 132 258 308 \
+      --model-profile "$model" \
+      --architecture "$arch" \
+      --max-steps 20 \
+      --trials 1 --run-seed 1 \
+      --official-eval \
+      --webarena-output-dir "experiments/t0_<date>/har_${model}_${arch}" \
+      --output "experiments/t0_<date>/baseline_${model}_${arch}.json"
+  done
+done
 ```
 
-换 `--model-profile deepseek-v4-pro` 再跑一次。**两个 profile 必须在同一会话内、同一环境下跑**：五个按故障划分的对照臂本是同一配置，平均墙钟却相差 2.17 倍（见英文稿 §6.4），机器级漂移足以伪装成模型差异。
+三个 profile 和两种架构必须在同一环境窗口内分块、交错运行；不要先跑完一个模型再跑另一个，
+避免机器与服务漂移伪装成模型或架构差异。
 
 要点：
 
 - `--max-steps 20`：`run_baseline.py` 默认是 **10**，与正式矩阵的 20 不一致，**必须显式覆盖**，否则两边的预算口径对不上。
-- `--trials 3`：与论文基线的种子数一致（`BaselineSeeds = 3`）。8 任务 × 3 = **每模型 24 次**。
+- `--trials 1`：T0 每个 `(model, architecture, task)` 只做一次健康检查；16任务×3模型×2架构
+  = **96 trials**。正式 Stage C 才做 3 次独立重复。
 - `--official-eval` + `--webarena-output-dir`：保留 HAR、走官方原生评估。这一条很关键——英文稿的主结论之一就是**评估器回退路径造成 32.9 pp 的基线差异**，pilot 必须走原生路径才可比。
-- 该脚本**没有 `--workers`**，是串行执行：24 次 × 约 160 s ≈ **1 小时/模型**。两个模型约 2 小时。
+- 该脚本**没有 `--workers`**，是串行执行；时间以实测为准。
 - 结束后把第 0 步的 `probe_*.json` 与 pilot 结果**放在同一个目录**，作为这一批的来源证据。
 
 ---
@@ -102,12 +112,13 @@ python3 run_baseline.py \
 | Pilot 观察 | 解读 | 下一步 |
 |---|---|---|
 | 控制成功率 ≈ 0 | 模型太弱，或 harness 在新模型下坏了（先看 `protocol_violation` 计数） | 别做 M×A：地板效应会让"模型无差异"成为必然。换更强的模型对，或先修 harness |
-| 两模型控制成功率都很高、差距很小 | 同家族模型高度相关（同语料、同分词器） | 模型主效应很可能在 n≈30 下测不出来——这与论文现有结论一致（零结果是**设计**的性质），但如果你要的是**可检测**的模型效应，就得改用过程层指标或把配对数提到约 155 |
+| 三模型控制成功率都很高、差距很小 | 成功率可能出现天花板 | 按 roadmap 的预注册闸门转向过程指标，不根据 T0 事后删除模型 |
 | 一个模型显著更慢 | 步数预算 ≠ 时间预算（正是 ReAct vs Plan-and-Execute 的 4.7 倍问题） | 必须同时记录 `llm_calls` / `executor_calls` / `planning_calls` / `replanning_calls` 与 token 数，否则"性能差异"可能是"预算差异" |
 | `protocol_violation` 频繁 | 新模型不遵守 `THOUGHT:` / JSON 约束 | 先修 prompt 或 harness，否则注入的故障效应被协议失败淹没 |
 | 探针发现替换或路由漂移 | 端点不可信 | 停。这一批的任何数字都不能用 |
 
-**关于"两个 DeepSeek 模型对比"这个设计本身**：同厂商对比避免了跨厂商 confound（服务栈、限流、分词器、认证），这是优点；代价是两模型同源、相关性高，**模型主效应会比跨厂商对比更小**。这不是缺陷，但要事先知道，否则容易得到一个"模型无差异"的零结果却误以为是发现——这正是英文稿 §6.3 讲的 MDE 陷阱。
+三个模型是分类水平。两款 DeepSeek 同源可能相关，而 4o-mini 又与厂商完全混同；因此只报告
+具体模型间差异，不声称一般能力梯度或厂商效应。
 
 ---
 
@@ -116,25 +127,30 @@ python3 run_baseline.py \
 仓库里没有 `.env`（只有 `.env.example`），需要新建。**密钥只从 `.env` 读，绝不进代码或仓库**：
 
 ```bash
-MODEL_PROFILES=deepseek-flash,deepseek-v4-pro
+MODEL_PROFILES=openai_4o_mini,deepseek_v4_pro,deepseek_v41_flash
 
-MODEL_DEEPSEEK_FLASH_API_KEY=...
-MODEL_DEEPSEEK_FLASH_BASE_URL=https://api.deepseek.com
-MODEL_DEEPSEEK_FLASH_NAME=deepseek-flash
-MODEL_DEEPSEEK_FLASH_TEMPERATURE=0.2
+MODEL_OPENAI_4O_MINI_API_KEY=...
+MODEL_OPENAI_4O_MINI_BASE_URL=https://api.openai.com/v1
+MODEL_OPENAI_4O_MINI_NAME=gpt-4o-mini
+MODEL_OPENAI_4O_MINI_TEMPERATURE=0
 
 MODEL_DEEPSEEK_V4_PRO_API_KEY=...
 MODEL_DEEPSEEK_V4_PRO_BASE_URL=https://api.deepseek.com
 MODEL_DEEPSEEK_V4_PRO_NAME=deepseek-v4-pro
-MODEL_DEEPSEEK_V4_PRO_TEMPERATURE=0.2
+MODEL_DEEPSEEK_V4_PRO_TEMPERATURE=0
+
+MODEL_DEEPSEEK_V41_FLASH_API_KEY=...
+MODEL_DEEPSEEK_V41_FLASH_BASE_URL=https://api.deepseek.com
+MODEL_DEEPSEEK_V41_FLASH_NAME=deepseek-v4.1-flash
+MODEL_DEEPSEEK_V41_FLASH_TEMPERATURE=0
 
 TRACE_LLM_IO=0
 TRACE_PROMPTS=0
 ```
 
-profile 名会被转成大写、`-` 转 `_` 后拼成环境变量名（`standard_agent/config.py:58`），所以 `deepseek-v4-pro` → `MODEL_DEEPSEEK_V4_PRO_*`。
+profile 名使用下划线，避免产品名中的点号或连字符进入环境变量名；实际服务模型 ID 写在对应的 `*_NAME` 中。
 
 **注意两处已失效的默认值**（换模型时应一并处理）：
 
 - `standard_agent/config.py:35` 的默认 `MODEL_NAME = "deepseek-v4-pro"`——在该 id 的去留反复之后，不要再依赖这个默认值，务必在 `.env` 里显式指定。
-- `.env.example:10` 用的是 `deepseek-chat`——**已停服，调用会报错**。示例文件需要更新。
+- `.env.example` 已同步为三个当前实验 profile；服务器仍须用 provenance probe 核验实际 `served_model`。

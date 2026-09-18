@@ -17,7 +17,8 @@
 | `docs/experiment_roadmap.md` | **当前唯一执行入口**：Stage A 改为对已有 HAR 离线重评，模型按分类因子分析 |
 | `docs/supplementary_experiment_plan.md` | **历史补实验方案**：保留原始阶段设计；执行前必须以 roadmap 的 2026-09-18 更正为准 |
 | `docs/model_pilot_plan.md` | **模型来源核验与基线 pilot**：换模型前的检查清单与决策规则 |
-| `docs/model_budget_policy.md` | **三 backbone 预算执行方针**：Pro/Flash/OpenAI 的档位、削减顺序、价格触发器 |
+| `docs/model_budget_policy.md` | **历史预算方针，不可执行**：旧 Pro/Flash 能力梯度与 GPT 脊柱方案 |
+| `docs/task_manifest_noauth16.json` | **当前冻结任务集**：四个公开站点、10 retrieval + 6 navigate |
 | `scripts/probe_model_provenance.py` | **端点来源探针**：查端点实际服务的模型 id、指纹、长上下文截断 |
 | `tests/test_stats_core.py` | 统计自检（22 项断言，纯标准库） |
 | `tests/test_provenance.py` | 来源提取器自检（12 项断言，纯标准库） |
@@ -60,4 +61,4 @@ python3 -m pytest tests/test_stats_core.py
 
 1. `paper/zh/清理说明.md` 中标注「（出版信息待核）」的参考文献条目 [3]–[9] —— 需补齐作者、会议、年份。
 2. 确认 `\iclrfinalcopy` 仍为注释状态（匿名送审）。
-3. 若更换基线模型，需重跑实验并重新生成全部表图（见 `docs/supplementary_experiment_plan.md`）。
+3. 新正式实验严格按 `docs/experiment_roadmap.md`；`supplementary_experiment_plan.md` 只保留历史追溯用途。
