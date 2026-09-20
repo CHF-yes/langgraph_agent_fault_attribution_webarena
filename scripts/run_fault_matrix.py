@@ -17,14 +17,13 @@ sys.path.insert(0, str(ROOT))
 
 from run_baseline import load_tasks, resolve_start_url
 
-# Frozen no-login Stage C sample.  The tasks cover four public site surfaces,
-# six navigation outcomes and ten retrieval outcomes.  Keep this list aligned
-# with docs/task_manifest_noauth16.json.
+# Frozen no-login Stage C sample. Keep this list aligned with
+# docs/task_manifest_noauth4.json. Map is excluded because the experiment
+# server cannot provision its external data volumes.
 BASELINE_TASK_IDS = [
-    21, 118, 124, 163, 274,       # shopping: public product/search pages
-    27, 66,                       # reddit: public read-only pages
-    7, 16, 248, 356, 369,         # map: retrieval and navigation
-    102, 132, 258, 308,           # gitlab: public project pages only
+    118, 124,  # shopping: one navigate and one retrieve task
+    27,        # reddit: public retrieval task
+    102,       # gitlab: public navigation task
 ]
 
 

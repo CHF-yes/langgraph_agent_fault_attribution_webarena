@@ -2,8 +2,8 @@
 
 > **2026-09-18 当前执行口径：** 本文只负责模型来源和 T0 健康检查；任务、架构、重复次数与
 > evaluator 政策以 [`experiment_roadmap.md`](experiment_roadmap.md) 和
-> [`task_manifest_noauth16.json`](task_manifest_noauth16.json) 为准。下文命令已同步为三模型、
-> 两架构、16 个免登录任务、每格一次控制运行，共 96 trials。
+> [`task_manifest_noauth4.json`](task_manifest_noauth4.json) 为准。下文命令已同步为三模型、
+> 两架构、4 个免登录任务、每格一次控制运行，共 24 trials。
 
 ## 为什么先做这一步
 
@@ -66,7 +66,7 @@ grep -ho '"served_model": "[^"]*"' experiments/<run>/**/*.jsonl | sort | uniq -c
 
 ---
 
-## 第 1 步：T0 控制臂（共 96 trials）
+## 第 1 步：T0 控制臂（共 24 trials）
 
 **只跑控制臂（不注入故障）**，用 `run_baseline.py`。目的不是产出论文数字，而是回答三个问题：端点是否健康、每个模型的控制成功率是多少、模型间差距是否大到值得投入 Stage C。
 
@@ -74,7 +74,7 @@ grep -ho '"served_model": "[^"]*"' experiments/<run>/**/*.jsonl | sort | uniq -c
 for model in openai_4o_mini deepseek_v4_pro deepseek_v41_flash; do
   for arch in react plan_execute; do
     python3 run_baseline.py \
-      --task-ids 21 118 124 163 274 27 66 7 16 248 356 369 102 132 258 308 \
+      --task-ids 118 124 27 102 \
       --model-profile "$model" \
       --architecture "$arch" \
       --max-steps 20 \
@@ -92,8 +92,8 @@ done
 要点：
 
 - `--max-steps 20`：`run_baseline.py` 默认是 **10**，与正式矩阵的 20 不一致，**必须显式覆盖**，否则两边的预算口径对不上。
-- `--trials 1`：T0 每个 `(model, architecture, task)` 只做一次健康检查；16任务×3模型×2架构
-  = **96 trials**。正式 Stage C 才做 3 次独立重复。
+- `--trials 1`：T0 每个 `(model, architecture, task)` 只做一次健康检查；4任务×3模型×2架构
+  = **24 trials**。正式 Stage C 才做 3 次独立重复。
 - `--official-eval` + `--webarena-output-dir`：保留 HAR、走官方原生评估。这一条很关键——英文稿的主结论之一就是**评估器回退路径造成 32.9 pp 的基线差异**，pilot 必须走原生路径才可比。
 - 该脚本**没有 `--workers`**，是串行执行；时间以实测为准。
 - 结束后把第 0 步的 `probe_*.json` 与 pilot 结果**放在同一个目录**，作为这一批的来源证据。

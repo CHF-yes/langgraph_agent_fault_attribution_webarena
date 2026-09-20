@@ -2,7 +2,7 @@
 
 > 本文是通用设计说明。当前可执行矩阵、冻结任务和预算以
 > [`experiment_roadmap.md`](experiment_roadmap.md) 与
-> [`task_manifest_noauth16.json`](task_manifest_noauth16.json) 为准。
+> [`task_manifest_noauth4.json`](task_manifest_noauth4.json) 为准。
 
 ## 1. 研究目标
 
