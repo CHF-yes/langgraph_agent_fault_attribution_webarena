@@ -18,7 +18,7 @@
 | `docs/supplementary_experiment_plan.md` | **历史补实验方案**：保留原始阶段设计；执行前必须以 roadmap 的 2026-09-18 更正为准 |
 | `docs/model_pilot_plan.md` | **模型来源核验与基线 pilot**：换模型前的检查清单与决策规则 |
 | `docs/model_budget_policy.md` | **历史预算方针，不可执行**：旧 Pro/Flash 能力梯度与 GPT 脊柱方案 |
-| `docs/task_manifest_noauth4.json` | **当前冻结任务集**：三个公开站点、2 retrieval + 2 navigate；Map 因服务器资源限制排除 |
+| `docs/task_manifest_public24.json` | **当前候选任务集**：4 类×6 任务、三个公开站点；T0 前须通过匿名访问与官方 evaluator 预检 |
 | `scripts/probe_model_provenance.py` | **端点来源探针**：查端点实际服务的模型 id、指纹、长上下文截断 |
 | `tests/test_stats_core.py` | 统计自检（22 项断言，纯标准库） |
 | `tests/test_provenance.py` | 来源提取器自检（12 项断言，纯标准库） |

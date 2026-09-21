@@ -2,7 +2,7 @@
 
 > 本文是通用设计说明。当前可执行矩阵、冻结任务和预算以
 > [`experiment_roadmap.md`](experiment_roadmap.md) 与
-> [`task_manifest_noauth4.json`](task_manifest_noauth4.json) 为准。
+> [`task_manifest_public24.json`](task_manifest_public24.json) 为准。
 
 ## 1. 研究目标
 
@@ -321,7 +321,7 @@ interaction_effect
 fault_effect
 ```
 
-当前正式矩阵每格使用 3 次独立重复；正式结果报告效应量和 95% 置信区间。相同任务上的模型/架构对比使用配对统计，并按 task 聚类或 bootstrap。
+当前 Stage C 每格使用 2 次独立重复；正式结果报告效应量和 95% 置信区间。相同任务上的模型/架构对比使用配对统计，并按 task 与任务模板检查相关性。
 
 ## 8. 实验数据格式
 

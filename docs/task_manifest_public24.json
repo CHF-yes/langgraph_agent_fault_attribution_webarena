@@ -1,0 +1,40 @@
+{
+  "manifest_version": 3,
+  "dataset": "ServiceNow/WebArena-Verified",
+  "amendment_date": "2026-09-21",
+  "amendment_reason": "Clarified four task categories, six task IDs per category, and two independent repetitions for Stage C. Map remains unavailable on the server.",
+  "historical_anchor_ids": [22, 24, 27, 28, 30, 132, 133, 134],
+  "selection_policy": {
+    "categories": 4,
+    "tasks_per_category": 6,
+    "requires_interactive_login": false,
+    "mutates_site_state": false,
+    "single_site_only": true,
+    "map_excluded": true,
+    "preflight_required_before_freeze": true
+  },
+  "categories": [
+    {
+      "name": "shopping_review_retrieval",
+      "task_ids": [21, 22, 23, 24, 25, 26],
+      "note": "Product review evidence extraction. IDs 22 and 24 are NOT_FOUND_ERROR/null-schema cases and require native-evaluator verification; compatibility results must be flagged and analyzed separately."
+    },
+    {
+      "name": "reddit_post_retrieval",
+      "task_ids": [27, 28, 29, 30, 31, 66],
+      "note": "Public forum post/comment retrieval; 66 adds a second task template."
+    },
+    {
+      "name": "gitlab_public_repository_retrieval",
+      "task_ids": [132, 133, 134, 135, 136, 308],
+      "note": "Public commit/contributor retrieval; 308 adds a second task template."
+    },
+    {
+      "name": "public_navigation",
+      "task_ids": [118, 158, 260, 274, 102, 258],
+      "note": "Four Shopping and two GitLab public-page navigation tasks spanning product, category, search, issue, and project-list views."
+    }
+  ],
+  "preflight_rule": "Before T0, confirm all 24 IDs against the pinned official dataset, test anonymous browser access and native evaluation for every ID, and record any replacement in a dated amendment. Do not silently drop or swap tasks after T0.",
+  "scope_limit": "Purposively stratified public read-only tasks on Shopping, Reddit and GitLab only; no claims about Map, authenticated mutation tasks or the full WebArena distribution. Tasks from the same intent template are correlated and must not be treated as 24 unrelated templates."
+}

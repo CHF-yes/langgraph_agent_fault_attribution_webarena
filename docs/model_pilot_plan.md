@@ -2,8 +2,8 @@
 
 > **2026-09-18 当前执行口径：** 本文只负责模型来源和 T0 健康检查；任务、架构、重复次数与
 > evaluator 政策以 [`experiment_roadmap.md`](experiment_roadmap.md) 和
-> [`task_manifest_noauth4.json`](task_manifest_noauth4.json) 为准。下文命令已同步为三模型、
-> 两架构、4 个免登录任务、每格一次控制运行，共 24 trials。
+> [`task_manifest_public24.json`](task_manifest_public24.json) 为准。下文命令已同步为三模型、
+> 两架构、24 个候选公开任务、每格一次控制运行，共 144 trials。须先完成匿名访问及 native evaluator 预检。
 
 ## 为什么先做这一步
 
@@ -66,34 +66,37 @@ grep -ho '"served_model": "[^"]*"' experiments/<run>/**/*.jsonl | sort | uniq -c
 
 ---
 
-## 第 1 步：T0 控制臂（共 24 trials）
+## 第 1 步：T0 控制臂（共 144 trials）
 
 **只跑控制臂（不注入故障）**，用 `run_baseline.py`。目的不是产出论文数字，而是回答三个问题：端点是否健康、每个模型的控制成功率是多少、模型间差距是否大到值得投入 Stage C。
 
 ```bash
-for model in openai_4o_mini deepseek_v4_pro deepseek_v41_flash; do
-  for arch in react plan_execute; do
-    python3 run_baseline.py \
-      --task-ids 118 124 27 102 \
-      --model-profile "$model" \
-      --architecture "$arch" \
-      --max-steps 20 \
-      --trials 1 --run-seed 1 \
-      --official-eval \
-      --webarena-output-dir "experiments/t0_<date>/har_${model}_${arch}" \
-      --output "experiments/t0_<date>/baseline_${model}_${arch}.json"
+for task in 21 22 23 24 25 26 27 28 29 30 31 66 132 133 134 135 136 308 118 158 260 274 102 258; do
+  for model in openai_4o_mini deepseek_v4_pro deepseek_v41_flash; do
+    for arch in react plan_execute; do
+      python3 run_baseline.py \
+        --task-ids "$task" \
+        --model-profile "$model" \
+        --architecture "$arch" \
+        --max-steps 20 \
+        --trials 1 --run-seed 1 \
+        --official-eval \
+        --evaluator-config experiments/webarena_local_config.json \
+        --webarena-output-dir "experiments/t0_<date>/har_${task}_${model}_${arch}" \
+        --output "experiments/t0_<date>/baseline_${task}_${model}_${arch}.json"
+    done
   done
 done
 ```
 
-三个 profile 和两种架构必须在同一环境窗口内分块、交错运行；不要先跑完一个模型再跑另一个，
+三个 profile 和两种架构必须在同一环境窗口内按任务交错运行；不要先跑完一个模型再跑另一个，
 避免机器与服务漂移伪装成模型或架构差异。
 
 要点：
 
 - `--max-steps 20`：`run_baseline.py` 默认是 **10**，与正式矩阵的 20 不一致，**必须显式覆盖**，否则两边的预算口径对不上。
-- `--trials 1`：T0 每个 `(model, architecture, task)` 只做一次健康检查；4任务×3模型×2架构
-  = **24 trials**。正式 Stage C 才做 3 次独立重复。
+- `--trials 1`：T0 每个 `(model, architecture, task)` 只做一次健康检查；24任务×3模型×2架构
+  = **144 trials**。正式 Stage C 做 2 次独立重复。
 - `--official-eval` + `--webarena-output-dir`：保留 HAR、走官方原生评估。这一条很关键——英文稿的主结论之一就是**评估器回退路径造成 32.9 pp 的基线差异**，pilot 必须走原生路径才可比。
 - 该脚本**没有 `--workers`**，是串行执行；时间以实测为准。
 - 结束后把第 0 步的 `probe_*.json` 与 pilot 结果**放在同一个目录**，作为这一批的来源证据。

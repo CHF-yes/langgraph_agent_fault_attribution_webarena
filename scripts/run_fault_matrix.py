@@ -17,13 +17,14 @@ sys.path.insert(0, str(ROOT))
 
 from run_baseline import load_tasks, resolve_start_url
 
-# Frozen no-login Stage C sample. Keep this list aligned with
-# docs/task_manifest_noauth4.json. Map is excluded because the experiment
-# server cannot provision its external data volumes.
+# Proposed public Stage C sample. Keep this list aligned with
+# docs/task_manifest_public24.json. Every task needs anonymous-access and
+# evaluator preflight before T0; Map remains unavailable on this server.
 BASELINE_TASK_IDS = [
-    118, 124,  # shopping: one navigate and one retrieve task
-    27,        # reddit: public retrieval task
-    102,       # gitlab: public navigation task
+    21, 22, 23, 24, 25, 26,       # shopping review retrieval
+    27, 28, 29, 30, 31, 66,       # reddit post retrieval
+    132, 133, 134, 135, 136, 308, # gitlab public repository retrieval
+    118, 158, 260, 274, 102, 258, # public navigation
 ]
 
 
@@ -32,7 +33,7 @@ def parse_args():
     parser.add_argument("--output-dir", required=True)
     parser.add_argument("--workers", type=int, default=4)
     parser.add_argument("--max-steps", type=int, default=20)
-    parser.add_argument("--trials", type=int, default=5)
+    parser.add_argument("--trials", type=int, default=2)
     parser.add_argument("--fault-type", default="web_dom_missing")
     parser.add_argument("--fault-types", nargs="+", default=None,
                         help="Run multiple fault types in one matrix")
