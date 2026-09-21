@@ -88,6 +88,16 @@ Model × Architecture 交互；不再为了增加自由度而构造有序的 `pl
 正式运行前仍须用同一任务各做一次冒烟，并确认 per-role 计数器
 （`planning_calls` / `executor_calls` / `replanning_calls`）完整落盘。
 
+### 0.7 `THOUGHT:` 契约违规口径 ✅ 已裁决（2026-09-21）
+
+`THOUGHT:` 契约违规的完整事实基础、裁决与 T0 放行标准见 **§7**。摘要：违规只计数、不阻断
+工具调用；`thought` 由必备归因证据降为**可缺失的辅助字段**；仅当违规**造成执行或评测退化**
+时才阻断大实验。T0 起必须按 `(model, architecture)` 报告 `protocol_violation` 率与
+`thought` 缺失率。
+
+（2026-09-20 的 T0 冒烟已完成 §0.1/§0.2 的落盘验证：`llm_provenance` 覆盖
+planner / executor / replanner 三个 phase，`served_model` 与请求一致。）
+
 ---
 
 ## 2. 设计：三个自变量与一个可检验的交互范式
@@ -324,16 +334,47 @@ DeepSeek 官方报告 V4.1 Flash 超过 V4 Pro，所以旧文档中 `Flash < Pro
 
 ---
 
-## 7. ~~明确不跑 GPT 的三个分支~~（上一版遗留）
+## 7. 协议违规的处理口径（2026-09-21 修订）
 
-这三条的前提是"GPT 是可选的第三个 vendor"。在 `Pro / Flash / 4o-mini` 下
-**没有可选模型**——三个都是设计的一部分。§4.1 已说明该框架为何作废。
+旧版这里只有一条"违规频发就先修 harness"的粗规则；本节把它细化为可执行的 T0 放行标准。
+（上一版"明确不跑 GPT 的三个分支"已作废：在 `Pro / Flash / 4o-mini` 下三个模型都是设计的一部分，
+见 §4.1。）
 
-保留其中**唯一仍然成立**的一条：
+### 7.1 事实基础（观察，不是因果机制）
 
-> **若某个模型的 T0 退化**（控制率 ≈ 0 或 `protocol_violation` 频发），
-> **先修 harness，不要继续跑它的大格。** 加数据不会修好坏掉的 harness。
-> 且此时 §2.3 的闸门大概率已经触发——主结果变量应转过程量。
+`plan_execute` 的 executor 要求每次 tool call 前回复文本以 `THOUGHT:` 开头，检查点在
+`standard_agent/core/nodes.py` 的 `protocol_violation` 分支；**违规只写事件，不阻断工具调用**，
+因此空正文 ≠ 任务失败。
+
+| 观测 | 数值 |
+|---|---|
+| 2026-09-20 T0 冒烟（DeepSeek V4 Pro，`plan_execute`，task 124） | executor **15/15** 步违规，`content` 为空串 |
+| 隔离复现同形态请求 | 6 次里 3–4 次合规（约一半省略正文） |
+| 把 ReAct 的完整协议段与示例搬进 executor prompt | 3/6，与现版无差异 |
+| 空正文时的 `additional_kwargs` | 仅有 `refusal`，**无 `reasoning_content` 可取** |
+| 历史对照（此前模型，`react` 臂） | 2269 个 trace 中 23 个含违规（**1.01%**）；`plan_execute` 臂 0 个 |
+
+> **写作要求：真实 trial 的 15/15 与隔离测试的约一半，只能表述为"观察到的关联"。**
+> prompt、页面、调用路径、上下文长度或端点状态都可能解释这个差异，本轮证据不足以确定
+> 因果机制，不得写成"上下文越长越容易省略"这类已证结论。
+
+### 7.2 裁决（T0 前生效，适用于 T0 与 Stage C）
+
+1. **不自动重试，不为单臂放宽契约。** 自动重试会改变模型动作、调用次数与成本，给架构对比
+   增加新的混淆；单独放宽某一臂会让两臂不再用同一把尺子；也不得为缺失的 `thought` 补造"思考"。
+2. **`thought` 由必备归因证据降为可缺失的辅助字段。** 主结果只使用官方任务结果与可观测的
+   动作、工具错误、步数等过程量；**不跨模型比较依赖 `thought` 的主观归因标签**。
+3. **必须分别报告**每个 `(model, architecture)` 的 `protocol_violation` 率与 `thought` 缺失率。
+4. **闸门细化：** 违规只有在**造成执行或评测退化**时才阻断大实验——即伴随实际工具调用失败、
+   异常停止，或官方 evaluator 无法评分；若仅造成辅助文字缺失，则允许继续，但必须披露缺失率。
+
+### 7.3 T0 放行标准（四条需同时成立）
+
+- 工具调用、HAR 与官方 evaluator 正常；空 `content` 不单独计为执行失败。
+- 已按 `(model, architecture)` 报出 `protocol_violation` 率与 `thought` 缺失率。
+- 主结果只依赖官方任务结果与可观测的动作 / 工具错误 / 步数。
+- 若 DeepSeek Pro 的空正文伴随工具调用失败、异常停止或无法评分，**暂停该模型**，修 harness 后
+  重做 T0。
 
 `model_budget_policy.md` §0/§2/§7 在改写前**请勿再引用**。
 

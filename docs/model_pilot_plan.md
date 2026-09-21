@@ -114,7 +114,7 @@ done
 | 控制成功率 ≈ 0 | 模型太弱，或 harness 在新模型下坏了（先看 `protocol_violation` 计数） | 别做 M×A：地板效应会让"模型无差异"成为必然。换更强的模型对，或先修 harness |
 | 三模型控制成功率都很高、差距很小 | 成功率可能出现天花板 | 按 roadmap 的预注册闸门转向过程指标，不根据 T0 事后删除模型 |
 | 一个模型显著更慢 | 步数预算 ≠ 时间预算（正是 ReAct vs Plan-and-Execute 的 4.7 倍问题） | 必须同时记录 `llm_calls` / `executor_calls` / `planning_calls` / `replanning_calls` 与 token 数，否则"性能差异"可能是"预算差异" |
-| `protocol_violation` 频繁 | 新模型不遵守 `THOUGHT:` / JSON 约束 | 先修 prompt 或 harness，否则注入的故障效应被协议失败淹没 |
+| `protocol_violation` 频繁 | **分两类**：仅 `thought` 缺失（`content` 空但 tool_call 正常）**不算退化**；伴随工具调用失败 / 异常停止 / 官方 evaluator 无法评分才算退化 | 前者继续跑，但必须按 `(model, architecture)` 披露违规率与 `thought` 缺失率；后者暂停该模型、修 harness 后重做 T0（口径见 roadmap **§7**） |
 | 探针发现替换或路由漂移 | 端点不可信 | 停。这一批的任何数字都不能用 |
 
 三个模型是分类水平。两款 DeepSeek 同源可能相关，而 4o-mini 又与厂商完全混同；因此只报告

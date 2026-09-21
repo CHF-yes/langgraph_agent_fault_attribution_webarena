@@ -218,6 +218,14 @@ reasoning_level
 no_tolerance
 ```
 
+> **`thought` 的可用性限定（2026-09-21）：** 上述标签必须能从**可观测字段**（动作、工具结果、
+> 步数、官方评测）导出。`thought` 已降为**可缺失的辅助字段**——推理型模型可能返回空正文
+> （事实基础与裁决见 `experiment_roadmap.md` §7）。因此：
+>
+> - 不得存在**只靠 `thought` 才能判定**的标签；
+> - `reasoning_level` 这类依赖正文的归因，只在有正文的 trial 上报告，并同时披露 `thought` 缺失率；
+> - 主结果不跨模型比较依赖 `thought` 的主观标签。
+
 示例：
 
 ```text
