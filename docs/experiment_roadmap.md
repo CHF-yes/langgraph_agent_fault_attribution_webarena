@@ -183,6 +183,14 @@ Reddit 帖子检索、GitLab 公开仓库检索、公开页面导航各 6 个；
 同时排除需要交互式登录或改变站点状态的任务。24 个 ID 均须在 T0 前通过匿名访问和
 官方 evaluator 预检，未通过者按有日期的修订记录替换，T0 后不再改动。
 
+> **预检进度（2026-09-21）：** 数据集 24/24 命中；匿名访问 **24/24 通过**（GitLab 的 `start_urls`
+> 是站点根路径，匿名访问必然跳 `/users/sign_in`，须按各任务意图的真实目标页判定，不能按根路径
+> 判定）。官方 evaluator 对 8 个历史锚点 **8/8 走 native 路径**，其中 22、24 原先被标为 null-schema
+> 案例，在配上 `--evaluator-config` 后未再触发 compatibility 回退，该警告已被本次实测取代。
+> 其余 16 个 ID 无历史 HAR，evaluator 强制要求 `network_trace`，因此其 native 可评分性只能在
+> 每个任务首次产出 response+HAR 后确认。详见 [`task_manifest_public24.json`](task_manifest_public24.json)
+> 的 `preflight` 字段。
+
 该选择降低认证失效、环境部署和跨 trial 状态污染，但外推范围很窄：正文只能把结果描述为
 **三个站点、四类公开只读任务的定向分层样本研究**。不得外推到整个 WebArena、Map 或登录后
 mutation 任务。同一模板内的任务相关，不能把 24 个 ID 当成 24 个独立模板。
