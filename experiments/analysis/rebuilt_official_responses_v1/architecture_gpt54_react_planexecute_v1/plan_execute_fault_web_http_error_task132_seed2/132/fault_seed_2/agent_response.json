@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "Kilian made 1 commit in the filtered results: “Fix typos in the code examples (#1524)” (`081f0af`). GitHub shows it was authored on March 5, 2023, but committed on March 6, 2023."
+  ],
+  "error_details": null
+}

@@ -1,0 +1,4 @@
+model,architecture,fault_type,condition,trials,official_successes,official_success_rate,evaluator_errors
+deepseek,plan_execute,control,control,30,21,0.7,0
+deepseek,plan_execute,web_dom_missing,fault,15,9,0.6,0
+deepseek,plan_execute,web_http_error,fault,15,10,0.6666666666666666,0

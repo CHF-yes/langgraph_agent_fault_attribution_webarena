@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "User selector search was opened and filtered to a single matching author, `Kilian`, but after clicking that option the page still showed the filter button as `All users` in the returned accessibility tree. The sub-goal is not yet confirmed complete; current state is the commits page with the user filter popover interaction performed and `Kilian` discovered as a selectable author."
+  ],
+  "error_details": null
+}

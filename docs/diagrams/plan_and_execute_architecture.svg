@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="580" viewBox="0 0 1200 580" role="img" aria-labelledby="title description">
+  <title id="title">计划与执行架构</title>
+  <desc id="description">同一个模型在规划、执行和重规划阶段被调用，并共享同一组浏览器工具。</desc>
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+      <path d="M 0 0 L 9 4 L 0 8 z" fill="#2c415c"/>
+    </marker>
+    <marker id="white-arrowhead" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+      <path d="M 0 0 L 9 4 L 0 8 z" fill="white"/>
+    </marker>
+    <marker id="outlined-arrowhead" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto">
+      <path d="M 0 0 L 11 5 L 0 10 z" fill="white" stroke="#152033" stroke-width="1.8" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="white"/>
+  
+  <text x="48" y="54" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="28" font-weight="700" fill="#152033">计划与执行架构</text>
+  <text x="48" y="82" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#54657a">同一个模型在规划、执行和重规划阶段被调用，并共享同一组浏览器工具。</text>
+  <rect x="38" y="108" width="1124" height="438" rx="16" fill="#f7f9fc" stroke="#ccd6e2"/>
+  <text x="62" y="142" text-anchor="start" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="12" font-weight="700" fill="#54657a">单模型多阶段工作流</text>
+  <rect x="68" y="268" width="96" height="34" rx="17" fill="#eef2f6" stroke="#ccd6e2" stroke-width="1.5"/>
+<text x="116.0" y="290" text-anchor="middle" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="13" font-weight="700" fill="#152033">开始</text>
+  <rect x="220" y="224" width="176" height="104" rx="12" fill="#f2e9ff" stroke="#9568cf" stroke-width="2"/>
+<text x="308.0" y="268.0" text-anchor="middle" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="18" font-weight="700" fill="#152033">规划器</text>
+<text x="308.0" y="293.0" text-anchor="middle" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="12" font-weight="400" fill="#54657a">结构化子目标</text>
+  <rect x="452" y="224" width="178" height="104" rx="12" fill="#dff5ec" stroke="#48a880" stroke-width="2"/>
+<text x="541.0" y="268.0" text-anchor="middle" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="18" font-weight="700" fill="#152033">执行器</text>
+<text x="541.0" y="293.0" text-anchor="middle" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="12" font-weight="400" fill="#54657a">每轮一个动作</text>
+  <rect x="686" y="224" width="152" height="104" rx="12" fill="#fff0d9" stroke="#e49a32" stroke-width="2"/>
+<text x="762.0" y="268.0" text-anchor="middle" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="18" font-weight="700" fill="#152033">工具</text>
+<text x="762.0" y="293.0" text-anchor="middle" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="12" font-weight="400" fill="#54657a">浏览器动作</text>
+  <rect x="894" y="224" width="184" height="104" rx="12" fill="#f2e9ff" stroke="#9568cf" stroke-width="2"/>
+<text x="986.0" y="268.0" text-anchor="middle" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="18" font-weight="700" fill="#152033">重规划器</text>
+<text x="986.0" y="293.0" text-anchor="middle" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="12" font-weight="400" fill="#54657a">推进 / 结束 / 重规划</text>
+  <path d="M 164 285 L 220 285" fill="none" stroke="#2c415c" stroke-width="2.3" marker-end="url(#arrowhead)"/>
+  <path d="M 396 276 L 452 276" fill="none" stroke="#2c415c" stroke-width="2.3" marker-end="url(#arrowhead)"/>
+  <path d="M 630 276 L 686 276" fill="none" stroke="#2c415c" stroke-width="2.3" marker-end="url(#arrowhead)"/>
+  <path d="M 838 276 L 894 276" fill="none" stroke="#2c415c" stroke-width="2.3" marker-end="url(#arrowhead)"/>
+  <rect x="968" y="420" width="96" height="34" rx="17" fill="#eef2f6" stroke="#ccd6e2" stroke-width="1.5"/>
+<text x="1016.0" y="442" text-anchor="middle" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="13" font-weight="700" fill="#152033">结束</text>
+  <path d="M 986 328 L 1016 420" fill="none" stroke="#2c415c" stroke-width="2.3" marker-end="url(#arrowhead)"/>
+<text x="1048" y="384" text-anchor="middle" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="13" font-weight="600" fill="#54657a">结束</text>
+  <path d="M 986 224 C 966 166, 818 162, 748 165 L 304 165 C 256 165, 250 196, 273 224" fill="none" stroke="#2c415c" stroke-width="2.3" marker-end="url(#arrowhead)"/>
+<text x="612" y="149" text-anchor="middle" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="13" font-weight="600" fill="#54657a">重规划</text>
+  <path d="M 894 309 C 837 387, 641 397, 559 328" fill="none" stroke="#2c415c" stroke-width="2.3" marker-end="url(#arrowhead)"/>
+<text x="730" y="390" text-anchor="middle" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="13" font-weight="600" fill="#54657a">推进至下一子目标</text>
+  <text x="62" y="380" text-anchor="start" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="12" font-weight="700" fill="#54657a">职责边界</text>
+  <text x="74" y="405" text-anchor="start" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="700" fill="#152033">规划器</text>
+  <text x="188" y="405" text-anchor="start" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="400" fill="#54657a">根据任务和观测生成、修订结构化子目标。</text>
+  <text x="74" y="445" text-anchor="start" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="700" fill="#152033">执行器</text>
+  <text x="188" y="445" text-anchor="start" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="400" fill="#54657a">每个执行轮次只为当前子目标选择一个动作。</text>
+  <text x="74" y="485" text-anchor="start" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="700" fill="#152033">重规划器</text>
+  <text x="188" y="485" text-anchor="start" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="400" fill="#54657a">依据工具反馈决定推进、结束或返回规划。</text>
+  <text x="1112" y="514" text-anchor="end" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="13" font-weight="700" fill="#54657a">不是多模型、多智能体系统</text>
+</svg>

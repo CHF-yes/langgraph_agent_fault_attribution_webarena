@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "Blocked on sign-in: the current page shows the GitLab sign-in form, but no credentials are available in the provided context. I cannot complete authentication without a username/email and password."
+  ],
+  "error_details": null
+}

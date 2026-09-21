@@ -1,0 +1,2 @@
+task_id,site,trials,valid_trials,evaluator_error_count,official_success_rate,mean_official_score,mean_steps,mean_llm_calls,mean_time_sec,fallback_trials,fallback_count,tool_error_rate
+124,shopping,1,1,0,0.0,0.0,15.0,35.0,463.49,0,0,0.0

@@ -1,0 +1,18 @@
+{
+  "trials": 15,
+  "model": "deepseek",
+  "architecture": "plan_execute",
+  "condition": "control",
+  "tasks": [
+    27,
+    30,
+    132
+  ],
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ]
+}

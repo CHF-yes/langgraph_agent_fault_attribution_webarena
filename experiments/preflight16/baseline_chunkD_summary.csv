@@ -1,0 +1,4 @@
+task_id,site,trials,valid_trials,evaluator_error_count,official_success_rate,mean_official_score,mean_steps,mean_llm_calls,mean_time_sec,fallback_trials,fallback_count,tool_error_rate
+26,shopping,1,1,0,0.0,0.0,20.0,20.0,497.16,1,1,0.1
+102,gitlab,1,1,0,0.0,0.0,3.0,3.0,31.45,0,0,0.0
+118,shopping,1,1,0,1.0,1.0,5.0,5.0,25.88,0,0,0.0

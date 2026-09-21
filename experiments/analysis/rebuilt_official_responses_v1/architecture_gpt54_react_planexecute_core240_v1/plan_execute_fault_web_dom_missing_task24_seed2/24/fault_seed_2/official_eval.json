@@ -1,0 +1,29 @@
+{
+  "official_success": false,
+  "official_score": 0.0,
+  "score": 0.0,
+  "status": "failure",
+  "error_msg": null,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluatorCompat",
+      "status": "failure",
+      "score": 0.0,
+      "actual": {
+        "task_type": "RETRIEVE",
+        "status": "SUCCESS",
+        "retrieved_data": [
+          "THOUGHT: Neither reviewer mentions unfair, overpriced, or otherwise unreasonable pricing. The reviews are by Jay and Josef Bürger, and neither qualifies."
+        ],
+        "error_details": null
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "NOT_FOUND_ERROR",
+        "retrieved_data": null
+      },
+      "assertion_name": "null_retrieval_schema_compatibility",
+      "upstream_error": "Error during evaluation with evaluator AgentResponseEvaluator for task 24: Schema type must be 'array', got: 'null'"
+    }
+  ]
+}

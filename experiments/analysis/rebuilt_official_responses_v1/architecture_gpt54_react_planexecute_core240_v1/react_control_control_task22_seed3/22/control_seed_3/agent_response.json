@@ -1,0 +1,6 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "NOT_FOUND_ERROR",
+  "retrieved_data": null,
+  "error_details": "On the current page, the reviewer names shown are AZ Guy and CT. The visible review snippets do not explicitly show the phrase \"under water photo\" in the AX tree, so no reviewer can be confirmed from the visible text alone."
+}

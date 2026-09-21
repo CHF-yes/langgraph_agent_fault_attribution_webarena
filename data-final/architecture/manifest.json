@@ -1,0 +1,23 @@
+{
+  "trials": 54,
+  "tasks": [
+    27,
+    30,
+    132
+  ],
+  "architectures": [
+    "react",
+    "plan_execute"
+  ],
+  "conditions": [
+    "control",
+    "web_dom_missing",
+    "web_http_error"
+  ],
+  "seeds": [
+    1,
+    2,
+    3
+  ],
+  "evaluator_errors": 0
+}

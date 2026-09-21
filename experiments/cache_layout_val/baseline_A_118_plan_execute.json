@@ -1,0 +1,157 @@
+[
+  {
+    "task_id": 118,
+    "intent": "I have a jaw bruxism problem, go to the product page for something that could alleviate the problem.",
+    "start_url": "http://localhost:7770",
+    "expected": [],
+    "thread_id": "base_deepseek_v4_pro_118_trial1_4ae80c",
+    "model_profile": "deepseek_v4_pro",
+    "architecture": "plan_execute",
+    "trial_id": 1,
+    "run_seed": 1,
+    "experiment_id": "baseline_deepseek_v4_pro_plan_execute_20260921T120341Z",
+    "python_version": "3.11.9",
+    "playwright_version": "1.62.0",
+    "langgraph_version": "1.2.11",
+    "webarena_verified_version": "1.2.3.post1.dev0",
+    "dataset_path": "/root/webarena-dataset/webarena-verified.json",
+    "evaluator_config": "experiments/webarena_local_config.json",
+    "storage_state": null,
+    "max_steps": 20,
+    "failure_category": "success",
+    "completed": true,
+    "llm_calls": 10,
+    "planning_calls": 2,
+    "executor_calls": 4,
+    "success": true,
+    "official_success": true,
+    "official_score": 1.0,
+    "evaluator_status": "success",
+    "evaluator_assertions": [
+      {
+        "evaluator_name": "AgentResponseEvaluator",
+        "status": "success",
+        "score": 1.0,
+        "actual": "{\n  \"task_type\": \"NAVIGATE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": null,\n  \"error_details\": null\n}\n",
+        "actual_normalized": {
+          "task_type": "navigate",
+          "retrieved_data": null,
+          "status": "success"
+        },
+        "expected": {
+          "task_type": "navigate",
+          "status": "success",
+          "retrieved_data": null
+        },
+        "assertions": null,
+        "error_msg": null,
+        "should_not_exist": null
+      },
+      {
+        "evaluator_name": "NetworkEventEvaluator",
+        "status": "success",
+        "score": 1.0,
+        "actual": [
+          {
+            "url": "http://localhost:7770/mouth-guard-professional-anti-grinding-night-guard-for-teeth-grinding-stops-bruxism-tmj-eliminates-teeth-grinding.html",
+            "headers": null,
+            "query_params": null,
+            "post_data": null,
+            "response_content": null,
+            "response_status": 200,
+            "http_method": "GET",
+            "response_cookies": null
+          }
+        ],
+        "actual_normalized": [
+          {
+            "url": {
+              "base_url": "__SHOPPING__/mouth-guard-professional-anti-grinding-night-guard-for-teeth-grinding-stops-bruxism-tmj-eliminates-teeth-grinding.html",
+              "query_params": {}
+            },
+            "response_status": 200,
+            "http_method": "GET",
+            "post_data": null,
+            "response_content": null,
+            "response_cookies": null
+          }
+        ],
+        "expected": {
+          "url": {
+            "base_url": "^__SHOPPING__/[a-z0-9-]*(?:guard|mouth|teeth|night|dental|bruxism)[a-z0-9-]*\\.html$",
+            "query_params": {}
+          },
+          "response_status": 200,
+          "http_method": "GET",
+          "post_data": null,
+          "response_content": null,
+          "response_cookies": null
+        },
+        "assertions": null,
+        "error_msg": null,
+        "should_not_exist": false
+      }
+    ],
+    "done": true,
+    "answer": "",
+    "steps": 4,
+    "time_sec": 94.71,
+    "error": null,
+    "fault_layer": "none",
+    "fault_type": "control",
+    "fault_seed": null,
+    "behavior_category": "",
+    "tolerance_layer": "",
+    "recovery_steps": 0,
+    "action_history": [
+      {
+        "step": 1,
+        "thought": "",
+        "action": "click",
+        "args": {
+          "element_id": "18"
+        },
+        "observation": "[OK] 已点击元素 [18]，页面已更新。\n当前 URL: http://localhost:7770/\n新页面内容:\n[1] banner\n  [2] list\n    [3] listitem\n      [4] link 'My Account'\n    [5] listitem\n      [6] link 'My Wish List'\n    [7] listitem\n      [8] link 'Sign In'\n    [9] listitem\n    [10] listitem 'Welcome to One Stop Market'\n    [11] listitem\n      [12] link 'Create an Account'\n  [13] link 'Skip to Content'\n  [14] link 'store logo'\n    [15] img 'one_stop_market_logo'\n  [16] link ' My Cart'\n  [17] text ' Search'\n  [18] combobox ' Search'\n  [19] link 'Advanced Search'\n  [20] button 'Search'\n[21] tablist\n  [22] tabpanel\n    [23] navigation\n      [24] menu\n        [25] listitem\n          [26] menuitem ' Beauty & Personal Care'\n        [27] listitem\n          [28] menuitem ' Sports & Outdoors'\n        [29] listitem\n          [30] menuitem ' Clothing, Shoes & Jewelry'\n        [31] listitem\n          [32] menuitem ' Home & Kitchen'\n        [33] listitem\n          [34] menuitem ' Office Products'\n        [35] listitem\n          [36] menuitem ' Tools & Home Improvement'\n        [37] listitem\n          [38] menuitem ' Health & Household'\n        [39] listitem\n          [40] menuitem ' Patio, Lawn & Garden'\n        [41] listitem\n          [42] menuitem ' Electronics'\n        [43] listitem\n          [44] menuitem ' Cell Phones & Accessories'\n        [45] listitem\n          [46] menuitem ' Video Games'\n        [47] listitem\n          [48] menuitem ' Grocery & Gourmet Food'\n[49] main\n  [50] heading 'One Stop Market'\n  [51] strong 'Product Showcases'\n  [52] list\n    [53] listitem\n      [54] link 'Image'\n        [55] img 'Image'\n      [56] strong\n        [57] link 'Pre-baked Gingerbread House Kit Value Pack, 17 oz., Pack of 2, Total 34 oz.'\n      [58] text 'Rating:   20%'\n      [59] link '1 Review'\n      [60] text '$19.99'\n      [61] button 'Add to Cart'\n      [62] link ' Add to Wish List'\n      [63] link ' Add to Compare'\n    [64] listitem\n      [65] link 'Image'\n        [66] img 'Image'\n      [67] ",
+        "error": false
+      },
+      {
+        "step": 2,
+        "thought": "",
+        "action": "type_text",
+        "args": {
+          "element_id": "18",
+          "text": "night guard for teeth grinding"
+        },
+        "observation": "[OK] 已在元素 [18] 中输入: night guard for teeth grinding\n当前 URL: http://localhost:7770/\n页面内容:\n[1] banner\n  [2] list\n    [3] listitem\n      [4] link 'My Account'\n    [5] listitem\n      [6] link 'My Wish List'\n    [7] listitem\n      [8] link 'Sign In'\n    [9] listitem\n    [10] listitem 'Welcome to One Stop Market'\n    [11] listitem\n      [12] link 'Create an Account'\n  [13] link 'Skip to Content'\n  [14] link 'store logo'\n    [15] img 'one_stop_market_logo'\n  [16] link ' My Cart'\n  [17] text ' Search'\n  [18] combobox ' Search'\n  [19] link 'Advanced Search'\n  [20] button 'Search'\n[21] tablist\n  [22] tabpanel\n    [23] navigation\n      [24] menu\n        [25] listitem\n          [26] menuitem ' Beauty & Personal Care'\n        [27] listitem\n          [28] menuitem ' Sports & Outdoors'\n        [29] listitem\n          [30] menuitem ' Clothing, Shoes & Jewelry'\n        [31] listitem\n          [32] menuitem ' Home & Kitchen'\n        [33] listitem\n          [34] menuitem ' Office Products'\n        [35] listitem\n          [36] menuitem ' Tools & Home Improvement'\n        [37] listitem\n          [38] menuitem ' Health & Household'\n        [39] listitem\n          [40] menuitem ' Patio, Lawn & Garden'\n        [41] listitem\n          [42] menuitem ' Electronics'\n        [43] listitem\n          [44] menuitem ' Cell Phones & Accessories'\n        [45] listitem\n          [46] menuitem ' Video Games'\n        [47] listitem\n          [48] menuitem ' Grocery & Gourmet Food'\n[49] main\n  [50] heading 'One Stop Market'\n  [51] strong 'Product Showcases'\n  [52] list\n    [53] listitem\n      [54] link 'Image'\n        [55] img 'Image'\n      [56] strong\n        [57] link 'Pre-baked Gingerbread House Kit Value Pack, 17 oz., Pack of 2, Total 34 oz.'\n      [58] text 'Rating:   20%'\n      [59] link '1 Review'\n      [60] text '$19.99'\n      [61] button 'Add to Cart'\n      [62] link ' Add to Wish List'\n      [63] link ' Add to Compare'\n    [64] listitem\n      [65] link 'Image'\n        [",
+        "error": false
+      },
+      {
+        "step": 3,
+        "thought": "",
+        "action": "click",
+        "args": {
+          "element_id": "20"
+        },
+        "observation": "[OK] 已点击元素 [20]，页面已更新。\n当前 URL: http://localhost:7770/catalogsearch/result/?q=night+guard+for+teeth+grinding\n新页面内容:\n[1] banner\n  [2] list\n    [3] listitem\n      [4] link 'My Account'\n    [5] listitem\n      [6] link 'My Wish List'\n    [7] listitem\n      [8] link 'Sign In'\n    [9] listitem\n    [10] listitem 'Welcome to One Stop Market'\n    [11] listitem\n      [12] link 'Create an Account'\n  [13] link 'Skip to Content'\n  [14] link 'store logo'\n    [15] img 'one_stop_market_logo'\n  [16] link ' My Cart'\n  [17] text ' Search'\n  [18] combobox ' Search'\n  [19] link 'Advanced Search'\n  [20] button 'Search'\n[21] tablist\n  [22] tabpanel\n    [23] navigation\n      [24] menu\n        [25] listitem\n          [26] menuitem ' Beauty & Personal Care'\n        [27] listitem\n          [28] menuitem ' Sports & Outdoors'\n        [29] listitem\n          [30] menuitem ' Clothing, Shoes & Jewelry'\n        [31] listitem\n          [32] menuitem ' Home & Kitchen'\n        [33] listitem\n          [34] menuitem ' Office Products'\n        [35] listitem\n          [36] menuitem ' Tools & Home Improvement'\n        [37] listitem\n          [38] menuitem ' Health & Household'\n        [39] listitem\n          [40] menuitem ' Patio, Lawn & Garden'\n        [41] listitem\n          [42] menuitem ' Electronics'\n        [43] listitem\n          [44] menuitem ' Cell Phones & Accessories'\n        [45] listitem\n          [46] menuitem ' Video Games'\n        [47] listitem\n          [48] menuitem ' Grocery & Gourmet Food'\n[49] list\n  [50] listitem\n    [51] link 'Home'\n    [52] text ''\n  [53] listitem\n    [54] strong 'Search results for:'\n[55] main\n  [56] Search results for 'heading'\n  [57] strong 'View as'\n  [58] strong ' Grid'\n  [59] link 'View as  List'\n    [60] text ' List'\n  [61] paragraph 'Items 1-12 of 10206'\n  [62] text 'Sort By'\n  [63] combobox 'Sort By'\n    [64] option 'Product Name'\n    [65] option 'Price'\n    [66] option 'Relevance'\n  [67] link ' Set Ascending Direction'\n  [68] term 'Relat",
+        "error": false
+      },
+      {
+        "step": 4,
+        "thought": "",
+        "action": "click",
+        "args": {
+          "element_id": "78"
+        },
+        "observation": "[OK] 已点击元素 [78]，页面已更新。\n当前 URL: http://localhost:7770/mouth-guard-professional-anti-grinding-night-guard-for-teeth-grinding-stops-bruxism-tmj-eliminates-teeth-grinding.html\n新页面内容:\n[1] banner\n  [2] list\n    [3] listitem\n      [4] link 'My Account'\n    [5] listitem\n      [6] link 'My Wish List'\n    [7] listitem\n      [8] link 'Sign In'\n    [9] listitem\n    [10] listitem 'Welcome to One Stop Market'\n    [11] listitem\n      [12] link 'Create an Account'\n  [13] link 'Skip to Content'\n  [14] link 'store logo'\n    [15] img 'one_stop_market_logo'\n  [16] link ' My Cart'\n  [17] text ' Search'\n  [18] combobox ' Search'\n  [19] link 'Advanced Search'\n  [20] button 'Search'\n[21] tablist\n  [22] tabpanel\n    [23] navigation\n      [24] menu\n        [25] listitem\n          [26] menuitem ' Beauty & Personal Care'\n        [27] listitem\n          [28] menuitem ' Sports & Outdoors'\n        [29] listitem\n          [30] menuitem ' Clothing, Shoes & Jewelry'\n        [31] listitem\n          [32] menuitem ' Home & Kitchen'\n        [33] listitem\n          [34] menuitem ' Office Products'\n        [35] listitem\n          [36] menuitem ' Tools & Home Improvement'\n        [37] listitem\n          [38] menuitem ' Health & Household'\n        [39] listitem\n          [40] menuitem ' Patio, Lawn & Garden'\n        [41] listitem\n          [42] menuitem ' Electronics'\n        [43] listitem\n          [44] menuitem ' Cell Phones & Accessories'\n        [45] listitem\n          [46] menuitem ' Video Games'\n        [47] listitem\n          [48] menuitem ' Grocery & Gourmet Food'\n[49] list\n  [50] listitem\n    [51] link 'Home'\n    [52] text ''\n  [53] listitem\n    [54] strong 'Mouth Guard, Professional Anti Grinding Night Guard for Teeth Grinding, Stops Bruxism, TMJ & Eliminates Teeth Grinding'\n[55] main\n  [56] heading 'Mouth Guard, Professional Anti Grinding Night Guard for Teeth Grinding, Stops Bruxism, TMJ & Eliminates Teeth Grinding'\n  [57] text 'In stock'\n  [58] strong 'SKU'\n  [59] text 'B09J24F5",
+        "error": false
+      }
+    ],
+    "injection_log": [],
+    "fallback_used": false,
+    "fallback_count": 0,
+    "fallback_events": [],
+    "replanning_calls": 4,
+    "evaluator_error": null,
+    "attributable_to_research": true
+  }
+]

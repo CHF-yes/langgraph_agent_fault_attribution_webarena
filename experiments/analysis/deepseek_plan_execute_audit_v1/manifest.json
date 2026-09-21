@@ -1,0 +1,8 @@
+{
+  "source": "experiments/architecture_deepseek_react_planexecute_subset36_v1",
+  "architecture": "plan_execute",
+  "candidate_logs": 18,
+  "rebuilt": 13,
+  "needs_agent_rerun": 5,
+  "note": "Rebuilt responses use the real task contract loaded by task_id; source files are untouched."
+}

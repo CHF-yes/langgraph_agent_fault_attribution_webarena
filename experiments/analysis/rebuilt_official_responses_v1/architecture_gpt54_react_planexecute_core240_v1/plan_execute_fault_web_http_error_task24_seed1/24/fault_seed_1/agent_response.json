@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "The reviewers who mention the price as unfavorable are **ejbpesca** and **TheLadySnow**. ejbpesca compares the cost with cheap ginger ale, while TheLadySnow says the price was initially not appealing. Kristie Robinson says “This is not fair,” but in reference to the expiration date rather than the price."
+  ],
+  "error_details": null
+}

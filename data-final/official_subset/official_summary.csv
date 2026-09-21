@@ -1,0 +1,10 @@
+architecture,fault_type,condition,trials,official_successes,official_success_rate,evaluator_errors
+plan_execute,control,control,40,11,0.275,0
+plan_execute,web_dom_missing,fault,40,14,0.35,0
+plan_execute,web_http_error,fault,40,10,0.25,0
+react,agent_param_error,fault,40,25,0.625,0
+react,control,control,40,28,0.7,0
+react,web_dom_missing,fault,40,26,0.65,0
+react,web_http_error,fault,40,22,0.55,0
+react,web_popup_block,fault,40,24,0.6,0
+react,web_timeout,fault,40,26,0.65,0

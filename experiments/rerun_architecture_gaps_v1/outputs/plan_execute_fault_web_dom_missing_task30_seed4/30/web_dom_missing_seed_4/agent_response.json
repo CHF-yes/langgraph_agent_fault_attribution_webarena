@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "UNKNOWN_ERROR",
+  "retrieved_data": [
+    "Error code: 400 - {'error': {'message': 'One of \"input\" or \"previous_response_id\" or \\'prompt\\' or \\'conversation\\' must be provided.', 'type': 'invalid_request_error'}}"
+  ],
+  "error_details": "Error code: 400 - {'error': {'message': 'One of \"input\" or \"previous_response_id\" or \\'prompt\\' or \\'conversation\\' must be provided.', 'type': 'invalid_request_error'}}"
+}

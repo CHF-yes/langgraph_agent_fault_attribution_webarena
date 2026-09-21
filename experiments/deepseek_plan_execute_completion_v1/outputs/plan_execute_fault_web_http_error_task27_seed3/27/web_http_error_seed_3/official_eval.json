@@ -1,0 +1,58 @@
+{
+  "task_id": 27,
+  "intent_template_id": 33,
+  "sites": [
+    "reddit"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    {\n      \"username\": \"11ej25\",\n      \"post_title\": \"A billing expert investigated her husband's ER bill. She was able to knock thousands off the charge.\",\n      \"count\": 7\n    }\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "status": "success",
+        "retrieved_data": [
+          {
+            "username": "11ej25",
+            "post_title": "a billing expert investigated her husband's er bill. she was able to knock thousands off the charge.",
+            "count": 7.0
+          }
+        ],
+        "task_type": "retrieve"
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          {
+            "username": "hammer94",
+            "post_title": "56 year old mom has no retirement. where do i even start on her behalf?",
+            "count": 0.0
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/1), Missing: 1, Extra: 1",
+            "Expected: [{'username': NormalizedString('Hammer94' -> 'hammer94'), 'post_title': NormalizedString('56 year old mom has no retirement. Where do I even start on her behalf?' -> '56 year old mom has no retirement. where do i even start on her behalf?'), 'count': Number(0.0)}], Got: [{'username': NormalizedString('11ej25'), 'post_title': NormalizedString(\"A billing expert investigated her husband's ER bill. She was able to knock thousands off the charge.\" -> \"a billing expert investigated her husband's er bill. she was able to knock thousands off the charge.\"), 'count': Number(7.0)}]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false
+}

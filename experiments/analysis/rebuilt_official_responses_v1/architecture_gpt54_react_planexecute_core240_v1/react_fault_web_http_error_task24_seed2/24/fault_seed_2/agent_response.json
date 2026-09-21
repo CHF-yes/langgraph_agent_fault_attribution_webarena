@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "I’m blocked: the session is on `about:blank`/`about:error`, and the original product page with the reviews is no longer available in the browser history. I can’t reliably identify which reviewer mentioned the price being unfair from the current page state alone."
+  ],
+  "error_details": null
+}

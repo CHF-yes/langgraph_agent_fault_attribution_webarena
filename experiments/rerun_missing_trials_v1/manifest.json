@@ -1,0 +1,5 @@
+{
+  "trials": 72,
+  "workers": 6,
+  "source": "experiments/analysis/rebuilt_official_responses_v1/needs_agent_rerun.csv"
+}

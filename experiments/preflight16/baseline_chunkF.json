@@ -1,0 +1,299 @@
+[
+  {
+    "task_id": 260,
+    "intent": "Open the Video Game category page to browse products",
+    "start_url": "http://localhost:7770",
+    "expected": [],
+    "thread_id": "base_deepseek_v4_pro_260_trial1_65f9a7",
+    "model_profile": "deepseek_v4_pro",
+    "architecture": "react",
+    "trial_id": 1,
+    "run_seed": 1,
+    "experiment_id": "baseline_deepseek_v4_pro_react_20260921T110434Z",
+    "python_version": "3.11.9",
+    "playwright_version": "1.62.0",
+    "langgraph_version": "1.2.11",
+    "webarena_verified_version": "1.2.3.post1.dev0",
+    "dataset_path": "/root/webarena-dataset/webarena-verified.json",
+    "evaluator_config": "experiments/webarena_local_config.json",
+    "storage_state": null,
+    "max_steps": 20,
+    "failure_category": "success",
+    "completed": true,
+    "llm_calls": 2,
+    "planning_calls": 0,
+    "executor_calls": 2,
+    "success": true,
+    "official_success": true,
+    "official_score": 1.0,
+    "evaluator_status": "success",
+    "evaluator_assertions": [
+      {
+        "evaluator_name": "AgentResponseEvaluator",
+        "status": "success",
+        "score": 1.0,
+        "actual": "{\n  \"task_type\": \"NAVIGATE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": null,\n  \"error_details\": null\n}\n",
+        "actual_normalized": {
+          "status": "success",
+          "task_type": "navigate",
+          "retrieved_data": null
+        },
+        "expected": {
+          "task_type": "navigate",
+          "status": "success",
+          "retrieved_data": null
+        },
+        "assertions": null,
+        "error_msg": null,
+        "should_not_exist": null
+      },
+      {
+        "evaluator_name": "NetworkEventEvaluator",
+        "status": "success",
+        "score": 1.0,
+        "actual": [
+          {
+            "url": "http://localhost:7770/video-games.html",
+            "headers": null,
+            "query_params": null,
+            "post_data": null,
+            "response_content": null,
+            "response_status": 200,
+            "http_method": "GET",
+            "response_cookies": null
+          }
+        ],
+        "actual_normalized": [
+          {
+            "url": {
+              "base_url": "__SHOPPING__/video-games.html",
+              "query_params": {}
+            },
+            "response_status": 200,
+            "http_method": "GET",
+            "post_data": null,
+            "response_content": null,
+            "response_cookies": null
+          }
+        ],
+        "expected": {
+          "url": {
+            "base_url": "__SHOPPING__/video-games.html",
+            "query_params": {}
+          },
+          "response_status": 200,
+          "http_method": "GET",
+          "post_data": null,
+          "response_content": null,
+          "response_cookies": null
+        },
+        "assertions": null,
+        "error_msg": null,
+        "should_not_exist": false
+      }
+    ],
+    "done": true,
+    "answer": "已成功打开 Video Game 分类页面。当前页面 URL 为 http://localhost:7770/video-games.html，页面显示标题 \"Video Games Items 1-12 of 932\"，列出了 932 件视频游戏相关产品，可浏览产品列表。",
+    "steps": 2,
+    "time_sec": 20.77,
+    "error": null,
+    "fault_layer": "none",
+    "fault_type": "control",
+    "fault_seed": null,
+    "behavior_category": "",
+    "tolerance_layer": "",
+    "recovery_steps": 0,
+    "action_history": [
+      {
+        "step": 1,
+        "thought": "THOUGHT: The task is to open the Video Game category page. The navigation menu contains a menuitem \"Video Games\" with element id [46]. I will click it to navigate to that category page.",
+        "action": "click",
+        "args": {
+          "element_id": "46"
+        },
+        "observation": "[OK] 已点击元素 [46]，页面已更新。\n当前 URL: http://localhost:7770/video-games.html\n新页面内容:\n[1] banner\n  [2] list\n    [3] listitem\n      [4] link 'My Account'\n    [5] listitem\n      [6] link 'My Wish List'\n    [7] listitem\n      [8] link 'Sign In'\n    [9] listitem\n    [10] listitem 'Welcome to One Stop Market'\n    [11] listitem\n      [12] link 'Create an Account'\n  [13] link 'Skip to Content'\n  [14] link 'store logo'\n    [15] img 'one_stop_market_logo'\n  [16] link ' My Cart'\n  [17] text ' Search'\n  [18] combobox ' Search'\n  [19] link 'Advanced Search'\n  [20] button 'Search'\n[21] tablist\n  [22] tabpanel\n    [23] navigation\n      [24] menu\n        [25] listitem\n          [26] menuitem ' Beauty & Personal Care'\n        [27] listitem\n          [28] menuitem ' Sports & Outdoors'\n        [29] listitem\n          [30] menuitem ' Clothing, Shoes & Jewelry'\n        [31] listitem\n          [32] menuitem ' Home & Kitchen'\n        [33] listitem\n          [34] menuitem ' Office Products'\n        [35] listitem\n          [36] menuitem ' Tools & Home Improvement'\n        [37] listitem\n          [38] menuitem ' Health & Household'\n        [39] listitem\n          [40] menuitem ' Patio, Lawn & Garden'\n        [41] listitem\n          [42] menuitem ' Electronics'\n        [43] listitem\n          [44] menuitem ' Cell Phones & Accessories'\n        [45] listitem\n          [46] menuitem ' Video Games'\n        [47] listitem\n          [48] menuitem ' Grocery & Gourmet Food'\n[49] list\n  [50] listitem\n    [51] link 'Home'\n    [52] text ''\n  [53] listitem\n    [54] strong 'Video Games'\n[55] main\n  [56] heading 'Video Games Items 1-12 of 932'\n  [57] strong 'View as'\n  [58] strong ' Grid'\n  [59] link 'View as  List'\n    [60] text ' List'\n  [61] paragraph 'Items 1-12 of 932'\n  [62] text 'Sort By'\n  [63] combobox 'Sort By'\n    [64] option 'Position'\n    [65] option 'Product Name'\n    [66] option 'Price'\n  [67] link ' Set Descending Direction'\n  [68] list\n    [69] listitem\n      [70] link 'Image'\n ",
+        "error": false
+      },
+      {
+        "step": 2,
+        "thought": "",
+        "action": "stop",
+        "args": {
+          "answer": "已成功打开 Video Game 分类页面。当前页面 URL 为 http://localhost:7770/video-games.html，页面显示标题 \"Video Games Items 1-12 of 932\"，列出了 932 件视频游戏相关产品，可浏览产品列表。"
+        },
+        "observation": "[OK] 任务完成！答案: 已成功打开 Video Game 分类页面。当前页面 URL 为 http://localhost:7770/video-games.html，页面显示标题 \"Video Games Items 1-12 of 932\"，列出了 932 件视频游戏相关产品，可浏览产品列表。",
+        "error": false
+      }
+    ],
+    "injection_log": [],
+    "fallback_used": false,
+    "fallback_count": 0,
+    "fallback_events": [],
+    "replanning_calls": 0,
+    "evaluator_error": null,
+    "attributable_to_research": true
+  },
+  {
+    "task_id": 274,
+    "intent": "Open the search results for \"usb wifi\"",
+    "start_url": "http://localhost:7770",
+    "expected": [],
+    "thread_id": "base_deepseek_v4_pro_274_trial1_4ea3b0",
+    "model_profile": "deepseek_v4_pro",
+    "architecture": "react",
+    "trial_id": 1,
+    "run_seed": 1,
+    "experiment_id": "baseline_deepseek_v4_pro_react_20260921T110434Z",
+    "python_version": "3.11.9",
+    "playwright_version": "1.62.0",
+    "langgraph_version": "1.2.11",
+    "webarena_verified_version": "1.2.3.post1.dev0",
+    "dataset_path": "/root/webarena-dataset/webarena-verified.json",
+    "evaluator_config": "experiments/webarena_local_config.json",
+    "storage_state": null,
+    "max_steps": 20,
+    "failure_category": "success",
+    "completed": true,
+    "llm_calls": 4,
+    "planning_calls": 0,
+    "executor_calls": 4,
+    "success": true,
+    "official_success": true,
+    "official_score": 1.0,
+    "evaluator_status": "success",
+    "evaluator_assertions": [
+      {
+        "evaluator_name": "AgentResponseEvaluator",
+        "status": "success",
+        "score": 1.0,
+        "actual": "{\n  \"task_type\": \"NAVIGATE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": null,\n  \"error_details\": null\n}\n",
+        "actual_normalized": {
+          "status": "success",
+          "task_type": "navigate",
+          "retrieved_data": null
+        },
+        "expected": {
+          "task_type": "navigate",
+          "status": "success",
+          "retrieved_data": null
+        },
+        "assertions": null,
+        "error_msg": null,
+        "should_not_exist": null
+      },
+      {
+        "evaluator_name": "NetworkEventEvaluator",
+        "status": "success",
+        "score": 1.0,
+        "actual": [
+          {
+            "url": "http://localhost:7770/catalogsearch/result/?q=usb+wifi",
+            "headers": null,
+            "query_params": null,
+            "post_data": null,
+            "response_content": null,
+            "response_status": 200,
+            "http_method": "GET",
+            "response_cookies": null
+          }
+        ],
+        "actual_normalized": [
+          {
+            "url": {
+              "base_url": "__SHOPPING__/catalogsearch/result/",
+              "query_params": {
+                "q": [
+                  "usb wifi"
+                ]
+              }
+            },
+            "response_status": 200,
+            "http_method": "GET",
+            "post_data": null,
+            "response_content": null,
+            "response_cookies": null
+          }
+        ],
+        "expected": {
+          "url": {
+            "base_url": "__SHOPPING__/catalogsearch/result",
+            "query_params": {
+              "q": [
+                "usb wifi"
+              ]
+            }
+          },
+          "response_status": 200,
+          "http_method": "GET",
+          "post_data": null,
+          "response_content": null,
+          "response_cookies": null
+        },
+        "assertions": null,
+        "error_msg": null,
+        "should_not_exist": false
+      }
+    ],
+    "done": true,
+    "answer": "已成功打开 \"usb wifi\" 的搜索结果页面，当前 URL 为 http://localhost:7770/catalogsearch/result/?q=usb+wifi。页面显示共 7123 件商品（当前第 1-12 项），包括 Foktech USB WiFi Adapter、Wireless USB WiFi Adapter 等多个相关产品。",
+    "steps": 4,
+    "time_sec": 17.6,
+    "error": null,
+    "fault_layer": "none",
+    "fault_type": "control",
+    "fault_seed": null,
+    "behavior_category": "",
+    "tolerance_layer": "",
+    "recovery_steps": 0,
+    "action_history": [
+      {
+        "step": 1,
+        "thought": "",
+        "action": "click",
+        "args": {
+          "element_id": "18"
+        },
+        "observation": "[OK] 已点击元素 [18]，页面已更新。\n当前 URL: http://localhost:7770/\n新页面内容:\n[1] banner\n  [2] list\n    [3] listitem\n      [4] link 'My Account'\n    [5] listitem\n      [6] link 'My Wish List'\n    [7] listitem\n      [8] link 'Sign In'\n    [9] listitem\n    [10] listitem 'Welcome to One Stop Market'\n    [11] listitem\n      [12] link 'Create an Account'\n  [13] link 'Skip to Content'\n  [14] link 'store logo'\n    [15] img 'one_stop_market_logo'\n  [16] link ' My Cart'\n  [17] text ' Search'\n  [18] combobox ' Search'\n  [19] link 'Advanced Search'\n  [20] button 'Search'\n[21] tablist\n  [22] tabpanel\n    [23] navigation\n      [24] menu\n        [25] listitem\n          [26] menuitem ' Beauty & Personal Care'\n        [27] listitem\n          [28] menuitem ' Sports & Outdoors'\n        [29] listitem\n          [30] menuitem ' Clothing, Shoes & Jewelry'\n        [31] listitem\n          [32] menuitem ' Home & Kitchen'\n        [33] listitem\n          [34] menuitem ' Office Products'\n        [35] listitem\n          [36] menuitem ' Tools & Home Improvement'\n        [37] listitem\n          [38] menuitem ' Health & Household'\n        [39] listitem\n          [40] menuitem ' Patio, Lawn & Garden'\n        [41] listitem\n          [42] menuitem ' Electronics'\n        [43] listitem\n          [44] menuitem ' Cell Phones & Accessories'\n        [45] listitem\n          [46] menuitem ' Video Games'\n        [47] listitem\n          [48] menuitem ' Grocery & Gourmet Food'\n[49] main\n  [50] heading 'One Stop Market'\n  [51] strong 'Product Showcases'\n  [52] list\n    [53] listitem\n      [54] link 'Image'\n        [55] img 'Image'\n      [56] strong\n        [57] link 'Pre-baked Gingerbread House Kit Value Pack, 17 oz., Pack of 2, Total 34 oz.'\n      [58] text 'Rating:   20%'\n      [59] link '1 Review'\n      [60] text '$19.99'\n      [61] button 'Add to Cart'\n      [62] link ' Add to Wish List'\n      [63] link ' Add to Compare'\n    [64] listitem\n      [65] link 'Image'\n        [66] img 'Image'\n      [67] ",
+        "error": false
+      },
+      {
+        "step": 2,
+        "thought": "",
+        "action": "type_text",
+        "args": {
+          "element_id": "18",
+          "text": "usb wifi"
+        },
+        "observation": "[OK] 已在元素 [18] 中输入: usb wifi\n当前 URL: http://localhost:7770/\n页面内容:\n[1] banner\n  [2] list\n    [3] listitem\n      [4] link 'My Account'\n    [5] listitem\n      [6] link 'My Wish List'\n    [7] listitem\n      [8] link 'Sign In'\n    [9] listitem\n    [10] listitem 'Welcome to One Stop Market'\n    [11] listitem\n      [12] link 'Create an Account'\n  [13] link 'Skip to Content'\n  [14] link 'store logo'\n    [15] img 'one_stop_market_logo'\n  [16] link ' My Cart'\n  [17] text ' Search'\n  [18] combobox ' Search'\n  [19] listbox\n    [20] option 'usb wifi'\n  [21] link 'Advanced Search'\n  [22] button 'Search'\n[23] tablist\n  [24] tabpanel\n    [25] navigation\n      [26] menu\n        [27] listitem\n          [28] menuitem ' Beauty & Personal Care'\n        [29] listitem\n          [30] menuitem ' Sports & Outdoors'\n        [31] listitem\n          [32] menuitem ' Clothing, Shoes & Jewelry'\n        [33] listitem\n          [34] menuitem ' Home & Kitchen'\n        [35] listitem\n          [36] menuitem ' Office Products'\n        [37] listitem\n          [38] menuitem ' Tools & Home Improvement'\n        [39] listitem\n          [40] menuitem ' Health & Household'\n        [41] listitem\n          [42] menuitem ' Patio, Lawn & Garden'\n        [43] listitem\n          [44] menuitem ' Electronics'\n        [45] listitem\n          [46] menuitem ' Cell Phones & Accessories'\n        [47] listitem\n          [48] menuitem ' Video Games'\n        [49] listitem\n          [50] menuitem ' Grocery & Gourmet Food'\n[51] main\n  [52] heading 'One Stop Market'\n  [53] strong 'Product Showcases'\n  [54] list\n    [55] listitem\n      [56] link 'Image'\n        [57] img 'Image'\n      [58] strong\n        [59] link 'Pre-baked Gingerbread House Kit Value Pack, 17 oz., Pack of 2, Total 34 oz.'\n      [60] text 'Rating:   20%'\n      [61] link '1 Review'\n      [62] text '$19.99'\n      [63] button 'Add to Cart'\n      [64] link ' Add to Wish List'\n      [65] link ' Add to Compare'\n    [66] listitem\n      [67] li",
+        "error": false
+      },
+      {
+        "step": 3,
+        "thought": "",
+        "action": "click",
+        "args": {
+          "element_id": "22"
+        },
+        "observation": "[OK] 已点击元素 [22]，页面已更新。\n当前 URL: http://localhost:7770/catalogsearch/result/?q=usb+wifi\n新页面内容:\n[1] banner\n  [2] list\n    [3] listitem\n      [4] link 'My Account'\n    [5] listitem\n      [6] link 'My Wish List'\n    [7] listitem\n      [8] link 'Sign In'\n    [9] listitem\n    [10] listitem 'Welcome to One Stop Market'\n    [11] listitem\n      [12] link 'Create an Account'\n  [13] link 'Skip to Content'\n  [14] link 'store logo'\n    [15] img 'one_stop_market_logo'\n  [16] link ' My Cart'\n  [17] text ' Search'\n  [18] combobox ' Search'\n  [19] link 'Advanced Search'\n  [20] button 'Search'\n[21] tablist\n  [22] tabpanel\n    [23] navigation\n      [24] menu\n        [25] listitem\n          [26] menuitem ' Beauty & Personal Care'\n        [27] listitem\n          [28] menuitem ' Sports & Outdoors'\n        [29] listitem\n          [30] menuitem ' Clothing, Shoes & Jewelry'\n        [31] listitem\n          [32] menuitem ' Home & Kitchen'\n        [33] listitem\n          [34] menuitem ' Office Products'\n        [35] listitem\n          [36] menuitem ' Tools & Home Improvement'\n        [37] listitem\n          [38] menuitem ' Health & Household'\n        [39] listitem\n          [40] menuitem ' Patio, Lawn & Garden'\n        [41] listitem\n          [42] menuitem ' Electronics'\n        [43] listitem\n          [44] menuitem ' Cell Phones & Accessories'\n        [45] listitem\n          [46] menuitem ' Video Games'\n        [47] listitem\n          [48] menuitem ' Grocery & Gourmet Food'\n[49] list\n  [50] listitem\n    [51] link 'Home'\n    [52] text ''\n  [53] listitem\n    [54] strong 'Search results for:'\n[55] main\n  [56] Search results for 'heading'\n  [57] strong 'View as'\n  [58] strong ' Grid'\n  [59] link 'View as  List'\n    [60] text ' List'\n  [61] paragraph 'Items 1-12 of 7123'\n  [62] text 'Sort By'\n  [63] combobox 'Sort By'\n    [64] option 'Product Name'\n    [65] option 'Price'\n    [66] option 'Relevance'\n  [67] link ' Set Ascending Direction'\n  [68] list\n    [69] listitem\n      [70] ",
+        "error": false
+      },
+      {
+        "step": 4,
+        "thought": "",
+        "action": "stop",
+        "args": {
+          "answer": "已成功打开 \"usb wifi\" 的搜索结果页面，当前 URL 为 http://localhost:7770/catalogsearch/result/?q=usb+wifi。页面显示共 7123 件商品（当前第 1-12 项），包括 Foktech USB WiFi Adapter、Wireless USB WiFi Adapter 等多个相关产品。"
+        },
+        "observation": "[OK] 任务完成！答案: 已成功打开 \"usb wifi\" 的搜索结果页面，当前 URL 为 http://localhost:7770/catalogsearch/result/?q=usb+wifi。页面显示共 7123 件商品（当前第 1-12 项），包括 Foktech USB WiFi Adapter、Wireless USB WiFi Adapter 等多个相关产品。",
+        "error": false
+      }
+    ],
+    "injection_log": [],
+    "fallback_used": false,
+    "fallback_count": 0,
+    "fallback_events": [],
+    "replanning_calls": 0,
+    "evaluator_error": null,
+    "attributable_to_research": true
+  }
+]

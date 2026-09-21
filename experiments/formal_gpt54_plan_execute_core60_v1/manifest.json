@@ -1,0 +1,271 @@
+{
+  "model_profile": "gpt54",
+  "architecture": "plan_execute",
+  "max_steps": 20,
+  "fault_types": [
+    "web_dom_missing",
+    "web_http_error"
+  ],
+  "fault_intensity": "high",
+  "fault_injection_steps": {
+    "web_dom_missing": 2,
+    "web_http_error": 2
+  },
+  "workers": 4,
+  "trials_per_task": 5,
+  "total_jobs": 30,
+  "total_trials_including_control": 60,
+  "task_ids": [
+    27,
+    30,
+    132
+  ],
+  "stop_policy": {
+    "infrastructure_errors": 2,
+    "fault_missing_in_last_8": 2,
+    "task_errors": "record_only"
+  },
+  "jobs": [
+    {
+      "task_id": 27,
+      "seed": 1,
+      "site": "reddit",
+      "start_url": "http://localhost:9999",
+      "intent": "In the personal finances forum, get the username and post title of the most recent post, and count the number of comments on that post that are not from the author and have more downvotes than upvotes. Return a list of objects with keys \"username\", \"post_title\", and \"count\".",
+      "fault_type": "web_dom_missing"
+    },
+    {
+      "task_id": 27,
+      "seed": 2,
+      "site": "reddit",
+      "start_url": "http://localhost:9999",
+      "intent": "In the personal finances forum, get the username and post title of the most recent post, and count the number of comments on that post that are not from the author and have more downvotes than upvotes. Return a list of objects with keys \"username\", \"post_title\", and \"count\".",
+      "fault_type": "web_dom_missing"
+    },
+    {
+      "task_id": 27,
+      "seed": 3,
+      "site": "reddit",
+      "start_url": "http://localhost:9999",
+      "intent": "In the personal finances forum, get the username and post title of the most recent post, and count the number of comments on that post that are not from the author and have more downvotes than upvotes. Return a list of objects with keys \"username\", \"post_title\", and \"count\".",
+      "fault_type": "web_dom_missing"
+    },
+    {
+      "task_id": 27,
+      "seed": 4,
+      "site": "reddit",
+      "start_url": "http://localhost:9999",
+      "intent": "In the personal finances forum, get the username and post title of the most recent post, and count the number of comments on that post that are not from the author and have more downvotes than upvotes. Return a list of objects with keys \"username\", \"post_title\", and \"count\".",
+      "fault_type": "web_dom_missing"
+    },
+    {
+      "task_id": 27,
+      "seed": 5,
+      "site": "reddit",
+      "start_url": "http://localhost:9999",
+      "intent": "In the personal finances forum, get the username and post title of the most recent post, and count the number of comments on that post that are not from the author and have more downvotes than upvotes. Return a list of objects with keys \"username\", \"post_title\", and \"count\".",
+      "fault_type": "web_dom_missing"
+    },
+    {
+      "task_id": 30,
+      "seed": 1,
+      "site": "reddit",
+      "start_url": "http://localhost:9999",
+      "intent": "In the space forum, get the username and post title of the most recent post, and count the number of comments on that post that are not from the author and have more downvotes than upvotes. Return a list of objects with keys \"username\", \"post_title\", and \"count\".",
+      "fault_type": "web_dom_missing"
+    },
+    {
+      "task_id": 30,
+      "seed": 2,
+      "site": "reddit",
+      "start_url": "http://localhost:9999",
+      "intent": "In the space forum, get the username and post title of the most recent post, and count the number of comments on that post that are not from the author and have more downvotes than upvotes. Return a list of objects with keys \"username\", \"post_title\", and \"count\".",
+      "fault_type": "web_dom_missing"
+    },
+    {
+      "task_id": 30,
+      "seed": 3,
+      "site": "reddit",
+      "start_url": "http://localhost:9999",
+      "intent": "In the space forum, get the username and post title of the most recent post, and count the number of comments on that post that are not from the author and have more downvotes than upvotes. Return a list of objects with keys \"username\", \"post_title\", and \"count\".",
+      "fault_type": "web_dom_missing"
+    },
+    {
+      "task_id": 30,
+      "seed": 4,
+      "site": "reddit",
+      "start_url": "http://localhost:9999",
+      "intent": "In the space forum, get the username and post title of the most recent post, and count the number of comments on that post that are not from the author and have more downvotes than upvotes. Return a list of objects with keys \"username\", \"post_title\", and \"count\".",
+      "fault_type": "web_dom_missing"
+    },
+    {
+      "task_id": 30,
+      "seed": 5,
+      "site": "reddit",
+      "start_url": "http://localhost:9999",
+      "intent": "In the space forum, get the username and post title of the most recent post, and count the number of comments on that post that are not from the author and have more downvotes than upvotes. Return a list of objects with keys \"username\", \"post_title\", and \"count\".",
+      "fault_type": "web_dom_missing"
+    },
+    {
+      "task_id": 132,
+      "seed": 1,
+      "site": "gitlab",
+      "start_url": "http://localhost:8023/a11yproject/a11yproject.com/-/commits/main",
+      "intent": "How many commits did kilian make to a11yproject.com on March 5, 2023?",
+      "fault_type": "web_dom_missing"
+    },
+    {
+      "task_id": 132,
+      "seed": 2,
+      "site": "gitlab",
+      "start_url": "http://localhost:8023/a11yproject/a11yproject.com/-/commits/main",
+      "intent": "How many commits did kilian make to a11yproject.com on March 5, 2023?",
+      "fault_type": "web_dom_missing"
+    },
+    {
+      "task_id": 132,
+      "seed": 3,
+      "site": "gitlab",
+      "start_url": "http://localhost:8023/a11yproject/a11yproject.com/-/commits/main",
+      "intent": "How many commits did kilian make to a11yproject.com on March 5, 2023?",
+      "fault_type": "web_dom_missing"
+    },
+    {
+      "task_id": 132,
+      "seed": 4,
+      "site": "gitlab",
+      "start_url": "http://localhost:8023/a11yproject/a11yproject.com/-/commits/main",
+      "intent": "How many commits did kilian make to a11yproject.com on March 5, 2023?",
+      "fault_type": "web_dom_missing"
+    },
+    {
+      "task_id": 132,
+      "seed": 5,
+      "site": "gitlab",
+      "start_url": "http://localhost:8023/a11yproject/a11yproject.com/-/commits/main",
+      "intent": "How many commits did kilian make to a11yproject.com on March 5, 2023?",
+      "fault_type": "web_dom_missing"
+    },
+    {
+      "task_id": 27,
+      "seed": 1,
+      "site": "reddit",
+      "start_url": "http://localhost:9999",
+      "intent": "In the personal finances forum, get the username and post title of the most recent post, and count the number of comments on that post that are not from the author and have more downvotes than upvotes. Return a list of objects with keys \"username\", \"post_title\", and \"count\".",
+      "fault_type": "web_http_error"
+    },
+    {
+      "task_id": 27,
+      "seed": 2,
+      "site": "reddit",
+      "start_url": "http://localhost:9999",
+      "intent": "In the personal finances forum, get the username and post title of the most recent post, and count the number of comments on that post that are not from the author and have more downvotes than upvotes. Return a list of objects with keys \"username\", \"post_title\", and \"count\".",
+      "fault_type": "web_http_error"
+    },
+    {
+      "task_id": 27,
+      "seed": 3,
+      "site": "reddit",
+      "start_url": "http://localhost:9999",
+      "intent": "In the personal finances forum, get the username and post title of the most recent post, and count the number of comments on that post that are not from the author and have more downvotes than upvotes. Return a list of objects with keys \"username\", \"post_title\", and \"count\".",
+      "fault_type": "web_http_error"
+    },
+    {
+      "task_id": 27,
+      "seed": 4,
+      "site": "reddit",
+      "start_url": "http://localhost:9999",
+      "intent": "In the personal finances forum, get the username and post title of the most recent post, and count the number of comments on that post that are not from the author and have more downvotes than upvotes. Return a list of objects with keys \"username\", \"post_title\", and \"count\".",
+      "fault_type": "web_http_error"
+    },
+    {
+      "task_id": 27,
+      "seed": 5,
+      "site": "reddit",
+      "start_url": "http://localhost:9999",
+      "intent": "In the personal finances forum, get the username and post title of the most recent post, and count the number of comments on that post that are not from the author and have more downvotes than upvotes. Return a list of objects with keys \"username\", \"post_title\", and \"count\".",
+      "fault_type": "web_http_error"
+    },
+    {
+      "task_id": 30,
+      "seed": 1,
+      "site": "reddit",
+      "start_url": "http://localhost:9999",
+      "intent": "In the space forum, get the username and post title of the most recent post, and count the number of comments on that post that are not from the author and have more downvotes than upvotes. Return a list of objects with keys \"username\", \"post_title\", and \"count\".",
+      "fault_type": "web_http_error"
+    },
+    {
+      "task_id": 30,
+      "seed": 2,
+      "site": "reddit",
+      "start_url": "http://localhost:9999",
+      "intent": "In the space forum, get the username and post title of the most recent post, and count the number of comments on that post that are not from the author and have more downvotes than upvotes. Return a list of objects with keys \"username\", \"post_title\", and \"count\".",
+      "fault_type": "web_http_error"
+    },
+    {
+      "task_id": 30,
+      "seed": 3,
+      "site": "reddit",
+      "start_url": "http://localhost:9999",
+      "intent": "In the space forum, get the username and post title of the most recent post, and count the number of comments on that post that are not from the author and have more downvotes than upvotes. Return a list of objects with keys \"username\", \"post_title\", and \"count\".",
+      "fault_type": "web_http_error"
+    },
+    {
+      "task_id": 30,
+      "seed": 4,
+      "site": "reddit",
+      "start_url": "http://localhost:9999",
+      "intent": "In the space forum, get the username and post title of the most recent post, and count the number of comments on that post that are not from the author and have more downvotes than upvotes. Return a list of objects with keys \"username\", \"post_title\", and \"count\".",
+      "fault_type": "web_http_error"
+    },
+    {
+      "task_id": 30,
+      "seed": 5,
+      "site": "reddit",
+      "start_url": "http://localhost:9999",
+      "intent": "In the space forum, get the username and post title of the most recent post, and count the number of comments on that post that are not from the author and have more downvotes than upvotes. Return a list of objects with keys \"username\", \"post_title\", and \"count\".",
+      "fault_type": "web_http_error"
+    },
+    {
+      "task_id": 132,
+      "seed": 1,
+      "site": "gitlab",
+      "start_url": "http://localhost:8023/a11yproject/a11yproject.com/-/commits/main",
+      "intent": "How many commits did kilian make to a11yproject.com on March 5, 2023?",
+      "fault_type": "web_http_error"
+    },
+    {
+      "task_id": 132,
+      "seed": 2,
+      "site": "gitlab",
+      "start_url": "http://localhost:8023/a11yproject/a11yproject.com/-/commits/main",
+      "intent": "How many commits did kilian make to a11yproject.com on March 5, 2023?",
+      "fault_type": "web_http_error"
+    },
+    {
+      "task_id": 132,
+      "seed": 3,
+      "site": "gitlab",
+      "start_url": "http://localhost:8023/a11yproject/a11yproject.com/-/commits/main",
+      "intent": "How many commits did kilian make to a11yproject.com on March 5, 2023?",
+      "fault_type": "web_http_error"
+    },
+    {
+      "task_id": 132,
+      "seed": 4,
+      "site": "gitlab",
+      "start_url": "http://localhost:8023/a11yproject/a11yproject.com/-/commits/main",
+      "intent": "How many commits did kilian make to a11yproject.com on March 5, 2023?",
+      "fault_type": "web_http_error"
+    },
+    {
+      "task_id": 132,
+      "seed": 5,
+      "site": "gitlab",
+      "start_url": "http://localhost:8023/a11yproject/a11yproject.com/-/commits/main",
+      "intent": "How many commits did kilian make to a11yproject.com on March 5, 2023?",
+      "fault_type": "web_http_error"
+    }
+  ],
+  "resume": false
+}

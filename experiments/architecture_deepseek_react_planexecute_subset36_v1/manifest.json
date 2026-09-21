@@ -1,0 +1,22 @@
+{
+  "trials": 36,
+  "workers": 6,
+  "model_profile": "deepseek",
+  "tasks": [
+    27,
+    30,
+    132
+  ],
+  "architectures": [
+    "react",
+    "plan_execute"
+  ],
+  "faults": [
+    "web_dom_missing",
+    "web_http_error"
+  ],
+  "seeds": [
+    1,
+    2
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "NOT_FOUND_ERROR",
+  "retrieved_data": null,
+  "error_details": "No reviewer names found. The product page states “Be the first to review this product,” and its Reviews panel contains no existing reviews or comments about the price being unfair."
+}

@@ -1,0 +1,11 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    {
+      "status": "blocked",
+      "reason": "No credentials were provided in context, and only one tool call is allowed for this sub-goal, so sign-in cannot be completed from the visible form alone."
+    }
+  ],
+  "error_details": null
+}

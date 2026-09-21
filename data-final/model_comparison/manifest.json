@@ -1,0 +1,32 @@
+{
+  "dataset": "gpt54_vs_deepseek_v4_pro_react_core60_v1",
+  "tasks": [
+    27,
+    30,
+    132
+  ],
+  "faults": [
+    "web_dom_missing",
+    "web_http_error"
+  ],
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "conditions": [
+    "control",
+    "fault"
+  ],
+  "gpt54_source": "experiments/analysis/official_subset_v1_final/official_trials.json",
+  "deepseek_source": "experiments/formal_deepseek_v4_pro_react_core45_v1/outputs",
+  "matched_condition_records": 60,
+  "model_trial_records": 120,
+  "paired_records": 60,
+  "limitations": [
+    "GPT-5.4 source must be version-audited against the current repaired-adapter/structured-output protocol before final paper claims.",
+    "This matrix compares ReAct only; it does not establish architecture effects."
+  ]
+}

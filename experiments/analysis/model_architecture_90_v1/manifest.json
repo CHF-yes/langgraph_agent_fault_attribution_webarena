@@ -1,0 +1,30 @@
+{
+  "target_per_model": 90,
+  "actual_records": 180,
+  "models": [
+    "gpt54",
+    "deepseek"
+  ],
+  "architectures": [
+    "react",
+    "plan_execute"
+  ],
+  "tasks": [
+    27,
+    30,
+    132
+  ],
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "conditions": [
+    "control",
+    "web_dom_missing",
+    "web_http_error"
+  ],
+  "note": "One control per model/architecture/task/seed is retained; extra control replicates are excluded from the balanced primary dataset."
+}

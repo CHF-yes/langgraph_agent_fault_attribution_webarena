@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "Reached the repository commit history page at https://github.com/a11yproject/a11yproject.com/commits/main/ from a stable state, but did not yet apply the `author=kilian` and March 1, 2023 date filters. Current visible controls are `All users` and `All time`."
+  ],
+  "error_details": null
+}

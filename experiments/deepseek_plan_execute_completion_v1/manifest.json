@@ -1,0 +1,23 @@
+{
+  "target_trials": 60,
+  "skipped_rebuilt": 13,
+  "scheduled": 32,
+  "architecture": "plan_execute",
+  "model_profile": "deepseek",
+  "tasks": [
+    27,
+    30,
+    132
+  ],
+  "faults": [
+    "web_dom_missing",
+    "web_http_error"
+  ],
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    {
+      "username": "MarvelsGrantMan136",
+      "post_title": "Nvidia RTX 4090",
+      "count": 0
+    }
+  ],
+  "error_details": null
+}

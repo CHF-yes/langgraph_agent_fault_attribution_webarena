@@ -1,0 +1,12 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    {
+      "username": "graemeknows",
+      "post_title": "A Coastal Massachusetts Gem",
+      "count": 1
+    }
+  ],
+  "error_details": null
+}

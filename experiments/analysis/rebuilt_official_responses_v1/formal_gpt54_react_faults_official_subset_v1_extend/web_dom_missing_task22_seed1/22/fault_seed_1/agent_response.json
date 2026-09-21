@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "The reviewer is **romance lover** (shown on the page as “romance loverromance lover”)."
+  ],
+  "error_details": null
+}

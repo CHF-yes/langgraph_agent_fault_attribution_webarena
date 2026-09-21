@@ -1,0 +1,137 @@
+[
+  {
+    "task_id": 132,
+    "response": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task132_seed1/132/control_seed_0/agent_response.json",
+    "har": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task132_seed1/132/control_seed_0/network.har",
+    "official_eval": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task132_seed1/132/control_seed_0/official_eval.json",
+    "official_success": true,
+    "status": "success",
+    "error": null
+  },
+  {
+    "task_id": 132,
+    "response": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task132_seed2/132/control_seed_0/agent_response.json",
+    "har": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task132_seed2/132/control_seed_0/network.har",
+    "official_eval": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task132_seed2/132/control_seed_0/official_eval.json",
+    "official_success": true,
+    "status": "success",
+    "error": null
+  },
+  {
+    "task_id": 132,
+    "response": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task132_seed3/132/control_seed_0/agent_response.json",
+    "har": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task132_seed3/132/control_seed_0/network.har",
+    "official_eval": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task132_seed3/132/control_seed_0/official_eval.json",
+    "official_success": true,
+    "status": "success",
+    "error": null
+  },
+  {
+    "task_id": 132,
+    "response": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task132_seed4/132/control_seed_0/agent_response.json",
+    "har": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task132_seed4/132/control_seed_0/network.har",
+    "official_eval": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task132_seed4/132/control_seed_0/official_eval.json",
+    "official_success": true,
+    "status": "success",
+    "error": null
+  },
+  {
+    "task_id": 132,
+    "response": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task132_seed5/132/control_seed_0/agent_response.json",
+    "har": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task132_seed5/132/control_seed_0/network.har",
+    "official_eval": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task132_seed5/132/control_seed_0/official_eval.json",
+    "official_success": true,
+    "status": "success",
+    "error": null
+  },
+  {
+    "task_id": 27,
+    "response": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task27_seed1/27/control_seed_0/agent_response.json",
+    "har": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task27_seed1/27/control_seed_0/network.har",
+    "official_eval": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task27_seed1/27/control_seed_0/official_eval.json",
+    "official_success": true,
+    "status": "success",
+    "error": null
+  },
+  {
+    "task_id": 27,
+    "response": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task27_seed2/27/control_seed_0/agent_response.json",
+    "har": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task27_seed2/27/control_seed_0/network.har",
+    "official_eval": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task27_seed2/27/control_seed_0/official_eval.json",
+    "official_success": true,
+    "status": "success",
+    "error": null
+  },
+  {
+    "task_id": 27,
+    "response": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task27_seed3/27/control_seed_0/agent_response.json",
+    "har": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task27_seed3/27/control_seed_0/network.har",
+    "official_eval": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task27_seed3/27/control_seed_0/official_eval.json",
+    "official_success": false,
+    "status": "failure",
+    "error": null
+  },
+  {
+    "task_id": 27,
+    "response": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task27_seed4/27/control_seed_0/agent_response.json",
+    "har": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task27_seed4/27/control_seed_0/network.har",
+    "official_eval": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task27_seed4/27/control_seed_0/official_eval.json",
+    "official_success": false,
+    "status": "failure",
+    "error": null
+  },
+  {
+    "task_id": 27,
+    "response": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task27_seed5/27/control_seed_0/agent_response.json",
+    "har": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task27_seed5/27/control_seed_0/network.har",
+    "official_eval": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task27_seed5/27/control_seed_0/official_eval.json",
+    "official_success": true,
+    "status": "success",
+    "error": null
+  },
+  {
+    "task_id": 30,
+    "response": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task30_seed1/30/control_seed_0/agent_response.json",
+    "har": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task30_seed1/30/control_seed_0/network.har",
+    "official_eval": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task30_seed1/30/control_seed_0/official_eval.json",
+    "official_success": true,
+    "status": "success",
+    "error": null
+  },
+  {
+    "task_id": 30,
+    "response": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task30_seed2/30/control_seed_0/agent_response.json",
+    "har": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task30_seed2/30/control_seed_0/network.har",
+    "official_eval": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task30_seed2/30/control_seed_0/official_eval.json",
+    "official_success": false,
+    "status": "failure",
+    "error": null
+  },
+  {
+    "task_id": 30,
+    "response": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task30_seed3/30/control_seed_0/agent_response.json",
+    "har": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task30_seed3/30/control_seed_0/network.har",
+    "official_eval": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task30_seed3/30/control_seed_0/official_eval.json",
+    "official_success": false,
+    "status": "failure",
+    "error": null
+  },
+  {
+    "task_id": 30,
+    "response": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task30_seed4/30/control_seed_0/agent_response.json",
+    "har": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task30_seed4/30/control_seed_0/network.har",
+    "official_eval": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task30_seed4/30/control_seed_0/official_eval.json",
+    "official_success": false,
+    "status": "failure",
+    "error": null
+  },
+  {
+    "task_id": 30,
+    "response": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task30_seed5/30/control_seed_0/agent_response.json",
+    "har": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task30_seed5/30/control_seed_0/network.har",
+    "official_eval": "experiments/deepseek_plan_execute_extra_controls_v1/outputs/plan_execute_control_extra_task30_seed5/30/control_seed_0/official_eval.json",
+    "official_success": true,
+    "status": "success",
+    "error": null
+  }
+]

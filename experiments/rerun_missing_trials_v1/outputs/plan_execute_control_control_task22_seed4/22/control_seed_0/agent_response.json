@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "UNKNOWN_ERROR",
+  "retrieved_data": [
+    "Request timed out."
+  ],
+  "error_details": "Request timed out."
+}

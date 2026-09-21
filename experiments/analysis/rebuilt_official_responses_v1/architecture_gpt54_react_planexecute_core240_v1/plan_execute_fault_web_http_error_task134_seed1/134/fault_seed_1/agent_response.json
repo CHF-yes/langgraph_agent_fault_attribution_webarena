@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "Blocked on sign-in: the provided page context includes the login form but does not include any available credentials (username/email and password), and this sub-goal allows exactly one tool call. I cannot authenticate without those credentials. Please provide or locate the credentials in a prior step, then retry the sign-in sub-goal."
+  ],
+  "error_details": null
+}

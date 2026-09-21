@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "Blocked by GitLab Cloudflare security verification at https://gitlab.com/a11yproject/a11yproject.com. I could not reach the project page or a commits/history link because every navigation resolves to the verification page instead of the repository view."
+  ],
+  "error_details": null
+}

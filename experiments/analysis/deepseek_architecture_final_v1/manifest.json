@@ -1,0 +1,28 @@
+{
+  "model": "deepseek",
+  "unique_trials": 60,
+  "raw_records": 60,
+  "duplicates": 0,
+  "architectures": [
+    "react",
+    "plan_execute"
+  ],
+  "tasks": [
+    27,
+    30,
+    132
+  ],
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "faults": [
+    "control",
+    "web_dom_missing",
+    "web_http_error"
+  ],
+  "evaluator_errors": 0
+}

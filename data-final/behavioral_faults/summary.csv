@@ -1,0 +1,11 @@
+fault_type,condition,trials,completed,task_errors,infrastructure_errors,valid_fault_injections,mean_steps,median_steps,mean_llm_calls,mean_time_sec,evaluator_status
+web_dom_missing,control,80,80,0,0,0,6.375,5.0,6.375,195.74,NOT_EVALUATED_NO_HAR
+web_dom_missing,fault,80,80,3,0,80,6.275,5.0,6.275,129.675,NOT_EVALUATED_NO_HAR
+web_popup_block,control,80,80,0,0,0,6.7,6.0,6.7,114.2575,NOT_EVALUATED_NO_HAR
+web_popup_block,fault,80,80,2,0,80,6.2625,5.0,6.2625,86.72375,NOT_EVALUATED_NO_HAR
+web_http_error,control,80,79,0,0,0,6.0625,5.0,6.0625,224.5525,NOT_EVALUATED_NO_HAR
+web_http_error,fault,80,79,16,0,80,10.2875,9.0,10.2875,374.4125,NOT_EVALUATED_NO_HAR
+web_timeout,control,80,80,0,0,0,6.5875,5.0,6.5875,103.6675,NOT_EVALUATED_NO_HAR
+web_timeout,fault,80,80,0,0,80,5.8625,5.0,5.8625,90.49375,NOT_EVALUATED_NO_HAR
+agent_param_error,control,80,80,0,0,0,6.375,5.0,6.375,124.89625,NOT_EVALUATED_NO_HAR
+agent_param_error,fault,80,80,6,0,80,8.675,7.0,8.675,145.47375,NOT_EVALUATED_NO_HAR

@@ -1,0 +1,13 @@
+model,architecture,fault_type,condition,trials,official_successes,official_success_rate,evaluator_errors
+gpt54,react,control,control,15,10,0.6666666666666666,0
+gpt54,react,web_dom_missing,fault,15,10,0.6666666666666666,0
+gpt54,react,web_http_error,fault,15,9,0.6,0
+gpt54,plan_execute,control,control,15,5,0.3333333333333333,0
+gpt54,plan_execute,web_dom_missing,fault,15,6,0.4,0
+gpt54,plan_execute,web_http_error,fault,15,4,0.26666666666666666,0
+deepseek,react,control,control,15,15,1.0,0
+deepseek,react,web_dom_missing,fault,15,15,1.0,0
+deepseek,react,web_http_error,fault,15,14,0.9333333333333333,0
+deepseek,plan_execute,control,control,15,11,0.7333333333333333,0
+deepseek,plan_execute,web_dom_missing,fault,15,9,0.6,0
+deepseek,plan_execute,web_http_error,fault,15,10,0.6666666666666666,0

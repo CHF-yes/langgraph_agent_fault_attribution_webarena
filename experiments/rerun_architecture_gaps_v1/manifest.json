@@ -1,0 +1,5 @@
+{
+  "trials": 17,
+  "architecture": "plan_execute",
+  "source": "experiments/analysis/schema_corrected_official_v1/coverage_gaps.csv"
+}

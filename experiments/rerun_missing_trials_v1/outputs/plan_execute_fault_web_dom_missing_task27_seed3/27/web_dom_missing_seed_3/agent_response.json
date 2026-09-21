@@ -1,0 +1,12 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    {
+      "username": "one-eye-owl",
+      "post_title": "My husband and I owe 22k in taxes but we only made a combine total of 75k",
+      "count": 5
+    }
+  ],
+  "error_details": null
+}

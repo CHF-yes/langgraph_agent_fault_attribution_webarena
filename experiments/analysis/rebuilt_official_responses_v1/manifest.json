@@ -1,0 +1,12 @@
+{
+  "source_roots": [
+    "experiments/formal_gpt54_react_faults_official_subset_v1/outputs",
+    "experiments/formal_gpt54_react_faults_official_subset_v1_extend/outputs",
+    "experiments/formal_gpt54_react_faults_official_subset_v1_missing60_rerun/outputs",
+    "experiments/architecture_gpt54_react_planexecute_v1/outputs",
+    "experiments/architecture_gpt54_react_planexecute_core240_v1/outputs"
+  ],
+  "rebuilt": 563,
+  "needs_agent_rerun": 72,
+  "note": "HAR copied unchanged; responses rebuilt using the task contract loaded by task_id."
+}

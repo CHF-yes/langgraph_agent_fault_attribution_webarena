@@ -1,0 +1,119 @@
+[
+  {
+    "task_id": 132,
+    "response": "experiments/analysis/deepseek_plan_execute_audit_v1/plan_execute_control_control_task132_seed1/132/agent_response.json",
+    "har": "experiments/analysis/deepseek_plan_execute_audit_v1/plan_execute_control_control_task132_seed1/132/network.har",
+    "official_eval": "experiments/analysis/deepseek_plan_execute_audit_v1/plan_execute_control_control_task132_seed1/132/official_eval.json",
+    "official_success": true,
+    "status": "success",
+    "error": null
+  },
+  {
+    "task_id": 132,
+    "response": "experiments/analysis/deepseek_plan_execute_audit_v1/plan_execute_control_control_task132_seed2/132/agent_response.json",
+    "har": "experiments/analysis/deepseek_plan_execute_audit_v1/plan_execute_control_control_task132_seed2/132/network.har",
+    "official_eval": "experiments/analysis/deepseek_plan_execute_audit_v1/plan_execute_control_control_task132_seed2/132/official_eval.json",
+    "official_success": true,
+    "status": "success",
+    "error": null
+  },
+  {
+    "task_id": 27,
+    "response": "experiments/analysis/deepseek_plan_execute_audit_v1/plan_execute_control_control_task27_seed1/27/agent_response.json",
+    "har": "experiments/analysis/deepseek_plan_execute_audit_v1/plan_execute_control_control_task27_seed1/27/network.har",
+    "official_eval": "experiments/analysis/deepseek_plan_execute_audit_v1/plan_execute_control_control_task27_seed1/27/official_eval.json",
+    "official_success": true,
+    "status": "success",
+    "error": null
+  },
+  {
+    "task_id": 27,
+    "response": "experiments/analysis/deepseek_plan_execute_audit_v1/plan_execute_control_control_task27_seed2/27/agent_response.json",
+    "har": "experiments/analysis/deepseek_plan_execute_audit_v1/plan_execute_control_control_task27_seed2/27/network.har",
+    "official_eval": "experiments/analysis/deepseek_plan_execute_audit_v1/plan_execute_control_control_task27_seed2/27/official_eval.json",
+    "official_success": true,
+    "status": "success",
+    "error": null
+  },
+  {
+    "task_id": 30,
+    "response": "experiments/analysis/deepseek_plan_execute_audit_v1/plan_execute_control_control_task30_seed1/30/agent_response.json",
+    "har": "experiments/analysis/deepseek_plan_execute_audit_v1/plan_execute_control_control_task30_seed1/30/network.har",
+    "official_eval": "experiments/analysis/deepseek_plan_execute_audit_v1/plan_execute_control_control_task30_seed1/30/official_eval.json",
+    "official_success": false,
+    "status": "failure",
+    "error": null
+  },
+  {
+    "task_id": 132,
+    "response": "experiments/analysis/deepseek_plan_execute_audit_v1/plan_execute_fault_web_dom_missing_task132_seed1/132/agent_response.json",
+    "har": "experiments/analysis/deepseek_plan_execute_audit_v1/plan_execute_fault_web_dom_missing_task132_seed1/132/network.har",
+    "official_eval": "experiments/analysis/deepseek_plan_execute_audit_v1/plan_execute_fault_web_dom_missing_task132_seed1/132/official_eval.json",
+    "official_success": true,
+    "status": "success",
+    "error": null
+  },
+  {
+    "task_id": 132,
+    "response": "experiments/analysis/deepseek_plan_execute_audit_v1/plan_execute_fault_web_dom_missing_task132_seed2/132/agent_response.json",
+    "har": "experiments/analysis/deepseek_plan_execute_audit_v1/plan_execute_fault_web_dom_missing_task132_seed2/132/network.har",
+    "official_eval": "experiments/analysis/deepseek_plan_execute_audit_v1/plan_execute_fault_web_dom_missing_task132_seed2/132/official_eval.json",
+    "official_success": true,
+    "status": "success",
+    "error": null
+  },
+  {
+    "task_id": 27,
+    "response": "experiments/analysis/deepseek_plan_execute_audit_v1/plan_execute_fault_web_dom_missing_task27_seed1/27/agent_response.json",
+    "har": "experiments/analysis/deepseek_plan_execute_audit_v1/plan_execute_fault_web_dom_missing_task27_seed1/27/network.har",
+    "official_eval": "experiments/analysis/deepseek_plan_execute_audit_v1/plan_execute_fault_web_dom_missing_task27_seed1/27/official_eval.json",
+    "official_success": true,
+    "status": "success",
+    "error": null
+  },
+  {
+    "task_id": 27,
+    "response": "experiments/analysis/deepseek_plan_execute_audit_v1/plan_execute_fault_web_dom_missing_task27_seed2/27/agent_response.json",
+    "har": "experiments/analysis/deepseek_plan_execute_audit_v1/plan_execute_fault_web_dom_missing_task27_seed2/27/network.har",
+    "official_eval": "experiments/analysis/deepseek_plan_execute_audit_v1/plan_execute_fault_web_dom_missing_task27_seed2/27/official_eval.json",
+    "official_success": true,
+    "status": "success",
+    "error": null
+  },
+  {
+    "task_id": 132,
+    "response": "experiments/analysis/deepseek_plan_execute_audit_v1/plan_execute_fault_web_http_error_task132_seed1/132/agent_response.json",
+    "har": "experiments/analysis/deepseek_plan_execute_audit_v1/plan_execute_fault_web_http_error_task132_seed1/132/network.har",
+    "official_eval": "experiments/analysis/deepseek_plan_execute_audit_v1/plan_execute_fault_web_http_error_task132_seed1/132/official_eval.json",
+    "official_success": true,
+    "status": "success",
+    "error": null
+  },
+  {
+    "task_id": 132,
+    "response": "experiments/analysis/deepseek_plan_execute_audit_v1/plan_execute_fault_web_http_error_task132_seed2/132/agent_response.json",
+    "har": "experiments/analysis/deepseek_plan_execute_audit_v1/plan_execute_fault_web_http_error_task132_seed2/132/network.har",
+    "official_eval": "experiments/analysis/deepseek_plan_execute_audit_v1/plan_execute_fault_web_http_error_task132_seed2/132/official_eval.json",
+    "official_success": true,
+    "status": "success",
+    "error": null
+  },
+  {
+    "task_id": 27,
+    "response": "experiments/analysis/deepseek_plan_execute_audit_v1/plan_execute_fault_web_http_error_task27_seed1/27/agent_response.json",
+    "har": "experiments/analysis/deepseek_plan_execute_audit_v1/plan_execute_fault_web_http_error_task27_seed1/27/network.har",
+    "official_eval": "experiments/analysis/deepseek_plan_execute_audit_v1/plan_execute_fault_web_http_error_task27_seed1/27/official_eval.json",
+    "official_success": true,
+    "status": "success",
+    "error": null
+  },
+  {
+    "task_id": 27,
+    "response": "experiments/analysis/deepseek_plan_execute_audit_v1/plan_execute_fault_web_http_error_task27_seed2/27/agent_response.json",
+    "har": "experiments/analysis/deepseek_plan_execute_audit_v1/plan_execute_fault_web_http_error_task27_seed2/27/network.har",
+    "official_eval": "experiments/analysis/deepseek_plan_execute_audit_v1/plan_execute_fault_web_http_error_task27_seed2/27/official_eval.json",
+    "official_success": true,
+    "status": "success",
+    "error": null
+  }
+]

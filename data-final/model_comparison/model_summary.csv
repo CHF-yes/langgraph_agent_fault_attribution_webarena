@@ -1,0 +1,9 @@
+model,fault_type,condition,trials,official_successes,official_success_rate,evaluator_errors
+gpt54,web_dom_missing,control,15,14,0.9333333333333333,0
+gpt54,web_dom_missing,fault,15,13,0.8666666666666667,0
+gpt54,web_http_error,control,15,14,0.9333333333333333,0
+gpt54,web_http_error,fault,15,11,0.7333333333333333,0
+deepseek_v4_pro,web_dom_missing,control,15,15,1.0,0
+deepseek_v4_pro,web_dom_missing,fault,15,15,1.0,0
+deepseek_v4_pro,web_http_error,control,15,15,1.0,0
+deepseek_v4_pro,web_http_error,fault,15,14,0.9333333333333333,0

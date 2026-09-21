@@ -1,0 +1,9 @@
+{
+  "raw_records": 641,
+  "unique_trials": 360,
+  "duplicate_keys": 106,
+  "rerun_records": 78,
+  "evaluator_errors": 0,
+  "coverage_gaps": 0,
+  "note": "Rerun trials override rebuilt historical records for the same architecture/condition/fault/task/seed key."
+}

@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "The post titles that recommend exactly one book are:\n1. I just finished reading The Hobbit to my 6 year old daughter, and she loved it!\n2. Apple Books has a free audiobook of A Christmas Carol narrated by LeVar Burton!"
+  ],
+  "error_details": null
+}

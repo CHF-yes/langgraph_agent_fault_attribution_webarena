@@ -1,0 +1,19 @@
+key,architecture,task_id,seed,condition,fault_type,status,reason
+plan_execute_control_control_task132_seed1,plan_execute,132,1,control,control,rebuildable,HAR and final answer recovered
+plan_execute_control_control_task132_seed2,plan_execute,132,2,control,control,rebuildable,HAR and final answer recovered
+plan_execute_control_control_task27_seed1,plan_execute,27,1,control,control,rebuildable,HAR and final answer recovered
+plan_execute_control_control_task27_seed2,plan_execute,27,2,control,control,rebuildable,HAR and final answer recovered
+plan_execute_control_control_task30_seed1,plan_execute,30,1,control,control,rebuildable,HAR and final answer recovered
+plan_execute_control_control_task30_seed2,plan_execute,30,2,control,control,needs_agent_rerun,missing HAR
+plan_execute_fault_web_dom_missing_task132_seed1,plan_execute,132,1,fault,web_dom_missing,rebuildable,HAR and final answer recovered
+plan_execute_fault_web_dom_missing_task132_seed2,plan_execute,132,2,fault,web_dom_missing,rebuildable,HAR and final answer recovered
+plan_execute_fault_web_dom_missing_task27_seed1,plan_execute,27,1,fault,web_dom_missing,rebuildable,HAR and final answer recovered
+plan_execute_fault_web_dom_missing_task27_seed2,plan_execute,27,2,fault,web_dom_missing,rebuildable,HAR and final answer recovered
+plan_execute_fault_web_dom_missing_task30_seed1,plan_execute,30,1,fault,web_dom_missing,needs_agent_rerun,missing final answer
+plan_execute_fault_web_dom_missing_task30_seed2,plan_execute,30,2,fault,web_dom_missing,needs_agent_rerun,missing final answer
+plan_execute_fault_web_http_error_task132_seed1,plan_execute,132,1,fault,web_http_error,rebuildable,HAR and final answer recovered
+plan_execute_fault_web_http_error_task132_seed2,plan_execute,132,2,fault,web_http_error,rebuildable,HAR and final answer recovered
+plan_execute_fault_web_http_error_task27_seed1,plan_execute,27,1,fault,web_http_error,rebuildable,HAR and final answer recovered
+plan_execute_fault_web_http_error_task27_seed2,plan_execute,27,2,fault,web_http_error,rebuildable,HAR and final answer recovered
+plan_execute_fault_web_http_error_task30_seed1,plan_execute,30,1,fault,web_http_error,needs_agent_rerun,missing final answer
+plan_execute_fault_web_http_error_task30_seed2,plan_execute,30,2,fault,web_http_error,needs_agent_rerun,missing HAR

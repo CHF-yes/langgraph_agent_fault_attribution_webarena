@@ -1,0 +1,322 @@
+[
+  {
+    "task_id": 21,
+    "chunk": "A",
+    "steps": 5,
+    "time_sec": 55.09,
+    "completed": true,
+    "official_status": "failure",
+    "official_success": false,
+    "evaluator_path": "native",
+    "har_mb": 4.1,
+    "browser_fallbacks": 1,
+    "checks": {
+      "terminated": true,
+      "har": true,
+      "response": true,
+      "evaluator_ran": true,
+      "native": true
+    },
+    "pass": true
+  },
+  {
+    "task_id": 23,
+    "chunk": "B",
+    "steps": 20,
+    "time_sec": 321.5,
+    "completed": false,
+    "official_status": "failure",
+    "official_success": false,
+    "evaluator_path": "native",
+    "har_mb": 11.2,
+    "browser_fallbacks": 1,
+    "checks": {
+      "terminated": true,
+      "har": true,
+      "response": true,
+      "evaluator_ran": true,
+      "native": true
+    },
+    "pass": true
+  },
+  {
+    "task_id": 25,
+    "chunk": "C",
+    "steps": 20,
+    "time_sec": 545.06,
+    "completed": false,
+    "official_status": "failure",
+    "official_success": false,
+    "evaluator_path": "native",
+    "har_mb": 8.3,
+    "browser_fallbacks": 1,
+    "checks": {
+      "terminated": true,
+      "har": true,
+      "response": true,
+      "evaluator_ran": true,
+      "native": true
+    },
+    "pass": true
+  },
+  {
+    "task_id": 26,
+    "chunk": "D",
+    "steps": 20,
+    "time_sec": 497.16,
+    "completed": false,
+    "official_status": "failure",
+    "official_success": false,
+    "evaluator_path": "native",
+    "har_mb": 14.8,
+    "browser_fallbacks": 1,
+    "checks": {
+      "terminated": true,
+      "har": true,
+      "response": true,
+      "evaluator_ran": true,
+      "native": true
+    },
+    "pass": true
+  },
+  {
+    "task_id": 29,
+    "chunk": "A",
+    "steps": 7,
+    "time_sec": 34.74,
+    "completed": true,
+    "official_status": "success",
+    "official_success": true,
+    "evaluator_path": "native",
+    "har_mb": 3.2,
+    "browser_fallbacks": 0,
+    "checks": {
+      "terminated": true,
+      "har": true,
+      "response": true,
+      "evaluator_ran": true,
+      "native": true
+    },
+    "pass": true
+  },
+  {
+    "task_id": 31,
+    "chunk": "B",
+    "steps": 11,
+    "time_sec": 53.02,
+    "completed": true,
+    "official_status": "success",
+    "official_success": true,
+    "evaluator_path": "native",
+    "har_mb": 4.1,
+    "browser_fallbacks": 0,
+    "checks": {
+      "terminated": true,
+      "har": true,
+      "response": true,
+      "evaluator_ran": true,
+      "native": true
+    },
+    "pass": true
+  },
+  {
+    "task_id": 66,
+    "chunk": "C",
+    "steps": 19,
+    "time_sec": 177.33,
+    "completed": true,
+    "official_status": "failure",
+    "official_success": false,
+    "evaluator_path": "native",
+    "har_mb": 18.8,
+    "browser_fallbacks": 0,
+    "checks": {
+      "terminated": true,
+      "har": true,
+      "response": true,
+      "evaluator_ran": true,
+      "native": true
+    },
+    "pass": true
+  },
+  {
+    "task_id": 102,
+    "chunk": "D",
+    "steps": 3,
+    "time_sec": 31.45,
+    "completed": true,
+    "official_status": "failure",
+    "official_success": false,
+    "evaluator_path": "native",
+    "har_mb": 7.2,
+    "browser_fallbacks": 0,
+    "checks": {
+      "terminated": true,
+      "har": true,
+      "response": true,
+      "evaluator_ran": true,
+      "native": true
+    },
+    "pass": true
+  },
+  {
+    "task_id": 118,
+    "chunk": "D",
+    "steps": 5,
+    "time_sec": 25.88,
+    "completed": true,
+    "official_status": "success",
+    "official_success": true,
+    "evaluator_path": "native",
+    "har_mb": 12.5,
+    "browser_fallbacks": 0,
+    "checks": {
+      "terminated": true,
+      "har": true,
+      "response": true,
+      "evaluator_ran": true,
+      "native": true
+    },
+    "pass": true
+  },
+  {
+    "task_id": 135,
+    "chunk": "A",
+    "steps": 20,
+    "time_sec": 94.58,
+    "completed": false,
+    "official_status": "failure",
+    "official_success": false,
+    "evaluator_path": "native",
+    "har_mb": 14.6,
+    "browser_fallbacks": 0,
+    "checks": {
+      "terminated": true,
+      "har": true,
+      "response": true,
+      "evaluator_ran": true,
+      "native": true
+    },
+    "pass": true
+  },
+  {
+    "task_id": 136,
+    "chunk": "B",
+    "steps": 8,
+    "time_sec": 65.75,
+    "completed": true,
+    "official_status": "failure",
+    "official_success": false,
+    "evaluator_path": "native",
+    "har_mb": 12.0,
+    "browser_fallbacks": 1,
+    "checks": {
+      "terminated": true,
+      "har": true,
+      "response": true,
+      "evaluator_ran": true,
+      "native": true
+    },
+    "pass": true
+  },
+  {
+    "task_id": 158,
+    "chunk": "E",
+    "steps": 12,
+    "time_sec": 138.98,
+    "completed": true,
+    "official_status": "success",
+    "official_success": true,
+    "evaluator_path": "native",
+    "har_mb": 34.0,
+    "browser_fallbacks": 0,
+    "checks": {
+      "terminated": true,
+      "har": true,
+      "response": true,
+      "evaluator_ran": true,
+      "native": true
+    },
+    "pass": true
+  },
+  {
+    "task_id": 258,
+    "chunk": "E",
+    "steps": 2,
+    "time_sec": 10.9,
+    "completed": true,
+    "official_status": "failure",
+    "official_success": false,
+    "evaluator_path": "native",
+    "har_mb": 4.0,
+    "browser_fallbacks": 0,
+    "checks": {
+      "terminated": true,
+      "har": true,
+      "response": true,
+      "evaluator_ran": true,
+      "native": true
+    },
+    "pass": true
+  },
+  {
+    "task_id": 260,
+    "chunk": "F",
+    "steps": 2,
+    "time_sec": 20.77,
+    "completed": true,
+    "official_status": "success",
+    "official_success": true,
+    "evaluator_path": "native",
+    "har_mb": 7.0,
+    "browser_fallbacks": 0,
+    "checks": {
+      "terminated": true,
+      "har": true,
+      "response": true,
+      "evaluator_ran": true,
+      "native": true
+    },
+    "pass": true
+  },
+  {
+    "task_id": 274,
+    "chunk": "F",
+    "steps": 4,
+    "time_sec": 17.6,
+    "completed": true,
+    "official_status": "success",
+    "official_success": true,
+    "evaluator_path": "native",
+    "har_mb": 7.0,
+    "browser_fallbacks": 0,
+    "checks": {
+      "terminated": true,
+      "har": true,
+      "response": true,
+      "evaluator_ran": true,
+      "native": true
+    },
+    "pass": true
+  },
+  {
+    "task_id": 308,
+    "chunk": "C",
+    "steps": 20,
+    "time_sec": 225.15,
+    "completed": false,
+    "official_status": "failure",
+    "official_success": false,
+    "evaluator_path": "native",
+    "har_mb": 24.7,
+    "browser_fallbacks": 2,
+    "checks": {
+      "terminated": true,
+      "har": true,
+      "response": true,
+      "evaluator_ran": true,
+      "native": true
+    },
+    "pass": true
+  }
+]

@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "UNKNOWN_ERROR",
+  "retrieved_data": [
+    "Reached max steps (20)"
+  ],
+  "error_details": "Reached max steps (20)"
+}

@@ -1,0 +1,18 @@
+{
+  "job": {
+    "task_id": 27,
+    "seed": 3,
+    "site": "reddit",
+    "start_url": "http://localhost:9999",
+    "intent": "In the personal finances forum, get the username and post title of the most recent post, and count the number of comments on that post that are not from the author and have more downvotes than upvotes. Return a list of objects with keys \"username\", \"post_title\", and \"count\".",
+    "fault_type": "web_dom_missing"
+  },
+  "returncode": 0,
+  "infrastructure_error": false,
+  "task_error": true,
+  "fault_missing": true,
+  "fault_count": 0,
+  "fault_triggered": false,
+  "fault_invalid": true,
+  "timed_out": false
+}

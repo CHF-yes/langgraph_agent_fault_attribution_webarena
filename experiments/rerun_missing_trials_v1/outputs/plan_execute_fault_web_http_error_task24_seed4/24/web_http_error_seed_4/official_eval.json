@@ -1,0 +1,29 @@
+{
+  "official_success": false,
+  "official_score": 0.0,
+  "score": 0.0,
+  "status": "failure",
+  "error_msg": null,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluatorCompat",
+      "status": "failure",
+      "score": 0.0,
+      "actual": {
+        "task_type": "RETRIEVE",
+        "status": "SUCCESS",
+        "retrieved_data": [
+          "I recovered from an error page back to the site and focused the main search box on the login page. The product detail page is not open yet, so this sub-goal is not complete; the next step should enter a product query or use category navigation to reach the product page and then open its reviews."
+        ],
+        "error_details": null
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "NOT_FOUND_ERROR",
+        "retrieved_data": null
+      },
+      "assertion_name": "null_retrieval_schema_compatibility",
+      "upstream_error": "Error during evaluation with evaluator AgentResponseEvaluator for task 24: Schema type must be 'array', got: 'null'"
+    }
+  ]
+}

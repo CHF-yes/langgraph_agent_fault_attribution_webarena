@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "Blocked at sign-in: the GitLab login page is open, but no valid credentials were provided in the current context. I cannot authenticate with a single safe action from this state without the username/password."
+  ],
+  "error_details": null
+}

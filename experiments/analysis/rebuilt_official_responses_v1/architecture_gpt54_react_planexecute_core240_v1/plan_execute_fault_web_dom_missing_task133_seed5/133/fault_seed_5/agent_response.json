@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "Blocked on sign-in: the page shows username and password fields but no credentials were provided in the task context, and the first interaction did not reveal an authenticated session. I cannot complete authentication without valid credentials."
+  ],
+  "error_details": null
+}

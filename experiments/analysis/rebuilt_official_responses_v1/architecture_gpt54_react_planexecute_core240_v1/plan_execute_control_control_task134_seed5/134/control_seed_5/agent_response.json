@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "Unable to complete sign-in sub-goal from the provided page alone because no credentials are present in the prompt or page context. I need the available username/email and password to authenticate."
+  ],
+  "error_details": null
+}
