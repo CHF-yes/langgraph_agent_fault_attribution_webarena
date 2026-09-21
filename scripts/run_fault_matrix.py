@@ -17,14 +17,14 @@ sys.path.insert(0, str(ROOT))
 
 from run_baseline import load_tasks, resolve_start_url
 
-# Proposed public Stage C sample. Keep this list aligned with
-# docs/task_manifest_public24.json. Every task needs anonymous-access and
-# evaluator preflight before T0; Map remains unavailable on this server.
+# Two-model 16-task main matrix. Keep aligned with
+# docs/task_manifest_public16.json. Pass --task-ids with that manifest's
+# eight validation IDs when running the third-model Pro matrix.
 BASELINE_TASK_IDS = [
-    21, 22, 23, 24, 25, 26,       # shopping review retrieval
-    27, 28, 29, 30, 31, 66,       # reddit post retrieval
-    132, 133, 134, 135, 136, 308, # gitlab public repository retrieval
-    118, 158, 260, 274, 102, 258, # public navigation
+    21, 22, 24, 25,      # shopping review retrieval
+    27, 28, 30, 66,      # reddit post retrieval
+    132, 133, 134, 308,  # gitlab public repository retrieval
+    102, 118, 258, 274,  # public navigation
 ]
 
 
@@ -40,7 +40,7 @@ def parse_args():
     parser.add_argument("--fault-intensity", default="high")
     parser.add_argument("--fault-seed", type=int, default=1)
     parser.add_argument("--fault-injection-step", type=int, default=None)
-    parser.add_argument("--model-profile", default="gpt54")
+    parser.add_argument("--model-profile", default="qwen38_flash")
     parser.add_argument("--architecture", default="react")
     parser.add_argument("--task-ids", type=int, nargs="*", default=None)
     parser.add_argument("--resume", action="store_true",

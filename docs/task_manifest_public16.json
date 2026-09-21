@@ -1,0 +1,51 @@
+{
+  "manifest_version": 1,
+  "dataset": "ServiceNow/WebArena-Verified",
+  "amendment_date": "2026-09-21",
+  "amendment_reason": "Reduce the prospective main study from three models on 24 tasks to two models on 16 tasks, with a third-model validation on eight prespecified shared tasks, before formal T0/Stage C.",
+  "supersedes": "task_manifest_public24.json",
+  "main_models": ["deepseek_v41_flash", "qwen38_flash"],
+  "validation_model": "deepseek_v4_pro",
+  "historical_anchor_ids": [22, 24, 27, 28, 30, 132, 133, 134],
+  "categories": [
+    {
+      "name": "shopping_review_retrieval",
+      "main_task_ids": [21, 22, 24, 25],
+      "validation_task_ids": [22, 25],
+      "selection_note": "Keep historical anchors 22/24; include short and multi-review searches."
+    },
+    {
+      "name": "reddit_post_retrieval",
+      "main_task_ids": [27, 28, 30, 66],
+      "validation_task_ids": [27, 66],
+      "selection_note": "Keep three historical anchors and a second intent template (66)."
+    },
+    {
+      "name": "gitlab_public_repository_retrieval",
+      "main_task_ids": [132, 133, 134, 308],
+      "validation_task_ids": [132, 308],
+      "selection_note": "Keep three historical anchors and a second intent template (308)."
+    },
+    {
+      "name": "public_navigation",
+      "main_task_ids": [102, 118, 258, 274],
+      "validation_task_ids": [102, 118],
+      "selection_note": "Two Shopping and two GitLab public-navigation tasks in the main set; one from each site in validation."
+    }
+  ],
+  "design": {
+    "architectures": ["react", "plan_execute"],
+    "faults": ["web_http_error", "agent_param_error", "web_dom_missing"],
+    "independent_repetitions": 2,
+    "conditions": ["control", "fault"],
+    "max_steps": 20,
+    "main_trials": 768,
+    "validation_trials": 192,
+    "total_trials": 960,
+    "t0_main_controls": 64,
+    "t0_validation_controls": 16
+  },
+  "selection_policy": "Prespecified four categories x four tasks for the main comparison and four categories x two shared tasks for third-model validation. Keep all eight historical anchors in the main set. Do not select tasks after seeing formal outcomes or per-task cost.",
+  "preflight": "The superseded 24-task manifest records 24/24 dataset and anonymous-access checks and native evaluation for the eight anchors. The server operator subsequently reported native evaluation for the other 16/16 ReAct/Pro trial outputs, but those reports are not committed here; verify and archive their evidence, plus Qwen/Flash and plan_execute health, before formal T0.",
+  "analysis_scope": "Confirmatory model-by-architecture comparisons cover only the two main models on 16 tasks. The third model is a prespecified replication on the common eight-task subset; three-model contrasts must restrict all models to those eight tasks and are secondary. Do not claim a fully crossed three-model 16- or 24-task study, a general capability gradient, vendor effect, or full WebArena generalization."
+}

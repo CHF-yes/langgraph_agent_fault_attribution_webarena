@@ -1,9 +1,10 @@
 # 模型来源核验与基线 pilot
 
-> **2026-09-18 当前执行口径：** 本文只负责模型来源和 T0 健康检查；任务、架构、重复次数与
+> **2026-09-21 当前执行口径：** 本文只负责模型来源和 T0 健康检查；任务、架构、重复次数与
 > evaluator 政策以 [`experiment_roadmap.md`](experiment_roadmap.md) 和
-> [`task_manifest_public24.json`](task_manifest_public24.json) 为准。下文命令已同步为三模型、
-> 两架构、24 个候选公开任务、每格一次控制运行，共 144 trials。须先完成匿名访问及 native evaluator 预检。
+> [`task_manifest_public16.json`](task_manifest_public16.json) 为准。两主模型各跑 16 任务、
+> Pro 验证模型跑共同 8 任务，均为两架构、每格一次控制运行，共 **80 trials**。
+> 百炼 `qwen3.8-flash` 须先完成身份、工具调用和 native evaluator 预检。
 
 ## 为什么先做这一步
 
@@ -66,13 +67,16 @@ grep -ho '"served_model": "[^"]*"' experiments/<run>/**/*.jsonl | sort | uniq -c
 
 ---
 
-## 第 1 步：T0 控制臂（共 144 trials）
+## 第 1 步：T0 控制臂（共 80 trials）
 
 **只跑控制臂（不注入故障）**，用 `run_baseline.py`。目的不是产出论文数字，而是回答三个问题：端点是否健康、每个模型的控制成功率是多少、模型间差距是否大到值得投入 Stage C。
 
 ```bash
-for task in 21 22 23 24 25 26 27 28 29 30 31 66 132 133 134 135 136 308 118 158 260 274 102 258; do
-  for model in openai_4o_mini deepseek_v4_pro deepseek_v41_flash; do
+for task in 21 22 24 25 27 28 30 66 132 133 134 308 102 118 258 274; do
+  for model in qwen38_flash deepseek_v4_pro deepseek_v41_flash; do
+    if [ "$model" = deepseek_v4_pro ]; then
+      case "$task" in 22|25|27|66|132|308|102|118) ;; *) continue ;; esac
+    fi
     for arch in react plan_execute; do
       python3 run_baseline.py \
         --task-ids "$task" \
@@ -89,14 +93,14 @@ for task in 21 22 23 24 25 26 27 28 29 30 31 66 132 133 134 135 136 308 118 158 
 done
 ```
 
-三个 profile 和两种架构必须在同一环境窗口内按任务交错运行；不要先跑完一个模型再跑另一个，
+三个 profile 和两种架构在共同任务上按任务交错运行；不要先跑完一个模型再跑另一个，
 避免机器与服务漂移伪装成模型或架构差异。
 
 要点：
 
 - `--max-steps 20`：`run_baseline.py` 默认是 **10**，与正式矩阵的 20 不一致，**必须显式覆盖**，否则两边的预算口径对不上。
-- `--trials 1`：T0 每个 `(model, architecture, task)` 只做一次健康检查；24任务×3模型×2架构
-  = **144 trials**。正式 Stage C 做 2 次独立重复。
+- `--trials 1`：T0 每个 `(model, architecture, task)` 只做一次健康检查；
+  两主模型×16任务×2架构 + Pro×8任务×2架构 = **80 trials**。正式 C 做 2 次独立重复。
 - `--official-eval` + `--webarena-output-dir`：保留 HAR、走官方原生评估。这一条很关键——英文稿的主结论之一就是**评估器回退路径造成 32.9 pp 的基线差异**，pilot 必须走原生路径才可比。
 - 该脚本**没有 `--workers`**，是串行执行；时间以实测为准。
 - 结束后把第 0 步的 `probe_*.json` 与 pilot 结果**放在同一个目录**，作为这一批的来源证据。
@@ -105,8 +109,8 @@ done
 
 ## 第 2 步：决策规则
 
-> **2026-09-18 口径更正：** DeepSeek 官方已将 V4.1 Flash 描述为在基准、速度、费用和
-> 总用时上超过 V4 Pro。因此 pilot 不再用来证成 `4o-mini < Flash < Pro` 的能力梯度。
+> **2026-09-21 口径更正：** DeepSeek 官方已将 V4.1 Flash 描述为在基准、速度、费用和
+> 总用时上超过 V4 Pro；千问 3.8 Flash 与两款 DeepSeek 也没有预注册的能力排序。
 > 三个 profile 首先是三个**分类模型水平**；pilot 负责确认端点身份、协议健康、
 > 地板/天花板与实测成本，不事后生成序数检验的排名。
 
@@ -115,13 +119,13 @@ done
 | Pilot 观察 | 解读 | 下一步 |
 |---|---|---|
 | 控制成功率 ≈ 0 | 模型太弱，或 harness 在新模型下坏了（先看 `protocol_violation` 计数） | 别做 M×A：地板效应会让"模型无差异"成为必然。换更强的模型对，或先修 harness |
-| 三模型控制成功率都很高、差距很小 | 成功率可能出现天花板 | 按 roadmap 的预注册闸门转向过程指标，不根据 T0 事后删除模型 |
+| 两主模型控制成功率都很高、差距很小 | 成功率可能出现天花板 | 按 roadmap 的预注册闸门转向过程指标，不根据 T0 事后删除模型 |
 | 一个模型显著更慢 | 步数预算 ≠ 时间预算（正是 ReAct vs Plan-and-Execute 的 4.7 倍问题） | 必须同时记录 `llm_calls` / `executor_calls` / `planning_calls` / `replanning_calls` 与 token 数，否则"性能差异"可能是"预算差异" |
 | `protocol_violation` 频繁 | **分两类**：仅 `thought` 缺失（`content` 空但 tool_call 正常）**不算退化**；伴随工具调用失败 / 异常停止 / 官方 evaluator 无法评分才算退化 | 前者继续跑，但必须按 `(model, architecture)` 披露违规率与 `thought` 缺失率；后者暂停该模型、修 harness 后重做 T0（口径见 roadmap **§7**） |
 | 探针发现替换或路由漂移 | 端点不可信 | 停。这一批的任何数字都不能用 |
 
-三个模型是分类水平。两款 DeepSeek 同源可能相关，而 4o-mini 又与厂商完全混同；因此只报告
-具体模型间差异，不声称一般能力梯度或厂商效应。
+两个主模型是分类水平；三模型比较仅限共同 8 任务的次级验证。
+厂商与具体模型混同，因此不声称一般能力梯度或厂商效应。
 
 ---
 
@@ -130,12 +134,12 @@ done
 仓库里没有 `.env`（只有 `.env.example`），需要新建。**密钥只从 `.env` 读，绝不进代码或仓库**：
 
 ```bash
-MODEL_PROFILES=openai_4o_mini,deepseek_v4_pro,deepseek_v41_flash
+MODEL_PROFILES=qwen38_flash,deepseek_v4_pro,deepseek_v41_flash
 
-MODEL_OPENAI_4O_MINI_API_KEY=...
-MODEL_OPENAI_4O_MINI_BASE_URL=https://api.openai.com/v1
-MODEL_OPENAI_4O_MINI_NAME=gpt-4o-mini
-MODEL_OPENAI_4O_MINI_TEMPERATURE=0
+MODEL_QWEN38_FLASH_API_KEY=...
+MODEL_QWEN38_FLASH_BASE_URL=https://dashscope.aliyuncs.com/compatible-mode/v1
+MODEL_QWEN38_FLASH_NAME=qwen3.8-flash
+MODEL_QWEN38_FLASH_TEMPERATURE=0
 
 MODEL_DEEPSEEK_V4_PRO_API_KEY=...
 MODEL_DEEPSEEK_V4_PRO_BASE_URL=https://api.deepseek.com
