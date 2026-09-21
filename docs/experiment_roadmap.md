@@ -346,13 +346,30 @@ DeepSeek 官方报告 V4.1 Flash 超过 V4 Pro，所以旧文档中 `Flash < Pro
 `standard_agent/core/nodes.py` 的 `protocol_violation` 分支；**违规只写事件，不阻断工具调用**，
 因此空正文 ≠ 任务失败。
 
-| 观测 | 数值 |
+**历史 trace 的 step 级统计**（`python3 scripts/protocol_health.py`，按 `model_profile × architecture`
+聚合，`missing` = 工具调用步中 `thought` 为空的占比，`viol` = `protocol_violation` 事件占比）：
+
+| profile（served） | 架构 | traces | 工具调用步 | `thought` 缺失 | 缺失率 | 违规率 |
+|---|---|---|---|---|---|---|
+| `gpt54`（gpt-5.4） | `react` | 2241 | 14782 | 49 | 0.3% | 0.0% |
+| `gpt54`（gpt-5.4） | `plan_execute` | 242 | 845 | 45 | 5.3% | 0.0% |
+| `deepseek`（deepseek-v4-pro） | `react` | 28 | 297 | 265 | 89.2% | 86.2% |
+| `deepseek`（deepseek-v4-pro） | `plan_execute` | 69 | 352 | 304 | 86.4% | 4.3% |
+
+| 其它观测 | 数值 |
 |---|---|
-| 2026-09-20 T0 冒烟（DeepSeek V4 Pro，`plan_execute`，task 124） | executor **15/15** 步违规，`content` 为空串 |
+| 2026-09-20 T0 冒烟（deepseek-v4-pro，`plan_execute`，task 124） | executor **15/15** 步 `thought` 缺失，`content` 为空串 |
 | 隔离复现同形态请求 | 6 次里 3–4 次合规（约一半省略正文） |
 | 把 ReAct 的完整协议段与示例搬进 executor prompt | 3/6，与现版无差异 |
 | 空正文时的 `additional_kwargs` | 仅有 `refusal`，**无 `reasoning_content` 可取** |
-| 历史对照（此前模型，`react` 臂） | 2269 个 trace 中 23 个含违规（**1.01%**）；`plan_execute` 臂 0 个 |
+
+两条读法上的约束：
+
+- **这是模型差异，不是架构差异。** gpt-5.4 在两个架构上都接近 0%，deepseek-v4-pro 在两个架构上
+  都约 86–89% 缺失。不得把它写成"plan_execute 特有的问题"。
+- **`viol` 与 `missing` 的差距来自检查点上线的先后。** `agent_node`（`react`）的检查更早，
+  `plan_executor_node`（`plan_execute`）的检查是 2026-09-15 才加入，因此历史 `plan_execute`
+  的违规计数偏低**不代表当时守约**——跨时间比较一律以 `thought` 缺失率为准。
 
 > **写作要求：真实 trial 的 15/15 与隔离测试的约一半，只能表述为"观察到的关联"。**
 > prompt、页面、调用路径、上下文长度或端点状态都可能解释这个差异，本轮证据不足以确定
@@ -371,7 +388,8 @@ DeepSeek 官方报告 V4.1 Flash 超过 V4 Pro，所以旧文档中 `Flash < Pro
 ### 7.3 T0 放行标准（四条需同时成立）
 
 - 工具调用、HAR 与官方 evaluator 正常；空 `content` 不单独计为执行失败。
-- 已按 `(model, architecture)` 报出 `protocol_violation` 率与 `thought` 缺失率。
+- 已按 `(model, architecture)` 报出 `protocol_violation` 率与 `thought` 缺失率——用仓库里的
+  `python3 scripts/protocol_health.py --trace-dir traces --json <out>.json` 产出，报告进 manifest。
 - 主结果只依赖官方任务结果与可观测的动作 / 工具错误 / 步数。
 - 若 DeepSeek Pro 的空正文伴随工具调用失败、异常停止或无法评分，**暂停该模型**，修 harness 后
   重做 T0。
