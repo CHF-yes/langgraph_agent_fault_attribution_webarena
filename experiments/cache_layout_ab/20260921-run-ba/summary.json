@@ -1,0 +1,191 @@
+{
+  "salt": "run-ba",
+  "order": "ba",
+  "model": "deepseek-v4-pro",
+  "tools": 9,
+  "steps": 5,
+  "repeats": 2,
+  "cells": [
+    {
+      "layout": "A",
+      "phase": "cold",
+      "calls": 5,
+      "prompt_tokens": 46667,
+      "cache_hit_tokens": 5504,
+      "cache_miss_tokens": 41163,
+      "completion_tokens": 80,
+      "hit_rate": 0.1179,
+      "mean_latency_s": 3.779
+    },
+    {
+      "layout": "A",
+      "phase": "warm1",
+      "calls": 5,
+      "prompt_tokens": 46667,
+      "cache_hit_tokens": 46336,
+      "cache_miss_tokens": 331,
+      "completion_tokens": 80,
+      "hit_rate": 0.9929,
+      "mean_latency_s": 3.293
+    },
+    {
+      "layout": "B",
+      "phase": "cold",
+      "calls": 5,
+      "prompt_tokens": 46668,
+      "cache_hit_tokens": 10112,
+      "cache_miss_tokens": 36556,
+      "completion_tokens": 80,
+      "hit_rate": 0.2167,
+      "mean_latency_s": 4.324
+    },
+    {
+      "layout": "B",
+      "phase": "warm1",
+      "calls": 5,
+      "prompt_tokens": 46668,
+      "cache_hit_tokens": 46336,
+      "cache_miss_tokens": 332,
+      "completion_tokens": 80,
+      "hit_rate": 0.9929,
+      "mean_latency_s": 3.434
+    }
+  ],
+  "checks": [
+    {
+      "step": 1,
+      "text_sha256": "67ed55f24112bfcf204954cf1d0ef33211f4114cc01ca1bf2f9a8eb0a32d4717",
+      "chars": 20680,
+      "a_messages": 3,
+      "b_messages": 4,
+      "a_roles": [
+        "system",
+        "user",
+        "system"
+      ],
+      "b_roles": [
+        "system",
+        "user",
+        "user",
+        "system"
+      ],
+      "role_or_boundary_equivalence": "not established by this tool"
+    },
+    {
+      "step": 2,
+      "text_sha256": "73ac9bd8df3cc233fc2587de058541d176c6e8f6745720bddc0a79f28deca7b8",
+      "chars": 24703,
+      "a_messages": 5,
+      "b_messages": 6,
+      "a_roles": [
+        "system",
+        "user",
+        "assistant",
+        "user",
+        "system"
+      ],
+      "b_roles": [
+        "system",
+        "user",
+        "assistant",
+        "user",
+        "user",
+        "system"
+      ],
+      "role_or_boundary_equivalence": "not established by this tool"
+    },
+    {
+      "step": 3,
+      "text_sha256": "12106d2c516338327f3b3d64ec784c79ee99676f5109d396ed8746d712b57d76",
+      "chars": 28725,
+      "a_messages": 7,
+      "b_messages": 8,
+      "a_roles": [
+        "system",
+        "user",
+        "assistant",
+        "user",
+        "assistant",
+        "user",
+        "system"
+      ],
+      "b_roles": [
+        "system",
+        "user",
+        "assistant",
+        "user",
+        "assistant",
+        "user",
+        "user",
+        "system"
+      ],
+      "role_or_boundary_equivalence": "not established by this tool"
+    },
+    {
+      "step": 4,
+      "text_sha256": "f02b769deb12730ed8bd740925b009e882450054ec61c627f7efbf0279a738dd",
+      "chars": 32754,
+      "a_messages": 9,
+      "b_messages": 10,
+      "a_roles": [
+        "system",
+        "user",
+        "assistant",
+        "user",
+        "assistant",
+        "user",
+        "assistant",
+        "user",
+        "system"
+      ],
+      "b_roles": [
+        "system",
+        "user",
+        "assistant",
+        "user",
+        "assistant",
+        "user",
+        "assistant",
+        "user",
+        "user",
+        "system"
+      ],
+      "role_or_boundary_equivalence": "not established by this tool"
+    },
+    {
+      "step": 5,
+      "text_sha256": "e4a66be257077aa17536a769671fcd8de50a35fabd86c9d45c68400b9926aedf",
+      "chars": 36777,
+      "a_messages": 11,
+      "b_messages": 12,
+      "a_roles": [
+        "system",
+        "user",
+        "assistant",
+        "user",
+        "assistant",
+        "user",
+        "assistant",
+        "user",
+        "assistant",
+        "user",
+        "system"
+      ],
+      "b_roles": [
+        "system",
+        "user",
+        "assistant",
+        "user",
+        "assistant",
+        "user",
+        "assistant",
+        "user",
+        "assistant",
+        "user",
+        "user",
+        "system"
+      ],
+      "role_or_boundary_equivalence": "not established by this tool"
+    }
+  ]
+}
