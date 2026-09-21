@@ -92,6 +92,44 @@ def extract_served_metadata(response: object, requested_model: str = "") -> dict
     served = meta.get("model") or meta.get("model_name") or ""
     served = str(served).strip() if served else ""
 
+    prompt_tokens = token_usage.get("prompt_tokens", usage.get("input_tokens"))
+    completion_tokens = token_usage.get(
+        "completion_tokens", usage.get("output_tokens")
+    )
+    total_tokens = token_usage.get("total_tokens", usage.get("total_tokens"))
+
+    # Prompt-cache metering.  A repeated prefix is billed at a different rate
+    # from a fresh one, so a run whose trace lacks these fields cannot be priced
+    # from its own evidence, and the share of prompt tokens that were *reused*
+    # stays unknown.  Three shapes show up in practice, checked in this order:
+    #   DeepSeek raw      token_usage.prompt_cache_hit_tokens / _miss_tokens
+    #   OpenAI raw        token_usage.prompt_tokens_details.cached_tokens
+    #   LangChain normal  usage_metadata.input_token_details.cache_read
+    # A missing field is recorded as None, never 0: zero is the claim "the cache
+    # returned nothing", which is a measurement, not an absence.
+    cache_hit = token_usage.get("prompt_cache_hit_tokens")
+    cache_miss = token_usage.get("prompt_cache_miss_tokens")
+    cache_source = "deepseek" if cache_hit is not None else ""
+
+    if cache_hit is None:
+        details = token_usage.get("prompt_tokens_details")
+        if not isinstance(details, dict):
+            details = usage.get("prompt_tokens_details")
+        if isinstance(details, dict) and details.get("cached_tokens") is not None:
+            cache_hit = details["cached_tokens"]
+            cache_source = "openai"
+
+    if cache_hit is None:
+        input_details = usage.get("input_token_details")
+        if isinstance(input_details, dict) and input_details.get("cache_read") is not None:
+            cache_hit = input_details["cache_read"]
+            cache_source = "langchain"
+
+    if cache_hit is not None and cache_miss is None and prompt_tokens is not None:
+        # Derive the miss count only when both the total and the hit are known,
+        # so an unreported field stays unreported.
+        cache_miss = max(int(prompt_tokens) - int(cache_hit), 0)
+
     return {
         "served_model": served,
         "system_fingerprint": str(meta.get("system_fingerprint") or ""),
@@ -102,11 +140,14 @@ def extract_served_metadata(response: object, requested_model: str = "") -> dict
         "served_model_differs": bool(
             served and requested_model and served != requested_model
         ),
-        "prompt_tokens": token_usage.get("prompt_tokens", usage.get("input_tokens")),
-        "completion_tokens": token_usage.get(
-            "completion_tokens", usage.get("output_tokens")
-        ),
-        "total_tokens": token_usage.get("total_tokens", usage.get("total_tokens")),
+        "prompt_tokens": prompt_tokens,
+        "completion_tokens": completion_tokens,
+        "total_tokens": total_tokens,
+        "prompt_cache_hit_tokens": cache_hit,
+        "prompt_cache_miss_tokens": cache_miss,
+        # Which provider shape supplied the cache numbers; "" means the endpoint
+        # reported none, so the cache share for this call is unknown.
+        "cache_usage_source": cache_source,
     }
 
 

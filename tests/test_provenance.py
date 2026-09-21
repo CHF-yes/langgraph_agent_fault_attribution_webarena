@@ -160,6 +160,48 @@ def test_absent_tokens_are_none_not_zero():
     assert got["completion_tokens"] is None
 
 
+# --------------------------------------------------------------------------
+# Prompt-cache accounting: an unreported field is "unknown", never zero
+# --------------------------------------------------------------------------
+def test_cache_hit_and_miss_from_deepseek_shape():
+    got = extract(_Resp({"model": "m", "token_usage": {
+        "prompt_tokens": 6095, "prompt_cache_hit_tokens": 6016,
+        "prompt_cache_miss_tokens": 79}}))
+    assert got["prompt_cache_hit_tokens"] == 6016
+    assert got["prompt_cache_miss_tokens"] == 79
+    assert got["cache_usage_source"] == "deepseek"
+
+
+def test_cache_read_from_openai_prompt_tokens_details():
+    """OpenAI reports only the cached read, so the miss side is derived."""
+    got = extract(_Resp({"model": "m", "token_usage": {
+        "prompt_tokens": 1000, "prompt_tokens_details": {"cached_tokens": 768}}}))
+    assert got["prompt_cache_hit_tokens"] == 768
+    assert got["prompt_cache_miss_tokens"] == 232
+    assert got["cache_usage_source"] == "openai"
+
+
+def test_cache_read_from_langchain_usage_metadata():
+    got = extract(_Resp(
+        {"model": "m"},
+        {"input_tokens": 500, "output_tokens": 5,
+         "input_token_details": {"cache_read": 400}},
+    ))
+    assert got["prompt_cache_hit_tokens"] == 400
+    assert got["prompt_cache_miss_tokens"] == 100
+    assert got["cache_usage_source"] == "langchain"
+
+
+def test_absent_cache_fields_are_none_not_zero():
+    """0 would mean "the cache returned nothing", which is a measurement.  A
+    missing field means the endpoint did not report it, so the cache share for
+    the call is unknown and must not be summed as a miss."""
+    got = extract(_Resp({"model": "m", "token_usage": {"prompt_tokens": 42}}))
+    assert got["prompt_cache_hit_tokens"] is None
+    assert got["prompt_cache_miss_tokens"] is None
+    assert got["cache_usage_source"] == ""
+
+
 def test_result_is_json_serialisable():
     """The dict is merged into a trace event and written as JSONL."""
     got = extract(_Resp({"model": "m", "token_usage": {"total_tokens": 3}}), "m")

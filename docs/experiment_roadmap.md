@@ -333,6 +333,19 @@ T0 的 144 个控制运行不自动计入 C：只有相同配置、相同配对�
 > ReAct 连续步之间共享极长前缀。不核实这一条，**T0 实测的 cost/trial 本身就不可信**。
 > 它依赖 `llm_provenance`，而后者依赖 **Stage 0.1**。
 
+**计量已就位（2026-09-21）。** `extract_served_metadata` 现在记录
+`prompt_cache_hit_tokens` / `prompt_cache_miss_tokens` / `cache_usage_source`，依次识别
+DeepSeek（`prompt_cache_hit_tokens`）、OpenAI（`prompt_tokens_details.cached_tokens`）、
+LangChain 归一化（`input_token_details.cache_read`）三种返回形态。**字段缺失记为 `None`
+（未知），绝不记 0**——0 是"缓存什么都没返回"的测量结论，与"端点没报"是两回事。
+
+端点实测（`api.deepseek.com`，固定 6094 token 前缀连续三次）：命中 `0 → 6016 → 6016`，
+即前缀稳定时命中率约 **98.7%**，说明端点缓存本身有效。
+
+> **但既有 trace 无法回溯核价。** 2026-09-21 之前的 trace 没有这三个字段，因此那批数据的
+> 缓存命中率永远是"未知"，其 token 数**不能**直接换算成费用。已知的 `82%` 与 `58%` 都是
+> **token 占比**，不是已核实的费用占比；`435 M tokens` 只能作为风险情景，不能作为报价。
+
 核价日期、`served_model` 探针结果、T0 实测 cost/trial 三者仍记进 manifest——
 **不是为了砍预算，是为了在稿子里报得出"我们到底跑了什么"。**
 
