@@ -53,6 +53,7 @@ from standard_agent.stage_c_analysis import (  # noqa: E402
 )
 from standard_agent.stage_c_pipeline import (  # noqa: E402
     EVALUATION_STATUS_COMPATIBILITY,
+    smoke_preflight,
     EVALUATION_STATUS_ERROR,
     EVALUATION_STATUS_NATIVE,
     audit,
@@ -1077,3 +1078,75 @@ def test_blocked_report_tables_are_still_well_formed():
     for table in tables:
         widths = {len(line.strip().strip("|").split("|")) for line in table}
         assert len(widths) == 1, f"ragged table: {widths}"
+
+
+# ==========================================================================
+# 9. 付费 smoke 开跑前门槛
+# ==========================================================================
+
+def _probe(head="6b241be" + "0" * 33, branch="stagec-exec-chain", dirty=False):
+    def probe(repo_root):
+        return {"head": head, "branch": branch, "dirty": dirty, "error": ""}
+    return probe
+
+
+def test_preflight_allows_an_empty_target_with_the_expected_commit(tmp_path: Path):
+    report = smoke_preflight(repo_root=tmp_path, output_root=tmp_path / "out",
+                             run_dir=tmp_path / "run", expect_commit="6b241be",
+                             git_probe=_probe())
+    assert report["allowed_to_run_paid_trials"] is True
+    assert report["blocked_reasons"] == []
+    assert report["existing_artifacts"] == 0
+
+
+def test_preflight_blocks_when_artifacts_already_exist(tmp_path: Path):
+    _trial_dir(tmp_path / "out", model="m1", condition="control", seed=1)
+    report = smoke_preflight(repo_root=tmp_path, output_root=tmp_path / "out",
+                             expect_commit="6b241be", git_probe=_probe())
+    assert report["allowed_to_run_paid_trials"] is False
+    assert report["existing_artifacts"] >= 1
+    assert any("已有" in reason for reason in report["blocked_reasons"])
+    assert "check" in report["next_step"]
+
+
+def test_preflight_blocks_on_a_resume_status_file(tmp_path: Path):
+    """即使没有 trial_record，只要 run-dir 里已有 status.json 也不能直接开跑。"""
+    run_dir = tmp_path / "run"
+    run_dir.mkdir(parents=True)
+    (run_dir / "web_dom_missing_task22_seed1.status.json").write_text("{}", encoding="utf-8")
+    report = smoke_preflight(repo_root=tmp_path, output_root=tmp_path / "out",
+                             run_dir=run_dir, expect_commit="6b241be",
+                             git_probe=_probe())
+    assert report["allowed_to_run_paid_trials"] is False
+    assert report["inventory"]["run_dir"]["status_json"] == 1
+
+
+def test_preflight_blocks_on_a_commit_mismatch(tmp_path: Path):
+    report = smoke_preflight(repo_root=tmp_path, output_root=tmp_path / "out",
+                             expect_commit="2a7a9bb", git_probe=_probe())
+    assert report["allowed_to_run_paid_trials"] is False
+    assert any("!= 期望" in reason for reason in report["blocked_reasons"])
+
+
+def test_preflight_blocks_when_the_version_cannot_be_read(tmp_path: Path):
+    report = smoke_preflight(repo_root=tmp_path, output_root=tmp_path / "out",
+                             expect_commit="6b241be",
+                             git_probe=lambda repo: {"head": "", "branch": "", "dirty": None})
+    assert report["allowed_to_run_paid_trials"] is False
+    assert any("无法确认" in reason for reason in report["blocked_reasons"])
+
+
+def test_preflight_blocks_a_dirty_tree_by_default(tmp_path: Path):
+    report = smoke_preflight(repo_root=tmp_path, output_root=tmp_path / "out",
+                             expect_commit="6b241be", git_probe=_probe(dirty=True))
+    assert report["allowed_to_run_paid_trials"] is False
+    assert any("未提交" in reason for reason in report["blocked_reasons"])
+
+
+def test_preflight_can_explicitly_allow_existing_artifacts(tmp_path: Path):
+    _trial_dir(tmp_path / "out", model="m1", condition="control", seed=1)
+    report = smoke_preflight(repo_root=tmp_path, output_root=tmp_path / "out",
+                             expect_commit="6b241be", allow_existing=True,
+                             git_probe=_probe())
+    assert report["allowed_to_run_paid_trials"] is True
+    assert report["existing_artifacts"] >= 1

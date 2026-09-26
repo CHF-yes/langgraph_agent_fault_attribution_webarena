@@ -541,3 +541,88 @@ def job_arms_ok(job_dir: str | Path, *, fault_type: str, task_id: int, seed: int
         if not ok:
             reasons.extend(f"{condition}: {reason}" for reason in why)
     return (not reasons), reasons
+
+
+# --------------------------------------------------------------------------
+# 付费 smoke 的开跑前门槛
+# --------------------------------------------------------------------------
+
+def _default_git_probe(repo_root: str | Path) -> dict:
+    """读取仓库版本信息；任何失败都返回空值，由调用方判为"无法确认"。"""
+    import subprocess
+
+    info = {"head": "", "branch": "", "dirty": None, "error": ""}
+    try:
+        for key, args in (("head", ["rev-parse", "HEAD"]),
+                          ("branch", ["rev-parse", "--abbrev-ref", "HEAD"])):
+            result = subprocess.run(["git", "-C", str(repo_root), *args],
+                                    capture_output=True, text=True, timeout=15)
+            if result.returncode == 0:
+                info[key] = result.stdout.strip()
+        result = subprocess.run(["git", "-C", str(repo_root), "status", "--porcelain"],
+                                capture_output=True, text=True, timeout=30)
+        if result.returncode == 0:
+            info["dirty"] = bool(result.stdout.strip())
+    except (OSError, subprocess.SubprocessError) as exc:
+        info["error"] = str(exc)
+    return info
+
+
+def smoke_preflight(*, repo_root: str | Path, output_root: str | Path,
+                    expect_commit: str = "", run_dir: str | Path | None = None,
+                    allow_existing: bool = False, require_clean: bool = True,
+                    git_probe=None) -> dict:
+    """付费 smoke 开跑前的门槛：代码版本正确 + 目标目录没有既有产物。
+
+    这是"宁可挡住、不可重复付费"的检查：版本读不到、或目录里已有任何产物时一律
+    不放行（除非显式 ``allow_existing``）。非空时给出 `next_step` 指向完整性审计。
+    """
+    probe = (git_probe or _default_git_probe)(repo_root)
+    head = str(probe.get("head") or "")
+    reasons: list[str] = []
+
+    if not head:
+        reasons.append("无法确认当前代码版本（读不到 git HEAD）")
+    elif expect_commit and not head.startswith(expect_commit):
+        reasons.append(f"当前 HEAD {head[:9]} != 期望 {expect_commit}")
+    if require_clean and probe.get("dirty"):
+        reasons.append("工作区有未提交改动，正式运行要求干净树")
+
+    roots = {"official_output_root": Path(output_root)}
+    if run_dir is not None:
+        roots["run_dir"] = Path(run_dir)
+
+    inventory = {}
+    total_artifacts = 0
+    for name, root in roots.items():
+        counts = {"agent_response": 0, "network_har": 0, "trial_record": 0,
+                  "status_json": 0, "manifest_json": 0}
+        if root.exists():
+            counts["agent_response"] = len(discover_trials(root))
+            counts["network_har"] = len(list(root.rglob(NETWORK_HAR)))
+            counts["trial_record"] = len(list(root.rglob(TRIAL_RECORD)))
+            counts["status_json"] = len(list(root.rglob("*.status.json")))
+            counts["manifest_json"] = len(list(root.rglob("manifest.json")))
+        inventory[name] = {"path": str(root), "exists": root.exists(), **counts}
+        total_artifacts += (counts["agent_response"] + counts["trial_record"]
+                            + counts["status_json"])
+
+    if total_artifacts and not allow_existing:
+        reasons.append(f"目标目录已有 {total_artifacts} 个产物/状态文件，"
+                       f"先跑完整性审计再决定，避免覆盖或重复付费")
+
+    allowed = not reasons
+    return {
+        "repo_root": str(repo_root),
+        "head": head, "head_short": head[:9],
+        "branch": probe.get("branch") or "",
+        "working_tree_dirty": probe.get("dirty"),
+        "expect_commit": expect_commit,
+        "inventory": inventory,
+        "existing_artifacts": total_artifacts,
+        "allowed_to_run_paid_trials": allowed,
+        "blocked_reasons": reasons,
+        "next_step": ("可以开跑 12 条 smoke" if allowed else
+                      "先运行: python scripts/stage_c_pipeline.py check "
+                      "--root <official_output_root>（非空时）并核对版本/工作区"),
+    }
