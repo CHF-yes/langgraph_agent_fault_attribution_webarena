@@ -1,0 +1,104 @@
+{
+  "design_fingerprint": "979e028a71e2be48",
+  "pairing_scheme": "seed-paired-v2",
+  "trial_record_schema": 1,
+  "resume_ignored_stale_status_files": [],
+  "resume_skipped_keys": [],
+  "resume_rerun": [],
+  "model_profile": "deepseek_v41_flash",
+  "architecture": "react",
+  "max_steps": 20,
+  "fault_types": [
+    "web_http_error",
+    "agent_param_error",
+    "web_dom_missing"
+  ],
+  "fault_intensity": "high",
+  "fault_injection_steps": {
+    "web_http_error": 2,
+    "agent_param_error": 1,
+    "web_dom_missing": 2
+  },
+  "injection_step_mode": "stage_c_fixed",
+  "injection_step_units": {
+    "web_http_error": "execution_step",
+    "agent_param_error": "parameter_action",
+    "web_dom_missing": "execution_step"
+  },
+  "workers": 2,
+  "trials_per_task": 1,
+  "total_jobs": 6,
+  "total_trials_including_control": 12,
+  "task_ids": [
+    22,
+    118
+  ],
+  "stop_policy": {
+    "infrastructure_errors": 2,
+    "fault_missing_in_last_8": 2,
+    "task_errors": "record_only"
+  },
+  "jobs": [
+    {
+      "task_id": 22,
+      "seed": 1,
+      "site": "shopping",
+      "start_url": "http://localhost:7770/fujifilm-finepix-z200fd-10mp-digital-camera-with-5x-optical-dual-image-stabilized-zoom-black.html",
+      "intent": "Get name(s) of reviewer(s) who mention under water photo for the product on the current page",
+      "fault_type": "web_http_error",
+      "injection_step": 2,
+      "injection_step_units": "execution_step"
+    },
+    {
+      "task_id": 118,
+      "seed": 1,
+      "site": "shopping",
+      "start_url": "http://localhost:7770",
+      "intent": "I have a jaw bruxism problem, go to the product page for something that could alleviate the problem.",
+      "fault_type": "web_http_error",
+      "injection_step": 2,
+      "injection_step_units": "execution_step"
+    },
+    {
+      "task_id": 22,
+      "seed": 1,
+      "site": "shopping",
+      "start_url": "http://localhost:7770/fujifilm-finepix-z200fd-10mp-digital-camera-with-5x-optical-dual-image-stabilized-zoom-black.html",
+      "intent": "Get name(s) of reviewer(s) who mention under water photo for the product on the current page",
+      "fault_type": "agent_param_error",
+      "injection_step": 1,
+      "injection_step_units": "parameter_action"
+    },
+    {
+      "task_id": 118,
+      "seed": 1,
+      "site": "shopping",
+      "start_url": "http://localhost:7770",
+      "intent": "I have a jaw bruxism problem, go to the product page for something that could alleviate the problem.",
+      "fault_type": "agent_param_error",
+      "injection_step": 1,
+      "injection_step_units": "parameter_action"
+    },
+    {
+      "task_id": 22,
+      "seed": 1,
+      "site": "shopping",
+      "start_url": "http://localhost:7770/fujifilm-finepix-z200fd-10mp-digital-camera-with-5x-optical-dual-image-stabilized-zoom-black.html",
+      "intent": "Get name(s) of reviewer(s) who mention under water photo for the product on the current page",
+      "fault_type": "web_dom_missing",
+      "injection_step": 2,
+      "injection_step_units": "execution_step"
+    },
+    {
+      "task_id": 118,
+      "seed": 1,
+      "site": "shopping",
+      "start_url": "http://localhost:7770",
+      "intent": "I have a jaw bruxism problem, go to the product page for something that could alleviate the problem.",
+      "fault_type": "web_dom_missing",
+      "injection_step": 2,
+      "injection_step_units": "execution_step"
+    }
+  ],
+  "resume": false
+}

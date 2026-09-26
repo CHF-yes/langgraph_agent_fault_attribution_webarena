@@ -1,0 +1,21 @@
+{
+  "job": {
+    "task_id": 118,
+    "seed": 1,
+    "site": "shopping",
+    "start_url": "http://localhost:7770",
+    "intent": "I have a jaw bruxism problem, go to the product page for something that could alleviate the problem.",
+    "fault_type": "web_dom_missing",
+    "injection_step": 2,
+    "injection_step_units": "execution_step"
+  },
+  "design_fingerprint": "979e028a71e2be48",
+  "returncode": 0,
+  "infrastructure_error": false,
+  "task_error": false,
+  "fault_missing": false,
+  "fault_count": 1,
+  "fault_triggered": true,
+  "fault_invalid": false,
+  "timed_out": false
+}
