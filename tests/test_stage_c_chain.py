@@ -37,6 +37,7 @@ from fault_injection.config import (  # noqa: E402
 )
 from standard_agent.stage_c_analysis import (  # noqa: E402
     HOLM_FAMILY_ID,
+    cap_exhaustion_summary,
     assess_matrix,
     build_observations,
     degradation_by_fault,
@@ -74,6 +75,7 @@ from standard_agent.trial_metadata import (  # noqa: E402
     trial_file_stem,
     write_trial_record,
 )
+from standard_agent.evaluation import is_cap_exhausted, is_completed  # noqa: E402
 from standard_agent.webarena_verified import (  # noqa: E402
     TaskDefinitionNotFound,
     load_task_definition,
@@ -1150,3 +1152,81 @@ def test_preflight_can_explicitly_allow_existing_artifacts(tmp_path: Path):
                              git_probe=_probe())
     assert report["allowed_to_run_paid_trials"] is True
     assert report["existing_artifacts"] >= 1
+
+
+# ==========================================================================
+# 10. 离线评分复核：诊断不进检索答案、cap 判定单一来源、耗尽率仅描述
+# ==========================================================================
+
+RETRIEVE_ARRAY_TASK = {
+    "task_id": 21, "intent": "find the reviewers", "sites": ["shopping"],
+    "eval": [{"evaluator": "AgentResponseEvaluator",
+              "results_schema": {"type": "array"},
+              "expected": {"task_type": "retrieve", "status": "SUCCESS",
+                           "retrieved_data": ["Dibbins"]}}],
+}
+
+
+def test_incomplete_run_never_reports_a_retrieval_answer():
+    """跑满步数时，harness 的诊断不能冒充检索答案。"""
+    response = make_agent_response(RETRIEVE_ARRAY_TASK, completed=False,
+                                   answer="Reached max steps (20)")
+    assert response["status"] == "UNKNOWN_ERROR"
+    assert response["retrieved_data"] is None
+    assert "reached max steps" in response["error_details"].casefold()
+
+
+def test_explicit_diagnostic_wins_over_the_answer_text():
+    response = make_agent_response(RETRIEVE_ARRAY_TASK, completed=True,
+                                   answer="[]", diagnostic="max_steps exhausted after 20 steps")
+    assert response["status"] == "UNKNOWN_ERROR"
+    assert response["retrieved_data"] is None
+    assert response["error_details"] == "max_steps exhausted after 20 steps"
+
+
+def test_completed_not_found_answer_is_unchanged():
+    response = make_agent_response(RETRIEVE_ARRAY_TASK, completed=True,
+                                   answer="No reviewer mentions that; nothing found.")
+    assert response["status"] == "NOT_FOUND_ERROR"
+    assert response["retrieved_data"] is None
+
+
+def test_completed_retrieval_answer_is_still_parsed():
+    response = make_agent_response(RETRIEVE_ARRAY_TASK, completed=True,
+                                   answer=json.dumps(["Dibbins"]))
+    assert response["status"] == "SUCCESS"
+    assert response["retrieved_data"] == ["Dibbins"]
+
+
+def test_cap_exhaustion_detection_has_one_source():
+    assert is_cap_exhausted(True, "Reached max steps (20)") is True
+    assert is_completed(True, "Reached max steps (20)") is False
+    assert is_completed(True, "Dibbins") is True
+    assert is_cap_exhausted(False, "") is False
+
+
+def test_trial_record_carries_steps_cap_and_llm_calls(tmp_path: Path):
+    record = build_trial_record(
+        model_profile="m1", architecture="react", fault_type="web_dom_missing",
+        task_id=22, seed=1, condition="control", replicate=0, run_config={},
+        paths={}, steps=20, cap_exhausted=True, llm_calls=13)
+    path = write_trial_record(tmp_path / "trial_record.json", record)
+    back = read_trial_record(path)
+    assert (back["steps"], back["cap_exhausted"], back["llm_calls"]) == (20, True, 13)
+
+
+def test_cap_exhaustion_is_descriptive_not_a_success_metric():
+    rows = _complete_rows(faults=("f1",), tasks=(1, 2), seeds=(1,))
+    rows[0]["cap_exhausted"] = True
+    rows[0]["steps"] = 20
+    rows[1]["cap_exhausted"] = False
+    rows[1]["steps"] = 6
+    summary = cap_exhaustion_summary(rows)
+    assert summary["overall"]["present"] == len(rows)
+    assert summary["overall"]["exhausted"] == 1
+    assert summary["overall"]["rate"] == pytest.approx(1 / len(rows))
+    assert summary["by_fault"]["f1"]["exhausted"] == 1
+    assert summary["mean_steps"] == pytest.approx((20 + 6) / 2)
+    # 官方成功率仍只看 evaluator 判定：cap 标记不改变任何行的 official_success
+    assert all("cap" not in json.dumps({"s": row["official_success"]}).casefold()
+               for row in rows)

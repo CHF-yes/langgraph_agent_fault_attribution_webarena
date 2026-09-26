@@ -16,6 +16,9 @@
       "trial_id": "model=deepseek_v41_flash|arch=react|fault=agent_param_error|task=118|seed=1|cond=fault|rep=0",
       "pair_key": "model=deepseek_v41_flash|arch=react|fault=agent_param_error|task=118|seed=1|cond=-|rep=0",
       "condition": "fault",
+      "steps": null,
+      "cap_exhausted": false,
+      "llm_calls": null,
       "cell": {
         "model_profile": "deepseek_v41_flash",
         "architecture": "react",
@@ -24,6 +27,7 @@
         "fault_seed": 1,
         "condition": "fault"
       },
+      "cap_exhausted_source": "derived_from_response",
       "reason": ""
     },
     {
@@ -36,6 +40,9 @@
       "trial_id": "model=deepseek_v41_flash|arch=react|fault=agent_param_error|task=118|seed=1|cond=control|rep=0",
       "pair_key": "model=deepseek_v41_flash|arch=react|fault=agent_param_error|task=118|seed=1|cond=-|rep=0",
       "condition": "control",
+      "steps": null,
+      "cap_exhausted": false,
+      "llm_calls": null,
       "cell": {
         "model_profile": "deepseek_v41_flash",
         "architecture": "react",
@@ -44,6 +51,7 @@
         "fault_seed": 1,
         "condition": "control"
       },
+      "cap_exhausted_source": "derived_from_response",
       "reason": ""
     },
     {
@@ -56,6 +64,9 @@
       "trial_id": "model=deepseek_v41_flash|arch=react|fault=agent_param_error|task=22|seed=1|cond=fault|rep=0",
       "pair_key": "model=deepseek_v41_flash|arch=react|fault=agent_param_error|task=22|seed=1|cond=-|rep=0",
       "condition": "fault",
+      "steps": null,
+      "cap_exhausted": true,
+      "llm_calls": null,
       "cell": {
         "model_profile": "deepseek_v41_flash",
         "architecture": "react",
@@ -64,6 +75,7 @@
         "fault_seed": 1,
         "condition": "fault"
       },
+      "cap_exhausted_source": "derived_from_response",
       "reason": ""
     },
     {
@@ -76,6 +88,9 @@
       "trial_id": "model=deepseek_v41_flash|arch=react|fault=agent_param_error|task=22|seed=1|cond=control|rep=0",
       "pair_key": "model=deepseek_v41_flash|arch=react|fault=agent_param_error|task=22|seed=1|cond=-|rep=0",
       "condition": "control",
+      "steps": null,
+      "cap_exhausted": true,
+      "llm_calls": null,
       "cell": {
         "model_profile": "deepseek_v41_flash",
         "architecture": "react",
@@ -84,6 +99,7 @@
         "fault_seed": 1,
         "condition": "control"
       },
+      "cap_exhausted_source": "derived_from_response",
       "reason": ""
     },
     {
@@ -96,6 +112,9 @@
       "trial_id": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=118|seed=1|cond=control|rep=0",
       "pair_key": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=118|seed=1|cond=-|rep=0",
       "condition": "control",
+      "steps": null,
+      "cap_exhausted": false,
+      "llm_calls": null,
       "cell": {
         "model_profile": "deepseek_v41_flash",
         "architecture": "react",
@@ -104,6 +123,7 @@
         "fault_seed": 1,
         "condition": "control"
       },
+      "cap_exhausted_source": "derived_from_response",
       "reason": ""
     },
     {
@@ -116,6 +136,9 @@
       "trial_id": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=118|seed=1|cond=fault|rep=0",
       "pair_key": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=118|seed=1|cond=-|rep=0",
       "condition": "fault",
+      "steps": null,
+      "cap_exhausted": false,
+      "llm_calls": null,
       "cell": {
         "model_profile": "deepseek_v41_flash",
         "architecture": "react",
@@ -124,6 +147,7 @@
         "fault_seed": 1,
         "condition": "fault"
       },
+      "cap_exhausted_source": "derived_from_response",
       "reason": ""
     },
     {
@@ -136,6 +160,9 @@
       "trial_id": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=22|seed=1|cond=control|rep=0",
       "pair_key": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=22|seed=1|cond=-|rep=0",
       "condition": "control",
+      "steps": null,
+      "cap_exhausted": true,
+      "llm_calls": null,
       "cell": {
         "model_profile": "deepseek_v41_flash",
         "architecture": "react",
@@ -144,6 +171,7 @@
         "fault_seed": 1,
         "condition": "control"
       },
+      "cap_exhausted_source": "derived_from_response",
       "reason": ""
     },
     {
@@ -156,6 +184,9 @@
       "trial_id": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=22|seed=1|cond=fault|rep=0",
       "pair_key": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=22|seed=1|cond=-|rep=0",
       "condition": "fault",
+      "steps": null,
+      "cap_exhausted": true,
+      "llm_calls": null,
       "cell": {
         "model_profile": "deepseek_v41_flash",
         "architecture": "react",
@@ -164,6 +195,7 @@
         "fault_seed": 1,
         "condition": "fault"
       },
+      "cap_exhausted_source": "derived_from_response",
       "reason": ""
     },
     {
@@ -176,6 +208,9 @@
       "trial_id": "model=deepseek_v41_flash|arch=react|fault=web_http_error|task=118|seed=1|cond=control|rep=0",
       "pair_key": "model=deepseek_v41_flash|arch=react|fault=web_http_error|task=118|seed=1|cond=-|rep=0",
       "condition": "control",
+      "steps": null,
+      "cap_exhausted": false,
+      "llm_calls": null,
       "cell": {
         "model_profile": "deepseek_v41_flash",
         "architecture": "react",
@@ -184,6 +219,7 @@
         "fault_seed": 1,
         "condition": "control"
       },
+      "cap_exhausted_source": "derived_from_response",
       "reason": ""
     },
     {
@@ -196,6 +232,9 @@
       "trial_id": "model=deepseek_v41_flash|arch=react|fault=web_http_error|task=118|seed=1|cond=fault|rep=0",
       "pair_key": "model=deepseek_v41_flash|arch=react|fault=web_http_error|task=118|seed=1|cond=-|rep=0",
       "condition": "fault",
+      "steps": null,
+      "cap_exhausted": false,
+      "llm_calls": null,
       "cell": {
         "model_profile": "deepseek_v41_flash",
         "architecture": "react",
@@ -204,6 +243,7 @@
         "fault_seed": 1,
         "condition": "fault"
       },
+      "cap_exhausted_source": "derived_from_response",
       "reason": ""
     },
     {
@@ -216,6 +256,9 @@
       "trial_id": "model=deepseek_v41_flash|arch=react|fault=web_http_error|task=22|seed=1|cond=control|rep=0",
       "pair_key": "model=deepseek_v41_flash|arch=react|fault=web_http_error|task=22|seed=1|cond=-|rep=0",
       "condition": "control",
+      "steps": null,
+      "cap_exhausted": false,
+      "llm_calls": null,
       "cell": {
         "model_profile": "deepseek_v41_flash",
         "architecture": "react",
@@ -224,6 +267,7 @@
         "fault_seed": 1,
         "condition": "control"
       },
+      "cap_exhausted_source": "derived_from_response",
       "reason": ""
     },
     {
@@ -236,6 +280,9 @@
       "trial_id": "model=deepseek_v41_flash|arch=react|fault=web_http_error|task=22|seed=1|cond=fault|rep=0",
       "pair_key": "model=deepseek_v41_flash|arch=react|fault=web_http_error|task=22|seed=1|cond=-|rep=0",
       "condition": "fault",
+      "steps": null,
+      "cap_exhausted": true,
+      "llm_calls": null,
       "cell": {
         "model_profile": "deepseek_v41_flash",
         "architecture": "react",
@@ -244,6 +291,7 @@
         "fault_seed": 1,
         "condition": "fault"
       },
+      "cap_exhausted_source": "derived_from_response",
       "reason": ""
     }
   ]

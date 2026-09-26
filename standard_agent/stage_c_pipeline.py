@@ -313,6 +313,9 @@ def collect_rows(root: str | Path, *, config_path=None, evaluate_fn=None,
             "trial_id": "",
             "pair_key": "",
             "condition": "",
+            "steps": None,
+            "cap_exhausted": None,
+            "llm_calls": None,
             "cell": None,
         }
         record = integrity.get("trial_record")
@@ -320,12 +323,24 @@ def collect_rows(root: str | Path, *, config_path=None, evaluate_fn=None,
             row["trial_id"] = record["trial_id"]
             row["pair_key"] = record["pair_key"]
             row["condition"] = record["condition"]
+            row["steps"] = record.get("steps")
+            row["cap_exhausted"] = record.get("cap_exhausted")
+            row["llm_calls"] = record.get("llm_calls")
             row["cell"] = {key: record[key] for key in (
                 "model_profile", "architecture", "fault_type", "task_id",
                 "fault_seed", "condition")}
         response = integrity.get("agent_response")
         if response:
             row["submitted_success"] = str(response.get("status") or "").casefold() == "success"
+            if row["cap_exhausted"] is None:
+                # 早于 cap_exhausted 字段的产物（例如首批 smoke）：从响应形态推断，
+                # 只用于描述性耗尽率，绝不参与官方判定。来源单独标注以便区分。
+                marker_zone = (json.dumps(response.get("retrieved_data"), ensure_ascii=False)
+                               + " " + str(response.get("error_details") or ""))
+                row["cap_exhausted"] = "reached max steps" in marker_zone.casefold()
+                row["cap_exhausted_source"] = "derived_from_response"
+            else:
+                row["cap_exhausted_source"] = "trial_record"
         if integrity["complete"] and (evaluate or evaluate_fn is not None):
             task_id = int((record or {}).get("task_id") or trial_dir.parts[-3])
             outcome = evaluate_trial(trial_dir, task_id=task_id,

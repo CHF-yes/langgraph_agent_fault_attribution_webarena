@@ -15,6 +15,9 @@
   `evaluated + missing + incomplete + unevaluated + error = expected`
   （根本没有产物 / 产物不完整 / 完整但未评分 / 评分自身报错）。**任何一类都不得从
   报告中静默消失**；evaluator 报错与"未评分"是两件事，分开报。
+- **步数耗尽率是描述性指标**：每格记录 `steps` / `cap_exhausted` / `llm_calls`，报告给出
+  总体与分故障/分条件的耗尽率。耗尽格仍按官方 evaluator 判定计入成功率，二者不得互换；
+  诊断文本只进 `error_details`，绝不作为检索答案提交（否则预算产物会被评分成检索结果）。
 - **正式推断前置检查**：矩阵必须通过健康检查才能输出显著性结论。缺格（没有产物）、
   incomplete（产物不完整）、unevaluated（未评分）、error（评分报错）、unpaired
   （控制/故障臂未配平）任一存在时，`formal_inference_allowed = false`，所有 p 值置空，

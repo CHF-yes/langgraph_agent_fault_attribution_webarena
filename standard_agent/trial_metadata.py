@@ -135,6 +135,9 @@ def build_trial_record(*, model_profile: str, architecture: str, fault_type: str
                        completed: bool | None = None,
                        success: bool | None = None,
                        injection_count: int | None = None,
+                       steps: int | None = None,
+                       cap_exhausted: bool | None = None,
+                       llm_calls: int | None = None,
                        error: str | None = None,
                        repo_root: str | Path | None = None) -> dict:
     """Build one trial record.
@@ -164,6 +167,11 @@ def build_trial_record(*, model_profile: str, architecture: str, fault_type: str
         "completed": completed,
         "success": success,
         "injection_count": injection_count,
+        # 行为量：步数、是否耗尽预算、LLM 调用次数。cap_exhausted 让分析可以把
+        # "预算耗尽"从"真实失败"里分出来，而不必回头解析 trace 或答案串。
+        "steps": steps,
+        "cap_exhausted": cap_exhausted,
+        "llm_calls": llm_calls,
         "error": error,
         "code": code_version(repo_root),
         "created_at": time.time(),

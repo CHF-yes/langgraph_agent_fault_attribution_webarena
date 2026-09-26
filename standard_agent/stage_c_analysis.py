@@ -584,6 +584,53 @@ def check_validation_scope(observations: list[dict], design: dict) -> dict:
             "ok": not violations}
 
 
+
+
+def cap_exhaustion_summary(rows: list[dict]) -> dict:
+    """步数耗尽率的**描述性**统计。
+
+    这里只回答"多少格跑满了预算"，不是成功率的一部分：``official_success_rate``
+    的计算完全不引用本函数。耗尽格在成功率里照常按 evaluator 判定计（通常失败），
+    但报告必须能看出失败是"预算耗尽"还是"答错"。
+    """
+    def bucket(selector):
+        agg: dict = {}
+        for row in rows:
+            cell = row.get("cell") or {}
+            key = selector(row, cell)
+            if key is None:
+                continue
+            entry = agg.setdefault(key, {"present": 0, "exhausted": 0,
+                                         "exhausted_steps": []})
+            entry["present"] += 1
+            if row.get("cap_exhausted"):
+                entry["exhausted"] += 1
+                if isinstance(row.get("steps"), int):
+                    entry["exhausted_steps"].append(row["steps"])
+        for entry in agg.values():
+            entry["rate"] = (entry["exhausted"] / entry["present"]
+                             if entry["present"] else None)
+            entry["mean_steps_when_exhausted"] = (
+                sum(entry["exhausted_steps"]) / len(entry["exhausted_steps"])
+                if entry["exhausted_steps"] else None)
+            entry.pop("exhausted_steps", None)
+        return agg
+
+    overall = bucket(lambda row, cell: "all")
+    by_condition = bucket(lambda row, cell: cell.get("condition"))
+    by_fault = bucket(lambda row, cell: cell.get("fault_type"))
+    by_cell = bucket(lambda row, cell: "/".join(str(cell.get(k)) for k in (
+        "model_profile", "architecture", "fault_type", "task_id")))
+    steps = [row["steps"] for row in rows if isinstance(row.get("steps"), int)]
+    return {
+        "overall": overall.get("all"),
+        "by_condition": by_condition,
+        "by_fault": by_fault,
+        "by_cell": by_cell,
+        "mean_steps": (sum(steps) / len(steps)) if steps else None,
+        "note": ("描述性指标：耗尽格仍按官方 evaluator 判定计入成功率，二者不得替换。"),
+    }
+
 def main_analysis(rows: list[dict], design: dict, *, n_boot: int = DEFAULT_BOOTSTRAP,
                   seed: int = DEFAULT_SEED) -> dict:
     """完整主分析：主模型 16 任务 + 验证模型共同 8 任务次级分析。
@@ -670,6 +717,7 @@ def main_analysis(rows: list[dict], design: dict, *, n_boot: int = DEFAULT_BOOTS
         "unpaired": unpaired,
         "degradation_by_cell": degradations,
         "degradation_by_fault": fault_level,
+        "cap_exhaustion": cap_exhaustion_summary(rows),
         "interaction": interaction,
         "holm_family": {
             "family_id": HOLM_FAMILY_ID,
@@ -724,6 +772,16 @@ def format_report(report: dict) -> str:
             p="—" if item["p_value"] is None else f"{item['p_value']:.4f}",
             ph="—" if item.get("p_value_holm") is None else f"{item['p_value_holm']:.4f}",
         ))
+    cap = report.get("cap_exhaustion") or {}
+    if cap.get("overall"):
+        lines.append("")
+        lines.append("步数耗尽（描述性，不计入成功率）："
+                     f"总体 {cap['overall']['exhausted']}/{cap['overall']['present']}"
+                     f" = {(cap['overall']['rate'] or 0) * 100:.1f}%"
+                     + (f"，均值步数 {cap['mean_steps']:.1f}" if cap.get('mean_steps') else ""))
+        for key, entry in sorted((cap.get("by_fault") or {}).items()):
+            lines.append(f"  - 故障 `{key}`: {entry['exhausted']}/{entry['present']}"
+                         f" = {(entry['rate'] or 0) * 100:.1f}%")
     lines.append("")
     lines.append(f"Holm 家族：{report.get('holm_family', {}).get('family_id')} "
                  f"= {report.get('holm_family', {}).get('members')}")

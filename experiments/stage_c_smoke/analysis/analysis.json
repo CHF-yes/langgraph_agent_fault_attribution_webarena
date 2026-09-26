@@ -12262,6 +12262,88 @@
       "inference_permitted": false
     }
   ],
+  "cap_exhaustion": {
+    "overall": {
+      "present": 12,
+      "exhausted": 5,
+      "rate": 0.4166666666666667,
+      "mean_steps_when_exhausted": null
+    },
+    "by_condition": {
+      "fault": {
+        "present": 6,
+        "exhausted": 3,
+        "rate": 0.5,
+        "mean_steps_when_exhausted": null
+      },
+      "control": {
+        "present": 6,
+        "exhausted": 2,
+        "rate": 0.3333333333333333,
+        "mean_steps_when_exhausted": null
+      }
+    },
+    "by_fault": {
+      "agent_param_error": {
+        "present": 4,
+        "exhausted": 2,
+        "rate": 0.5,
+        "mean_steps_when_exhausted": null
+      },
+      "web_dom_missing": {
+        "present": 4,
+        "exhausted": 2,
+        "rate": 0.5,
+        "mean_steps_when_exhausted": null
+      },
+      "web_http_error": {
+        "present": 4,
+        "exhausted": 1,
+        "rate": 0.25,
+        "mean_steps_when_exhausted": null
+      }
+    },
+    "by_cell": {
+      "deepseek_v41_flash/react/agent_param_error/118": {
+        "present": 2,
+        "exhausted": 0,
+        "rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/react/agent_param_error/22": {
+        "present": 2,
+        "exhausted": 2,
+        "rate": 1.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/react/web_dom_missing/118": {
+        "present": 2,
+        "exhausted": 0,
+        "rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/react/web_dom_missing/22": {
+        "present": 2,
+        "exhausted": 2,
+        "rate": 1.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/react/web_http_error/118": {
+        "present": 2,
+        "exhausted": 0,
+        "rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/react/web_http_error/22": {
+        "present": 2,
+        "exhausted": 1,
+        "rate": 0.5,
+        "mean_steps_when_exhausted": null
+      }
+    },
+    "mean_steps": null,
+    "note": "描述性指标：耗尽格仍按官方 evaluator 判定计入成功率，二者不得替换。"
+  },
   "interaction": {
     "error": "interaction requires exactly two models and two architectures",
     "models": [

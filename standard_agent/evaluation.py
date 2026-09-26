@@ -1,9 +1,22 @@
 """统一的 Agent 任务结果评估逻辑。"""
 
 
+MAX_STEPS_ANSWER_MARKER = "reached max steps"
+
+
+def is_cap_exhausted(done: bool, answer: str) -> bool:
+    """步数耗尽判定（单一来源）。
+
+    达到 max_steps 时 harness 会合成一个答案串（``nodes.py:_force_stop``），
+    因此"是否跑满"只能从 harness 自己的标记判断——判定逻辑只放在这里，
+    适配器、trial 记录与分析都复用它，避免各自做字符串匹配。
+    """
+    return bool(done) and MAX_STEPS_ANSWER_MARKER in str(answer).casefold()
+
+
 def is_completed(done: bool, answer: str) -> bool:
     """判断 Agent 是否正常结束，而不是因达到最大步数结束。"""
-    return bool(done) and "reached max steps" not in str(answer).casefold()
+    return bool(done) and not is_cap_exhausted(done, answer)
 
 
 def answer_matches(answer: str, expected: list) -> bool:

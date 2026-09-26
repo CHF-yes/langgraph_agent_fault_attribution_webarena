@@ -15,6 +15,11 @@
 | web_dom_missing | 2 | +0.0 | [+0.0, +0.0] | — | — |
 | web_http_error | 2 | +0.0 | [+0.0, +0.0] | — | — |
 
+步数耗尽（描述性，不计入成功率）：总体 5/12 = 41.7%
+  - 故障 `agent_param_error`: 2/4 = 50.0%
+  - 故障 `web_dom_missing`: 2/4 = 50.0%
+  - 故障 `web_http_error`: 1/4 = 25.0%
+
 Holm 家族：per_fault_primary = ['agent_param_error', 'web_dom_missing', 'web_http_error']
 
 逐 (model, architecture, fault) 描述性结果：

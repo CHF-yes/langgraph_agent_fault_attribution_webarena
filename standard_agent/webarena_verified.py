@@ -101,20 +101,36 @@ def _is_not_found_answer(answer: str) -> bool:
     return any(marker in text for marker in markers)
 
 
-def make_agent_response(task: dict, *, completed: bool, answer: str) -> dict:
-    """Build a WebArena-Verified ``agent_response.json`` payload."""
+def make_agent_response(task: dict, *, completed: bool, answer: str,
+                        diagnostic: str | None = None) -> dict:
+    """Build a WebArena-Verified ``agent_response.json`` payload.
+
+    An incomplete run has **no retrieval result to report**. When ``completed``
+    is false the answer text is a harness diagnostic (for example "Reached max
+    steps (20)"), so it goes into ``error_details`` and ``retrieved_data`` stays
+    null -- otherwise the diagnostic is submitted as if the agent had returned
+    it as an answer, and a budget artefact can be scored as a retrieval result.
+    ``diagnostic`` lets the caller name the condition explicitly.
+    """
     task_type = task_type_for(task)
     results_schema = (task.get("eval") or [{}])[0].get("results_schema")
     # The response status must depend only on the Agent output. Reading the
     # task's expected status here would leak evaluator ground truth.
+    if diagnostic is not None:
+        return {
+            "task_type": task_type,
+            "status": "UNKNOWN_ERROR",
+            "retrieved_data": None,
+            "error_details": str(diagnostic),
+        }
     not_found = completed and _is_not_found_answer(answer)
     status = "NOT_FOUND_ERROR" if not_found else ("SUCCESS" if completed else "UNKNOWN_ERROR")
     return {
         "task_type": task_type,
         "status": status,
         "retrieved_data": (
-            None if not_found else _parse_retrieved_data(answer, results_schema=results_schema)
-            if task_type == "RETRIEVE" else None
+            _parse_retrieved_data(answer, results_schema=results_schema)
+            if (completed and not not_found and task_type == "RETRIEVE") else None
         ),
         "error_details": (
             str(answer or "No matching result found") if not_found
@@ -124,7 +140,7 @@ def make_agent_response(task: dict, *, completed: bool, answer: str) -> dict:
 
 
 def write_agent_response(response_path: str | Path, task: dict, *, completed: bool,
-                         answer: str) -> Path:
+                         answer: str, diagnostic: str | None = None) -> Path:
     """Write an official response to an explicit path.
 
     ``task`` must be the dataset entry (with its real ``eval`` block). Use
@@ -135,7 +151,8 @@ def write_agent_response(response_path: str | Path, task: dict, *, completed: bo
     path = Path(response_path)
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
-        json.dumps(make_agent_response(task, completed=completed, answer=answer),
+        json.dumps(make_agent_response(task, completed=completed, answer=answer,
+                                       diagnostic=diagnostic),
                    ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )

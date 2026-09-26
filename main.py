@@ -25,7 +25,7 @@ import os
 import time
 
 from standard_agent.config import settings
-from standard_agent.evaluation import evaluate_answer
+from standard_agent.evaluation import evaluate_answer, is_cap_exhausted
 from standard_agent.core.graph import build_graph
 from standard_agent.tools.web_tools import (
     use_browser, use_simulation, reset_page_state, set_page_state,
@@ -668,6 +668,11 @@ def run_benchmark(args):
             # 先统一计算完成状态；是否正确由 BenchmarkRunner 的 evaluator 决定。
             completed, _ = evaluate_answer(done, answer, [])
             success = completed
+            # 步数耗尽：答案串是 harness 合成的诊断，必须走 error_details，
+            # 不能当成检索答案提交（否则预算产物会被评分成检索结果）。
+            cap_exhausted = is_cap_exhausted(done, answer)
+            diagnostic = (f"max_steps exhausted after {steps} steps; "
+                          f"no answer produced" if cap_exhausted else None)
 
             log = proxy.get_injection_log()
             total_delay = sum(
@@ -709,6 +714,7 @@ def run_benchmark(args):
                 response_path = write_agent_response(
                     os.path.join(output_dir, "agent_response.json"),
                     task_definition, completed=completed, answer=answer,
+                    diagnostic=diagnostic,
                 )
                 from standard_agent.core.trace import get_trace_path
                 trace_path = get_trace_path(stem)
@@ -732,6 +738,8 @@ def run_benchmark(args):
                     },
                     completed=completed, success=success,
                     injection_count=len(log), error=None,
+                    steps=steps, cap_exhausted=cap_exhausted,
+                    llm_calls=result.get("llm_calls", 0),
                 )
                 write_trial_record(os.path.join(output_dir, "trial_record.json"), record)
                 trial.trace_path = str(trace_path)
