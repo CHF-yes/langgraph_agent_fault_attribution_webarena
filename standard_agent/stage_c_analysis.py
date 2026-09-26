@@ -629,6 +629,10 @@ def main_analysis(rows: list[dict], design: dict, *, n_boot: int = DEFAULT_BOOTS
             item["p_value"] = None
             item["p_value_holm"] = None
             item["inference_permitted"] = False
+        # 只把逐项 p 值置空还不够：家族里保存的校正前后数值同样是显著性结论，
+        # 留在产物里会被下游当成可用结果，必须一并清空。
+        raw = []
+        adjusted = []
         if "error" not in interaction:
             interaction["p_value"] = None
             interaction["inference_permitted"] = False
@@ -727,9 +731,9 @@ def format_report(report: dict) -> str:
     lines.append("逐 (model, architecture, fault) 描述性结果：")
     lines.append("")
     lines.append("| model | arch | fault | n_pair | control | fault | Δ(pp) | 95% CI | p |")
-    lines.append("|---|---|---|---|---|---|---|---|---|---|")
+    lines.append("|---|---|---|---|---|---|---|---|---|")
     for item in report.get("degradation_by_cell") or []:
-        lines.append("| {model} | {arch} | {fault} | {n} | {c:.3f} | {f:.3f} | {d:+.1f} | [{lo:+.1f}, {hi:+.1f}] | {p} | {ph} |".format(
+        lines.append("| {model} | {arch} | {fault} | {n} | {c:.3f} | {f:.3f} | {d:+.1f} | [{lo:+.1f}, {hi:+.1f}] | {p} |".format(
             model=item["model_profile"], arch=item["architecture"], fault=item["fault_type"],
             n=item["n_pairs"],
             c=item["control_success_rate"] if item["control_success_rate"] is not None else float("nan"),
@@ -738,9 +742,15 @@ def format_report(report: dict) -> str:
             lo=100 * item["ci_low"] if item["ci_low"] == item["ci_low"] else float("nan"),
             hi=100 * item["ci_high"] if item["ci_high"] == item["ci_high"] else float("nan"),
             p="—" if item["p_value"] is None else f"{item['p_value']:.4f}",
-            ph="—" if item.get("p_value_holm") is None else f"{item['p_value_holm']:.4f}",
         ))
     interaction = report.get("interaction") or {}
+    if report.get("formal_inference_allowed", True):
+        p_values = [item.get("p_value") for item in (report.get("degradation_by_fault") or [])]
+        p_values += [item.get("p_value") for item in (report.get("degradation_by_cell") or [])]
+        if any(value is None for value in p_values):
+            lines.append("")
+            lines.append("> 表中 `—` 表示该对比的聚类稳健标准误为 0（无任务间变异），"
+                         "无法给出 p 值；此时以整群自助区间为准。")
     lines.append("")
     if interaction.get("error"):
         lines.append(f"- 交互检验: 无法估计（{interaction['error']}）")

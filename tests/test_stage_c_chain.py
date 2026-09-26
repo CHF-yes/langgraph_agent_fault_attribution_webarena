@@ -748,7 +748,8 @@ def _write_job(tmp_path: Path, *, fault="web_dom_missing", task=118, seed=1,
                model="m1", architecture="react", max_steps=20,
                injection_step=2, fault_intensity="high", task_type="NAVIGATE",
                scheme=PAIRING_SCHEME, omit_har_in_fault=False,
-               record_max_steps=None, record_injection_step=None):
+               record_max_steps=None, record_injection_step=None,
+               record_fault_intensity=None):
     """构造一个 job 目录：<job>/<task>/<label>_seed_<seed>/ 下两臂齐备。"""
     from standard_agent.trial_metadata import arm_dir_name
 
@@ -764,11 +765,17 @@ def _write_job(tmp_path: Path, *, fault="web_dom_missing", task=118, seed=1,
         record = build_trial_record(
             model_profile=model, architecture=architecture, fault_type=fault,
             task_id=task, seed=seed, condition=condition, replicate=0,
+            # 与 main.py 一致：控制臂是 off / injection_step=None，故障臂才用
+            # 预注册的强度与注入步。
             run_config={
                 "max_steps": max_steps if record_max_steps is None else record_max_steps,
-                "injection_step": (injection_step if record_injection_step is None
-                                   else record_injection_step),
-                "fault_intensity": fault_intensity}, paths={})
+                "injection_step": (
+                    record_injection_step if record_injection_step is not None
+                    else (None if condition == "control" else injection_step)),
+                "fault_intensity": (
+                    record_fault_intensity if record_fault_intensity is not None
+                    else ("off" if condition == "control" else fault_intensity))},
+            paths={})
         if scheme != PAIRING_SCHEME:
             record["pairing_scheme"] = scheme
         write_trial_record(arm / "trial_record.json", record)
@@ -975,3 +982,98 @@ def test_secondary_validation_results_never_report_significance():
     assert secondary
     assert all(item["p_value"] is None and item["inference_permitted"] is False
                for item in secondary)
+
+
+# ==========================================================================
+# 8. 第三轮：控制臂期望分离、blocked 家族清空、表格列数
+# ==========================================================================
+
+def test_resume_accepts_a_complete_pair_with_off_control_arm(tmp_path: Path, dataset: Path):
+    """回归：控制臂记录是 off / injection_step=None，必须能被判为合格并跳过。"""
+    ok, why = _job_ok(tmp_path, dataset)
+    assert ok is True, why
+
+
+def test_resume_rejects_a_control_arm_that_claims_injection(tmp_path: Path, dataset: Path):
+    """控制臂若写着 intensity=high / injection_step=2，说明它不是控制臂，必须重跑。"""
+    ok, why = _job_ok(tmp_path, dataset, record_fault_intensity="high",
+                      record_injection_step=2)
+    assert ok is False
+    assert any("fault_intensity" in reason for reason in why)
+
+
+def test_resume_rejects_a_fault_arm_recorded_with_control_intensity(tmp_path: Path, dataset: Path):
+    """反向：故障臂必须用预注册强度，不能记成 off。"""
+    ok, why = _job_ok(tmp_path, dataset, record_fault_intensity="off")
+    assert ok is False
+    assert any("fault_intensity" in reason for reason in why)
+
+
+def _collect_key_values(node, key_fragment):
+    found = []
+    if isinstance(node, dict):
+        for key, value in node.items():
+            if key_fragment in str(key):
+                found.append((key, value))
+            found.extend(_collect_key_values(value, key_fragment))
+    elif isinstance(node, list):
+        for item in node:
+            found.extend(_collect_key_values(item, key_fragment))
+    return found
+
+
+def test_blocked_report_keeps_no_p_values_anywhere():
+    """被阻断时，产物 JSON 里不允许残留任何 p 值（含 holm_family 的 raw/adjusted）。"""
+    rows = [row for row in _complete_rows() if not (row["cell"]["task_id"] == 4 and
+                                                    row["cell"]["condition"] == "fault")]
+    report = main_analysis(rows, _design(), n_boot=100, seed=3)
+    assert report["formal_inference_allowed"] is False
+
+    family = report["holm_family"]
+    assert family["raw_p_values"] == []
+    assert family["adjusted_p_values"] == []
+
+    leftovers = [(key, value) for key, value in _collect_key_values(report, "p_value")
+                 if value not in (None, [])]
+    assert leftovers == [], f"blocked report still carries p values: {leftovers}"
+    assert all(item["inference_permitted"] is False
+               for item in report["degradation_by_cell"])
+
+
+def test_allowed_report_has_the_family_p_values():
+    report = main_analysis(_complete_rows(), _design(), n_boot=100, seed=3)
+    assert report["formal_inference_allowed"] is True
+    assert len(report["holm_family"]["raw_p_values"]) == 3
+    assert len(report["holm_family"]["adjusted_p_values"]) == 3
+
+
+def _markdown_tables(text: str):
+    tables, current = [], []
+    for line in text.splitlines():
+        if line.startswith("|"):
+            current.append(line)
+        elif current:
+            tables.append(current)
+            current = []
+    if current:
+        tables.append(current)
+    return tables
+
+
+def test_markdown_tables_have_consistent_column_counts():
+    report = main_analysis(_complete_rows(), _design(), n_boot=100, seed=3)
+    tables = _markdown_tables(format_report(report))
+    assert tables, "report should contain at least one table"
+    for table in tables:
+        widths = {len(line.strip().strip("|").split("|")) for line in table}
+        assert len(widths) == 1, f"ragged table: {widths} in\n" + "\n".join(table)
+
+
+def test_blocked_report_tables_are_still_well_formed():
+    rows = [row for row in _complete_rows() if row["cell"]["condition"] == "control"]
+    report = main_analysis(rows, _design(), n_boot=50, seed=3)
+    tables = _markdown_tables(format_report(report))
+    assert tables
+    for table in tables:
+        widths = {len(line.strip().strip("|").split("|")) for line in table}
+        assert len(widths) == 1, f"ragged table: {widths}"

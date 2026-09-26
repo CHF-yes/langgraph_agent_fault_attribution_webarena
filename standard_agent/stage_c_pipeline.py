@@ -522,13 +522,20 @@ def job_arms_ok(job_dir: str | Path, *, fault_type: str, task_id: int, seed: int
         arm_label = fault_type if label is None else label
         arm_dir = Path(job_dir) / str(task_id) / arm_dir_name(
             fault_label=arm_label, seed=seed)
+        # 两臂的注入配置**不同**，不能共用一套期望：控制臂不注入任何故障，其记录
+        # 必然是 intensity="off"、injection_step=None；只有故障臂才用预注册的强度
+        # 与注入步。共用期望会让完整的控制臂永远判为"配置不符"，--resume 永远不跳过。
+        if condition == "control":
+            arm_intensity, arm_step = "off", None
+        else:
+            arm_intensity, arm_step = fault_intensity, injection_step
         ok, why = arm_artifacts_ok(
             arm_dir,
             expect={"model_profile": model_profile, "architecture": architecture,
                     "fault_type": fault_type, "task_id": int(task_id),
                     "fault_seed": int(seed), "condition": condition,
-                    "max_steps": max_steps, "injection_step": injection_step,
-                    "fault_intensity": fault_intensity},
+                    "max_steps": max_steps, "injection_step": arm_step,
+                    "fault_intensity": arm_intensity},
             task_type=task_type,
         )
         if not ok:
