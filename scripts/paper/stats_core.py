@@ -143,7 +143,15 @@ def wilson_interval(k: int, n: int, conf: float = 0.95) -> tuple[float, float]:
     denom = 1 + z * z / n
     centre = (p + z * z / (2 * n)) / denom
     half = z * math.sqrt(p * (1 - p) / n + z * z / (4 * n * n)) / denom
-    return (max(0.0, centre - half), min(1.0, centre + half))
+    lo = max(0.0, centre - half)
+    hi = min(1.0, centre + half)
+    # k=0 / k=n 时浮点残差会给出 1e-17 级别的非零边界，破坏 lo<=k/n<=hi；
+    # 这两个退化情形在数学上就是 0 与 1。
+    if k <= 0:
+        lo = 0.0
+    if k >= n:
+        hi = 1.0
+    return (lo, hi)
 
 
 def bootstrap_delta(

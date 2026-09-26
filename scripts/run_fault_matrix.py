@@ -2,6 +2,7 @@
 """Run a bounded, stoppable control/fault matrix with isolated processes."""
 
 import argparse
+import hashlib
 import json
 import os
 import re
@@ -16,6 +17,12 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from run_baseline import load_tasks, resolve_start_url
+from standard_agent.trial_metadata import PAIRING_SCHEME, TRIAL_RECORD_SCHEMA_VERSION
+from fault_injection.config import (
+    injection_step_mode,
+    injection_step_units,
+    resolve_injection_step,
+)
 
 # Two-model 16-task main matrix. Keep aligned with
 # docs/task_manifest_public16.json. Pass --task-ids with that manifest's
@@ -52,6 +59,32 @@ def parse_args():
     return parser.parse_args()
 
 
+
+def design_fingerprint(args, fault_types, injection_steps, task_ids) -> str:
+    """指纹化本次正式运行的设计，用于阻止把旧产物当成同一试验恢复。
+
+    历史产物（control_seed_0、无 trial_record.json）与本次运行共享
+    ``{fault}_task{id}_seed{seed}.status.json`` 这个键格式。若只按文件名判断
+    "已完成"，指向旧输出目录的 ``--resume`` 会静默跳过本该重跑的格子。因此把
+    与结论相关的设计要素（模型、架构、步数、故障集、注入步、重复数、任务集、
+    配对方案与记录 schema）哈希进 manifest 和每个 status；恢复时只接受指纹一致的。
+    """
+    payload = {
+        "pairing_scheme": PAIRING_SCHEME,
+        "trial_record_schema": TRIAL_RECORD_SCHEMA_VERSION,
+        "model_profile": args.model_profile,
+        "architecture": args.architecture,
+        "max_steps": args.max_steps,
+        "fault_types": sorted(fault_types),
+        "fault_intensity": args.fault_intensity,
+        "injection_steps": {key: injection_steps[key] for key in sorted(injection_steps)},
+        "trials_per_task": args.trials,
+        "task_ids": sorted({int(task_id) for task_id in task_ids}),
+    }
+    canonical = json.dumps(payload, sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(canonical.encode("utf-8")).hexdigest()[:16]
+
+
 def task_jobs(args):
     task_ids = args.task_ids if args.task_ids is not None else BASELINE_TASK_IDS
     tasks = load_tasks(task_ids=task_ids)
@@ -78,10 +111,15 @@ def task_jobs(args):
 
 
 def command_for(args, job):
-    fault_type = job.get("fault_type", args.fault_type)
-    injection_step = args.fault_injection_step
-    if injection_step is None:
-        injection_step = 1 if fault_type == "agent_param_error" else 2
+    # job 里通常带 fault_type；没有时才回落到 args，避免在 job 有值时仍去读
+    # 一个可能不存在的属性（旧写法 job.get(k, args.k) 会立即求值 args.k）。
+    fault_type = job.get("fault_type") or getattr(args, "fault_type", None)
+    # Single source of truth: Stage C pins the step per fault (agent_param_error
+    # on the first parameter action, others on the second step); an explicit
+    # --fault-injection-step is a Stage E sweep and is passed through as given.
+    injection_step = resolve_injection_step(
+        fault_type, getattr(args, "fault_injection_step", None)
+    )
     command = [
         sys.executable, "main.py", "--benchmark",
         "--site", job["site"], "--url", job["start_url"],
@@ -176,19 +214,30 @@ def main():
     jobs = task_jobs(args)
     fault_types = args.fault_types or [args.fault_type]
     injection_steps = {
-        fault_type: (
-            args.fault_injection_step
-            if args.fault_injection_step is not None
-            else (1 if fault_type == "agent_param_error" else 2)
-        )
+        fault_type: resolve_injection_step(fault_type, args.fault_injection_step)
         for fault_type in fault_types
     }
+    # Record the step on every job so a status/record file is self-describing
+    # even when the manifest is separated from the logs.
+    for job in jobs:
+        job["injection_step"] = injection_steps[job.get("fault_type", args.fault_type)]
+        job["injection_step_units"] = injection_step_units(
+            job.get("fault_type", args.fault_type)
+        )
+    fingerprint = design_fingerprint(args, fault_types, injection_steps,
+                                     [job["task_id"] for job in jobs])
+    stale_status_files = []
     if args.resume:
         completed_keys = set()
         for path in output_dir.glob("*.status.json"):
             try:
                 status = json.loads(path.read_text(encoding="utf-8"))
             except (OSError, json.JSONDecodeError):
+                continue
+            # 只认本次设计的指纹；旧产物（例如 control_seed_0 时代、无
+            # trial_record.json）指纹不同，必须重跑而不是被跳过。
+            if status.get("design_fingerprint") != fingerprint:
+                stale_status_files.append(path.name)
                 continue
             if (
                 status.get("returncode") == 0
@@ -200,13 +249,24 @@ def main():
             job for job in jobs
             if f"{job['fault_type']}_task{job['task_id']}_seed{job['seed']}" not in completed_keys
         ]
+        if stale_status_files:
+            print(f"RESUME: ignored {len(stale_status_files)} status file(s) with a "
+                  f"different design fingerprint", flush=True)
     manifest = {
+        "design_fingerprint": fingerprint,
+        "pairing_scheme": PAIRING_SCHEME,
+        "trial_record_schema": TRIAL_RECORD_SCHEMA_VERSION,
+        "resume_ignored_stale_status_files": stale_status_files,
         "model_profile": args.model_profile,
         "architecture": args.architecture,
         "max_steps": args.max_steps,
         "fault_types": fault_types,
         "fault_intensity": args.fault_intensity,
         "fault_injection_steps": injection_steps,
+        "injection_step_mode": injection_step_mode(args.fault_injection_step),
+        "injection_step_units": {
+            fault_type: injection_step_units(fault_type) for fault_type in fault_types
+        },
         "workers": args.workers,
         "trials_per_task": args.trials,
         "total_jobs": len(jobs),
@@ -264,6 +324,7 @@ def main():
                 log_file.close()
                 result = {
                     "job": job,
+                    "design_fingerprint": fingerprint,
                     "returncode": process.returncode,
                     "infrastructure_error": True,
                     "task_error": False,
@@ -287,8 +348,8 @@ def main():
             log_file.close()
             text = (output_dir / f"{key}.log").read_text(encoding="utf-8", errors="replace")
             status = classify_log(text)
-            result = {"job": job, "returncode": process.returncode, **status,
-                      "timed_out": False}
+            result = {"job": job, "design_fingerprint": fingerprint,
+                      "returncode": process.returncode, **status, "timed_out": False}
             (output_dir / f"{key}.status.json").write_text(
                 json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
             )

@@ -569,20 +569,53 @@ def run_benchmark(args):
         print("\n⚠️  请指定 --url 或 --site")
         return
 
+    # The official evaluator scores the response against the dataset's own
+    # `eval` contract (task type, expected status, results schema). Building a
+    # response from a placeholder task would silently turn a navigation task
+    # into a retrieval task, so the definition is resolved once, up front, and
+    # the run refuses to write responses without it.
+    task_definition = None
+    if args.task_id is not None:
+        from standard_agent.webarena_verified import (
+            TaskDefinitionNotFound, load_task_definition,
+        )
+        try:
+            task_definition = load_task_definition(args.task_id)
+        except TaskDefinitionNotFound as exc:
+            print(f"\n❌ 无法加载任务 {args.task_id} 的官方 eval 定义，"
+                  f"拒绝生成无法评分的 agent_response：{exc}")
+            return
+        from standard_agent.webarena_verified import task_type_for
+        print(f"\n任务 {args.task_id} 官方类型: {task_type_for(task_definition)}")
+
     def run_one_trial(task_id: str, task_desc: str, page_url: str,
                       fault_config: FaultConfig, trial_idx: int) -> TrialResult:
         """执行单次 Agent 任务并返回 TrialResult。"""
         import uuid
         from standard_agent.core.graph import build_graph
         from standard_agent.tools.web_tools import use_browser, use_simulation
+        from standard_agent.trial_metadata import (
+            arm_dir_name, build_trial_record, trial_file_stem, write_trial_record,
+        )
 
         reset_page_state()
         headers = get_auto_login_headers(args.site) if args.site else {}
+        condition = "control" if fault_config.fault_label == "control" else "fault"
+        # Both arms of a pair carry the matrix fault type; the arm is
+        # distinguished by `condition`, not by the injected label.
+        record_fault_type = args.fault_type or fault_config.fault_label
+        model_profile = args.model_profile or settings.MODEL_PROFILE
+        stem = trial_file_stem(
+            model_profile=model_profile, architecture=args.architecture,
+            fault_type=record_fault_type, task_id=args.task_id,
+            seed=fault_config.seed, condition=condition, replicate=trial_idx,
+        )
         output_dir = None
         if args.webarena_output_dir and args.task_id is not None:
             output_dir = os.path.join(
                 args.webarena_output_dir, str(args.task_id),
-                f"{fault_config.fault_label}_seed_{fault_config.seed}",
+                arm_dir_name(fault_label=fault_config.fault_label,
+                             seed=fault_config.seed),
             )
             os.makedirs(output_dir, exist_ok=True)
         har_path = os.path.join(output_dir, "network.har") if output_dir else None
@@ -602,7 +635,7 @@ def run_benchmark(args):
             initial_obs = proxy.get_obs()
             result = app.invoke({
                 "task": task_desc,
-                "model_profile": args.model_profile or settings.MODEL_PROFILE,
+                "model_profile": model_profile,
                 "url": initial_obs.url,
                 "page_content": initial_obs.ax_tree_text,
                 "step_count": 0,
@@ -620,7 +653,7 @@ def run_benchmark(args):
                 "planning_calls": 0,
                 "executor_calls": 0,
                 "replanning_calls": 0,
-            }, {"configurable": {"thread_id": str(uuid.uuid4())[:8]}})
+            }, {"configurable": {"thread_id": stem}})
 
             elapsed = time.time() - t0
             done = result.get("done", False)
@@ -661,17 +694,44 @@ def run_benchmark(args):
                 total_delay_sec=total_delay,
                 action_history=result.get("action_history", []),
                 injection_log=list(log),
+                model_profile=model_profile,
+                trial_id=stem,
+                condition=condition,
+                replicate=trial_idx,
             )
             if output_dir and args.task_id is not None:
-                from standard_agent.webarena_verified import make_agent_response
-                response_path = os.path.join(output_dir, "agent_response.json")
-                with open(response_path, "w", encoding="utf-8") as response_file:
-                    json.dump(make_agent_response(
-                        {"task_id": args.task_id, "eval": []},
-                        completed=completed, answer=answer,
-                    ), response_file, ensure_ascii=False, indent=2)
-                    response_file.write("\n")
+                from standard_agent.webarena_verified import write_agent_response
+                response_path = write_agent_response(
+                    os.path.join(output_dir, "agent_response.json"),
+                    task_definition, completed=completed, answer=answer,
+                )
+                from standard_agent.core.trace import get_trace_path
+                trace_path = get_trace_path(stem)
+                record = build_trial_record(
+                    model_profile=model_profile, architecture=args.architecture,
+                    fault_type=record_fault_type, task_id=args.task_id,
+                    seed=fault_config.seed, condition=condition, replicate=trial_idx,
+                    run_config={
+                        "task_id": args.task_id, "site": args.site, "url": page_url,
+                        "max_steps": args.max_steps or settings.MAX_STEPS,
+                        "fault_intensity": fault_config.intensity,
+                        "fault_label": fault_config.fault_label,
+                        "injection_step": fault_config.injection_step,
+                        "trial_index": trial_idx,
+                    },
+                    paths={
+                        "agent_response": str(response_path),
+                        "network_har": str(har_path) if har_path else None,
+                        "trace": str(trace_path),
+                    },
+                    completed=completed, success=success,
+                    injection_count=len(log), error=None,
+                )
+                write_trial_record(os.path.join(output_dir, "trial_record.json"), record)
+                trial.trace_path = str(trace_path)
+                trial.trial_record_path = os.path.join(output_dir, "trial_record.json")
             return trial
+
         except Exception as e:
             return TrialResult(
                 task_id=task_id,
@@ -706,7 +766,9 @@ def run_benchmark(args):
     )
 
     if args.condition != "fault":
-        runner.add_config("control", FaultConfig.off())
+        # Control 与故障臂共用同一次运行的 seed：control 不注入任何故障，
+        # seed 只用于配对标识，因此两臂能用同一个 pair key 对上。
+        runner.add_config("control", FaultConfig(intensity="off", seed=args.fault_seed))
 
     # 实验组
     exp_label = f"fault_{args.fault_intensity}"
@@ -722,6 +784,11 @@ def run_benchmark(args):
     print(f"   任务: {args.task}")
     print(f"   URL: {url}")
     print(f"   每组 {args.trials} 次试验\n")
+    if args.condition != "control" and args.fault_type:
+        from fault_injection.config import injection_step_mode, injection_step_units
+        step = exp_config.injection_step
+        print(f"   注入步: {step} ({injection_step_units(args.fault_type)}), "
+              f"口径={injection_step_mode(args.fault_injection_step)}\n")
     if args.expected_answer:
         print(f"   评估模式: 答案匹配 ({len(args.expected_answer)} 个可接受答案)\n")
     else:
@@ -733,11 +800,18 @@ def run_benchmark(args):
 def _build_fault_config(args) -> "FaultConfig":
     """从 CLI args 构建 FaultConfig（不含代理包装）。"""
     from fault_injection import FaultConfig
+    from fault_injection.config import resolve_injection_step
 
     if args.fault_type:
+        # A named single fault is a formal single-injection arm. With no
+        # explicit --fault-injection-step it follows the frozen Stage C
+        # contract (agent_param_error -> 1st parameter action, everything else
+        # -> 2nd execution step). Stage E is the stage that sweeps the step and
+        # passes an explicit value; the matrix records which mode was used.
+        step = resolve_injection_step(args.fault_type, args.fault_injection_step)
         return FaultConfig.single_fault(
             args.fault_type, intensity=args.fault_intensity, seed=args.fault_seed,
-            injection_step=args.fault_injection_step,
+            injection_step=step,
         )
 
     if args.fault_all:

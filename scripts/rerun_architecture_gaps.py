@@ -17,6 +17,8 @@ def main():
    while pending and len(active)<6:
     r=pending.popleft(); tid=int(r['task_id']); seed=int(r['seed']); condition=r['condition']; fault=r['fault_type']; task=tasks[tid]; site=(task.get('sites')or[None])[0]; url=resolve_start_url(task); key=f'plan_execute_{condition}_{fault}_task{tid}_seed{seed}'; log=(OUT/f'{key}.log').open('w')
     cmd=[sys.executable,'main.py','--benchmark','--site',site,'--url',url,'--task',task['intent'],'--task-id',str(tid),'--model-profile','gpt54','--architecture','plan_execute','--max-steps','20','--trials','1','--condition',condition,'--fault-seed',str(seed),'--webarena-output-dir',str(OUT/'outputs'/key)]
+    # 历史复现：本脚本固定注入步 2，复现已发布的历史产物（含 agent_param_error 臂）。
+    # Stage C 正式运行请用 scripts/run_fault_matrix.py，其口径为 agent_param_error→第1个参数动作、其余→第2步。
     if condition=='fault': cmd += ['--fault-type',fault,'--fault-intensity','high','--fault-injection-step','2']
     p=subprocess.Popen(cmd,cwd=ROOT,stdout=log,stderr=subprocess.STDOUT,start_new_session=True); active[key]=(p,log); print('START',key,flush=True)
    for key,(p,log) in list(active.items()):

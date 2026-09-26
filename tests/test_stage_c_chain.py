@@ -1,0 +1,736 @@
+"""Stage C 执行链的离线测试：任务定义、注入步口径、留痕、闭环、主分析。
+
+这些测试不联网、不起浏览器、不调用任何模型，也不跑官方 evaluator：需要评测的地方
+注入假 evaluator，需要数据的地方构造最小 fixture。覆盖的风险点是：
+
+* 用占位 `eval: []` 生成响应会把导航任务写成检索任务，导致官方评分必然失败；
+* 注入步口径散落各处会让 `agent_param_error` 落在错误的动作上；
+* 控制臂与故障臂若不能配对，退化量就不可估计；
+* 完成率被当成官方成功率；
+* V4 Pro 混进 16 任务主估计。
+"""
+
+from __future__ import annotations
+
+import json
+import sys
+from pathlib import Path
+
+import pytest
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+# 同目录的 test_provenance.py 会在导入时向 sys.modules 注入 standard_agent 桩模块，
+# 使后续模块无法导入真实包（仓库既有问题，这里只做隔离，不改动其他测试）。
+# 先清掉桩，再导入真实模块；本模块单独运行与整体运行结果一致。
+for _stubbed in [name for name in list(sys.modules)
+                 if name == "standard_agent" or name.startswith("standard_agent.")]:
+    del sys.modules[_stubbed]
+
+from fault_injection.config import (  # noqa: E402
+    FaultConfig,
+    injection_step_mode,
+    injection_step_units,
+    resolve_injection_step,
+    stage_c_injection_step,
+)
+from standard_agent.stage_c_analysis import (  # noqa: E402
+    build_observations,
+    resample_tasks_by_stratum,
+    strata_for_tasks,
+    check_validation_scope,
+    cluster_bootstrap_ci,
+    degradation_by_cell,
+    holm_adjust,
+    interaction_on_degradation,
+    main_analysis,
+    pair_observations,
+)
+from standard_agent.stage_c_pipeline import (  # noqa: E402
+    EVALUATION_STATUS_COMPATIBILITY,
+    EVALUATION_STATUS_ERROR,
+    EVALUATION_STATUS_NATIVE,
+    audit,
+    check_artifacts,
+    classify_evaluation,
+    collect_rows,
+    expected_cells,
+    load_design,
+)
+from standard_agent.trial_metadata import (  # noqa: E402
+    PAIRING_SCHEME,
+    build_trial_record,
+    discover_trial_records,
+    make_trial_id,
+    pair_key,
+    pair_records,
+    read_trial_record,
+    trial_file_stem,
+    write_trial_record,
+)
+from standard_agent.webarena_verified import (  # noqa: E402
+    TaskDefinitionNotFound,
+    load_task_definition,
+    make_agent_response,
+    write_agent_response,
+)
+
+NAVIGATE_TASK = {
+    "task_id": 118,
+    "intent": "go to the product page for a night guard",
+    "sites": ["shopping"],
+    "eval": [{
+        "evaluator": "AgentResponseEvaluator",
+        "results_schema": {"type": "null"},
+        "expected": {"task_type": "navigate", "status": "SUCCESS", "retrieved_data": None},
+    }],
+}
+RETRIEVE_TASK = {
+    "task_id": 21,
+    "intent": "find the reviewers",
+    "sites": ["shopping"],
+    "eval": [{
+        "evaluator": "AgentResponseEvaluator",
+        "results_schema": {"type": "array"},
+        "expected": {"task_type": "retrieve", "status": "SUCCESS",
+                     "retrieved_data": [{"name": "Dibbins"}]},
+    }],
+}
+
+
+@pytest.fixture()
+def dataset(tmp_path: Path) -> Path:
+    path = tmp_path / "webarena-verified.json"
+    path.write_text(json.dumps([NAVIGATE_TASK, RETRIEVE_TASK]), encoding="utf-8")
+    return path
+
+
+# ==========================================================================
+# 1. 任务定义：导航任务必须带 NAVIGATE 语义
+# ==========================================================================
+
+def test_load_task_definition_returns_the_dataset_entry(dataset: Path):
+    task = load_task_definition(118, path=dataset)
+    assert task["task_id"] == 118
+    assert task["eval"][0]["expected"]["task_type"] == "navigate"
+
+
+def test_missing_task_definition_raises_instead_of_falling_back(dataset: Path):
+    with pytest.raises(TaskDefinitionNotFound):
+        load_task_definition(999, path=dataset)
+
+
+def test_missing_dataset_raises(tmp_path: Path):
+    with pytest.raises(TaskDefinitionNotFound):
+        load_task_definition(118, path=tmp_path / "absent.json")
+
+
+def test_navigate_task_produces_navigate_response(dataset: Path):
+    task = load_task_definition(118, path=dataset)
+    response = make_agent_response(task, completed=True, answer="arrived")
+    assert response["task_type"] == "NAVIGATE"
+    assert response["status"] == "SUCCESS"
+    # 导航任务不带 retrieved_data；提交列表会破坏评分
+    assert response["retrieved_data"] is None
+
+
+def test_placeholder_eval_block_would_flip_task_type():
+    """记录旧缺陷的失败模式：占位 eval 会把导航任务当成检索任务。"""
+    placeholder = make_agent_response({"task_id": 118, "eval": []},
+                                      completed=True, answer="arrived")
+    real = make_agent_response(NAVIGATE_TASK, completed=True, answer="arrived")
+    assert placeholder["task_type"] == "RETRIEVE"
+    assert real["task_type"] == "NAVIGATE"
+    assert placeholder["task_type"] != real["task_type"]
+
+
+def test_retrieve_task_keeps_structured_answer(dataset: Path):
+    task = load_task_definition(21, path=dataset)
+    response = make_agent_response(task, completed=True,
+                                   answer=json.dumps([{"name": "Dibbins"}]))
+    assert response["task_type"] == "RETRIEVE"
+    assert response["retrieved_data"] == [{"name": "Dibbins"}]
+
+
+def test_write_agent_response_writes_valid_json(tmp_path: Path):
+    path = write_agent_response(tmp_path / "t" / "agent_response.json", NAVIGATE_TASK,
+                               completed=True, answer="arrived")
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    assert payload["task_type"] == "NAVIGATE"
+
+
+# ==========================================================================
+# 2. 注入步口径
+# ==========================================================================
+
+def test_stage_c_step_mapping_and_units():
+    assert stage_c_injection_step("agent_param_error") == 1
+    assert stage_c_injection_step("web_dom_missing") == 2
+    assert stage_c_injection_step("web_http_error") == 2
+    assert injection_step_units("agent_param_error") == "parameter_action"
+    assert injection_step_units("web_dom_missing") == "execution_step"
+
+
+def test_explicit_step_is_the_stage_e_sweep():
+    assert resolve_injection_step("web_dom_missing", 3) == 3
+    assert injection_step_mode(3) == "stage_e_explicit"
+    assert injection_step_mode(None) == "stage_c_fixed"
+    # 显式值覆盖 Stage C 默认（Stage E 扫描参数动作）
+    assert resolve_injection_step("agent_param_error", 2) == 2
+
+
+def test_unset_step_never_means_probability_mode():
+    for fault in ("agent_param_error", "web_dom_missing", "web_http_error"):
+        assert resolve_injection_step(fault, None) == stage_c_injection_step(fault)
+
+
+def test_agent_param_error_fires_on_the_first_parameter_action():
+    from fault_injection.agent_faults import inject_param_error
+    step = resolve_injection_step("agent_param_error")
+    assert step == 1
+    config = FaultConfig.single_fault("agent_param_error", intensity="high", seed=7,
+                                      injection_step=step)
+    first, _ = inject_param_error(config, "click", element_id="1")
+    second, _ = inject_param_error(config, "click", element_id="2")
+    # 第 1 个参数动作就是被破坏的那个；之后恢复正常，且只注入一次
+    assert first.startswith("invalid_")
+    assert second == "2"
+    assert len(config.log) == 1
+    assert config.log[0]["parameter_action_index"] == 1
+
+
+def test_other_fault_fires_on_the_second_execution_step():
+    config = FaultConfig.single_fault("web_dom_missing", intensity="high", seed=7,
+                                      injection_step=resolve_injection_step("web_dom_missing"))
+    config.set_execution_step(1)
+    assert not config.should_inject("web_dom_missing")
+    config.set_execution_step(2)
+    assert config.should_inject("web_dom_missing")
+    config.set_execution_step(3)
+    assert not config.should_inject("web_dom_missing")
+
+
+def test_matrix_command_uses_resolved_steps(monkeypatch):
+    from scripts.run_fault_matrix import command_for
+
+    class Args:
+        fault_injection_step = None
+        model_profile = "deepseek_v41_flash"
+        architecture = "react"
+        max_steps = 20
+        fault_intensity = "high"
+        official_output_root = None
+
+    job = {"task_id": 118, "seed": 1, "site": "shopping", "start_url": "http://x",
+           "intent": "go", "fault_type": "agent_param_error"}
+    command = command_for(Args(), job)
+    assert command[command.index("--fault-injection-step") + 1] == "1"
+
+    job["fault_type"] = "web_http_error"
+    command = command_for(Args(), job)
+    assert command[command.index("--fault-injection-step") + 1] == "2"
+
+    Args.fault_injection_step = 3   # Stage E sweep
+    command = command_for(Args(), job)
+    assert command[command.index("--fault-injection-step") + 1] == "3"
+
+
+# ==========================================================================
+# 3. 逐 trial 留痕与配对
+# ==========================================================================
+
+def _record(**overrides) -> dict:
+    payload = dict(model_profile="deepseek_v41_flash", architecture="react",
+                   fault_type="web_dom_missing", task_id=118, seed=1, condition="fault",
+                   replicate=0, run_config={"max_steps": 20}, paths={"trace": "traces/x.jsonl"})
+    payload.update(overrides)
+    return build_trial_record(**payload)
+
+
+def test_control_and_fault_share_pair_key_but_not_trial_id():
+    control = _record(condition="control")
+    fault = _record(condition="fault")
+    assert control["pair_key"] == fault["pair_key"]
+    assert control["trial_id"] != fault["trial_id"]
+
+
+def test_pair_key_changes_when_a_design_factor_changes():
+    base = pair_key(model_profile="m", architecture="react", fault_type="f",
+                    task_id=1, seed=1, replicate=0)
+    for changed in (
+        pair_key(model_profile="m2", architecture="react", fault_type="f", task_id=1, seed=1, replicate=0),
+        pair_key(model_profile="m", architecture="plan_execute", fault_type="f", task_id=1, seed=1, replicate=0),
+        pair_key(model_profile="m", architecture="react", fault_type="f2", task_id=1, seed=1, replicate=0),
+        pair_key(model_profile="m", architecture="react", fault_type="f", task_id=2, seed=1, replicate=0),
+        pair_key(model_profile="m", architecture="react", fault_type="f", task_id=1, seed=2, replicate=0),
+    ):
+        assert changed != base
+
+
+def test_trial_file_stem_is_filesystem_safe_and_deterministic():
+    kwargs = dict(model_profile="deepseek_v41_flash", architecture="plan_execute",
+                  fault_type="web_dom_missing", task_id=118, seed=1, condition="fault",
+                  replicate=0)
+    stem = trial_file_stem(**kwargs)
+    assert stem == trial_file_stem(**kwargs)
+    assert "/" not in stem and "|" not in stem and "=" not in stem
+    assert "task118" in stem and "seed1" in stem
+
+
+def test_trial_record_roundtrip_carries_code_version_and_paths(tmp_path: Path):
+    path = write_trial_record(tmp_path / "trial_record.json", _record())
+    record = read_trial_record(path)
+    assert record["paths"]["trace"] == "traces/x.jsonl"
+    assert record["run_config"]["max_steps"] == 20
+    assert "git_sha" in record["code"] and "git_dirty" in record["code"]
+
+
+def test_read_trial_record_rejects_unknown_schema(tmp_path: Path):
+    path = tmp_path / "trial_record.json"
+    path.write_text(json.dumps({"schema_version": 99}), encoding="utf-8")
+    with pytest.raises(ValueError):
+        read_trial_record(path)
+
+
+def test_pair_records_groups_arms_and_rejects_duplicates():
+    records = [_record(condition="control"), _record(condition="fault")]
+    grouped = pair_records(records)
+    assert len(grouped) == 1
+    assert set(next(iter(grouped.values()))) == {"control", "fault"}
+    with pytest.raises(ValueError):
+        pair_records(records + [_record(condition="control")])
+
+
+def test_discover_trial_records_reads_nested_tree(tmp_path: Path):
+    write_trial_record(tmp_path / "a" / "trial_record.json", _record())
+    write_trial_record(tmp_path / "b" / "trial_record.json", _record(seed=2, condition="control"))
+    found = discover_trial_records(tmp_path)
+    assert len(found) == 2
+
+
+# ==========================================================================
+# 4. 闭环：完整性 → evaluator → 审计
+# ==========================================================================
+
+def _trial_dir(root: Path, *, model="deepseek_v41_flash", architecture="react",
+               fault="web_dom_missing", task=118, seed=1, condition="fault",
+               with_har=True, with_record=True, response=None) -> Path:
+    trial_dir = root / model / architecture / f"{fault}_task{task}_seed{seed}" / \
+        f"{'control' if condition == 'control' else fault}_seed_{seed}" / str(task)
+    trial_dir.mkdir(parents=True, exist_ok=True)
+    payload = response or {"task_type": "NAVIGATE", "status": "SUCCESS",
+                           "retrieved_data": None, "error_details": None}
+    (trial_dir / "agent_response.json").write_text(json.dumps(payload), encoding="utf-8")
+    if with_har:
+        (trial_dir / "network.har").write_text('{"log": {"entries": []}}', encoding="utf-8")
+    if with_record:
+        record = build_trial_record(
+            model_profile=model, architecture=architecture, fault_type=fault,
+            task_id=task, seed=seed, condition=condition, replicate=0,
+            run_config={"max_steps": 20}, paths={})
+        write_trial_record(trial_dir / "trial_record.json", record)
+    return trial_dir
+
+
+def test_missing_har_makes_a_cell_incomplete(tmp_path: Path):
+    trial_dir = _trial_dir(tmp_path, with_har=False)
+    integrity = check_artifacts(trial_dir)
+    assert integrity["complete"] is False
+    assert any("network.har" in reason for reason in integrity["reasons"])
+
+
+def test_invalid_agent_response_is_rejected(tmp_path: Path):
+    trial_dir = _trial_dir(tmp_path, response={"status": "SUCCESS"})
+    integrity = check_artifacts(trial_dir)
+    assert integrity["complete"] is False
+    assert integrity["artifacts"]["agent_response"]["valid"] is False
+
+
+def test_classify_evaluation_separates_native_compat_and_error():
+    native = {"status": "success", "official_success": True, "error_msg": None,
+              "evaluators_results": [{"evaluator_name": "AgentResponseEvaluator"}]}
+    compat = {"status": "success", "official_success": True, "error_msg": None,
+              "evaluators_results": [{"evaluator_name": "AgentResponseEvaluatorCompat"}]}
+    error = {"status": "ERROR", "official_success": False, "error_msg": "boom",
+             "evaluators_results": []}
+    assert classify_evaluation(native)["evaluation_status"] == EVALUATION_STATUS_NATIVE
+    assert classify_evaluation(compat)["evaluation_status"] == EVALUATION_STATUS_COMPATIBILITY
+    assert classify_evaluation(error)["evaluation_status"] == EVALUATION_STATUS_ERROR
+    # evaluator error 不算 agent 失败
+    assert classify_evaluation(error)["official_success"] is None
+
+
+def test_audit_keeps_official_and_completion_rates_apart(tmp_path: Path):
+    design = {
+        "main_models": ["m1"], "validation_model": "pro",
+        "architectures": ["react"], "faults": ["web_dom_missing"],
+        "repetitions": 1, "conditions": ["control", "fault"],
+        "main_tasks": [118], "validation_tasks": [118], "category_of": {118: "public_navigation"},
+    }
+    _trial_dir(tmp_path, model="m1", condition="control", seed=1)
+    _trial_dir(tmp_path, model="m1", condition="fault", seed=1)
+
+    def fake_evaluate(task_id, *, agent_response_path, network_trace_path, config_path):
+        # 控制臂判成功、故障臂判失败
+        success = "control" in str(agent_response_path)
+        return {"status": "success" if success else "failure", "official_success": success,
+                "evaluators_results": [{"evaluator_name": "AgentResponseEvaluator"}]}
+
+    rows = collect_rows(tmp_path, evaluate_fn=fake_evaluate, evaluate=True)
+    report = audit(rows, expected_cells(design, model_profile="m1", architecture="react"))
+    assert report["evaluated_cells"] == 2
+    assert report["official_success_rate"] == pytest.approx(0.5)
+    # 两个臂都自报 SUCCESS（完成后答），所以完成率是 1.0，与官方成功率不同
+    assert report["submitted_completion_rate"] == pytest.approx(1.0)
+    assert report["missing_cells"] == []
+    assert report["evaluation_status_counts"][EVALUATION_STATUS_NATIVE] == 2
+
+
+def test_audit_reports_missing_and_error_cells(tmp_path: Path):
+    design = {
+        "main_models": ["m1"], "validation_model": "pro",
+        "architectures": ["react"], "faults": ["web_dom_missing"],
+        "repetitions": 1, "conditions": ["control", "fault"],
+        "main_tasks": [118], "validation_tasks": [118], "category_of": {118: "public_navigation"},
+    }
+    _trial_dir(tmp_path, model="m1", condition="control", seed=1)
+
+    def fake_error(task_id, *, agent_response_path, network_trace_path, config_path):
+        return {"status": "ERROR", "official_success": False, "error_msg": "evaluator crashed",
+                "evaluators_results": []}
+
+    rows = collect_rows(tmp_path, evaluate_fn=fake_error, evaluate=True)
+    report = audit(rows, expected_cells(design, model_profile="m1", architecture="react"))
+    assert len(report["missing_cells"]) == 1          # 缺 fault 臂
+    assert len(report["error_cells"]) == 1            # 控制臂评分失败
+    assert report["official_success_rate"] is None    # 没有可计入的格子
+    assert report["evaluation_status_counts"][EVALUATION_STATUS_ERROR] == 1
+
+
+def test_audit_detects_unpaired_arms(tmp_path: Path):
+    design = {
+        "main_models": ["m1"], "validation_model": "pro",
+        "architectures": ["react"], "faults": ["web_dom_missing"],
+        "repetitions": 1, "conditions": ["control", "fault"],
+        "main_tasks": [118], "validation_tasks": [118], "category_of": {118: "public_navigation"},
+    }
+    _trial_dir(tmp_path, model="m1", condition="control", seed=1)
+
+    def fake_evaluate(task_id, *, agent_response_path, network_trace_path, config_path):
+        return {"status": "success", "official_success": True,
+                "evaluators_results": [{"evaluator_name": "AgentResponseEvaluator"}]}
+
+    rows = collect_rows(tmp_path, evaluate_fn=fake_evaluate, evaluate=True)
+    report = audit(rows, expected_cells(design, model_profile="m1", architecture="react"))
+    assert len(report["unpaired_keys"]) == 1
+
+
+# ==========================================================================
+# 5. 主分析
+# ==========================================================================
+
+def _analysis_rows(*, models=("m1", "m2"), architectures=("react", "plan_execute"),
+                   faults=("web_dom_missing",), tasks=range(1, 17), seeds=(1, 2),
+                   effect=None) -> list[dict]:
+    """构造分析用行；``effect(model, architecture, fault)`` 给出故障臂的失败概率。"""
+    import random
+    rng = random.Random(20260926)
+    effect = effect or (lambda model, architecture, fault: 0.0)
+    rows = []
+    for task in tasks:
+        for fault in faults:
+            for seed in seeds:
+                for model in models:
+                    for architecture in architectures:
+                        base = 0.95 - 0.02 * (int(task) % 3)
+                        drop = effect(model, architecture, fault)
+                        for condition in ("control", "fault"):
+                            probability = base - (drop if condition == "fault" else 0.0)
+                            success = 1 if rng.random() < probability else 0
+                            rows.append({
+                                "official_success": bool(success),
+                                "evaluation_status": "native",
+                                "cell": {"model_profile": model, "architecture": architecture,
+                                         "fault_type": fault, "task_id": int(task),
+                                         "fault_seed": seed, "condition": condition},
+                                "trial_dir": f"/x/{model}/{architecture}/{fault}/task{task}/{condition}_{seed}",
+                            })
+    return rows
+
+
+def test_pairs_are_built_per_task_and_seed():
+    rows = _analysis_rows(tasks=[1, 2])
+    observations = build_observations(rows)
+    pairs, unpaired = pair_observations(observations)
+    assert unpaired == []
+    assert len(pairs) == 2 * 2 * 2 * 2  # tasks × seeds × models × architectures
+
+
+def test_bootstrap_interval_is_deterministic_for_a_fixed_seed():
+    by_task = {1: [1.0, 0.0], 2: [1.0, 1.0], 3: [0.0, 1.0]}
+    first = cluster_bootstrap_ci(by_task, n_boot=500, seed=7)
+    second = cluster_bootstrap_ci(by_task, n_boot=500, seed=7)
+    assert first == second
+    assert first[0] <= first[1]
+
+
+def test_degradation_recovers_a_planted_effect():
+    rows = _analysis_rows(effect=lambda model, architecture, fault: 0.4)
+    pairs, _ = pair_observations(build_observations(rows))
+    cells = degradation_by_cell(pairs, n_boot=500, seed=1)
+    assert len(cells) == 2 * 2  # models × architectures
+    for cell in cells:
+        assert cell["degradation"] > 0.1
+        assert cell["ci_low"] > 0.0
+
+
+def test_zero_effect_yields_no_positive_lower_bound():
+    rows = _analysis_rows(effect=lambda model, architecture, fault: 0.0)
+    pairs, _ = pair_observations(build_observations(rows))
+    cells = degradation_by_cell(pairs, n_boot=500, seed=1)
+    assert all(cell["ci_low"] <= 0.05 for cell in cells)
+
+
+def test_interaction_detects_a_known_three_way_pattern():
+    def effect(model, architecture, fault):
+        return 0.7 if (model == "m2" and architecture == "plan_execute") else 0.0
+
+    rows = _analysis_rows(effect=effect, seeds=(1, 2, 3, 4))
+    result = interaction_on_degradation(build_observations(rows), models=["m1", "m2"],
+                                        n_boot=400, seed=3)
+    assert "error" not in result
+    assert result["coefficient_condition_x_model_x_architecture"] > 0
+    assert result["p_value"] is not None and result["p_value"] < 0.05
+    assert result["bootstrap_ci_low"] > 0
+
+
+def test_interaction_refuses_a_single_model_design():
+    rows = _analysis_rows(models=("m1",))
+    result = interaction_on_degradation(build_observations(rows))
+    assert "error" in result
+
+
+def test_holm_adjust_is_monotonic_and_bounded():
+    adjusted = holm_adjust([0.01, 0.04, 0.03])
+    assert adjusted == sorted(adjusted)
+    assert all(0.0 <= value <= 1.0 for value in adjusted)
+    assert adjusted[0] == pytest.approx(0.03)
+
+
+def test_validation_scope_flags_v4_pro_outside_common_tasks():
+    design = {"validation_model": "deepseek_v4_pro", "validation_tasks": [22, 25]}
+    observations = [
+        {"model_profile": "deepseek_v4_pro", "task_id": 22, "condition": "control",
+         "architecture": "react", "fault_type": "web_dom_missing", "seed": 1,
+         "official_success": 1, "evaluation_status": "native"},
+        {"model_profile": "deepseek_v4_pro", "task_id": 118, "condition": "fault",
+         "architecture": "react", "fault_type": "web_dom_missing", "seed": 1,
+         "official_success": 0, "evaluation_status": "native"},
+    ]
+    scope = check_validation_scope(observations, design)
+    assert scope["ok"] is False
+    assert scope["violations"] == [118]
+
+
+def test_main_analysis_excludes_validation_model_from_main_estimate():
+    design = {
+        "main_models": ["m1", "m2"], "validation_model": "pro",
+        "validation_tasks": [1, 2], "main_tasks": list(range(1, 17)),
+        "faults": ["web_dom_missing"], "architectures": ["react", "plan_execute"],
+        "conditions": ["control", "fault"], "repetitions": 2, "category_of": {},
+    }
+    rows = _analysis_rows(effect=lambda model, architecture, fault: 0.3, seeds=(1, 2))
+    pro_rows = _analysis_rows(models=("pro",), tasks=[1, 2], seeds=(1, 2),
+                              effect=lambda model, architecture, fault: 0.2)
+    report = main_analysis(rows + pro_rows, design, n_boot=300, seed=5)
+    main_models = {item["model_profile"] for item in report["degradation_by_cell"]}
+    assert main_models == {"m1", "m2"}
+    assert report["secondary_validation_model"]["model_profile"] == "pro"
+    assert all(item["model_profile"] == "pro"
+               for item in report["secondary_validation_model"]["degradation_by_cell"])
+    assert report["scope"]["ok"] is True
+
+
+def test_design_manifest_has_the_frozen_sizes():
+    design = load_design(ROOT / "docs" / "task_manifest_public16.json")
+    assert len(design["main_tasks"]) == 16
+    assert len(design["validation_tasks"]) == 8
+    assert design["repetitions"] == 2
+    assert set(design["faults"]) == {"web_http_error", "agent_param_error", "web_dom_missing"}
+    cells = expected_cells(design, model_profile=design["main_models"][0],
+                           architecture="react")
+    # 16 任务 × 3 故障 × 2 重复 × 2 条件
+    assert len(cells) == 192
+    validation_cells = expected_cells(design, model_profile=design["validation_model"],
+                                      architecture="react")
+    assert len(validation_cells) == 8 * 3 * 2 * 2
+
+
+# ==========================================================================
+# 6. 评审驱动的加固：命名方案、恢复守卫、四类分母、分层聚类
+# ==========================================================================
+
+def test_trial_record_marks_the_new_pairing_scheme():
+    record = _record()
+    assert record["pairing_scheme"] == PAIRING_SCHEME
+    assert PAIRING_SCHEME == "seed-paired-v2"
+
+
+def test_legacy_record_is_identifiable_but_rejected_by_the_pipeline(tmp_path: Path):
+    """旧方案记录必须能被读出并指名到格子，然后被判 incomplete，而不是被静默当成
+
+    "没有产物"或"可以配对"。读取层保持宽容，判定层严格。
+    """
+    trial_dir = _trial_dir(tmp_path, model="m1", condition="control", seed=1)
+    record_path = trial_dir / "trial_record.json"
+    record = json.loads(record_path.read_text(encoding="utf-8"))
+    record["pairing_scheme"] = "legacy-control-seed0"
+    record_path.write_text(json.dumps(record), encoding="utf-8")
+
+    read_back = read_trial_record(record_path)          # 读得出（可识别）
+    assert read_back["task_id"] == 118
+
+    integrity = check_artifacts(trial_dir)               # 但不可用于正式分析
+    assert integrity["complete"] is False
+    assert any("legacy pairing scheme" in reason for reason in integrity["reasons"])
+
+    design = {
+        "main_models": ["m1"], "validation_model": "pro",
+        "architectures": ["react"], "faults": ["web_dom_missing"],
+        "repetitions": 1, "conditions": ["control", "fault"],
+        "main_tasks": [118], "validation_tasks": [118], "category_of": {118: "public_navigation"},
+    }
+    report = audit(collect_rows(tmp_path), expected_cells(design, model_profile="m1",
+                                                          architecture="react"))
+    assert len(report["incomplete_cells"]) == 1          # 控制臂：指名到格子，理由明确
+    assert len(report["missing_cells"]) == 1             # 故障臂：确实没有产物
+    assert report["unidentified_artifact_dirs"] == []    # 没有"读不出来"的目录
+    assert report["cell_counts"]["consistent"] is True
+
+
+def test_arm_dir_name_documents_the_new_scheme():
+    from standard_agent.trial_metadata import arm_dir_name
+    # 新方案：控制臂与故障臂都用 job seed
+    assert arm_dir_name(fault_label="control", seed=3) == "control_seed_3"
+    # 历史方案是 control_seed_0（FaultConfig.off() 的固定 seed=0），二者不可混用
+    assert arm_dir_name(fault_label="control", seed=3) != "control_seed_0"
+
+
+def _matrix_args(**overrides):
+    class Args:
+        output_dir = ""
+        workers = 1
+        max_steps = 20
+        trials = 2
+        fault_type = "web_dom_missing"
+        fault_types = None
+        fault_intensity = "high"
+        fault_seed = 1
+        fault_injection_step = None
+        model_profile = "deepseek_v41_flash"
+        architecture = "react"
+        task_ids = None
+        resume = False
+        job_timeout_minutes = 45
+        official_output_root = None
+    for key, value in overrides.items():
+        setattr(Args, key, value)
+    return Args()
+
+
+def test_design_fingerprint_tracks_design_changes():
+    from scripts.run_fault_matrix import design_fingerprint
+
+    base = design_fingerprint(_matrix_args(), ["web_dom_missing"], {"web_dom_missing": 2}, [22, 118])
+    same = design_fingerprint(_matrix_args(), ["web_dom_missing"], {"web_dom_missing": 2}, [118, 22])
+    changed_step = design_fingerprint(_matrix_args(), ["web_dom_missing"], {"web_dom_missing": 3}, [22, 118])
+    changed_model = design_fingerprint(_matrix_args(model_profile="qwen38_flash"),
+                                       ["web_dom_missing"], {"web_dom_missing": 2}, [22, 118])
+    changed_arch = design_fingerprint(_matrix_args(architecture="plan_execute"),
+                                      ["web_dom_missing"], {"web_dom_missing": 2}, [22, 118])
+    assert base == same                      # 任务顺序无关
+    assert len({base, changed_step, changed_model, changed_arch}) == 4
+
+
+def test_resume_ignores_status_files_from_a_different_design():
+    """旧产物 control_seed_0 时代的 status 没有指纹，不能当成已完成而跳过。"""
+    from scripts.run_fault_matrix import design_fingerprint
+
+    args = _matrix_args()
+    fingerprint = design_fingerprint(args, ["web_dom_missing"], {"web_dom_missing": 2}, [118])
+    legacy_status = {"job": {"task_id": 118, "seed": 1, "fault_type": "web_dom_missing"},
+                     "returncode": 0, "infrastructure_error": False, "fault_invalid": False}
+    new_status = dict(legacy_status, design_fingerprint=fingerprint)
+    assert legacy_status.get("design_fingerprint") != fingerprint   # 旧文件被拒
+    assert new_status.get("design_fingerprint") == fingerprint      # 本次文件被接受
+
+
+def test_audit_reports_four_distinct_denominators(tmp_path: Path):
+    """missing / incomplete / unevaluated / error 必须分别计数且总和等于期望格子数。"""
+    design = {
+        "main_models": ["m1"], "validation_model": "pro",
+        "architectures": ["react"], "faults": ["web_dom_missing"],
+        "repetitions": 1, "conditions": ["control", "fault"],
+        "main_tasks": [118], "validation_tasks": [118], "category_of": {118: "public_navigation"},
+    }
+    expected = expected_cells(design, model_profile="m1", architecture="react")
+    assert len(expected) == 2
+
+    # 控制臂完整、不评分（check-only）；故障臂缺 HAR → incomplete；另造一个既不完整也行
+    _trial_dir(tmp_path, model="m1", condition="control", seed=1)
+    _trial_dir(tmp_path, model="m1", condition="fault", seed=1, with_har=False)
+    rows = collect_rows(tmp_path)          # evaluate=False → unevaluated
+    report = audit(rows, expected)
+    assert len(report["unevaluated_cells"]) == 1
+    assert len(report["incomplete_cells"]) == 1
+    assert report["cell_counts"]["expected"] == 2
+    assert report["cell_counts"]["consistent"] is True
+    assert report["official_success_rate"] is None
+
+
+def test_stratified_resampling_keeps_category_sizes():
+    import random as _random
+    strata = {"cat_a": [1, 2, 3], "cat_b": [10, 11]}
+    sampled = resample_tasks_by_stratum(strata, _random.Random(0))
+    assert len(sampled) == 5
+    assert sum(task in (1, 2, 3) for task in sampled) == 3
+    assert sum(task in (10, 11) for task in sampled) == 2
+
+
+def test_strata_for_tasks_buckets_by_category():
+    strata = strata_for_tasks({1: "cat_a", 2: "cat_a", 3: "cat_b"}, [1, 2, 3, 4])
+    assert strata["cat_a"] == [1, 2]
+    assert strata["cat_b"] == [3]
+    assert strata["uncategorized"] == [4]
+
+
+def test_single_task_yields_no_false_precision():
+    """只有一个任务时，重复 trial 不能把区间收窄——trial 不是独立样本。"""
+    wide = {1: [1.0, -1.0, 1.0, -1.0]}
+    low, high = cluster_bootstrap_ci(wide, n_boot=200, seed=0)
+    assert low == high           # 任务间无变异 → 区间退化，不因 4 个 trial 而变窄
+
+
+def test_stratified_bootstrap_differs_from_pooled_when_categories_differ():
+    values = {1: [1.0], 2: [1.0], 3: [0.0], 4: [0.0]}
+    strata = {"large": [1, 2], "small": [3]}          # 有意不平衡的分层
+    pooled = cluster_bootstrap_ci(values, n_boot=300, seed=11)
+    stratified = cluster_bootstrap_ci(values, strata=strata, n_boot=300, seed=11)
+    assert pooled[0] <= stratified[1]
+    assert stratified[0] <= pooled[1]
+
+
+def test_main_analysis_uses_category_strata():
+    design = {
+        "main_models": ["m1", "m2"], "validation_model": "pro",
+        "validation_tasks": [1, 2], "main_tasks": list(range(1, 17)),
+        "faults": ["web_dom_missing"], "architectures": ["react", "plan_execute"],
+        "conditions": ["control", "fault"], "repetitions": 2,
+        "category_of": {**{task: "cat_a" for task in range(1, 9)},
+                        **{task: "cat_b" for task in range(9, 17)}},
+    }
+    rows = _analysis_rows(effect=lambda model, architecture, fault: 0.3, seeds=(1, 2))
+    report = main_analysis(rows, design, n_boot=200, seed=9)
+    assert report["degradation_by_cell"]
+    assert report["interaction"]["bootstrap_resamples"] == 200

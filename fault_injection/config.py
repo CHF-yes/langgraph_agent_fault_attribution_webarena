@@ -81,6 +81,59 @@ INTENSITY_PRESETS = {
 
 
 # ============================================================
+# Stage C 注入步口径（单一来源）
+# ============================================================
+#
+# Stage C 的正式矩阵对每一条故障臂只注入一次，注入位置固定，不扫描：
+#
+#   agent_param_error   → 第 1 个"带参数的动作"（参数动作计数，不是步数）
+#   其他故障            → 第 2 个执行步（execution step）
+#
+# 两者计数单位不同，这是刻意的：参数错误必须在真正携带参数的动作上发生，
+# 若按执行步计数，早期步可能只有 goto/stop 之类无参数动作，故障就落空了。
+# 需要扫描注入步的是 Stage E（注入步敏感性），它用显式 injection_step 覆盖
+# 下面的默认值；显式传入即视为 Stage E 口径，Stage C 运行不得显式覆盖。
+STAGE_C_DEFAULT_INJECTION_STEP = 2
+STAGE_C_PARAMETER_ACTION_FAULTS = frozenset({"agent_param_error"})
+
+_INJECTION_STEP_UNITS = {
+    "agent_param_error": "parameter_action",
+}
+STAGE_C_DEFAULT_INJECTION_STEP_UNITS = "execution_step"
+
+
+def injection_step_units(fault_name: str) -> str:
+    """Return the unit that ``injection_step`` counts for ``fault_name``."""
+    return _INJECTION_STEP_UNITS.get(fault_name, STAGE_C_DEFAULT_INJECTION_STEP_UNITS)
+
+
+def stage_c_injection_step(fault_name: str) -> int:
+    """Return the frozen Stage C injection step for ``fault_name``."""
+    if fault_name in STAGE_C_PARAMETER_ACTION_FAULTS:
+        return 1
+    return STAGE_C_DEFAULT_INJECTION_STEP
+
+
+def resolve_injection_step(fault_name: str, requested: Optional[int] = None) -> int:
+    """Resolve the injection step for ``fault_name``.
+
+    ``requested`` comes from an explicit ``--fault-injection-step``. A value is
+    required for Stage E sweeps; leaving it unset selects the frozen Stage C
+    default. ``None`` means "Stage C", never "probability mode": formal trials
+    always pin the step so a fault arm either fires exactly once or is recorded
+    as invalid.
+    """
+    if requested is not None:
+        return int(requested)
+    return stage_c_injection_step(fault_name)
+
+
+def injection_step_mode(requested: Optional[int] = None) -> str:
+    """Label the step-selection mode: Stage C default or explicit Stage E sweep."""
+    return "stage_e_explicit" if requested is not None else "stage_c_fixed"
+
+
+# ============================================================
 # FaultConfig
 # ============================================================
 

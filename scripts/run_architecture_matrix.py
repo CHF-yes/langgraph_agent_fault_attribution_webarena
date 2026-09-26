@@ -35,6 +35,8 @@ def main():
       while pending and len(active)<a.workers:
        arch,task,site,start_url,intent,seed,condition,fault=pending.popleft(); key=f'{arch}_{condition}_{fault or "control"}_task{task}_seed{seed}'; log=(out/f'{key}.log').open('w')
        cmd=[sys.executable,'main.py','--benchmark','--site',site,'--url',start_url,'--task',intent,'--task-id',str(task),'--model-profile','gpt54','--architecture',arch,'--max-steps',str(a.max_steps),'--trials','1','--condition',condition,'--fault-seed',str(seed)]
+       # 历史复现：本脚本固定注入步 2，复现已发布的历史产物（含 agent_param_error 臂）。
+       # Stage C 正式运行请用 scripts/run_fault_matrix.py，其口径为 agent_param_error→第1个参数动作、其余→第2步。
        if fault: cmd += ['--fault-type',fault,'--fault-intensity','high','--fault-injection-step','2']
        cmd += ['--webarena-output-dir',str(ROOT/a.official_output_root/key)]
        proc=subprocess.Popen(cmd,cwd=ROOT,stdout=log,stderr=subprocess.STDOUT,start_new_session=True); active[key]=(proc,log); print('START',key,'pid=',proc.pid,flush=True)

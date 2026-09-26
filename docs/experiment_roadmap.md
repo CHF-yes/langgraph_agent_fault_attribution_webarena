@@ -223,13 +223,51 @@ mutation 任务。同一模板内的任务相关，不能把 16 个 ID 当成 16
 **三向 M×A×F 交互预注册为探索性**。任务按类别及模板聚类，报告描述性模式与逐格置信区间；
 两次重复不能替代跨任务模板的独立证据。
 
-### Stage B 已并入 C；Stage D 取消
+### Stage C 执行契约（2026-09-26 固定）
+
+以下是 Stage C 的**执行层**约定；它们不改变上表的样本量与格子，只规定"怎么跑、怎么留痕、怎么算"。
+
+1. **任务定义必须来自数据集**。生成 `agent_response.json` 时必须传入该任务在数据集里的
+   真实 `eval` 定义（`standard_agent/webarena_verified.py:load_task_definition` /
+   `write_agent_response`）。用占位符 `eval: []` 生成响应会把 `navigate` 任务写成
+   `RETRIEVE`，官方 evaluator 的 `AgentResponseEvaluator` 必然判负——这类格子不是
+   "agent 失败"，而是产物不可评分。
+2. **注入步口径单一来源**（`fault_injection/config.py:resolve_injection_step`）：
+   Stage C 每臂只注入一次且位置固定——`agent_param_error` 落在**第 1 个参数动作**，
+   其余两个故障落在**第 2 个执行步**，两者计数单位不同（参数动作 vs 执行步）。
+   Stage E 才扫描注入步，并显式传 `--fault-injection-step`；矩阵把该模式记为
+   `stage_e_explicit`，Stage C 记为 `stage_c_fixed`。历史复现脚本保留旧步并在文件内标注。
+3. **逐 trial 留痕**（`standard_agent/trial_metadata.py`）：每个
+   `(model, architecture, fault, task, seed, condition)` 生成 `trial_record.json`，含
+   deterministic `trial_id`、控制/故障配对用的 `pair_key`、trace 路径、`agent_response`/
+   HAR 路径、代码版本（git sha/branch/dirty）与运行配置；trace 文件名即 trial file stem。
+   **配对方案明确记为 `seed-paired-v2`（新方案）**：控制臂与故障臂共用同一次运行的
+   job seed，因此控制臂目录是 `control_seed_<jobseed>`。这与历史产物**不同**：旧产物
+   的控制臂是 `control_seed_0`（`FaultConfig.off()` 的固定 seed=0），且旧产物没有
+   `trial_record.json`。为免把旧目录误当作同一 trial，矩阵在 `manifest.json` 与每个
+   `*.status.json` 里写入 `design_fingerprint`（模型/架构/步数/故障集/注入步/重复数/
+   任务集/配对方案/schema 的哈希），`--resume` 只接受指纹一致的 status 文件，其余
+   计入 `resume_ignored_stale_status_files` 并重跑。
+4. **闭环**（`scripts/stage_c_pipeline.py`）：产物完整性检查 → 官方 evaluator →
+   `native`/`compatibility`/`error` 审计 → 缺失与失败格子清单。**完成率不是官方成功率**：
+   两个口径分别统计、分别报告。未进入官方成功率分母的格子分四类计数，且必须满足
+   `evaluated + missing + incomplete + unevaluated + error = expected`（`cell_counts.consistent`）：
+   根本没有产物 / 产物不完整 / 完整但未评分 / 评分自身报错。
+5. **主分析预注册**：估计量、整群自助区间、交互检验、Holm 家族与判定语言见
+   [`stage_c_analysis_plan.md`](stage_c_analysis_plan.md)；实现为
+   `standard_agent/stage_c_analysis.py` + `scripts/stage_c_analysis.py`。
+
+
 - Stage B 的存在理由是"单模型下模型效应退化"。C 主矩阵有 2 个模型，该理由消失。
 - 原 Stage D 是任务外推检验。服务器无法运行 Map，当前 16 个任务均来自三个公开站点，
   因此 Stage D 没有被 C 吸收，而是明确取消；跨站点/需登录任务的外推不足作为主要 limitation。
 
 ### Stage E — 注入步敏感性（审稿人一定会压的混淆）
-- 把 `--fault-injection-step` 扫 **{1,2,3}**，针对 Stage C 的三个故障。step 2 已覆盖，新增两步。
+- 把 `--fault-injection-step` 扫 **{1,2,3}**，针对 Stage C 的三个故障。
+- 计数单位随故障而定（`fault_injection/config.py:injection_step_units`）：
+  `agent_param_error` 的 k 指**第 k 个参数动作**，另两个故障的 k 指**第 k 个执行步**。
+  Stage C 的取值是 `agent_param_error → 1`、其余 `→ 2`；Stage E 在这三点上扫描，
+  因此对 `agent_param_error` 而言 k=1 与 Stage C 重合，k=2/3 为新点。
 - 此阶段须按 16 任务新样本重新设计并计费；旧版 240 trials / 2.2 h 预算作废 / 模型：**Flash**
 - **这是唯一有意传 `--fault-injection-step` 的阶段**，且它统一施加，`agent_param_error` 会离开默认位置——**这是有意的，记进 manifest**。
 

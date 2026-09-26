@@ -35,6 +35,8 @@ def command_for(options: argparse.Namespace) -> list[str]:
         "--trials", str(len(SEEDS)),
         "--fault-seed", str(SEEDS[0]),
         "--fault-intensity", "high",
+        # 历史复现：本脚本固定注入步 2，复现已发布的历史产物（含 agent_param_error 臂）。
+        # Stage C 正式运行请用 scripts/run_fault_matrix.py，其口径为 agent_param_error→第1个参数动作、其余→第2步。
         "--fault-injection-step", "2",
         "--max-steps", "20",
         "--workers", str(options.workers),

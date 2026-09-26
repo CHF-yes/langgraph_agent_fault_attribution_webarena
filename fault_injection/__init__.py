@@ -24,7 +24,17 @@
     runner.print_report(report)
 """
 
-from fault_injection.config import FaultConfig, SeededRandom, INTENSITY_PRESETS
+from fault_injection.config import (
+    FaultConfig,
+    SeededRandom,
+    INTENSITY_PRESETS,
+    STAGE_C_DEFAULT_INJECTION_STEP,
+    STAGE_C_PARAMETER_ACTION_FAULTS,
+    injection_step_mode,
+    injection_step_units,
+    resolve_injection_step,
+    stage_c_injection_step,
+)
 from fault_injection.proxy import FaultProxy
 from fault_injection.injector import FaultInjector
 from fault_injection.benchmark import BenchmarkRunner, TrialResult, SummaryMetrics

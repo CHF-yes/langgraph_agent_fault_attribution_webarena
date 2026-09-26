@@ -352,8 +352,14 @@ class TestConfigSecurity(unittest.TestCase):
         from standard_agent.config import settings
 
         profiles = settings.get_model_profiles()
-        self.assertEqual(set(profiles), {"deepseek", "gpt54", "gemini", "grok", "glm52"})
+        # 冻结设计里的模型名来自 .env / 环境变量，代码与测试都不写死名单；
+        # 这里校验结构性质：键名与 name 一致、逐个自洽、两次读取不共享对象。
+        for name, profile in profiles.items():
+            self.assertEqual(profile.name, name)
         self.assertTrue(all(profile.validate() for profile in profiles.values()))
+        again = settings.get_model_profiles()
+        self.assertEqual(set(profiles), set(again))
+        self.assertTrue(all(profiles[key] is not again[key] for key in profiles))
 
     def test_no_hardcoded_api_key(self):
         # 确保密钥只来自 .env / 环境变量，不硬编码在源码中

@@ -56,6 +56,14 @@ class TrialResult:
     recovery_steps: int = 0
     action_history: list[dict] = field(default_factory=list)
     injection_log: list[dict] = field(default_factory=list)
+    # Traceability: which trial this is, where its artifacts live, and which
+    # arm it belongs to. Filled by the runner; empty when the caller runs the
+    # benchmark without an official output directory.
+    trial_id: str = ""
+    condition: str = ""
+    replicate: Optional[int] = None
+    trace_path: str = ""
+    trial_record_path: str = ""
 
     def to_dict(self) -> dict:
         """Return a JSON/CSV-friendly record for one experiment trial."""
