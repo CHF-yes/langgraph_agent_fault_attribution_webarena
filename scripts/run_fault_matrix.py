@@ -17,7 +17,9 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from run_baseline import load_tasks, resolve_start_url
+from standard_agent.stage_c_pipeline import job_arms_ok
 from standard_agent.trial_metadata import PAIRING_SCHEME, TRIAL_RECORD_SCHEMA_VERSION
+from standard_agent.webarena_verified import dataset_path
 from fault_injection.config import (
     injection_step_mode,
     injection_step_units,
@@ -227,6 +229,8 @@ def main():
     fingerprint = design_fingerprint(args, fault_types, injection_steps,
                                      [job["task_id"] for job in jobs])
     stale_status_files = []
+    resume_rerun = []
+    resume_skipped = []
     if args.resume:
         completed_keys = set()
         for path in output_dir.glob("*.status.json"):
@@ -239,24 +243,52 @@ def main():
             if status.get("design_fingerprint") != fingerprint:
                 stale_status_files.append(path.name)
                 continue
-            if (
-                status.get("returncode") == 0
-                and not status.get("infrastructure_error")
-                and not status.get("fault_invalid")
-            ):
-                completed_keys.add(path.name.removesuffix(".status.json"))
+            if not (status.get("returncode") == 0
+                    and not status.get("infrastructure_error")
+                    and not status.get("fault_invalid")):
+                continue
+            # 日志分类通过还不够：必须两臂的 agent_response / network.har /
+            # trial_record 都完整且与当前设计一致，才允许跳过这个格子。
+            key = path.name.removesuffix(".status.json")
+            job = next((item for item in jobs if (
+                f"{item['fault_type']}_task{item['task_id']}_seed{item['seed']}") == key), None)
+            if job is None:
+                continue
+            job_dir = (Path(args.official_output_root)
+                       / f"{job['fault_type']}_task{job['task_id']}_seed{job['seed']}"
+                       if getattr(args, "official_output_root", None) else None)
+            if job_dir is None:
+                resume_rerun.append({"key": key, "why": "no --official-output-root to verify"})
+                continue
+            ok, why = job_arms_ok(
+                job_dir, fault_type=job["fault_type"], task_id=job["task_id"],
+                seed=job["seed"], model_profile=args.model_profile,
+                architecture=args.architecture, max_steps=args.max_steps,
+                injection_step=injection_steps[job["fault_type"]],
+                fault_intensity=args.fault_intensity,
+                dataset_path=dataset_path(),
+            )
+            if ok:
+                completed_keys.add(key)
+                resume_skipped.append(key)
+            else:
+                resume_rerun.append({"key": key, "why": "; ".join(why)[:500]})
         jobs = [
             job for job in jobs
             if f"{job['fault_type']}_task{job['task_id']}_seed{job['seed']}" not in completed_keys
         ]
-        if stale_status_files:
-            print(f"RESUME: ignored {len(stale_status_files)} status file(s) with a "
-                  f"different design fingerprint", flush=True)
+        for key in stale_status_files:
+            print(f"RESUME: ignored stale status file {key} (design fingerprint differs)",
+                  flush=True)
+        for item in resume_rerun:
+            print(f"RESUME: rerun {item['key']} ({item['why']})", flush=True)
     manifest = {
         "design_fingerprint": fingerprint,
         "pairing_scheme": PAIRING_SCHEME,
         "trial_record_schema": TRIAL_RECORD_SCHEMA_VERSION,
         "resume_ignored_stale_status_files": stale_status_files,
+        "resume_skipped_keys": resume_skipped,
+        "resume_rerun": resume_rerun,
         "model_profile": args.model_profile,
         "architecture": args.architecture,
         "max_steps": args.max_steps,

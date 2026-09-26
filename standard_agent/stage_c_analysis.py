@@ -30,6 +30,13 @@ DEFAULT_SEED = 20260921
 DEFAULT_INTERACTION_BOOTSTRAP = 4000
 
 CONTRACT_ERROR = "error"
+
+# Holm 校正的检验家族：**按故障**的三个主对比（两个主模型 × 两个架构合并，
+# 任务为聚类单位）。逐 (model, architecture, fault) 的格子只作描述性报告，
+# 不进入这个家族——否则家族会随模型/架构数量变化，校正失去意义。
+HOLM_FAMILY_ID = "per_fault_primary"
+HOLM_FAMILY_DESCRIPTION = ("三个故障各自的配对退化（两个主模型 × 两个架构合并，"
+                           "任务整群、按类别分层）")
 CONTRACT_NATIVE = "native"
 CONTRACT_COMPATIBILITY = "compatibility"
 
@@ -451,6 +458,119 @@ def interaction_on_degradation(observations: list[dict], *, models: list[str] | 
 # 作用域约束（V4 Pro 只能做共同 8 任务的次级分析）
 # --------------------------------------------------------------------------
 
+
+def degradation_by_fault(pairs: list[dict], *, category_of: dict | None = None,
+                         n_boot: int = DEFAULT_BOOTSTRAP,
+                         seed: int = DEFAULT_SEED) -> list[dict]:
+    """Holm 家族的三个成员：按故障合并 model/architecture 的配对退化。
+
+    每个故障一个检验：先在同一 (task, model, architecture, seed) 内配对，再对
+    任务取等权平均（任务内先平均掉模型/架构/重复），任务整群、按类别分层自助。
+    """
+    grouped: dict[str, dict[int, list[float]]] = defaultdict(lambda: defaultdict(list))
+    for pair in pairs:
+        grouped[pair["fault_type"]][pair["task_id"]].append(float(pair["delta"]))
+
+    results = []
+    for fault, by_task in sorted(grouped.items()):
+        per_task = {task: sum(values) / len(values) for task, values in by_task.items()}
+        mean_delta = sum(per_task.values()) / len(per_task) if per_task else float("nan")
+        strata = strata_for_tasks(category_of, by_task)
+        low, high = cluster_bootstrap_ci(by_task, strata=strata, n_boot=n_boot, seed=seed)
+        variance = statistics.variance(list(per_task.values())) if len(per_task) > 1 else 0.0
+        stderr = math.sqrt(variance / len(per_task)) if per_task else float("nan")
+        z = mean_delta / stderr if stderr and stderr > 0 else float("nan")
+        results.append({
+            "family_id": HOLM_FAMILY_ID,
+            "fault_type": fault,
+            "n_pairs": sum(len(values) for values in by_task.values()),
+            "n_tasks": len(by_task),
+            "degradation": mean_delta,
+            "ci_low": low, "ci_high": high,
+            "std_error": stderr if stderr == stderr else None,
+            "p_value": _normal_two_sided_p(z) if z == z else None,
+        })
+    return results
+
+
+def assess_matrix(rows: list[dict], design: dict, *, models: list[str],
+                  architectures: list[str]) -> dict:
+    """判断这个矩阵能否支撑正式显著性结论。
+
+    缺格、产物不完整、未评分、评分报错、以及控制/故障臂未配对，任何一项存在都
+    不允许输出正式推断——此时只能给描述性统计。判断与管道审计用同一套口径：
+    ``evaluated + missing + incomplete + unevaluated + error == expected``。
+    """
+    from standard_agent.stage_c_pipeline import expected_cells
+
+    expected_keys = set()
+    for model in models:
+        for architecture in architectures:
+            for cell in expected_cells(design, model_profile=model,
+                                       architecture=architecture):
+                expected_keys.add((cell["model_profile"], cell["architecture"],
+                                   cell["fault_type"], int(cell["task_id"]),
+                                   int(cell["seed"]), cell["condition"]))
+
+    present: dict[tuple, dict] = {}
+    for row in rows:
+        cell = row.get("cell")
+        if not cell:
+            continue
+        key = (cell["model_profile"], cell["architecture"], cell["fault_type"],
+               int(cell["task_id"]), int(cell["fault_seed"]), cell["condition"])
+        if key in expected_keys:
+            present[key] = row
+
+    missing = sorted(expected_keys - set(present))
+    incomplete, unevaluated, errors = [], [], []
+    for key, row in present.items():
+        if not row.get("complete"):
+            incomplete.append(key)
+        elif row.get("evaluation_status") == CONTRACT_ERROR:
+            errors.append(key)
+        elif row.get("evaluation_status") not in (CONTRACT_NATIVE, CONTRACT_COMPATIBILITY):
+            unevaluated.append(key)
+
+    evaluated_keys = {key for key, row in present.items()
+                      if row.get("complete")
+                      and row.get("evaluation_status") in (CONTRACT_NATIVE, CONTRACT_COMPATIBILITY)}
+    unpaired = []
+    for (model, architecture, fault, task, seed, _condition) in sorted(expected_keys):
+        arms = {key[5] for key in expected_keys
+                if key[:5] == (model, architecture, fault, task, seed)}
+        if not arms <= {"control", "fault"}:
+            continue
+        have = {key[5] for key in evaluated_keys
+                if key[:5] == (model, architecture, fault, task, seed)}
+        if have != {"control", "fault"}:
+            unpaired.append((model, architecture, fault, task, seed, sorted(have)))
+
+    blocked = []
+    if missing:
+        blocked.append(f"{len(missing)} 个期望格子没有产物")
+    if incomplete:
+        blocked.append(f"{len(incomplete)} 个格子产物不完整")
+    if unevaluated:
+        blocked.append(f"{len(unevaluated)} 个格子未评分")
+    if errors:
+        blocked.append(f"{len(errors)} 个格子评分报错")
+    if unpaired:
+        blocked.append(f"{len(unpaired)} 组控制/故障臂未配平")
+
+    return {
+        "expected_cells": len(expected_keys),
+        "evaluated_cells": len(evaluated_keys),
+        "missing_cells": missing,
+        "incomplete_cells": incomplete,
+        "unevaluated_cells": unevaluated,
+        "error_cells": errors,
+        "unpaired_pairs": unpaired,
+        "formal_inference_allowed": not blocked,
+        "blocked_reasons": blocked,
+    }
+
+
 def check_validation_scope(observations: list[dict], design: dict) -> dict:
     """检查验证模型是否只出现在共同 8 任务上。"""
     validation_model = design.get("validation_model")
@@ -466,53 +586,108 @@ def check_validation_scope(observations: list[dict], design: dict) -> dict:
 
 def main_analysis(rows: list[dict], design: dict, *, n_boot: int = DEFAULT_BOOTSTRAP,
                   seed: int = DEFAULT_SEED) -> dict:
-    """完整主分析：主模型 16 任务 + 验证模型共同 8 任务次级分析。"""
+    """完整主分析：主模型 16 任务 + 验证模型共同 8 任务次级分析。
+
+    **前置健康检查不通过时拒绝输出正式显著性结论**：p 值与 Holm 校正一律置空，
+    只保留描述性点估计与区间，并写明阻塞原因。
+    """
     observations = build_observations(rows)
     scope = check_validation_scope(observations, design)
     main_models = list(design.get("main_models") or [])
+    architectures = list(design.get("architectures") or [])
+    health = assess_matrix(rows, design, models=main_models, architectures=architectures)
+    allowed = bool(health["formal_inference_allowed"]) and bool(scope["ok"])
+
     main_observations = [obs for obs in observations if obs["model_profile"] in main_models]
     pairs, unpaired = pair_observations(main_observations)
     degradations = degradation_by_cell(pairs, category_of=design.get("category_of"),
                                       n_boot=n_boot, seed=seed)
-    pvalues = [item["p_value"] if item["p_value"] is not None else 1.0 for item in degradations]
-    adjusted = holm_adjust(pvalues)
-    for item, value in zip(degradations, adjusted):
+
+    # Holm 家族 = 三个故障级主对比；逐格结果只作描述性。
+    fault_level = degradation_by_fault(pairs, category_of=design.get("category_of"),
+                                       n_boot=n_boot, seed=seed)
+    raw = [item["p_value"] if item["p_value"] is not None else 1.0 for item in fault_level]
+    adjusted = holm_adjust(raw)
+    for item, value in zip(fault_level, adjusted):
         item["p_value_holm"] = value
+        item["in_holm_family"] = True
+
     interaction = interaction_on_degradation(main_observations, models=main_models,
                                             category_of=design.get("category_of"),
                                             n_boot=n_boot, seed=seed)
+
+    if not allowed:
+        reason = list(health["blocked_reasons"])
+        if not scope["ok"]:
+            reason.append(f"验证模型出现在共同 8 任务之外: {scope['violations']}")
+        for item in degradations:
+            item["p_value"] = None
+            item["p_value_holm"] = None
+            item["in_holm_family"] = False
+            item["inference_permitted"] = False
+        for item in fault_level:
+            item["p_value"] = None
+            item["p_value_holm"] = None
+            item["inference_permitted"] = False
+        if "error" not in interaction:
+            interaction["p_value"] = None
+            interaction["inference_permitted"] = False
+            interaction["inference"] = "blocked"
+        interaction["blocked_reasons"] = reason
+    else:
+        for item in degradations:
+            item["in_holm_family"] = False
+            item["inference_permitted"] = True
+        for item in fault_level:
+            item["inference_permitted"] = True
+        if "error" not in interaction:
+            interaction["inference_permitted"] = True
+
     validation_model = design.get("validation_model")
     validation_observations = [obs for obs in observations
                                if obs["model_profile"] == validation_model]
     validation_pairs, _ = pair_observations(validation_observations)
     validation_degradations = degradation_by_cell(
         validation_pairs, category_of=design.get("category_of"), n_boot=n_boot, seed=seed)
+    for item in validation_degradations:      # 次级分析一律不报显著性
+        item["p_value"] = None
+        item["p_value_holm"] = None
+        item["in_holm_family"] = False
+        item["inference_permitted"] = False
+
     return {
         "scope": scope,
+        "matrix_health": health,
+        "formal_inference_allowed": allowed,
         "main_models": main_models,
         "main_tasks": sorted({obs["task_id"] for obs in main_observations}),
         "n_observations_main": len(main_observations),
         "n_pairs_main": len(pairs),
         "unpaired": unpaired,
         "degradation_by_cell": degradations,
+        "degradation_by_fault": fault_level,
         "interaction": interaction,
+        "holm_family": {
+            "family_id": HOLM_FAMILY_ID,
+            "description": HOLM_FAMILY_DESCRIPTION,
+            "members": [item["fault_type"] for item in fault_level],
+            "method": "Holm",
+            "raw_p_values": raw,
+            "adjusted_p_values": adjusted,
+        },
         "secondary_validation_model": {
             "model_profile": validation_model,
             "tasks": sorted({obs["task_id"] for obs in validation_observations}),
             "n_pairs": len(validation_pairs),
             "degradation_by_cell": validation_degradations,
         },
-        "multiple_comparison": {
-            "family": "三个故障的配对退化检验 (main models, 16 tasks)",
-            "method": "Holm",
-            "raw_p_values": pvalues,
-            "adjusted_p_values": adjusted,
-        },
         "notes": [
             "退化量定义为 control 成功率减 fault 成功率（百分点 = ×100）。",
-            "区间按任务整群自助；不要把同一任务的重复当成独立样本。",
-            "结果不显著只能报告为功效不足，不能当作等价性证据。",
-            "V4 Pro 仅用于共同 8 任务次级分析，不进入主估计。",
+            "区间按任务整群、按四个预注册类别分层自助；重复 trial 不是独立样本。",
+            "Holm 家族固定为三个故障级主对比；逐 (model, architecture, fault) 格子为描述性。",
+            "矩阵不健康（缺格/未配对/评分报错）时不输出 p 值，只给描述性区间；"
+            "不显著只能报告为功效不足，不能当作等价性证据。",
+            "V4 Pro 仅用于共同 8 任务次级分析，不进入主估计，也不报显著性。",
         ],
     }
 
@@ -522,12 +697,36 @@ def format_report(report: dict) -> str:
     lines = ["## Stage C 主分析", ""]
     scope = report.get("scope") or {}
     lines.append(f"- 验证模型作用域检查: {'通过' if scope.get('ok') else '违规 ' + str(scope.get('violations'))}")
+    if not report.get("formal_inference_allowed", True):
+        health = report.get("matrix_health") or {}
+        lines.append("")
+        lines.append("> ⛔ **正式显著性推断已被拒绝**（矩阵不健康）：")
+        for reason in health.get("blocked_reasons") or []:
+            lines.append(f"> - {reason}")
+        lines.append("> 以下数值仅为描述性，p 值已置空。")
     lines.append(f"- 主模型: {', '.join(report.get('main_models') or [])}")
     lines.append(f"- 主观测数: {report.get('n_observations_main')}，配对数: {report.get('n_pairs_main')}")
     if report.get("unpaired"):
         lines.append(f"- ⚠️ 未配对条目: {len(report['unpaired'])}")
     lines.append("")
-    lines.append("| model | arch | fault | n_pair | control | fault | Δ(pp) | 95% CI | p | p(Holm) |")
+    lines.append("| 故障 | 配对 | Δ(pp) | 95% CI | p | p(Holm) |")
+    lines.append("|---|---|---|---|---|---|")
+    for item in report.get("degradation_by_fault") or []:
+        lines.append("| {fault} | {n} | {d:+.1f} | [{lo:+.1f}, {hi:+.1f}] | {p} | {ph} |".format(
+            fault=item["fault_type"], n=item["n_pairs"],
+            d=100 * item["degradation"] if item["degradation"] == item["degradation"] else float("nan"),
+            lo=100 * item["ci_low"] if item["ci_low"] == item["ci_low"] else float("nan"),
+            hi=100 * item["ci_high"] if item["ci_high"] == item["ci_high"] else float("nan"),
+            p="—" if item["p_value"] is None else f"{item['p_value']:.4f}",
+            ph="—" if item.get("p_value_holm") is None else f"{item['p_value_holm']:.4f}",
+        ))
+    lines.append("")
+    lines.append(f"Holm 家族：{report.get('holm_family', {}).get('family_id')} "
+                 f"= {report.get('holm_family', {}).get('members')}")
+    lines.append("")
+    lines.append("逐 (model, architecture, fault) 描述性结果：")
+    lines.append("")
+    lines.append("| model | arch | fault | n_pair | control | fault | Δ(pp) | 95% CI | p |")
     lines.append("|---|---|---|---|---|---|---|---|---|---|")
     for item in report.get("degradation_by_cell") or []:
         lines.append("| {model} | {arch} | {fault} | {n} | {c:.3f} | {f:.3f} | {d:+.1f} | [{lo:+.1f}, {hi:+.1f}] | {p} | {ph} |".format(
@@ -538,17 +737,18 @@ def format_report(report: dict) -> str:
             d=100 * item["degradation"] if item["degradation"] == item["degradation"] else float("nan"),
             lo=100 * item["ci_low"] if item["ci_low"] == item["ci_low"] else float("nan"),
             hi=100 * item["ci_high"] if item["ci_high"] == item["ci_high"] else float("nan"),
-            p="n/a" if item["p_value"] is None else f"{item['p_value']:.4f}",
-            ph="n/a" if item.get("p_value_holm") is None else f"{item['p_value_holm']:.4f}",
+            p="—" if item["p_value"] is None else f"{item['p_value']:.4f}",
+            ph="—" if item.get("p_value_holm") is None else f"{item['p_value_holm']:.4f}",
         ))
     interaction = report.get("interaction") or {}
     lines.append("")
     if interaction.get("error"):
         lines.append(f"- 交互检验: 无法估计（{interaction['error']}）")
     else:
+        p_text = "—" if interaction.get("p_value") is None else f"{interaction['p_value']:.4f}"
         lines.append(f"- **Model × Architecture 交互**（condition:model:architecture）: "
                      f"{interaction['coefficient_condition_x_model_x_architecture']:+.4f}, "
-                     f"p={interaction['p_value']:.4f}, "
+                     f"p={p_text}, "
                      f"95% CI [{interaction['bootstrap_ci_low']:+.4f}, {interaction['bootstrap_ci_high']:+.4f}]")
     lines.append("")
     lines.extend(["> " + note for note in (report.get("notes") or [])])

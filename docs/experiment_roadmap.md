@@ -248,6 +248,14 @@ mutation 任务。同一模板内的任务相关，不能把 16 个 ID 当成 16
    `*.status.json` 里写入 `design_fingerprint`（模型/架构/步数/故障集/注入步/重复数/
    任务集/配对方案/schema 的哈希），`--resume` 只接受指纹一致的 status 文件，其余
    计入 `resume_ignored_stale_status_files` 并重跑。
+   **trace 独立性**：每次 trial 生成 `run_id`，trace 落在 `<TRACE_DIR>/<run_id>/`，且写前
+   调用 `prepare_trace()` 把同名旧文件轮转为 `.prev`——同一格重跑**不会**把新记录追加到
+   旧 trace。
+   **resume 的两臂门槛**：日志分类通过还不够，只有**控制臂与故障臂**的
+   `agent_response.json`、`network.har`、`trial_record.json` 都完整，且记录字段
+   （模型/架构/故障/任务/seed/条件/`max_steps`/`injection_step`/强度）与数据集给出的
+   任务类型都与当前设计一致时，才允许跳过该格子；否则重跑并写入 manifest 的
+   `resume_rerun`（含逐条原因）。
 4. **闭环**（`scripts/stage_c_pipeline.py`）：产物完整性检查 → 官方 evaluator →
    `native`/`compatibility`/`error` 审计 → 缺失与失败格子清单。**完成率不是官方成功率**：
    两个口径分别统计、分别报告。未进入官方成功率分母的格子分四类计数，且必须满足
@@ -256,6 +264,10 @@ mutation 任务。同一模板内的任务相关，不能把 16 个 ID 当成 16
 5. **主分析预注册**：估计量、整群自助区间、交互检验、Holm 家族与判定语言见
    [`stage_c_analysis_plan.md`](stage_c_analysis_plan.md)；实现为
    `standard_agent/stage_c_analysis.py` + `scripts/stage_c_analysis.py`。
+   **Holm 家族固定为三个故障级主对比**（`family_id = per_fault_primary`：两个主模型 ×
+   两个架构合并，任务为聚类单位）；逐 `(model, architecture, fault)` 格子只作描述性。
+   **正式推断前置检查**：缺格、产物不完整、未评分、评分报错或控制/故障臂未配平，一律
+   拒绝输出显著性结论（p 值置空，只给描述性区间，并写明阻塞原因）。
 
 
 - Stage B 的存在理由是"单模型下模型效应退化"。C 主矩阵有 2 个模型，该理由消失。

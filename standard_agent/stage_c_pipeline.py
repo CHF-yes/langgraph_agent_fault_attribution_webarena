@@ -442,3 +442,95 @@ def audit(rows: list[dict], expected: list[dict]) -> dict:
         "note": ("official_success_rate 只统计 evaluator 判定；submitted_completion_rate 是 "
                  "agent 自报完成率。二者不可互相替代，报告里必须分别标注。"),
     }
+
+
+# --------------------------------------------------------------------------
+# 恢复运行前置检查：两臂都要完整且与当前设计一致
+# --------------------------------------------------------------------------
+
+ARM_CONDITIONS = (("control", "control"), ("fault", None))  # (condition, arm label)
+
+
+def arm_artifacts_ok(arm_dir: str | Path, *, expect: dict,
+                     task_type: str | None = None) -> tuple[bool, list[str]]:
+    """检查单臂产物是否**完整且与当前设计一致**。
+
+    ``expect`` 至少包含 model_profile / architecture / fault_type / task_id /
+    fault_seed / condition；可选 max_steps / injection_step / fault_intensity 与
+    数据集里的 task_type。任何一项不符都返回原因，绝不放行。
+    """
+    integrity = check_artifacts(arm_dir)
+    reasons = list(integrity["reasons"])
+    if not integrity["complete"]:
+        return False, reasons
+
+    record = integrity["trial_record"] or {}
+    for field in ("model_profile", "architecture", "fault_type", "task_id",
+                  "fault_seed", "condition"):
+        actual = record.get(field)
+        wanted = expect.get(field)
+        if isinstance(wanted, int) and isinstance(actual, (int, str)):
+            try:
+                actual = int(actual)
+            except (TypeError, ValueError):
+                pass
+        if actual != wanted:
+            reasons.append(f"trial_record {field}={actual!r} != design {wanted!r}")
+
+    run_config = record.get("run_config") or {}
+    for field in ("max_steps", "injection_step", "fault_intensity"):
+        if field in expect and run_config.get(field) != expect[field]:
+            reasons.append(
+                f"trial_record run_config.{field}={run_config.get(field)!r} "
+                f"!= design {expect[field]!r}")
+
+    if task_type is not None:
+        response = integrity.get("agent_response") or {}
+        actual_type = str(response.get("task_type") or "").upper()
+        if actual_type != str(task_type).upper():
+            reasons.append(f"agent_response task_type={actual_type!r} "
+                           f"!= dataset {str(task_type).upper()!r}")
+
+    return (not reasons), reasons
+
+
+def job_arms_ok(job_dir: str | Path, *, fault_type: str, task_id: int, seed: int,
+                model_profile: str, architecture: str, max_steps: int,
+                injection_step: int | None, fault_intensity: str,
+                dataset_path: str | Path | None = None) -> tuple[bool, list[str]]:
+    """控制臂与故障臂**都**完整且一致，调用方才能跳过这个格子。
+
+    ``--resume`` 的语义是"这个格子已经按当前设计跑完了"，单臂完整不足以支持这个
+    判断：缺了控制臂就没有配对的基线，缺了故障臂就没有处理组。
+    """
+    from standard_agent.trial_metadata import arm_dir_name
+
+    task_type = None
+    if dataset_path is not None:
+        try:
+            from standard_agent.webarena_verified import (
+                TaskDefinitionNotFound, load_task_definition, task_type_for,
+            )
+            task_type = task_type_for(load_task_definition(int(task_id), path=dataset_path))
+        except TaskDefinitionNotFound as exc:
+            return False, [f"dataset unavailable, cannot verify design: {exc}"]
+        except Exception as exc:  # noqa: BLE001 - 保守处理，宁可重跑
+            return False, [f"dataset check failed: {exc}"]
+
+    reasons: list[str] = []
+    for condition, label in ARM_CONDITIONS:
+        arm_label = fault_type if label is None else label
+        arm_dir = Path(job_dir) / str(task_id) / arm_dir_name(
+            fault_label=arm_label, seed=seed)
+        ok, why = arm_artifacts_ok(
+            arm_dir,
+            expect={"model_profile": model_profile, "architecture": architecture,
+                    "fault_type": fault_type, "task_id": int(task_id),
+                    "fault_seed": int(seed), "condition": condition,
+                    "max_steps": max_steps, "injection_step": injection_step,
+                    "fault_intensity": fault_intensity},
+            task_type=task_type,
+        )
+        if not ok:
+            reasons.extend(f"{condition}: {reason}" for reason in why)
+    return (not reasons), reasons

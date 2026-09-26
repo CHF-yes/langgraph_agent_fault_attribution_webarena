@@ -15,6 +15,10 @@
   `evaluated + missing + incomplete + unevaluated + error = expected`
   （根本没有产物 / 产物不完整 / 完整但未评分 / 评分自身报错）。**任何一类都不得从
   报告中静默消失**；evaluator 报错与"未评分"是两件事，分开报。
+- **正式推断前置检查**：矩阵必须通过健康检查才能输出显著性结论。缺格（没有产物）、
+  incomplete（产物不完整）、unevaluated（未评分）、error（评分报错）、unpaired
+  （控制/故障臂未配平）任一存在时，`formal_inference_allowed = false`，所有 p 值置空，
+  只保留描述性点估计与区间，并在报告顶部列出阻塞原因；判断口径与管道审计一致。
 - 配对方案记为 `seed-paired-v2`：控制臂与故障臂共用同一次运行的 job seed，故
   `pair_key` 含同一 seed。历史产物的控制臂是 `control_seed_0` 且无 `trial_record.json`，
   审计将其判为不完整，不参与配对；恢复运行另由 `design_fingerprint` 拦截。
@@ -62,9 +66,12 @@ success ~ condition * model * architecture
 
 ## 5. 多重比较
 
-- 预注册家族 1：三个故障的 Δ 检验（主模型、16 任务）。用 **Holm** 校正，报告校正前后
-  两个 p 值。
-- 交互检验是单一预注册对比：报告原 p 值；若报告了多个交互检验，同样给出 Holm 校正值。
+- **家族定义固定为"三个故障级主对比"**（代码常量 `HOLM_FAMILY_ID = "per_fault_primary"`）：
+  每个故障一个检验，把两个主模型与两个架构**合并**后估计该故障的配对退化 Δ，任务为聚类
+  单位；用 **Holm** 校正并报告校正前后 p 值与家族成员（`holm_family.members`）。
+- 逐 `(model, architecture, fault)` 的格子**不进入家族**，只作描述性展示
+  （`in_holm_family = false`）；否则家族大小会随模型/架构数量变化，校正失去意义。
+- V4 Pro 的次级分析一律不报显著性（p 值置空）。
 - 不因"想显著性"而扩大样本或更换任务；需要改设计时先修订预注册方案。
 
 ## 6. 三类故障与任务类别

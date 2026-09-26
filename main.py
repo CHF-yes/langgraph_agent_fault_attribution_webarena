@@ -610,6 +610,11 @@ def run_benchmark(args):
             fault_type=record_fault_type, task_id=args.task_id,
             seed=fault_config.seed, condition=condition, replicate=trial_idx,
         )
+        # 每次 trial 一个 run id：trace 落在独立目录，重跑同一格不会续写旧 trace。
+        run_id = f"{time.strftime('%Y%m%dT%H%M%S')}-{uuid.uuid4().hex[:6]}"
+        os.environ["TRACE_RUN_ID"] = run_id
+        from standard_agent.core.trace import prepare_trace
+        prepare_trace(stem)
         output_dir = None
         if args.webarena_output_dir and args.task_id is not None:
             output_dir = os.path.join(
@@ -712,6 +717,7 @@ def run_benchmark(args):
                     fault_type=record_fault_type, task_id=args.task_id,
                     seed=fault_config.seed, condition=condition, replicate=trial_idx,
                     run_config={
+                        "run_id": run_id,
                         "task_id": args.task_id, "site": args.site, "url": page_url,
                         "max_steps": args.max_steps or settings.MAX_STEPS,
                         "fault_intensity": fault_config.intensity,

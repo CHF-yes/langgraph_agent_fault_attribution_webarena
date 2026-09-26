@@ -14,9 +14,33 @@ from pathlib import Path
 
 
 def get_trace_path(thread_id: str) -> Path:
-    """返回 trace 文件路径：{TRACE_DIR}/{thread_id}.jsonl"""
-    trace_dir = os.getenv("TRACE_DIR", "traces")
-    return Path(trace_dir) / f"{thread_id}.jsonl"
+    """返回 trace 文件路径：{TRACE_DIR}/{TRACE_RUN_ID}/{thread_id}.jsonl
+
+    ``TRACE_RUN_ID`` 让每次 trial 运行落在自己的目录里，因此**同一格重跑不会把
+    新记录追加到旧 trace 上**。未设置时退回旧的扁平布局（保证向后兼容）。
+    """
+    trace_dir = Path(os.getenv("TRACE_DIR", "traces"))
+    run_id = os.getenv("TRACE_RUN_ID", "").strip()
+    if run_id:
+        return trace_dir / run_id / f"{thread_id}.jsonl"
+    return trace_dir / f"{thread_id}.jsonl"
+
+
+def prepare_trace(thread_id: str) -> Path:
+    """在本次 trial 第一次写 trace 之前调用，保证不会追加到旧文件。
+
+    即便 ``TRACE_RUN_ID`` 没变（例如手工重跑同一 run id），只要目标文件已存在且
+    非空，就把它重命名成 ``<name>.<ts>.prev`` 而不是续写。重命名失败不阻断任务：
+    trace 是诊断产物，不能因为它让 trial 失败。
+    """
+    path = get_trace_path(thread_id)
+    try:
+        if path.exists() and path.stat().st_size > 0:
+            rotated = path.with_name(f"{path.name}.{int(time.time())}.prev")
+            os.replace(path, rotated)
+    except OSError:
+        pass
+    return path
 
 
 def append_trace(thread_id: str, entry: dict) -> None:

@@ -36,7 +36,11 @@ from fault_injection.config import (  # noqa: E402
     stage_c_injection_step,
 )
 from standard_agent.stage_c_analysis import (  # noqa: E402
+    HOLM_FAMILY_ID,
+    assess_matrix,
     build_observations,
+    degradation_by_fault,
+    format_report,
     resample_tasks_by_stratum,
     strata_for_tasks,
     check_validation_scope,
@@ -734,3 +738,240 @@ def test_main_analysis_uses_category_strata():
     report = main_analysis(rows, design, n_boot=200, seed=9)
     assert report["degradation_by_cell"]
     assert report["interaction"]["bootstrap_resamples"] == 200
+
+
+# ==========================================================================
+# 7. 评审第二轮：resume 两臂校验、trace 独立、正式推断前置检查
+# ==========================================================================
+
+def _write_job(tmp_path: Path, *, fault="web_dom_missing", task=118, seed=1,
+               model="m1", architecture="react", max_steps=20,
+               injection_step=2, fault_intensity="high", task_type="NAVIGATE",
+               scheme=PAIRING_SCHEME, omit_har_in_fault=False,
+               record_max_steps=None, record_injection_step=None):
+    """构造一个 job 目录：<job>/<task>/<label>_seed_<seed>/ 下两臂齐备。"""
+    from standard_agent.trial_metadata import arm_dir_name
+
+    job_dir = tmp_path / f"{fault}_task{task}_seed{seed}"
+    for condition, label in (("control", "control"), ("fault", fault)):
+        arm = job_dir / str(task) / arm_dir_name(fault_label=label, seed=seed)
+        arm.mkdir(parents=True, exist_ok=True)
+        (arm / "agent_response.json").write_text(json.dumps(
+            {"task_type": task_type, "status": "SUCCESS", "retrieved_data": None,
+             "error_details": None}), encoding="utf-8")
+        if not (omit_har_in_fault and condition == "fault"):
+            (arm / "network.har").write_text('{"log": {"entries": []}}', encoding="utf-8")
+        record = build_trial_record(
+            model_profile=model, architecture=architecture, fault_type=fault,
+            task_id=task, seed=seed, condition=condition, replicate=0,
+            run_config={
+                "max_steps": max_steps if record_max_steps is None else record_max_steps,
+                "injection_step": (injection_step if record_injection_step is None
+                                   else record_injection_step),
+                "fault_intensity": fault_intensity}, paths={})
+        if scheme != PAIRING_SCHEME:
+            record["pairing_scheme"] = scheme
+        write_trial_record(arm / "trial_record.json", record)
+    return job_dir
+
+
+def _job_ok(tmp_path, dataset, **kwargs):
+    from standard_agent.stage_c_pipeline import job_arms_ok
+    job_dir = _write_job(tmp_path, **kwargs)
+    return job_arms_ok(job_dir, fault_type=kwargs.get("fault", "web_dom_missing"),
+                       task_id=kwargs.get("task", 118), seed=kwargs.get("seed", 1),
+                       model_profile=kwargs.get("model", "m1"),
+                       architecture=kwargs.get("architecture", "react"),
+                       max_steps=kwargs.get("max_steps", 20),
+                       injection_step=kwargs.get("injection_step", 2),
+                       fault_intensity=kwargs.get("fault_intensity", "high"),
+                       dataset_path=dataset)
+
+
+def test_resume_accepts_a_fully_complete_pair(tmp_path: Path, dataset: Path):
+    ok, why = _job_ok(tmp_path, dataset)
+    assert ok is True and why == []
+
+
+def test_resume_rejects_when_one_arm_lacks_a_har(tmp_path: Path, dataset: Path):
+    ok, why = _job_ok(tmp_path, dataset, omit_har_in_fault=True)
+    assert ok is False
+    assert any("network.har" in reason for reason in why)
+
+
+def test_resume_rejects_design_mismatch_in_run_config(tmp_path: Path, dataset: Path):
+    # 记录里写 99，当前设计是 20 → 不一致，必须重跑
+    ok, why = _job_ok(tmp_path, dataset, record_max_steps=99)
+    assert ok is False
+    assert any("run_config.max_steps" in reason for reason in why)
+
+
+def test_resume_rejects_an_injection_step_mismatch(tmp_path: Path, dataset: Path):
+    # 记录里写 3（Stage E 的点），当前 Stage C 口径是 2 → 必须重跑
+    ok, why = _job_ok(tmp_path, dataset, record_injection_step=3)
+    assert ok is False
+    assert any("run_config.injection_step" in reason for reason in why)
+
+
+def test_resume_rejects_legacy_pairing_scheme(tmp_path: Path, dataset: Path):
+    ok, why = _job_ok(tmp_path, dataset, scheme="legacy-control-seed0")
+    assert ok is False
+    assert any("legacy pairing scheme" in reason for reason in why)
+
+
+def test_resume_rejects_when_task_type_differs_from_dataset(tmp_path: Path, dataset: Path):
+    # 数据集里 task 118 是 navigate，响应却写成 RETRIEVE → 设计不一致，必须重跑
+    ok, why = _job_ok(tmp_path, dataset, task_type="RETRIEVE")
+    assert ok is False
+    assert any("task_type" in reason for reason in why)
+
+
+def test_resume_is_conservative_without_the_dataset(tmp_path: Path):
+    ok, why = _job_ok(tmp_path, Path("/nonexistent/dataset.json"))
+    assert ok is False
+    assert any("dataset" in reason for reason in why)
+
+
+def test_rerun_uses_an_independent_trace_directory(tmp_path: Path, monkeypatch):
+    from standard_agent.core.trace import append_trace, get_trace_path, prepare_trace
+
+    monkeypatch.setenv("TRACE_DIR", str(tmp_path))
+    monkeypatch.setenv("TRACE_RUN_ID", "run-A")
+    prepare_trace("cell")
+    append_trace("cell", {"step": 1, "run": "A"})
+    first = get_trace_path("cell")
+    monkeypatch.setenv("TRACE_RUN_ID", "run-B")
+    prepare_trace("cell")
+    append_trace("cell", {"step": 1, "run": "B"})
+    second = get_trace_path("cell")
+
+    assert first != second
+    assert first.exists() and second.exists()
+    assert [json.loads(line)["run"] for line in first.read_text().splitlines()] == ["A"]
+    assert [json.loads(line)["run"] for line in second.read_text().splitlines()] == ["B"]
+
+
+def test_prepare_trace_rotates_instead_of_appending(tmp_path: Path, monkeypatch):
+    from standard_agent.core.trace import append_trace, get_trace_path, prepare_trace
+
+    monkeypatch.setenv("TRACE_DIR", str(tmp_path))
+    monkeypatch.setenv("TRACE_RUN_ID", "same-run")
+    prepare_trace("cell")
+    append_trace("cell", {"run": "old"})
+    path = get_trace_path("cell")
+    prepare_trace("cell")                      # 同路径重跑
+    append_trace("cell", {"run": "new"})
+
+    assert [json.loads(line)["run"] for line in path.read_text().splitlines()] == ["new"]
+    rotated = list(tmp_path.rglob("*.prev"))
+    assert len(rotated) == 1
+    assert [json.loads(line)["run"] for line in rotated[0].read_text().splitlines()] == ["old"]
+
+
+def _row(model, architecture, fault, task, seed, condition, success,
+         *, complete=True, status="native"):
+    return {
+        "official_success": bool(success) if success is not None else None,
+        "evaluation_status": status,
+        "complete": complete,
+        "cell": {"model_profile": model, "architecture": architecture,
+                 "fault_type": fault, "task_id": task, "fault_seed": seed,
+                 "condition": condition},
+        "trial_dir": f"/x/{model}/{architecture}/{fault}/{task}/{condition}_{seed}",
+    }
+
+
+def _complete_rows(tasks=(1, 2, 3, 4), faults=("f1", "f2", "f3"),
+                   models=("m1", "m2"), architectures=("react", "plan_execute"),
+                   seeds=(1,)):
+    import random
+    rng = random.Random(20260926)
+    rows = []
+    for fault in faults:
+        for task in tasks:
+            for seed in seeds:
+                for model in models:
+                    for architecture in architectures:
+                        control = 1 if rng.random() < 0.9 else 0
+                        fault_arm = 1 if rng.random() < 0.5 else 0
+                        rows.append(_row(model, architecture, fault, task, seed, "control", control))
+                        rows.append(_row(model, architecture, fault, task, seed, "fault", fault_arm))
+    return rows
+
+
+def _design(tasks=(1, 2, 3, 4), faults=("f1", "f2", "f3")):
+    return {
+        "main_models": ["m1", "m2"], "validation_model": "pro",
+        "validation_tasks": [1, 2], "main_tasks": list(tasks),
+        "faults": list(faults), "architectures": ["react", "plan_execute"],
+        "conditions": ["control", "fault"], "repetitions": 1,
+        "category_of": {task: ("cat_a" if task <= 2 else "cat_b") for task in tasks},
+    }
+
+
+def test_holm_family_is_the_three_fault_level_contrasts():
+    report = main_analysis(_complete_rows(), _design(), n_boot=200, seed=3)
+    family = report["holm_family"]
+    assert family["family_id"] == HOLM_FAMILY_ID
+    assert family["members"] == ["f1", "f2", "f3"]
+    assert len(family["adjusted_p_values"]) == 3
+    assert report["formal_inference_allowed"] is True
+    # 逐格结果只作描述性，不进入家族
+    assert all(item["in_holm_family"] is False for item in report["degradation_by_cell"])
+    assert all(item["inference_permitted"] for item in report["degradation_by_fault"])
+
+
+def test_missing_cell_blocks_formal_inference():
+    rows = [row for row in _complete_rows() if not (row["cell"]["task_id"] == 4 and
+                                                    row["cell"]["condition"] == "fault")]
+    report = main_analysis(rows, _design(), n_boot=200, seed=3)
+    assert report["formal_inference_allowed"] is False
+    assert any("没有产物" in reason for reason in report["matrix_health"]["blocked_reasons"])
+    assert all(item["p_value"] is None for item in report["degradation_by_fault"])
+    assert all(item["p_value"] is None for item in report["degradation_by_cell"])
+    assert "正式显著性推断已被拒绝" in format_report(report)
+
+
+def test_unpaired_arms_block_formal_inference():
+    rows = [row for row in _complete_rows() if row["cell"]["condition"] == "control"]
+    report = main_analysis(rows, _design(), n_boot=100, seed=3)
+    assert report["formal_inference_allowed"] is False
+    assert any("未配平" in reason for reason in report["matrix_health"]["blocked_reasons"])
+
+
+def test_evaluator_error_blocks_formal_inference():
+    rows = _complete_rows()
+    rows[0]["evaluation_status"] = "error"
+    rows[0]["official_success"] = None
+    report = main_analysis(rows, _design(), n_boot=100, seed=3)
+    assert report["formal_inference_allowed"] is False
+    assert any("评分报错" in reason for reason in report["matrix_health"]["blocked_reasons"])
+
+
+def test_incomplete_artifacts_block_formal_inference():
+    rows = _complete_rows()
+    rows[1]["complete"] = False
+    report = main_analysis(rows, _design(), n_boot=100, seed=3)
+    assert report["formal_inference_allowed"] is False
+    assert any("产物不完整" in reason for reason in report["matrix_health"]["blocked_reasons"])
+
+
+def test_assess_matrix_accounts_for_every_expected_cell():
+    health = assess_matrix(_complete_rows(), _design(), models=["m1", "m2"],
+                           architectures=["react", "plan_execute"])
+    assert health["expected_cells"] == len(_complete_rows())
+    assert health["evaluated_cells"] == health["expected_cells"]
+    assert health["formal_inference_allowed"] is True
+
+
+def test_secondary_validation_results_never_report_significance():
+    rows = _complete_rows() + [
+        _row("pro", "react", fault, task, 1, condition, 1)
+        for fault in ("f1", "f2", "f3") for task in (1, 2)
+        for condition in ("control", "fault")
+    ]
+    report = main_analysis(rows, _design(), n_boot=100, seed=3)
+    secondary = report["secondary_validation_model"]["degradation_by_cell"]
+    assert secondary
+    assert all(item["p_value"] is None and item["inference_permitted"] is False
+               for item in secondary)
