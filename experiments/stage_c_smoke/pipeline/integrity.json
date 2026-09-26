@@ -1,0 +1,883 @@
+{
+  "summary": {
+    "trials": 12,
+    "complete": 12,
+    "incomplete": []
+  },
+  "trials": [
+    {
+      "trial_dir": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/agent_param_error_task118_seed1/118/agent_param_error_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/agent_param_error_task118_seed1/118/agent_param_error_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/agent_param_error_task118_seed1/118/agent_param_error_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/agent_param_error_task118_seed1/118/agent_param_error_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=deepseek_v41_flash|arch=react|fault=agent_param_error|task=118|seed=1|cond=fault|rep=0",
+        "pair_key": "model=deepseek_v41_flash|arch=react|fault=agent_param_error|task=118|seed=1|cond=-|rep=0",
+        "condition": "fault",
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "agent_param_error",
+        "task_id": 118,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20260926T171649-ac3d11",
+          "task_id": 118,
+          "site": "shopping",
+          "url": "http://localhost:7770",
+          "max_steps": 20,
+          "fault_intensity": "high",
+          "fault_label": "agent_param_error",
+          "injection_step": 1,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/agent_param_error_task118_seed1/118/agent_param_error_seed_1/agent_response.json",
+          "network_har": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/agent_param_error_task118_seed1/118/agent_param_error_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/stage_c_smoke/20260926T171649-ac3d11/deepseek_v41_flash__react__agent_param_error__task118__seed1__fault__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 1,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "659ce52fe0024822b6d66ce3df1863f5cf4cda24",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": true,
+          "recorded_at": 1790414222.2472243
+        },
+        "created_at": 1790414222.3025196
+      },
+      "agent_response": {
+        "task_type": "NAVIGATE",
+        "status": "SUCCESS",
+        "retrieved_data": null,
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/agent_param_error_task118_seed1/118/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/agent_param_error_task118_seed1/118/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/agent_param_error_task118_seed1/118/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/agent_param_error_task118_seed1/118/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=deepseek_v41_flash|arch=react|fault=agent_param_error|task=118|seed=1|cond=control|rep=0",
+        "pair_key": "model=deepseek_v41_flash|arch=react|fault=agent_param_error|task=118|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "agent_param_error",
+        "task_id": 118,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20260926T171635-ea751b",
+          "task_id": 118,
+          "site": "shopping",
+          "url": "http://localhost:7770",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/agent_param_error_task118_seed1/118/control_seed_1/agent_response.json",
+          "network_har": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/agent_param_error_task118_seed1/118/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/stage_c_smoke/20260926T171635-ea751b/deepseek_v41_flash__react__agent_param_error__task118__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "659ce52fe0024822b6d66ce3df1863f5cf4cda24",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": true,
+          "recorded_at": 1790414209.6440885
+        },
+        "created_at": 1790414209.7022054
+      },
+      "agent_response": {
+        "task_type": "NAVIGATE",
+        "status": "SUCCESS",
+        "retrieved_data": null,
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/agent_param_error_task22_seed1/22/agent_param_error_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/agent_param_error_task22_seed1/22/agent_param_error_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/agent_param_error_task22_seed1/22/agent_param_error_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/agent_param_error_task22_seed1/22/agent_param_error_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=deepseek_v41_flash|arch=react|fault=agent_param_error|task=22|seed=1|cond=fault|rep=0",
+        "pair_key": "model=deepseek_v41_flash|arch=react|fault=agent_param_error|task=22|seed=1|cond=-|rep=0",
+        "condition": "fault",
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "agent_param_error",
+        "task_id": 22,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20260926T171058-8ed9da",
+          "task_id": 22,
+          "site": "shopping",
+          "url": "http://localhost:7770/fujifilm-finepix-z200fd-10mp-digital-camera-with-5x-optical-dual-image-stabilized-zoom-black.html",
+          "max_steps": 20,
+          "fault_intensity": "high",
+          "fault_label": "agent_param_error",
+          "injection_step": 1,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/agent_param_error_task22_seed1/22/agent_param_error_seed_1/agent_response.json",
+          "network_har": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/agent_param_error_task22_seed1/22/agent_param_error_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/stage_c_smoke/20260926T171058-8ed9da/deepseek_v41_flash__react__agent_param_error__task22__seed1__fault__rep0.jsonl"
+        },
+        "completed": false,
+        "success": false,
+        "injection_count": 1,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "659ce52fe0024822b6d66ce3df1863f5cf4cda24",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": true,
+          "recorded_at": 1790414388.5754013
+        },
+        "created_at": 1790414388.632139
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "UNKNOWN_ERROR",
+        "retrieved_data": [
+          "Reached max steps (20)"
+        ],
+        "error_details": "Reached max steps (20)"
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/agent_param_error_task22_seed1/22/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/agent_param_error_task22_seed1/22/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/agent_param_error_task22_seed1/22/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/agent_param_error_task22_seed1/22/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=deepseek_v41_flash|arch=react|fault=agent_param_error|task=22|seed=1|cond=control|rep=0",
+        "pair_key": "model=deepseek_v41_flash|arch=react|fault=agent_param_error|task=22|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "agent_param_error",
+        "task_id": 22,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20260926T170318-df2e6c",
+          "task_id": 22,
+          "site": "shopping",
+          "url": "http://localhost:7770/fujifilm-finepix-z200fd-10mp-digital-camera-with-5x-optical-dual-image-stabilized-zoom-black.html",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/agent_param_error_task22_seed1/22/control_seed_1/agent_response.json",
+          "network_har": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/agent_param_error_task22_seed1/22/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/stage_c_smoke/20260926T170318-df2e6c/deepseek_v41_flash__react__agent_param_error__task22__seed1__control__rep0.jsonl"
+        },
+        "completed": false,
+        "success": false,
+        "injection_count": 0,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "659ce52fe0024822b6d66ce3df1863f5cf4cda24",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": true,
+          "recorded_at": 1790413858.036648
+        },
+        "created_at": 1790413858.0929742
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "UNKNOWN_ERROR",
+        "retrieved_data": [
+          "Reached max steps (20)"
+        ],
+        "error_details": "Reached max steps (20)"
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_dom_missing_task118_seed1/118/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_dom_missing_task118_seed1/118/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_dom_missing_task118_seed1/118/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_dom_missing_task118_seed1/118/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=118|seed=1|cond=control|rep=0",
+        "pair_key": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=118|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "web_dom_missing",
+        "task_id": 118,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20260926T171951-d55b10",
+          "task_id": 118,
+          "site": "shopping",
+          "url": "http://localhost:7770",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_dom_missing_task118_seed1/118/control_seed_1/agent_response.json",
+          "network_har": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_dom_missing_task118_seed1/118/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/stage_c_smoke/20260926T171951-d55b10/deepseek_v41_flash__react__web_dom_missing__task118__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "659ce52fe0024822b6d66ce3df1863f5cf4cda24",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": true,
+          "recorded_at": 1790414404.6938975
+        },
+        "created_at": 1790414404.745656
+      },
+      "agent_response": {
+        "task_type": "NAVIGATE",
+        "status": "SUCCESS",
+        "retrieved_data": null,
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_dom_missing_task118_seed1/118/web_dom_missing_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_dom_missing_task118_seed1/118/web_dom_missing_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_dom_missing_task118_seed1/118/web_dom_missing_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_dom_missing_task118_seed1/118/web_dom_missing_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=118|seed=1|cond=fault|rep=0",
+        "pair_key": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=118|seed=1|cond=-|rep=0",
+        "condition": "fault",
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "web_dom_missing",
+        "task_id": 118,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20260926T172004-983030",
+          "task_id": 118,
+          "site": "shopping",
+          "url": "http://localhost:7770",
+          "max_steps": 20,
+          "fault_intensity": "high",
+          "fault_label": "web_dom_missing",
+          "injection_step": 2,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_dom_missing_task118_seed1/118/web_dom_missing_seed_1/agent_response.json",
+          "network_har": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_dom_missing_task118_seed1/118/web_dom_missing_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/stage_c_smoke/20260926T172004-983030/deepseek_v41_flash__react__web_dom_missing__task118__seed1__fault__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 1,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "659ce52fe0024822b6d66ce3df1863f5cf4cda24",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": true,
+          "recorded_at": 1790414420.1223488
+        },
+        "created_at": 1790414420.1756234
+      },
+      "agent_response": {
+        "task_type": "NAVIGATE",
+        "status": "SUCCESS",
+        "retrieved_data": null,
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_dom_missing_task22_seed1/22/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_dom_missing_task22_seed1/22/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_dom_missing_task22_seed1/22/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_dom_missing_task22_seed1/22/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=22|seed=1|cond=control|rep=0",
+        "pair_key": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=22|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "web_dom_missing",
+        "task_id": 22,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20260926T171705-8b013f",
+          "task_id": 22,
+          "site": "shopping",
+          "url": "http://localhost:7770/fujifilm-finepix-z200fd-10mp-digital-camera-with-5x-optical-dual-image-stabilized-zoom-black.html",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_dom_missing_task22_seed1/22/control_seed_1/agent_response.json",
+          "network_har": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_dom_missing_task22_seed1/22/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/stage_c_smoke/20260926T171705-8b013f/deepseek_v41_flash__react__web_dom_missing__task22__seed1__control__rep0.jsonl"
+        },
+        "completed": false,
+        "success": false,
+        "injection_count": 0,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "659ce52fe0024822b6d66ce3df1863f5cf4cda24",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": true,
+          "recorded_at": 1790414474.4541023
+        },
+        "created_at": 1790414474.5078878
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "UNKNOWN_ERROR",
+        "retrieved_data": [
+          "Reached max steps (20)"
+        ],
+        "error_details": "Reached max steps (20)"
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_dom_missing_task22_seed1/22/web_dom_missing_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_dom_missing_task22_seed1/22/web_dom_missing_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_dom_missing_task22_seed1/22/web_dom_missing_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_dom_missing_task22_seed1/22/web_dom_missing_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=22|seed=1|cond=fault|rep=0",
+        "pair_key": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=22|seed=1|cond=-|rep=0",
+        "condition": "fault",
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "web_dom_missing",
+        "task_id": 22,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20260926T172114-3a00cb",
+          "task_id": 22,
+          "site": "shopping",
+          "url": "http://localhost:7770/fujifilm-finepix-z200fd-10mp-digital-camera-with-5x-optical-dual-image-stabilized-zoom-black.html",
+          "max_steps": 20,
+          "fault_intensity": "high",
+          "fault_label": "web_dom_missing",
+          "injection_step": 2,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_dom_missing_task22_seed1/22/web_dom_missing_seed_1/agent_response.json",
+          "network_har": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_dom_missing_task22_seed1/22/web_dom_missing_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/stage_c_smoke/20260926T172114-3a00cb/deepseek_v41_flash__react__web_dom_missing__task22__seed1__fault__rep0.jsonl"
+        },
+        "completed": false,
+        "success": false,
+        "injection_count": 1,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "659ce52fe0024822b6d66ce3df1863f5cf4cda24",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": true,
+          "recorded_at": 1790414787.7119029
+        },
+        "created_at": 1790414787.7676466
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "UNKNOWN_ERROR",
+        "retrieved_data": [
+          "Reached max steps (20)"
+        ],
+        "error_details": "Reached max steps (20)"
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_http_error_task118_seed1/118/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_http_error_task118_seed1/118/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_http_error_task118_seed1/118/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_http_error_task118_seed1/118/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=deepseek_v41_flash|arch=react|fault=web_http_error|task=118|seed=1|cond=control|rep=0",
+        "pair_key": "model=deepseek_v41_flash|arch=react|fault=web_http_error|task=118|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "web_http_error",
+        "task_id": 118,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20260926T170236-3755c7",
+          "task_id": 118,
+          "site": "shopping",
+          "url": "http://localhost:7770",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_http_error_task118_seed1/118/control_seed_1/agent_response.json",
+          "network_har": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_http_error_task118_seed1/118/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/stage_c_smoke/20260926T170236-3755c7/deepseek_v41_flash__react__web_http_error__task118__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "659ce52fe0024822b6d66ce3df1863f5cf4cda24",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": true,
+          "recorded_at": 1790413376.9560835
+        },
+        "created_at": 1790413377.0189197
+      },
+      "agent_response": {
+        "task_type": "NAVIGATE",
+        "status": "SUCCESS",
+        "retrieved_data": null,
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_http_error_task118_seed1/118/web_http_error_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_http_error_task118_seed1/118/web_http_error_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_http_error_task118_seed1/118/web_http_error_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_http_error_task118_seed1/118/web_http_error_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=deepseek_v41_flash|arch=react|fault=web_http_error|task=118|seed=1|cond=fault|rep=0",
+        "pair_key": "model=deepseek_v41_flash|arch=react|fault=web_http_error|task=118|seed=1|cond=-|rep=0",
+        "condition": "fault",
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "web_http_error",
+        "task_id": 118,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20260926T170257-30a363",
+          "task_id": 118,
+          "site": "shopping",
+          "url": "http://localhost:7770",
+          "max_steps": 20,
+          "fault_intensity": "high",
+          "fault_label": "web_http_error",
+          "injection_step": 2,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_http_error_task118_seed1/118/web_http_error_seed_1/agent_response.json",
+          "network_har": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_http_error_task118_seed1/118/web_http_error_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/stage_c_smoke/20260926T170257-30a363/deepseek_v41_flash__react__web_http_error__task118__seed1__fault__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 1,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "659ce52fe0024822b6d66ce3df1863f5cf4cda24",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": true,
+          "recorded_at": 1790413395.4789567
+        },
+        "created_at": 1790413395.5331717
+      },
+      "agent_response": {
+        "task_type": "NAVIGATE",
+        "status": "SUCCESS",
+        "retrieved_data": null,
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_http_error_task22_seed1/22/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_http_error_task22_seed1/22/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_http_error_task22_seed1/22/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_http_error_task22_seed1/22/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=deepseek_v41_flash|arch=react|fault=web_http_error|task=22|seed=1|cond=control|rep=0",
+        "pair_key": "model=deepseek_v41_flash|arch=react|fault=web_http_error|task=22|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "web_http_error",
+        "task_id": 22,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20260926T170236-497590",
+          "task_id": 22,
+          "site": "shopping",
+          "url": "http://localhost:7770/fujifilm-finepix-z200fd-10mp-digital-camera-with-5x-optical-dual-image-stabilized-zoom-black.html",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_http_error_task22_seed1/22/control_seed_1/agent_response.json",
+          "network_har": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_http_error_task22_seed1/22/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/stage_c_smoke/20260926T170236-497590/deepseek_v41_flash__react__web_http_error__task22__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "659ce52fe0024822b6d66ce3df1863f5cf4cda24",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": true,
+          "recorded_at": 1790413837.8298
+        },
+        "created_at": 1790413837.8831773
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "SUCCESS",
+        "retrieved_data": [],
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_http_error_task22_seed1/22/web_http_error_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_http_error_task22_seed1/22/web_http_error_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_http_error_task22_seed1/22/web_http_error_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_http_error_task22_seed1/22/web_http_error_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=deepseek_v41_flash|arch=react|fault=web_http_error|task=22|seed=1|cond=fault|rep=0",
+        "pair_key": "model=deepseek_v41_flash|arch=react|fault=web_http_error|task=22|seed=1|cond=-|rep=0",
+        "condition": "fault",
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "web_http_error",
+        "task_id": 22,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20260926T171038-a5e9ce",
+          "task_id": 22,
+          "site": "shopping",
+          "url": "http://localhost:7770/fujifilm-finepix-z200fd-10mp-digital-camera-with-5x-optical-dual-image-stabilized-zoom-black.html",
+          "max_steps": 20,
+          "fault_intensity": "high",
+          "fault_label": "web_http_error",
+          "injection_step": 2,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_http_error_task22_seed1/22/web_http_error_seed_1/agent_response.json",
+          "network_har": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_http_error_task22_seed1/22/web_http_error_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/stage_c_smoke/20260926T171038-a5e9ce/deepseek_v41_flash__react__web_http_error__task22__seed1__fault__rep0.jsonl"
+        },
+        "completed": false,
+        "success": false,
+        "injection_count": 1,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "659ce52fe0024822b6d66ce3df1863f5cf4cda24",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": true,
+          "recorded_at": 1790414192.3335636
+        },
+        "created_at": 1790414192.391123
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "UNKNOWN_ERROR",
+        "retrieved_data": [
+          "Reached max steps (20)"
+        ],
+        "error_details": "Reached max steps (20)"
+      },
+      "reasons": []
+    }
+  ]
+}

@@ -1,0 +1,250 @@
+{
+  "config_substitutions": {
+    "test_data_file": {
+      "from": "/root/webarena-dataset/webarena-verified.json",
+      "to": "/data/webarena/webarena-dataset/webarena-verified.json"
+    }
+  },
+  "rows": [
+    {
+      "trial_dir": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/agent_param_error_task118_seed1/118/agent_param_error_seed_1",
+      "complete": true,
+      "reasons": [],
+      "evaluation_status": "native",
+      "official_success": true,
+      "submitted_success": true,
+      "trial_id": "model=deepseek_v41_flash|arch=react|fault=agent_param_error|task=118|seed=1|cond=fault|rep=0",
+      "pair_key": "model=deepseek_v41_flash|arch=react|fault=agent_param_error|task=118|seed=1|cond=-|rep=0",
+      "condition": "fault",
+      "cell": {
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "agent_param_error",
+        "task_id": 118,
+        "fault_seed": 1,
+        "condition": "fault"
+      },
+      "reason": ""
+    },
+    {
+      "trial_dir": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/agent_param_error_task118_seed1/118/control_seed_1",
+      "complete": true,
+      "reasons": [],
+      "evaluation_status": "native",
+      "official_success": true,
+      "submitted_success": true,
+      "trial_id": "model=deepseek_v41_flash|arch=react|fault=agent_param_error|task=118|seed=1|cond=control|rep=0",
+      "pair_key": "model=deepseek_v41_flash|arch=react|fault=agent_param_error|task=118|seed=1|cond=-|rep=0",
+      "condition": "control",
+      "cell": {
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "agent_param_error",
+        "task_id": 118,
+        "fault_seed": 1,
+        "condition": "control"
+      },
+      "reason": ""
+    },
+    {
+      "trial_dir": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/agent_param_error_task22_seed1/22/agent_param_error_seed_1",
+      "complete": true,
+      "reasons": [],
+      "evaluation_status": "compatibility",
+      "official_success": false,
+      "submitted_success": false,
+      "trial_id": "model=deepseek_v41_flash|arch=react|fault=agent_param_error|task=22|seed=1|cond=fault|rep=0",
+      "pair_key": "model=deepseek_v41_flash|arch=react|fault=agent_param_error|task=22|seed=1|cond=-|rep=0",
+      "condition": "fault",
+      "cell": {
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "agent_param_error",
+        "task_id": 22,
+        "fault_seed": 1,
+        "condition": "fault"
+      },
+      "reason": ""
+    },
+    {
+      "trial_dir": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/agent_param_error_task22_seed1/22/control_seed_1",
+      "complete": true,
+      "reasons": [],
+      "evaluation_status": "compatibility",
+      "official_success": false,
+      "submitted_success": false,
+      "trial_id": "model=deepseek_v41_flash|arch=react|fault=agent_param_error|task=22|seed=1|cond=control|rep=0",
+      "pair_key": "model=deepseek_v41_flash|arch=react|fault=agent_param_error|task=22|seed=1|cond=-|rep=0",
+      "condition": "control",
+      "cell": {
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "agent_param_error",
+        "task_id": 22,
+        "fault_seed": 1,
+        "condition": "control"
+      },
+      "reason": ""
+    },
+    {
+      "trial_dir": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_dom_missing_task118_seed1/118/control_seed_1",
+      "complete": true,
+      "reasons": [],
+      "evaluation_status": "native",
+      "official_success": true,
+      "submitted_success": true,
+      "trial_id": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=118|seed=1|cond=control|rep=0",
+      "pair_key": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=118|seed=1|cond=-|rep=0",
+      "condition": "control",
+      "cell": {
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "web_dom_missing",
+        "task_id": 118,
+        "fault_seed": 1,
+        "condition": "control"
+      },
+      "reason": ""
+    },
+    {
+      "trial_dir": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_dom_missing_task118_seed1/118/web_dom_missing_seed_1",
+      "complete": true,
+      "reasons": [],
+      "evaluation_status": "native",
+      "official_success": true,
+      "submitted_success": true,
+      "trial_id": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=118|seed=1|cond=fault|rep=0",
+      "pair_key": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=118|seed=1|cond=-|rep=0",
+      "condition": "fault",
+      "cell": {
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "web_dom_missing",
+        "task_id": 118,
+        "fault_seed": 1,
+        "condition": "fault"
+      },
+      "reason": ""
+    },
+    {
+      "trial_dir": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_dom_missing_task22_seed1/22/control_seed_1",
+      "complete": true,
+      "reasons": [],
+      "evaluation_status": "compatibility",
+      "official_success": false,
+      "submitted_success": false,
+      "trial_id": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=22|seed=1|cond=control|rep=0",
+      "pair_key": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=22|seed=1|cond=-|rep=0",
+      "condition": "control",
+      "cell": {
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "web_dom_missing",
+        "task_id": 22,
+        "fault_seed": 1,
+        "condition": "control"
+      },
+      "reason": ""
+    },
+    {
+      "trial_dir": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_dom_missing_task22_seed1/22/web_dom_missing_seed_1",
+      "complete": true,
+      "reasons": [],
+      "evaluation_status": "compatibility",
+      "official_success": false,
+      "submitted_success": false,
+      "trial_id": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=22|seed=1|cond=fault|rep=0",
+      "pair_key": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=22|seed=1|cond=-|rep=0",
+      "condition": "fault",
+      "cell": {
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "web_dom_missing",
+        "task_id": 22,
+        "fault_seed": 1,
+        "condition": "fault"
+      },
+      "reason": ""
+    },
+    {
+      "trial_dir": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_http_error_task118_seed1/118/control_seed_1",
+      "complete": true,
+      "reasons": [],
+      "evaluation_status": "native",
+      "official_success": true,
+      "submitted_success": true,
+      "trial_id": "model=deepseek_v41_flash|arch=react|fault=web_http_error|task=118|seed=1|cond=control|rep=0",
+      "pair_key": "model=deepseek_v41_flash|arch=react|fault=web_http_error|task=118|seed=1|cond=-|rep=0",
+      "condition": "control",
+      "cell": {
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "web_http_error",
+        "task_id": 118,
+        "fault_seed": 1,
+        "condition": "control"
+      },
+      "reason": ""
+    },
+    {
+      "trial_dir": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_http_error_task118_seed1/118/web_http_error_seed_1",
+      "complete": true,
+      "reasons": [],
+      "evaluation_status": "native",
+      "official_success": true,
+      "submitted_success": true,
+      "trial_id": "model=deepseek_v41_flash|arch=react|fault=web_http_error|task=118|seed=1|cond=fault|rep=0",
+      "pair_key": "model=deepseek_v41_flash|arch=react|fault=web_http_error|task=118|seed=1|cond=-|rep=0",
+      "condition": "fault",
+      "cell": {
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "web_http_error",
+        "task_id": 118,
+        "fault_seed": 1,
+        "condition": "fault"
+      },
+      "reason": ""
+    },
+    {
+      "trial_dir": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_http_error_task22_seed1/22/control_seed_1",
+      "complete": true,
+      "reasons": [],
+      "evaluation_status": "native",
+      "official_success": false,
+      "submitted_success": true,
+      "trial_id": "model=deepseek_v41_flash|arch=react|fault=web_http_error|task=22|seed=1|cond=control|rep=0",
+      "pair_key": "model=deepseek_v41_flash|arch=react|fault=web_http_error|task=22|seed=1|cond=-|rep=0",
+      "condition": "control",
+      "cell": {
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "web_http_error",
+        "task_id": 22,
+        "fault_seed": 1,
+        "condition": "control"
+      },
+      "reason": ""
+    },
+    {
+      "trial_dir": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_http_error_task22_seed1/22/web_http_error_seed_1",
+      "complete": true,
+      "reasons": [],
+      "evaluation_status": "compatibility",
+      "official_success": false,
+      "submitted_success": false,
+      "trial_id": "model=deepseek_v41_flash|arch=react|fault=web_http_error|task=22|seed=1|cond=fault|rep=0",
+      "pair_key": "model=deepseek_v41_flash|arch=react|fault=web_http_error|task=22|seed=1|cond=-|rep=0",
+      "condition": "fault",
+      "cell": {
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "web_http_error",
+        "task_id": 22,
+        "fault_seed": 1,
+        "condition": "fault"
+      },
+      "reason": ""
+    }
+  ]
+}

@@ -31,3 +31,6 @@ experiments/auth/
 # Unused sample bibliography shipped with the ICLR template. The paper uses
 # paper/iclr2027/references.bib.
 paper/iclr2027/iclr2027_conference.bib
+
+# HAR captures are not committed; see experiments/HAR_MANIFEST.tsv
+*.har
