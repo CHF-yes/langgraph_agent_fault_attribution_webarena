@@ -1338,3 +1338,91 @@ def test_preflight_and_trial_records_share_the_same_dirty_rule(tmp_path: Path):
                              expect_commit=git_status(repo)["head"][:9])
     assert report["allowed_to_run_paid_trials"] is True
     assert report["blocked_reasons"] == []
+
+
+# ==========================================================================
+# 12. 门槛保守拒绝 + provenance 摘要（无敏感内容）
+# ==========================================================================
+
+def test_preflight_blocks_when_dirty_cannot_be_determined(tmp_path: Path):
+    """回归：无法确认是否干净时必须和"确实脏"一样挡住。"""
+    head = "32fd4147" + "0" * 32
+
+    def probe(dirty):
+        return lambda repo: {"head": head, "branch": "b", "dirty": dirty}
+
+    unknown = smoke_preflight(repo_root=tmp_path, output_root=tmp_path / "out",
+                              expect_commit="32fd4147", git_probe=probe(None))
+    assert unknown["allowed_to_run_paid_trials"] is False
+    assert any("无法确认" in reason for reason in unknown["blocked_reasons"])
+
+    dirty = smoke_preflight(repo_root=tmp_path, output_root=tmp_path / "out",
+                            expect_commit="32fd4147", git_probe=probe(True))
+    assert dirty["allowed_to_run_paid_trials"] is False
+
+    clean = smoke_preflight(repo_root=tmp_path, output_root=tmp_path / "out",
+                            expect_commit="32fd4147", git_probe=probe(False))
+    assert clean["allowed_to_run_paid_trials"] is True
+
+
+def _synthetic_trace(dir_path: Path, name: str, events: list[dict]) -> Path:
+    dir_path.mkdir(parents=True, exist_ok=True)
+    path = dir_path / name
+    path.write_text("".join(json.dumps(e, ensure_ascii=False) + "\n" for e in events),
+                    encoding="utf-8")
+    return path
+
+
+def test_provenance_summary_aggregates_without_leaking_content(tmp_path: Path):
+    from standard_agent.provenance_summary import SCHEMA, summarize_traces
+
+    secret = "SECRET-AX-TREE-AND-PROMPT"
+    name = "m1__react__web_dom_missing__task118__seed1__control__rep0.jsonl"
+    _synthetic_trace(tmp_path, name, [
+        {"event": "llm_provenance", "step": 1, "served_model": "m1-served",
+         "served_model_differs": False, "prompt_tokens": 100, "completion_tokens": 10,
+         "total_tokens": 110, "prompt_cache_hit_tokens": 40,
+         "prompt_cache_miss_tokens": 60, "cache_usage_source": "openai", "latency_s": 1.5},
+        {"event": "llm_provenance", "step": 2, "served_model": "m1-served",
+         "served_model_differs": True, "prompt_tokens": 200, "completion_tokens": 20,
+         "total_tokens": 220, "prompt_cache_hit_tokens": None,
+         "prompt_cache_miss_tokens": None, "cache_usage_source": "",
+         "latency_s": 280.0},
+        # 含敏感内容的非 provenance 事件：不得进入摘要
+        {"event": "action", "action": "goto", "observation": secret,
+         "url": "http://localhost:7770/secret"},
+    ])
+
+    summary = summarize_traces(tmp_path, label="unit")
+    assert summary["schema"] == SCHEMA
+    assert summary["trials_total"] == 1
+    trial = summary["trials"][0]
+    assert trial["calls"] == 2
+    assert trial["served_models"] == {"m1-served": 2}
+    assert trial["served_model_differs"] == 1
+    assert trial["tokens"] == {"prompt_tokens": 300, "completion_tokens": 30,
+                               "total_tokens": 330, "prompt_cache_hit_tokens": 40,
+                               "prompt_cache_miss_tokens": 60}
+    assert trial["slow_calls"] == 1
+    assert summary["slow_calls"]["count"] == 1
+    assert summary["served_model_totals"] == {"m1-served": 2}
+    assert summary["by_architecture"]["react"]["calls"] == 2
+
+    blob = json.dumps(summary, ensure_ascii=False)
+    assert secret not in blob
+    assert "localhost" not in blob and "http://" not in blob
+    assert "observation" not in blob
+
+
+def test_provenance_summary_keeps_unparsable_trial_names(tmp_path: Path):
+    from standard_agent.provenance_summary import summarize_traces
+
+    _synthetic_trace(tmp_path, "weird-name.jsonl", [
+        {"event": "llm_provenance", "served_model": "x", "prompt_tokens": 5},
+    ])
+    summary = summarize_traces(tmp_path)
+    trial = summary["trials"][0]
+    assert trial["trial"] == "weird-name"
+    assert trial["model_profile"] is None
+    assert trial["calls"] == 1
+    assert summary["by_architecture"].get("(unknown)", {}).get("calls") == 1

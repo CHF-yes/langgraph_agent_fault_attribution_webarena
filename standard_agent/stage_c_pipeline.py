@@ -601,8 +601,15 @@ def smoke_preflight(*, repo_root: str | Path, output_root: str | Path,
         reasons.append("无法确认当前代码版本（读不到 git HEAD）")
     elif expect_commit and not head.startswith(expect_commit):
         reasons.append(f"当前 HEAD {head[:9]} != 期望 {expect_commit}")
-    if require_clean and probe.get("dirty"):
-        reasons.append("工作区有未提交改动，正式运行要求干净树")
+    if require_clean:
+        dirty = probe.get("dirty")
+        if dirty is None:
+            # 这是防误跑门槛："无法确认是否干净"必须和"确实脏"一样挡住，
+            # 否则 git 读取失败会被当成干净而放行。
+            reasons.append("无法确认工作区是否干净（git status 读取失败），"
+                           "正式运行要求可确认的干净树")
+        elif dirty:
+            reasons.append("工作区有未提交改动，正式运行要求干净树")
 
     roots = {"official_output_root": Path(output_root)}
     if run_dir is not None:
