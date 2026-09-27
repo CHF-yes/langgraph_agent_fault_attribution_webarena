@@ -1222,11 +1222,61 @@ def test_cap_exhaustion_is_descriptive_not_a_success_metric():
     rows[1]["cap_exhausted"] = False
     rows[1]["steps"] = 6
     summary = cap_exhaustion_summary(rows)
-    assert summary["overall"]["present"] == len(rows)
-    assert summary["overall"]["exhausted"] == 1
-    assert summary["overall"]["rate"] == pytest.approx(1 / len(rows))
+    overall = summary["overall"]
+    assert overall["present"] == len(rows)
+    assert overall["known"] == 2
+    assert overall["exhausted"] == 1
+    assert overall["unknown"] == len(rows) - 2
+    # 分母只含已知状态，未知不稀释比率
+    assert overall["rate"] == pytest.approx(0.5)
     assert summary["by_fault"]["f1"]["exhausted"] == 1
     assert summary["mean_steps"] == pytest.approx((20 + 6) / 2)
     # 官方成功率仍只看 evaluator 判定：cap 标记不改变任何行的 official_success
     assert all("cap" not in json.dumps({"s": row["official_success"]}).casefold()
                for row in rows)
+
+
+def test_unknown_cap_state_is_excluded_from_the_denominator():
+    """未知状态既不进分子也不进分母；若全部未知则比率为 None 而不是 0。"""
+    rows = _complete_rows(faults=("f1",), tasks=(1,), seeds=(1,))
+    for row in rows:
+        row["cap_exhausted"] = None
+    summary = cap_exhaustion_summary(rows)
+    assert summary["overall"]["known"] == 0
+    assert summary["overall"]["unknown"] == len(rows)
+    assert summary["overall"]["rate"] is None
+    assert summary["overall"]["unknown_rate"] == pytest.approx(1.0)
+
+    rows[0]["cap_exhausted"] = True          # 1 已知耗尽 + 其余未知
+    summary = cap_exhaustion_summary(rows)
+    assert summary["overall"]["known"] == 1
+    assert summary["overall"]["rate"] == pytest.approx(1.0)
+    assert summary["overall"]["unknown"] == len(rows) - 1
+
+
+def test_collect_rows_derives_cap_state_with_three_states(tmp_path: Path):
+    """采集侧：有标记→True；状态表明自行终止→False；其余保持未知。"""
+    from standard_agent.stage_c_pipeline import collect_rows as _collect
+
+    # 三个用例用不同 task id，避免落在同名目录（<task>/）里互相覆盖
+    # (a) 响应里带 harness 标记 → True
+    _trial_dir(tmp_path, model="m1", condition="fault", seed=1, task=118,
+               response={"task_type": "RETRIEVE", "status": "UNKNOWN_ERROR",
+                         "retrieved_data": None,
+                         "error_details": "Reached max steps (20)"})
+    # (b) 状态表明 agent 自行终止 → False
+    _trial_dir(tmp_path, model="m1", condition="fault", seed=1, task=21,
+               response={"task_type": "RETRIEVE", "status": "SUCCESS",
+                         "retrieved_data": [], "error_details": None})
+    # (c) UNKNOWN_ERROR 但没有标记（可能来自旧格式/其它中断）→ 未知
+    _trial_dir(tmp_path, model="m1", condition="fault", seed=1, task=24,
+               response={"task_type": "RETRIEVE", "status": "UNKNOWN_ERROR",
+                         "retrieved_data": None, "error_details": None})
+    rows = _collect(tmp_path)
+    by_task = {str((row["cell"] or {}).get("task_id")): row for row in rows}
+    assert by_task["118"]["cap_exhausted"] is True
+    assert by_task["118"]["cap_exhausted_source"] == "derived_marker"
+    assert by_task["21"]["cap_exhausted"] is False
+    assert by_task["21"]["cap_exhausted_source"] == "derived_completed_status"
+    assert by_task["24"]["cap_exhausted"] is None
+    assert by_task["24"]["cap_exhausted_source"] == "unknown"

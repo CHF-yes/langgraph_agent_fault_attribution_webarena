@@ -333,12 +333,24 @@ def collect_rows(root: str | Path, *, config_path=None, evaluate_fn=None,
         if response:
             row["submitted_success"] = str(response.get("status") or "").casefold() == "success"
             if row["cap_exhausted"] is None:
-                # 早于 cap_exhausted 字段的产物（例如首批 smoke）：从响应形态推断，
-                # 只用于描述性耗尽率，绝不参与官方判定。来源单独标注以便区分。
+                # 早于 cap_exhausted 字段的产物（例如首批 smoke）：从响应形态**三态**推断，
+                # 只用于描述性耗尽率，绝不参与官方判定。
+                #   True  : 出现 harness 的步数耗尽标记（正面证据）
+                #   False : 响应状态表明 agent 自行终止（SUCCESS / NOT_FOUND_ERROR），
+                #           而耗尽路径只会写 UNKNOWN_ERROR，因此可反证
+                #   None  : 两者都不成立 —— "没找到标记"不等于"确定没耗尽"，
+                #           混合历史数据里必须保持未知，不能推成 False
                 marker_zone = (json.dumps(response.get("retrieved_data"), ensure_ascii=False)
                                + " " + str(response.get("error_details") or ""))
-                row["cap_exhausted"] = "reached max steps" in marker_zone.casefold()
-                row["cap_exhausted_source"] = "derived_from_response"
+                if "reached max steps" in marker_zone.casefold():
+                    row["cap_exhausted"] = True
+                    row["cap_exhausted_source"] = "derived_marker"
+                elif str(response.get("status") or "").upper() in ("SUCCESS", "NOT_FOUND_ERROR"):
+                    row["cap_exhausted"] = False
+                    row["cap_exhausted_source"] = "derived_completed_status"
+                else:
+                    row["cap_exhausted"] = None
+                    row["cap_exhausted_source"] = "unknown"
             else:
                 row["cap_exhausted_source"] = "trial_record"
         if integrity["complete"] and (evaluate or evaluate_fn is not None):

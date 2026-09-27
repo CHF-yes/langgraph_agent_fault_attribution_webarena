@@ -27,7 +27,7 @@
         "fault_seed": 1,
         "condition": "fault"
       },
-      "cap_exhausted_source": "derived_from_response",
+      "cap_exhausted_source": "derived_completed_status",
       "reason": ""
     },
     {
@@ -51,7 +51,7 @@
         "fault_seed": 1,
         "condition": "control"
       },
-      "cap_exhausted_source": "derived_from_response",
+      "cap_exhausted_source": "derived_completed_status",
       "reason": ""
     },
     {
@@ -75,7 +75,7 @@
         "fault_seed": 1,
         "condition": "fault"
       },
-      "cap_exhausted_source": "derived_from_response",
+      "cap_exhausted_source": "derived_marker",
       "reason": ""
     },
     {
@@ -99,7 +99,7 @@
         "fault_seed": 1,
         "condition": "control"
       },
-      "cap_exhausted_source": "derived_from_response",
+      "cap_exhausted_source": "derived_marker",
       "reason": ""
     },
     {
@@ -123,7 +123,7 @@
         "fault_seed": 1,
         "condition": "control"
       },
-      "cap_exhausted_source": "derived_from_response",
+      "cap_exhausted_source": "derived_completed_status",
       "reason": ""
     },
     {
@@ -147,7 +147,7 @@
         "fault_seed": 1,
         "condition": "fault"
       },
-      "cap_exhausted_source": "derived_from_response",
+      "cap_exhausted_source": "derived_completed_status",
       "reason": ""
     },
     {
@@ -171,7 +171,7 @@
         "fault_seed": 1,
         "condition": "control"
       },
-      "cap_exhausted_source": "derived_from_response",
+      "cap_exhausted_source": "derived_marker",
       "reason": ""
     },
     {
@@ -195,7 +195,7 @@
         "fault_seed": 1,
         "condition": "fault"
       },
-      "cap_exhausted_source": "derived_from_response",
+      "cap_exhausted_source": "derived_marker",
       "reason": ""
     },
     {
@@ -219,7 +219,7 @@
         "fault_seed": 1,
         "condition": "control"
       },
-      "cap_exhausted_source": "derived_from_response",
+      "cap_exhausted_source": "derived_completed_status",
       "reason": ""
     },
     {
@@ -243,7 +243,7 @@
         "fault_seed": 1,
         "condition": "fault"
       },
-      "cap_exhausted_source": "derived_from_response",
+      "cap_exhausted_source": "derived_completed_status",
       "reason": ""
     },
     {
@@ -267,7 +267,7 @@
         "fault_seed": 1,
         "condition": "control"
       },
-      "cap_exhausted_source": "derived_from_response",
+      "cap_exhausted_source": "derived_completed_status",
       "reason": ""
     },
     {
@@ -291,7 +291,7 @@
         "fault_seed": 1,
         "condition": "fault"
       },
-      "cap_exhausted_source": "derived_from_response",
+      "cap_exhausted_source": "derived_marker",
       "reason": ""
     }
   ]

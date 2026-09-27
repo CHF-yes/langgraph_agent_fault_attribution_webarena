@@ -600,16 +600,27 @@ def cap_exhaustion_summary(rows: list[dict]) -> dict:
             key = selector(row, cell)
             if key is None:
                 continue
-            entry = agg.setdefault(key, {"present": 0, "exhausted": 0,
+            entry = agg.setdefault(key, {"present": 0, "known": 0, "exhausted": 0,
+                                         "not_exhausted": 0, "unknown": 0,
                                          "exhausted_steps": []})
             entry["present"] += 1
-            if row.get("cap_exhausted"):
-                entry["exhausted"] += 1
-                if isinstance(row.get("steps"), int):
-                    entry["exhausted_steps"].append(row["steps"])
+            state = row.get("cap_exhausted")
+            if state is None:
+                # "未知"单独计数：既不算耗尽也不算未耗尽，绝不进比率分母。
+                entry["unknown"] += 1
+            else:
+                entry["known"] += 1
+                if state:
+                    entry["exhausted"] += 1
+                    if isinstance(row.get("steps"), int):
+                        entry["exhausted_steps"].append(row["steps"])
+                else:
+                    entry["not_exhausted"] += 1
         for entry in agg.values():
-            entry["rate"] = (entry["exhausted"] / entry["present"]
-                             if entry["present"] else None)
+            entry["rate"] = (entry["exhausted"] / entry["known"]
+                             if entry["known"] else None)
+            entry["unknown_rate"] = (entry["unknown"] / entry["present"]
+                                     if entry["present"] else None)
             entry["mean_steps_when_exhausted"] = (
                 sum(entry["exhausted_steps"]) / len(entry["exhausted_steps"])
                 if entry["exhausted_steps"] else None)
@@ -628,7 +639,9 @@ def cap_exhaustion_summary(rows: list[dict]) -> dict:
         "by_fault": by_fault,
         "by_cell": by_cell,
         "mean_steps": (sum(steps) / len(steps)) if steps else None,
-        "note": ("描述性指标：耗尽格仍按官方 evaluator 判定计入成功率，二者不得替换。"),
+        "note": ("描述性指标：耗尽格仍按官方 evaluator 判定计入成功率，二者不得替换；"
+                 "比率只以已知状态为分母（known = exhausted + not_exhausted），"
+                 "未知单独计入 unknown，既不进分子也不进分母。"),
     }
 
 def main_analysis(rows: list[dict], design: dict, *, n_boot: int = DEFAULT_BOOTSTRAP,
@@ -775,13 +788,17 @@ def format_report(report: dict) -> str:
     cap = report.get("cap_exhaustion") or {}
     if cap.get("overall"):
         lines.append("")
+        overall = cap["overall"]
+        rate_text = ("n/a（无已知状态）" if overall["rate"] is None
+                     else f"{overall['rate'] * 100:.1f}%")
         lines.append("步数耗尽（描述性，不计入成功率）："
-                     f"总体 {cap['overall']['exhausted']}/{cap['overall']['present']}"
-                     f" = {(cap['overall']['rate'] or 0) * 100:.1f}%"
+                     f"总体 {overall['exhausted']}/{overall['known']} = {rate_text}"
+                     f"，未知 {overall['unknown']}/{overall['present']}"
                      + (f"，均值步数 {cap['mean_steps']:.1f}" if cap.get('mean_steps') else ""))
         for key, entry in sorted((cap.get("by_fault") or {}).items()):
-            lines.append(f"  - 故障 `{key}`: {entry['exhausted']}/{entry['present']}"
-                         f" = {(entry['rate'] or 0) * 100:.1f}%")
+            entry_rate = ("n/a" if entry["rate"] is None else f"{entry['rate'] * 100:.0f}%")
+            lines.append(f"  - 故障 `{key}`: {entry['exhausted']}/{entry['known']} = {entry_rate}"
+                         f"（未知 {entry['unknown']}）")
     lines.append("")
     lines.append(f"Holm 家族：{report.get('holm_family', {}).get('family_id')} "
                  f"= {report.get('holm_family', {}).get('members')}")

@@ -12265,84 +12265,132 @@
   "cap_exhaustion": {
     "overall": {
       "present": 12,
+      "known": 12,
       "exhausted": 5,
+      "not_exhausted": 7,
+      "unknown": 0,
       "rate": 0.4166666666666667,
+      "unknown_rate": 0.0,
       "mean_steps_when_exhausted": null
     },
     "by_condition": {
       "fault": {
         "present": 6,
+        "known": 6,
         "exhausted": 3,
+        "not_exhausted": 3,
+        "unknown": 0,
         "rate": 0.5,
+        "unknown_rate": 0.0,
         "mean_steps_when_exhausted": null
       },
       "control": {
         "present": 6,
+        "known": 6,
         "exhausted": 2,
+        "not_exhausted": 4,
+        "unknown": 0,
         "rate": 0.3333333333333333,
+        "unknown_rate": 0.0,
         "mean_steps_when_exhausted": null
       }
     },
     "by_fault": {
       "agent_param_error": {
         "present": 4,
+        "known": 4,
         "exhausted": 2,
+        "not_exhausted": 2,
+        "unknown": 0,
         "rate": 0.5,
+        "unknown_rate": 0.0,
         "mean_steps_when_exhausted": null
       },
       "web_dom_missing": {
         "present": 4,
+        "known": 4,
         "exhausted": 2,
+        "not_exhausted": 2,
+        "unknown": 0,
         "rate": 0.5,
+        "unknown_rate": 0.0,
         "mean_steps_when_exhausted": null
       },
       "web_http_error": {
         "present": 4,
+        "known": 4,
         "exhausted": 1,
+        "not_exhausted": 3,
+        "unknown": 0,
         "rate": 0.25,
+        "unknown_rate": 0.0,
         "mean_steps_when_exhausted": null
       }
     },
     "by_cell": {
       "deepseek_v41_flash/react/agent_param_error/118": {
         "present": 2,
+        "known": 2,
         "exhausted": 0,
+        "not_exhausted": 2,
+        "unknown": 0,
         "rate": 0.0,
+        "unknown_rate": 0.0,
         "mean_steps_when_exhausted": null
       },
       "deepseek_v41_flash/react/agent_param_error/22": {
         "present": 2,
+        "known": 2,
         "exhausted": 2,
+        "not_exhausted": 0,
+        "unknown": 0,
         "rate": 1.0,
+        "unknown_rate": 0.0,
         "mean_steps_when_exhausted": null
       },
       "deepseek_v41_flash/react/web_dom_missing/118": {
         "present": 2,
+        "known": 2,
         "exhausted": 0,
+        "not_exhausted": 2,
+        "unknown": 0,
         "rate": 0.0,
+        "unknown_rate": 0.0,
         "mean_steps_when_exhausted": null
       },
       "deepseek_v41_flash/react/web_dom_missing/22": {
         "present": 2,
+        "known": 2,
         "exhausted": 2,
+        "not_exhausted": 0,
+        "unknown": 0,
         "rate": 1.0,
+        "unknown_rate": 0.0,
         "mean_steps_when_exhausted": null
       },
       "deepseek_v41_flash/react/web_http_error/118": {
         "present": 2,
+        "known": 2,
         "exhausted": 0,
+        "not_exhausted": 2,
+        "unknown": 0,
         "rate": 0.0,
+        "unknown_rate": 0.0,
         "mean_steps_when_exhausted": null
       },
       "deepseek_v41_flash/react/web_http_error/22": {
         "present": 2,
+        "known": 2,
         "exhausted": 1,
+        "not_exhausted": 1,
+        "unknown": 0,
         "rate": 0.5,
+        "unknown_rate": 0.0,
         "mean_steps_when_exhausted": null
       }
     },
     "mean_steps": null,
-    "note": "描述性指标：耗尽格仍按官方 evaluator 判定计入成功率，二者不得替换。"
+    "note": "描述性指标：耗尽格仍按官方 evaluator 判定计入成功率，二者不得替换；比率只以已知状态为分母（known = exhausted + not_exhausted），未知单独计入 unknown，既不进分子也不进分母。"
   },
   "interaction": {
     "error": "interaction requires exactly two models and two architectures",
