@@ -1480,3 +1480,22 @@ def test_expected_cells_can_be_scoped_to_a_control_batch():
                          architecture="react", faults=["web_dom_missing"],
                          conditions=["control"], seeds=[1])
     assert len(pro) == 8
+
+
+def test_matrix_parser_defines_every_forwarded_flag():
+    """回归：condition 曾只在 command_for 里透传而解析器没定义，导致整批秒退。"""
+    from scripts.run_fault_matrix import build_parser
+
+    parser = build_parser()
+    base = ["--output-dir", "x"]
+    assert parser.parse_args(base).condition == "both"          # 默认保持既有行为
+    for value in ("control", "fault", "both"):
+        assert parser.parse_args(base + ["--condition", value]).condition == value
+    # 解析出的对象必须能驱动 command_for 把 --condition 真的传给 main.py
+    from scripts.run_fault_matrix import command_for
+    args = parser.parse_args(base + ["--condition", "control"])
+    args.official_output_root = None
+    job = {"task_id": 118, "seed": 1, "site": "shopping", "start_url": "http://x",
+           "intent": "go", "fault_type": "web_dom_missing"}
+    command = command_for(args, job)
+    assert command[command.index("--condition") + 1] == "control"

@@ -37,7 +37,8 @@ BASELINE_TASK_IDS = [
 ]
 
 
-def parse_args():
+def build_parser():
+    """构造参数解析器（抽出成函数，便于测试保证参数真实存在）。"""
     parser = argparse.ArgumentParser()
     parser.add_argument("--output-dir", required=True)
     parser.add_argument("--workers", type=int, default=4)
@@ -49,6 +50,9 @@ def parse_args():
     parser.add_argument("--fault-intensity", default="high")
     parser.add_argument("--fault-seed", type=int, default=1)
     parser.add_argument("--fault-injection-step", type=int, default=None)
+    # T0 是控制批：condition=control 时每个 job 只跑控制臂，故障槽位退化为作业容器。
+    parser.add_argument("--condition", choices=["control", "fault", "both"], default="both",
+                        help="T0 控制批传 control；默认 both（控制+故障各一次，保持既有行为）")
     parser.add_argument("--model-profile", default="qwen38_flash")
     parser.add_argument("--architecture", default="react")
     parser.add_argument("--task-ids", type=int, nargs="*", default=None)
@@ -58,7 +62,11 @@ def parse_args():
                         help="Stop the matrix if one job exceeds this duration")
     parser.add_argument("--official-output-root", default=None,
                         help="Root for per-job HAR/agent_response/evaluator outputs")
-    return parser.parse_args()
+    return parser
+
+
+def parse_args():
+    return build_parser().parse_args()
 
 
 
