@@ -1,0 +1,36 @@
+{
+  "task_id": 22,
+  "intent_template_id": 222,
+  "sites": [
+    "shopping"
+  ],
+  "task_revision": 2,
+  "status": "success",
+  "score": 1.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "success",
+      "score": 1.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"NOT_FOUND_ERROR\",\n  \"retrieved_data\": null,\n  \"error_details\": \"Page 1 of the review list for product 38785 (Fujifilm FinePix Z200fd 10MP Digital Camera, 12 reviews total) contains these 10 reviewer names with their visible snippet text:\\n\\n1. badkat — \\\"very pretty, easy to use\\\" | full body: \\\"its nice to look at, and its nice to see what it does. they really went above and beyond with this one, i will write another review when i have more experience with it, but it is really nice, and so far, i like it A LOT.\\\" (COMPLETE)\\n2. DrummerGirlLB — \\\"Five Stars\\\" | \\\"worked great\\\" (COMPLETE, very short)\\n3. G. Matsusaki — \\\"LOVE the PINK!\\\" | \\\"I am a FUJI fan. Saw this PINK and just had to have it. It has a nice big viewing screen, pics come out nice. I just take pics for family and friends, nothing professional, so this is great for me.\\\" (COMPLETE)\\n4. Razzberry — (no title) | \\\"t wanna carry a big camera.I love that the camera has a feature which takes two pictures at once, one with flash, one without flash.But the quality of the pictures is pretty disappointing.It was good for a while, but I\\\" (TRUNCATED — starts mid-word, ends mid-sentence)\\n5. Nic — \\\"Beautiful\\\" | \\\"My cannon elph stopped functioning after using it in the snow and I replaced it with this one. Honestly, the cannon pics were better in quality, but not too much better. This one looks great and takes decent pics so I'm happy.\\\" (COMPLETE)\\n6. CA Guy — \\\"viewfinder\\\" (COMPLETE, very short)\\n7. Kenan — (no title) | \\\"s come to the image quality, it\\\" (TRUNCATED — starts/ends mid-sentence)\\n8. CT — (no title) | \\\"s sleek design...loved how you just slide the cover off to turn this on. I have had it almost 1 year when you day, my husband takes the camera to take a picture of our son in the snow. He goes to slide the cover off and it slid right off! We couldn\\\" (TRUNCATED — starts mid-word, ends mid-word)\\n9. romance lover — (no title) | \\\"ve had this camera for about a year and a half now. I use it a lot and have explored many of the different features it has.Pros:the color is gorgeous! I\\\" (TRUNCATED — starts mid-word, ends mid-sentence)\\n10. AZ Guy — \\\"Gorgeous pictures, high quality product\\\" | \\\"I have a Fuji S5200 which I couldn\\\" (TRUNCATED — ends mid-word)\\n\\nPage 2 of the review list (reached via \\\"Page 2\\\", URL .../listAjax/id/38785/?p=2) shows 2 reviews: AZ Guy (\\\"Gorgeous pictures, high quality product ... I have a Fuji S5200 which I couldn\\\") and CT (\\\"s sleek design... my husband takes the camera to take a picture of our son in the snow... We couldn\\\").\\n\\nRegarding the overall goal (\\\"reviewer(s) who mention under water photo\\\"): No visible review snippet for product 38785 explicitly mentions \\\"under water\\\" or \\\"underwater\\\" photography. The only water-related photo references found are two reviews describing photos taken \\\"in the snow\\\" — by Nic and CT. The reviewer names are not clickable permalinks and the review bodies cannot be expanded in this view, so the snippets for Razzberry, Kenan, CT, romance lover, and AZ Guy are truncated/incomplete and the full text (which could potentially contain an \\\"under water\\\" phrase) is not retrievable from the review-list UI. Based on the readable text, no reviewer clearly mentions an underwater photo; the closest water-related mentions are Nic and CT (snow).\"\n}\n",
+      "actual_normalized": {
+        "task_type": "retrieve",
+        "retrieved_data": null,
+        "status": "not_found_error"
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "not_found_error",
+        "retrieved_data": null
+      },
+      "assertions": null,
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": true
+}
