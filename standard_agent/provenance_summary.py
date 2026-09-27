@@ -51,6 +51,42 @@ def _empty_tokens() -> dict:
     return {field: 0 for field in _TOKEN_FIELDS}
 
 
+def _idle_gaps(events: list[dict]) -> dict:
+    """相邻 LLM 调用之间的**空闲间隔**（秒）。
+
+    trace 的 provenance 事件带 ``timestamp``（写入时刻，即调用结束）与 ``latency_s``，
+    因此"上一次结束后到下一次开始前"的空档 = ``(t_next - latency_next) - t_cur``。
+    这个量是判断"浏览器步骤是否把请求间隔拉到驱逐阈值以上"的直接依据；只看
+    完成到完成的时间差会把调用自身耗时算进去，从而低估空档。
+    """
+    gaps: list[float] = []
+    spacing: list[float] = []
+    previous_end = None
+    for event in events:
+        stamp = event.get("timestamp")
+        latency = event.get("latency_s")
+        if not isinstance(stamp, (int, float)):
+            continue
+        if previous_end is not None:
+            spacing.append(max(0.0, float(stamp) - previous_end))
+            if isinstance(latency, (int, float)):
+                gaps.append(max(0.0, float(stamp) - float(latency) - previous_end))
+        previous_end = float(stamp)
+
+    def stats(values: list[float]) -> dict:
+        if not values:
+            return {"count": 0, "median": None, "p90": None, "max": None}
+        ordered = sorted(values)
+        return {
+            "count": len(ordered),
+            "median": statistics.median(ordered),
+            "p90": ordered[int(0.9 * (len(ordered) - 1))],
+            "max": ordered[-1],
+        }
+
+    return {"idle_gap_s": stats(gaps), "completion_spacing_s": stats(spacing)}
+
+
 def summarize_traces(trace_dir: str | Path, label: str | None = None) -> dict:
     """读取目录下所有 ``*.jsonl``，产出聚合摘要。"""
     trace_dir = Path(trace_dir)
@@ -70,6 +106,7 @@ def summarize_traces(trace_dir: str | Path, label: str | None = None) -> dict:
         sources: Counter = Counter()
         tokens = _empty_tokens()
         lat: list[float] = []
+        provenance_events: list[dict] = []
         for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
             line = line.strip()
             if not line:
@@ -81,6 +118,7 @@ def summarize_traces(trace_dir: str | Path, label: str | None = None) -> dict:
             if event.get("event") != "llm_provenance":
                 continue
             calls += 1
+            provenance_events.append(event)
             served = event.get("served_model") or "(unreported)"
             models[served] += 1
             served_models[served] += 1
@@ -113,6 +151,7 @@ def summarize_traces(trace_dir: str | Path, label: str | None = None) -> dict:
             "served_model_differs": differs,
             "cache_usage_sources": dict(sources),
             "tokens": tokens,
+            **_idle_gaps(provenance_events),
             "latency_s": {
                 "min": min(lat) if lat else None,
                 "median": statistics.median(lat) if lat else None,
@@ -133,6 +172,7 @@ def summarize_traces(trace_dir: str | Path, label: str | None = None) -> dict:
         "by_architecture": dict(by_architecture),
         "served_model_totals": dict(served_models),
         "cache_usage_source_totals": dict(served_sources),
+        "idle_gap_s_by_trial": {trial["trial"]: trial["idle_gap_s"] for trial in trials},
         "latency_s": {
             "calls_with_latency": len(latencies),
             "min": min(latencies) if latencies else None,

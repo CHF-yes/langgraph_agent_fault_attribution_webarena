@@ -1538,3 +1538,28 @@ def test_expected_cells_can_be_scoped_to_a_task_subset():
                              faults=["web_dom_missing"], conditions=["control"],
                              seeds=[1], tasks=[21, 999])
     assert {int(cell["task_id"]) for cell in outside} == {21}
+
+
+def test_provenance_summary_reports_idle_gaps(tmp_path: Path):
+    """调用间隔必须扣掉调用自身耗时，否则浏览器空档会被低估。"""
+    from standard_agent.provenance_summary import summarize_traces
+
+    name = "m1__react__web_dom_missing__task118__seed1__control__rep0.jsonl"
+    _synthetic_trace(tmp_path, name, [
+        {"event": "llm_provenance", "timestamp": 100.0, "latency_s": 1.0,
+         "served_model": "m", "prompt_tokens": 10},
+        # 上次结束在 100.0，本次开始于 130.0 → 空闲 30s，调用自身 2s
+        {"event": "llm_provenance", "timestamp": 132.0, "latency_s": 2.0,
+         "served_model": "m", "prompt_tokens": 10},
+        # 紧接：空闲 0s
+        {"event": "llm_provenance", "timestamp": 140.0, "latency_s": 8.0,
+         "served_model": "m", "prompt_tokens": 10},
+    ])
+    summary = summarize_traces(tmp_path)
+    trial = summary["trials"][0]
+    gaps = trial["idle_gap_s"]
+    assert gaps["count"] == 2
+    assert gaps["median"] == pytest.approx(15.0)     # (30 + 0) / 2
+    assert gaps["max"] == pytest.approx(30.0)
+    assert trial["completion_spacing_s"]["max"] == pytest.approx(32.0)
+    assert summary["idle_gap_s_by_trial"][name.replace(".jsonl", "")]["max"] == pytest.approx(30.0)
