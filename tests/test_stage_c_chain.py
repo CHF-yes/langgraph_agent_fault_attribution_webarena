@@ -1426,3 +1426,57 @@ def test_provenance_summary_keeps_unparsable_trial_names(tmp_path: Path):
     assert trial["model_profile"] is None
     assert trial["calls"] == 1
     assert summary["by_architecture"].get("(unknown)", {}).get("calls") == 1
+
+
+def test_trial_record_carries_wall_clock_time(tmp_path: Path):
+    """T0 排程与成本估算直接读记录，不必回头解析 trace 时间戳。"""
+    record = build_trial_record(
+        model_profile="m1", architecture="react", fault_type="web_dom_missing",
+        task_id=118, seed=1, condition="control", replicate=0, run_config={}, paths={},
+        steps=5, cap_exhausted=False, llm_calls=8, time_sec=132.4567)
+    back = read_trial_record(write_trial_record(tmp_path / "trial_record.json", record))
+    assert back["time_sec"] == pytest.approx(132.457)
+    assert back["steps"] == 5 and back["llm_calls"] == 8
+
+
+def test_matrix_condition_scope_is_passed_through():
+    """T0 控制批：condition=control 只跑控制臂，both 保持既有行为。"""
+    from scripts.run_fault_matrix import command_for
+
+    class Args:
+        fault_injection_step = None
+        model_profile = "qwen38_flash"
+        architecture = "react"
+        max_steps = 20
+        fault_intensity = "high"
+        official_output_root = None
+        condition = "control"
+
+    job = {"task_id": 118, "seed": 1, "site": "shopping", "start_url": "http://x",
+           "intent": "go", "fault_type": "web_dom_missing"}
+    control = command_for(Args(), job)
+    assert control[control.index("--condition") + 1] == "control"
+
+    Args.condition = "both"
+    assert "--condition" not in command_for(Args(), job)
+
+    Args.condition = "fault"
+    fault = command_for(Args(), job)
+    assert fault[fault.index("--condition") + 1] == "fault"
+
+
+def test_expected_cells_can_be_scoped_to_a_control_batch():
+    """T0 控制批：只期望 control 条件、单一故障槽，且任务数×架构数可精确对齐。"""
+    design = load_design(ROOT / "docs" / "task_manifest_public16.json")
+    stage_c = expected_cells(design, model_profile="deepseek_v41_flash", architecture="react")
+    t0 = expected_cells(design, model_profile="deepseek_v41_flash", architecture="react",
+                        faults=["web_dom_missing"], conditions=["control"], seeds=[1])
+    assert len(stage_c) == 192
+    assert len(t0) == 16                     # 16 任务 × 1 槽 × 1 重复 × 1 条件
+    assert {cell["condition"] for cell in t0} == {"control"}
+    assert {cell["fault_type"] for cell in t0} == {"web_dom_missing"}
+    # 验证模型仍然只在共同 8 任务上
+    pro = expected_cells(design, model_profile=design["validation_model"],
+                         architecture="react", faults=["web_dom_missing"],
+                         conditions=["control"], seeds=[1])
+    assert len(pro) == 8

@@ -69,7 +69,8 @@ def load_design(manifest_path: str | Path = DEFAULT_MANIFEST) -> dict:
 
 def expected_cells(design: dict, *, model_profile: str, architecture: str,
                    faults: list[str] | None = None,
-                   seeds: list[int] | None = None) -> list[dict]:
+                   seeds: list[int] | None = None,
+                   conditions: list[str] | None = None) -> list[dict]:
     """列出某个 (model, architecture) 下应当存在的 trial 格子。
 
     验证模型（V4 Pro）只在共同 8 任务上出现，这是冻结设计的一部分：它不能进入
@@ -82,11 +83,13 @@ def expected_cells(design: dict, *, model_profile: str, architecture: str,
         tasks = list(design["main_tasks"])
     faults = list(faults if faults is not None else design["faults"])
     seeds = list(seeds) if seeds is not None else [1 + index for index in range(design["repetitions"])]
+    # T0 是控制批：只有 condition=control，故障维度退化为"作业容器槽位"。
+    conditions = list(conditions if conditions is not None else design["conditions"])
     cells = []
     for task_id in tasks:
         for fault_type in faults:
             for seed in seeds:
-                for condition in design["conditions"]:
+                for condition in conditions:
                     cells.append({
                         "model_profile": model_profile,
                         "architecture": architecture,

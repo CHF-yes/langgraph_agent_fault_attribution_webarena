@@ -48,6 +48,11 @@ def parse_args() -> argparse.Namespace:
                         help="限定模型；缺省用清单里的主模型 + 验证模型")
     parser.add_argument("--architecture", action="append", default=None)
     parser.add_argument("--limit", type=int, default=None, help="最多处理多少 trial（调试用）")
+    parser.add_argument("--fault-types", nargs="+", default=None,
+                        help="限定期望格子里的故障槽（T0 控制批传实际使用的槽位）")
+    parser.add_argument("--conditions", nargs="+", default=None,
+                        help="限定期望格子的条件（T0 控制批传 control）")
+    parser.add_argument("--seeds", type=int, nargs="+", default=None)
     return parser.parse_args()
 
 
@@ -62,7 +67,10 @@ def main() -> int:
     for model in models:
         for architecture in architectures:
             expected.extend(expected_cells(design, model_profile=model,
-                                           architecture=architecture))
+                                           architecture=architecture,
+                                           faults=args.fault_types,
+                                           conditions=args.conditions,
+                                           seeds=args.seeds))
     if args.output_dir is None:
         args.output_dir = str(Path(args.root) / "_stage_c_pipeline")
     Path(args.output_dir).mkdir(parents=True, exist_ok=True)

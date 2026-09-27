@@ -154,6 +154,7 @@ def build_trial_record(*, model_profile: str, architecture: str, fault_type: str
                        steps: int | None = None,
                        cap_exhausted: bool | None = None,
                        llm_calls: int | None = None,
+                       time_sec: float | None = None,
                        error: str | None = None,
                        repo_root: str | Path | None = None) -> dict:
     """Build one trial record.
@@ -188,6 +189,8 @@ def build_trial_record(*, model_profile: str, architecture: str, fault_type: str
         "steps": steps,
         "cap_exhausted": cap_exhausted,
         "llm_calls": llm_calls,
+        # 墙钟耗时：T0 的排程与成本估算直接用记录即可，不必回头解析 trace 时间戳。
+        "time_sec": (round(float(time_sec), 3) if time_sec is not None else None),
         "error": error,
         "code": code_version(repo_root),
         "created_at": time.time(),

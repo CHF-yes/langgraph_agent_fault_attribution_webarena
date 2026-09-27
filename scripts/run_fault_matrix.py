@@ -135,6 +135,9 @@ def command_for(args, job):
         "--fault-seed", str(job["seed"]),
         "--fault-injection-step", str(injection_step),
     ]
+    # T0 是控制批：condition=control 时只跑控制臂，fault 槽位仅作为作业容器。
+    if getattr(args, "condition", "both") != "both":
+        command += ["--condition", args.condition]
     if getattr(args, "official_output_root", None):
         output = Path(args.official_output_root) / (
             f"{fault_type}_task{job['task_id']}_seed{job['seed']}"

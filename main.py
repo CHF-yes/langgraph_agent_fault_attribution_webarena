@@ -740,6 +740,7 @@ def run_benchmark(args):
                     injection_count=len(log), error=None,
                     steps=steps, cap_exhausted=cap_exhausted,
                     llm_calls=result.get("llm_calls", 0),
+                    time_sec=elapsed,
                 )
                 write_trial_record(os.path.join(output_dir, "trial_record.json"), record)
                 trial.trace_path = str(trace_path)
