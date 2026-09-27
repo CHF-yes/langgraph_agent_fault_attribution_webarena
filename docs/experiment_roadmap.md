@@ -254,7 +254,13 @@ mutation 任务。同一模板内的任务相关，不能把 16 个 ID 当成 16
    **resume 的两臂门槛**：日志分类通过还不够，只有**控制臂与故障臂**的
    `agent_response.json`、`network.har`、`trial_record.json` 都完整，且记录字段
    （模型/架构/故障/任务/seed/条件/`max_steps`/`injection_step`/强度）与数据集给出的
-   任务类型都与当前设计一致时，才允许跳过该格子；否则重跑并写入 manifest 的
+   任务类型都与当前设计一致时，才允许跳过该格子
+   **`git_dirty` 口径**：只统计**已跟踪**文件的改动（与开跑前门槛共用同一实现
+   `trial_metadata.git_status`）。运行会把 trace 与实验产物写进同一个仓库，那些未跟踪
+   产物属于运行产物，不构成“代码与提交不一致”。注意：该修复之前产生的记录（例如首批
+   Qwen 批次）可能因未跟踪产物被误标为 `git_dirty=true`，读记录时应结合其 `git_sha`
+   与当时的已跟踪树判断。
+；否则重跑并写入 manifest 的
    `resume_rerun`（含逐条原因）。
 4. **闭环**（`scripts/stage_c_pipeline.py`）：产物完整性检查 → 官方 evaluator →
    `native`/`compatibility`/`error` 审计 → 缺失与失败格子清单。**完成率不是官方成功率**：
