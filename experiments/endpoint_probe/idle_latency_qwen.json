@@ -1,0 +1,312 @@
+{
+  "started_at": 1790505113.3550906,
+  "settings": {
+    "idle_seconds": 300.0,
+    "consecutive": 3,
+    "ping_interval": 120.0,
+    "ping_duration": 480.0,
+    "slow_threshold_s": 30.0
+  },
+  "profiles": [
+    {
+      "profile": "qwen38_flash",
+      "model": "qwen3.8-flash",
+      "base_url": "https://maas.qianwenaiapi.com/compatible-mode/v1",
+      "request_timeout_s": 600.0,
+      "calls": [
+        {
+          "label": "warmup",
+          "prompt_chars": 26,
+          "content": "OK (1)",
+          "prompt_tokens": 69,
+          "completion_tokens": 33,
+          "served_model": "qwen3.8-flash",
+          "ok": true,
+          "latency_s": 270.366,
+          "slow": true
+        },
+        {
+          "label": "consecutive_1",
+          "prompt_chars": 26,
+          "content": "OK (2)",
+          "prompt_tokens": 69,
+          "completion_tokens": 34,
+          "served_model": "qwen3.8-flash",
+          "ok": true,
+          "latency_s": 0.908,
+          "slow": false
+        },
+        {
+          "label": "consecutive_2",
+          "prompt_chars": 26,
+          "content": "OK (3)",
+          "prompt_tokens": 69,
+          "completion_tokens": 34,
+          "served_model": "qwen3.8-flash",
+          "ok": true,
+          "latency_s": 1.162,
+          "slow": false
+        },
+        {
+          "label": "consecutive_3",
+          "prompt_chars": 26,
+          "content": "OK (4)",
+          "prompt_tokens": 69,
+          "completion_tokens": 34,
+          "served_model": "qwen3.8-flash",
+          "ok": true,
+          "latency_s": 0.907,
+          "slow": false
+        },
+        {
+          "label": "after_idle_first",
+          "prompt_chars": 26,
+          "content": "OK (5)",
+          "prompt_tokens": 69,
+          "completion_tokens": 38,
+          "served_model": "qwen3.8-flash",
+          "ok": true,
+          "latency_s": 270.52,
+          "slow": true
+        },
+        {
+          "label": "after_idle_consecutive_1",
+          "prompt_chars": 26,
+          "content": "OK (6)",
+          "prompt_tokens": 69,
+          "completion_tokens": 33,
+          "served_model": "qwen3.8-flash",
+          "ok": true,
+          "latency_s": 0.935,
+          "slow": false
+        },
+        {
+          "label": "after_idle_consecutive_2",
+          "prompt_chars": 26,
+          "content": "OK (7)",
+          "prompt_tokens": 69,
+          "completion_tokens": 34,
+          "served_model": "qwen3.8-flash",
+          "ok": true,
+          "latency_s": 1.018,
+          "slow": false
+        },
+        {
+          "label": "after_idle_consecutive_3",
+          "prompt_chars": 26,
+          "content": "OK (8)",
+          "prompt_tokens": 69,
+          "completion_tokens": 34,
+          "served_model": "qwen3.8-flash",
+          "ok": true,
+          "latency_s": 0.694,
+          "slow": false
+        },
+        {
+          "label": "during_keepalive_real",
+          "prompt_chars": 27,
+          "content": "OK (10)",
+          "prompt_tokens": 70,
+          "completion_tokens": 37,
+          "served_model": "qwen3.8-flash",
+          "ok": true,
+          "latency_s": 270.912,
+          "slow": true
+        },
+        {
+          "label": "after_ping_stopped_idle",
+          "prompt_chars": 27,
+          "content": "OK (12)",
+          "prompt_tokens": 70,
+          "completion_tokens": 37,
+          "served_model": "qwen3.8-flash",
+          "ok": true,
+          "latency_s": 269.575,
+          "slow": true
+        }
+      ],
+      "keepalive_pings": [
+        {
+          "label": "keepalive_ping",
+          "prompt_chars": 26,
+          "content": "OK (9)",
+          "prompt_tokens": 69,
+          "completion_tokens": 34,
+          "served_model": "qwen3.8-flash",
+          "ok": true,
+          "latency_s": 270.637,
+          "slow": true
+        },
+        {
+          "label": "keepalive_ping",
+          "prompt_chars": 27,
+          "content": "OK (11)",
+          "prompt_tokens": 70,
+          "completion_tokens": 36,
+          "served_model": "qwen3.8-flash",
+          "ok": true,
+          "latency_s": 135.211,
+          "slow": true
+        }
+      ],
+      "summary": {
+        "steady_median_s": 0.935,
+        "after_idle_first_s": 270.52,
+        "after_idle_first_slow": true,
+        "during_keepalive_slow": [
+          true
+        ],
+        "after_ping_stopped_slow": true,
+        "ping_count": 2,
+        "ping_slow_count": 2
+      }
+    }
+  ],
+  "flushed_calls": [
+    {
+      "profile": "qwen38_flash",
+      "label": "warmup",
+      "prompt_chars": 26,
+      "content": "OK (1)",
+      "prompt_tokens": 69,
+      "completion_tokens": 33,
+      "served_model": "qwen3.8-flash",
+      "ok": true,
+      "latency_s": 270.366,
+      "slow": true
+    },
+    {
+      "profile": "qwen38_flash",
+      "label": "consecutive_1",
+      "prompt_chars": 26,
+      "content": "OK (2)",
+      "prompt_tokens": 69,
+      "completion_tokens": 34,
+      "served_model": "qwen3.8-flash",
+      "ok": true,
+      "latency_s": 0.908,
+      "slow": false
+    },
+    {
+      "profile": "qwen38_flash",
+      "label": "consecutive_2",
+      "prompt_chars": 26,
+      "content": "OK (3)",
+      "prompt_tokens": 69,
+      "completion_tokens": 34,
+      "served_model": "qwen3.8-flash",
+      "ok": true,
+      "latency_s": 1.162,
+      "slow": false
+    },
+    {
+      "profile": "qwen38_flash",
+      "label": "consecutive_3",
+      "prompt_chars": 26,
+      "content": "OK (4)",
+      "prompt_tokens": 69,
+      "completion_tokens": 34,
+      "served_model": "qwen3.8-flash",
+      "ok": true,
+      "latency_s": 0.907,
+      "slow": false
+    },
+    {
+      "profile": "qwen38_flash",
+      "label": "after_idle_first",
+      "prompt_chars": 26,
+      "content": "OK (5)",
+      "prompt_tokens": 69,
+      "completion_tokens": 38,
+      "served_model": "qwen3.8-flash",
+      "ok": true,
+      "latency_s": 270.52,
+      "slow": true
+    },
+    {
+      "profile": "qwen38_flash",
+      "label": "after_idle_consecutive_1",
+      "prompt_chars": 26,
+      "content": "OK (6)",
+      "prompt_tokens": 69,
+      "completion_tokens": 33,
+      "served_model": "qwen3.8-flash",
+      "ok": true,
+      "latency_s": 0.935,
+      "slow": false
+    },
+    {
+      "profile": "qwen38_flash",
+      "label": "after_idle_consecutive_2",
+      "prompt_chars": 26,
+      "content": "OK (7)",
+      "prompt_tokens": 69,
+      "completion_tokens": 34,
+      "served_model": "qwen3.8-flash",
+      "ok": true,
+      "latency_s": 1.018,
+      "slow": false
+    },
+    {
+      "profile": "qwen38_flash",
+      "label": "after_idle_consecutive_3",
+      "prompt_chars": 26,
+      "content": "OK (8)",
+      "prompt_tokens": 69,
+      "completion_tokens": 34,
+      "served_model": "qwen3.8-flash",
+      "ok": true,
+      "latency_s": 0.694,
+      "slow": false
+    },
+    {
+      "profile": "qwen38_flash",
+      "label": "during_keepalive_real",
+      "prompt_chars": 27,
+      "content": "OK (10)",
+      "prompt_tokens": 70,
+      "completion_tokens": 37,
+      "served_model": "qwen3.8-flash",
+      "ok": true,
+      "latency_s": 270.912,
+      "slow": true
+    },
+    {
+      "profile": "qwen38_flash",
+      "label": "keepalive_ping",
+      "prompt_chars": 26,
+      "content": "OK (9)",
+      "prompt_tokens": 69,
+      "completion_tokens": 34,
+      "served_model": "qwen3.8-flash",
+      "ok": true,
+      "latency_s": 270.637,
+      "slow": true
+    },
+    {
+      "profile": "qwen38_flash",
+      "label": "keepalive_ping",
+      "prompt_chars": 27,
+      "content": "OK (11)",
+      "prompt_tokens": 70,
+      "completion_tokens": 36,
+      "served_model": "qwen3.8-flash",
+      "ok": true,
+      "latency_s": 135.211,
+      "slow": true
+    },
+    {
+      "profile": "qwen38_flash",
+      "label": "after_ping_stopped_idle",
+      "prompt_chars": 27,
+      "content": "OK (12)",
+      "prompt_tokens": 70,
+      "completion_tokens": 37,
+      "served_model": "qwen3.8-flash",
+      "ok": true,
+      "latency_s": 269.575,
+      "slow": true
+    }
+  ],
+  "finished_at": 1790507282.1787026
+}

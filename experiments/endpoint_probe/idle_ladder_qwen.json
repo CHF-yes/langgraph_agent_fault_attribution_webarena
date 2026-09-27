@@ -1,0 +1,11 @@
+{
+  "started_at": 1790507803.3167145,
+  "settings": {
+    "idle_seconds": 240,
+    "consecutive": 3,
+    "ping_interval": 120,
+    "ping_duration": 480,
+    "slow_threshold_s": 30.0
+  },
+  "profiles": []
+}

@@ -1,0 +1,265 @@
+{
+  "started_at": 1790507282.6344092,
+  "settings": {
+    "idle_seconds": 300.0,
+    "consecutive": 3,
+    "ping_interval": 120.0,
+    "ping_duration": 60.0,
+    "slow_threshold_s": 30.0
+  },
+  "profiles": [
+    {
+      "profile": "deepseek_v41_flash",
+      "model": "deepseek-flash",
+      "base_url": "https://api.deepseek.com",
+      "request_timeout_s": 120.0,
+      "calls": [
+        {
+          "label": "warmup",
+          "prompt_chars": 26,
+          "content": "OK (1)",
+          "prompt_tokens": 38,
+          "completion_tokens": 23,
+          "served_model": "deepseek-flash",
+          "ok": true,
+          "latency_s": 0.72,
+          "slow": false
+        },
+        {
+          "label": "consecutive_1",
+          "prompt_chars": 26,
+          "content": "OK (2)",
+          "prompt_tokens": 38,
+          "completion_tokens": 84,
+          "served_model": "deepseek-flash",
+          "ok": true,
+          "latency_s": 0.877,
+          "slow": false
+        },
+        {
+          "label": "consecutive_2",
+          "prompt_chars": 26,
+          "content": "OK (3)",
+          "prompt_tokens": 38,
+          "completion_tokens": 67,
+          "served_model": "deepseek-flash",
+          "ok": true,
+          "latency_s": 0.734,
+          "slow": false
+        },
+        {
+          "label": "consecutive_3",
+          "prompt_chars": 26,
+          "content": "OK (4)",
+          "prompt_tokens": 38,
+          "completion_tokens": 22,
+          "served_model": "deepseek-flash",
+          "ok": true,
+          "latency_s": 0.342,
+          "slow": false
+        },
+        {
+          "label": "after_idle_first",
+          "prompt_chars": 26,
+          "content": "OK (5)",
+          "prompt_tokens": 38,
+          "completion_tokens": 38,
+          "served_model": "deepseek-flash",
+          "ok": true,
+          "latency_s": 0.533,
+          "slow": false
+        },
+        {
+          "label": "after_idle_consecutive_1",
+          "prompt_chars": 26,
+          "content": "OK (6)",
+          "prompt_tokens": 38,
+          "completion_tokens": 61,
+          "served_model": "deepseek-flash",
+          "ok": true,
+          "latency_s": 0.477,
+          "slow": false
+        },
+        {
+          "label": "after_idle_consecutive_2",
+          "prompt_chars": 26,
+          "content": "OK (7)",
+          "prompt_tokens": 38,
+          "completion_tokens": 47,
+          "served_model": "deepseek-flash",
+          "ok": true,
+          "latency_s": 0.614,
+          "slow": false
+        },
+        {
+          "label": "after_idle_consecutive_3",
+          "prompt_chars": 26,
+          "content": "OK (8)",
+          "prompt_tokens": 38,
+          "completion_tokens": 20,
+          "served_model": "deepseek-flash",
+          "ok": true,
+          "latency_s": 0.674,
+          "slow": false
+        },
+        {
+          "label": "during_keepalive_real",
+          "prompt_chars": 26,
+          "content": "OK (9)",
+          "prompt_tokens": 38,
+          "completion_tokens": 24,
+          "served_model": "deepseek-flash",
+          "ok": true,
+          "latency_s": 0.665,
+          "slow": false
+        },
+        {
+          "label": "after_ping_stopped_idle",
+          "prompt_chars": 27,
+          "content": "OK (10)",
+          "prompt_tokens": 38,
+          "completion_tokens": 37,
+          "served_model": "deepseek-flash",
+          "ok": true,
+          "latency_s": 0.887,
+          "slow": false
+        }
+      ],
+      "keepalive_pings": [],
+      "summary": {
+        "steady_median_s": 0.665,
+        "after_idle_first_s": 0.533,
+        "after_idle_first_slow": false,
+        "during_keepalive_slow": [
+          false
+        ],
+        "after_ping_stopped_slow": false,
+        "ping_count": 0,
+        "ping_slow_count": 0
+      }
+    }
+  ],
+  "flushed_calls": [
+    {
+      "profile": "deepseek_v41_flash",
+      "label": "warmup",
+      "prompt_chars": 26,
+      "content": "OK (1)",
+      "prompt_tokens": 38,
+      "completion_tokens": 23,
+      "served_model": "deepseek-flash",
+      "ok": true,
+      "latency_s": 0.72,
+      "slow": false
+    },
+    {
+      "profile": "deepseek_v41_flash",
+      "label": "consecutive_1",
+      "prompt_chars": 26,
+      "content": "OK (2)",
+      "prompt_tokens": 38,
+      "completion_tokens": 84,
+      "served_model": "deepseek-flash",
+      "ok": true,
+      "latency_s": 0.877,
+      "slow": false
+    },
+    {
+      "profile": "deepseek_v41_flash",
+      "label": "consecutive_2",
+      "prompt_chars": 26,
+      "content": "OK (3)",
+      "prompt_tokens": 38,
+      "completion_tokens": 67,
+      "served_model": "deepseek-flash",
+      "ok": true,
+      "latency_s": 0.734,
+      "slow": false
+    },
+    {
+      "profile": "deepseek_v41_flash",
+      "label": "consecutive_3",
+      "prompt_chars": 26,
+      "content": "OK (4)",
+      "prompt_tokens": 38,
+      "completion_tokens": 22,
+      "served_model": "deepseek-flash",
+      "ok": true,
+      "latency_s": 0.342,
+      "slow": false
+    },
+    {
+      "profile": "deepseek_v41_flash",
+      "label": "after_idle_first",
+      "prompt_chars": 26,
+      "content": "OK (5)",
+      "prompt_tokens": 38,
+      "completion_tokens": 38,
+      "served_model": "deepseek-flash",
+      "ok": true,
+      "latency_s": 0.533,
+      "slow": false
+    },
+    {
+      "profile": "deepseek_v41_flash",
+      "label": "after_idle_consecutive_1",
+      "prompt_chars": 26,
+      "content": "OK (6)",
+      "prompt_tokens": 38,
+      "completion_tokens": 61,
+      "served_model": "deepseek-flash",
+      "ok": true,
+      "latency_s": 0.477,
+      "slow": false
+    },
+    {
+      "profile": "deepseek_v41_flash",
+      "label": "after_idle_consecutive_2",
+      "prompt_chars": 26,
+      "content": "OK (7)",
+      "prompt_tokens": 38,
+      "completion_tokens": 47,
+      "served_model": "deepseek-flash",
+      "ok": true,
+      "latency_s": 0.614,
+      "slow": false
+    },
+    {
+      "profile": "deepseek_v41_flash",
+      "label": "after_idle_consecutive_3",
+      "prompt_chars": 26,
+      "content": "OK (8)",
+      "prompt_tokens": 38,
+      "completion_tokens": 20,
+      "served_model": "deepseek-flash",
+      "ok": true,
+      "latency_s": 0.674,
+      "slow": false
+    },
+    {
+      "profile": "deepseek_v41_flash",
+      "label": "during_keepalive_real",
+      "prompt_chars": 26,
+      "content": "OK (9)",
+      "prompt_tokens": 38,
+      "completion_tokens": 24,
+      "served_model": "deepseek-flash",
+      "ok": true,
+      "latency_s": 0.665,
+      "slow": false
+    },
+    {
+      "profile": "deepseek_v41_flash",
+      "label": "after_ping_stopped_idle",
+      "prompt_chars": 27,
+      "content": "OK (10)",
+      "prompt_tokens": 38,
+      "completion_tokens": 37,
+      "served_model": "deepseek-flash",
+      "ok": true,
+      "latency_s": 0.887,
+      "slow": false
+    }
+  ],
+  "finished_at": 1790507951.2254744
+}
