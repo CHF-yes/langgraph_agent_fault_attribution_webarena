@@ -154,7 +154,7 @@ def command_for(args, job):
     return command
 
 
-def classify_log(text):
+def classify_log(text, *, expect_fault=True):
     infrastructure_patterns = (
         r"Traceback \(most recent call last\)",
         r"(?:HTTP|status|status_code|response[_ ]code)[^\n]{0,24}(?:429|502|503)",
@@ -177,6 +177,11 @@ def classify_log(text):
     fault_labels = [faults for _, _, faults in fault_records]
     fault_triggered = any(count == 1 for count in fault_counts)
     fault_invalid = not fault_counts or any(count != 1 for count in fault_counts)
+    if not expect_fault:
+        # T0 是控制批：本来就没有故障臂，"没有注入"是预期结果而不是异常。
+        # 否则每个控制 job 都会被判 fault_invalid，并触发"连续故障缺失即停止"策略。
+        fault_triggered = False
+        fault_invalid = False
     infrastructure_error = any(
         re.search(pattern, text, re.IGNORECASE)
         for pattern in infrastructure_patterns
@@ -188,6 +193,7 @@ def classify_log(text):
     return {
         "infrastructure_error": infrastructure_error,
         "task_error": any(marker in text for marker in task_error),
+        "fault_expected": bool(expect_fault),
         "fault_missing": fault_invalid,
         "fault_count": fault_counts[-1] if fault_counts else 0,
         "fault_triggered": fault_triggered,
@@ -390,7 +396,7 @@ def main():
                 continue
             log_file.close()
             text = (output_dir / f"{key}.log").read_text(encoding="utf-8", errors="replace")
-            status = classify_log(text)
+            status = classify_log(text, expect_fault=(getattr(args, "condition", "both") != "control"))
             result = {"job": job, "design_fingerprint": fingerprint,
                       "returncode": process.returncode, **status, "timed_out": False}
             (output_dir / f"{key}.status.json").write_text(

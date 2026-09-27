@@ -1,0 +1,308 @@
+{
+  "schema": "llm_provenance_summary/1",
+  "schema_note": "仅聚合计数与 token/延迟统计，不含提示词、回答、页面观察、URL 或任务正文。",
+  "label": "T0 首批控制批 (2 模型 × 2 架构 × 2 任务 = 8 trials)",
+  "source_dir": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_small",
+  "generated_at": 1790503873.50129,
+  "trials_total": 8,
+  "trials": [
+    {
+      "trial": "deepseek_v41_flash__react__web_dom_missing__task21__seed1__control__rep0",
+      "model_profile": "deepseek_v41_flash",
+      "architecture": "react",
+      "fault": "web_dom_missing",
+      "task": "21",
+      "seed": "1",
+      "condition": "control",
+      "replicate": "0",
+      "calls": 2,
+      "served_models": {
+        "deepseek-flash": 2
+      },
+      "served_model_differs": 0,
+      "cache_usage_sources": {
+        "deepseek": 2
+      },
+      "tokens": {
+        "prompt_tokens": 11336,
+        "completion_tokens": 854,
+        "total_tokens": 12190,
+        "prompt_cache_hit_tokens": 1024,
+        "prompt_cache_miss_tokens": 10312
+      },
+      "latency_s": {
+        "min": 0.956,
+        "median": 2.0435,
+        "max": 3.131
+      },
+      "slow_calls": 0
+    },
+    {
+      "trial": "deepseek_v41_flash__react__web_dom_missing__task118__seed1__control__rep0",
+      "model_profile": "deepseek_v41_flash",
+      "architecture": "react",
+      "fault": "web_dom_missing",
+      "task": "118",
+      "seed": "1",
+      "condition": "control",
+      "replicate": "0",
+      "calls": 5,
+      "served_models": {
+        "deepseek-flash": 5
+      },
+      "served_model_differs": 0,
+      "cache_usage_sources": {
+        "deepseek": 5
+      },
+      "tokens": {
+        "prompt_tokens": 47064,
+        "completion_tokens": 943,
+        "total_tokens": 48007,
+        "prompt_cache_hit_tokens": 18688,
+        "prompt_cache_miss_tokens": 28376
+      },
+      "latency_s": {
+        "min": 0.696,
+        "median": 1.141,
+        "max": 2.109
+      },
+      "slow_calls": 0
+    },
+    {
+      "trial": "deepseek_v41_flash__plan_execute__web_dom_missing__task21__seed1__control__rep0",
+      "model_profile": "deepseek_v41_flash",
+      "architecture": "plan_execute",
+      "fault": "web_dom_missing",
+      "task": "21",
+      "seed": "1",
+      "condition": "control",
+      "replicate": "0",
+      "calls": 4,
+      "served_models": {
+        "deepseek-flash": 4
+      },
+      "served_model_differs": 0,
+      "cache_usage_sources": {
+        "deepseek": 4
+      },
+      "tokens": {
+        "prompt_tokens": 13442,
+        "completion_tokens": 1935,
+        "total_tokens": 15377,
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 13442
+      },
+      "latency_s": {
+        "min": 1.166,
+        "median": 2.775,
+        "max": 4.137
+      },
+      "slow_calls": 0
+    },
+    {
+      "trial": "deepseek_v41_flash__plan_execute__web_dom_missing__task118__seed1__control__rep0",
+      "model_profile": "deepseek_v41_flash",
+      "architecture": "plan_execute",
+      "fault": "web_dom_missing",
+      "task": "118",
+      "seed": "1",
+      "condition": "control",
+      "replicate": "0",
+      "calls": 9,
+      "served_models": {
+        "deepseek-flash": 9
+      },
+      "served_model_differs": 0,
+      "cache_usage_sources": {
+        "deepseek": 9
+      },
+      "tokens": {
+        "prompt_tokens": 37890,
+        "completion_tokens": 2011,
+        "total_tokens": 39901,
+        "prompt_cache_hit_tokens": 2944,
+        "prompt_cache_miss_tokens": 34946
+      },
+      "latency_s": {
+        "min": 0.859,
+        "median": 1.441,
+        "max": 2.52
+      },
+      "slow_calls": 0
+    },
+    {
+      "trial": "qwen38_flash__react__web_dom_missing__task21__seed1__control__rep0",
+      "model_profile": "qwen38_flash",
+      "architecture": "react",
+      "fault": "web_dom_missing",
+      "task": "21",
+      "seed": "1",
+      "condition": "control",
+      "replicate": "0",
+      "calls": 7,
+      "served_models": {
+        "qwen3.8-flash": 7
+      },
+      "served_model_differs": 0,
+      "cache_usage_sources": {
+        "openai": 7
+      },
+      "tokens": {
+        "prompt_tokens": 83124,
+        "completion_tokens": 2559,
+        "total_tokens": 85683,
+        "prompt_cache_hit_tokens": 25088,
+        "prompt_cache_miss_tokens": 58036
+      },
+      "latency_s": {
+        "min": 2.911,
+        "median": 6.478,
+        "max": 283.039
+      },
+      "slow_calls": 2
+    },
+    {
+      "trial": "qwen38_flash__react__web_dom_missing__task118__seed1__control__rep0",
+      "model_profile": "qwen38_flash",
+      "architecture": "react",
+      "fault": "web_dom_missing",
+      "task": "118",
+      "seed": "1",
+      "condition": "control",
+      "replicate": "0",
+      "calls": 5,
+      "served_models": {
+        "qwen3.8-flash": 5
+      },
+      "served_model_differs": 0,
+      "cache_usage_sources": {
+        "openai": 5
+      },
+      "tokens": {
+        "prompt_tokens": 52804,
+        "completion_tokens": 1013,
+        "total_tokens": 53817,
+        "prompt_cache_hit_tokens": 8192,
+        "prompt_cache_miss_tokens": 44612
+      },
+      "latency_s": {
+        "min": 2.567,
+        "median": 3.568,
+        "max": 271.429
+      },
+      "slow_calls": 1
+    },
+    {
+      "trial": "qwen38_flash__plan_execute__web_dom_missing__task21__seed1__control__rep0",
+      "model_profile": "qwen38_flash",
+      "architecture": "plan_execute",
+      "fault": "web_dom_missing",
+      "task": "21",
+      "seed": "1",
+      "condition": "control",
+      "replicate": "0",
+      "calls": 6,
+      "served_models": {
+        "qwen3.8-flash": 6
+      },
+      "served_model_differs": 0,
+      "cache_usage_sources": {
+        "openai": 6
+      },
+      "tokens": {
+        "prompt_tokens": 21302,
+        "completion_tokens": 3044,
+        "total_tokens": 24346,
+        "prompt_cache_hit_tokens": 3072,
+        "prompt_cache_miss_tokens": 18230
+      },
+      "latency_s": {
+        "min": 1.709,
+        "median": 17.5525,
+        "max": 277.398
+      },
+      "slow_calls": 2
+    },
+    {
+      "trial": "qwen38_flash__plan_execute__web_dom_missing__task118__seed1__control__rep0",
+      "model_profile": "qwen38_flash",
+      "architecture": "plan_execute",
+      "fault": "web_dom_missing",
+      "task": "118",
+      "seed": "1",
+      "condition": "control",
+      "replicate": "0",
+      "calls": 7,
+      "served_models": {
+        "qwen3.8-flash": 7
+      },
+      "served_model_differs": 0,
+      "cache_usage_sources": {
+        "openai": 7
+      },
+      "tokens": {
+        "prompt_tokens": 29192,
+        "completion_tokens": 1867,
+        "total_tokens": 31059,
+        "prompt_cache_hit_tokens": 3072,
+        "prompt_cache_miss_tokens": 26120
+      },
+      "latency_s": {
+        "min": 1.272,
+        "median": 5.588,
+        "max": 278.14
+      },
+      "slow_calls": 2
+    }
+  ],
+  "totals": {
+    "calls": 45,
+    "served_model_differs": 0,
+    "prompt_tokens": 296154,
+    "completion_tokens": 14226,
+    "total_tokens": 310380,
+    "prompt_cache_hit_tokens": 62080,
+    "prompt_cache_miss_tokens": 234074
+  },
+  "by_architecture": {
+    "react": {
+      "calls": 19,
+      "prompt_tokens": 194328,
+      "completion_tokens": 5369,
+      "total_tokens": 199697,
+      "prompt_cache_hit_tokens": 52992,
+      "prompt_cache_miss_tokens": 141336
+    },
+    "plan_execute": {
+      "calls": 26,
+      "prompt_tokens": 101826,
+      "completion_tokens": 8857,
+      "total_tokens": 110683,
+      "prompt_cache_hit_tokens": 9088,
+      "prompt_cache_miss_tokens": 92738
+    }
+  },
+  "served_model_totals": {
+    "deepseek-flash": 20,
+    "qwen3.8-flash": 25
+  },
+  "cache_usage_source_totals": {
+    "deepseek": 20,
+    "openai": 25
+  },
+  "latency_s": {
+    "calls_with_latency": 45,
+    "min": 0.696,
+    "median": 2.911,
+    "max": 283.039
+  },
+  "slow_calls": {
+    "threshold_s": 60.0,
+    "note": "统计单次调用延迟 > 阈值。Qwen 端点上实测为网关空闲驱逐导致的冷启动（273–280s）；其它端点也可能是长生成或客户端重试，故用中性口径命名。",
+    "count": 7,
+    "by_architecture": {
+      "react": 3,
+      "plan_execute": 4
+    }
+  }
+}

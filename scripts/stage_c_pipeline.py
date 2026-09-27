@@ -53,6 +53,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--conditions", nargs="+", default=None,
                         help="限定期望格子的条件（T0 控制批传 control）")
     parser.add_argument("--seeds", type=int, nargs="+", default=None)
+    parser.add_argument("--task-ids", type=int, nargs="+", default=None,
+                        help="限定期望格子的任务子集（T0 小批只覆盖部分任务时用）")
     return parser.parse_args()
 
 
@@ -70,7 +72,8 @@ def main() -> int:
                                            architecture=architecture,
                                            faults=args.fault_types,
                                            conditions=args.conditions,
-                                           seeds=args.seeds))
+                                           seeds=args.seeds,
+                                           tasks=args.task_ids))
     if args.output_dir is None:
         args.output_dir = str(Path(args.root) / "_stage_c_pipeline")
     Path(args.output_dir).mkdir(parents=True, exist_ok=True)

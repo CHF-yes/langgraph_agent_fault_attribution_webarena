@@ -1,0 +1,157 @@
+{
+  "note": "控制批首次运行时分类器仍按'必须存在故障臂'判定，导致 fault_invalid=true 并触发停止策略；原始 status 文件保持不变，这里给出用修正后分类器(expect_fault=False)重算的结果。",
+  "entries": [
+    {
+      "status_file": "experiments/t0_small/run_deepseek_v41_flash_plan_execute/web_dom_missing_task118_seed1.status.json",
+      "log": "experiments/t0_small/run_deepseek_v41_flash_plan_execute/web_dom_missing_task118_seed1.log",
+      "original": {
+        "fault_missing": true,
+        "fault_invalid": true,
+        "fault_triggered": false,
+        "fault_expected": null
+      },
+      "reclassified_control_only": {
+        "infrastructure_error": false,
+        "task_error": false,
+        "fault_expected": false,
+        "fault_missing": false,
+        "fault_count": 0,
+        "fault_triggered": false,
+        "fault_invalid": false
+      }
+    },
+    {
+      "status_file": "experiments/t0_small/run_deepseek_v41_flash_plan_execute/web_dom_missing_task21_seed1.status.json",
+      "log": "experiments/t0_small/run_deepseek_v41_flash_plan_execute/web_dom_missing_task21_seed1.log",
+      "original": {
+        "fault_missing": true,
+        "fault_invalid": true,
+        "fault_triggered": false,
+        "fault_expected": null
+      },
+      "reclassified_control_only": {
+        "infrastructure_error": false,
+        "task_error": false,
+        "fault_expected": false,
+        "fault_missing": false,
+        "fault_count": 0,
+        "fault_triggered": false,
+        "fault_invalid": false
+      }
+    },
+    {
+      "status_file": "experiments/t0_small/run_deepseek_v41_flash_react/web_dom_missing_task118_seed1.status.json",
+      "log": "experiments/t0_small/run_deepseek_v41_flash_react/web_dom_missing_task118_seed1.log",
+      "original": {
+        "fault_missing": true,
+        "fault_invalid": true,
+        "fault_triggered": false,
+        "fault_expected": null
+      },
+      "reclassified_control_only": {
+        "infrastructure_error": false,
+        "task_error": false,
+        "fault_expected": false,
+        "fault_missing": false,
+        "fault_count": 0,
+        "fault_triggered": false,
+        "fault_invalid": false
+      }
+    },
+    {
+      "status_file": "experiments/t0_small/run_deepseek_v41_flash_react/web_dom_missing_task21_seed1.status.json",
+      "log": "experiments/t0_small/run_deepseek_v41_flash_react/web_dom_missing_task21_seed1.log",
+      "original": {
+        "fault_missing": true,
+        "fault_invalid": true,
+        "fault_triggered": false,
+        "fault_expected": null
+      },
+      "reclassified_control_only": {
+        "infrastructure_error": false,
+        "task_error": false,
+        "fault_expected": false,
+        "fault_missing": false,
+        "fault_count": 0,
+        "fault_triggered": false,
+        "fault_invalid": false
+      }
+    },
+    {
+      "status_file": "experiments/t0_small/run_qwen38_flash_plan_execute/web_dom_missing_task118_seed1.status.json",
+      "log": "experiments/t0_small/run_qwen38_flash_plan_execute/web_dom_missing_task118_seed1.log",
+      "original": {
+        "fault_missing": true,
+        "fault_invalid": true,
+        "fault_triggered": false,
+        "fault_expected": null
+      },
+      "reclassified_control_only": {
+        "infrastructure_error": false,
+        "task_error": false,
+        "fault_expected": false,
+        "fault_missing": false,
+        "fault_count": 0,
+        "fault_triggered": false,
+        "fault_invalid": false
+      }
+    },
+    {
+      "status_file": "experiments/t0_small/run_qwen38_flash_plan_execute/web_dom_missing_task21_seed1.status.json",
+      "log": "experiments/t0_small/run_qwen38_flash_plan_execute/web_dom_missing_task21_seed1.log",
+      "original": {
+        "fault_missing": true,
+        "fault_invalid": true,
+        "fault_triggered": false,
+        "fault_expected": null
+      },
+      "reclassified_control_only": {
+        "infrastructure_error": false,
+        "task_error": false,
+        "fault_expected": false,
+        "fault_missing": false,
+        "fault_count": 0,
+        "fault_triggered": false,
+        "fault_invalid": false
+      }
+    },
+    {
+      "status_file": "experiments/t0_small/run_qwen38_flash_react/web_dom_missing_task118_seed1.status.json",
+      "log": "experiments/t0_small/run_qwen38_flash_react/web_dom_missing_task118_seed1.log",
+      "original": {
+        "fault_missing": true,
+        "fault_invalid": true,
+        "fault_triggered": false,
+        "fault_expected": null
+      },
+      "reclassified_control_only": {
+        "infrastructure_error": false,
+        "task_error": false,
+        "fault_expected": false,
+        "fault_missing": false,
+        "fault_count": 0,
+        "fault_triggered": false,
+        "fault_invalid": false
+      }
+    },
+    {
+      "status_file": "experiments/t0_small/run_qwen38_flash_react/web_dom_missing_task21_seed1.status.json",
+      "log": "experiments/t0_small/run_qwen38_flash_react/web_dom_missing_task21_seed1.log",
+      "original": {
+        "fault_missing": true,
+        "fault_invalid": true,
+        "fault_triggered": false,
+        "fault_expected": null
+      },
+      "reclassified_control_only": {
+        "infrastructure_error": false,
+        "task_error": false,
+        "fault_expected": false,
+        "fault_missing": false,
+        "fault_count": 0,
+        "fault_triggered": false,
+        "fault_invalid": false
+      }
+    }
+  ]
+}

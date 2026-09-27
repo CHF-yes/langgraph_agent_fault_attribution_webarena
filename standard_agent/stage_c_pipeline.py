@@ -70,7 +70,8 @@ def load_design(manifest_path: str | Path = DEFAULT_MANIFEST) -> dict:
 def expected_cells(design: dict, *, model_profile: str, architecture: str,
                    faults: list[str] | None = None,
                    seeds: list[int] | None = None,
-                   conditions: list[str] | None = None) -> list[dict]:
+                   conditions: list[str] | None = None,
+                   tasks: list[int] | None = None) -> list[dict]:
     """列出某个 (model, architecture) 下应当存在的 trial 格子。
 
     验证模型（V4 Pro）只在共同 8 任务上出现，这是冻结设计的一部分：它不能进入
@@ -78,9 +79,13 @@ def expected_cells(design: dict, *, model_profile: str, architecture: str,
     8 个共同任务。
     """
     if model_profile == design.get("validation_model"):
-        tasks = list(design["validation_tasks"])
+        allowed_tasks = list(design["validation_tasks"])
     else:
-        tasks = list(design["main_tasks"])
+        allowed_tasks = list(design["main_tasks"])
+    # 允许限定任务子集（例如 T0 的首个小批只覆盖 2 个任务），避免把未跑的任务
+    # 误报成"缺失格子"。
+    requested_tasks = [int(task) for task in tasks] if tasks is not None else allowed_tasks
+    tasks = [task for task in requested_tasks if task in allowed_tasks]
     faults = list(faults if faults is not None else design["faults"])
     seeds = list(seeds) if seeds is not None else [1 + index for index in range(design["repetitions"])]
     # T0 是控制批：只有 condition=control，故障维度退化为"作业容器槽位"。

@@ -1499,3 +1499,42 @@ def test_matrix_parser_defines_every_forwarded_flag():
            "intent": "go", "fault_type": "web_dom_missing"}
     command = command_for(args, job)
     assert command[command.index("--condition") + 1] == "control"
+
+
+def test_classify_log_does_not_blame_a_control_only_batch():
+    """回归：控制批没有故障臂，不能被判 fault_invalid 并触发停止策略。"""
+    from scripts.run_fault_matrix import classify_log
+
+    control_log = ("        injection_count=0 fault_seed=1 faults=[] steps=[]\n"
+                   "[ReAct][step=1] ACTION goto args={'url': 'http://localhost:7770/'}\n")
+    status = classify_log(control_log, expect_fault=False)
+    assert status["fault_expected"] is False
+    assert status["fault_missing"] is False and status["fault_invalid"] is False
+    assert status["fault_triggered"] is False
+    assert status["infrastructure_error"] is False
+
+    # 同样的日志在"期望故障臂"的批次里仍然是异常
+    fault_status = classify_log(control_log, expect_fault=True)
+    assert fault_status["fault_expected"] is True
+    assert fault_status["fault_invalid"] is True
+
+    # 故障臂正常注入的日志在两种口径下都算正常
+    armed_log = ("        injection_count=0 fault_seed=1 faults=[] steps=[]\n"
+                 "        injection_count=1 fault_seed=1 faults=['web_dom_missing'] steps=[2]\n")
+    assert classify_log(armed_log, expect_fault=True)["fault_triggered"] is True
+    assert classify_log(armed_log, expect_fault=True)["fault_invalid"] is False
+
+
+def test_expected_cells_can_be_scoped_to_a_task_subset():
+    """T0 首个小批只跑 2 个任务时，期望格子必须精确到该子集。"""
+    design = load_design(ROOT / "docs" / "task_manifest_public16.json")
+    scoped = expected_cells(design, model_profile="deepseek_v41_flash", architecture="react",
+                            faults=["web_dom_missing"], conditions=["control"],
+                            seeds=[1], tasks=[21, 118])
+    assert len(scoped) == 2
+    assert {int(cell["task_id"]) for cell in scoped} == {21, 118}
+    # 不在主任务集里的任务会被过滤掉，而不是静默扩大期望
+    outside = expected_cells(design, model_profile="deepseek_v41_flash", architecture="react",
+                             faults=["web_dom_missing"], conditions=["control"],
+                             seeds=[1], tasks=[21, 999])
+    assert {int(cell["task_id"]) for cell in outside} == {21}
