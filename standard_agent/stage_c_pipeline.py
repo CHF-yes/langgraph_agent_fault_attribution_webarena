@@ -575,27 +575,13 @@ def job_arms_ok(job_dir: str | Path, *, fault_type: str, task_id: int, seed: int
 # --------------------------------------------------------------------------
 
 def _default_git_probe(repo_root: str | Path) -> dict:
-    """读取仓库版本信息；任何失败都返回空值，由调用方判为"无法确认"。"""
-    import subprocess
+    """读取仓库版本信息，复用 trial_metadata.git_status（同一 dirty 口径）。
 
-    info = {"head": "", "branch": "", "dirty": None, "error": ""}
-    try:
-        for key, args in (("head", ["rev-parse", "HEAD"]),
-                          ("branch", ["rev-parse", "--abbrev-ref", "HEAD"])):
-            result = subprocess.run(["git", "-C", str(repo_root), *args],
-                                    capture_output=True, text=True, timeout=15)
-            if result.returncode == 0:
-                info[key] = result.stdout.strip()
-        # 只看**已跟踪**文件的改动：仓库里通常还有本地实验产物等未跟踪内容，
-        # 它们不改变"跑的是哪个版本的代码"这个判断，不能当成脏树。
-        result = subprocess.run(
-            ["git", "-C", str(repo_root), "status", "--porcelain", "--untracked-files=no"],
-            capture_output=True, text=True, timeout=30)
-        if result.returncode == 0:
-            info["dirty"] = bool(result.stdout.strip())
-    except (OSError, subprocess.SubprocessError) as exc:
-        info["error"] = str(exc)
-    return info
+    任何失败都返回空值，由调用方判为"无法确认"。
+    """
+    from standard_agent.trial_metadata import git_status
+
+    return git_status(repo_root)
 
 
 def smoke_preflight(*, repo_root: str | Path, output_root: str | Path,

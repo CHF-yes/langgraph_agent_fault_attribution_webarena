@@ -97,35 +97,51 @@ def trial_file_stem(*, model_profile: str, architecture: str, fault_type: str,
     return "__".join(_safe(part) for part in parts)
 
 
-def code_version(repo_root: str | Path | None = None) -> dict:
-    """Return the code revision that produced a trial.
+def git_status(repo_root: str | Path | None = None) -> dict:
+    """Return the repository revision state (single source of truth).
 
-    ``git_dirty`` is recorded rather than forbidden: a trial produced from a
-    dirty tree is not automatically invalid, but it must be visible in the
-    manifest so the analysis can exclude or annotate it.
+    ``dirty`` looks at **tracked** files only (``--untracked-files=no``).  A run
+    writes its traces and experiment output into the same repository, so those
+    untracked artefacts are a normal product of the run, not evidence that the
+    code under test differs from the recorded commit.  The preflight gate uses
+    this same function, so "dirty" means one thing everywhere: the tracked tree
+    differs from HEAD.
     """
     root = Path(repo_root) if repo_root else Path(__file__).resolve().parents[1]
-    info = {"repo_root": str(root), "git_sha": "", "git_branch": "", "git_dirty": None,
-            "recorded_at": time.time()}
-    for key, args in (
-        ("git_sha", ["rev-parse", "HEAD"]),
-        ("git_branch", ["rev-parse", "--abbrev-ref", "HEAD"]),
-    ):
-        try:
+    info = {"repo_root": str(root), "head": "", "branch": "", "dirty": None, "error": ""}
+    try:
+        for key, args in (("head", ["rev-parse", "HEAD"]),
+                          ("branch", ["rev-parse", "--abbrev-ref", "HEAD"])):
             out = subprocess.run(["git", "-C", str(root), *args], capture_output=True,
                                  text=True, timeout=10)
             if out.returncode == 0:
                 info[key] = out.stdout.strip()
-        except (OSError, subprocess.SubprocessError):
-            pass
-    try:
-        out = subprocess.run(["git", "-C", str(root), "status", "--porcelain"],
-                             capture_output=True, text=True, timeout=20)
+        out = subprocess.run(
+            ["git", "-C", str(root), "status", "--porcelain", "--untracked-files=no"],
+            capture_output=True, text=True, timeout=20)
         if out.returncode == 0:
-            info["git_dirty"] = bool(out.stdout.strip())
-    except (OSError, subprocess.SubprocessError):
-        pass
+            info["dirty"] = bool(out.stdout.strip())
+    except (OSError, subprocess.SubprocessError) as exc:
+        info["error"] = str(exc)
     return info
+
+
+def code_version(repo_root: str | Path | None = None) -> dict:
+    """Return the code revision that produced a trial.
+
+    ``git_dirty`` is recorded rather than forbidden: a trial produced from a
+    dirty tracked tree is not automatically invalid, but it must be visible in
+    the record so the analysis can exclude or annotate it.  Untracked run output
+    does not make the tree dirty (see ``git_status``).
+    """
+    status = git_status(repo_root)
+    return {
+        "repo_root": status["repo_root"],
+        "git_sha": status["head"],
+        "git_branch": status["branch"],
+        "git_dirty": status["dirty"],
+        "recorded_at": time.time(),
+    }
 
 
 def build_trial_record(*, model_profile: str, architecture: str, fault_type: str,

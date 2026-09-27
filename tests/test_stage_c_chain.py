@@ -13,6 +13,7 @@
 from __future__ import annotations
 
 import json
+import subprocess
 import sys
 from pathlib import Path
 
@@ -1280,3 +1281,60 @@ def test_collect_rows_derives_cap_state_with_three_states(tmp_path: Path):
     assert by_task["21"]["cap_exhausted_source"] == "derived_completed_status"
     assert by_task["24"]["cap_exhausted"] is None
     assert by_task["24"]["cap_exhausted_source"] == "unknown"
+
+
+# ==========================================================================
+# 11. dirty 口径：未跟踪的运行产物不算脏，两处必须同一规则
+# ==========================================================================
+
+def _make_git_repo(path: Path) -> Path:
+    subprocess.run(["git", "init", "-q", str(path)], check=True)
+    (path / "code.py").write_text("x = 1\n", encoding="utf-8")
+    for args in (["add", "code.py"],
+                 ["commit", "-qm", "init"]):
+        subprocess.run(["git", "-C", str(path), "-c", "user.name=t",
+                        "-c", "user.email=t@example.invalid", *args], check=True)
+    return path
+
+
+def test_untracked_run_output_does_not_mark_the_tree_dirty(tmp_path: Path):
+    """回归：运行写在仓库内的未跟踪产物不是"代码脏"。"""
+    from standard_agent.trial_metadata import code_version, git_status
+
+    repo = _make_git_repo(tmp_path / "repo")
+    (repo / "experiments").mkdir()
+    (repo / "experiments" / "trial_record.json").write_text("{}", encoding="utf-8")
+    (repo / "traces").mkdir()
+    (repo / "traces" / "run.jsonl").write_text("{}\n", encoding="utf-8")
+
+    status = git_status(repo)
+    assert status["dirty"] is False
+    assert status["head"]
+    assert code_version(repo)["git_dirty"] is False
+
+
+def test_modified_tracked_file_still_marks_the_tree_dirty(tmp_path: Path):
+    from standard_agent.trial_metadata import code_version, git_status
+
+    repo = _make_git_repo(tmp_path / "repo")
+    (repo / "code.py").write_text("x = 2\n", encoding="utf-8")
+    assert git_status(repo)["dirty"] is True
+    assert code_version(repo)["git_dirty"] is True
+
+
+def test_preflight_and_trial_records_share_the_same_dirty_rule(tmp_path: Path):
+    """开跑前门槛与 trial 记录必须用同一口径，否则正式矩阵会被误标。"""
+    from standard_agent.stage_c_pipeline import _default_git_probe, smoke_preflight
+    from standard_agent.trial_metadata import git_status
+
+    repo = _make_git_repo(tmp_path / "repo")
+    (repo / "experiments").mkdir()
+    (repo / "experiments" / "out.json").write_text("{}", encoding="utf-8")
+
+    probe = _default_git_probe(repo)
+    assert probe["dirty"] == git_status(repo)["dirty"] is False
+    # 门槛据此放行（输出目录为空、HEAD 自洽）
+    report = smoke_preflight(repo_root=repo, output_root=tmp_path / "out",
+                             expect_commit=git_status(repo)["head"][:9])
+    assert report["allowed_to_run_paid_trials"] is True
+    assert report["blocked_reasons"] == []
