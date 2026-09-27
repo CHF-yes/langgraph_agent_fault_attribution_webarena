@@ -1,0 +1,476 @@
+{
+  "summary": {
+    "trials": 6,
+    "complete": 6,
+    "incomplete": []
+  },
+  "trials": [
+    {
+      "trial_dir": "experiments/t0_slice2/outputs/qwen38_flash/plan_execute/web_dom_missing_task102_seed1/102/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_slice2/outputs/qwen38_flash/plan_execute/web_dom_missing_task102_seed1/102/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_slice2/outputs/qwen38_flash/plan_execute/web_dom_missing_task102_seed1/102/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_slice2/outputs/qwen38_flash/plan_execute/web_dom_missing_task102_seed1/102/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=qwen38_flash|arch=plan_execute|fault=web_dom_missing|task=102|seed=1|cond=control|rep=0",
+        "pair_key": "model=qwen38_flash|arch=plan_execute|fault=web_dom_missing|task=102|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "qwen38_flash",
+        "architecture": "plan_execute",
+        "fault_type": "web_dom_missing",
+        "task_id": 102,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20260927T205728-158910",
+          "task_id": 102,
+          "site": "gitlab",
+          "url": "http://localhost:8023",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_slice2/outputs/qwen38_flash/plan_execute/web_dom_missing_task102_seed1/102/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_slice2/outputs/qwen38_flash/plan_execute/web_dom_missing_task102_seed1/102/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_slice2/20260927T205728-158910/qwen38_flash__plan_execute__web_dom_missing__task102__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 10,
+        "cap_exhausted": false,
+        "llm_calls": 29,
+        "time_sec": 952.554,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "ea851414e61d2617f4ba22c1708b44918b5cf1b5",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": true,
+          "recorded_at": 1790514801.5566456
+        },
+        "created_at": 1790514801.5566468
+      },
+      "agent_response": {
+        "task_type": "NAVIGATE",
+        "status": "SUCCESS",
+        "retrieved_data": null,
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_slice2/outputs/qwen38_flash/plan_execute/web_dom_missing_task132_seed1/132/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_slice2/outputs/qwen38_flash/plan_execute/web_dom_missing_task132_seed1/132/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_slice2/outputs/qwen38_flash/plan_execute/web_dom_missing_task132_seed1/132/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_slice2/outputs/qwen38_flash/plan_execute/web_dom_missing_task132_seed1/132/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=qwen38_flash|arch=plan_execute|fault=web_dom_missing|task=132|seed=1|cond=control|rep=0",
+        "pair_key": "model=qwen38_flash|arch=plan_execute|fault=web_dom_missing|task=132|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "qwen38_flash",
+        "architecture": "plan_execute",
+        "fault_type": "web_dom_missing",
+        "task_id": 132,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20260927T205729-8fcb5f",
+          "task_id": 132,
+          "site": "gitlab",
+          "url": "http://localhost:8023",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_slice2/outputs/qwen38_flash/plan_execute/web_dom_missing_task132_seed1/132/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_slice2/outputs/qwen38_flash/plan_execute/web_dom_missing_task132_seed1/132/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_slice2/20260927T205729-8fcb5f/qwen38_flash__plan_execute__web_dom_missing__task132__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 6,
+        "cap_exhausted": false,
+        "llm_calls": 13,
+        "time_sec": 1203.229,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "ea851414e61d2617f4ba22c1708b44918b5cf1b5",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": true,
+          "recorded_at": 1790515052.2936635
+        },
+        "created_at": 1790515052.293665
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "SUCCESS",
+        "retrieved_data": [
+          "Kilian (Kilian Valkhof) made **1 commit** to a11yproject.com on March 5, 2023.\n\nDetails from the commits page (http://localhost:8023/a11yproject/a11yproject.com/-/commits/main):\n- Date group: \"05 Mar, 2023 — 1 commit\" (the whole day's commits are shown; the next group is \"02 Mar, 2023\", so nothing is cut off by pagination)\n- Commit: \"Fix typos in the code examples (#1524)\" — authored by Kilian Valkhof, SHA 081f0af1\n\nNote: the Author filter couldn't be used because \"Kilian Valkhof\" is a git commit author, not a registered GitLab user, so the count was verified directly from the day-grouped commit list."
+        ],
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_slice2/outputs/qwen38_flash/plan_execute/web_dom_missing_task22_seed1/22/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_slice2/outputs/qwen38_flash/plan_execute/web_dom_missing_task22_seed1/22/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_slice2/outputs/qwen38_flash/plan_execute/web_dom_missing_task22_seed1/22/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_slice2/outputs/qwen38_flash/plan_execute/web_dom_missing_task22_seed1/22/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=qwen38_flash|arch=plan_execute|fault=web_dom_missing|task=22|seed=1|cond=control|rep=0",
+        "pair_key": "model=qwen38_flash|arch=plan_execute|fault=web_dom_missing|task=22|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "qwen38_flash",
+        "architecture": "plan_execute",
+        "fault_type": "web_dom_missing",
+        "task_id": 22,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20260927T205729-653338",
+          "task_id": 22,
+          "site": "shopping",
+          "url": "http://localhost:7770/fujifilm-finepix-z200fd-10mp-digital-camera-with-5x-optical-dual-image-stabilized-zoom-black.html",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_slice2/outputs/qwen38_flash/plan_execute/web_dom_missing_task22_seed1/22/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_slice2/outputs/qwen38_flash/plan_execute/web_dom_missing_task22_seed1/22/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_slice2/20260927T205729-653338/qwen38_flash__plan_execute__web_dom_missing__task22__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 10,
+        "cap_exhausted": false,
+        "llm_calls": 25,
+        "time_sec": 1261.897,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "ea851414e61d2617f4ba22c1708b44918b5cf1b5",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": true,
+          "recorded_at": 1790515110.9612424
+        },
+        "created_at": 1790515110.9612436
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "SUCCESS",
+        "retrieved_data": [
+          "Structured list of all review entries currently displayed on the review page (product id 38785 — Fujifilm FinePix Z200fd, 12 reviews total across 2 AJAX pages):\n\n1. Reviewer: badkat | Title: \"very pretty, easy to use\" | Rating 100% | Text: \"its nice to look at, and its nice to see what it does. they really went above and beyond with this one, i will write another review when i have more experience with it, but it is really nice, and so far, i like it A LOT.\" | Posted 4/20/23\n2. Reviewer: DrummerGirlLB | Title: \"Five Stars\" | Rating 100% | Text: \"worked great\" | Posted 4/20/23\n3. Reviewer: G. Matsusaki | Title: \"LOVE the PINK!\" | Rating 100% | Text: \"I am a FUJI fan. Saw this PINK and just had to have it. It has a nice big viewing screen, pics come out nice. I just take pics for family and friends, nothing professional, so this is great for me.\" | Posted 4/20/23\n4. Reviewer: Razzberry | Title: (not shown/truncated) | Text: \"t wanna carry a big camera. I love that the camera has a feature which takes two pictures at once, one with flash, one without flash. But the quality of the pictures is pretty disappointing. It was good for a while, but I\" (TRUNCATED) | Posted 4/20/23\n5. Reviewer: Nic | Title: \"Beautiful\" | Rating 80% | Text: \"My cannon elph stopped functioning after using it in the snow and I replaced it with this one. Honestly, the cannon pics were better in quality, but not too much better. This one looks great and takes decent pics so I'm happy.\" | Posted 4/20/23\n6. Reviewer: CA Guy | Title: \"viewfinder\" | Text: (only \"viewfinder\" visible — body truncated) | Posted 4/20/23\n7. Reviewer: Kenan | Title: (not shown) | Text: \"s come to the image quality, it\" (TRUNCATED) | Posted 4/20/23\n8. Reviewer: CT | Title: (not shown) | Text: \"s sleek design...loved how you just slide the cover off to turn this on. I have had it almost 1 year when you day, my husband takes the camera to take a picture of our son in the snow. He goes to slide the cover off and it slid right off! We couldn\" (TRUNCATED) | Posted 4/20/23\n9. Reviewer: romance loverromance lover | Title: (not shown) | Text: \"ve had this camera for about a year and a half now. I use it a lot and have explored many of the different features it has. Pros: the color is gorgeous! I\" (TRUNCATED) | Posted 4/20/23\n10. Reviewer: AZ Guy | Title: \"Gorgeous pictures, high quality product\" | Rating 100% | Text: \"I have a Fuji S5200 which I couldn\" (TRUNCATED) | Posted 4/20/23\n\n(Page 2 of the AJAX list repeats only entries 10 and 8 — AZ Guy and CT — so no additional reviewers exist beyond the 12 counted; 10 distinct reviewer names are rendered per page.)\n\nNote on the \"under water\" question: none of the review texts visible in the page markup contain the words \"under water\"/\"underwater\". Several entries (Razzberry, CA Guy, Kenan, CT, romance lover, AZ Guy) are truncated in the DOM, so their full text could not be retrieved — the truncated portions are the only remaining place such a mention could appear."
+        ],
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_slice2/outputs/qwen38_flash/react/web_dom_missing_task102_seed1/102/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_slice2/outputs/qwen38_flash/react/web_dom_missing_task102_seed1/102/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_slice2/outputs/qwen38_flash/react/web_dom_missing_task102_seed1/102/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_slice2/outputs/qwen38_flash/react/web_dom_missing_task102_seed1/102/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=qwen38_flash|arch=react|fault=web_dom_missing|task=102|seed=1|cond=control|rep=0",
+        "pair_key": "model=qwen38_flash|arch=react|fault=web_dom_missing|task=102|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "qwen38_flash",
+        "architecture": "react",
+        "fault_type": "web_dom_missing",
+        "task_id": 102,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20260927T202720-ba8a4e",
+          "task_id": 102,
+          "site": "gitlab",
+          "url": "http://localhost:8023",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_slice2/outputs/qwen38_flash/react/web_dom_missing_task102_seed1/102/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_slice2/outputs/qwen38_flash/react/web_dom_missing_task102_seed1/102/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_slice2/20260927T202720-ba8a4e/qwen38_flash__react__web_dom_missing__task102__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 2,
+        "cap_exhausted": false,
+        "llm_calls": 2,
+        "time_sec": 562.049,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "ea851414e61d2617f4ba22c1708b44918b5cf1b5",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": false,
+          "recorded_at": 1790512602.663101
+        },
+        "created_at": 1790512602.663105
+      },
+      "agent_response": {
+        "task_type": "NAVIGATE",
+        "status": "SUCCESS",
+        "retrieved_data": null,
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_slice2/outputs/qwen38_flash/react/web_dom_missing_task132_seed1/132/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_slice2/outputs/qwen38_flash/react/web_dom_missing_task132_seed1/132/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_slice2/outputs/qwen38_flash/react/web_dom_missing_task132_seed1/132/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_slice2/outputs/qwen38_flash/react/web_dom_missing_task132_seed1/132/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=qwen38_flash|arch=react|fault=web_dom_missing|task=132|seed=1|cond=control|rep=0",
+        "pair_key": "model=qwen38_flash|arch=react|fault=web_dom_missing|task=132|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "qwen38_flash",
+        "architecture": "react",
+        "fault_type": "web_dom_missing",
+        "task_id": 132,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20260927T202720-fbbbcc",
+          "task_id": 132,
+          "site": "gitlab",
+          "url": "http://localhost:8023",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_slice2/outputs/qwen38_flash/react/web_dom_missing_task132_seed1/132/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_slice2/outputs/qwen38_flash/react/web_dom_missing_task132_seed1/132/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_slice2/20260927T202720-fbbbcc/qwen38_flash__react__web_dom_missing__task132__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 4,
+        "cap_exhausted": false,
+        "llm_calls": 4,
+        "time_sec": 840.238,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "ea851414e61d2617f4ba22c1708b44918b5cf1b5",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": false,
+          "recorded_at": 1790512880.7668624
+        },
+        "created_at": 1790512880.7668676
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "SUCCESS",
+        "retrieved_data": [
+          {
+            "count": 1,
+            "commits": [
+              "Fix typos in the code examples (#1524) (081f0af1)"
+            ]
+          }
+        ],
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_slice2/outputs/qwen38_flash/react/web_dom_missing_task22_seed1/22/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_slice2/outputs/qwen38_flash/react/web_dom_missing_task22_seed1/22/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_slice2/outputs/qwen38_flash/react/web_dom_missing_task22_seed1/22/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_slice2/outputs/qwen38_flash/react/web_dom_missing_task22_seed1/22/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=qwen38_flash|arch=react|fault=web_dom_missing|task=22|seed=1|cond=control|rep=0",
+        "pair_key": "model=qwen38_flash|arch=react|fault=web_dom_missing|task=22|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "qwen38_flash",
+        "architecture": "react",
+        "fault_type": "web_dom_missing",
+        "task_id": 22,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20260927T202720-417b52",
+          "task_id": 22,
+          "site": "shopping",
+          "url": "http://localhost:7770/fujifilm-finepix-z200fd-10mp-digital-camera-with-5x-optical-dual-image-stabilized-zoom-black.html",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_slice2/outputs/qwen38_flash/react/web_dom_missing_task22_seed1/22/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_slice2/outputs/qwen38_flash/react/web_dom_missing_task22_seed1/22/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_slice2/20260927T202720-417b52/qwen38_flash__react__web_dom_missing__task22__seed1__control__rep0.jsonl"
+        },
+        "completed": false,
+        "success": false,
+        "injection_count": 0,
+        "steps": 20,
+        "cap_exhausted": true,
+        "llm_calls": 20,
+        "time_sec": 1804.057,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "ea851414e61d2617f4ba22c1708b44918b5cf1b5",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": true,
+          "recorded_at": 1790513844.5596817
+        },
+        "created_at": 1790513844.5596826
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "UNKNOWN_ERROR",
+        "retrieved_data": null,
+        "error_details": "max_steps exhausted after 20 steps; no answer produced"
+      },
+      "reasons": []
+    }
+  ]
+}

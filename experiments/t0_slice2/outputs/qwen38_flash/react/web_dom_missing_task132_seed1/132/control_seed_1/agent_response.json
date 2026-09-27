@@ -1,0 +1,13 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    {
+      "count": 1,
+      "commits": [
+        "Fix typos in the code examples (#1524) (081f0af1)"
+      ]
+    }
+  ],
+  "error_details": null
+}

@@ -1563,3 +1563,16 @@ def test_provenance_summary_reports_idle_gaps(tmp_path: Path):
     assert gaps["max"] == pytest.approx(30.0)
     assert trial["completion_spacing_s"]["max"] == pytest.approx(32.0)
     assert summary["idle_gap_s_by_trial"][name.replace(".jsonl", "")]["max"] == pytest.approx(30.0)
+
+
+def test_trial_record_file_stem_matches_the_artifact_name(tmp_path: Path):
+    """记录里的 file_stem 必须等于 trace/产物文件名用的 stem，审计才能直接 join。"""
+    from standard_agent.trial_metadata import read_trial_record, trial_file_stem
+
+    kwargs = dict(model_profile="m1", architecture="react", fault_type="web_dom_missing",
+                  task_id=118, seed=1, condition="control", replicate=0)
+    record = build_trial_record(run_config={}, paths={}, **kwargs)
+    assert record["file_stem"] == trial_file_stem(**kwargs)
+    assert "|" not in record["file_stem"] and "__" in record["file_stem"]
+    assert read_trial_record(write_trial_record(tmp_path / "t.json", record))["file_stem"] \
+        == record["file_stem"]

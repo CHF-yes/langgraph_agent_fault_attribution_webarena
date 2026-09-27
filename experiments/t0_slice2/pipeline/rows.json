@@ -1,0 +1,154 @@
+{
+  "config_substitutions": {
+    "test_data_file": {
+      "from": "/root/webarena-dataset/webarena-verified.json",
+      "to": "/data/webarena/webarena-dataset/webarena-verified.json"
+    }
+  },
+  "rows": [
+    {
+      "trial_dir": "experiments/t0_slice2/outputs/qwen38_flash/plan_execute/web_dom_missing_task102_seed1/102/control_seed_1",
+      "complete": true,
+      "reasons": [],
+      "evaluation_status": "native",
+      "official_success": false,
+      "submitted_success": true,
+      "trial_id": "model=qwen38_flash|arch=plan_execute|fault=web_dom_missing|task=102|seed=1|cond=control|rep=0",
+      "pair_key": "model=qwen38_flash|arch=plan_execute|fault=web_dom_missing|task=102|seed=1|cond=-|rep=0",
+      "condition": "control",
+      "steps": 10,
+      "cap_exhausted": false,
+      "llm_calls": 29,
+      "cell": {
+        "model_profile": "qwen38_flash",
+        "architecture": "plan_execute",
+        "fault_type": "web_dom_missing",
+        "task_id": 102,
+        "fault_seed": 1,
+        "condition": "control"
+      },
+      "cap_exhausted_source": "trial_record",
+      "reason": ""
+    },
+    {
+      "trial_dir": "experiments/t0_slice2/outputs/qwen38_flash/plan_execute/web_dom_missing_task132_seed1/132/control_seed_1",
+      "complete": true,
+      "reasons": [],
+      "evaluation_status": "native",
+      "official_success": false,
+      "submitted_success": true,
+      "trial_id": "model=qwen38_flash|arch=plan_execute|fault=web_dom_missing|task=132|seed=1|cond=control|rep=0",
+      "pair_key": "model=qwen38_flash|arch=plan_execute|fault=web_dom_missing|task=132|seed=1|cond=-|rep=0",
+      "condition": "control",
+      "steps": 6,
+      "cap_exhausted": false,
+      "llm_calls": 13,
+      "cell": {
+        "model_profile": "qwen38_flash",
+        "architecture": "plan_execute",
+        "fault_type": "web_dom_missing",
+        "task_id": 132,
+        "fault_seed": 1,
+        "condition": "control"
+      },
+      "cap_exhausted_source": "trial_record",
+      "reason": ""
+    },
+    {
+      "trial_dir": "experiments/t0_slice2/outputs/qwen38_flash/plan_execute/web_dom_missing_task22_seed1/22/control_seed_1",
+      "complete": true,
+      "reasons": [],
+      "evaluation_status": "compatibility",
+      "official_success": false,
+      "submitted_success": true,
+      "trial_id": "model=qwen38_flash|arch=plan_execute|fault=web_dom_missing|task=22|seed=1|cond=control|rep=0",
+      "pair_key": "model=qwen38_flash|arch=plan_execute|fault=web_dom_missing|task=22|seed=1|cond=-|rep=0",
+      "condition": "control",
+      "steps": 10,
+      "cap_exhausted": false,
+      "llm_calls": 25,
+      "cell": {
+        "model_profile": "qwen38_flash",
+        "architecture": "plan_execute",
+        "fault_type": "web_dom_missing",
+        "task_id": 22,
+        "fault_seed": 1,
+        "condition": "control"
+      },
+      "cap_exhausted_source": "trial_record",
+      "reason": ""
+    },
+    {
+      "trial_dir": "experiments/t0_slice2/outputs/qwen38_flash/react/web_dom_missing_task102_seed1/102/control_seed_1",
+      "complete": true,
+      "reasons": [],
+      "evaluation_status": "native",
+      "official_success": false,
+      "submitted_success": true,
+      "trial_id": "model=qwen38_flash|arch=react|fault=web_dom_missing|task=102|seed=1|cond=control|rep=0",
+      "pair_key": "model=qwen38_flash|arch=react|fault=web_dom_missing|task=102|seed=1|cond=-|rep=0",
+      "condition": "control",
+      "steps": 2,
+      "cap_exhausted": false,
+      "llm_calls": 2,
+      "cell": {
+        "model_profile": "qwen38_flash",
+        "architecture": "react",
+        "fault_type": "web_dom_missing",
+        "task_id": 102,
+        "fault_seed": 1,
+        "condition": "control"
+      },
+      "cap_exhausted_source": "trial_record",
+      "reason": ""
+    },
+    {
+      "trial_dir": "experiments/t0_slice2/outputs/qwen38_flash/react/web_dom_missing_task132_seed1/132/control_seed_1",
+      "complete": true,
+      "reasons": [],
+      "evaluation_status": "native",
+      "official_success": false,
+      "submitted_success": true,
+      "trial_id": "model=qwen38_flash|arch=react|fault=web_dom_missing|task=132|seed=1|cond=control|rep=0",
+      "pair_key": "model=qwen38_flash|arch=react|fault=web_dom_missing|task=132|seed=1|cond=-|rep=0",
+      "condition": "control",
+      "steps": 4,
+      "cap_exhausted": false,
+      "llm_calls": 4,
+      "cell": {
+        "model_profile": "qwen38_flash",
+        "architecture": "react",
+        "fault_type": "web_dom_missing",
+        "task_id": 132,
+        "fault_seed": 1,
+        "condition": "control"
+      },
+      "cap_exhausted_source": "trial_record",
+      "reason": ""
+    },
+    {
+      "trial_dir": "experiments/t0_slice2/outputs/qwen38_flash/react/web_dom_missing_task22_seed1/22/control_seed_1",
+      "complete": true,
+      "reasons": [],
+      "evaluation_status": "native",
+      "official_success": false,
+      "submitted_success": false,
+      "trial_id": "model=qwen38_flash|arch=react|fault=web_dom_missing|task=22|seed=1|cond=control|rep=0",
+      "pair_key": "model=qwen38_flash|arch=react|fault=web_dom_missing|task=22|seed=1|cond=-|rep=0",
+      "condition": "control",
+      "steps": 20,
+      "cap_exhausted": true,
+      "llm_calls": 20,
+      "cell": {
+        "model_profile": "qwen38_flash",
+        "architecture": "react",
+        "fault_type": "web_dom_missing",
+        "task_id": 22,
+        "fault_seed": 1,
+        "condition": "control"
+      },
+      "cap_exhausted_source": "trial_record",
+      "reason": ""
+    }
+  ]
+}

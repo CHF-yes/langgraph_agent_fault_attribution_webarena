@@ -169,6 +169,11 @@ def build_trial_record(*, model_profile: str, architecture: str, fault_type: str
         "trial_id": make_trial_id(
             model_profile=model_profile, architecture=architecture, fault_type=fault_type,
             task_id=task_id, seed=seed, condition=condition, replicate=replicate),
+        # 与 trace / 产物文件名一致的键：trial_id 是管道格式的标识，file_stem 是文件键，
+        # 两者格式不同，审计要 join 记录与 trace 时用 file_stem 最直接。
+        "file_stem": trial_file_stem(
+            model_profile=model_profile, architecture=architecture, fault_type=fault_type,
+            task_id=task_id, seed=seed, condition=condition, replicate=replicate),
         "pair_key": pair_key(
             model_profile=model_profile, architecture=architecture, fault_type=fault_type,
             task_id=task_id, seed=seed, replicate=replicate),

@@ -169,6 +169,88 @@ def probe_idle_ladder(profile: str, ladder: list[float], args, flushes: list,
                 "steady_warm_s": calls[1]["latency_s"]}}
 
 
+def probe_true_concurrency(profile: str, args, flushes: list, on_call=None) -> dict:
+    """真并发：N 个请求**同时**发出（调用期间不持锁），各做 M 轮。
+
+    与 probe_concurrency 的区别：那里用锁把调用串行化了，只能证明"串行且间隔短就快"，
+    无法回答"并发请求是否会让网关分叉出未预热的实例、从而每个新实例付一次冷启动"。
+    这里刻意去掉调用期间的锁，只保留记账用的锁。
+    """
+    from standard_agent.config import settings
+    from standard_agent.llm.provider import create_llm
+
+    config = settings.get_model_profile(profile)
+    llm = create_llm(temperature=0.0, profile_name=profile)
+    counter = [0]
+    booking = threading.Lock()
+    calls: list[dict] = []
+    barrier = threading.Barrier(args.concurrency)
+
+    def worker(index: int) -> None:
+        for round_index in range(args.true_rounds):
+            try:
+                barrier.wait(timeout=600)          # 让 N 个请求尽量同时发出
+            except threading.BrokenBarrierError:
+                break
+            with booking:
+                counter[0] += 1
+                seq = counter[0]
+            started = time.time()
+            prompt = f"Reply with exactly: OK ({seq})"
+            record = {"label": f"true_conc_r{round_index}_t{index}", "prompt_chars": len(prompt)}
+            try:
+                response = llm.invoke(prompt, config={"max_tokens": 8})
+                record["content"] = str(response.content)[:24]
+                usage = getattr(response, "usage_metadata", None) or {}
+                record["prompt_tokens"] = usage.get("input_tokens") if isinstance(usage, dict) else None
+                record["completion_tokens"] = usage.get("output_tokens") if isinstance(usage, dict) else None
+                record["served_model"] = (getattr(response, "response_metadata", {}) or {}).get("model_name")
+                record["ok"] = True
+            except Exception as exc:  # noqa: BLE001
+                record["ok"] = False
+                record["error"] = f"{type(exc).__name__}: {str(exc)[:160]}"
+            record["started_at"] = started
+            record["latency_s"] = round(time.time() - started, 3)
+            record["slow"] = record["latency_s"] > SLOW_THRESHOLD_S
+            with booking:
+                calls.append(record)
+                flushes.append({"profile": profile, **record})
+                if on_call is not None:
+                    on_call()
+            print(f"    {record['label']:20} {record['latency_s']:8.1f}s slow={record['slow']} "
+                  f"ok={record['ok']}", flush=True)
+
+    print(f"\n=== {profile} TRUE concurrency={args.true_concurrency} "
+          f"rounds={args.true_rounds} (同时发出，不串行)", flush=True)
+    # 预热一次，避免把"首次必然 270s"算进来
+    warm = _call(llm, "true_warmup", counter)
+    calls.append(warm)
+    flushes.append({"profile": profile, **warm})
+    if on_call is not None:
+        on_call()
+
+    threads = [threading.Thread(target=worker, args=(i,), daemon=False)
+               for i in range(args.concurrency)]
+    for thread in threads:
+        thread.start()
+    for thread in threads:
+        thread.join()
+
+    measured = [c for c in calls if c["label"] != "true_warmup"]
+    latencies = [c["latency_s"] for c in measured]
+    slow = [c for c in measured if c["slow"]]
+    return {
+        "profile": profile, "mode": "true_concurrency", "calls": calls,
+        "summary": {
+            "concurrency": args.true_concurrency, "rounds": args.true_rounds,
+            "warmup_s": warm["latency_s"],
+            "calls": len(measured), "slow_calls": len(slow),
+            "median_s": statistics.median(latencies) if latencies else None,
+            "max_s": max(latencies) if latencies else None,
+        },
+    }
+
+
 def probe_concurrency(profile: str, args, flushes: list, on_call=None) -> dict:
     """并发保持保温：N 个线程各按固定间隔调用，看延迟是否稳定在稳态。
 
@@ -248,6 +330,9 @@ def main() -> int:
     parser.add_argument("--ping-interval", type=float, default=120)
     parser.add_argument("--ping-duration", type=float, default=480)
     parser.add_argument("--out", required=True)
+    parser.add_argument("--true-concurrency", type=int, default=0,
+                        help="真并发模式：N 个请求同时发出（不做串行化），测网关是否分叉出冷实例")
+    parser.add_argument("--true-rounds", type=int, default=3)
     parser.add_argument("--concurrency", type=int, default=0,
                         help="并发保温模式：N 个线程同时按 --concurrency-interval 调用")
     parser.add_argument("--concurrency-interval", type=float, default=10)
@@ -269,7 +354,10 @@ def main() -> int:
     for profile in options.profiles:
         flushed: list = []
         try:
-            if options.concurrency:
+            if options.true_concurrency:
+                results["profiles"].append(
+                    probe_true_concurrency(profile, options, flushed, on_call=persist))
+            elif options.concurrency:
                 results["profiles"].append(
                     probe_concurrency(profile, options, flushed, on_call=persist))
             elif options.idle_ladder:
@@ -290,7 +378,9 @@ def main() -> int:
 
     for entry in results["profiles"]:
         summary = entry.get("summary")
-        if entry.get("mode") == "concurrency":
+        if entry.get("mode") == "true_concurrency":
+            print(f"\n=== 真并发 {entry.get('profile')}: {json.dumps(summary, ensure_ascii=False)}")
+        elif entry.get("mode") == "concurrency":
             print(f"\n=== 并发保温 {entry.get('profile')}: {json.dumps(summary, ensure_ascii=False)}")
         elif entry.get("mode") == "idle_ladder":
             print(f"\n=== 阈值 {entry.get('profile')}: {json.dumps(entry.get('ladder_results'), ensure_ascii=False)}")

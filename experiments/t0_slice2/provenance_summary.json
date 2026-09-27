@@ -1,0 +1,354 @@
+{
+  "schema": "llm_provenance_summary/1",
+  "schema_note": "仅聚合计数与 token/延迟统计，不含提示词、回答、页面观察、URL 或任务正文。",
+  "label": "T0 Step A: qwen38_flash 控制批 2 架构 × 3 任务 (W=6)",
+  "source_dir": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_slice2",
+  "generated_at": 1790515229.8264408,
+  "trials_total": 6,
+  "trials": [
+    {
+      "trial": "qwen38_flash__react__web_dom_missing__task22__seed1__control__rep0",
+      "model_profile": "qwen38_flash",
+      "architecture": "react",
+      "fault": "web_dom_missing",
+      "task": "22",
+      "seed": "1",
+      "condition": "control",
+      "replicate": "0",
+      "calls": 20,
+      "served_models": {
+        "qwen3.8-flash": 20
+      },
+      "served_model_differs": 0,
+      "cache_usage_sources": {
+        "openai": 20
+      },
+      "tokens": {
+        "prompt_tokens": 633437,
+        "completion_tokens": 53523,
+        "total_tokens": 686960,
+        "prompt_cache_hit_tokens": 201472,
+        "prompt_cache_miss_tokens": 431965
+      },
+      "idle_gap_s": {
+        "count": 19,
+        "median": 1.308265209197998,
+        "p90": 1.9543232917785645,
+        "max": 6.239268064498901
+      },
+      "completion_spacing_s": {
+        "count": 19,
+        "median": 38.2536358833313,
+        "p90": 112.56117224693298,
+        "max": 502.06834840774536
+      },
+      "latency_s": {
+        "min": 5.156,
+        "median": 40.692,
+        "max": 497.053
+      },
+      "slow_calls": 9
+    },
+    {
+      "trial": "qwen38_flash__react__web_dom_missing__task102__seed1__control__rep0",
+      "model_profile": "qwen38_flash",
+      "architecture": "react",
+      "fault": "web_dom_missing",
+      "task": "102",
+      "seed": "1",
+      "condition": "control",
+      "replicate": "0",
+      "calls": 2,
+      "served_models": {
+        "qwen3.8-flash": 2
+      },
+      "served_model_differs": 0,
+      "cache_usage_sources": {
+        "openai": 2
+      },
+      "tokens": {
+        "prompt_tokens": 8932,
+        "completion_tokens": 748,
+        "total_tokens": 9680,
+        "prompt_cache_hit_tokens": 2048,
+        "prompt_cache_miss_tokens": 6884
+      },
+      "idle_gap_s": {
+        "count": 1,
+        "median": 6.407248020172119,
+        "p90": 6.407248020172119,
+        "max": 6.407248020172119
+      },
+      "completion_spacing_s": {
+        "count": 1,
+        "median": 286.12224793434143,
+        "p90": 286.12224793434143,
+        "max": 286.12224793434143
+      },
+      "latency_s": {
+        "min": 273.311,
+        "median": 276.513,
+        "max": 279.715
+      },
+      "slow_calls": 2
+    },
+    {
+      "trial": "qwen38_flash__react__web_dom_missing__task132__seed1__control__rep0",
+      "model_profile": "qwen38_flash",
+      "architecture": "react",
+      "fault": "web_dom_missing",
+      "task": "132",
+      "seed": "1",
+      "condition": "control",
+      "replicate": "0",
+      "calls": 4,
+      "served_models": {
+        "qwen3.8-flash": 4
+      },
+      "served_model_differs": 0,
+      "cache_usage_sources": {
+        "openai": 4
+      },
+      "tokens": {
+        "prompt_tokens": 26426,
+        "completion_tokens": 833,
+        "total_tokens": 27259,
+        "prompt_cache_hit_tokens": 3072,
+        "prompt_cache_miss_tokens": 23354
+      },
+      "idle_gap_s": {
+        "count": 3,
+        "median": 6.101397514343262,
+        "p90": 6.101397514343262,
+        "max": 6.489216566085815
+      },
+      "completion_spacing_s": {
+        "count": 3,
+        "median": 280.75421667099,
+        "p90": 280.75421667099,
+        "max": 280.8543975353241
+      },
+      "latency_s": {
+        "min": 2.508,
+        "median": 272.4455,
+        "max": 274.753
+      },
+      "slow_calls": 3
+    },
+    {
+      "trial": "qwen38_flash__plan_execute__web_dom_missing__task102__seed1__control__rep0",
+      "model_profile": "qwen38_flash",
+      "architecture": "plan_execute",
+      "fault": "web_dom_missing",
+      "task": "102",
+      "seed": "1",
+      "condition": "control",
+      "replicate": "0",
+      "calls": 29,
+      "served_models": {
+        "qwen3.8-flash": 29
+      },
+      "served_model_differs": 0,
+      "cache_usage_sources": {
+        "openai": 29
+      },
+      "tokens": {
+        "prompt_tokens": 42237,
+        "completion_tokens": 21331,
+        "total_tokens": 63568,
+        "prompt_cache_hit_tokens": 10240,
+        "prompt_cache_miss_tokens": 31997
+      },
+      "idle_gap_s": {
+        "count": 28,
+        "median": 0.006360530853271484,
+        "p90": 0.5810651779174805,
+        "max": 5.997141599655151
+      },
+      "completion_spacing_s": {
+        "count": 28,
+        "median": 9.247101187705994,
+        "p90": 27.667040824890137,
+        "max": 279.36314153671265
+      },
+      "latency_s": {
+        "min": 1.854,
+        "median": 9.01,
+        "max": 308.284
+      },
+      "slow_calls": 2
+    },
+    {
+      "trial": "qwen38_flash__plan_execute__web_dom_missing__task22__seed1__control__rep0",
+      "model_profile": "qwen38_flash",
+      "architecture": "plan_execute",
+      "fault": "web_dom_missing",
+      "task": "22",
+      "seed": "1",
+      "condition": "control",
+      "replicate": "0",
+      "calls": 25,
+      "served_models": {
+        "qwen3.8-flash": 25
+      },
+      "served_model_differs": 0,
+      "cache_usage_sources": {
+        "openai": 25
+      },
+      "tokens": {
+        "prompt_tokens": 126516,
+        "completion_tokens": 32262,
+        "total_tokens": 158778,
+        "prompt_cache_hit_tokens": 11264,
+        "prompt_cache_miss_tokens": 115252
+      },
+      "idle_gap_s": {
+        "count": 24,
+        "median": 0.006161332130432129,
+        "p90": 0.6189792156219482,
+        "max": 6.138392210006714
+      },
+      "completion_spacing_s": {
+        "count": 24,
+        "median": 16.712891101837158,
+        "p90": 82.83185529708862,
+        "max": 278.9037296772003
+      },
+      "latency_s": {
+        "min": 2.576,
+        "median": 19.652,
+        "max": 278.156
+      },
+      "slow_calls": 6
+    },
+    {
+      "trial": "qwen38_flash__plan_execute__web_dom_missing__task132__seed1__control__rep0",
+      "model_profile": "qwen38_flash",
+      "architecture": "plan_execute",
+      "fault": "web_dom_missing",
+      "task": "132",
+      "seed": "1",
+      "condition": "control",
+      "replicate": "0",
+      "calls": 13,
+      "served_models": {
+        "qwen3.8-flash": 13
+      },
+      "served_model_differs": 0,
+      "cache_usage_sources": {
+        "openai": 13
+      },
+      "tokens": {
+        "prompt_tokens": 98856,
+        "completion_tokens": 5836,
+        "total_tokens": 104692,
+        "prompt_cache_hit_tokens": 6144,
+        "prompt_cache_miss_tokens": 92712
+      },
+      "idle_gap_s": {
+        "count": 12,
+        "median": 0.008210897445678711,
+        "p90": 5.722223520278931,
+        "max": 11.452897310256958
+      },
+      "completion_spacing_s": {
+        "count": 12,
+        "median": 9.0917387008667,
+        "p90": 278.8112235069275,
+        "max": 287.11446714401245
+      },
+      "latency_s": {
+        "min": 2.512,
+        "median": 12.213,
+        "max": 281.213
+      },
+      "slow_calls": 4
+    }
+  ],
+  "totals": {
+    "calls": 93,
+    "served_model_differs": 0,
+    "prompt_tokens": 936404,
+    "completion_tokens": 114533,
+    "total_tokens": 1050937,
+    "prompt_cache_hit_tokens": 234240,
+    "prompt_cache_miss_tokens": 702164
+  },
+  "by_architecture": {
+    "react": {
+      "calls": 26,
+      "prompt_tokens": 668795,
+      "completion_tokens": 55104,
+      "total_tokens": 723899,
+      "prompt_cache_hit_tokens": 206592,
+      "prompt_cache_miss_tokens": 462203
+    },
+    "plan_execute": {
+      "calls": 67,
+      "prompt_tokens": 267609,
+      "completion_tokens": 59429,
+      "total_tokens": 327038,
+      "prompt_cache_hit_tokens": 27648,
+      "prompt_cache_miss_tokens": 239961
+    }
+  },
+  "served_model_totals": {
+    "qwen3.8-flash": 93
+  },
+  "cache_usage_source_totals": {
+    "openai": 93
+  },
+  "idle_gap_s_by_trial": {
+    "qwen38_flash__react__web_dom_missing__task22__seed1__control__rep0": {
+      "count": 19,
+      "median": 1.308265209197998,
+      "p90": 1.9543232917785645,
+      "max": 6.239268064498901
+    },
+    "qwen38_flash__react__web_dom_missing__task102__seed1__control__rep0": {
+      "count": 1,
+      "median": 6.407248020172119,
+      "p90": 6.407248020172119,
+      "max": 6.407248020172119
+    },
+    "qwen38_flash__react__web_dom_missing__task132__seed1__control__rep0": {
+      "count": 3,
+      "median": 6.101397514343262,
+      "p90": 6.101397514343262,
+      "max": 6.489216566085815
+    },
+    "qwen38_flash__plan_execute__web_dom_missing__task102__seed1__control__rep0": {
+      "count": 28,
+      "median": 0.006360530853271484,
+      "p90": 0.5810651779174805,
+      "max": 5.997141599655151
+    },
+    "qwen38_flash__plan_execute__web_dom_missing__task22__seed1__control__rep0": {
+      "count": 24,
+      "median": 0.006161332130432129,
+      "p90": 0.6189792156219482,
+      "max": 6.138392210006714
+    },
+    "qwen38_flash__plan_execute__web_dom_missing__task132__seed1__control__rep0": {
+      "count": 12,
+      "median": 0.008210897445678711,
+      "p90": 5.722223520278931,
+      "max": 11.452897310256958
+    }
+  },
+  "latency_s": {
+    "calls_with_latency": 93,
+    "min": 1.854,
+    "median": 16.575,
+    "max": 497.053
+  },
+  "slow_calls": {
+    "threshold_s": 60.0,
+    "note": "统计单次调用延迟 > 阈值。Qwen 端点上实测为网关空闲驱逐导致的冷启动（273–280s）；其它端点也可能是长生成或客户端重试，故用中性口径命名。",
+    "count": 26,
+    "by_architecture": {
+      "react": 14,
+      "plan_execute": 12
+    }
+  }
+}
