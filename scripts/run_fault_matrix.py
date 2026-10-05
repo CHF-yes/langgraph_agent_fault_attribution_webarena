@@ -160,7 +160,10 @@ def classify_log(text, *, expect_fault=True):
         r"(?:HTTP|status|status_code|response[_ ]code)[^\n]{0,24}(?:429|502|503)",
         r"(?:429|502|503) (?:Too Many Requests|Bad Gateway|Service Unavailable)",
         r"Connection refused",
-        r"net::ERR_[A-Z_]+",
+        # net::ERR_ABORTED 在不同场景含义相反：导航被中止（可能是真实故障），
+        # 但 agent 点击 mailto:/tel:/javascript: 链接时浏览器必然中止——那是正常的
+        # 动作失败，曾把 deepseek react 整批误判为基础设施错误并触发停止策略。
+        r"net::ERR_(?!ABORTED at (?:mailto|tel|javascript):)[A-Z_]+",
         r"EPIPE",
         r"write after end",
         r"Target (?:page|context|browser) has been closed",
@@ -284,6 +287,7 @@ def main():
                 injection_step=injection_steps[job["fault_type"]],
                 fault_intensity=args.fault_intensity,
                 dataset_path=dataset_path(),
+                condition_scope=getattr(args, "condition", "both"),
             )
             if ok:
                 completed_keys.add(key)

@@ -1,0 +1,56 @@
+{
+  "task_id": 134,
+  "intent_template_id": 322,
+  "sites": [
+    "gitlab"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    {\n      \"project\": \"a11yproject.com\",\n      \"author\": \"Kilian Valkhof (kilian)\",\n      \"date\": \"2023-03-01\",\n      \"commit_count\": 0,\n      \"explanation\": \"The commits list for the a11yproject.com repository groups commits by date as 14 Mar, 12 Mar, 07 Mar, 05 Mar, 02 Mar, then 28 Feb 2023. There is no '01 Mar, 2023' group at all, meaning no commits were made on March 1, 2023. Kilian Valkhof's only nearby commit ('Fix typos in the code examples (#1524)', SHA 081f0af1) is dated 05 Mar, 2023. Therefore kilian made 0 commits on March 1, 2023.\"\n    }\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "retrieved_data": [
+          {
+            "project": "a11yproject.com",
+            "author": "Kilian Valkhof (kilian)",
+            "date": "2023-03-01",
+            "commit_count": 0,
+            "explanation": "The commits list for the a11yproject.com repository groups commits by date as 14 Mar, 12 Mar, 07 Mar, 05 Mar, 02 Mar, then 28 Feb 2023. There is no '01 Mar, 2023' group at all, meaning no commits were made on March 1, 2023. Kilian Valkhof's only nearby commit ('Fix typos in the code examples (#1524)', SHA 081f0af1) is dated 05 Mar, 2023. Therefore kilian made 0 commits on March 1, 2023."
+          }
+        ],
+        "task_type": "retrieve",
+        "status": "success"
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          0.0
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/1), Missing: 1, Extra: 1",
+            "Expected: [0.0], Got: [{'project': 'a11yproject.com', 'author': 'Kilian Valkhof (kilian)', 'date': '2023-03-01', 'commit_count': 0, 'explanation': \"The commits list for the a11yproject.com repository groups commits by date as 14 Mar, 12 Mar, 07 Mar, 05 Mar, 02 Mar, then 28 Feb 2023. There is no '01 Mar, 2023' group at all, meaning no commits were made on March 1, 2023. Kilian Valkhof's only nearby commit ('Fix typos in the code examples (#1524)', SHA 081f0af1) is dated 05 Mar, 2023. Therefore kilian made 0 commits on March 1, 2023.\"}]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false
+}

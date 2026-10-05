@@ -1,0 +1,3947 @@
+{
+  "summary": {
+    "trials": 50,
+    "complete": 50,
+    "incomplete": []
+  },
+  "trials": [
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task102_seed1/102/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task102_seed1/102/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task102_seed1/102/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task102_seed1/102/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=deepseek_v41_flash|arch=plan_execute|fault=web_dom_missing|task=102|seed=1|cond=control|rep=0",
+        "file_stem": "deepseek_v41_flash__plan_execute__web_dom_missing__task102__seed1__control__rep0",
+        "pair_key": "model=deepseek_v41_flash|arch=plan_execute|fault=web_dom_missing|task=102|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "plan_execute",
+        "fault_type": "web_dom_missing",
+        "task_id": 102,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T105517-888b08",
+          "task_id": 102,
+          "site": "gitlab",
+          "url": "http://localhost:8023",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task102_seed1/102/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task102_seed1/102/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T105517-888b08/deepseek_v41_flash__plan_execute__web_dom_missing__task102__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 8,
+        "cap_exhausted": false,
+        "llm_calls": 17,
+        "time_sec": 142.855,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": false,
+          "recorded_at": 1791169060.251377
+        },
+        "created_at": 1791169060.251379
+      },
+      "agent_response": {
+        "task_type": "NAVIGATE",
+        "status": "SUCCESS",
+        "retrieved_data": null,
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task132_seed1/132/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task132_seed1/132/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task132_seed1/132/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task132_seed1/132/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=deepseek_v41_flash|arch=plan_execute|fault=web_dom_missing|task=132|seed=1|cond=control|rep=0",
+        "file_stem": "deepseek_v41_flash__plan_execute__web_dom_missing__task132__seed1__control__rep0",
+        "pair_key": "model=deepseek_v41_flash|arch=plan_execute|fault=web_dom_missing|task=132|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "plan_execute",
+        "fault_type": "web_dom_missing",
+        "task_id": 132,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T105530-3abe62",
+          "task_id": 132,
+          "site": "gitlab",
+          "url": "http://localhost:8023",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task132_seed1/132/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task132_seed1/132/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T105530-3abe62/deepseek_v41_flash__plan_execute__web_dom_missing__task132__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 5,
+        "cap_exhausted": false,
+        "llm_calls": 11,
+        "time_sec": 61.952,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": false,
+          "recorded_at": 1791168992.8024323
+        },
+        "created_at": 1791168992.8024335
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "SUCCESS",
+        "retrieved_data": [
+          "Kilian made 1 commit to a11yproject.com on March 5, 2023. The commit list shows a group labeled \"05 Mar, 2023 1 commit\", containing the single commit \"Fix typos in the code examples (#1524)\" (SHA 081f0af1) authored by Kilian Valkhof."
+        ],
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task133_seed1/133/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task133_seed1/133/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task133_seed1/133/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task133_seed1/133/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=deepseek_v41_flash|arch=plan_execute|fault=web_dom_missing|task=133|seed=1|cond=control|rep=0",
+        "file_stem": "deepseek_v41_flash__plan_execute__web_dom_missing__task133__seed1__control__rep0",
+        "pair_key": "model=deepseek_v41_flash|arch=plan_execute|fault=web_dom_missing|task=133|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "plan_execute",
+        "fault_type": "web_dom_missing",
+        "task_id": 133,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T105552-a68997",
+          "task_id": 133,
+          "site": "gitlab",
+          "url": "http://localhost:8023",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task133_seed1/133/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task133_seed1/133/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T105552-a68997/deepseek_v41_flash__plan_execute__web_dom_missing__task133__seed1__control__rep0.jsonl"
+        },
+        "completed": false,
+        "success": false,
+        "injection_count": 0,
+        "steps": 20,
+        "cap_exhausted": true,
+        "llm_calls": 50,
+        "time_sec": 209.148,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": false,
+          "recorded_at": 1791169162.0139215
+        },
+        "created_at": 1791169162.0139234
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "UNKNOWN_ERROR",
+        "retrieved_data": null,
+        "error_details": "max_steps exhausted after 20 steps; no answer produced"
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task134_seed1/134/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task134_seed1/134/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task134_seed1/134/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task134_seed1/134/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=deepseek_v41_flash|arch=plan_execute|fault=web_dom_missing|task=134|seed=1|cond=control|rep=0",
+        "file_stem": "deepseek_v41_flash__plan_execute__web_dom_missing__task134__seed1__control__rep0",
+        "pair_key": "model=deepseek_v41_flash|arch=plan_execute|fault=web_dom_missing|task=134|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "plan_execute",
+        "fault_type": "web_dom_missing",
+        "task_id": 134,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T105603-7dddc6",
+          "task_id": 134,
+          "site": "gitlab",
+          "url": "http://localhost:8023",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task134_seed1/134/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task134_seed1/134/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T105603-7dddc6/deepseek_v41_flash__plan_execute__web_dom_missing__task134__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 9,
+        "cap_exhausted": false,
+        "llm_calls": 22,
+        "time_sec": 65.346,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": false,
+          "recorded_at": 1791169028.8693275
+        },
+        "created_at": 1791169028.8693292
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "SUCCESS",
+        "retrieved_data": [
+          "Un páginado público cargó sin autenticación: navegar a http://localhost:8023/explore/projects mostró la lista pública de proyectos (Explore GitLab) sin muro de inicio de sesión. El proyecto objetivo, \"The A11Y Project / a11yproject.com\" (Apache License 2.0), aparece en el listado junto con su enlace. Por lo tanto, la instancia permite acceso no autenticado a proyectos públicos y el repositorio a11yproject.com es accesible sin iniciar sesión, lo que permite consultar sus commits directamente."
+        ],
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task22_seed1/22/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task22_seed1/22/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task22_seed1/22/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task22_seed1/22/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=deepseek_v41_flash|arch=plan_execute|fault=web_dom_missing|task=22|seed=1|cond=control|rep=0",
+        "file_stem": "deepseek_v41_flash__plan_execute__web_dom_missing__task22__seed1__control__rep0",
+        "pair_key": "model=deepseek_v41_flash|arch=plan_execute|fault=web_dom_missing|task=22|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "plan_execute",
+        "fault_type": "web_dom_missing",
+        "task_id": 22,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T105517-7dd82c",
+          "task_id": 22,
+          "site": "shopping",
+          "url": "http://localhost:7770/fujifilm-finepix-z200fd-10mp-digital-camera-with-5x-optical-dual-image-stabilized-zoom-black.html",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task22_seed1/22/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task22_seed1/22/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T105517-7dd82c/deepseek_v41_flash__plan_execute__web_dom_missing__task22__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 6,
+        "cap_exhausted": false,
+        "llm_calls": 14,
+        "time_sec": 102.878,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": false,
+          "recorded_at": 1791169020.2816765
+        },
+        "created_at": 1791169020.2816877
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "SUCCESS",
+        "retrieved_data": [
+          "Navigated to Page 1 of the customer reviews (URL: http://localhost:7770/review/product/listAjax/id/38785/). Page 1 displays 10 reviews with reviewers: badkat, DrummerGirlLB, G. Matsusaki, Razzberry, Nic, CA Guy, Kenan, CT, romance lover, AZ Guy. Page 2 contains 2 additional reviews (AZ Guy, CT). Note: several review bodies appear truncated in the accessibility tree (e.g., Razzberry, CA Guy, Kenan, CT, romance lover, AZ Guy), so full text may require expanding individual reviews to check for the underwater photo mention."
+        ],
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task24_seed1/24/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task24_seed1/24/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task24_seed1/24/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task24_seed1/24/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=deepseek_v41_flash|arch=plan_execute|fault=web_dom_missing|task=24|seed=1|cond=control|rep=0",
+        "file_stem": "deepseek_v41_flash__plan_execute__web_dom_missing__task24__seed1__control__rep0",
+        "pair_key": "model=deepseek_v41_flash|arch=plan_execute|fault=web_dom_missing|task=24|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "plan_execute",
+        "fault_type": "web_dom_missing",
+        "task_id": 24,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T105517-3be4a3",
+          "task_id": 24,
+          "site": "shopping",
+          "url": "http://localhost:7770/haflinger-men-s-wool-felt-open-back-slippers-beige-550-peat-us-7.html",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task24_seed1/24/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task24_seed1/24/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T105517-3be4a3/deepseek_v41_flash__plan_execute__web_dom_missing__task24__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 2,
+        "cap_exhausted": false,
+        "llm_calls": 4,
+        "time_sec": 10.471,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": false,
+          "recorded_at": 1791168927.8227801
+        },
+        "created_at": 1791168927.8227923
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "NOT_FOUND_ERROR",
+        "retrieved_data": null,
+        "error_details": "No reviewer mentions the price being unfair. The product page has 2 reviews:\n1. Jay (4/18/23) — \"Wonderful! ... Nothing.....everyday use.\" (5 stars, praises the product; no price comment)\n2. Josef Bürger (4/18/23) — \"Die Haflinger sind wie beschrieben und erwartet sehr gut\" (says the slippers are as described and very good; no price comment)\n\nShortlist of reviewers mentioning price being unfair: NONE (empty)."
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task258_seed1/258/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task258_seed1/258/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task258_seed1/258/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task258_seed1/258/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=deepseek_v41_flash|arch=plan_execute|fault=web_dom_missing|task=258|seed=1|cond=control|rep=0",
+        "file_stem": "deepseek_v41_flash__plan_execute__web_dom_missing__task258__seed1__control__rep0",
+        "pair_key": "model=deepseek_v41_flash|arch=plan_execute|fault=web_dom_missing|task=258|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "plan_execute",
+        "fault_type": "web_dom_missing",
+        "task_id": 258,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T105635-60fd0f",
+          "task_id": 258,
+          "site": "gitlab",
+          "url": "http://localhost:8023",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task258_seed1/258/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task258_seed1/258/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T105635-60fd0f/deepseek_v41_flash__plan_execute__web_dom_missing__task258__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 1,
+        "cap_exhausted": false,
+        "llm_calls": 3,
+        "time_sec": 8.289,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": false,
+          "recorded_at": 1791169004.1492155
+        },
+        "created_at": 1791169004.1492207
+      },
+      "agent_response": {
+        "task_type": "NAVIGATE",
+        "status": "SUCCESS",
+        "retrieved_data": null,
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task25_seed1/25/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task25_seed1/25/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task25_seed1/25/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task25_seed1/25/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=deepseek_v41_flash|arch=plan_execute|fault=web_dom_missing|task=25|seed=1|cond=control|rep=0",
+        "file_stem": "deepseek_v41_flash__plan_execute__web_dom_missing__task25__seed1__control__rep0",
+        "pair_key": "model=deepseek_v41_flash|arch=plan_execute|fault=web_dom_missing|task=25|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "plan_execute",
+        "fault_type": "web_dom_missing",
+        "task_id": 25,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T105517-5bb52c",
+          "task_id": 25,
+          "site": "shopping",
+          "url": "http://localhost:7770/epson-workforce-wf-3620-wifi-direct-all-in-one-color-inkjet-printer-copier-scanner-amazon-dash-replenishment-ready.html",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task25_seed1/25/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task25_seed1/25/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T105517-5bb52c/deepseek_v41_flash__plan_execute__web_dom_missing__task25__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 14,
+        "cap_exhausted": false,
+        "llm_calls": 34,
+        "time_sec": 288.697,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": false,
+          "recorded_at": 1791169206.0425882
+        },
+        "created_at": 1791169206.0425894
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "NOT_FOUND_ERROR",
+        "retrieved_data": null,
+        "error_details": "Returned from the single \"Review Details\" view to the full product review listing for the Youdepot Coat Rack (Product: \"Youdepot - Coat Rack, 7 Hooks, Decorative Metal Door Hooks Hanger Holder for Home Office Kitchen Use (White)\", SKU B07D7PZ4SG, id 32235). Price $12.98. Average rating 85% of 100; \"12 Reviews\" link present. Pagination: \"Items 11 to 12 of 12 total\" (page 2) and page 1 lists 10 items.\n\nAll reviews captured (reviewer | rating | date | visible text):\n\nPAGE 1:\n1. Ellen Weglarz | 100% (5★) | 4/18/23 | \"The fit is perfect and the look is really very lovely. This door hanger was thick enough to hold three bath robes and two bath towels it was sturdy enough without bending or moving. It was a fabulous value for my money, so much so I ordered three more for my home.\"\n2. HikerGirlBelle | 100% (5★) | 4/18/23 | \"Holds lots of weight. This was hanging in my bathroom in my last place and in my room now and is great. The hooks are wider than most of my doors so I usually put a tea towel or a sock or something behind it so it fits better...\"\n3. Bailey | 100% (5★) | 4/18/23 | \"Good value... Nice sturdy product... What's not to like!!! I live in a small Apartment and this holds all my at home casual wear... good value...\"\n4. Medic Man | 80% (4★) | 4/18/23 | \"A little flimsy but looks good. A nice looking rack, if a bit flimsy. I bought this to organize my daughter's scarves. Works great for lightweight items like scarves. But I would not get this if you had designs to use this for coats or heavier items.\"\n5. LITTLEONEINCT | 100% (5★) | 4/18/23 | \"Love This! I really like this hanger. I have little closet space in my apartment so this really helps with my coats... I would highly recommend this item.\"\n6. Karen | 60% (3★) | 4/18/23 | \"Meh. I give it 3 stars because it's pretty thin the metal, feels like it can bend if heavy stuff are being hanged, also it does not let me close my door... This one is more thicker the hook but for the price I guess it's okay. I just need it for my sweaters\"\n7. Amazon Customer | 60% (3★) | 4/18/23 | \"cute. this is really cute but it came bent, its pretty flimsy in that aspect. i bent it back but its not even - still using it in my daughters room holding towels and jackets, the door hook part was really my only issue\"\n8. ClaudiaRClaudiaR | 100% (5★) | 4/18/23 | \"Really cute. Better than expected. Cute to match with my light blue and white bedroom... Sturdy enough for my coats although I prefer them in the closet. No problems with anything.\"\n9. Becca | rating not displayed | 4/18/23 | \"s not as strong or durable as my other one, the metal isn\" (text clipped)\n10. Wolf Paws | 100% (5★) | 4/18/23 | \"Cute, not too flimsy for basic home/bath use. While I would be wary of putting a heavy backpack on it, the hangar seems durable for its thin hooks... the door bracket... is wider than I expected...\"\n\nPAGE 2 (2 entries, duplicating items 9-10):\n11. Wolf Paws | 100% | 4/18/23 | same text as above\n12. Becca | rating not displayed | 4/18/23 | same clipped text as above\n\nNote for the overall goal: Within these reviews, NO reviewer explicitly mentions \"print quality\" (this is a coat rack product; the reviews discuss sturdiness/thin metal/fit/hooks). The only reviews rated ≤3 stars are Karen (60% = 3★), Amazon Customer (60% = 3★), and possibly Becca (rating not shown). None of the low-rated reviews mention print quality."
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task274_seed1/274/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task274_seed1/274/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task274_seed1/274/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task274_seed1/274/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=deepseek_v41_flash|arch=plan_execute|fault=web_dom_missing|task=274|seed=1|cond=control|rep=0",
+        "file_stem": "deepseek_v41_flash__plan_execute__web_dom_missing__task274__seed1__control__rep0",
+        "pair_key": "model=deepseek_v41_flash|arch=plan_execute|fault=web_dom_missing|task=274|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "plan_execute",
+        "fault_type": "web_dom_missing",
+        "task_id": 274,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T105647-92b8ce",
+          "task_id": 274,
+          "site": "shopping",
+          "url": "http://localhost:7770",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task274_seed1/274/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task274_seed1/274/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T105647-92b8ce/deepseek_v41_flash__plan_execute__web_dom_missing__task274__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 4,
+        "cap_exhausted": false,
+        "llm_calls": 9,
+        "time_sec": 24.498,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": false,
+          "recorded_at": 1791169031.8840566
+        },
+        "created_at": 1791169031.8840668
+      },
+      "agent_response": {
+        "task_type": "NAVIGATE",
+        "status": "SUCCESS",
+        "retrieved_data": null,
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task27_seed1/27/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task27_seed1/27/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task27_seed1/27/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task27_seed1/27/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=deepseek_v41_flash|arch=plan_execute|fault=web_dom_missing|task=27|seed=1|cond=control|rep=0",
+        "file_stem": "deepseek_v41_flash__plan_execute__web_dom_missing__task27__seed1__control__rep0",
+        "pair_key": "model=deepseek_v41_flash|arch=plan_execute|fault=web_dom_missing|task=27|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "plan_execute",
+        "fault_type": "web_dom_missing",
+        "task_id": 27,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T105517-3b1303",
+          "task_id": 27,
+          "site": "reddit",
+          "url": "http://localhost:9999",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task27_seed1/27/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task27_seed1/27/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T105517-3b1303/deepseek_v41_flash__plan_execute__web_dom_missing__task27__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 5,
+        "cap_exhausted": false,
+        "llm_calls": 12,
+        "time_sec": 42.969,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": false,
+          "recorded_at": 1791168960.3209157
+        },
+        "created_at": 1791168960.3209178
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "SUCCESS",
+        "retrieved_data": [],
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task28_seed1/28/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task28_seed1/28/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task28_seed1/28/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task28_seed1/28/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=deepseek_v41_flash|arch=plan_execute|fault=web_dom_missing|task=28|seed=1|cond=control|rep=0",
+        "file_stem": "deepseek_v41_flash__plan_execute__web_dom_missing__task28__seed1__control__rep0",
+        "pair_key": "model=deepseek_v41_flash|arch=plan_execute|fault=web_dom_missing|task=28|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "plan_execute",
+        "fault_type": "web_dom_missing",
+        "task_id": 28,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T105517-bdd85c",
+          "task_id": 28,
+          "site": "reddit",
+          "url": "http://localhost:9999",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task28_seed1/28/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task28_seed1/28/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T105517-bdd85c/deepseek_v41_flash__plan_execute__web_dom_missing__task28__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 10,
+        "cap_exhausted": false,
+        "llm_calls": 22,
+        "time_sec": 90.609,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": false,
+          "recorded_at": 1791169007.9509983
+        },
+        "created_at": 1791169007.9509997
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "SUCCESS",
+        "retrieved_data": [
+          "Most recent post in /f/WorcesterMA (sorted by New):\n- post_title: \"Best place for a foot rub?\"\n- username: \"mineinhusdson\""
+        ],
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task308_seed1/308/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task308_seed1/308/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task308_seed1/308/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task308_seed1/308/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=deepseek_v41_flash|arch=plan_execute|fault=web_dom_missing|task=308|seed=1|cond=control|rep=0",
+        "file_stem": "deepseek_v41_flash__plan_execute__web_dom_missing__task308__seed1__control__rep0",
+        "pair_key": "model=deepseek_v41_flash|arch=plan_execute|fault=web_dom_missing|task=308|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "plan_execute",
+        "fault_type": "web_dom_missing",
+        "task_id": 308,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T105650-5430f3",
+          "task_id": 308,
+          "site": "gitlab",
+          "url": "http://localhost:8023",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task308_seed1/308/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task308_seed1/308/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T105650-5430f3/deepseek_v41_flash__plan_execute__web_dom_missing__task308__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 10,
+        "cap_exhausted": false,
+        "llm_calls": 23,
+        "time_sec": 141.105,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": false,
+          "recorded_at": 1791169152.0926104
+        },
+        "created_at": 1791169152.0926116
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "SUCCESS",
+        "retrieved_data": [
+          "The user with the most commits to the primer/design project is Shawn Allen (shawn.allen@github.com), with 95 commits. It is the unique maximum — no other contributor ties at that count (the next highest is Inayaili León with 77 commits)."
+        ],
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task30_seed1/30/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task30_seed1/30/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task30_seed1/30/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task30_seed1/30/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=deepseek_v41_flash|arch=plan_execute|fault=web_dom_missing|task=30|seed=1|cond=control|rep=0",
+        "file_stem": "deepseek_v41_flash__plan_execute__web_dom_missing__task30__seed1__control__rep0",
+        "pair_key": "model=deepseek_v41_flash|arch=plan_execute|fault=web_dom_missing|task=30|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "plan_execute",
+        "fault_type": "web_dom_missing",
+        "task_id": 30,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T105517-5fdf41",
+          "task_id": 30,
+          "site": "reddit",
+          "url": "http://localhost:9999",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task30_seed1/30/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task30_seed1/30/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T105517-5fdf41/deepseek_v41_flash__plan_execute__web_dom_missing__task30__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 4,
+        "cap_exhausted": false,
+        "llm_calls": 9,
+        "time_sec": 32.409,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": false,
+          "recorded_at": 1791168949.810991
+        },
+        "created_at": 1791168949.8109932
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "SUCCESS",
+        "retrieved_data": [],
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task66_seed1/66/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task66_seed1/66/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task66_seed1/66/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task66_seed1/66/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=deepseek_v41_flash|arch=plan_execute|fault=web_dom_missing|task=66|seed=1|cond=control|rep=0",
+        "file_stem": "deepseek_v41_flash__plan_execute__web_dom_missing__task66__seed1__control__rep0",
+        "pair_key": "model=deepseek_v41_flash|arch=plan_execute|fault=web_dom_missing|task=66|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "plan_execute",
+        "fault_type": "web_dom_missing",
+        "task_id": 66,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T105517-ebb8fb",
+          "task_id": 66,
+          "site": "reddit",
+          "url": "http://localhost:9999",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task66_seed1/66/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task66_seed1/66/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T105517-ebb8fb/deepseek_v41_flash__plan_execute__web_dom_missing__task66__seed1__control__rep0.jsonl"
+        },
+        "completed": false,
+        "success": false,
+        "injection_count": 0,
+        "steps": 20,
+        "cap_exhausted": true,
+        "llm_calls": 50,
+        "time_sec": 246.704,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": false,
+          "recorded_at": 1791169164.1725187
+        },
+        "created_at": 1791169164.1725202
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "UNKNOWN_ERROR",
+        "retrieved_data": null,
+        "error_details": "max_steps exhausted after 20 steps; no answer produced"
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task102_seed1/102/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task102_seed1/102/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task102_seed1/102/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task102_seed1/102/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=102|seed=1|cond=control|rep=0",
+        "file_stem": "deepseek_v41_flash__react__web_dom_missing__task102__seed1__control__rep0",
+        "pair_key": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=102|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "web_dom_missing",
+        "task_id": 102,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T105156-a6334d",
+          "task_id": 102,
+          "site": "gitlab",
+          "url": "http://localhost:8023",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task102_seed1/102/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task102_seed1/102/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T105156-a6334d/deepseek_v41_flash__react__web_dom_missing__task102__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 2,
+        "cap_exhausted": false,
+        "llm_calls": 2,
+        "time_sec": 13.386,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": false,
+          "recorded_at": 1791168729.4445286
+        },
+        "created_at": 1791168729.4445338
+      },
+      "agent_response": {
+        "task_type": "NAVIGATE",
+        "status": "SUCCESS",
+        "retrieved_data": null,
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task132_seed1/132/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task132_seed1/132/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task132_seed1/132/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task132_seed1/132/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=132|seed=1|cond=control|rep=0",
+        "file_stem": "deepseek_v41_flash__react__web_dom_missing__task132__seed1__control__rep0",
+        "pair_key": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=132|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "web_dom_missing",
+        "task_id": 132,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T105212-ee2da1",
+          "task_id": 132,
+          "site": "gitlab",
+          "url": "http://localhost:8023",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task132_seed1/132/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task132_seed1/132/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T105212-ee2da1/deepseek_v41_flash__react__web_dom_missing__task132__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 10,
+        "cap_exhausted": false,
+        "llm_calls": 10,
+        "time_sec": 46.915,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": false,
+          "recorded_at": 1791168779.4688563
+        },
+        "created_at": 1791168779.4688585
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "SUCCESS",
+        "retrieved_data": [
+          1
+        ],
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task133_seed1/133/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task133_seed1/133/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task133_seed1/133/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task133_seed1/133/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=133|seed=1|cond=control|rep=0",
+        "file_stem": "deepseek_v41_flash__react__web_dom_missing__task133__seed1__control__rep0",
+        "pair_key": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=133|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "web_dom_missing",
+        "task_id": 133,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T105233-a38e39",
+          "task_id": 133,
+          "site": "gitlab",
+          "url": "http://localhost:8023",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task133_seed1/133/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task133_seed1/133/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T105233-a38e39/deepseek_v41_flash__react__web_dom_missing__task133__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 9,
+        "cap_exhausted": false,
+        "llm_calls": 9,
+        "time_sec": 33.07,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": false,
+          "recorded_at": 1791168786.5155025
+        },
+        "created_at": 1791168786.5155036
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "SUCCESS",
+        "retrieved_data": [
+          "Eric Bailey made 2 commits to a11yproject.com on March 2, 2023:\n1. \"Copy tweaks (#1523)\" (SHA a323cbb6)\n2. \"Add Are you making these five mistakes when writing alt text? post (#1522)\" (SHA 9bf4ae35)"
+        ],
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task134_seed1/134/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task134_seed1/134/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task134_seed1/134/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task134_seed1/134/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=134|seed=1|cond=control|rep=0",
+        "file_stem": "deepseek_v41_flash__react__web_dom_missing__task134__seed1__control__rep0",
+        "pair_key": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=134|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "web_dom_missing",
+        "task_id": 134,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T111953-cc0092",
+          "task_id": 134,
+          "site": "gitlab",
+          "url": "http://localhost:8023",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task134_seed1/134/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task134_seed1/134/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T111953-cc0092/deepseek_v41_flash__react__web_dom_missing__task134__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 9,
+        "cap_exhausted": false,
+        "llm_calls": 9,
+        "time_sec": 74.633,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": true,
+          "recorded_at": 1791170467.896856
+        },
+        "created_at": 1791170467.8968587
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "SUCCESS",
+        "retrieved_data": [
+          "THOUGHT: The API endpoint for commits on March 1, 2023, returned an empty JSON array `[]`, indicating no commits were made on that date. I verified the API is functional by checking another date (March 5, 2023), which returned data (though truncated). The commit list on the main branch also showed no commits between March 2 and February 28, 2023. Therefore, Kilian Valkhof made 0 commits on March 1, 2023.\n\nACTION: stop(answer=\"0\")"
+        ],
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task22_seed1/22/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task22_seed1/22/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task22_seed1/22/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task22_seed1/22/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=22|seed=1|cond=control|rep=0",
+        "file_stem": "deepseek_v41_flash__react__web_dom_missing__task22__seed1__control__rep0",
+        "pair_key": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=22|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "web_dom_missing",
+        "task_id": 22,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T111953-b5a82a",
+          "task_id": 22,
+          "site": "shopping",
+          "url": "http://localhost:7770/fujifilm-finepix-z200fd-10mp-digital-camera-with-5x-optical-dual-image-stabilized-zoom-black.html",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task22_seed1/22/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task22_seed1/22/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T111953-b5a82a/deepseek_v41_flash__react__web_dom_missing__task22__seed1__control__rep0.jsonl"
+        },
+        "completed": false,
+        "success": false,
+        "injection_count": 0,
+        "steps": 20,
+        "cap_exhausted": true,
+        "llm_calls": 20,
+        "time_sec": 525.65,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": true,
+          "recorded_at": 1791170918.834604
+        },
+        "created_at": 1791170918.834605
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "UNKNOWN_ERROR",
+        "retrieved_data": null,
+        "error_details": "max_steps exhausted after 20 steps; no answer produced"
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task24_seed1/24/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task24_seed1/24/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task24_seed1/24/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task24_seed1/24/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=24|seed=1|cond=control|rep=0",
+        "file_stem": "deepseek_v41_flash__react__web_dom_missing__task24__seed1__control__rep0",
+        "pair_key": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=24|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "web_dom_missing",
+        "task_id": 24,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T111953-5404b2",
+          "task_id": 24,
+          "site": "shopping",
+          "url": "http://localhost:7770/haflinger-men-s-wool-felt-open-back-slippers-beige-550-peat-us-7.html",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task24_seed1/24/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task24_seed1/24/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T111953-5404b2/deepseek_v41_flash__react__web_dom_missing__task24__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 2,
+        "cap_exhausted": false,
+        "llm_calls": 2,
+        "time_sec": 6.475,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": true,
+          "recorded_at": 1791170399.668729
+        },
+        "created_at": 1791170399.668735
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "NOT_FOUND_ERROR",
+        "retrieved_data": null,
+        "error_details": "No reviewer on this page mentions price being unfair. The product has only 2 reviews: one by \"Jay\" (Wonderful! ... Nothing.....everyday use.) and one by \"Josef Bürger\" (Joe Die Haflinger sind wie beschrieben und erwartet sehr gut). Both are positive reviews about the product's quality and fit, and neither of them discusses or complains about the price."
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task258_seed1/258/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task258_seed1/258/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task258_seed1/258/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task258_seed1/258/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=258|seed=1|cond=control|rep=0",
+        "file_stem": "deepseek_v41_flash__react__web_dom_missing__task258__seed1__control__rep0",
+        "pair_key": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=258|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "web_dom_missing",
+        "task_id": 258,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T105303-fff4b3",
+          "task_id": 258,
+          "site": "gitlab",
+          "url": "http://localhost:8023",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task258_seed1/258/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task258_seed1/258/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T105303-fff4b3/deepseek_v41_flash__react__web_dom_missing__task258__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 3,
+        "cap_exhausted": false,
+        "llm_calls": 3,
+        "time_sec": 12.441,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": false,
+          "recorded_at": 1791168795.6729546
+        },
+        "created_at": 1791168795.6729605
+      },
+      "agent_response": {
+        "task_type": "NAVIGATE",
+        "status": "SUCCESS",
+        "retrieved_data": null,
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task25_seed1/25/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task25_seed1/25/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task25_seed1/25/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task25_seed1/25/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=25|seed=1|cond=control|rep=0",
+        "file_stem": "deepseek_v41_flash__react__web_dom_missing__task25__seed1__control__rep0",
+        "pair_key": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=25|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "web_dom_missing",
+        "task_id": 25,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T111953-617066",
+          "task_id": 25,
+          "site": "shopping",
+          "url": "http://localhost:7770/epson-workforce-wf-3620-wifi-direct-all-in-one-color-inkjet-printer-copier-scanner-amazon-dash-replenishment-ready.html",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task25_seed1/25/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task25_seed1/25/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T111953-617066/deepseek_v41_flash__react__web_dom_missing__task25__seed1__control__rep0.jsonl"
+        },
+        "completed": false,
+        "success": false,
+        "injection_count": 0,
+        "steps": 20,
+        "cap_exhausted": true,
+        "llm_calls": 20,
+        "time_sec": 512.857,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": true,
+          "recorded_at": 1791170906.0453506
+        },
+        "created_at": 1791170906.0453525
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "UNKNOWN_ERROR",
+        "retrieved_data": null,
+        "error_details": "max_steps exhausted after 20 steps; no answer produced"
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task274_seed1/274/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task274_seed1/274/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task274_seed1/274/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task274_seed1/274/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=274|seed=1|cond=control|rep=0",
+        "file_stem": "deepseek_v41_flash__react__web_dom_missing__task274__seed1__control__rep0",
+        "pair_key": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=274|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "web_dom_missing",
+        "task_id": 274,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T105309-8a0ad9",
+          "task_id": 274,
+          "site": "shopping",
+          "url": "http://localhost:7770",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task274_seed1/274/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task274_seed1/274/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T105309-8a0ad9/deepseek_v41_flash__react__web_dom_missing__task274__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 4,
+        "cap_exhausted": false,
+        "llm_calls": 4,
+        "time_sec": 13.625,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": false,
+          "recorded_at": 1791168803.1450765
+        },
+        "created_at": 1791168803.145084
+      },
+      "agent_response": {
+        "task_type": "NAVIGATE",
+        "status": "SUCCESS",
+        "retrieved_data": null,
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task27_seed1/27/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task27_seed1/27/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task27_seed1/27/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task27_seed1/27/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=27|seed=1|cond=control|rep=0",
+        "file_stem": "deepseek_v41_flash__react__web_dom_missing__task27__seed1__control__rep0",
+        "pair_key": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=27|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "web_dom_missing",
+        "task_id": 27,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T105155-838511",
+          "task_id": 27,
+          "site": "reddit",
+          "url": "http://localhost:9999",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task27_seed1/27/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task27_seed1/27/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T105155-838511/deepseek_v41_flash__react__web_dom_missing__task27__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 6,
+        "cap_exhausted": false,
+        "llm_calls": 6,
+        "time_sec": 154.916,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": false,
+          "recorded_at": 1791168870.9127362
+        },
+        "created_at": 1791168870.9127386
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "SUCCESS",
+        "retrieved_data": [
+          {
+            "username": "Hammer94",
+            "post_title": "56 year old mom has no retirement. Where do I even start on her behalf?",
+            "count": 0
+          }
+        ],
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task28_seed1/28/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task28_seed1/28/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task28_seed1/28/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task28_seed1/28/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=28|seed=1|cond=control|rep=0",
+        "file_stem": "deepseek_v41_flash__react__web_dom_missing__task28__seed1__control__rep0",
+        "pair_key": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=28|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "web_dom_missing",
+        "task_id": 28,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T105155-4218af",
+          "task_id": 28,
+          "site": "reddit",
+          "url": "http://localhost:9999",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task28_seed1/28/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task28_seed1/28/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T105155-4218af/deepseek_v41_flash__react__web_dom_missing__task28__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 11,
+        "cap_exhausted": false,
+        "llm_calls": 11,
+        "time_sec": 55.715,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": false,
+          "recorded_at": 1791168771.7009099
+        },
+        "created_at": 1791168771.7009113
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "SUCCESS",
+        "retrieved_data": [
+          {
+            "username": "mineinhusdson",
+            "post_title": "Best place for a foot rub?",
+            "count": 0
+          }
+        ],
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task308_seed1/308/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task308_seed1/308/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task308_seed1/308/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task308_seed1/308/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=308|seed=1|cond=control|rep=0",
+        "file_stem": "deepseek_v41_flash__react__web_dom_missing__task308__seed1__control__rep0",
+        "pair_key": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=308|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "web_dom_missing",
+        "task_id": 308,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T111953-15cf62",
+          "task_id": 308,
+          "site": "gitlab",
+          "url": "http://localhost:8023",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task308_seed1/308/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task308_seed1/308/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T111953-15cf62/deepseek_v41_flash__react__web_dom_missing__task308__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 11,
+        "cap_exhausted": false,
+        "llm_calls": 11,
+        "time_sec": 40.381,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": true,
+          "recorded_at": 1791170433.674978
+        },
+        "created_at": 1791170433.6749792
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "SUCCESS",
+        "retrieved_data": [
+          "The user with the most commits to the primer/design project is Shawn Allen (shawn.allen@github.com), with 95 commits to the main branch. The next highest is Inayaili León with 77 commits."
+        ],
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task30_seed1/30/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task30_seed1/30/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task30_seed1/30/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task30_seed1/30/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=30|seed=1|cond=control|rep=0",
+        "file_stem": "deepseek_v41_flash__react__web_dom_missing__task30__seed1__control__rep0",
+        "pair_key": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=30|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "web_dom_missing",
+        "task_id": 30,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T105156-0e1bfa",
+          "task_id": 30,
+          "site": "reddit",
+          "url": "http://localhost:9999",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task30_seed1/30/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task30_seed1/30/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T105156-0e1bfa/deepseek_v41_flash__react__web_dom_missing__task30__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 8,
+        "cap_exhausted": false,
+        "llm_calls": 8,
+        "time_sec": 34.203,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": false,
+          "recorded_at": 1791168750.2636993
+        },
+        "created_at": 1791168750.2637012
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "SUCCESS",
+        "retrieved_data": [
+          {
+            "username": "Dhghomon",
+            "post_title": "Scientists erupt at NASA gutting funding for crucial Venus mission",
+            "count": 0
+          }
+        ],
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task66_seed1/66/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task66_seed1/66/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task66_seed1/66/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task66_seed1/66/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=66|seed=1|cond=control|rep=0",
+        "file_stem": "deepseek_v41_flash__react__web_dom_missing__task66__seed1__control__rep0",
+        "pair_key": "model=deepseek_v41_flash|arch=react|fault=web_dom_missing|task=66|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "web_dom_missing",
+        "task_id": 66,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T105156-338f9a",
+          "task_id": 66,
+          "site": "reddit",
+          "url": "http://localhost:9999",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task66_seed1/66/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/deepseek_v41_flash/react/web_dom_missing_task66_seed1/66/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T105156-338f9a/deepseek_v41_flash__react__web_dom_missing__task66__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 20,
+        "cap_exhausted": false,
+        "llm_calls": 20,
+        "time_sec": 146.184,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": false,
+          "recorded_at": 1791168862.2112384
+        },
+        "created_at": 1791168862.2112403
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "SUCCESS",
+        "retrieved_data": [
+          "Among the top 10 hottest posts in the /f/books forum, the ones that recommend exactly one book are:\n\n1. \"I just finished reading The Hobbit to my 6 year old daughter, and she loved it!\" (recommends The Hobbit)\n2. \"Apple Books has a free audiobook of A Christmas Carol narrated by LeVar Burton!\" (recommends A Christmas Carol)\n\n(The other top 10 posts either recommend no specific book — e.g., bookshop.org website, Ukrainian publishers, prison book project, used bookstores article — or discuss an author/multiple books, e.g., the Agatha Christie essay and the \"38 Children's Books\" article.)"
+        ],
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task133_seed1/133/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task133_seed1/133/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task133_seed1/133/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task133_seed1/133/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=qwen38_flash|arch=plan_execute|fault=web_dom_missing|task=133|seed=1|cond=control|rep=0",
+        "file_stem": "qwen38_flash__plan_execute__web_dom_missing__task133__seed1__control__rep0",
+        "pair_key": "model=qwen38_flash|arch=plan_execute|fault=web_dom_missing|task=133|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "qwen38_flash",
+        "architecture": "plan_execute",
+        "fault_type": "web_dom_missing",
+        "task_id": 133,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T110950-58ef1e",
+          "task_id": 133,
+          "site": "gitlab",
+          "url": "http://localhost:8023",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task133_seed1/133/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task133_seed1/133/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T110950-58ef1e/qwen38_flash__plan_execute__web_dom_missing__task133__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 8,
+        "cap_exhausted": false,
+        "llm_calls": 20,
+        "time_sec": 369.486,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": true,
+          "recorded_at": 1791170160.0116715
+        },
+        "created_at": 1791170160.0116737
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "SUCCESS",
+        "retrieved_data": [
+          "Confirmed: the page at http://localhost:8023/a11yproject/a11yproject.com/-/commits/main is the commits list for the \"main\" branch of a11yproject.com, and it is fully rendered with date group headings (14 Mar, 12 Mar, 07 Mar, 05 Mar, 02 Mar 2023, 28 Feb, etc.), including the heading \"02 Mar, 2023 — 3 commits\".\n\nUnder that 02 Mar, 2023 heading there are 3 commits, of which 2 were authored by Eric Bailey:\n1. \"Copy tweaks (#1523)\" — Eric Bailey (a323cbb6)\n2. \"Add Are you making these five mistakes when writing alt text? post (#1522)\" — Eric Bailey (9bf4ae35)\n3. \"Correct typos on Contributing Guidelines and Follow (#1518)\" — Philip Wong (b349ca86) — not Eric\n\nAnswer: Eric made 2 commits to a11yproject.com on March 2, 2023."
+        ],
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task134_seed1/134/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task134_seed1/134/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task134_seed1/134/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task134_seed1/134/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=qwen38_flash|arch=plan_execute|fault=web_dom_missing|task=134|seed=1|cond=control|rep=0",
+        "file_stem": "qwen38_flash__plan_execute__web_dom_missing__task134__seed1__control__rep0",
+        "pair_key": "model=qwen38_flash|arch=plan_execute|fault=web_dom_missing|task=134|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "qwen38_flash",
+        "architecture": "plan_execute",
+        "fault_type": "web_dom_missing",
+        "task_id": 134,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T110950-46aa28",
+          "task_id": 134,
+          "site": "gitlab",
+          "url": "http://localhost:8023",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task134_seed1/134/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task134_seed1/134/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T110950-46aa28/qwen38_flash__plan_execute__web_dom_missing__task134__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 7,
+        "cap_exhausted": false,
+        "llm_calls": 15,
+        "time_sec": 217.212,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": true,
+          "recorded_at": 1791170008.5335875
+        },
+        "created_at": 1791170008.5335898
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "NOT_FOUND_ERROR",
+        "retrieved_data": null,
+        "error_details": "Kilian (Kilian Valkhof) made 0 commits to a11yproject.com on March 1, 2023.\n\nHow it was verified:\n- Opened the public project at http://localhost:8023/a11yproject/a11yproject.com (no sign-in was needed; accessed via Explore).\n- Applied the author filter via URL query parameter: http://localhost:8023/a11yproject/a11yproject.com/-/commits/main?author=Kilian%20Valkhof — the filter chip \"Kilian Valkhof\" confirms the author filter is active.\n- The filtered list returned the complete set of his commits on `main` (only 3 entries, no pagination/Next control):\n  1. \"Fix typos in the code examples (#1524)\" — 05 Mar, 2023 (081f0af1)\n  2. \"Add Polypane as a developer tool (#1427)\" — 19 Mar, 2022 (582c8c58)\n  3. \"Add article about Fix Contrast (#1288)\" — 08 Jun, 2021 (21356486)\n- Note: GitLab's commits view has no calendar-date filter in the UI or URL (its `before`/`after` params are SHA-based pagination), but because the full author-filtered commit list is displayed and none of the entries fall on March 1, 2023, the filter clearly yields no matching commits. His closest commit to that date is on March 5, 2023."
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task24_seed1/24/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task24_seed1/24/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task24_seed1/24/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task24_seed1/24/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=qwen38_flash|arch=plan_execute|fault=web_dom_missing|task=24|seed=1|cond=control|rep=0",
+        "file_stem": "qwen38_flash__plan_execute__web_dom_missing__task24__seed1__control__rep0",
+        "pair_key": "model=qwen38_flash|arch=plan_execute|fault=web_dom_missing|task=24|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "qwen38_flash",
+        "architecture": "plan_execute",
+        "fault_type": "web_dom_missing",
+        "task_id": 24,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T110950-21fff6",
+          "task_id": 24,
+          "site": "shopping",
+          "url": "http://localhost:7770/haflinger-men-s-wool-felt-open-back-slippers-beige-550-peat-us-7.html",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task24_seed1/24/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task24_seed1/24/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T110950-21fff6/qwen38_flash__plan_execute__web_dom_missing__task24__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 2,
+        "cap_exhausted": false,
+        "llm_calls": 4,
+        "time_sec": 25.623,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": true,
+          "recorded_at": 1791169816.1198592
+        },
+        "created_at": 1791169816.1198602
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "NOT_FOUND_ERROR",
+        "retrieved_data": null,
+        "error_details": "No reviewer on this page mentions the price being unfair.\n\nThe product page (HAFLINGER Men's Wool Felt Open Back Slippers, Beige 550 Peat, US:7) shows exactly 2 reviews, and both were checked:\n\n1. Jay — \"Wonderful!\" / \"Nothing.....everyday use.\" → No mention of price.\n2. Josef Bürger — \"Joe\" / \"Die Haflinger sind wie beschrieben und erwartet sehr gut\" (German: \"The Haflingers are very good, as described and expected\") → No mention of price.\n\nResult: 0 reviewers mention price being unfair (empty set)."
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task258_seed1/258/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task258_seed1/258/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task258_seed1/258/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task258_seed1/258/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=qwen38_flash|arch=plan_execute|fault=web_dom_missing|task=258|seed=1|cond=control|rep=0",
+        "file_stem": "qwen38_flash__plan_execute__web_dom_missing__task258__seed1__control__rep0",
+        "pair_key": "model=qwen38_flash|arch=plan_execute|fault=web_dom_missing|task=258|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "qwen38_flash",
+        "architecture": "plan_execute",
+        "fault_type": "web_dom_missing",
+        "task_id": 258,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T111018-4bdd7e",
+          "task_id": 258,
+          "site": "gitlab",
+          "url": "http://localhost:8023",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task258_seed1/258/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task258_seed1/258/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T111018-4bdd7e/qwen38_flash__plan_execute__web_dom_missing__task258__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 2,
+        "cap_exhausted": false,
+        "llm_calls": 4,
+        "time_sec": 30.716,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": true,
+          "recorded_at": 1791169849.716086
+        },
+        "created_at": 1791169849.716092
+      },
+      "agent_response": {
+        "task_type": "NAVIGATE",
+        "status": "SUCCESS",
+        "retrieved_data": null,
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task25_seed1/25/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task25_seed1/25/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task25_seed1/25/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task25_seed1/25/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=qwen38_flash|arch=plan_execute|fault=web_dom_missing|task=25|seed=1|cond=control|rep=0",
+        "file_stem": "qwen38_flash__plan_execute__web_dom_missing__task25__seed1__control__rep0",
+        "pair_key": "model=qwen38_flash|arch=plan_execute|fault=web_dom_missing|task=25|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "qwen38_flash",
+        "architecture": "plan_execute",
+        "fault_type": "web_dom_missing",
+        "task_id": 25,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T110950-1ad408",
+          "task_id": 25,
+          "site": "shopping",
+          "url": "http://localhost:7770/epson-workforce-wf-3620-wifi-direct-all-in-one-color-inkjet-printer-copier-scanner-amazon-dash-replenishment-ready.html",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task25_seed1/25/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task25_seed1/25/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T110950-1ad408/qwen38_flash__plan_execute__web_dom_missing__task25__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 5,
+        "cap_exhausted": false,
+        "llm_calls": 12,
+        "time_sec": 241.011,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": true,
+          "recorded_at": 1791170031.4894888
+        },
+        "created_at": 1791170031.4894946
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "NOT_FOUND_ERROR",
+        "retrieved_data": null,
+        "error_details": "No reviewer meets both criteria. The only review that explicitly mentions \"print quality\" is by **GoldfishGoldfish** (\"It gives great print quality as long as you use the premium paper settings\"), but it is a positive (high-star) review, not 3 stars or fewer. The reviewers who actually gave a rating of 3 stars or less (≈20% / 1-star) — **Bob in Vegas**, **AMAZON SHOPAHOLIC AMAZON SHOPAHOLIC**, and **Dylan Spears** — describe poor performance/quality but never use the explicit phrase \"print quality.\"\n\nTherefore, there are no reviewer(s) who mention print quality explicitly with a rating of 3 or fewer stars."
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task274_seed1/274/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task274_seed1/274/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task274_seed1/274/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task274_seed1/274/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=qwen38_flash|arch=plan_execute|fault=web_dom_missing|task=274|seed=1|cond=control|rep=0",
+        "file_stem": "qwen38_flash__plan_execute__web_dom_missing__task274__seed1__control__rep0",
+        "pair_key": "model=qwen38_flash|arch=plan_execute|fault=web_dom_missing|task=274|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "qwen38_flash",
+        "architecture": "plan_execute",
+        "fault_type": "web_dom_missing",
+        "task_id": 274,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T111046-d53fab",
+          "task_id": 274,
+          "site": "shopping",
+          "url": "http://localhost:7770",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task274_seed1/274/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task274_seed1/274/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T111046-d53fab/qwen38_flash__plan_execute__web_dom_missing__task274__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 3,
+        "cap_exhausted": false,
+        "llm_calls": 8,
+        "time_sec": 41.024,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": true,
+          "recorded_at": 1791169887.4866369
+        },
+        "created_at": 1791169887.486654
+      },
+      "agent_response": {
+        "task_type": "NAVIGATE",
+        "status": "SUCCESS",
+        "retrieved_data": null,
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task27_seed1/27/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task27_seed1/27/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task27_seed1/27/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task27_seed1/27/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=qwen38_flash|arch=plan_execute|fault=web_dom_missing|task=27|seed=1|cond=control|rep=0",
+        "file_stem": "qwen38_flash__plan_execute__web_dom_missing__task27__seed1__control__rep0",
+        "pair_key": "model=qwen38_flash|arch=plan_execute|fault=web_dom_missing|task=27|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "qwen38_flash",
+        "architecture": "plan_execute",
+        "fault_type": "web_dom_missing",
+        "task_id": 27,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T110950-28b6ab",
+          "task_id": 27,
+          "site": "reddit",
+          "url": "http://localhost:9999",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task27_seed1/27/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task27_seed1/27/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T110950-28b6ab/qwen38_flash__plan_execute__web_dom_missing__task27__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 6,
+        "cap_exhausted": false,
+        "llm_calls": 14,
+        "time_sec": 151.62,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": true,
+          "recorded_at": 1791169942.094803
+        },
+        "created_at": 1791169942.094805
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "SUCCESS",
+        "retrieved_data": [
+          "[{\"username\": \"Hammer94\", \"post_title\": \"56 year old mom has no retirement. Where do I even start on her behalf?\", \"count\": 0}]\n\nDetails:\n- Forum: /f/personalfinance, submissions sorted by \"New\" (http://localhost:9999/f/personalfinance/new)\n- Most recent post (first in list, confirmed by opening it): \"56 year old mom has no retirement. Where do I even start on her behalf?\" by Hammer94\n- The post page shows \"No comments\" and \"There's nothing here…\", so there are 0 comments total, hence 0 comments that are both non-author and net-downvoted."
+        ],
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task28_seed1/28/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task28_seed1/28/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task28_seed1/28/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task28_seed1/28/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=qwen38_flash|arch=plan_execute|fault=web_dom_missing|task=28|seed=1|cond=control|rep=0",
+        "file_stem": "qwen38_flash__plan_execute__web_dom_missing__task28__seed1__control__rep0",
+        "pair_key": "model=qwen38_flash|arch=plan_execute|fault=web_dom_missing|task=28|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "qwen38_flash",
+        "architecture": "plan_execute",
+        "fault_type": "web_dom_missing",
+        "task_id": 28,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T110950-303ac0",
+          "task_id": 28,
+          "site": "reddit",
+          "url": "http://localhost:9999",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task28_seed1/28/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task28_seed1/28/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T110950-303ac0/qwen38_flash__plan_execute__web_dom_missing__task28__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 11,
+        "cap_exhausted": false,
+        "llm_calls": 24,
+        "time_sec": 156.64,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": true,
+          "recorded_at": 1791169947.2509115
+        },
+        "created_at": 1791169947.2509127
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "SUCCESS",
+        "retrieved_data": [
+          "All comments on the most recent WorcesterMA post are now loaded and expanded. The post \"Best place for a foot rub?\" (author: mineinhusdson) reports 3 comments, and all 3 are visible on the detail page with no collapsed threads or pagination remaining:\n1. _Strid_ — score 14 (upvotes exceed downvotes)\n2. Plastic-Ad-4791 — score 7 (upvotes exceed downvotes)\n3. mineinhusdson (Original poster) — score −2 (author, excluded)\n\nSuccess condition met: every comment associated with the post is visible and available for inspection."
+        ],
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task308_seed1/308/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task308_seed1/308/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task308_seed1/308/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task308_seed1/308/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=qwen38_flash|arch=plan_execute|fault=web_dom_missing|task=308|seed=1|cond=control|rep=0",
+        "file_stem": "qwen38_flash__plan_execute__web_dom_missing__task308__seed1__control__rep0",
+        "pair_key": "model=qwen38_flash|arch=plan_execute|fault=web_dom_missing|task=308|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "qwen38_flash",
+        "architecture": "plan_execute",
+        "fault_type": "web_dom_missing",
+        "task_id": 308,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T111052-604ced",
+          "task_id": 308,
+          "site": "gitlab",
+          "url": "http://localhost:8023",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task308_seed1/308/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task308_seed1/308/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T111052-604ced/qwen38_flash__plan_execute__web_dom_missing__task308__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 12,
+        "cap_exhausted": false,
+        "llm_calls": 28,
+        "time_sec": 308.219,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": true,
+          "recorded_at": 1791170160.6782372
+        },
+        "created_at": 1791170160.6782396
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "SUCCESS",
+        "retrieved_data": [
+          "Sign-in is not possible — the only credentials attempted (admin/adminadmin) were rejected with \"Invalid login or password.\" I therefore used public exploration, which succeeded: the GitLab interface is accessible and project navigation has begun. I am now on the Primer/design project page at http://localhost:8023/primer/design (Project ID 180, 921 commits, 38 branches), reachable without authentication. Caveat for the next step: the Repository → Contributors / graphs view requires sign-in, so the top committers must be determined from publicly available data (e.g., the commit list at /primer/design/commits/main, which shows each commit's author)."
+        ],
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task30_seed1/30/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task30_seed1/30/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task30_seed1/30/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task30_seed1/30/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=qwen38_flash|arch=plan_execute|fault=web_dom_missing|task=30|seed=1|cond=control|rep=0",
+        "file_stem": "qwen38_flash__plan_execute__web_dom_missing__task30__seed1__control__rep0",
+        "pair_key": "model=qwen38_flash|arch=plan_execute|fault=web_dom_missing|task=30|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "qwen38_flash",
+        "architecture": "plan_execute",
+        "fault_type": "web_dom_missing",
+        "task_id": 30,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T110950-eba249",
+          "task_id": 30,
+          "site": "reddit",
+          "url": "http://localhost:9999",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task30_seed1/30/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task30_seed1/30/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T110950-eba249/qwen38_flash__plan_execute__web_dom_missing__task30__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 8,
+        "cap_exhausted": false,
+        "llm_calls": 19,
+        "time_sec": 173.534,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": true,
+          "recorded_at": 1791169964.0794075
+        },
+        "created_at": 1791169964.079409
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "SUCCESS",
+        "retrieved_data": [
+          {
+            "username": "Dhghomon",
+            "post_title": "Scientists erupt at NASA gutting funding for crucial Venus mission",
+            "count": 0
+          }
+        ],
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task66_seed1/66/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task66_seed1/66/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task66_seed1/66/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task66_seed1/66/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=qwen38_flash|arch=plan_execute|fault=web_dom_missing|task=66|seed=1|cond=control|rep=0",
+        "file_stem": "qwen38_flash__plan_execute__web_dom_missing__task66__seed1__control__rep0",
+        "pair_key": "model=qwen38_flash|arch=plan_execute|fault=web_dom_missing|task=66|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "qwen38_flash",
+        "architecture": "plan_execute",
+        "fault_type": "web_dom_missing",
+        "task_id": 66,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T110950-8eeb7b",
+          "task_id": 66,
+          "site": "reddit",
+          "url": "http://localhost:9999",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task66_seed1/66/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/qwen38_flash/plan_execute/web_dom_missing_task66_seed1/66/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T110950-8eeb7b/qwen38_flash__plan_execute__web_dom_missing__task66__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 3,
+        "cap_exhausted": false,
+        "llm_calls": 6,
+        "time_sec": 52.986,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": true,
+          "recorded_at": 1791169843.5547698
+        },
+        "created_at": 1791169843.554774
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "SUCCESS",
+        "retrieved_data": [
+          "Collected the top 10 hottest posts from the Books forum (http://localhost:9999/f/Books), sorted by \"Hot\" (verified via the sort dropdown, which shows \"• Hot\" as the active option):\n\n1. \"The letters of T. S. Eliot to Emily Hale that were kept sealed from 1956 to 2020 have been released for free online\" — tseliot.com | 3,591 pts | 184 comments\n2. \"Friendly reminder bookshop.org exists.\" — 3,085 pts | 125 comments\n3. \"Appalachian prison book project seeks notebook donations: 'The books can help inmates learn new skills, broaden their worldviews and obtain college credits through the West Virginia University Higher Education in Prison Initiative'\" — timeswv.com | 1,716 pts | 33 comments\n4. \"After Two Decades And 38 Children's Books Lin Oliver Continues Her Thriving Collaboration With Henry Winkler\" — forbes.com | 1,695 pts | 27 comments\n5. \"Museum issues appeal to save famed 'Misty of Chincoteague'\" — delmarvanow.com | 1,539 pts | 43 comments\n6. \"How Ukrainian publishers are fighting to survive\" — publishersweekly.com | 1,434 pts | 31 comments\n7. \"The simple greatness of Agatha Christie\" — 1,423 pts | 147 comments\n8. \"I just finished reading The Hobbit to my 6 year old daughter, and she loved it!\" — 1,423 pts | 138 comments\n9. \"Apple Books has a free audiobook of A Christmas Carol narrated by LeVar Burton!\" — 1,335 pts | 39 comments\n10. \"What Is It That Makes Used Bookstores So Wonderful?\" — crimereads.com | 1,334 pts | 142 comments\n\nThese 10 entries are now available for the next step: determining which ones recommend exactly one book."
+        ],
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task133_seed1/133/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task133_seed1/133/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task133_seed1/133/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task133_seed1/133/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=qwen38_flash|arch=react|fault=web_dom_missing|task=133|seed=1|cond=control|rep=0",
+        "file_stem": "qwen38_flash__react__web_dom_missing__task133__seed1__control__rep0",
+        "pair_key": "model=qwen38_flash|arch=react|fault=web_dom_missing|task=133|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "qwen38_flash",
+        "architecture": "react",
+        "fault_type": "web_dom_missing",
+        "task_id": 133,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T110010-dca438",
+          "task_id": 133,
+          "site": "gitlab",
+          "url": "http://localhost:8023",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task133_seed1/133/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task133_seed1/133/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T110010-dca438/qwen38_flash__react__web_dom_missing__task133__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 2,
+        "cap_exhausted": false,
+        "llm_calls": 2,
+        "time_sec": 17.04,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": false,
+          "recorded_at": 1791169227.5439208
+        },
+        "created_at": 1791169227.5439236
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "SUCCESS",
+        "retrieved_data": [
+          {
+            "count": 2
+          }
+        ],
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task134_seed1/134/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task134_seed1/134/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task134_seed1/134/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task134_seed1/134/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=qwen38_flash|arch=react|fault=web_dom_missing|task=134|seed=1|cond=control|rep=0",
+        "file_stem": "qwen38_flash__react__web_dom_missing__task134__seed1__control__rep0",
+        "pair_key": "model=qwen38_flash|arch=react|fault=web_dom_missing|task=134|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "qwen38_flash",
+        "architecture": "react",
+        "fault_type": "web_dom_missing",
+        "task_id": 134,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T110010-0ad692",
+          "task_id": 134,
+          "site": "gitlab",
+          "url": "http://localhost:8023",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task134_seed1/134/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task134_seed1/134/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T110010-0ad692/qwen38_flash__react__web_dom_missing__task134__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 16,
+        "cap_exhausted": false,
+        "llm_calls": 16,
+        "time_sec": 209.069,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": false,
+          "recorded_at": 1791169419.5470493
+        },
+        "created_at": 1791169419.5470507
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "SUCCESS",
+        "retrieved_data": [
+          {
+            "project": "a11yproject.com",
+            "author": "Kilian Valkhof (kilian)",
+            "date": "2023-03-01",
+            "commit_count": 0,
+            "explanation": "The commits list for the a11yproject.com repository groups commits by date as 14 Mar, 12 Mar, 07 Mar, 05 Mar, 02 Mar, then 28 Feb 2023. There is no '01 Mar, 2023' group at all, meaning no commits were made on March 1, 2023. Kilian Valkhof's only nearby commit ('Fix typos in the code examples (#1524)', SHA 081f0af1) is dated 05 Mar, 2023. Therefore kilian made 0 commits on March 1, 2023."
+          }
+        ],
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task24_seed1/24/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task24_seed1/24/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task24_seed1/24/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task24_seed1/24/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=qwen38_flash|arch=react|fault=web_dom_missing|task=24|seed=1|cond=control|rep=0",
+        "file_stem": "qwen38_flash__react__web_dom_missing__task24__seed1__control__rep0",
+        "pair_key": "model=qwen38_flash|arch=react|fault=web_dom_missing|task=24|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "qwen38_flash",
+        "architecture": "react",
+        "fault_type": "web_dom_missing",
+        "task_id": 24,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T110010-427fdf",
+          "task_id": 24,
+          "site": "shopping",
+          "url": "http://localhost:7770/haflinger-men-s-wool-felt-open-back-slippers-beige-550-peat-us-7.html",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task24_seed1/24/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task24_seed1/24/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T110010-427fdf/qwen38_flash__react__web_dom_missing__task24__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 3,
+        "cap_exhausted": false,
+        "llm_calls": 3,
+        "time_sec": 32.393,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": false,
+          "recorded_at": 1791169242.8703365
+        },
+        "created_at": 1791169242.8703382
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "NOT_FOUND_ERROR",
+        "retrieved_data": null,
+        "error_details": "No reviewer on this page mentions the price being unfair.\n\nThe product page (HAFLINGER Men's Wool Felt Open Back Slippers, Beige 550 Peat, US:7, $108.00) has exactly 2 reviews, and both are positive with no mention of price/value:\n\n1. \"Wonderful!\" — Review by **Jay** (4/18/23): \"Nothing.....everyday use.\"\n2. \"Joe\" — Review by **Josef Bürger** (4/18/23): \"Die Haflinger sind wie beschrieben und erwartet sehr gut\" (German: \"The Haflingers are as described and expected — very good\").\n\nSo there is no reviewer name to report for a complaint about unfair pricing."
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task258_seed1/258/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task258_seed1/258/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task258_seed1/258/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task258_seed1/258/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=qwen38_flash|arch=react|fault=web_dom_missing|task=258|seed=1|cond=control|rep=0",
+        "file_stem": "qwen38_flash__react__web_dom_missing__task258__seed1__control__rep0",
+        "pair_key": "model=qwen38_flash|arch=react|fault=web_dom_missing|task=258|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "qwen38_flash",
+        "architecture": "react",
+        "fault_type": "web_dom_missing",
+        "task_id": 258,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T110030-475769",
+          "task_id": 258,
+          "site": "gitlab",
+          "url": "http://localhost:8023",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task258_seed1/258/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task258_seed1/258/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T110030-475769/qwen38_flash__react__web_dom_missing__task258__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 2,
+        "cap_exhausted": false,
+        "llm_calls": 2,
+        "time_sec": 11.474,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": false,
+          "recorded_at": 1791169241.9142687
+        },
+        "created_at": 1791169241.9142752
+      },
+      "agent_response": {
+        "task_type": "NAVIGATE",
+        "status": "SUCCESS",
+        "retrieved_data": null,
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task25_seed1/25/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task25_seed1/25/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task25_seed1/25/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task25_seed1/25/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=qwen38_flash|arch=react|fault=web_dom_missing|task=25|seed=1|cond=control|rep=0",
+        "file_stem": "qwen38_flash__react__web_dom_missing__task25__seed1__control__rep0",
+        "pair_key": "model=qwen38_flash|arch=react|fault=web_dom_missing|task=25|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "qwen38_flash",
+        "architecture": "react",
+        "fault_type": "web_dom_missing",
+        "task_id": 25,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T110010-d2382d",
+          "task_id": 25,
+          "site": "shopping",
+          "url": "http://localhost:7770/epson-workforce-wf-3620-wifi-direct-all-in-one-color-inkjet-printer-copier-scanner-amazon-dash-replenishment-ready.html",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task25_seed1/25/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task25_seed1/25/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T110010-d2382d/qwen38_flash__react__web_dom_missing__task25__seed1__control__rep0.jsonl"
+        },
+        "completed": false,
+        "success": false,
+        "injection_count": 0,
+        "steps": 20,
+        "cap_exhausted": true,
+        "llm_calls": 20,
+        "time_sec": 575.339,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": true,
+          "recorded_at": 1791169785.9470758
+        },
+        "created_at": 1791169785.9470773
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "UNKNOWN_ERROR",
+        "retrieved_data": null,
+        "error_details": "max_steps exhausted after 20 steps; no answer produced"
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task274_seed1/274/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task274_seed1/274/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task274_seed1/274/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task274_seed1/274/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=qwen38_flash|arch=react|fault=web_dom_missing|task=274|seed=1|cond=control|rep=0",
+        "file_stem": "qwen38_flash__react__web_dom_missing__task274__seed1__control__rep0",
+        "pair_key": "model=qwen38_flash|arch=react|fault=web_dom_missing|task=274|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "qwen38_flash",
+        "architecture": "react",
+        "fault_type": "web_dom_missing",
+        "task_id": 274,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T110041-ddd842",
+          "task_id": 274,
+          "site": "shopping",
+          "url": "http://localhost:7770",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task274_seed1/274/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task274_seed1/274/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T110041-ddd842/qwen38_flash__react__web_dom_missing__task274__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 4,
+        "cap_exhausted": false,
+        "llm_calls": 4,
+        "time_sec": 18.864,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": false,
+          "recorded_at": 1791169260.0568955
+        },
+        "created_at": 1791169260.0568993
+      },
+      "agent_response": {
+        "task_type": "NAVIGATE",
+        "status": "SUCCESS",
+        "retrieved_data": null,
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task27_seed1/27/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task27_seed1/27/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task27_seed1/27/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task27_seed1/27/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=qwen38_flash|arch=react|fault=web_dom_missing|task=27|seed=1|cond=control|rep=0",
+        "file_stem": "qwen38_flash__react__web_dom_missing__task27__seed1__control__rep0",
+        "pair_key": "model=qwen38_flash|arch=react|fault=web_dom_missing|task=27|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "qwen38_flash",
+        "architecture": "react",
+        "fault_type": "web_dom_missing",
+        "task_id": 27,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T110010-e145a2",
+          "task_id": 27,
+          "site": "reddit",
+          "url": "http://localhost:9999",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task27_seed1/27/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task27_seed1/27/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T110010-e145a2/qwen38_flash__react__web_dom_missing__task27__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 6,
+        "cap_exhausted": false,
+        "llm_calls": 6,
+        "time_sec": 27.373,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": false,
+          "recorded_at": 1791169237.8884287
+        },
+        "created_at": 1791169237.888432
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "SUCCESS",
+        "retrieved_data": [
+          {
+            "username": "Hammer94",
+            "post_title": "56 year old mom has no retirement. Where do I even start on her behalf?",
+            "count": 0
+          }
+        ],
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task28_seed1/28/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task28_seed1/28/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task28_seed1/28/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task28_seed1/28/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=qwen38_flash|arch=react|fault=web_dom_missing|task=28|seed=1|cond=control|rep=0",
+        "file_stem": "qwen38_flash__react__web_dom_missing__task28__seed1__control__rep0",
+        "pair_key": "model=qwen38_flash|arch=react|fault=web_dom_missing|task=28|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "qwen38_flash",
+        "architecture": "react",
+        "fault_type": "web_dom_missing",
+        "task_id": 28,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T110010-b3c047",
+          "task_id": 28,
+          "site": "reddit",
+          "url": "http://localhost:9999",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task28_seed1/28/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task28_seed1/28/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T110010-b3c047/qwen38_flash__react__web_dom_missing__task28__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 9,
+        "cap_exhausted": false,
+        "llm_calls": 9,
+        "time_sec": 37.539,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": false,
+          "recorded_at": 1791169248.1470387
+        },
+        "created_at": 1791169248.1470406
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "SUCCESS",
+        "retrieved_data": [
+          {
+            "username": "mineinhusdson",
+            "post_title": "Best place for a foot rub?",
+            "count": 0
+          }
+        ],
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task308_seed1/308/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task308_seed1/308/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task308_seed1/308/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task308_seed1/308/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=qwen38_flash|arch=react|fault=web_dom_missing|task=308|seed=1|cond=control|rep=0",
+        "file_stem": "qwen38_flash__react__web_dom_missing__task308__seed1__control__rep0",
+        "pair_key": "model=qwen38_flash|arch=react|fault=web_dom_missing|task=308|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "qwen38_flash",
+        "architecture": "react",
+        "fault_type": "web_dom_missing",
+        "task_id": 308,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T110045-246c23",
+          "task_id": 308,
+          "site": "gitlab",
+          "url": "http://localhost:8023",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task308_seed1/308/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task308_seed1/308/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T110045-246c23/qwen38_flash__react__web_dom_missing__task308__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 4,
+        "cap_exhausted": false,
+        "llm_calls": 4,
+        "time_sec": 15.147,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": false,
+          "recorded_at": 1791169260.1786544
+        },
+        "created_at": 1791169260.1786604
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "SUCCESS",
+        "retrieved_data": [
+          "THOUGHT: Typing \"design\" into the search box didn't navigate anywhere. The graphs page returns 404, likely because I'm not signed in. Let me click the Search button [6] to submit the query and locate the project."
+        ],
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task30_seed1/30/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task30_seed1/30/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task30_seed1/30/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task30_seed1/30/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=qwen38_flash|arch=react|fault=web_dom_missing|task=30|seed=1|cond=control|rep=0",
+        "file_stem": "qwen38_flash__react__web_dom_missing__task30__seed1__control__rep0",
+        "pair_key": "model=qwen38_flash|arch=react|fault=web_dom_missing|task=30|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "qwen38_flash",
+        "architecture": "react",
+        "fault_type": "web_dom_missing",
+        "task_id": 30,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T110010-428d48",
+          "task_id": 30,
+          "site": "reddit",
+          "url": "http://localhost:9999",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task30_seed1/30/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task30_seed1/30/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T110010-428d48/qwen38_flash__react__web_dom_missing__task30__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 7,
+        "cap_exhausted": false,
+        "llm_calls": 7,
+        "time_sec": 37.08,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": false,
+          "recorded_at": 1791169247.5723243
+        },
+        "created_at": 1791169247.572326
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "SUCCESS",
+        "retrieved_data": [
+          {
+            "username": "Dhghomon",
+            "post_title": "Scientists erupt at NASA gutting funding for crucial Venus mission",
+            "count": 0
+          }
+        ],
+        "error_details": null
+      },
+      "reasons": []
+    },
+    {
+      "trial_dir": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task66_seed1/66/control_seed_1",
+      "complete": true,
+      "artifacts": {
+        "agent_response": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task66_seed1/66/control_seed_1/agent_response.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "trial_record": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task66_seed1/66/control_seed_1/trial_record.json",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        },
+        "har": {
+          "path": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task66_seed1/66/control_seed_1/network.har",
+          "present": true,
+          "valid": true,
+          "reason": ""
+        }
+      },
+      "trial_record": {
+        "schema_version": 1,
+        "pairing_scheme": "seed-paired-v2",
+        "trial_id": "model=qwen38_flash|arch=react|fault=web_dom_missing|task=66|seed=1|cond=control|rep=0",
+        "file_stem": "qwen38_flash__react__web_dom_missing__task66__seed1__control__rep0",
+        "pair_key": "model=qwen38_flash|arch=react|fault=web_dom_missing|task=66|seed=1|cond=-|rep=0",
+        "condition": "control",
+        "model_profile": "qwen38_flash",
+        "architecture": "react",
+        "fault_type": "web_dom_missing",
+        "task_id": 66,
+        "fault_seed": 1,
+        "replicate": 0,
+        "run_config": {
+          "run_id": "20261005T110010-8c2959",
+          "task_id": 66,
+          "site": "reddit",
+          "url": "http://localhost:9999",
+          "max_steps": 20,
+          "fault_intensity": "off",
+          "fault_label": "control",
+          "injection_step": null,
+          "trial_index": 0
+        },
+        "paths": {
+          "agent_response": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task66_seed1/66/control_seed_1/agent_response.json",
+          "network_har": "experiments/t0_stepb/outputs/qwen38_flash/react/web_dom_missing_task66_seed1/66/control_seed_1/network.har",
+          "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_stepb/20261005T110010-8c2959/qwen38_flash__react__web_dom_missing__task66__seed1__control__rep0.jsonl"
+        },
+        "completed": true,
+        "success": true,
+        "injection_count": 0,
+        "steps": 9,
+        "cap_exhausted": false,
+        "llm_calls": 9,
+        "time_sec": 102.324,
+        "error": null,
+        "code": {
+          "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+          "git_sha": "f383c5058ac255995c7593fd8e77c509acdc132e",
+          "git_branch": "stagec-exec-chain",
+          "git_dirty": false,
+          "recorded_at": 1791169312.8989275
+        },
+        "created_at": 1791169312.898929
+      },
+      "agent_response": {
+        "task_type": "RETRIEVE",
+        "status": "SUCCESS",
+        "retrieved_data": [
+          "Among the top 10 hottest posts in /f/books (sorted by Hot), only two posts recommend exactly one book:\n\n1. \"I just finished reading The Hobbit to my 6 year old daughter, and she loved it!\" — recommends The Hobbit (J.R.R. Tolkien).\n2. \"Apple Books has a free audiobook of A Christmas Carol narrated by LeVar Burton!\" — recommends A Christmas Carol (Charles Dickens).\n\nThe other 8 posts in the top 10 (T. S. Eliot letters release, bookshop.org reminder, Appalachian prison book project, Lin Oliver/Henry Winkler feature, Misty of Chincoteague museum appeal, Ukrainian publishers, \"The simple greatness of Agatha Christie\", and \"What Is It That Makes Used Bookstores So Wonderful?\") are news links or general discussions that do not recommend a single specific book."
+        ],
+        "error_details": null
+      },
+      "reasons": []
+    }
+  ]
+}

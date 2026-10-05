@@ -1,0 +1,51 @@
+{
+  "task_id": 66,
+  "intent_template_id": 17,
+  "sites": [
+    "reddit"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"Collected the top 10 hottest posts from the Books forum (http://localhost:9999/f/Books), sorted by \\\"Hot\\\" (verified via the sort dropdown, which shows \\\"• Hot\\\" as the active option):\\n\\n1. \\\"The letters of T. S. Eliot to Emily Hale that were kept sealed from 1956 to 2020 have been released for free online\\\" — tseliot.com | 3,591 pts | 184 comments\\n2. \\\"Friendly reminder bookshop.org exists.\\\" — 3,085 pts | 125 comments\\n3. \\\"Appalachian prison book project seeks notebook donations: 'The books can help inmates learn new skills, broaden their worldviews and obtain college credits through the West Virginia University Higher Education in Prison Initiative'\\\" — timeswv.com | 1,716 pts | 33 comments\\n4. \\\"After Two Decades And 38 Children's Books Lin Oliver Continues Her Thriving Collaboration With Henry Winkler\\\" — forbes.com | 1,695 pts | 27 comments\\n5. \\\"Museum issues appeal to save famed 'Misty of Chincoteague'\\\" — delmarvanow.com | 1,539 pts | 43 comments\\n6. \\\"How Ukrainian publishers are fighting to survive\\\" — publishersweekly.com | 1,434 pts | 31 comments\\n7. \\\"The simple greatness of Agatha Christie\\\" — 1,423 pts | 147 comments\\n8. \\\"I just finished reading The Hobbit to my 6 year old daughter, and she loved it!\\\" — 1,423 pts | 138 comments\\n9. \\\"Apple Books has a free audiobook of A Christmas Carol narrated by LeVar Burton!\\\" — 1,335 pts | 39 comments\\n10. \\\"What Is It That Makes Used Bookstores So Wonderful?\\\" — crimereads.com | 1,334 pts | 142 comments\\n\\nThese 10 entries are now available for the next step: determining which ones recommend exactly one book.\"\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "retrieved_data": [
+          "collected the top 10 hottest posts from the books forum (__reddit__/f/books), sorted by \"hot\" (verified via the sort dropdown, which shows \"* hot\" as the active option): 1. \"the letters of t. s. eliot to emily hale that were kept sealed from 1956 to 2020 have been released for free online\" -- tseliot.com | 3,591 pts | 184 comments 2. \"friendly reminder bookshop.org exists.\" -- 3,085 pts | 125 comments 3. \"appalachian prison book project seeks notebook donations: 'the books can help inmates learn new skills, broaden their worldviews and obtain college credits through the west virginia university higher education in prison initiative'\" -- timeswv.com | 1,716 pts | 33 comments 4. \"after two decades and 38 children's books lin oliver continues her thriving collaboration with henry winkler\" -- forbes.com | 1,695 pts | 27 comments 5. \"museum issues appeal to save famed 'misty of chincoteague'\" -- delmarvanow.com | 1,539 pts | 43 comments 6. \"how ukrainian publishers are fighting to survive\" -- publishersweekly.com | 1,434 pts | 31 comments 7. \"the simple greatness of agatha christie\" -- 1,423 pts | 147 comments 8. \"i just finished reading the hobbit to my 6 year old daughter, and she loved it!\" -- 1,423 pts | 138 comments 9. \"apple books has a free audiobook of a christmas carol narrated by levar burton!\" -- 1,335 pts | 39 comments 10. \"what is it that makes used bookstores so wonderful?\" -- crimereads.com | 1,334 pts | 142 comments these 10 entries are now available for the next step: determining which ones recommend exactly one book."
+        ],
+        "task_type": "retrieve",
+        "status": "success"
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "i just finished reading the hobbit to my 6 year old daughter, and she loved it!",
+          "apple books has a free audiobook of a christmas carol narrated by levar burton!"
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/2), Missing: 2, Extra: 1",
+            "Expected: [i just finished reading the hobbit to my 6 year old daughter, and she loved it!, apple books has a free audiobook of a christmas carol narrated by levar burton!], Got: [collected the top 10 hottest posts from the books forum (__reddit__/f/books), sorted by \"hot\" (verified via the sort dropdown, which shows \"* hot\" as the active option): 1. \"the letters of t. s. eliot to emily hale that were kept sealed from 1956 to 2020 have been released for free online\" -- tseliot.com | 3,591 pts | 184 comments 2. \"friendly reminder bookshop.org exists.\" -- 3,085 pts | 125 comments 3. \"appalachian prison book project seeks notebook donations: 'the books can help inmates learn new skills, broaden their worldviews and obtain college credits through the west virginia university higher education in prison initiative'\" -- timeswv.com | 1,716 pts | 33 comments 4. \"after two decades and 38 children's books lin oliver continues her thriving collaboration with henry winkler\" -- forbes.com | 1,695 pts | 27 comments 5. \"museum issues appeal to save famed 'misty of chincoteague'\" -- delmarvanow.com | 1,539 pts | 43 comments 6. \"how ukrainian publishers are fighting to survive\" -- publishersweekly.com | 1,434 pts | 31 comments 7. \"the simple greatness of agatha christie\" -- 1,423 pts | 147 comments 8. \"i just finished reading the hobbit to my 6 year old daughter, and she loved it!\" -- 1,423 pts | 138 comments 9. \"apple books has a free audiobook of a christmas carol narrated by levar burton!\" -- 1,335 pts | 39 comments 10. \"what is it that makes used bookstores so wonderful?\" -- crimereads.com | 1,334 pts | 142 comments these 10 entries are now available for the next step: determining which ones recommend exactly one book.]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false
+}

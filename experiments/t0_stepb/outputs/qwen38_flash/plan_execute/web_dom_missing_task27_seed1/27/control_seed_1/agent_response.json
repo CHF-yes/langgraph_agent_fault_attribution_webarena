@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "[{\"username\": \"Hammer94\", \"post_title\": \"56 year old mom has no retirement. Where do I even start on her behalf?\", \"count\": 0}]\n\nDetails:\n- Forum: /f/personalfinance, submissions sorted by \"New\" (http://localhost:9999/f/personalfinance/new)\n- Most recent post (first in list, confirmed by opening it): \"56 year old mom has no retirement. Where do I even start on her behalf?\" by Hammer94\n- The post page shows \"No comments\" and \"There's nothing here…\", so there are 0 comments total, hence 0 comments that are both non-author and net-downvoted."
+  ],
+  "error_details": null
+}

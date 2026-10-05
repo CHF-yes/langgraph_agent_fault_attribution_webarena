@@ -532,7 +532,8 @@ def arm_artifacts_ok(arm_dir: str | Path, *, expect: dict,
 def job_arms_ok(job_dir: str | Path, *, fault_type: str, task_id: int, seed: int,
                 model_profile: str, architecture: str, max_steps: int,
                 injection_step: int | None, fault_intensity: str,
-                dataset_path: str | Path | None = None) -> tuple[bool, list[str]]:
+                dataset_path: str | Path | None = None,
+                condition_scope: str = "both") -> tuple[bool, list[str]]:
     """控制臂与故障臂**都**完整且一致，调用方才能跳过这个格子。
 
     ``--resume`` 的语义是"这个格子已经按当前设计跑完了"，单臂完整不足以支持这个
@@ -552,8 +553,17 @@ def job_arms_ok(job_dir: str | Path, *, fault_type: str, task_id: int, seed: int
         except Exception as exc:  # noqa: BLE001 - 保守处理，宁可重跑
             return False, [f"dataset check failed: {exc}"]
 
+    # T0 是控制批：只跑控制臂，此时要求"两臂齐备"会让每个格子都判不合格，
+    # 恢复运行无法跳过任何已完成格子。按批次实际的条件范围校验。
+    if condition_scope == "control":
+        arms = (("control", "control"),)
+    elif condition_scope == "fault":
+        arms = (("fault", None),)
+    else:
+        arms = ARM_CONDITIONS
+
     reasons: list[str] = []
-    for condition, label in ARM_CONDITIONS:
+    for condition, label in arms:
         arm_label = fault_type if label is None else label
         arm_dir = Path(job_dir) / str(task_id) / arm_dir_name(
             fault_label=arm_label, seed=seed)

@@ -1,0 +1,29 @@
+{
+  "official_success": false,
+  "official_score": 0.0,
+  "score": 0.0,
+  "status": "failure",
+  "error_msg": null,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluatorCompat",
+      "status": "failure",
+      "score": 0.0,
+      "actual": {
+        "task_type": "RETRIEVE",
+        "status": "SUCCESS",
+        "retrieved_data": [
+          "Navigated to Page 1 of the customer reviews (URL: http://localhost:7770/review/product/listAjax/id/38785/). Page 1 displays 10 reviews with reviewers: badkat, DrummerGirlLB, G. Matsusaki, Razzberry, Nic, CA Guy, Kenan, CT, romance lover, AZ Guy. Page 2 contains 2 additional reviews (AZ Guy, CT). Note: several review bodies appear truncated in the accessibility tree (e.g., Razzberry, CA Guy, Kenan, CT, romance lover, AZ Guy), so full text may require expanding individual reviews to check for the underwater photo mention."
+        ],
+        "error_details": null
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "NOT_FOUND_ERROR",
+        "retrieved_data": null
+      },
+      "assertion_name": "null_retrieval_schema_compatibility",
+      "upstream_error": "Error during evaluation with evaluator AgentResponseEvaluator for task 22: Schema type must be 'array', got: 'null'"
+    }
+  ]
+}

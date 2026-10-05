@@ -1576,3 +1576,51 @@ def test_trial_record_file_stem_matches_the_artifact_name(tmp_path: Path):
     assert "|" not in record["file_stem"] and "__" in record["file_stem"]
     assert read_trial_record(write_trial_record(tmp_path / "t.json", record))["file_stem"] \
         == record["file_stem"]
+
+
+# ==========================================================================
+# 13. Step B 实战暴露的两处：mailto 误判、控制批的恢复检查
+# ==========================================================================
+
+def test_mailto_abort_is_not_an_infrastructure_error():
+    """回归：点击 mailto:/tel: 链接导致的 net::ERR_ABORTED 是正常动作失败。
+
+    它曾把整批 deepseek react 判成基础设施错误并触发停止策略，导致 3 个格子没跑。
+    """
+    from scripts.run_fault_matrix import classify_log
+
+    mailto = ("[ReAct][step=6] OBSERVATION [Error] 点击失败: Page.goto: "
+              "net::ERR_ABORTED at mailto:kilian@kilianvalkhof.com\n")
+    tel = "[ReAct][step=3] OBSERVATION [Error] Page.goto: net::ERR_ABORTED at tel:+123\n"
+    real = "[ReAct][step=4] OBSERVATION [Error] Page.goto: net::ERR_CONNECTION_RESET\n"
+
+    assert classify_log(mailto, expect_fault=False)["infrastructure_error"] is False
+    assert classify_log(tel, expect_fault=False)["infrastructure_error"] is False
+    assert classify_log(real, expect_fault=False)["infrastructure_error"] is True
+
+
+def test_resume_artifact_check_respects_the_condition_scope(tmp_path: Path, dataset: Path):
+    """控制批只有控制臂：按 control 作用域应判合格，按 both 则不合格。"""
+    from standard_agent.stage_c_pipeline import job_arms_ok
+    from standard_agent.trial_metadata import arm_dir_name, build_trial_record, write_trial_record
+
+    task, seed, fault = 118, 1, "web_dom_missing"
+    job_dir = tmp_path / f"{fault}_task{task}_seed{seed}"
+    arm = job_dir / str(task) / arm_dir_name(fault_label="control", seed=seed)
+    arm.mkdir(parents=True)
+    (arm / "agent_response.json").write_text(json.dumps(
+        {"task_type": "NAVIGATE", "status": "SUCCESS", "retrieved_data": None,
+         "error_details": None}), encoding="utf-8")
+    (arm / "network.har").write_text('{"log": {"entries": []}}', encoding="utf-8")
+    write_trial_record(arm / "trial_record.json", build_trial_record(
+        model_profile="m1", architecture="react", fault_type=fault, task_id=task,
+        seed=seed, condition="control", replicate=0,
+        run_config={"max_steps": 20, "injection_step": None, "fault_intensity": "off"},
+        paths={}))
+
+    kwargs = dict(fault_type=fault, task_id=task, seed=seed, model_profile="m1",
+                  architecture="react", max_steps=20, injection_step=None,
+                  fault_intensity="off", dataset_path=dataset)
+    assert job_arms_ok(job_dir, condition_scope="control", **kwargs)[0] is True
+    both_ok, both_why = job_arms_ok(job_dir, condition_scope="both", **kwargs)
+    assert both_ok is False and any("fault:" in reason for reason in both_why)

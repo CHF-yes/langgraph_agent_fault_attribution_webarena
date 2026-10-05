@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "All comments on the most recent WorcesterMA post are now loaded and expanded. The post \"Best place for a foot rub?\" (author: mineinhusdson) reports 3 comments, and all 3 are visible on the detail page with no collapsed threads or pagination remaining:\n1. _Strid_ — score 14 (upvotes exceed downvotes)\n2. Plastic-Ad-4791 — score 7 (upvotes exceed downvotes)\n3. mineinhusdson (Original poster) — score −2 (author, excluded)\n\nSuccess condition met: every comment associated with the post is visible and available for inspection."
+  ],
+  "error_details": null
+}

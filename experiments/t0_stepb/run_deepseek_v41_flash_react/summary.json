@@ -1,0 +1,7 @@
+{
+  "completed": 5,
+  "scheduled": 5,
+  "stopped": false,
+  "infrastructure_errors": 0,
+  "remaining_jobs": 0
+}

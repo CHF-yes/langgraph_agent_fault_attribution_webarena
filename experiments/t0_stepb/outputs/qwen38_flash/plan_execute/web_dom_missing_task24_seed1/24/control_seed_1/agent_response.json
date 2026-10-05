@@ -1,0 +1,6 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "NOT_FOUND_ERROR",
+  "retrieved_data": null,
+  "error_details": "No reviewer on this page mentions the price being unfair.\n\nThe product page (HAFLINGER Men's Wool Felt Open Back Slippers, Beige 550 Peat, US:7) shows exactly 2 reviews, and both were checked:\n\n1. Jay — \"Wonderful!\" / \"Nothing.....everyday use.\" → No mention of price.\n2. Josef Bürger — \"Joe\" / \"Die Haflinger sind wie beschrieben und erwartet sehr gut\" (German: \"The Haflingers are very good, as described and expected\") → No mention of price.\n\nResult: 0 reviewers mention price being unfair (empty set)."
+}

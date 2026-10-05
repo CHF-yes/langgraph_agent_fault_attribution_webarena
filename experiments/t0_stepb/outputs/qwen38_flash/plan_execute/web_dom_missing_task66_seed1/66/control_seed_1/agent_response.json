@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "Collected the top 10 hottest posts from the Books forum (http://localhost:9999/f/Books), sorted by \"Hot\" (verified via the sort dropdown, which shows \"• Hot\" as the active option):\n\n1. \"The letters of T. S. Eliot to Emily Hale that were kept sealed from 1956 to 2020 have been released for free online\" — tseliot.com | 3,591 pts | 184 comments\n2. \"Friendly reminder bookshop.org exists.\" — 3,085 pts | 125 comments\n3. \"Appalachian prison book project seeks notebook donations: 'The books can help inmates learn new skills, broaden their worldviews and obtain college credits through the West Virginia University Higher Education in Prison Initiative'\" — timeswv.com | 1,716 pts | 33 comments\n4. \"After Two Decades And 38 Children's Books Lin Oliver Continues Her Thriving Collaboration With Henry Winkler\" — forbes.com | 1,695 pts | 27 comments\n5. \"Museum issues appeal to save famed 'Misty of Chincoteague'\" — delmarvanow.com | 1,539 pts | 43 comments\n6. \"How Ukrainian publishers are fighting to survive\" — publishersweekly.com | 1,434 pts | 31 comments\n7. \"The simple greatness of Agatha Christie\" — 1,423 pts | 147 comments\n8. \"I just finished reading The Hobbit to my 6 year old daughter, and she loved it!\" — 1,423 pts | 138 comments\n9. \"Apple Books has a free audiobook of A Christmas Carol narrated by LeVar Burton!\" — 1,335 pts | 39 comments\n10. \"What Is It That Makes Used Bookstores So Wonderful?\" — crimereads.com | 1,334 pts | 142 comments\n\nThese 10 entries are now available for the next step: determining which ones recommend exactly one book."
+  ],
+  "error_details": null
+}
