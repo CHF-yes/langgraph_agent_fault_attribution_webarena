@@ -1,0 +1,21 @@
+{
+  "schema": "endpoint_latency_recheck/1",
+  "date": "2026-10-05",
+  "note": "距上次调用 8 天后的首次调用",
+  "calls": [
+    {
+      "label": "qwen 专属实例(现配置)",
+      "endpoint": "https://maas.qianwenaiapi.com/compatible-mode/v1",
+      "model": "qwen3.8-flash",
+      "latency_s": 0.9,
+      "served_model": "qwen3.8-flash"
+    },
+    {
+      "label": "qwen 共享平台",
+      "endpoint": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+      "model": "qwen3.8-flash",
+      "latency_s": 1.0,
+      "served_model": "qwen3.8-flash"
+    }
+  ]
+}
