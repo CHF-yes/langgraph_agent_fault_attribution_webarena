@@ -232,6 +232,10 @@ mutation 任务。同一模板内的任务相关，不能把 16 个 ID 当成 16
    `write_agent_response`）。用占位符 `eval: []` 生成响应会把 `navigate` 任务写成
    `RETRIEVE`，官方 evaluator 的 `AgentResponseEvaluator` 必然判负——这类格子不是
    "agent 失败"，而是产物不可评分。
+   （**schema 感知的 retrieved_data**：任务 contract 的 `results_schema.type == "null"` 时
+   强制 `retrieved_data = null`、散文进 `error_details`（2026-10-05 起）。此前产出的记录保留旧
+   形态，可用 `trial_record.code.git_sha` 与 `run_config.response_schema_clamped` 区分；
+   离线重评显示 4 个散文格由 compatibility 变为 native，**判定不变**。）
 2. **注入步口径单一来源**（`fault_injection/config.py:resolve_injection_step`）：
    Stage C 每臂只注入一次且位置固定——`agent_param_error` 落在**第 1 个参数动作**，
    其余两个故障落在**第 2 个执行步**，两者计数单位不同（参数动作 vs 执行步）。

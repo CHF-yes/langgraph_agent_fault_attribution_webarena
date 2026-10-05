@@ -1,0 +1,204 @@
+{
+  "config_substitutions": {
+    "test_data_file": {
+      "from": "/root/webarena-dataset/webarena-verified.json",
+      "to": "/data/webarena/webarena-dataset/webarena-verified.json"
+    }
+  },
+  "cap_exhausted_recheck": [
+    {
+      "cell": "deepseek_v41_flash/react/agent_param_error_task22_seed1/22/agent_param_error_seed_1",
+      "task_id": 22,
+      "steps": 20,
+      "before": {
+        "status": "UNKNOWN_ERROR",
+        "retrieved_data": [
+          "Reached max steps (20)"
+        ],
+        "evaluation_status": "compatibility",
+        "official_success": false
+      },
+      "after": {
+        "status": "UNKNOWN_ERROR",
+        "retrieved_data": null,
+        "error_details": "max_steps exhausted after 20 steps; no answer produced",
+        "evaluation_status": "native",
+        "official_success": false
+      }
+    },
+    {
+      "cell": "deepseek_v41_flash/react/agent_param_error_task22_seed1/22/control_seed_1",
+      "task_id": 22,
+      "steps": 20,
+      "before": {
+        "status": "UNKNOWN_ERROR",
+        "retrieved_data": [
+          "Reached max steps (20)"
+        ],
+        "evaluation_status": "compatibility",
+        "official_success": false
+      },
+      "after": {
+        "status": "UNKNOWN_ERROR",
+        "retrieved_data": null,
+        "error_details": "max_steps exhausted after 20 steps; no answer produced",
+        "evaluation_status": "native",
+        "official_success": false
+      }
+    },
+    {
+      "cell": "deepseek_v41_flash/react/web_dom_missing_task22_seed1/22/control_seed_1",
+      "task_id": 22,
+      "steps": 20,
+      "before": {
+        "status": "UNKNOWN_ERROR",
+        "retrieved_data": [
+          "Reached max steps (20)"
+        ],
+        "evaluation_status": "compatibility",
+        "official_success": false
+      },
+      "after": {
+        "status": "UNKNOWN_ERROR",
+        "retrieved_data": null,
+        "error_details": "max_steps exhausted after 20 steps; no answer produced",
+        "evaluation_status": "native",
+        "official_success": false
+      }
+    },
+    {
+      "cell": "deepseek_v41_flash/react/web_dom_missing_task22_seed1/22/web_dom_missing_seed_1",
+      "task_id": 22,
+      "steps": 20,
+      "before": {
+        "status": "UNKNOWN_ERROR",
+        "retrieved_data": [
+          "Reached max steps (20)"
+        ],
+        "evaluation_status": "compatibility",
+        "official_success": false
+      },
+      "after": {
+        "status": "UNKNOWN_ERROR",
+        "retrieved_data": null,
+        "error_details": "max_steps exhausted after 20 steps; no answer produced",
+        "evaluation_status": "native",
+        "official_success": false
+      }
+    },
+    {
+      "cell": "deepseek_v41_flash/react/web_http_error_task22_seed1/22/web_http_error_seed_1",
+      "task_id": 22,
+      "steps": 20,
+      "before": {
+        "status": "UNKNOWN_ERROR",
+        "retrieved_data": [
+          "Reached max steps (20)"
+        ],
+        "evaluation_status": "compatibility",
+        "official_success": false
+      },
+      "after": {
+        "status": "UNKNOWN_ERROR",
+        "retrieved_data": null,
+        "error_details": "max_steps exhausted after 20 steps; no answer produced",
+        "evaluation_status": "native",
+        "official_success": false
+      }
+    }
+  ],
+  "not_found_native_probe": [
+    {
+      "task_id": 22,
+      "har": "experiments/stage_c_smoke/outputs/deepseek_v41_flash/react/web_http_error_task22_seed1/22/web_http_error_seed_1/network.har",
+      "response": {
+        "task_type": "RETRIEVE",
+        "status": "NOT_FOUND_ERROR",
+        "retrieved_data": null,
+        "error_details": "No reviewer on this product page mentions that; nothing found."
+      },
+      "evaluation_status": "native",
+      "official_success": true,
+      "evaluator_names": [
+        "AgentResponseEvaluator"
+      ]
+    },
+    {
+      "task_id": 24,
+      "har": "experiments/official_outputs/gpt54_react_public16_corrected_control/task_24/trial_1/official_outputs/task_24/trial_1/network.har",
+      "response": {
+        "task_type": "RETRIEVE",
+        "status": "NOT_FOUND_ERROR",
+        "retrieved_data": null,
+        "error_details": "No reviewer on this product page mentions that; nothing found."
+      },
+      "evaluation_status": "native",
+      "official_success": true,
+      "evaluator_names": [
+        "AgentResponseEvaluator"
+      ]
+    }
+  ],
+  "prose_clamp_recheck": [
+    {
+      "cell": "experiments/stage_c_smoke_pe/outputs/deepseek_v41_flash/plan_execute/agent_param_error_task22_seed1/22/control_seed_1",
+      "task_id": 22,
+      "before": {
+        "retrieved_data": "['Page-2 review list captured. The two reviews on the curren",
+        "evaluation_status": "compatibility",
+        "official_success": false
+      },
+      "after": {
+        "retrieved_data": null,
+        "error_details": "Page-2 review list captured. The two reviews on the current ",
+        "evaluation_status": "native",
+        "official_success": false
+      }
+    },
+    {
+      "cell": "experiments/stage_c_smoke_pe/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task22_seed1/22/web_dom_missing_seed_1",
+      "task_id": 22,
+      "before": {
+        "retrieved_data": "[\"Sub-goal complete: The 'Show' dropdown is now set to the l",
+        "evaluation_status": "compatibility",
+        "official_success": false
+      },
+      "after": {
+        "retrieved_data": null,
+        "error_details": "Sub-goal complete: The 'Show' dropdown is now set to the lar",
+        "evaluation_status": "native",
+        "official_success": false
+      }
+    },
+    {
+      "cell": "experiments/t0_slice2/outputs/qwen38_flash/plan_execute/web_dom_missing_task22_seed1/22/control_seed_1",
+      "task_id": 22,
+      "before": {
+        "retrieved_data": "['Structured list of all review entries currently displayed ",
+        "evaluation_status": "compatibility",
+        "official_success": false
+      },
+      "after": {
+        "retrieved_data": null,
+        "error_details": "Structured list of all review entries currently displayed on",
+        "evaluation_status": "native",
+        "official_success": false
+      }
+    },
+    {
+      "cell": "experiments/t0_stepb/outputs/deepseek_v41_flash/plan_execute/web_dom_missing_task22_seed1/22/control_seed_1",
+      "task_id": 22,
+      "before": {
+        "retrieved_data": "['Navigated to Page 1 of the customer reviews (URL: http://l",
+        "evaluation_status": "compatibility",
+        "official_success": false
+      },
+      "after": {
+        "retrieved_data": null,
+        "error_details": "Navigated to Page 1 of the customer reviews (URL: http://loc",
+        "evaluation_status": "native",
+        "official_success": false
+      }
+    }
+  ]
+}

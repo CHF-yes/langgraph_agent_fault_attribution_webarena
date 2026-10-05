@@ -101,6 +101,16 @@ def _is_not_found_answer(answer: str) -> bool:
     return any(marker in text for marker in markers)
 
 
+def schema_clamps_retrieved_data(task: dict) -> bool:
+    """任务契约是否要求 ``retrieved_data`` 必须为 null（schema type 为 "null"）。
+
+    这类任务是负例检索（期望 NOT_FOUND + 无结果）。散文回答不能当作检索结果，
+    否则上游 evaluator 会因 schema 不符直接抛错，只能落到我们的兼容兜底里评分。
+    """
+    results_schema = (task.get("eval") or [{}])[0].get("results_schema") or {}
+    return str(results_schema.get("type") or "").lower() == "null"
+
+
 def make_agent_response(task: dict, *, completed: bool, answer: str,
                         diagnostic: str | None = None) -> dict:
     """Build a WebArena-Verified ``agent_response.json`` payload.
@@ -125,16 +135,27 @@ def make_agent_response(task: dict, *, completed: bool, answer: str,
         }
     not_found = completed and _is_not_found_answer(answer)
     status = "NOT_FOUND_ERROR" if not_found else ("SUCCESS" if completed else "UNKNOWN_ERROR")
+    # schema 感知：只有当契约接受数组结果时，才把回答序列化成 retrieved_data。
+    # 对显式要求 null 的任务（如 task 22 这种"无人提及 X"的负例），散文一律进
+    # error_details、retrieved_data 置 null —— 否则上游 evaluator 抛 schema 错误，
+    # 只能由兼容兜底评分，native/compat 口径就不一致了。array 任务行为不变。
+    schema_requires_null = schema_clamps_retrieved_data(task)
+    clamp_applied = bool(
+        completed and not not_found and task_type == "RETRIEVE"
+        and schema_requires_null and str(answer or "").strip()
+    )
     return {
         "task_type": task_type,
         "status": status,
         "retrieved_data": (
             _parse_retrieved_data(answer, results_schema=results_schema)
-            if (completed and not not_found and task_type == "RETRIEVE") else None
+            if (completed and not not_found and task_type == "RETRIEVE"
+                and not schema_requires_null) else None
         ),
         "error_details": (
             str(answer or "No matching result found") if not_found
-            else (None if completed else str(answer or "Agent did not complete the task"))
+            else (str(answer) if clamp_applied
+                  else (None if completed else str(answer or "Agent did not complete the task")))
         ),
     }
 

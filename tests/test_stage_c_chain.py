@@ -79,6 +79,7 @@ from standard_agent.trial_metadata import (  # noqa: E402
 from standard_agent.evaluation import is_cap_exhausted, is_completed  # noqa: E402
 from standard_agent.webarena_verified import (  # noqa: E402
     TaskDefinitionNotFound,
+    schema_clamps_retrieved_data,
     load_task_definition,
     make_agent_response,
     write_agent_response,
@@ -1624,3 +1625,70 @@ def test_resume_artifact_check_respects_the_condition_scope(tmp_path: Path, data
     assert job_arms_ok(job_dir, condition_scope="control", **kwargs)[0] is True
     both_ok, both_why = job_arms_ok(job_dir, condition_scope="both", **kwargs)
     assert both_ok is False and any("fault:" in reason for reason in both_why)
+
+
+# ==========================================================================
+# 14. schema 感知钳制：null-schema 任务的散文回答不再当检索结果
+# ==========================================================================
+
+NULL_SCHEMA_TASK = {
+    "task_id": 22, "intent": "reviewers who mention X", "sites": ["shopping"],
+    "eval": [{"evaluator": "AgentResponseEvaluator", "results_schema": {"type": "null"},
+              "expected": {"task_type": "retrieve", "status": "NOT_FOUND_ERROR",
+                           "retrieved_data": None}}],
+}
+
+
+def test_schema_clamp_helper_reads_the_contract():
+    assert schema_clamps_retrieved_data(NULL_SCHEMA_TASK) is True
+    assert schema_clamps_retrieved_data(RETRIEVE_ARRAY_TASK) is False
+    assert schema_clamps_retrieved_data({"eval": []}) is False
+
+
+def test_prose_answer_on_null_schema_goes_to_error_details():
+    """回归：散文曾作为 list 进 retrieved_data，导致上游 schema 报错、只能兼容评分。"""
+    prose = "Navigated to Page 1 of the customer reviews (URL: http://localhost:7770/x)"
+    response = make_agent_response(NULL_SCHEMA_TASK, completed=True, answer=prose)
+    assert response["status"] == "SUCCESS"          # 模型自报完成，判定不变
+    assert response["retrieved_data"] is None       # 契约要求 null
+    assert response["error_details"] == prose       # 内容仍可查
+
+
+def test_array_schema_prose_is_unchanged():
+    """array 契约下行为不变：散文仍序列化成列表（native 评分路径不变）。"""
+    prose = "the reviewers are Dibbins"
+    response = make_agent_response(RETRIEVE_ARRAY_TASK, completed=True, answer=prose)
+    assert response["retrieved_data"] == [prose]
+    assert response["error_details"] is None
+
+
+def test_array_schema_json_answer_is_unchanged():
+    response = make_agent_response(RETRIEVE_ARRAY_TASK, completed=True,
+                                   answer=json.dumps(["Dibbins"]))
+    assert response["retrieved_data"] == ["Dibbins"]
+
+
+def test_null_schema_not_found_and_incomplete_paths_are_unchanged():
+    not_found = make_agent_response(NULL_SCHEMA_TASK, completed=True,
+                                    answer="No reviewer mentions that; nothing found.")
+    assert not_found["status"] == "NOT_FOUND_ERROR"
+    assert not_found["retrieved_data"] is None
+    assert "no reviewer" in not_found["error_details"].casefold()
+
+    incomplete = make_agent_response(NULL_SCHEMA_TASK, completed=False,
+                                     answer="Reached max steps (20)")
+    assert incomplete["status"] == "UNKNOWN_ERROR"
+    assert incomplete["retrieved_data"] is None
+
+    clamped_diagnostic = make_agent_response(
+        NULL_SCHEMA_TASK, completed=False, answer="x",
+        diagnostic="max_steps exhausted after 20 steps; no answer produced")
+    assert clamped_diagnostic["error_details"].startswith("max_steps exhausted")
+
+
+def test_trial_record_can_flag_the_schema_clamp():
+    record = build_trial_record(
+        model_profile="m1", architecture="react", fault_type="web_dom_missing",
+        task_id=22, seed=1, condition="control", replicate=0,
+        run_config={"response_schema_clamped": True}, paths={})
+    assert record["run_config"]["response_schema_clamped"] is True

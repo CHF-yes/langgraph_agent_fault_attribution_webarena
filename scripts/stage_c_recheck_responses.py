@@ -42,6 +42,7 @@ from standard_agent.webarena_verified import (  # noqa: E402
     dataset_path,
     load_task_definition,
     make_agent_response,
+    schema_clamps_retrieved_data,
 )
 
 CAP_MARKER = "max_steps exhausted"
@@ -73,6 +74,8 @@ def main() -> int:
     parser.add_argument("--out", required=True)
     parser.add_argument("--config", default="experiments/webarena_local_config.json")
     parser.add_argument("--manifest", default=DEFAULT_MANIFEST)
+    parser.add_argument("--prose-root", action="append", default=None,
+                        help="扫描这些根下 schema=null 的散文兼容格，按钳制规则重建后重评")
     parser.add_argument("--task-ids", type=int, nargs="+", default=[22, 24],
                         help="要验证真 NOT_FOUND 原生评分的任务")
     options = parser.parse_args()
@@ -85,7 +88,8 @@ def main() -> int:
     config_path = resolved["config_path"]
 
     report: dict = {"config_substitutions": resolved["substitutions"],
-                    "cap_exhausted_recheck": [], "not_found_native_probe": []}
+                    "cap_exhausted_recheck": [], "not_found_native_probe": [],
+                    "prose_clamp_recheck": []}
 
     # ---- 1) 预算耗尽格：改前 vs 改后 ----
     for response_path in sorted(smoke_root.rglob("agent_response.json")):
@@ -160,6 +164,44 @@ def main() -> int:
                                 for item in (outcome["result"].get("evaluators_results") or [])],
         })
 
+    # ---- 3) 散文回答（schema=null）按钳制规则重建后重评 ----
+    for root in options.prose_root or []:
+        for response_path in sorted((ROOT / root).rglob("agent_response.json")):
+            original = _read(response_path)
+            data = original.get("retrieved_data")
+            if original.get("status") != "SUCCESS" or not isinstance(data, list) or not data:
+                continue
+            cell_dir = response_path.parent
+            record_path = cell_dir / "trial_record.json"
+            record = _read(record_path) if record_path.exists() else {}
+            task_id = int(record.get("task_id") or cell_dir.parent.name)
+            task = load_task_definition(task_id, path=dataset)
+            if not schema_clamps_retrieved_data(task):
+                continue                      # 只处理契约要求 null 的任务
+            before = _evaluate(cell_dir, task_id, config_path)
+
+            fixed = make_agent_response(task, completed=True, answer=str(data[0]))
+            fixed_dir = out_root / "prose_clamped" / str(cell_dir.relative_to(ROOT))
+            fixed_dir.mkdir(parents=True, exist_ok=True)
+            (fixed_dir / "agent_response.json").write_text(
+                json.dumps(fixed, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+            har = cell_dir / "network.har"
+            if har.exists():
+                shutil.copy(har, fixed_dir / "network.har")
+            after = _evaluate(fixed_dir, task_id, config_path)
+
+            report["prose_clamp_recheck"].append({
+                "cell": str(cell_dir.relative_to(ROOT)),
+                "task_id": task_id,
+                "before": {"retrieved_data": str(data)[:60],
+                           "evaluation_status": before["evaluation_status"],
+                           "official_success": before["official_success"]},
+                "after": {"retrieved_data": fixed["retrieved_data"],
+                          "error_details": str(fixed["error_details"])[:60],
+                          "evaluation_status": after["evaluation_status"],
+                          "official_success": after["official_success"]},
+            })
+
     (out_root / "recheck_report.json").write_text(
         json.dumps(report, ensure_ascii=False, indent=2, default=str) + "\n", encoding="utf-8")
 
@@ -169,6 +211,12 @@ def main() -> int:
                                 for item in report["cap_exhausted_recheck"]),
         "after_all_failed": all(item["after"]["official_success"] is False
                                 for item in report["cap_exhausted_recheck"]),
+        "prose_clamp_cells": len(report["prose_clamp_recheck"]),
+        "prose_clamp_all_native": all(item["after"]["evaluation_status"] == "native"
+                                      for item in report["prose_clamp_recheck"]),
+        "prose_clamp_verdict_unchanged": all(
+            item["before"]["official_success"] == item["after"]["official_success"]
+            for item in report["prose_clamp_recheck"]),
         "not_found_native": {item["task_id"]: {
             "evaluation_status": item.get("evaluation_status"),
             "official_success": item.get("official_success")}

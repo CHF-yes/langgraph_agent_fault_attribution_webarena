@@ -585,7 +585,9 @@ def run_benchmark(args):
             print(f"\n❌ 无法加载任务 {args.task_id} 的官方 eval 定义，"
                   f"拒绝生成无法评分的 agent_response：{exc}")
             return
-        from standard_agent.webarena_verified import task_type_for
+        from standard_agent.webarena_verified import (
+            schema_clamps_retrieved_data, task_type_for,
+        )
         print(f"\n任务 {args.task_id} 官方类型: {task_type_for(task_definition)}")
 
     def run_one_trial(task_id: str, task_desc: str, page_url: str,
@@ -724,6 +726,7 @@ def run_benchmark(args):
                     seed=fault_config.seed, condition=condition, replicate=trial_idx,
                     run_config={
                         "run_id": run_id,
+                        "response_schema_clamped": schema_clamps_retrieved_data(task_definition),
                         "task_id": args.task_id, "site": args.site, "url": page_url,
                         "max_steps": args.max_steps or settings.MAX_STEPS,
                         "fault_intensity": fault_config.intensity,
