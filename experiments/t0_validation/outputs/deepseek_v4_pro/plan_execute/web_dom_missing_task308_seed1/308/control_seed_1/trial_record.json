@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "pairing_scheme": "seed-paired-v2",
+  "trial_id": "model=deepseek_v4_pro|arch=plan_execute|fault=web_dom_missing|task=308|seed=1|cond=control|rep=0",
+  "file_stem": "deepseek_v4_pro__plan_execute__web_dom_missing__task308__seed1__control__rep0",
+  "pair_key": "model=deepseek_v4_pro|arch=plan_execute|fault=web_dom_missing|task=308|seed=1|cond=-|rep=0",
+  "condition": "control",
+  "model_profile": "deepseek_v4_pro",
+  "architecture": "plan_execute",
+  "fault_type": "web_dom_missing",
+  "task_id": 308,
+  "fault_seed": 1,
+  "replicate": 0,
+  "run_config": {
+    "run_id": "20261005T115305-157df3",
+    "task_id": 308,
+    "site": "gitlab",
+    "url": "http://localhost:8023",
+    "max_steps": 20,
+    "fault_intensity": "off",
+    "fault_label": "control",
+    "injection_step": null,
+    "trial_index": 0
+  },
+  "paths": {
+    "agent_response": "experiments/t0_validation/outputs/deepseek_v4_pro/plan_execute/web_dom_missing_task308_seed1/308/control_seed_1/agent_response.json",
+    "network_har": "experiments/t0_validation/outputs/deepseek_v4_pro/plan_execute/web_dom_missing_task308_seed1/308/control_seed_1/network.har",
+    "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_validation/20261005T115305-157df3/deepseek_v4_pro__plan_execute__web_dom_missing__task308__seed1__control__rep0.jsonl"
+  },
+  "completed": true,
+  "success": true,
+  "injection_count": 0,
+  "steps": 5,
+  "cap_exhausted": false,
+  "llm_calls": 10,
+  "time_sec": 122.808,
+  "error": null,
+  "code": {
+    "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+    "git_sha": "af72b07552129d79e54547964c93407e6c698130",
+    "git_branch": "stagec-exec-chain",
+    "git_dirty": false,
+    "recorded_at": 1791172508.5801532
+  },
+  "created_at": 1791172508.5801842
+}

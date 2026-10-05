@@ -265,6 +265,9 @@ mutation 任务。同一模板内的任务相关，不能把 16 个 ID 当成 16
    两个口径分别统计、分别报告。未进入官方成功率分母的格子分四类计数，且必须满足
    `evaluated + missing + incomplete + unevaluated + error = expected`（`cell_counts.consistent`）：
    根本没有产物 / 产物不完整 / 完整但未评分 / 评分自身报错。
+   （**Pro profile 别名**：`.env` 同时声明 `deepseek_v4_pro`（冻结清单用）与 `deepseek`
+   （历史复现脚本用），两者指向同一 key/model/base_url；不复制密钥，避免破坏已有复现脚本。
+   主模型用 `deepseek_v41_flash` / `qwen38_flash`。）
 5. **主分析预注册**：估计量、整群自助区间、交互检验、Holm 家族与判定语言见
    [`stage_c_analysis_plan.md`](stage_c_analysis_plan.md)；实现为
    `standard_agent/stage_c_analysis.py` + `scripts/stage_c_analysis.py`。

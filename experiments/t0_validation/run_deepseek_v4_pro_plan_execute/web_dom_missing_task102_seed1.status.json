@@ -1,0 +1,22 @@
+{
+  "job": {
+    "task_id": 102,
+    "seed": 1,
+    "site": "gitlab",
+    "start_url": "http://localhost:8023",
+    "intent": "Navigate to the page showing the list of open issues in the a11yproject/a11yproject.com repository that have labels related to help wanted",
+    "fault_type": "web_dom_missing",
+    "injection_step": 2,
+    "injection_step_units": "execution_step"
+  },
+  "design_fingerprint": "ea28c105939fc76f",
+  "returncode": 0,
+  "infrastructure_error": false,
+  "task_error": false,
+  "fault_expected": false,
+  "fault_missing": false,
+  "fault_count": 0,
+  "fault_triggered": false,
+  "fault_invalid": false,
+  "timed_out": false
+}

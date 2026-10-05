@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "pairing_scheme": "seed-paired-v2",
+  "trial_id": "model=deepseek_v4_pro|arch=react|fault=web_dom_missing|task=22|seed=1|cond=control|rep=0",
+  "file_stem": "deepseek_v4_pro__react__web_dom_missing__task22__seed1__control__rep0",
+  "pair_key": "model=deepseek_v4_pro|arch=react|fault=web_dom_missing|task=22|seed=1|cond=-|rep=0",
+  "condition": "control",
+  "model_profile": "deepseek_v4_pro",
+  "architecture": "react",
+  "fault_type": "web_dom_missing",
+  "task_id": 22,
+  "fault_seed": 1,
+  "replicate": 0,
+  "run_config": {
+    "run_id": "20261005T114643-7c272f",
+    "task_id": 22,
+    "site": "shopping",
+    "url": "http://localhost:7770/fujifilm-finepix-z200fd-10mp-digital-camera-with-5x-optical-dual-image-stabilized-zoom-black.html",
+    "max_steps": 20,
+    "fault_intensity": "off",
+    "fault_label": "control",
+    "injection_step": null,
+    "trial_index": 0
+  },
+  "paths": {
+    "agent_response": "experiments/t0_validation/outputs/deepseek_v4_pro/react/web_dom_missing_task22_seed1/22/control_seed_1/agent_response.json",
+    "network_har": "experiments/t0_validation/outputs/deepseek_v4_pro/react/web_dom_missing_task22_seed1/22/control_seed_1/network.har",
+    "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/t0_validation/20261005T114643-7c272f/deepseek_v4_pro__react__web_dom_missing__task22__seed1__control__rep0.jsonl"
+  },
+  "completed": false,
+  "success": false,
+  "injection_count": 0,
+  "steps": 20,
+  "cap_exhausted": true,
+  "llm_calls": 20,
+  "time_sec": 126.942,
+  "error": null,
+  "code": {
+    "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+    "git_sha": "af72b07552129d79e54547964c93407e6c698130",
+    "git_branch": "stagec-exec-chain",
+    "git_dirty": false,
+    "recorded_at": 1791172130.1174135
+  },
+  "created_at": 1791172130.1174157
+}
