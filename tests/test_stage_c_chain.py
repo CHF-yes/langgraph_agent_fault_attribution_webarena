@@ -1784,3 +1784,26 @@ def test_resumable_status_ignores_missing_injection():
     assert resumable_status({"returncode": 0, "infrastructure_error": True}) is False
     assert resumable_status({"returncode": -15, "infrastructure_error": False}) is False
     assert resumable_status({}) is False
+
+
+# ==========================================================================
+# 17. 架构对等：两个臂必须拿到同一段作答契约
+# ==========================================================================
+
+def test_both_architectures_receive_the_same_answer_contract():
+    """回归：JSON 作答要求曾只注入 react，PE 执行器没有 → 架构对比被污染。"""
+    from standard_agent.core.nodes import (
+        _answer_contract_context, _plan_executor_prompt, _react_system_prompt,
+    )
+
+    structured = ("How many commits did kilian make? "
+                  "Return a list of objects with keys username and post_title.")
+    plain = "Go to the product page for a night guard and add it to the cart."
+
+    for task, expect_json in ((structured, True), (plain, False)):
+        react = _react_system_prompt(task, "http://x", "AX")
+        executor = _plan_executor_prompt(task, {"goal": "g"}, "http://x", "AX")
+        assert ("ONLY valid JSON" in react) is expect_json
+        assert ("ONLY valid JSON" in executor) is expect_json
+        contract = _answer_contract_context(task)
+        assert contract in react and contract in executor

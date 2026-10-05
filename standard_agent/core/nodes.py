@@ -155,6 +155,43 @@ def _output_format_context(task: str) -> str:
     )
 
 
+def _answer_contract_context(task: str) -> str:
+    """两个架构**必须**拿到的同一段作答契约（检索完整性 + 输出格式）。
+
+    react 与 plan-and-execute 的作答要求若不一致，架构对比就会被提示词差异污染：
+    此前 ``_output_format_context`` 与 ``_retrieval_completeness_context`` 只注入 react，
+    PE 执行器反而被告知"只执行当前子目标"，于是倾向汇报进度式散文，在 array-schema
+    检索任务上系统性失分。这里把契约收敛成单一来源，两个 prompt 组装函数共用。
+    """
+    return _retrieval_completeness_context(task) + _output_format_context(task)
+
+
+def _react_system_prompt(task: str, url: str, page_content: str,
+                         plan_context: str = "") -> str:
+    """react 臂的系统提示（含共享作答契约）。"""
+    return SYSTEM_PROMPT.format(
+        task=task, url=url, page_content=page_content, plan_context=plan_context,
+        retrieval_context=_retrieval_completeness_context(task),
+        output_format_context=_output_format_context(task),
+    )
+
+
+def _plan_executor_prompt(task: str, current_step: dict, url: str,
+                          page_content: str) -> str:
+    """plan-execute 执行器的系统提示（**与 react 相同的作答契约**）。"""
+    return (
+        "You are the executor in a plan-and-execute web agent.\n"
+        "Execute ONLY the current sub-goal below. Use exactly one tool call, "
+        "or call stop when the overall task is complete. Do not redesign the "
+        "whole plan; the replanner will do that after the observation.\n\n"
+        f"Overall task: {task}\nCurrent sub-goal: {current_step['goal']}\n"
+        f"Success condition: {current_step.get('success_condition', '')}\n"
+        f"URL: {url}\nAccessibility Tree:\n{page_content}\n"
+        "Your response must begin with THOUGHT:."
+        + _answer_contract_context(task)
+    )
+
+
 def _thread_id(config: RunnableConfig | None) -> str:
     """从 LangGraph config 中提取 thread_id。"""
     try:
@@ -259,13 +296,8 @@ def agent_node(state: AgentState, config: RunnableConfig) -> dict:
     # ---- 构建消息 ----
     # 每轮重新注入任务、最新观测和工具协议。系统消息没有写入 state，避免
     # 状态膨胀；但也不能只在首轮注入，否则多步任务会丢失任务约束。
-    system_msg = SystemMessage(content=SYSTEM_PROMPT.format(
-        task=task,
-        url=current_url,
-        page_content=page_content,
-        plan_context=plan_context,
-        retrieval_context=retrieval_context,
-        output_format_context=output_format_context,
+    system_msg = SystemMessage(content=_react_system_prompt(
+        task, current_url, page_content, plan_context=plan_context,
     ))
     task_msg = HumanMessage(content=(
         f"Please continue completing this task: {task}\n"
@@ -558,15 +590,8 @@ def plan_executor_node(state: AgentState, config: RunnableConfig) -> dict:
     if step_count >= max_steps:
         return _force_stop(messages, step_count, max_steps, thread_id, task, url, architecture)
 
-    prompt = SystemMessage(content=(
-        "You are the executor in a plan-and-execute web agent.\n"
-        "Execute ONLY the current sub-goal below. Use exactly one tool call, "
-        "or call stop when the overall task is complete. Do not redesign the "
-        "whole plan; the replanner will do that after the observation.\n\n"
-        f"Overall task: {task}\nCurrent sub-goal: {current_step['goal']}\n"
-        f"Success condition: {current_step.get('success_condition', '')}\n"
-        f"URL: {url}\nAccessibility Tree:\n{page_content}\n"
-        "Your response must begin with THOUGHT:."
+    prompt = SystemMessage(content=_plan_executor_prompt(
+        task, current_step, url, page_content,
     ))
     full_messages = [prompt, *list(messages), THOUGHT_REMINDER]
     llm = create_llm(profile_name=model_profile).bind_tools(ALL_TOOLS)
