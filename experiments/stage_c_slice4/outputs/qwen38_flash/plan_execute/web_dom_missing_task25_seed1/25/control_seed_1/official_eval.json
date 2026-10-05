@@ -1,0 +1,56 @@
+{
+  "task_id": 25,
+  "intent_template_id": 222,
+  "sites": [
+    "shopping"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"NOT_FOUND_ERROR\",\n  \"retrieved_data\": null,\n  \"error_details\": \"No reviewers meet the criteria. After examining all reviews across both pages for the Epson WorkForce WF-3620 product, there are NO reviewers who BOTH explicitly mention \\\"print quality\\\" AND give a rating of 3 stars or less.\\n\\nDetails:\\n- The only review that explicitly mentions \\\"print quality\\\" is by **GoldfishGoldfish** (\\\"It gives great print quality as long as you use the premium paper settings\\\"), but this is a POSITIVE comment about print quality and does not correspond to a ≤3-star rating.\\n- Low-rated reviews (e.g., Bob in Vegas at 20%, AMAZON SHOPAHOLIC at 20%, RemyR, Dylan Spears at 20%) criticize performance/ink/connectivity but do NOT explicitly use the phrase \\\"print quality.\\\"\\n- On page 2, Imajin8 has an 80% (high) rating, and Jennifer Healy Keintz's review concerns wasted ink, not print quality.\\n\\nFinal list of qualifying reviewers: NONE (empty).\"\n}\n",
+      "actual_normalized": {
+        "retrieved_data": null,
+        "status": "not_found_error",
+        "task_type": "retrieve"
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "roxanne brandon coffey",
+          "nelson"
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "agent_response.status_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Expected success, got not_found_error"
+          ],
+          "error_msg": null
+        },
+        {
+          "assertion_name": "retrieved_data_missing_or_null",
+          "status": "failure",
+          "assertion_msgs": [
+            "Expected retrieved_data to be (NormalizedString('Roxanne Brandon Coffey' -> 'roxanne brandon coffey'), NormalizedString('Nelson' -> 'nelson')), but got None or empty"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false
+}

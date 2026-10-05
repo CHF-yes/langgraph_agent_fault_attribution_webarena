@@ -1,0 +1,22 @@
+{
+  "job": {
+    "task_id": 308,
+    "seed": 1,
+    "site": "gitlab",
+    "start_url": "http://localhost:8023",
+    "intent": "Get the username(s) of the user(s) with the most commits to the primer/design project",
+    "fault_type": "agent_param_error",
+    "injection_step": 1,
+    "injection_step_units": "parameter_action"
+  },
+  "design_fingerprint": "2a6d2786423356b6",
+  "returncode": 0,
+  "infrastructure_error": false,
+  "task_error": true,
+  "fault_expected": true,
+  "fault_missing": false,
+  "fault_count": 1,
+  "fault_triggered": true,
+  "fault_invalid": false,
+  "timed_out": false
+}

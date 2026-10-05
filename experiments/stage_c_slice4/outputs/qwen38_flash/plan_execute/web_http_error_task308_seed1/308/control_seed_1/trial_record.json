@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "pairing_scheme": "seed-paired-v2",
+  "trial_id": "model=qwen38_flash|arch=plan_execute|fault=web_http_error|task=308|seed=1|cond=control|rep=0",
+  "file_stem": "qwen38_flash__plan_execute__web_http_error__task308__seed1__control__rep0",
+  "pair_key": "model=qwen38_flash|arch=plan_execute|fault=web_http_error|task=308|seed=1|cond=-|rep=0",
+  "condition": "control",
+  "model_profile": "qwen38_flash",
+  "architecture": "plan_execute",
+  "fault_type": "web_http_error",
+  "task_id": 308,
+  "fault_seed": 1,
+  "replicate": 0,
+  "run_config": {
+    "run_id": "20261005T164955-c7975f",
+    "response_schema_clamped": false,
+    "thinking_mode": "disabled",
+    "task_id": 308,
+    "site": "gitlab",
+    "url": "http://localhost:8023",
+    "max_steps": 20,
+    "fault_intensity": "off",
+    "fault_label": "control",
+    "injection_step": null,
+    "trial_index": 0
+  },
+  "paths": {
+    "agent_response": "experiments/stage_c_slice4/outputs/qwen38_flash/plan_execute/web_http_error_task308_seed1/308/control_seed_1/agent_response.json",
+    "network_har": "experiments/stage_c_slice4/outputs/qwen38_flash/plan_execute/web_http_error_task308_seed1/308/control_seed_1/network.har",
+    "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/stage_c_slice4/20261005T164955-c7975f/qwen38_flash__plan_execute__web_http_error__task308__seed1__control__rep0.jsonl"
+  },
+  "completed": true,
+  "success": true,
+  "injection_count": 0,
+  "steps": 16,
+  "cap_exhausted": false,
+  "llm_calls": 39,
+  "time_sec": 152.922,
+  "error": null,
+  "code": {
+    "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+    "git_sha": "e340cb769db5a33a35daebb8686b79df2d6c7bc0",
+    "git_branch": "stagec-exec-chain",
+    "git_dirty": false,
+    "recorded_at": 1791190348.819304
+  },
+  "created_at": 1791190348.8193057
+}

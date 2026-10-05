@@ -1,0 +1,6 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "NOT_FOUND_ERROR",
+  "retrieved_data": null,
+  "error_details": "No reviewer mentions an underwater photo for this product. After loading all 12 reviews (via limit=50, which supersedes the need for a separate Page 2), none of the review texts reference taking pictures under water/underwater. Reviewers mentioned were: badkat, DrummerGirlLB, G. Matsusaki, Razzberry, Nic, CA Guy, Kenan, CT, romance lover, and AZ Guy — their reviews cover topics like the pink color, ease of use, flash feature, snow photography, viewfinder, image quality, and a broken slide cover, but nothing about underwater photos."
+}

@@ -1,0 +1,22 @@
+{
+  "job": {
+    "task_id": 132,
+    "seed": 1,
+    "site": "gitlab",
+    "start_url": "http://localhost:8023",
+    "intent": "How many commits did kilian make to a11yproject.com on March 5, 2023?",
+    "fault_type": "agent_param_error",
+    "injection_step": 1,
+    "injection_step_units": "parameter_action"
+  },
+  "design_fingerprint": "2a6d2786423356b6",
+  "returncode": 0,
+  "infrastructure_error": false,
+  "task_error": false,
+  "fault_expected": true,
+  "fault_missing": false,
+  "fault_count": 1,
+  "fault_triggered": true,
+  "fault_invalid": false,
+  "timed_out": false
+}

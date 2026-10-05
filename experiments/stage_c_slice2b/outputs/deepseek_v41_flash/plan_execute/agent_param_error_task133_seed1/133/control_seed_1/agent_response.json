@@ -1,0 +1,11 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    {
+      "status": "blocked",
+      "reason": "Unable to sign in to the GitLab instance: the login attempt with username 'root' and password 'password' returned 'Invalid login or password.' No valid credentials were provided, so authentication cannot be completed. Note: the overall task concerns commit history on a11yproject.com (a GitHub-hosted project), which may not require this GitLab login."
+    }
+  ],
+  "error_details": null
+}

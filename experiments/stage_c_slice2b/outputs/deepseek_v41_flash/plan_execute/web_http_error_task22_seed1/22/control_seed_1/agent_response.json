@@ -1,0 +1,6 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "NOT_FOUND_ERROR",
+  "retrieved_data": null,
+  "error_details": "Based on scanning the customer reviews on page 1 and page 2 of the Fujifilm FinePix Z200fd camera product page, no review's visible text contains the phrase 'under water' or 'underwater'. The reviews on page 2 are: 'Gorgeous pictures, high quality product' by AZ Guy, and a review by CT about the camera's sleek design. Neither mentions an underwater photo. Note: some review texts are truncated in the accessibility tree, so a definitive full-text confirmation is limited, but no match was found in the displayed content."
+}

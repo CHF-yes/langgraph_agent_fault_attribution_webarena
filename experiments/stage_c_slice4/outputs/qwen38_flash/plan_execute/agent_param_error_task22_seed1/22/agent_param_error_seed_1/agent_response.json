@@ -1,0 +1,6 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "NOT_FOUND_ERROR",
+  "retrieved_data": null,
+  "error_details": "After scanning the visible reviews on page 2 (and page 1) of the product reviews, no reviewer name is associated with a comment mentioning an \"under water photo\" or underwater photography. Page 2 contains only two reviews: by \"AZ Guy\" (\"Gorgeous pictures, high quality product\") and by \"CT\" (about the slide cover failing in the snow). Neither mentions underwater photos. Therefore, there are no reviewers to report for this criterion based on the available page content."
+}

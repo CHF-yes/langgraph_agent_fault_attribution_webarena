@@ -1,0 +1,6 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "NOT_FOUND_ERROR",
+  "retrieved_data": null,
+  "error_details": "No reviewers meet the criteria. After examining all reviews across both pages for the Epson WorkForce WF-3620 product, there are NO reviewers who BOTH explicitly mention \"print quality\" AND give a rating of 3 stars or less.\n\nDetails:\n- The only review that explicitly mentions \"print quality\" is by **GoldfishGoldfish** (\"It gives great print quality as long as you use the premium paper settings\"), but this is a POSITIVE comment about print quality and does not correspond to a ≤3-star rating.\n- Low-rated reviews (e.g., Bob in Vegas at 20%, AMAZON SHOPAHOLIC at 20%, RemyR, Dylan Spears at 20%) criticize performance/ink/connectivity but do NOT explicitly use the phrase \"print quality.\"\n- On page 2, Imajin8 has an 80% (high) rating, and Jennifer Healy Keintz's review concerns wasted ink, not print quality.\n\nFinal list of qualifying reviewers: NONE (empty)."
+}

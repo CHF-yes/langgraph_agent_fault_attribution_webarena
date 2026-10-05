@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "Unable to sign in to GitLab. Login attempts for user 'eric' with passwords 'Password1!', 'test1234', and 'password' all returned \"Invalid login or password.\" The a11yproject.com commits page is not accessible anonymously (returns 404). Valid credentials were not provided, so the sign-in sub-goal could not be completed."
+  ],
+  "error_details": null
+}

@@ -1,0 +1,51 @@
+{
+  "task_id": 25,
+  "intent_template_id": 222,
+  "sites": [
+    "shopping"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"Based on the reviews on the product page (Epson WorkForce WF-3620), the reviews with a rating of 3 stars or less (shown as \\\"Rating 20%\\\" = 1 star) are:\\n- Bob in Vegas (\\\"Poorly designed, lousy performance\\\")\\n- AMAZON SHOPAHOLIC (\\\"HORRIBLE IN EVERY WAY!\\\")\\n- Dylan Spears (\\\"ll save lots of time\\\")\\n\\nThe only reviewer who explicitly mentions \\\"print quality\\\" is GoldfishGoldfish (\\\"It gives great print quality as long as you use the premium paper settings\\\"), but this review does not display a low rating (it appears to be a positive review).\\n\\nTherefore, among the low-rated (≤3 star) reviews, none explicitly mention print quality in their visible text. The reviewer mentioning print quality explicitly is GoldfishGoldfish, but their rating does not appear to be ≤3 stars.\"\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "status": "success",
+        "task_type": "retrieve",
+        "retrieved_data": [
+          "based on the reviews on the product page (epson workforce wf 3620), the reviews with a rating of 3 stars or less (shown as \"rating 20%\" = 1 star) are: - bob in vegas (\"poorly designed, lousy performance\") - amazon shopaholic (\"horrible in every way!\") - dylan spears (\"ll save lots of time\") the only reviewer who explicitly mentions \"print quality\" is goldfishgoldfish (\"it gives great print quality as long as you use the premium paper settings\"), but this review does not display a low rating (it appears to be a positive review). therefore, among the low rated (<=3 star) reviews, none explicitly mention print quality in their visible text. the reviewer mentioning print quality explicitly is goldfishgoldfish, but their rating does not appear to be <=3 stars."
+        ]
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "roxanne brandon coffey",
+          "nelson"
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/2), Missing: 2, Extra: 1",
+            "Expected: [roxanne brandon coffey, nelson], Got: [based on the reviews on the product page (epson workforce wf 3620), the reviews with a rating of 3 stars or less (shown as \"rating 20%\" = 1 star) are: - bob in vegas (\"poorly designed, lousy performance\") - amazon shopaholic (\"horrible in every way!\") - dylan spears (\"ll save lots of time\") the only reviewer who explicitly mentions \"print quality\" is goldfishgoldfish (\"it gives great print quality as long as you use the premium paper settings\"), but this review does not display a low rating (it appears to be a positive review). therefore, among the low rated (<=3 star) reviews, none explicitly mention print quality in their visible text. the reviewer mentioning print quality explicitly is goldfishgoldfish, but their rating does not appear to be <=3 stars.]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false
+}

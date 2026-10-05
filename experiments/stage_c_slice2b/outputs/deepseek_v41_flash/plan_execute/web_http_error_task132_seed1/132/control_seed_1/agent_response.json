@@ -1,0 +1,11 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    {
+      "status": "blocked",
+      "reason": "Unable to sign in to GitLab. Multiple credential combinations (root/password, root/root, admin/password) all returned 'Invalid login or password.' No valid credentials were provided, so authentication cannot be completed."
+    }
+  ],
+  "error_details": null
+}

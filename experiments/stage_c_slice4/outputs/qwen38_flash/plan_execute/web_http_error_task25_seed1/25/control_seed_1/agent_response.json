@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "Low-rated reviews (≤3 stars) identified across both pages of the Epson WorkForce WF-3620 product reviews:\n\nPage 1:\n- Bob in Vegas — \"Poorly designed, lousy performance\" (Rating 20% ≈ 1 star)\n- AMAZON SHOPAHOLIC AMAZON SHOPAHOLIC — \"HORRIBLE IN EVERY WAY!\" (Rating 20% ≈ 1 star)\n- Dylan Spears — \"...ll save lots of time\" (Rating 20% ≈ 1 star)\n\nPage 2:\n- Imajin8 — \"Great true AIO...\" (Rating 80% ≈ 4 stars) → NOT a low-rated review, excluded.\n\nRegarding the final goal (reviewers who mention print quality explicitly AND rate ≤3 stars): None of the low-rated (≤3 star) reviewers explicitly mention \"print quality.\" The only reviewer who explicitly mentions \"print quality\" is GoldfishGoldfish (\"It gives great print quality as long as you use the premium paper settings\"), but that review carries a high rating (>3 stars), so it does not meet the criteria. Therefore there are no qualifying reviewers."
+  ],
+  "error_details": null
+}

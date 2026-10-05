@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "The space forum page is loaded and its post list is visible."
+  ],
+  "error_details": null
+}

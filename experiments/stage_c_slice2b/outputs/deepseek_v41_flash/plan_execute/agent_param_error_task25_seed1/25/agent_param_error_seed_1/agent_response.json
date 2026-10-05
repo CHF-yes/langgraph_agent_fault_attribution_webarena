@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "THOUGHT: I need to open the Reviews tab to view customer reviews. The Reviews tab is at element [258] with link 'Reviews (12)' at [259]. I'll click on the Reviews tab."
+  ],
+  "error_details": null
+}

@@ -1,0 +1,14 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    {
+      "status": "sub-goal complete",
+      "post_url": "http://localhost:9999/f/WorcesterMA/123034/a-coastal-massachusetts-gem",
+      "post_title": "A Coastal Massachusetts Gem",
+      "post_author": "graemeknows",
+      "comment_section_loaded": true
+    }
+  ],
+  "error_details": null
+}

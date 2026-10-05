@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "Unable to complete the task. The GitLab page (https://gitlab.com/primer/design) is blocked by a Cloudflare \"Performing security verification\" challenge that prevents automated access. The security verification never completes, so the primer/design project page cannot be displayed and the commit data cannot be retrieved."
+  ],
+  "error_details": null
+}

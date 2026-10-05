@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "Page 2 of the customer reviews is now loaded and visible. It contains 2 reviews:\n1. Imajin8 — \"Great true AIO - ups and considerations depending on what you are looking for\" — Rating 80% (≈4 stars). This exceeds the ≤3-star threshold, so it does NOT qualify regardless of mentioning print quality.\n2. Jennifer Healy Keintz — review text is truncated (\"...t tell you how much ink has been wasted (that...\") and no explicit star rating is shown in the accessibility tree.\n\nNote: The reviewer(s) who explicitly mention \"print quality\" with a rating of 3 or fewer stars were found on Page 1 (e.g., GoldfishGoldfish mentions \"great print quality\"). On Page 2, the only qualifying candidate would require confirming Jennifer Healy Keintz's rating and full text, but Imajin8 (the only clearly-rated review here at 80%/4 stars) does not meet the ≤3-star criterion. No additional qualifying reviewers beyond those already identified on Page 1 appear on Page 2."
+  ],
+  "error_details": null
+}

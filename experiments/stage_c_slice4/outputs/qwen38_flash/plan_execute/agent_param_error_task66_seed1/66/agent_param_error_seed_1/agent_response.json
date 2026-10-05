@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "The Books forum is already sorted by 'Hot'. The sort control displays \"Sort by: Hot\" and the submission list reflects this ordering — posts appear ranked by engagement/vote score in descending order (top post with 3,591 votes, followed by 3,085, 1,716, 1,695, etc.). No change was needed; the top 10 hottest posts are now visible for the next step of identifying which recommend exactly one book."
+  ],
+  "error_details": null
+}

@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "Page 2 of the reviews contains 2 reviews:\n\n1. Review by Imajin8 - \"Great true AIO - ups and considerations depending on what you are looking for\" - Rating: 80% (4 stars) - Posted 4/20/23. Text is truncated in the accessibility tree; visible portion does not explicitly mention \"print quality.\"\n\n2. Review by Jennifer Healy Keintz - \"t tell you how much ink has been wasted (that...\" - Rating: not visible in the accessibility tree - Posted 4/20/23. Text is truncated; visible portion does not explicitly mention \"print quality.\"\n\nNote: The review text on page 2 is truncated in the accessibility tree, so full text could not be fully captured. Based on visible content, neither page-2 review explicitly mentions \"print quality,\" and the only visible rating (Imajin8, 80% = 4 stars) exceeds the 3-star threshold."
+  ],
+  "error_details": null
+}

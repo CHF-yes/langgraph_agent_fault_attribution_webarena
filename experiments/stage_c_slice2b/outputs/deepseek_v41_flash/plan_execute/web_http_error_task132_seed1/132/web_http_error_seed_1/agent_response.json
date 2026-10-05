@@ -1,0 +1,11 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    {
+      "status": "blocked",
+      "reason": "GitLab is protected by Cloudflare security verification that cannot be bypassed. The a11yproject.com repository page could not be accessed to view the commit history."
+    }
+  ],
+  "error_details": null
+}

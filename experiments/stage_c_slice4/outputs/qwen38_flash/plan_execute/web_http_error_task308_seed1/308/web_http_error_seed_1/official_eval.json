@@ -1,0 +1,50 @@
+{
+  "task_id": 308,
+  "intent_template_id": 323,
+  "sites": [
+    "gitlab"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"Unable to complete the task. Every attempt to access gitlab.com (including https://gitlab.com/users/sign_in and https://gitlab.com/primer/design) is intercepted by a Cloudflare \\\"Performing security verification\\\" interstitial page (\\\"This website uses a security service to protect against malicious bots\\\"). This bot-protection challenge blocks loading of both the sign-in form and the primer/design project pages, so I could not sign in or open the project's Contributors/Graphs view needed to identify the user(s) with the most commits. Additionally, no valid GitLab credentials were provided for the sign-in step. To proceed, the Cloudflare challenge must be passed manually (or via a non-blocked session), after which the commit-author data can be read at https://gitlab.com/primer/design/-/graphs/master.\"\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "retrieved_data": [
+          "unable to complete the task. every attempt to access gitlab.com (including https://gitlab.com/users/sign_in and https://gitlab.com/primer/design) is intercepted by a cloudflare \"performing security verification\" interstitial page (\"this website uses a security service to protect against malicious bots\"). this bot protection challenge blocks loading of both the sign in form and the primer/design project pages, so i could not sign in or open the project's contributors/graphs view needed to identify the user(s) with the most commits. additionally, no valid gitlab credentials were provided for the sign in step. to proceed, the cloudflare challenge must be passed manually (or via a non blocked session), after which the commit author data can be read at https://gitlab.com/primer/design/-/graphs/master."
+        ],
+        "status": "success",
+        "task_type": "retrieve"
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "shawn.allen@github.com"
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/1), Missing: 1, Extra: 1",
+            "Expected: [shawn.allen@github.com], Got: [unable to complete the task. every attempt to access gitlab.com (including https://gitlab.com/users/sign_in and https://gitlab.com/primer/design) is intercepted by a cloudflare \"performing security verification\" interstitial page (\"this website uses a security service to protect against malicious bots\"). this bot protection challenge blocks loading of both the sign in form and the primer/design project pages, so i could not sign in or open the project's contributors/graphs view needed to identify the user(s) with the most commits. additionally, no valid gitlab credentials were provided for the sign in step. to proceed, the cloudflare challenge must be passed manually (or via a non blocked session), after which the commit author data can be read at https://gitlab.com/primer/design/-/graphs/master.]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false
+}

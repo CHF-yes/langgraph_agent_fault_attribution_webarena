@@ -1,0 +1,6 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "NOT_FOUND_ERROR",
+  "retrieved_data": null,
+  "error_details": "No reviewer on this page meets both criteria. After analyzing all visible reviews, none who gave a rating of 3 stars or less (i.e., 20%, 40%, or 60%) explicitly mention \"print quality.\" The only review that explicitly mentions \"print quality\" is by GoldfishGoldfish (\"It gives great print quality as long as you use the premium paper settings\"), but that review carries a high rating (80% / ~4 stars), so it does not qualify. The low-rated (≤3 star) reviews discuss issues like ink cost, clogged print heads, poor performance, and connectivity, but do not use the exact phrase \"print quality.\""
+}

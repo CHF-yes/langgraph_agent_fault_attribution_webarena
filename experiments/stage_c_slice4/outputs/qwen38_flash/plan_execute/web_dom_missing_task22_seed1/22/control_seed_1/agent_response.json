@@ -1,0 +1,6 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "NOT_FOUND_ERROR",
+  "retrieved_data": null,
+  "error_details": "All reviews have been checked. Pagination confirmed there are exactly 2 pages of reviews (Page 1 and Page 2), with no further pages beyond page 2. After scanning every reviewer's text on both pages, none of the reviewers mention an \"under water\"/\"underwater\" photo for this product. Therefore, there are NO reviewers who mention under water photos."
+}

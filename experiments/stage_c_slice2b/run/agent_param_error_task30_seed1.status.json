@@ -1,0 +1,22 @@
+{
+  "job": {
+    "task_id": 30,
+    "seed": 1,
+    "site": "reddit",
+    "start_url": "http://localhost:9999",
+    "intent": "In the space forum, get the username and post title of the most recent post, and count the number of comments on that post that are not from the author and have more downvotes than upvotes. Return a list of objects with keys \"username\", \"post_title\", and \"count\".",
+    "fault_type": "agent_param_error",
+    "injection_step": 1,
+    "injection_step_units": "parameter_action"
+  },
+  "design_fingerprint": "25677df8bab68851",
+  "returncode": 0,
+  "infrastructure_error": false,
+  "task_error": true,
+  "fault_expected": true,
+  "fault_missing": false,
+  "fault_count": 1,
+  "fault_triggered": true,
+  "fault_invalid": false,
+  "timed_out": false
+}

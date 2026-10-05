@@ -1,0 +1,51 @@
+{
+  "task_id": 25,
+  "intent_template_id": 222,
+  "sites": [
+    "shopping"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"Page 2 of the reviews contains 2 reviews:\\n\\n1. Review by Imajin8 - \\\"Great true AIO - ups and considerations depending on what you are looking for\\\" - Rating: 80% (4 stars) - Posted 4/20/23. Text is truncated in the accessibility tree; visible portion does not explicitly mention \\\"print quality.\\\"\\n\\n2. Review by Jennifer Healy Keintz - \\\"t tell you how much ink has been wasted (that...\\\" - Rating: not visible in the accessibility tree - Posted 4/20/23. Text is truncated; visible portion does not explicitly mention \\\"print quality.\\\"\\n\\nNote: The review text on page 2 is truncated in the accessibility tree, so full text could not be fully captured. Based on visible content, neither page-2 review explicitly mentions \\\"print quality,\\\" and the only visible rating (Imajin8, 80% = 4 stars) exceeds the 3-star threshold.\"\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "status": "success",
+        "task_type": "retrieve",
+        "retrieved_data": [
+          "page 2 of the reviews contains 2 reviews: 1. review by imajin8 - \"great true aio - ups and considerations depending on what you are looking for\" - rating: 80% (4 stars) - posted 4/20/23. text is truncated in the accessibility tree; visible portion does not explicitly mention \"print quality.\" 2. review by jennifer healy keintz - \"t tell you how much ink has been wasted (that...\" - rating: not visible in the accessibility tree - posted 4/20/23. text is truncated; visible portion does not explicitly mention \"print quality.\" note: the review text on page 2 is truncated in the accessibility tree, so full text could not be fully captured. based on visible content, neither page 2 review explicitly mentions \"print quality,\" and the only visible rating (imajin8, 80% = 4 stars) exceeds the 3 star threshold."
+        ]
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "roxanne brandon coffey",
+          "nelson"
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/2), Missing: 2, Extra: 1",
+            "Expected: [roxanne brandon coffey, nelson], Got: [page 2 of the reviews contains 2 reviews: 1. review by imajin8 - \"great true aio - ups and considerations depending on what you are looking for\" - rating: 80% (4 stars) - posted 4/20/23. text is truncated in the accessibility tree; visible portion does not explicitly mention \"print quality.\" 2. review by jennifer healy keintz - \"t tell you how much ink has been wasted (that...\" - rating: not visible in the accessibility tree - posted 4/20/23. text is truncated; visible portion does not explicitly mention \"print quality.\" note: the review text on page 2 is truncated in the accessibility tree, so full text could not be fully captured. based on visible content, neither page 2 review explicitly mentions \"print quality,\" and the only visible rating (imajin8, 80% = 4 stars) exceeds the 3 star threshold.]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false
+}

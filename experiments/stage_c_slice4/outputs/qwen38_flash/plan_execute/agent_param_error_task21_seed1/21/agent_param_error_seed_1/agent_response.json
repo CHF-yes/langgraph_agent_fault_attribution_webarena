@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "The reviewer(s) who mention the ear cups being small on the current product page are:\n\n1. **Dibbins** – Review titled \"Cup for ears very small\": states \"the ear cups MAY be ok for children... but for adult sized ears they are way too small.\"\n2. **Catso** – Review titled \"Too small, did not hold charge\": notes \"they really are for people with very small ears.\"\n3. **Michelle Davis** – Review: mentions \"For small ears the padding goes over their ears. It won't go over mine as I'm an adult with adult sized ears.\"\n\nThe most direct match to \"ear cups being small\" is **Dibbins**, whose review title and body explicitly describe the ear cups as too small."
+  ],
+  "error_details": null
+}

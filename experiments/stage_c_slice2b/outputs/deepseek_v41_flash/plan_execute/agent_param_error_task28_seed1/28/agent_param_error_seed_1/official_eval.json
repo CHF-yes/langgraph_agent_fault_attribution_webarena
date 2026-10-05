@@ -1,0 +1,60 @@
+{
+  "task_id": 28,
+  "intent_template_id": 33,
+  "sites": [
+    "reddit"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    {\n      \"status\": \"sub-goal complete\",\n      \"post_url\": \"http://localhost:9999/f/WorcesterMA/123034/a-coastal-massachusetts-gem\",\n      \"post_title\": \"A Coastal Massachusetts Gem\",\n      \"post_author\": \"graemeknows\",\n      \"comment_section_loaded\": true\n    }\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "status": "success",
+        "task_type": "retrieve",
+        "retrieved_data": [
+          {
+            "status": "sub goal complete",
+            "post_url": "__reddit__/f/worcesterma/123034/a coastal massachusetts gem",
+            "post_title": "a coastal massachusetts gem",
+            "post_author": "graemeknows",
+            "comment_section_loaded": "true"
+          }
+        ]
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          {
+            "username": "mineinhusdson",
+            "post_title": "best place for a foot rub?",
+            "count": 0.0
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/1), Missing: 1, Extra: 1",
+            "Expected: [{'username': NormalizedString('mineinhusdson'), 'post_title': NormalizedString('Best place for a foot rub?' -> 'best place for a foot rub?'), 'count': Number(0.0)}], Got: [{'status': NormalizedString('sub-goal complete' -> 'sub goal complete'), 'post_url': NormalizedString('http://localhost:9999/f/WorcesterMA/123034/a-coastal-massachusetts-gem' -> '__reddit__/f/worcesterma/123034/a coastal massachusetts gem'), 'post_title': NormalizedString('A Coastal Massachusetts Gem' -> 'a coastal massachusetts gem'), 'post_author': NormalizedString('graemeknows'), 'comment_section_loaded': NormalizedString(True -> 'true')}]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false
+}

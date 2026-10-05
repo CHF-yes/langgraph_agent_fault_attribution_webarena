@@ -1,0 +1,53 @@
+{
+  "task_id": 21,
+  "intent_template_id": 222,
+  "sites": [
+    "shopping"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"Unable to sign in: the login attempt with the provided credentials (test@example.com / Password123) failed with the error \\\"The account sign-in was incorrect or your account is disabled temporarily.\\\" Valid account credentials are required to complete this sub-goal. Note: signing in may not be necessary for the overall task of finding reviewers who mention small ear cups — that can likely be done by browsing product review pages directly.\"\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "status": "success",
+        "task_type": "retrieve",
+        "retrieved_data": [
+          "unable to sign in: the login attempt with the provided credentials (test@example.com / password123) failed with the error \"the account sign in was incorrect or your account is disabled temporarily.\" valid account credentials are required to complete this sub goal. note: signing in may not be necessary for the overall task of finding reviewers who mention small ear cups -- that can likely be done by browsing product review pages directly."
+        ]
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "catso",
+          "dibbins",
+          "anglebert dinkherhump",
+          "michelle davis"
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/4), Missing: 4, Extra: 1",
+            "Expected: [catso, dibbins, ..., michelle davis], Got: [unable to sign in: the login attempt with the provided credentials (test@example.com / password123) failed with the error \"the account sign in was incorrect or your account is disabled temporarily.\" valid account credentials are required to complete this sub goal. note: signing in may not be necessary for the overall task of finding reviewers who mention small ear cups -- that can likely be done by browsing product review pages directly.]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false
+}

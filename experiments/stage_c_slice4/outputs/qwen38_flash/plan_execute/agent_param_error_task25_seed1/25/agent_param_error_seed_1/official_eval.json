@@ -1,0 +1,51 @@
+{
+  "task_id": 25,
+  "intent_template_id": 222,
+  "sites": [
+    "shopping"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"Page 2 of the customer reviews is now loaded and visible. It contains 2 reviews:\\n1. Imajin8 — \\\"Great true AIO - ups and considerations depending on what you are looking for\\\" — Rating 80% (≈4 stars). This exceeds the ≤3-star threshold, so it does NOT qualify regardless of mentioning print quality.\\n2. Jennifer Healy Keintz — review text is truncated (\\\"...t tell you how much ink has been wasted (that...\\\") and no explicit star rating is shown in the accessibility tree.\\n\\nNote: The reviewer(s) who explicitly mention \\\"print quality\\\" with a rating of 3 or fewer stars were found on Page 1 (e.g., GoldfishGoldfish mentions \\\"great print quality\\\"). On Page 2, the only qualifying candidate would require confirming Jennifer Healy Keintz's rating and full text, but Imajin8 (the only clearly-rated review here at 80%/4 stars) does not meet the ≤3-star criterion. No additional qualifying reviewers beyond those already identified on Page 1 appear on Page 2.\"\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "retrieved_data": [
+          "page 2 of the customer reviews is now loaded and visible. it contains 2 reviews: 1. imajin8 -- \"great true aio - ups and considerations depending on what you are looking for\" -- rating 80% (4 stars). this exceeds the <=3 star threshold, so it does not qualify regardless of mentioning print quality. 2. jennifer healy keintz -- review text is truncated (\"...t tell you how much ink has been wasted (that...\") and no explicit star rating is shown in the accessibility tree. note: the reviewer(s) who explicitly mention \"print quality\" with a rating of 3 or fewer stars were found on page 1 (e.g., goldfishgoldfish mentions \"great print quality\"). on page 2, the only qualifying candidate would require confirming jennifer healy keintz's rating and full text, but imajin8 (the only clearly rated review here at 80%/4 stars) does not meet the <=3 star criterion. no additional qualifying reviewers beyond those already identified on page 1 appear on page 2."
+        ],
+        "status": "success",
+        "task_type": "retrieve"
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "roxanne brandon coffey",
+          "nelson"
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/2), Missing: 2, Extra: 1",
+            "Expected: [roxanne brandon coffey, nelson], Got: [page 2 of the customer reviews is now loaded and visible. it contains 2 reviews: 1. imajin8 -- \"great true aio - ups and considerations depending on what you are looking for\" -- rating 80% (4 stars). this exceeds the <=3 star threshold, so it does not qualify regardless of mentioning print quality. 2. jennifer healy keintz -- review text is truncated (\"...t tell you how much ink has been wasted (that...\") and no explicit star rating is shown in the accessibility tree. note: the reviewer(s) who explicitly mention \"print quality\" with a rating of 3 or fewer stars were found on page 1 (e.g., goldfishgoldfish mentions \"great print quality\"). on page 2, the only qualifying candidate would require confirming jennifer healy keintz's rating and full text, but imajin8 (the only clearly rated review here at 80%/4 stars) does not meet the <=3 star criterion. no additional qualifying reviewers beyond those already identified on page 1 appear on page 2.]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false
+}

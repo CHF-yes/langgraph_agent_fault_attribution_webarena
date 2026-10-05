@@ -1,0 +1,11 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    {
+      "status": "blocked",
+      "reason": "GitLab (gitlab.com/a11yproject/a11yproject.com) is protected by a Cloudflare 'Performing security verification' bot challenge that does not resolve in this environment. Repeated navigations returned only the verification interstitial or a 500 Internal Server Error, so the repository main page could not be reached and the commit count for kilian on March 5, 2023 could not be determined."
+    }
+  ],
+  "error_details": null
+}

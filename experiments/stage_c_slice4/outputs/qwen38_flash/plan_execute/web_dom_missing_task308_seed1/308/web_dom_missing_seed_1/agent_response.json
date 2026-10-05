@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "The user with the most commits to the primer/design project is Shawn Allen, with 95 commits (email: shawn.allen@github.com).\n\nThis was confirmed on the Contributors page (http://localhost:8023/primer/design/-/graphs/main), which lists contributors sorted by commit count. Shawn Allen is at the top with 95 commits, well ahead of the second-place contributor, Inayaili León, who has 77 commits. So there is a single clear leader — no tie for the maximum."
+  ],
+  "error_details": null
+}

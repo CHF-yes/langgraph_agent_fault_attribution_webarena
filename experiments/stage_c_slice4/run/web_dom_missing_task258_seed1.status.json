@@ -1,0 +1,22 @@
+{
+  "job": {
+    "task_id": 258,
+    "seed": 1,
+    "site": "gitlab",
+    "start_url": "http://localhost:8023",
+    "intent": "Open the public projects listing",
+    "fault_type": "web_dom_missing",
+    "injection_step": 2,
+    "injection_step_units": "execution_step"
+  },
+  "design_fingerprint": "2a6d2786423356b6",
+  "returncode": 0,
+  "infrastructure_error": false,
+  "task_error": false,
+  "fault_expected": true,
+  "fault_missing": false,
+  "fault_count": 1,
+  "fault_triggered": true,
+  "fault_invalid": false,
+  "timed_out": false
+}

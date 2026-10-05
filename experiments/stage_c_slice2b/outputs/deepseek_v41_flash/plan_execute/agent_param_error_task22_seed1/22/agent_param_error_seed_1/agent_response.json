@@ -1,0 +1,6 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "NOT_FOUND_ERROR",
+  "retrieved_data": null,
+  "error_details": "No reviewer on page 1 (or page 2) of the product's reviews mentions an \"under water\" or \"underwater\" photo. The reviews on page 1 are by: badkat, DrummerGirlLB, G. Matsusaki, Razzberry, Nic, CA Guy, Kenan, CT, romance lover, and AZ Guy — none of them reference underwater photography. Therefore, no reviewer matching the criterion was found."
+}
