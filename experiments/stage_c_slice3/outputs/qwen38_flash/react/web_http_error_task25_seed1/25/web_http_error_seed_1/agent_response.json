@@ -1,0 +1,6 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "NOT_FOUND_ERROR",
+  "retrieved_data": null,
+  "error_details": "There are no reviewers who mention print quality with a rating of 3 or fewer stars for this product. The TTTK Mini Photo Printer (SKU B08Q77LR3J) currently has no customer reviews at all — the page shows \"Be the first to review this product,\" and the Reviews section contains only an empty review-submission form. Consequently, no reviewer names can be returned."
+}

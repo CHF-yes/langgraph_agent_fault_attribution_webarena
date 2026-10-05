@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "Among the top 10 hottest posts in /f/books, two posts recommend exactly one book:\n\n1. \"I just finished reading The Hobbit to my 6 year old daughter, and she loved it!\" (recommends The Hobbit)\n2. \"Apple Books has a free audiobook of A Christmas Carol narrated by LeVar Burton!\" (recommends A Christmas Carol)\n\nThe other top-10 posts are news articles, discussions about authors/publishers/bookstores, or general topics that do not recommend a single specific book."
+  ],
+  "error_details": null
+}

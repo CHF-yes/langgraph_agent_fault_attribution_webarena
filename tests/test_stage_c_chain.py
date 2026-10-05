@@ -1772,3 +1772,15 @@ def test_pairs_without_injection_are_excluded_from_degradation():
     cell = report["degradation_by_fault"][0]
     assert cell["n_pairs"] == 1          # 只统计真正注入了故障的那一对
     assert cell["n_tasks"] == 1
+
+
+def test_resumable_status_ignores_missing_injection():
+    """回归：故障臂未注入（逐格事实）不应导致每次 resume 都重跑。"""
+    from scripts.run_fault_matrix import resumable_status
+
+    assert resumable_status({"returncode": 0, "infrastructure_error": False}) is True
+    assert resumable_status({"returncode": 0, "infrastructure_error": False,
+                             "fault_invalid": True, "fault_missing": True}) is True
+    assert resumable_status({"returncode": 0, "infrastructure_error": True}) is False
+    assert resumable_status({"returncode": -15, "infrastructure_error": False}) is False
+    assert resumable_status({}) is False

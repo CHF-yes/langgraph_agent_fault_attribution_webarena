@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "Among the top 10 hottest posts in the \"Books\" forum (/f/books), the posts that recommend exactly one book are:\n\n1. \"I just finished reading The Hobbit to my 6 year old daughter, and she loved it!\" — recommends The Hobbit (J.R.R. Tolkien)\n2. \"Apple Books has a free audiobook of A Christmas Carol narrated by LeVar Burton!\" — recommends A Christmas Carol (Charles Dickens)\n\nThe other top-10 posts do not qualify as recommending exactly one book:\n- \"The letters of T. S. Eliot to Emily Hale...\" — news about released letters\n- \"Friendly reminder bookshop.org exists.\" — promotes a bookstore website\n- \"Appalachian prison book project seeks notebook donations\" — donation/news article\n- \"After Two Decades And 38 Children's Books Lin Oliver...\" — author interview/news\n- \"Museum issues appeal to save famed 'Misty of Chincoteague'\" — news/museum appeal\n- \"How Ukrainian publishers are fighting to survive\" — industry news\n- \"The simple greatness of Agatha Christie\" — general essay about an author's whole body of work (not a single book)"
+  ],
+  "error_details": null
+}

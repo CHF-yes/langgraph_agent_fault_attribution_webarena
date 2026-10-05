@@ -1,0 +1,50 @@
+{
+  "task_id": 308,
+  "intent_template_id": 323,
+  "sites": [
+    "gitlab"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"The user with the most commits to the primer/design project is **Shawn Allen** (email shawn.allen@github.com), with **95 commits**. He is the clear leader on the Contributors graph, ahead of the next-highest contributors: Inayaili León (77 commits) and Aurora Pleguezuelo (66 commits). There is no tie for first place.\"\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "retrieved_data": [
+          "the user with the most commits to the primer/design project is **shawn allen** (email shawn.allen@github.com), with **95 commits**. he is the clear leader on the contributors graph, ahead of the next highest contributors: inayaili leon (77 commits) and aurora pleguezuelo (66 commits). there is no tie for first place."
+        ],
+        "status": "success",
+        "task_type": "retrieve"
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "shawn.allen@github.com"
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/1), Missing: 1, Extra: 1",
+            "Expected: [shawn.allen@github.com], Got: [the user with the most commits to the primer/design project is **shawn allen** (email shawn.allen@github.com), with **95 commits**. he is the clear leader on the contributors graph, ahead of the next highest contributors: inayaili leon (77 commits) and aurora pleguezuelo (66 commits). there is no tie for first place.]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false
+}

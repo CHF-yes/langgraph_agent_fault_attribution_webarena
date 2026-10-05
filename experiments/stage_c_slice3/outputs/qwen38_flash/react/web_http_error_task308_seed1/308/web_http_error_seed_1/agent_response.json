@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "The user with the most commits to the primer/design project is **Shawn Allen** (email shawn.allen@github.com), with **95 commits**. He is the clear leader on the Contributors graph, ahead of the next-highest contributors: Inayaili León (77 commits) and Aurora Pleguezuelo (66 commits). There is no tie for first place."
+  ],
+  "error_details": null
+}

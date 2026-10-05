@@ -1,0 +1,45 @@
+{
+  "task_id": 24,
+  "intent_template_id": 222,
+  "sites": [
+    "shopping"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": null,\n  \"error_details\": \"THOUGHT: The Reviews tab is now expanded showing 2 reviews. Review 1 by \\\"Jay\\\" says \\\"Wonderful! ... Nothing.....everyday use.\\\" — no mention of price. Review 2 by \\\"Josef Bürger\\\" says \\\"Die Haflinger sind wie beschrieben und erwartet sehr gut\\\" (German: as described and expected, very good) — also no mention of unfair price. Neither reviewer mentions price being unfair.\\n\\nACTION: stop(answer=\\\"None of the reviewers on this page mention the price being unfair. The product has only 2 reviews: one by 'Jay' (summary: 'Wonderful!', body: 'Nothing.....everyday use.') and one by 'Josef Bürger' (body: 'Die Haflinger sind wie beschrieben und erwartet sehr gut'). Neither review contains any comment about the price being unfair.\\\")\"\n}\n",
+      "actual_normalized": {
+        "retrieved_data": null,
+        "status": "success",
+        "task_type": "retrieve"
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "not_found_error",
+        "retrieved_data": null
+      },
+      "assertions": [
+        {
+          "assertion_name": "agent_response.status_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Expected not_found_error, got success"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false
+}

@@ -1,0 +1,6 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "NOT_FOUND_ERROR",
+  "retrieved_data": null,
+  "error_details": "No reviewer mentions the price being unfair for this product.\n\nThe current page (product id 1865 — SUGAR Cosmetics Matte Attack Transferproof Lipstick) lists all 4 customer reviews, and none of them reference price/fairness:\n- MIKKY ALEX — \"Good color. But damaged\" (damaged on delivery)\n- Brea — \"Not brown. Burgundy brown\" (wrong color)\n- Om Tripathi — \"super product\" (positive)\n- Reema Arora — \"Great Color, Bad formula\" (formula is drying/comes off badly)\n\nTherefore, there are no reviewers who mention the price being unfair."
+}

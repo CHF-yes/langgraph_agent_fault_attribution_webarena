@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "Among the top 10 hottest posts in the /f/books forum, two posts recommend exactly one book each:\n\n1. \"I just finished reading The Hobbit to my 6 year old daughter, and she loved it!\" — recommends one book: The Hobbit.\n2. \"Apple Books has a free audiobook of A Christmas Carol narrated by LeVar Burton!\" — recommends one book: A Christmas Carol.\n\nThe other 8 top posts do not qualify: they are either news/industry articles (T.S. Eliot letters release, Appalachian prison book project, Lin Oliver/Henry Winkler feature, Misty of Chincoteague museum appeal, Ukrainian publishers), about a store rather than a book (bookshop.org reminder, used bookstores), or about an author with many works (Agatha Christie) rather than recommending a single specific book."
+  ],
+  "error_details": null
+}

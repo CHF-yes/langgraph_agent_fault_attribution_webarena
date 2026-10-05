@@ -90,3 +90,14 @@ median 1.07s   max 2.08s   p95 1.52s
 `scripts/probe_endpoint_idle_latency.py --true-concurrency` 的首次运行只完成预热
 （270.8s）就结束、且标签用了旧字段，属无效产物，已删除；逐阶段计时改由
 `scripts/probe_endpoint_phases.py` 完成（DNS/TCP/TLS/响应头/首包/结束，逐项落盘）。
+
+## 7. 2026-10-05 Stage C 期间：一次请求长时间挂死（同类间歇现象）
+
+qwen react 网格（96 trials）整体正常（847 次调用、0 次 >60s 慢调用、缓存命中 51.9%），
+但 **web_http_error × task21 的故障臂有一次请求挂住 ~30 分钟**：进程 0.2% CPU、`ep_poll`
+等待，日志停在某一步的 THOUGHT（即上一次响应之后、下一次响应之前），HAR 未落盘。
+`REQUEST_TIMEOUT=600` 对"有数据但在缓慢推进"的连接不生效（第 1 节已观测到同一现象：
+120s 超时下 241s 仍成功），所以它不会被自动切断。
+
+处置：**kill 该 job → `--resume` 只补跑这一格**（2 trials），补跑正常（`injection=yes`、
+rc=0），网格随即 96/96 完整。说明这类挂死是逐次请求的孤立事件，重跑即可，不影响有效性格。

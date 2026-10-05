@@ -154,6 +154,18 @@ def command_for(args, job):
     return command
 
 
+def resumable_status(status: dict) -> bool:
+    """--resume 是否可以跳过这个 job（只看"跑完了且不是基础设施故障"）。
+
+    刻意**不看** ``fault_invalid``：故障臂"未注入"有两种含义——harness 出问题（会体现为
+    rc≠0 或基础设施错误），或 agent 只做了无参数动作（goto→stop）。后者是逐格事实，
+    分析会标 ``fault_not_applied`` 并排除；若把它当作"不可跳过"，每次 --resume 都会重跑
+    这些格子（实测已发生一次，多花 14 条 trial）。产物完整性由 job_arms_ok 另行校验。
+    """
+    return bool(status.get("returncode") == 0
+                and not status.get("infrastructure_error"))
+
+
 def classify_log(text, *, expect_fault=True):
     infrastructure_patterns = (
         r"Traceback \(most recent call last\)",
@@ -263,9 +275,7 @@ def main():
             if status.get("design_fingerprint") != fingerprint:
                 stale_status_files.append(path.name)
                 continue
-            if not (status.get("returncode") == 0
-                    and not status.get("infrastructure_error")
-                    and not status.get("fault_invalid")):
+            if not resumable_status(status):
                 continue
             # 日志分类通过还不够：必须两臂的 agent_response / network.har /
             # trial_record 都完整且与当前设计一致，才允许跳过这个格子。
