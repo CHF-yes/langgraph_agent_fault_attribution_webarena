@@ -39,6 +39,12 @@ def create_llm(temperature: float = None, profile_name: str = None) -> ChatOpenA
     if profile.base_url:
         kwargs["base_url"] = profile.base_url
 
+    # DeepSeek 的 thinking 模式要求把上一轮 reasoning_content 回传，而我们回放历史时
+    # 拿不到该字段 → 端点返回 400 并中断 trial（Step B 之后实测 3/18 job 因此失败）。
+    # 因此默认显式关闭 thinking；需要时用 MODEL_<NAME>_THINKING=enabled 打开。
+    if profile.thinking in {"enabled", "disabled"}:
+        kwargs["extra_body"] = {"thinking": {"type": profile.thinking}}
+
     return ChatOpenAI(**kwargs)
 
 

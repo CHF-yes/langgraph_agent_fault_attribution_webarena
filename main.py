@@ -727,6 +727,7 @@ def run_benchmark(args):
                     run_config={
                         "run_id": run_id,
                         "response_schema_clamped": schema_clamps_retrieved_data(task_definition),
+                        "thinking_mode": settings.get_model_profile(model_profile).thinking,
                         "task_id": args.task_id, "site": args.site, "url": page_url,
                         "max_steps": args.max_steps or settings.MAX_STEPS,
                         "fault_intensity": fault_config.intensity,

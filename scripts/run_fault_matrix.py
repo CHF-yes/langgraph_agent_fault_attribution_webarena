@@ -412,13 +412,20 @@ def main():
             recent.append(status)
             infrastructure_errors += int(status["infrastructure_error"])
             recent_missing = sum(item["fault_missing"] for item in recent)
+            if status.get("fault_missing"):
+                print(f"WARN {key}: fault arm reported no injection "
+                      f"(agent likely took no parameterised action)", flush=True)
             print(
                 f"DONE {key} rc={process.returncode} "
                 f"injection={'yes' if status['fault_triggered'] else 'no'} "
                 f"infra={status['infrastructure_error']} task_error={status['task_error']}",
                 flush=True,
             )
-            if infrastructure_errors >= 2 or recent_missing >= 2:
+            # fault_missing 有两种来源：故障臂中途异常（已在基础设施错误里体现），
+            # 或 agent 只做了"无参数动作"（如 goto→stop）导致故障无从注入——后者是
+            # 逐格事实，不是 harness 故障。因此只有基础设施错误才停止整批；缺失注入
+            # 改为告警并记录在 status/manifest 里，由分析标为 fault_not_applied 排除。
+            if infrastructure_errors >= 2:
                 print("STOP policy threshold reached; terminating active jobs.", flush=True)
                 stopped = True
                 pending.clear()

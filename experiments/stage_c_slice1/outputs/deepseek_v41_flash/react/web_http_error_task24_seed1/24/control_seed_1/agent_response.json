@@ -1,0 +1,6 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "NOT_FOUND_ERROR",
+  "retrieved_data": null,
+  "error_details": "Based on the reviews on the current page, there are only 2 reviews for this product: one by \"Jay\" and one by \"Josef Bürger\". Neither of these reviewers mentions the price being unfair. Jay's review says \"Wonderful! Nothing.....everyday use.\" and Josef Bürger's review says \"Joe Die Haflinger sind wie beschrieben und erwartet sehr gut\" (The Haflingers are as described and very good as expected). Therefore, no reviewer on this page mentions the price being unfair."
+}

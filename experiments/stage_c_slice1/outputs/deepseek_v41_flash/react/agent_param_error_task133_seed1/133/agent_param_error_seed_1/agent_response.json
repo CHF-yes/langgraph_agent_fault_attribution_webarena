@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "Eric made 2 commits to a11yproject.com on March 2, 2023 (\"Copy tweaks (#1523)\" and \"Add Are you making these five mistakes when writing alt text? post (#1522)\")."
+  ],
+  "error_details": null
+}

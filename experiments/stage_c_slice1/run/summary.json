@@ -1,6 +1,6 @@
 {
-  "completed": 6,
-  "scheduled": 6,
+  "completed": 25,
+  "scheduled": 25,
   "stopped": false,
   "infrastructure_errors": 0,
   "remaining_jobs": 0

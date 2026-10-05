@@ -1,0 +1,22 @@
+{
+  "job": {
+    "task_id": 258,
+    "seed": 1,
+    "site": "gitlab",
+    "start_url": "http://localhost:8023",
+    "intent": "Open the public projects listing",
+    "fault_type": "agent_param_error",
+    "injection_step": 1,
+    "injection_step_units": "parameter_action"
+  },
+  "design_fingerprint": "d39af0d0052e7393",
+  "returncode": 0,
+  "infrastructure_error": false,
+  "task_error": false,
+  "fault_expected": true,
+  "fault_missing": true,
+  "fault_count": 0,
+  "fault_triggered": false,
+  "fault_invalid": true,
+  "timed_out": false
+}

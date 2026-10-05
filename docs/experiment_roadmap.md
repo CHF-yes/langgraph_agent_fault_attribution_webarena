@@ -236,6 +236,12 @@ mutation 任务。同一模板内的任务相关，不能把 16 个 ID 当成 16
    强制 `retrieved_data = null`、散文进 `error_details`（2026-10-05 起）。此前产出的记录保留旧
    形态，可用 `trial_record.code.git_sha` 与 `run_config.response_schema_clamped` 区分；
    离线重评显示 4 个散文格由 compatibility 变为 native，**判定不变**。）
+   （**thinking 开关**：DeepSeek 的 thinking 模式要求把上一轮 `reasoning_content` 回传，
+   而历史回放拿不到该字段 → 端点返回 400 并中断 trial（实测 3/18 job 因此失败）。
+   Stage C 固定 `thinking=disabled`（`MODEL_*_THINKING`/`LLM_THINKING`），每 trial 记 `run_config.thinking_mode`；
+   百炼端已实测接受该参数、行为不变。**故障未注入**：agent 若只做 `goto→stop` 等无参数动作，
+   `agent_param_error` 无从注入 → 该 pair 标 `fault_not_applied` 并从退化估计中排除（主分析里单列
+   `pairs_fault_not_applied`）；停止策略只在基础设施错误 ≥2 时停批，未注入只告警。）
 2. **注入步口径单一来源**（`fault_injection/config.py:resolve_injection_step`）：
    Stage C 每臂只注入一次且位置固定——`agent_param_error` 落在**第 1 个参数动作**，
    其余两个故障落在**第 2 个执行步**，两者计数单位不同（参数动作 vs 执行步）。

@@ -1,0 +1,53 @@
+{
+  "task_id": 21,
+  "intent_template_id": 222,
+  "sites": [
+    "shopping"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"Reviewers who mention the ear cups being small:\\n\\n1. Dibbins — \\\"Cup for ears very small... The ear cups MAY be ok for children... but for adult sized ears they are way too small\\\" (most explicit about small ear cups)\\n2. Catso — \\\"Too small... they really are for people with very small ears\\\"\\n3. Anglebert Dinkherhump — \\\"These are NOT over the ear cups. I got about half my ear into it and the rest is on top\\\"\\n4. Michelle DavisMichelle Davis — \\\"For small ears the padding goes over their ears. It won't go over mine as I'm an adult with adult sized ears\\\"\\n\\nThe clearest mentions of small ear cups are by Dibbins and Catso.\"\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "task_type": "retrieve",
+        "retrieved_data": [
+          "reviewers who mention the ear cups being small: 1. dibbins -- \"cup for ears very small... the ear cups may be ok for children... but for adult sized ears they are way too small\" (most explicit about small ear cups) 2. catso -- \"too small... they really are for people with very small ears\" 3. anglebert dinkherhump -- \"these are not over the ear cups. i got about half my ear into it and the rest is on top\" 4. michelle davismichelle davis -- \"for small ears the padding goes over their ears. it won't go over mine as i'm an adult with adult sized ears\" the clearest mentions of small ear cups are by dibbins and catso."
+        ],
+        "status": "success"
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "catso",
+          "dibbins",
+          "anglebert dinkherhump",
+          "michelle davis"
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/4), Missing: 4, Extra: 1",
+            "Expected: [catso, dibbins, ..., michelle davis], Got: [reviewers who mention the ear cups being small: 1. dibbins -- \"cup for ears very small... the ear cups may be ok for children... but for adult sized ears they are way too small\" (most explicit about small ear cups) 2. catso -- \"too small... they really are for people with very small ears\" 3. anglebert dinkherhump -- \"these are not over the ear cups. i got about half my ear into it and the rest is on top\" 4. michelle davismichelle davis -- \"for small ears the padding goes over their ears. it won't go over mine as i'm an adult with adult sized ears\" the clearest mentions of small ear cups are by dibbins and catso.]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false
+}

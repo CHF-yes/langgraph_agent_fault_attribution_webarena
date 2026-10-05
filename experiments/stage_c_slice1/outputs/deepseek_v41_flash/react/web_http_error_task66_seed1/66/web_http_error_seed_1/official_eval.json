@@ -1,0 +1,51 @@
+{
+  "task_id": 66,
+  "intent_template_id": 17,
+  "sites": [
+    "reddit"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"Among the top 10 hottest posts in the \\\"Books\\\" forum, the posts that recommend exactly one book are:\\n\\n1. \\\"I just finished reading The Hobbit to my 6 year old daughter, and she loved it!\\\" (recommends The Hobbit)\\n2. \\\"Apple Books has a free audiobook of A Christmas Carol narrated by LeVar Burton!\\\" (recommends A Christmas Carol)\\n\\nThe other top 10 posts (about T.S. Eliot's letters, bookshop.org, prison book donations, Lin Oliver's children's books, Misty of Chincoteague museum, Ukrainian publishers, Agatha Christie's writing style, and used bookstores) do not recommend a single specific book.\"\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "task_type": "retrieve",
+        "retrieved_data": [
+          "among the top 10 hottest posts in the \"books\" forum, the posts that recommend exactly one book are: 1. \"i just finished reading the hobbit to my 6 year old daughter, and she loved it!\" (recommends the hobbit) 2. \"apple books has a free audiobook of a christmas carol narrated by levar burton!\" (recommends a christmas carol) the other top 10 posts (about t.s. eliot's letters, bookshop.org, prison book donations, lin oliver's children's books, misty of chincoteague museum, ukrainian publishers, agatha christie's writing style, and used bookstores) do not recommend a single specific book."
+        ],
+        "status": "success"
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "i just finished reading the hobbit to my 6 year old daughter, and she loved it!",
+          "apple books has a free audiobook of a christmas carol narrated by levar burton!"
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/2), Missing: 2, Extra: 1",
+            "Expected: [i just finished reading the hobbit to my 6 year old daughter, and she loved it!, apple books has a free audiobook of a christmas carol narrated by levar burton!], Got: [among the top 10 hottest posts in the \"books\" forum, the posts that recommend exactly one book are: 1. \"i just finished reading the hobbit to my 6 year old daughter, and she loved it!\" (recommends the hobbit) 2. \"apple books has a free audiobook of a christmas carol narrated by levar burton!\" (recommends a christmas carol) the other top 10 posts (about t.s. eliot's letters, bookshop.org, prison book donations, lin oliver's children's books, misty of chincoteague museum, ukrainian publishers, agatha christie's writing style, and used bookstores) do not recommend a single specific book.]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false
+}

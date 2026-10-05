@@ -1692,3 +1692,83 @@ def test_trial_record_can_flag_the_schema_clamp():
         task_id=22, seed=1, condition="control", replicate=0,
         run_config={"response_schema_clamped": True}, paths={})
     assert record["run_config"]["response_schema_clamped"] is True
+
+
+# ==========================================================================
+# 15. thinking 开关：默认关闭并透传给端点（避免 reasoning_content 400）
+# ==========================================================================
+
+def test_profile_thinking_is_parsed_and_validated(monkeypatch):
+    from standard_agent.config import ModelProfile, Settings
+
+    # MODEL_PROFILES 是 import 时求值的类属性，需直接改类属性
+    monkeypatch.setattr(Settings, "MODEL_PROFILES", ("probe",), raising=False)
+    monkeypatch.setenv("MODEL_PROBE_API_KEY", "k")
+    monkeypatch.setenv("MODEL_PROBE_BASE_URL", "https://api.deepseek.com")
+    monkeypatch.setenv("MODEL_PROBE_NAME", "deepseek-flash")
+    monkeypatch.setenv("MODEL_PROBE_THINKING", "disabled")
+    profile = Settings.get_model_profiles()["probe"]
+    assert profile.thinking == "disabled" and profile.validate() is True
+
+    monkeypatch.setenv("MODEL_PROBE_THINKING", "sometimes")
+    assert Settings.get_model_profiles()["probe"].validate() is False     # 只接受三种取值
+
+    monkeypatch.delenv("MODEL_PROBE_THINKING")
+    assert Settings.get_model_profiles()["probe"].thinking == Settings.LLM_THINKING  # 回落到全局
+
+
+def test_create_llm_forwards_the_thinking_switch(monkeypatch):
+    from standard_agent.config import ModelProfile
+    from standard_agent.llm import provider
+
+    captured = {}
+
+    class FakeChatOpenAI:
+        def __init__(self, **kwargs):
+            captured.clear()
+            captured.update(kwargs)
+
+    monkeypatch.setattr(provider, "ChatOpenAI", FakeChatOpenAI)
+
+    def profile(thinking):
+        return ModelProfile(name="p", api_key="k", base_url="https://api.deepseek.com",
+                            model="m", temperature=0.2, request_timeout=120,
+                            max_retries=1, thinking=thinking)
+
+    monkeypatch.setattr(provider.settings, "get_model_profile", lambda name=None: profile("disabled"))
+    provider.create_llm(profile_name="p")
+    assert captured["extra_body"] == {"thinking": {"type": "disabled"}}
+
+    monkeypatch.setattr(provider.settings, "get_model_profile", lambda name=None: profile("enabled"))
+    provider.create_llm(profile_name="p")
+    assert captured["extra_body"] == {"thinking": {"type": "enabled"}}
+
+    monkeypatch.setattr(provider.settings, "get_model_profile", lambda name=None: profile("default"))
+    provider.create_llm(profile_name="p")
+    assert "extra_body" not in captured
+
+
+# ==========================================================================
+# 16. 故障未注入（agent 无参数动作）：标记并排除出退化估计
+# ==========================================================================
+
+def test_pairs_without_injection_are_excluded_from_degradation():
+    design = {
+        "main_models": ["m1"], "validation_model": "pro",
+        "validation_tasks": [1], "main_tasks": [1, 2],
+        "faults": ["f1"], "architectures": ["react"],
+        "conditions": ["control", "fault"], "repetitions": 1, "category_of": {},
+    }
+    rows = []
+    for task in (1, 2):
+        rows.append(_row("m1", "react", "f1", task, 1, "control", 1))
+        rows.append(_row("m1", "react", "f1", task, 1, "fault", 0))
+    # task 1 的故障臂没有注入（agent 只做了 goto→stop），task 2 正常注入
+    rows[1]["injection_count"] = 0
+    rows[3]["injection_count"] = 1
+
+    report = main_analysis(rows, design, n_boot=50, seed=1)
+    assert report["pairs_fault_not_applied"] == 1
+    cell = report["degradation_by_fault"][0]
+    assert cell["n_pairs"] == 1          # 只统计真正注入了故障的那一对
+    assert cell["n_tasks"] == 1

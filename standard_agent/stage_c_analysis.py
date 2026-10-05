@@ -66,7 +66,8 @@ def build_observations(rows: list[dict]) -> list[dict]:
                   "seed": int(cell.get("fault_seed", row.get("seed", 0))),
                   "replicate": row.get("replicate"),
                   "official_success": int(bool(row.get("official_success"))),
-                  "evaluation_status": row.get("evaluation_status")}
+                  "evaluation_status": row.get("evaluation_status"),
+                  "injection_count": row.get("injection_count")}
         observations.append(record)
     return observations
 
@@ -87,7 +88,10 @@ def pair_observations(observations: list[dict]) -> tuple[list[dict], list[dict]]
     pairs, unpaired = [], []
     for key, arms in sorted(buckets.items()):
         if "control" in arms and "fault" in arms:
+            fault_injections = arms["fault"].get("injection_count")
             pairs.append({
+                # 故障臂没有注入 → 这个 pair 不能用来估计"故障退化"，单独标记并排除
+                "fault_applied": (fault_injections is None or fault_injections > 0),
                 "model_profile": key[0], "architecture": key[1], "fault_type": key[2],
                 "task_id": key[3], "seed": key[4],
                 "control": arms["control"]["official_success"],
@@ -323,9 +327,13 @@ def degradation_by_cell(pairs: list[dict], *, model_profile: str | None = None,
                         seed: int = DEFAULT_SEED) -> list[dict]:
     """按 (model, architecture, fault) 汇总配对退化。"""
     grouped: dict[tuple, dict[int, list[float]]] = defaultdict(lambda: defaultdict(list))
+    excluded = 0
     for pair in pairs:
         if model_profile is not None and pair["model_profile"] != model_profile:
             continue
+        if not pair.get("fault_applied", True):
+            excluded += 1
+            continue                      # 故障未注入的 pair 不进入退化估计
         grouped[(pair["model_profile"], pair["architecture"], pair["fault_type"])][
             pair["task_id"]].append(float(pair["delta"]))
 
@@ -365,6 +373,7 @@ def degradation_by_cell(pairs: list[dict], *, model_profile: str | None = None,
             "degenerate": bool(control_total and (control_successes in (0, control_total)
                                                  or fault_successes in (0, fault_total))),
         })
+    del excluded  # 排除数在主分析输出里单列（pairs_fault_not_applied）
     return results
 
 
@@ -469,6 +478,8 @@ def degradation_by_fault(pairs: list[dict], *, category_of: dict | None = None,
     """
     grouped: dict[str, dict[int, list[float]]] = defaultdict(lambda: defaultdict(list))
     for pair in pairs:
+        if not pair.get("fault_applied", True):
+            continue                      # 未注入故障 → 不参与故障级退化
         grouped[pair["fault_type"]][pair["task_id"]].append(float(pair["delta"]))
 
     results = []
@@ -660,6 +671,7 @@ def main_analysis(rows: list[dict], design: dict, *, n_boot: int = DEFAULT_BOOTS
 
     main_observations = [obs for obs in observations if obs["model_profile"] in main_models]
     pairs, unpaired = pair_observations(main_observations)
+    fault_not_applied = sum(1 for pair in pairs if not pair.get("fault_applied", True))
     degradations = degradation_by_cell(pairs, category_of=design.get("category_of"),
                                       n_boot=n_boot, seed=seed)
 
@@ -727,6 +739,7 @@ def main_analysis(rows: list[dict], design: dict, *, n_boot: int = DEFAULT_BOOTS
         "main_tasks": sorted({obs["task_id"] for obs in main_observations}),
         "n_observations_main": len(main_observations),
         "n_pairs_main": len(pairs),
+        "pairs_fault_not_applied": fault_not_applied,
         "unpaired": unpaired,
         "degradation_by_cell": degradations,
         "degradation_by_fault": fault_level,

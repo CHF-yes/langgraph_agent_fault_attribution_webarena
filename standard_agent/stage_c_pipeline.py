@@ -324,6 +324,7 @@ def collect_rows(root: str | Path, *, config_path=None, evaluate_fn=None,
             "steps": None,
             "cap_exhausted": None,
             "llm_calls": None,
+            "injection_count": None,
             "cell": None,
         }
         record = integrity.get("trial_record")
@@ -334,6 +335,7 @@ def collect_rows(root: str | Path, *, config_path=None, evaluate_fn=None,
             row["steps"] = record.get("steps")
             row["cap_exhausted"] = record.get("cap_exhausted")
             row["llm_calls"] = record.get("llm_calls")
+            row["injection_count"] = record.get("injection_count")
             row["cell"] = {key: record[key] for key in (
                 "model_profile", "architecture", "fault_type", "task_id",
                 "fault_seed", "condition")}

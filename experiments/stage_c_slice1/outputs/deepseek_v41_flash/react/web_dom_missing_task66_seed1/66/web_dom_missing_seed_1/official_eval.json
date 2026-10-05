@@ -1,0 +1,51 @@
+{
+  "task_id": 66,
+  "intent_template_id": 17,
+  "sites": [
+    "reddit"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"Among the top 10 hottest posts in the \\\"Books\\\" forum, the posts that recommend exactly one book are:\\n\\n1. \\\"I just finished reading The Hobbit to my 6 year old daughter, and she loved it!\\\" — recommends exactly one book: The Hobbit (by J.R.R. Tolkien).\\n\\n2. \\\"Apple Books has a free audiobook of A Christmas Carol narrated by LeVar Burton!\\\" — recommends exactly one book: A Christmas Carol (by Charles Dickens).\\n\\nThe other top-10 posts (e.g., \\\"The letters of T. S. Eliot to Emily Hale...\\\", \\\"Friendly reminder bookshop.org exists.\\\", \\\"Appalachian prison book project seeks notebook donations\\\", \\\"After Two Decades And 38 Children's Books Lin Oliver...\\\", \\\"Museum issues appeal to save famed 'Misty of Chincoteague'\\\", \\\"How Ukrainian publishers are fighting to survive\\\", \\\"The simple greatness of Agatha Christie\\\", and \\\"What Is It That Makes Used Bookstores So Wonderful?\\\") do not recommend exactly one book.\"\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "task_type": "retrieve",
+        "retrieved_data": [
+          "among the top 10 hottest posts in the \"books\" forum, the posts that recommend exactly one book are: 1. \"i just finished reading the hobbit to my 6 year old daughter, and she loved it!\" -- recommends exactly one book: the hobbit (by j.r.r. tolkien). 2. \"apple books has a free audiobook of a christmas carol narrated by levar burton!\" -- recommends exactly one book: a christmas carol (by charles dickens). the other top 10 posts (e.g., \"the letters of t. s. eliot to emily hale...\", \"friendly reminder bookshop.org exists.\", \"appalachian prison book project seeks notebook donations\", \"after two decades and 38 children's books lin oliver...\", \"museum issues appeal to save famed 'misty of chincoteague'\", \"how ukrainian publishers are fighting to survive\", \"the simple greatness of agatha christie\", and \"what is it that makes used bookstores so wonderful?\") do not recommend exactly one book."
+        ],
+        "status": "success"
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "i just finished reading the hobbit to my 6 year old daughter, and she loved it!",
+          "apple books has a free audiobook of a christmas carol narrated by levar burton!"
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/2), Missing: 2, Extra: 1",
+            "Expected: [i just finished reading the hobbit to my 6 year old daughter, and she loved it!, apple books has a free audiobook of a christmas carol narrated by levar burton!], Got: [among the top 10 hottest posts in the \"books\" forum, the posts that recommend exactly one book are: 1. \"i just finished reading the hobbit to my 6 year old daughter, and she loved it!\" -- recommends exactly one book: the hobbit (by j.r.r. tolkien). 2. \"apple books has a free audiobook of a christmas carol narrated by levar burton!\" -- recommends exactly one book: a christmas carol (by charles dickens). the other top 10 posts (e.g., \"the letters of t. s. eliot to emily hale...\", \"friendly reminder bookshop.org exists.\", \"appalachian prison book project seeks notebook donations\", \"after two decades and 38 children's books lin oliver...\", \"museum issues appeal to save famed 'misty of chincoteague'\", \"how ukrainian publishers are fighting to survive\", \"the simple greatness of agatha christie\", and \"what is it that makes used bookstores so wonderful?\") do not recommend exactly one book.]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false
+}

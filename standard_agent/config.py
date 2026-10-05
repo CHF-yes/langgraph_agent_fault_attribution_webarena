@@ -20,9 +20,14 @@ class ModelProfile:
     temperature: float
     request_timeout: float
     max_retries: int
+    # Provider 侧思考开关："disabled" 时不要求把 reasoning_content 回传（DeepSeek
+    # thinking 模式会因此返回 400 并中断 trial）；"enabled"/"default" 原样透传或不传。
+    thinking: str = "default"
 
     def validate(self) -> bool:
-        return bool(self.api_key and self.base_url and self.model)
+        if not (self.api_key and self.base_url and self.model):
+            return False
+        return self.thinking in {"default", "enabled", "disabled"}
 
 
 class Settings:
@@ -36,6 +41,8 @@ class Settings:
     TEMPERATURE: float = float(os.getenv("TEMPERATURE", "0.7"))
     LLM_REQUEST_TIMEOUT: float = float(os.getenv("LLM_REQUEST_TIMEOUT", "120"))
     LLM_MAX_RETRIES: int = int(os.getenv("LLM_MAX_RETRIES", "1"))
+    # 全局思考开关默认：明确关闭（见 ModelProfile.thinking 注释）
+    LLM_THINKING: str = os.getenv("LLM_THINKING", "disabled").strip().lower()
     MODEL_PROFILE: str = os.getenv("MODEL_PROFILE", "default")
     MODEL_PROFILES: tuple[str, ...] = tuple(
         name.strip() for name in os.getenv("MODEL_PROFILES", "").split(",") if name.strip()
@@ -66,6 +73,7 @@ class Settings:
                     f"MODEL_{key}_REQUEST_TIMEOUT", str(cls.LLM_REQUEST_TIMEOUT)
                 )),
                 max_retries=int(os.getenv(f"MODEL_{key}_MAX_RETRIES", str(cls.LLM_MAX_RETRIES))),
+                thinking=os.getenv(f"MODEL_{key}_THINKING", cls.LLM_THINKING).strip().lower(),
             )
         return profiles
 
@@ -90,6 +98,7 @@ class Settings:
                     f"MODEL_{key}_REQUEST_TIMEOUT", str(cls.LLM_REQUEST_TIMEOUT)
                 )),
                 max_retries=int(os.getenv(f"MODEL_{key}_MAX_RETRIES", str(cls.LLM_MAX_RETRIES))),
+                thinking=os.getenv(f"MODEL_{key}_THINKING", cls.LLM_THINKING).strip().lower(),
             )
         return ModelProfile(
             name="default",
