@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "Unable to sign in: the login attempt with test@example.com / Password123 returned \"The account sign-in was incorrect or your account is disabled temporarily.\" No valid customer credentials were provided, so the sign-in sub-goal cannot be completed. Note: the overall task (finding reviewer names mentioning small ear cups) may not require login and could be attempted directly on the product page."
+  ],
+  "error_details": null
+}

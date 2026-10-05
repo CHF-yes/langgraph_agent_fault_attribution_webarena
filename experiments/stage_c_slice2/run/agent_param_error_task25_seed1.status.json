@@ -1,0 +1,22 @@
+{
+  "job": {
+    "task_id": 25,
+    "seed": 1,
+    "site": "shopping",
+    "start_url": "http://localhost:7770/epson-workforce-wf-3620-wifi-direct-all-in-one-color-inkjet-printer-copier-scanner-amazon-dash-replenishment-ready.html",
+    "intent": "Get name(s) of reviewer(s) who mention print quality explicitly with a rating of 3 or less stars for the product on the current page",
+    "fault_type": "agent_param_error",
+    "injection_step": 1,
+    "injection_step_units": "parameter_action"
+  },
+  "design_fingerprint": "25677df8bab68851",
+  "returncode": 0,
+  "infrastructure_error": false,
+  "task_error": false,
+  "fault_expected": true,
+  "fault_missing": false,
+  "fault_count": 1,
+  "fault_triggered": true,
+  "fault_invalid": false,
+  "timed_out": false
+}

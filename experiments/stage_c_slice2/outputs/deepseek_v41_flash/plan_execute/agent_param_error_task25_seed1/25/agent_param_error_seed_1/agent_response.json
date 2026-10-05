@@ -1,0 +1,6 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "NOT_FOUND_ERROR",
+  "retrieved_data": null,
+  "error_details": "No reviewer with a rating of 3 stars or less explicitly mentions print quality. The only review that explicitly mentions \"print quality\" is by GoldfishGoldfish (\"It gives great print quality as long as you use the premium paper settings\"), but that is a positive review, not a low-rated one. The low-rated reviews (≤3 stars) are: Bob in Vegas (1 star, \"Poorly designed, lousy performance\"), AMAZON SHOPAHOLIC (1 star, \"HORRIBLE IN EVERY WAY!\"), and Dylan Spears (1 star, \"ll save lots of time\") — none of which explicitly mention print quality."
+}

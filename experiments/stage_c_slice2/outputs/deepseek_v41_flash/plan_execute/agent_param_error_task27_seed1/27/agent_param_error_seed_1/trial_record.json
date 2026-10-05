@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "pairing_scheme": "seed-paired-v2",
+  "trial_id": "model=deepseek_v41_flash|arch=plan_execute|fault=agent_param_error|task=27|seed=1|cond=fault|rep=0",
+  "file_stem": "deepseek_v41_flash__plan_execute__agent_param_error__task27__seed1__fault__rep0",
+  "pair_key": "model=deepseek_v41_flash|arch=plan_execute|fault=agent_param_error|task=27|seed=1|cond=-|rep=0",
+  "condition": "fault",
+  "model_profile": "deepseek_v41_flash",
+  "architecture": "plan_execute",
+  "fault_type": "agent_param_error",
+  "task_id": 27,
+  "fault_seed": 1,
+  "replicate": 0,
+  "run_config": {
+    "run_id": "20261005T144817-7779fd",
+    "response_schema_clamped": false,
+    "thinking_mode": "disabled",
+    "task_id": 27,
+    "site": "reddit",
+    "url": "http://localhost:9999",
+    "max_steps": 20,
+    "fault_intensity": "high",
+    "fault_label": "agent_param_error",
+    "injection_step": 1,
+    "trial_index": 0
+  },
+  "paths": {
+    "agent_response": "experiments/stage_c_slice2/outputs/deepseek_v41_flash/plan_execute/agent_param_error_task27_seed1/27/agent_param_error_seed_1/agent_response.json",
+    "network_har": "experiments/stage_c_slice2/outputs/deepseek_v41_flash/plan_execute/agent_param_error_task27_seed1/27/agent_param_error_seed_1/network.har",
+    "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/stage_c_slice2/20261005T144817-7779fd/deepseek_v41_flash__plan_execute__agent_param_error__task27__seed1__fault__rep0.jsonl"
+  },
+  "completed": true,
+  "success": true,
+  "injection_count": 1,
+  "steps": 7,
+  "cap_exhausted": false,
+  "llm_calls": 17,
+  "time_sec": 23.606,
+  "error": null,
+  "code": {
+    "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+    "git_sha": "c7f6c00b22622c3cab9086724b1f92ba98e58245",
+    "git_branch": "stagec-exec-chain",
+    "git_dirty": false,
+    "recorded_at": 1791182921.0098867
+  },
+  "created_at": 1791182921.009888
+}

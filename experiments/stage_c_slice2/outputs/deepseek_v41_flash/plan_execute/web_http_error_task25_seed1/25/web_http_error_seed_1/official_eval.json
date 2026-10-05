@@ -1,0 +1,51 @@
+{
+  "task_id": 25,
+  "intent_template_id": 222,
+  "sites": [
+    "shopping"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"Reviews with ratings ≤ 3 stars identified from the product page (PeriPage Mini Portable Paper Photo Pocket Thermal Printer):\\n\\n1. Martha L. Nethers (Posted 4/21/23) — Review text: \\\"...t clear at all! I know it is a small printer and black and white but everything I...\\\" — This is a negative review (low rating, ≤3 stars) that explicitly mentions print quality/clarity issues.\\n\\n2. Marjorie Morales (Posted 4/21/23) — \\\"Good little black and white printer. Rating 80%... however the picture is clear.\\\" — This is a positive review (80% ≈ 4 stars), so it does NOT qualify.\\n\\nFiltered list of reviews with rating ≤ 3 stars: Martha L. Nethers (mentions print quality explicitly).\"\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "reviews with ratings <= 3 stars identified from the product page (peripage mini portable paper photo pocket thermal printer): 1. martha l. nethers (posted 4/21/23) -- review text: \"...t clear at all! i know it is a small printer and black and white but everything i...\" -- this is a negative review (low rating, <=3 stars) that explicitly mentions print quality/clarity issues. 2. marjorie morales (posted 4/21/23) -- \"good little black and white printer. rating 80%... however the picture is clear.\" -- this is a positive review (80% 4 stars), so it does not qualify. filtered list of reviews with rating <= 3 stars: martha l. nethers (mentions print quality explicitly)."
+        ]
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "roxanne brandon coffey",
+          "nelson"
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/2), Missing: 2, Extra: 1",
+            "Expected: [roxanne brandon coffey, nelson], Got: [reviews with ratings <= 3 stars identified from the product page (peripage mini portable paper photo pocket thermal printer): 1. martha l. nethers (posted 4/21/23) -- review text: \"...t clear at all! i know it is a small printer and black and white but everything i...\" -- this is a negative review (low rating, <=3 stars) that explicitly mentions print quality/clarity issues. 2. marjorie morales (posted 4/21/23) -- \"good little black and white printer. rating 80%... however the picture is clear.\" -- this is a positive review (80% 4 stars), so it does not qualify. filtered list of reviews with rating <= 3 stars: martha l. nethers (mentions print quality explicitly).]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false
+}

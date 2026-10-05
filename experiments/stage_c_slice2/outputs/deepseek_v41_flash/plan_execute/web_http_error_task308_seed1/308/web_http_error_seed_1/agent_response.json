@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "Unable to complete the sub-goal: GitLab is protected by a Cloudflare security verification (\"Performing security verification\" / bot protection challenge) that blocks all access to the sign-in page and the primer/design project page. No authentication form is reachable, so an authenticated session could not be established. The task cannot proceed until the Cloudflare challenge is resolved."
+  ],
+  "error_details": null
+}

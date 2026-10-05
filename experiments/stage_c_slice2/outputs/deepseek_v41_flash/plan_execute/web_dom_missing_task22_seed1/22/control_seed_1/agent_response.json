@@ -1,0 +1,6 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": null,
+  "error_details": "Scanned page 1 of the reviews (10 reviews: badkat, DrummerGirlLB, G. Matsusaki, Razzberry, Nic, CA Guy, Kenan, CT, romance lover, AZ Guy). None of the visible review text on page 1 contains 'under water' or 'underwater'. Note: review text is truncated in the accessibility tree, so a mention could be hidden in the cut-off portions. Page 2 was also checked (AZ Guy, CT) with no visible 'under water'/'underwater' mention."
+}

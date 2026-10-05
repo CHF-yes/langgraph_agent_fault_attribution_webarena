@@ -1,0 +1,56 @@
+{
+  "task_id": 25,
+  "intent_template_id": 222,
+  "sites": [
+    "shopping"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"NOT_FOUND_ERROR\",\n  \"retrieved_data\": null,\n  \"error_details\": \"No reviewer with a rating of 3 stars or less explicitly mentions print quality. The only review that explicitly mentions \\\"print quality\\\" is by GoldfishGoldfish (\\\"It gives great print quality as long as you use the premium paper settings\\\"), but that is a positive review, not a low-rated one. The low-rated reviews (≤3 stars) are: Bob in Vegas (1 star, \\\"Poorly designed, lousy performance\\\"), AMAZON SHOPAHOLIC (1 star, \\\"HORRIBLE IN EVERY WAY!\\\"), and Dylan Spears (1 star, \\\"ll save lots of time\\\") — none of which explicitly mention print quality.\"\n}\n",
+      "actual_normalized": {
+        "task_type": "retrieve",
+        "status": "not_found_error",
+        "retrieved_data": null
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "roxanne brandon coffey",
+          "nelson"
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "agent_response.status_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Expected success, got not_found_error"
+          ],
+          "error_msg": null
+        },
+        {
+          "assertion_name": "retrieved_data_missing_or_null",
+          "status": "failure",
+          "assertion_msgs": [
+            "Expected retrieved_data to be (NormalizedString('Roxanne Brandon Coffey' -> 'roxanne brandon coffey'), NormalizedString('Nelson' -> 'nelson')), but got None or empty"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false
+}

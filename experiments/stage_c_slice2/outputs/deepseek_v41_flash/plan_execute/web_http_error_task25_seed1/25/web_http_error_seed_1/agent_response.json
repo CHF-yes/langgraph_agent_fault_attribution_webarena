@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "Reviews with ratings ≤ 3 stars identified from the product page (PeriPage Mini Portable Paper Photo Pocket Thermal Printer):\n\n1. Martha L. Nethers (Posted 4/21/23) — Review text: \"...t clear at all! I know it is a small printer and black and white but everything I...\" — This is a negative review (low rating, ≤3 stars) that explicitly mentions print quality/clarity issues.\n\n2. Marjorie Morales (Posted 4/21/23) — \"Good little black and white printer. Rating 80%... however the picture is clear.\" — This is a positive review (80% ≈ 4 stars), so it does NOT qualify.\n\nFiltered list of reviews with rating ≤ 3 stars: Martha L. Nethers (mentions print quality explicitly)."
+  ],
+  "error_details": null
+}

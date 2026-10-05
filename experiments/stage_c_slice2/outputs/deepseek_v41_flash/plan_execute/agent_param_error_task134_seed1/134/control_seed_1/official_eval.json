@@ -1,0 +1,50 @@
+{
+  "task_id": 134,
+  "intent_template_id": 322,
+  "sites": [
+    "gitlab"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"Repository page for a11yproject.com is displayed at http://localhost:8023/a11yproject/a11yproject.com/-/commits/main. The commit history is visible, grouped by date. I can see commits from March 2023 (14 Mar, 12 Mar, 07 Mar, 05 Mar, 02 Mar) but March 1, 2023 is not yet visible in the current view - further scrolling or filtering by author may be needed to find kilian's commits on that specific date.\"\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "Repository page for a11yproject.com is displayed at http://localhost:8023/a11yproject/a11yproject.com/-/commits/main. The commit history is visible, grouped by date. I can see commits from March 2023 (14 Mar, 12 Mar, 07 Mar, 05 Mar, 02 Mar) but March 1, 2023 is not yet visible in the current view - further scrolling or filtering by author may be needed to find kilian's commits on that specific date."
+        ]
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          0.0
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/1), Missing: 1, Extra: 1",
+            "Expected: [0.0], Got: [Repository page for a11yproject.com is displayed at http://localhost:8023/a11yproject/a11yproject.com/-/commits/main. The commit history is visible, grouped by date. I can see commits from March 2023 (14 Mar, 12 Mar, 07 Mar, 05 Mar, 02 Mar) but March 1, 2023 is not yet visible in the current view - further scrolling or filtering by author may be needed to find kilian's commits on that specific date.]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false
+}

@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "The a11yproject.com project repository page is displayed at http://localhost:8023/a11yproject/a11yproject.com. It shows the project with 2,320 commits, 15 branches, 5 tags, and 5 releases. The most recent commit was authored by Eric Bailey (SHA ed37a2f2)."
+  ],
+  "error_details": null
+}
