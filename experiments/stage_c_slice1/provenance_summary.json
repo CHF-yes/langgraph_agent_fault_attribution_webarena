@@ -1,0 +1,639 @@
+{
+  "schema": "llm_provenance_summary/1",
+  "schema_note": "仅聚合计数与 token/延迟统计，不含提示词、回答、页面观察、URL 或任务正文。",
+  "label": "Stage C 首切片 (deepseek_v41_flash × react × 2 任务 × 3 故障, 12 trials)",
+  "source_dir": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/stage_c_slice1",
+  "generated_at": 1791178020.197794,
+  "trials_total": 12,
+  "trials": [
+    {
+      "trial": "deepseek_v41_flash__react__web_dom_missing__task118__seed1__control__rep0",
+      "model_profile": "deepseek_v41_flash",
+      "architecture": "react",
+      "fault": "web_dom_missing",
+      "task": "118",
+      "seed": "1",
+      "condition": "control",
+      "replicate": "0",
+      "calls": 5,
+      "served_models": {
+        "deepseek-flash": 5
+      },
+      "served_model_differs": 0,
+      "cache_usage_sources": {
+        "deepseek": 5
+      },
+      "tokens": {
+        "prompt_tokens": 46742,
+        "completion_tokens": 1065,
+        "total_tokens": 47807,
+        "prompt_cache_hit_tokens": 18432,
+        "prompt_cache_miss_tokens": 28310
+      },
+      "idle_gap_s": {
+        "count": 4,
+        "median": 1.1846750974655151,
+        "p90": 1.7989702224731445,
+        "max": 3.125506639480591
+      },
+      "completion_spacing_s": {
+        "count": 4,
+        "median": 2.153195858001709,
+        "p90": 2.70097017288208,
+        "max": 5.533506631851196
+      },
+      "latency_s": {
+        "min": 0.902,
+        "median": 1.036,
+        "max": 2.408
+      },
+      "slow_calls": 0
+    },
+    {
+      "trial": "deepseek_v41_flash__react__agent_param_error__task22__seed1__control__rep0",
+      "model_profile": "deepseek_v41_flash",
+      "architecture": "react",
+      "fault": "agent_param_error",
+      "task": "22",
+      "seed": "1",
+      "condition": "control",
+      "replicate": "0",
+      "calls": 20,
+      "served_models": {
+        "deepseek-flash": 20
+      },
+      "served_model_differs": 0,
+      "cache_usage_sources": {
+        "deepseek": 20
+      },
+      "tokens": {
+        "prompt_tokens": 923028,
+        "completion_tokens": 71399,
+        "total_tokens": 994427,
+        "prompt_cache_hit_tokens": 83584,
+        "prompt_cache_miss_tokens": 839444
+      },
+      "idle_gap_s": {
+        "count": 19,
+        "median": 1.6321187019348145,
+        "p90": 2.261197566986084,
+        "max": 6.143160820007324
+      },
+      "completion_spacing_s": {
+        "count": 19,
+        "median": 19.598315954208374,
+        "p90": 40.50050759315491,
+        "max": 48.65276002883911
+      },
+      "latency_s": {
+        "min": 0.936,
+        "median": 14.2575,
+        "max": 43.641
+      },
+      "slow_calls": 0
+    },
+    {
+      "trial": "deepseek_v41_flash__react__web_dom_missing__task22__seed1__control__rep0",
+      "model_profile": "deepseek_v41_flash",
+      "architecture": "react",
+      "fault": "web_dom_missing",
+      "task": "22",
+      "seed": "1",
+      "condition": "control",
+      "replicate": "0",
+      "calls": 20,
+      "served_models": {
+        "deepseek-flash": 20
+      },
+      "served_model_differs": 0,
+      "cache_usage_sources": {
+        "deepseek": 20
+      },
+      "tokens": {
+        "prompt_tokens": 957843,
+        "completion_tokens": 68811,
+        "total_tokens": 1026654,
+        "prompt_cache_hit_tokens": 319744,
+        "prompt_cache_miss_tokens": 638099
+      },
+      "idle_gap_s": {
+        "count": 19,
+        "median": 1.6177258491516113,
+        "p90": 5.012274980545044,
+        "max": 6.137209892272949
+      },
+      "completion_spacing_s": {
+        "count": 19,
+        "median": 16.6121883392334,
+        "p90": 37.95348358154297,
+        "max": 50.00436615943909
+      },
+      "latency_s": {
+        "min": 0.778,
+        "median": 11.279,
+        "max": 48.2
+      },
+      "slow_calls": 0
+    },
+    {
+      "trial": "deepseek_v41_flash__react__agent_param_error__task118__seed1__control__rep0",
+      "model_profile": "deepseek_v41_flash",
+      "architecture": "react",
+      "fault": "agent_param_error",
+      "task": "118",
+      "seed": "1",
+      "condition": "control",
+      "replicate": "0",
+      "calls": 5,
+      "served_models": {
+        "deepseek-flash": 5
+      },
+      "served_model_differs": 0,
+      "cache_usage_sources": {
+        "deepseek": 5
+      },
+      "tokens": {
+        "prompt_tokens": 46510,
+        "completion_tokens": 1004,
+        "total_tokens": 47514,
+        "prompt_cache_hit_tokens": 14720,
+        "prompt_cache_miss_tokens": 31790
+      },
+      "idle_gap_s": {
+        "count": 4,
+        "median": 1.1148031949996948,
+        "p90": 1.6403162479400635,
+        "max": 3.4473280906677246
+      },
+      "completion_spacing_s": {
+        "count": 4,
+        "median": 2.1513713598251343,
+        "p90": 2.7013163566589355,
+        "max": 5.573328018188477
+      },
+      "latency_s": {
+        "min": 0.818,
+        "median": 1.061,
+        "max": 2.126
+      },
+      "slow_calls": 0
+    },
+    {
+      "trial": "deepseek_v41_flash__react__web_http_error__task118__seed1__control__rep0",
+      "model_profile": "deepseek_v41_flash",
+      "architecture": "react",
+      "fault": "web_http_error",
+      "task": "118",
+      "seed": "1",
+      "condition": "control",
+      "replicate": "0",
+      "calls": 5,
+      "served_models": {
+        "deepseek-flash": 5
+      },
+      "served_model_differs": 0,
+      "cache_usage_sources": {
+        "deepseek": 5
+      },
+      "tokens": {
+        "prompt_tokens": 44429,
+        "completion_tokens": 1045,
+        "total_tokens": 45474,
+        "prompt_cache_hit_tokens": 9088,
+        "prompt_cache_miss_tokens": 35341
+      },
+      "idle_gap_s": {
+        "count": 4,
+        "median": 1.2307528257369995,
+        "p90": 1.868962049484253,
+        "max": 2.0955967903137207
+      },
+      "completion_spacing_s": {
+        "count": 4,
+        "median": 2.2816576957702637,
+        "p90": 2.996962070465088,
+        "max": 4.613596677780151
+      },
+      "latency_s": {
+        "min": 0.88,
+        "median": 1.128,
+        "max": 2.518
+      },
+      "slow_calls": 0
+    },
+    {
+      "trial": "deepseek_v41_flash__react__web_http_error__task22__seed1__control__rep0",
+      "model_profile": "deepseek_v41_flash",
+      "architecture": "react",
+      "fault": "web_http_error",
+      "task": "22",
+      "seed": "1",
+      "condition": "control",
+      "replicate": "0",
+      "calls": 20,
+      "served_models": {
+        "deepseek-flash": 20
+      },
+      "served_model_differs": 0,
+      "cache_usage_sources": {
+        "deepseek": 20
+      },
+      "tokens": {
+        "prompt_tokens": 1221574,
+        "completion_tokens": 119379,
+        "total_tokens": 1340953,
+        "prompt_cache_hit_tokens": 450944,
+        "prompt_cache_miss_tokens": 770630
+      },
+      "idle_gap_s": {
+        "count": 19,
+        "median": 1.2092852592468262,
+        "p90": 5.011279582977295,
+        "max": 6.122607707977295
+      },
+      "completion_spacing_s": {
+        "count": 19,
+        "median": 23.446018934249878,
+        "p90": 67.86624312400818,
+        "max": 87.31428527832031
+      },
+      "latency_s": {
+        "min": 1.115,
+        "median": 18.661,
+        "max": 86.105
+      },
+      "slow_calls": 3
+    },
+    {
+      "trial": "deepseek_v41_flash__react__web_dom_missing__task118__seed1__fault__rep0",
+      "model_profile": "deepseek_v41_flash",
+      "architecture": "react",
+      "fault": "web_dom_missing",
+      "task": "118",
+      "seed": "1",
+      "condition": "fault",
+      "replicate": "0",
+      "calls": 5,
+      "served_models": {
+        "deepseek-flash": 5
+      },
+      "served_model_differs": 0,
+      "cache_usage_sources": {
+        "deepseek": 5
+      },
+      "tokens": {
+        "prompt_tokens": 46555,
+        "completion_tokens": 977,
+        "total_tokens": 47532,
+        "prompt_cache_hit_tokens": 22272,
+        "prompt_cache_miss_tokens": 24283
+      },
+      "idle_gap_s": {
+        "count": 4,
+        "median": 1.1041871309280396,
+        "p90": 1.623643159866333,
+        "max": 3.09006667137146
+      },
+      "completion_spacing_s": {
+        "count": 4,
+        "median": 2.3253238201141357,
+        "p90": 2.9846432209014893,
+        "max": 5.343066692352295
+      },
+      "latency_s": {
+        "min": 0.765,
+        "median": 1.087,
+        "max": 2.253
+      },
+      "slow_calls": 0
+    },
+    {
+      "trial": "deepseek_v41_flash__react__web_http_error__task118__seed1__fault__rep0",
+      "model_profile": "deepseek_v41_flash",
+      "architecture": "react",
+      "fault": "web_http_error",
+      "task": "118",
+      "seed": "1",
+      "condition": "fault",
+      "replicate": "0",
+      "calls": 5,
+      "served_models": {
+        "deepseek-flash": 5
+      },
+      "served_model_differs": 0,
+      "cache_usage_sources": {
+        "deepseek": 5
+      },
+      "tokens": {
+        "prompt_tokens": 28103,
+        "completion_tokens": 1258,
+        "total_tokens": 29361,
+        "prompt_cache_hit_tokens": 8064,
+        "prompt_cache_miss_tokens": 20039
+      },
+      "idle_gap_s": {
+        "count": 4,
+        "median": 1.8455150127410889,
+        "p90": 1.9423201084136963,
+        "max": 2.8638269901275635
+      },
+      "completion_spacing_s": {
+        "count": 4,
+        "median": 3.2925150394439697,
+        "p90": 3.3753201961517334,
+        "max": 5.3578269481658936
+      },
+      "latency_s": {
+        "min": 0.675,
+        "median": 1.433,
+        "max": 2.494
+      },
+      "slow_calls": 0
+    },
+    {
+      "trial": "deepseek_v41_flash__react__agent_param_error__task118__seed1__fault__rep0",
+      "model_profile": "deepseek_v41_flash",
+      "architecture": "react",
+      "fault": "agent_param_error",
+      "task": "118",
+      "seed": "1",
+      "condition": "fault",
+      "replicate": "0",
+      "calls": 5,
+      "served_models": {
+        "deepseek-flash": 5
+      },
+      "served_model_differs": 0,
+      "cache_usage_sources": {
+        "deepseek": 5
+      },
+      "tokens": {
+        "prompt_tokens": 37776,
+        "completion_tokens": 1068,
+        "total_tokens": 38844,
+        "prompt_cache_hit_tokens": 22528,
+        "prompt_cache_miss_tokens": 15248
+      },
+      "idle_gap_s": {
+        "count": 4,
+        "median": 1.126038908958435,
+        "p90": 1.6579976081848145,
+        "max": 3.0722219944000244
+      },
+      "completion_spacing_s": {
+        "count": 4,
+        "median": 2.210038900375366,
+        "p90": 2.8349976539611816,
+        "max": 5.285222053527832
+      },
+      "latency_s": {
+        "min": 0.991,
+        "median": 1.177,
+        "max": 2.213
+      },
+      "slow_calls": 0
+    },
+    {
+      "trial": "deepseek_v41_flash__react__web_dom_missing__task22__seed1__fault__rep0",
+      "model_profile": "deepseek_v41_flash",
+      "architecture": "react",
+      "fault": "web_dom_missing",
+      "task": "22",
+      "seed": "1",
+      "condition": "fault",
+      "replicate": "0",
+      "calls": 20,
+      "served_models": {
+        "deepseek-flash": 20
+      },
+      "served_model_differs": 0,
+      "cache_usage_sources": {
+        "deepseek": 20
+      },
+      "tokens": {
+        "prompt_tokens": 738233,
+        "completion_tokens": 40546,
+        "total_tokens": 778779,
+        "prompt_cache_hit_tokens": 122112,
+        "prompt_cache_miss_tokens": 616121
+      },
+      "idle_gap_s": {
+        "count": 19,
+        "median": 1.567995309829712,
+        "p90": 1.9962081909179688,
+        "max": 6.119736671447754
+      },
+      "completion_spacing_s": {
+        "count": 19,
+        "median": 10.249144554138184,
+        "p90": 24.469594955444336,
+        "max": 26.594810962677002
+      },
+      "latency_s": {
+        "min": 0.942,
+        "median": 7.49,
+        "max": 25.071
+      },
+      "slow_calls": 0
+    },
+    {
+      "trial": "deepseek_v41_flash__react__agent_param_error__task22__seed1__fault__rep0",
+      "model_profile": "deepseek_v41_flash",
+      "architecture": "react",
+      "fault": "agent_param_error",
+      "task": "22",
+      "seed": "1",
+      "condition": "fault",
+      "replicate": "0",
+      "calls": 20,
+      "served_models": {
+        "deepseek-flash": 20
+      },
+      "served_model_differs": 0,
+      "cache_usage_sources": {
+        "deepseek": 20
+      },
+      "tokens": {
+        "prompt_tokens": 699224,
+        "completion_tokens": 46749,
+        "total_tokens": 745973,
+        "prompt_cache_hit_tokens": 345984,
+        "prompt_cache_miss_tokens": 353240
+      },
+      "idle_gap_s": {
+        "count": 19,
+        "median": 1.2232131958007812,
+        "p90": 5.012831211090088,
+        "max": 6.132701635360718
+      },
+      "completion_spacing_s": {
+        "count": 19,
+        "median": 7.596203088760376,
+        "p90": 27.249867916107178,
+        "max": 49.37478494644165
+      },
+      "latency_s": {
+        "min": 0.824,
+        "median": 6.619999999999999,
+        "max": 48.134
+      },
+      "slow_calls": 0
+    },
+    {
+      "trial": "deepseek_v41_flash__react__web_http_error__task22__seed1__fault__rep0",
+      "model_profile": "deepseek_v41_flash",
+      "architecture": "react",
+      "fault": "web_http_error",
+      "task": "22",
+      "seed": "1",
+      "condition": "fault",
+      "replicate": "0",
+      "calls": 20,
+      "served_models": {
+        "deepseek-flash": 20
+      },
+      "served_model_differs": 0,
+      "cache_usage_sources": {
+        "deepseek": 20
+      },
+      "tokens": {
+        "prompt_tokens": 814029,
+        "completion_tokens": 85201,
+        "total_tokens": 899230,
+        "prompt_cache_hit_tokens": 140160,
+        "prompt_cache_miss_tokens": 673869
+      },
+      "idle_gap_s": {
+        "count": 19,
+        "median": 1.5630807876586914,
+        "p90": 1.8412151336669922,
+        "max": 6.139541149139404
+      },
+      "completion_spacing_s": {
+        "count": 19,
+        "median": 18.60154104232788,
+        "p90": 36.69351100921631,
+        "max": 72.58237671852112
+      },
+      "latency_s": {
+        "min": 0.942,
+        "median": 14.962499999999999,
+        "max": 71.118
+      },
+      "slow_calls": 2
+    }
+  ],
+  "totals": {
+    "calls": 150,
+    "served_model_differs": 0,
+    "prompt_tokens": 5604046,
+    "completion_tokens": 438502,
+    "total_tokens": 6042548,
+    "prompt_cache_hit_tokens": 1557632,
+    "prompt_cache_miss_tokens": 4046414
+  },
+  "by_architecture": {
+    "react": {
+      "calls": 150,
+      "prompt_tokens": 5604046,
+      "completion_tokens": 438502,
+      "total_tokens": 6042548,
+      "prompt_cache_hit_tokens": 1557632,
+      "prompt_cache_miss_tokens": 4046414
+    }
+  },
+  "served_model_totals": {
+    "deepseek-flash": 150
+  },
+  "cache_usage_source_totals": {
+    "deepseek": 150
+  },
+  "idle_gap_s_by_trial": {
+    "deepseek_v41_flash__react__web_dom_missing__task118__seed1__control__rep0": {
+      "count": 4,
+      "median": 1.1846750974655151,
+      "p90": 1.7989702224731445,
+      "max": 3.125506639480591
+    },
+    "deepseek_v41_flash__react__agent_param_error__task22__seed1__control__rep0": {
+      "count": 19,
+      "median": 1.6321187019348145,
+      "p90": 2.261197566986084,
+      "max": 6.143160820007324
+    },
+    "deepseek_v41_flash__react__web_dom_missing__task22__seed1__control__rep0": {
+      "count": 19,
+      "median": 1.6177258491516113,
+      "p90": 5.012274980545044,
+      "max": 6.137209892272949
+    },
+    "deepseek_v41_flash__react__agent_param_error__task118__seed1__control__rep0": {
+      "count": 4,
+      "median": 1.1148031949996948,
+      "p90": 1.6403162479400635,
+      "max": 3.4473280906677246
+    },
+    "deepseek_v41_flash__react__web_http_error__task118__seed1__control__rep0": {
+      "count": 4,
+      "median": 1.2307528257369995,
+      "p90": 1.868962049484253,
+      "max": 2.0955967903137207
+    },
+    "deepseek_v41_flash__react__web_http_error__task22__seed1__control__rep0": {
+      "count": 19,
+      "median": 1.2092852592468262,
+      "p90": 5.011279582977295,
+      "max": 6.122607707977295
+    },
+    "deepseek_v41_flash__react__web_dom_missing__task118__seed1__fault__rep0": {
+      "count": 4,
+      "median": 1.1041871309280396,
+      "p90": 1.623643159866333,
+      "max": 3.09006667137146
+    },
+    "deepseek_v41_flash__react__web_http_error__task118__seed1__fault__rep0": {
+      "count": 4,
+      "median": 1.8455150127410889,
+      "p90": 1.9423201084136963,
+      "max": 2.8638269901275635
+    },
+    "deepseek_v41_flash__react__agent_param_error__task118__seed1__fault__rep0": {
+      "count": 4,
+      "median": 1.126038908958435,
+      "p90": 1.6579976081848145,
+      "max": 3.0722219944000244
+    },
+    "deepseek_v41_flash__react__web_dom_missing__task22__seed1__fault__rep0": {
+      "count": 19,
+      "median": 1.567995309829712,
+      "p90": 1.9962081909179688,
+      "max": 6.119736671447754
+    },
+    "deepseek_v41_flash__react__agent_param_error__task22__seed1__fault__rep0": {
+      "count": 19,
+      "median": 1.2232131958007812,
+      "p90": 5.012831211090088,
+      "max": 6.132701635360718
+    },
+    "deepseek_v41_flash__react__web_http_error__task22__seed1__fault__rep0": {
+      "count": 19,
+      "median": 1.5630807876586914,
+      "p90": 1.8412151336669922,
+      "max": 6.139541149139404
+    }
+  },
+  "latency_s": {
+    "calls_with_latency": 150,
+    "min": 0.675,
+    "median": 6.8805,
+    "max": 86.105
+  },
+  "slow_calls": {
+    "threshold_s": 60.0,
+    "note": "统计单次调用延迟 > 阈值。Qwen 端点上实测为网关空闲驱逐导致的冷启动（273–280s）；其它端点也可能是长生成或客户端重试，故用中性口径命名。",
+    "count": 5,
+    "by_architecture": {
+      "react": 5
+    }
+  }
+}
