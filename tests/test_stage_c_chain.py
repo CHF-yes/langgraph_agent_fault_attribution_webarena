@@ -1933,3 +1933,100 @@ def test_cluster_robust_cov_matches_an_independent_sandwich():
     # 顺序写错时会与"meat @ inv^2"一致，这里显式排除
     wrong = matmul(meat, matmul(inv, inv))
     assert abs(got[1][1] - wrong[1][1]) > 1e-12
+
+
+# ==========================================================================
+# 20. 评分护栏：默认不覆盖既有 official_eval.json
+# ==========================================================================
+
+def _eval_result(success=True, status="success"):
+    return {"status": status, "official_success": success,
+            "evaluators_results": [{"evaluator_name": "AgentResponseEvaluator",
+                                    "result": success}],
+            "error_msg": ""}
+
+
+def test_evaluate_trial_reuses_a_valid_existing_eval(tmp_path):
+    from standard_agent.stage_c_pipeline import evaluate_trial
+    trial = _trial_dir(tmp_path)
+    (trial / "official_eval.json").write_text(json.dumps(_eval_result()), encoding="utf-8")
+    before = (trial / "official_eval.json").read_text()
+
+    def boom(*args, **kwargs):
+        raise AssertionError("evaluator must not be called when a valid eval exists")
+
+    out = evaluate_trial(trial, task_id=118, config_path=None, evaluate_fn=boom, evaluate=True)
+    assert out["source"] == "reused"
+    assert out["evaluation_status"] == "native"
+    assert (trial / "official_eval.json").read_text() == before
+
+
+def test_evaluate_trial_evaluates_only_when_missing(tmp_path):
+    from standard_agent.stage_c_pipeline import evaluate_trial
+    trial = _trial_dir(tmp_path)
+    calls = []
+
+    def fake(task_id, **kwargs):
+        calls.append(task_id)
+        return _eval_result()
+
+    out = evaluate_trial(trial, task_id=118, config_path=None, evaluate_fn=fake, evaluate=True)
+    assert out["source"] == "evaluated" and calls == [118]
+    assert json.loads((trial / "official_eval.json").read_text())["status"] == "success"
+
+
+def test_evaluate_trial_does_not_overwrite_a_broken_eval(tmp_path):
+    from standard_agent.stage_c_pipeline import evaluate_trial
+    trial = _trial_dir(tmp_path)
+    broken = {"status": "error", "error_msg": "boom", "evaluators_results": []}
+    (trial / "official_eval.json").write_text(json.dumps(broken), encoding="utf-8")
+    before = (trial / "official_eval.json").read_text()
+    warnings = []
+
+    def boom(*args, **kwargs):
+        raise AssertionError("broken eval must not trigger a silent re-evaluation")
+
+    out = evaluate_trial(trial, task_id=118, config_path=None, evaluate_fn=boom,
+                         evaluate=True, warn=warnings.append)
+    assert out["source"] == "existing_invalid"
+    assert (trial / "official_eval.json").read_text() == before
+    assert warnings and "error" in warnings[0]
+
+
+def test_audit_reads_existing_eval_without_evaluating(tmp_path):
+    from standard_agent.stage_c_pipeline import collect_rows
+    trial = _trial_dir(tmp_path)
+    (trial / "official_eval.json").write_text(json.dumps(_eval_result()), encoding="utf-8")
+    _trial_dir(tmp_path, task=21)          # 无评分文件
+    rows = collect_rows(tmp_path, evaluate=False)
+    by_task = {str((row["cell"] or {}).get("task_id")): row for row in rows}
+    assert by_task["118"]["official_success"] is True
+    assert by_task["118"]["evaluation_source"] == "reused"
+    assert by_task["21"]["evaluation_status"] == "skipped"
+
+
+def test_force_re_evaluate_backs_up_and_journals(tmp_path):
+    from standard_agent.stage_c_pipeline import evaluate_trial
+    trial = _trial_dir(tmp_path)
+    (trial / "official_eval.json").write_text(json.dumps(_eval_result(success=False)),
+                                              encoding="utf-8")
+    out = evaluate_trial(trial, task_id=118, config_path="/tmp/cfg.json",
+                         evaluate_fn=lambda *a, **k: _eval_result(success=True),
+                         evaluate=True, force_re_evaluate=True)
+    assert out["source"] == "re_evaluated"
+    backups = list(trial.glob("official_eval.json.pre-re-evaluate-*.json"))
+    assert len(backups) == 1
+    assert json.loads(backups[0].read_text())["official_success"] is False
+    journal = json.loads((trial / "official_eval.re-evaluate.json").read_text())
+    assert journal["old"]["official_success"] is False
+    assert journal["new"]["official_success"] is True
+    assert journal["config_path"] == "/tmp/cfg.json"
+
+
+def test_cli_rejects_force_re_evaluate_on_audit(tmp_path, monkeypatch, capsys):
+    import sys as _sys
+    from scripts.stage_c_pipeline import main as pipeline_main
+    monkeypatch.setattr(_sys, "argv", [
+        "stage_c_pipeline.py", "audit", "--root", str(tmp_path), "--force-re-evaluate"])
+    assert pipeline_main() == 2
+    assert "--force-re-evaluate" in capsys.readouterr().err

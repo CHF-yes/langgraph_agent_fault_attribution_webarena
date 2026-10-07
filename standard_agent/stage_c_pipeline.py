@@ -17,11 +17,15 @@
 from __future__ import annotations
 
 import json
+import sys
+import time
 from pathlib import Path
 
 AGENT_RESPONSE = "agent_response.json"
 TRIAL_RECORD = "trial_record.json"
 NETWORK_HAR = "network.har"
+OFFICIAL_EVAL = "official_eval.json"
+OFFICIAL_EVAL_JOURNAL = "official_eval.re-evaluate.json"
 
 EVALUATION_STATUS_NATIVE = "native"
 EVALUATION_STATUS_COMPATIBILITY = "compatibility"
@@ -268,20 +272,88 @@ def resolve_evaluator_config(config_path: str | Path | None, out_dir: str | Path
     return {"config_path": config_path, "substitutions": substitutions}
 
 
+def read_official_eval(trial_dir: str | Path):
+    """返回 ``(记录, 读取错误)``。文件不存在返回 ``(None, None)``。"""
+    path = Path(trial_dir) / OFFICIAL_EVAL
+    if not _readable_exists(path):
+        return None, None
+    try:
+        return json.loads(path.read_text(encoding="utf-8")), None
+    except Exception as exc:                      # noqa: BLE001 - 任何损坏都算读取失败
+        return None, str(exc)
+
+
 def evaluate_trial(trial_dir: str | Path, *, task_id: int, config_path,
-                   evaluate_fn=None) -> dict:
-    """对一个 trial 目录跑官方 evaluator 并写出 ``official_eval.json``。"""
+                   evaluate_fn=None, evaluate: bool = True,
+                   force_re_evaluate: bool = False, warn=None) -> dict:
+    """评分策略（护栏）。
+
+    评分文件一旦生成就不应是"顺手覆盖"的产物：本函数默认**不覆盖**已有的
+    ``official_eval.json``。
+
+    - 已有且判定非 ``error`` → 复用（``source=reused``），不调用 evaluator；
+    - 缺失 → 评分并写出（``source=evaluated``）；
+    - 已有但无法解析、或判定为 ``error`` → **明确告警、保留原文件、不覆盖**
+      （``source=existing_unreadable`` / ``existing_invalid``），绝不静默跳过或重评；
+    - ``force_re_evaluate=True`` → 先把旧结果备份到
+      ``official_eval.pre-re-evaluate-<ts>.json``，再评分，并写
+      ``official_eval.re-evaluate.json`` 记录评测配置与新旧差异（``source=re_evaluated``）。
+
+    ``evaluate=False``（``audit`` 等只读命令）只读取/分类既有文件，绝不评分。
+    """
     trial_dir = Path(trial_dir)
     evaluate_fn = evaluate_fn or default_evaluate
+    warn = warn or (lambda message: print(message, file=sys.stderr))
+    path = trial_dir / OFFICIAL_EVAL
+    existing, read_error = read_official_eval(trial_dir)
+
+    if not force_re_evaluate and read_error is not None:
+        warn(f"⚠️ {path} 存在但无法解析（{read_error}）；保留原文件，不覆盖、不评分。")
+        return {"evaluation_status": EVALUATION_STATUS_ERROR, "official_success": None,
+                "reason": f"unreadable {OFFICIAL_EVAL}: {read_error}",
+                "source": "existing_unreadable"}
+
+    if existing is not None and not force_re_evaluate:
+        classification = classify_evaluation(existing)
+        if classification["evaluation_status"] != EVALUATION_STATUS_ERROR:
+            return {"result": existing, **classification, "source": "reused"}
+        warn(f"⚠️ {path} 已有但判定为 error（{classification.get('reason') or '无 evaluator 结果'}）；"
+             "保留原文件，不覆盖。需要重评请显式传 --force-re-evaluate。")
+        return {"result": existing, **classification, "source": "existing_invalid"}
+
+    if not evaluate and not force_re_evaluate:
+        return {"evaluation_status": EVALUATION_STATUS_SKIPPED, "official_success": None,
+                "source": "not_evaluated"}
+
+    backup = None
+    if force_re_evaluate and (existing is not None or read_error is not None):
+        stamp = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
+        backup = trial_dir / f"{OFFICIAL_EVAL}.pre-re-evaluate-{stamp}.json"
+        if path.exists():
+            backup.write_text(path.read_text(encoding="utf-8"), encoding="utf-8")
+
     result = evaluate_fn(
         task_id, agent_response_path=trial_dir / AGENT_RESPONSE,
         network_trace_path=trial_dir / NETWORK_HAR, config_path=config_path,
     )
     classification = classify_evaluation(result)
-    (trial_dir / "official_eval.json").write_text(
-        json.dumps(result, ensure_ascii=False, indent=2, default=str) + "\n",
-        encoding="utf-8")
-    return {"result": result, **classification}
+    path.write_text(json.dumps(result, ensure_ascii=False, indent=2, default=str) + "\n",
+                    encoding="utf-8")
+    if force_re_evaluate:
+        journal = {
+            "trial_dir": str(trial_dir), "config_path": str(config_path),
+            "backup": str(backup) if backup else None,
+            "old": None if existing is None else {
+                "status": existing.get("status"),
+                "official_success": existing.get("official_success")},
+            "new": {"status": result.get("status"),
+                    "official_success": result.get("official_success")},
+        }
+        (trial_dir / OFFICIAL_EVAL_JOURNAL).write_text(
+            json.dumps(journal, ensure_ascii=False, indent=2, default=str) + "\n",
+            encoding="utf-8")
+    return {"result": result, **classification,
+            "source": "re_evaluated" if force_re_evaluate else "evaluated"}
 
 
 # --------------------------------------------------------------------------
@@ -300,8 +372,13 @@ def cell_key(cell: dict) -> tuple:
 
 def collect_rows(root: str | Path, *, config_path=None, evaluate_fn=None,
                  out_dir=None, dataset_path=None, limit: int | None = None,
-                 evaluate: bool = False) -> list[dict]:
-    """对 ``root`` 下所有 trial 执行完整性检查（并按需评分）。"""
+                 evaluate: bool = False, force_re_evaluate: bool = False) -> list[dict]:
+    """对 ``root`` 下所有 trial 执行完整性检查（并按需评分）。
+
+    无论 ``evaluate`` 与否都会**读取**既有 ``official_eval.json``：这样 ``audit``
+    可以在不触碰 evaluator 的前提下重建官方标签，而 ``run``/``evaluate`` 在默认
+    策略下复用既有结果、只对缺失者评分（详见 :func:`evaluate_trial`）。
+    """
     evaluated_config = {"config_path": config_path, "substitutions": {}}
     if out_dir is not None:
         evaluated_config = resolve_evaluator_config(
@@ -363,13 +440,15 @@ def collect_rows(root: str | Path, *, config_path=None, evaluate_fn=None,
                     row["cap_exhausted_source"] = "unknown"
             else:
                 row["cap_exhausted_source"] = "trial_record"
-        if integrity["complete"] and (evaluate or evaluate_fn is not None):
+        if integrity["complete"]:
             task_id = int((record or {}).get("task_id") or trial_dir.parts[-3])
             outcome = evaluate_trial(trial_dir, task_id=task_id,
                                      config_path=evaluated_config["config_path"],
-                                     evaluate_fn=evaluate_fn)
-            row.update({key: outcome[key] for key in (
+                                     evaluate_fn=evaluate_fn, evaluate=evaluate,
+                                     force_re_evaluate=force_re_evaluate)
+            row.update({key: outcome.get(key) for key in (
                 "evaluation_status", "official_success", "reason")})
+            row["evaluation_source"] = outcome.get("source")
         rows.append(row)
     if out_dir is not None:
         Path(out_dir).mkdir(parents=True, exist_ok=True)

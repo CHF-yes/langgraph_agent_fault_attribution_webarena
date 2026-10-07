@@ -55,11 +55,19 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--seeds", type=int, nargs="+", default=None)
     parser.add_argument("--task-ids", type=int, nargs="+", default=None,
                         help="限定期望格子的任务子集（T0 小批只覆盖部分任务时用）")
+    parser.add_argument("--force-re-evaluate", action="store_true",
+                        help="显式重评：先备份旧 official_eval.json 并记录新旧差异，再评分。"
+                             "仅对 run/evaluate 有效；check/audit 只读，禁止使用。")
     return parser.parse_args()
 
 
 def main() -> int:
     args = parse_args()
+    if args.force_re_evaluate and args.command not in ("run", "evaluate"):
+        # audit/check 必须保持只读：不接受重评开关，避免误把对账命令变成写操作。
+        print(f"error: --force-re-evaluate 只能用于 run/evaluate，不能用于 {args.command}",
+              file=sys.stderr)
+        return 2
     design = load_design(args.manifest)
     models = args.model_profile or (
         list(design["main_models"]) + ([design["validation_model"]]
@@ -102,6 +110,7 @@ def main() -> int:
         dataset_path=args.dataset,
         limit=args.limit,
         evaluate=(args.command in ("evaluate", "run")),
+        force_re_evaluate=args.force_re_evaluate,
     )
     report = audit(rows, expected)
     (Path(args.output_dir) / "audit.json").write_text(
