@@ -52,6 +52,7 @@ from standard_agent.stage_c_analysis import (  # noqa: E402
     interaction_on_degradation,
     main_analysis,
     pair_observations,
+    task_floor_ceiling,
 )
 from standard_agent.stage_c_pipeline import (  # noqa: E402
     EVALUATION_STATUS_COMPATIBILITY,
@@ -1807,3 +1808,64 @@ def test_both_architectures_receive_the_same_answer_contract():
         assert ("ONLY valid JSON" in executor) is expect_json
         contract = _answer_contract_context(task)
         assert contract in react and contract in executor
+
+
+# ==========================================================================
+# 18. 口径一致性：分母同源、ITT/触发后分列、地板天花板、交互同口径
+# ==========================================================================
+
+def _mixed_injection_rows():
+    """一个任务注入、一个任务未注入的极简网格。"""
+    rows = _analysis_rows(tasks=[1, 2], seeds=(1,), faults=("f1",))
+    for row in rows:
+        if row["cell"]["task_id"] == 2 and row["cell"]["condition"] == "fault":
+            row["injection_count"] = 0     # 未注入：只能进 ITT，不进触发后估计
+        else:
+            row["injection_count"] = 1
+    return rows
+
+
+def test_cell_rates_and_delta_use_the_same_pairs():
+    pairs, _ = pair_observations(build_observations(_mixed_injection_rows()))
+    cells = degradation_by_cell(pairs, n_boot=200, seed=1)
+    for cell in cells:
+        assert cell["n_pairs"] == 1                      # 只有注入的那一对进入触发后估计
+        assert cell["n_pairs_itt"] == 2                  # ITT 保留两对
+        assert cell["control_success_rate_itt"] is not None
+        # 触发后行内 control/fault 的成功数之和必须等于 n_pairs
+        combined = (cell["control_success_rate"] + cell["fault_success_rate"]) * cell["n_pairs"]
+        assert abs(combined - round(combined)) < 1e-9
+
+
+def test_fault_level_reports_itt_and_triggered_separately():
+    pairs, _ = pair_observations(build_observations(_mixed_injection_rows()))
+    cells = degradation_by_fault(pairs, n_boot=200, seed=1)
+    assert cells
+    item = cells[0]
+    # 故障级会把 model×architecture 汇总：任务1 触发 4 对，任务2 未触发 4 对
+    assert item["n_pairs"] == 4 and item["n_pairs_itt"] == 8
+    assert item["degradation_itt"] is not None
+
+
+def test_task_floor_ceiling_flags_extremes():
+    observations = []
+    for task in (1, 2, 3):
+        for rep in range(4):
+            observations.append({"task_id": task, "condition": "control",
+                                 "official_success": task == 2 or (task == 3 and rep < 2)})
+    result = task_floor_ceiling(observations, control_per_task=4)
+    assert result["floor_tasks"] == [1]
+    assert result["ceiling_tasks"] == [2]
+    assert result["n_within_range"] == 1
+
+
+def test_interaction_reports_one_estimand_for_interval_and_p():
+    def effect(model, architecture, fault):
+        return 0.7 if (model == "m2" and architecture == "plan_execute") else 0.0
+    rows = _analysis_rows(effect=effect, seeds=(1, 2, 3, 4))
+    result = interaction_on_degradation(build_observations(rows), models=["m1", "m2"],
+                                        n_boot=400, seed=3)
+    assert result["estimand"] == "task_equal_weighted_interaction"
+    assert result["p_value"] is not None and result["p_value"] < 0.05
+    assert result["bootstrap_ci_low"] > 0
+    assert "sensitivity_observation_weighted" in result

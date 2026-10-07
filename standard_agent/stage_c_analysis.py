@@ -312,6 +312,57 @@ def holm_adjust(pvalues: list[float]) -> list[float]:
     return adjusted
 
 
+def _t_two_sided_p(t: float, df: int) -> float:
+    """Two-sided Student-t p-value via the regularized incomplete beta.
+
+    The interaction is clustered on tasks, and there are only 16 of them, so the
+    normal approximation is not the right reference distribution; this is used
+    wherever a task-level standard error is turned into a p-value.
+    """
+    if df <= 0 or t != t:
+        return float("nan")
+
+    def betacf(a, b, x):
+        qab, qap, qam = a + b, a + 1, a - 1
+        c = 1.0
+        d = 1.0 - qab * x / qap
+        d = 1.0 / (d if abs(d) > 1e-300 else 1e-300)
+        h = d
+        for m in range(1, 201):
+            m2 = 2 * m
+            aa = m * (b - m) * x / ((qam + m2) * (a + m2))
+            d = 1.0 + aa * d
+            d = 1.0 / (d if abs(d) > 1e-300 else 1e-300)
+            c = 1.0 + aa / c
+            c = c if abs(c) > 1e-300 else 1e-300
+            h *= d * c
+            aa = -(a + m) * (qab + m) * x / ((a + m2) * (qap + m2))
+            d = 1.0 + aa * d
+            d = 1.0 / (d if abs(d) > 1e-300 else 1e-300)
+            c = 1.0 + aa / c
+            c = c if abs(c) > 1e-300 else 1e-300
+            h *= d * c
+            if abs(d * c - 1.0) < 3e-12:
+                break
+        return h
+
+    def betai(a, b, x):
+        if x <= 0:
+            return 0.0
+        if x >= 1:
+            return 1.0
+        lbeta = math.lgamma(a) + math.lgamma(b) - math.lgamma(a + b)
+        bt = math.exp(a * math.log(x) + b * math.log(1 - x) - lbeta)
+        if x < (a + 1) / (a + b + 2):
+            return bt * betacf(a, b, x) / a
+        return 1.0 - bt * betacf(b, a, 1 - x) / b
+
+    x = df / (df + t * t)
+    # Two-sided p = I_x(df/2, 1/2); this already accounts for |t|, so there is no
+    # sign branch (a sign branch produced p>1 for negative t).
+    return betai(df / 2.0, 0.5, x)
+
+
 def _normal_two_sided_p(z: float) -> float:
     """双侧正态 p 值。"""
     return 2 * (1 - 0.5 * (1 + math.erf(abs(z) / math.sqrt(2))))
@@ -325,17 +376,27 @@ def degradation_by_cell(pairs: list[dict], *, model_profile: str | None = None,
                         category_of: dict | None = None,
                         n_boot: int = DEFAULT_BOOTSTRAP,
                         seed: int = DEFAULT_SEED) -> list[dict]:
-    """按 (model, architecture, fault) 汇总配对退化。"""
+    """按 (model, architecture, fault) 汇总配对退化。
+
+    每行的成功率与退化量使用**同一批配对**：默认只看故障真正注入的 pair。未注入
+    的 pair 单列 ``*_itt`` 字段，供"按分配"分析使用；此前成功率先于退化量的一遍
+    循环统计、把未注入 pair 也算了进去，导致同一行里 n 与 Δ 不同源。
+    """
+    selected = [pair for pair in pairs
+                if model_profile is None or pair["model_profile"] == model_profile]
+    triggered = [pair for pair in selected if pair.get("fault_applied", True)]
+
     grouped: dict[tuple, dict[int, list[float]]] = defaultdict(lambda: defaultdict(list))
-    excluded = 0
-    for pair in pairs:
-        if model_profile is not None and pair["model_profile"] != model_profile:
-            continue
-        if not pair.get("fault_applied", True):
-            excluded += 1
-            continue                      # 故障未注入的 pair 不进入退化估计
+    for pair in triggered:
         grouped[(pair["model_profile"], pair["architecture"], pair["fault_type"])][
             pair["task_id"]].append(float(pair["delta"]))
+
+    def rates(subset):
+        successes = total = 0
+        for pair in subset:
+            successes += pair["control"] + pair["fault"]
+            total += 2
+        return successes, total
 
     results = []
     for (model, architecture, fault), by_task in sorted(grouped.items()):
@@ -344,21 +405,22 @@ def degradation_by_cell(pairs: list[dict], *, model_profile: str | None = None,
         mean_delta = sum(per_task_means) / len(per_task_means) if per_task_means else float("nan")
         strata = strata_for_tasks(category_of, by_task)
         low, high = cluster_bootstrap_ci(by_task, strata=strata, n_boot=n_boot, seed=seed)
-        control_successes = control_total = fault_successes = fault_total = 0
-        for pair in pairs:
-            if (pair["model_profile"], pair["architecture"], pair["fault_type"]) != (model, architecture, fault):
-                continue
-            if model_profile is not None and pair["model_profile"] != model_profile:
-                continue
-            control_successes += pair["control"]
-            fault_successes += pair["fault"]
-            control_total += 1
-            fault_total += 1
-        # 退化量的检验：任务等权均值的正态近似（区间用整群自助）。
+        cell = lambda subset, key: [p for p in subset
+                                    if (p["model_profile"], p["architecture"], p["fault_type"])
+                                    == (model, architecture, fault)]
+        hit = cell(triggered, None)
+        hit_itt = cell(selected, None)
+        control_successes = sum(p["control"] for p in hit)
+        fault_successes = sum(p["fault"] for p in hit)
+        control_total = fault_total = len(hit)
+        control_successes_itt = sum(p["control"] for p in hit_itt)
+        fault_successes_itt = sum(p["fault"] for p in hit_itt)
+        n_itt = len(hit_itt)
+        # 退化量的检验：任务等权均值的 t(df=n_tasks-1)（区间同用整群自助）。
         per_task_variance = (statistics.variance(per_task_means)
                              if len(per_task_means) > 1 else 0.0)
         stderr = math.sqrt(per_task_variance / len(per_task_means)) if per_task_means else float("nan")
-        z = mean_delta / stderr if stderr and stderr > 0 else float("nan")
+        t_stat = mean_delta / stderr if stderr and stderr > 0 else float("nan")
         results.append({
             "model_profile": model, "architecture": architecture, "fault_type": fault,
             "n_pairs": n_pairs, "n_tasks": len(by_task),
@@ -366,14 +428,17 @@ def degradation_by_cell(pairs: list[dict], *, model_profile: str | None = None,
             "fault_success_rate": fault_successes / fault_total if fault_total else None,
             "control_wilson": wilson_interval(control_successes, control_total) if control_total else None,
             "fault_wilson": wilson_interval(fault_successes, fault_total) if fault_total else None,
+            "n_pairs_itt": n_itt,
+            "control_success_rate_itt": control_successes_itt / n_itt if n_itt else None,
+            "fault_success_rate_itt": fault_successes_itt / n_itt if n_itt else None,
             "degradation": mean_delta,
             "ci_low": low, "ci_high": high,
             "std_error": stderr if stderr == stderr else None,
-            "p_value": _normal_two_sided_p(z) if z == z else None,
+            "p_value": (_t_two_sided_p(t_stat, len(per_task_means) - 1)
+                        if t_stat == t_stat and len(per_task_means) > 1 else None),
             "degenerate": bool(control_total and (control_successes in (0, control_total)
                                                  or fault_successes in (0, fault_total))),
         })
-    del excluded  # 排除数在主分析输出里单列（pairs_fault_not_applied）
     return results
 
 
@@ -434,6 +499,27 @@ def interaction_on_degradation(observations: list[dict], *, models: list[str] | 
     for task, task_rows in grouped_rows.items():
         per_task[task] = normal_equations(task_rows, grouped_targets[task])
 
+    # 任务等权估计量：逐任务拟合同一个 8 参数模型，取三阶项，再对任务等权平均。
+    # 设计平衡时与观测加权 OLS 系数同值，但方差口径与"任务是独立单位"一致，
+    # 因此区间与 p 都由它给出；观测加权的聚类稳健结果另列为敏感性分析。此前
+    # 报告把观测加权的 p 与任务等权的自助区间并列，两者不是同一口径。
+    per_task_coef = {}
+    for task, task_rows in grouped_rows.items():
+        try:
+            per_task_coef[task] = solve(*normal_equations(
+                task_rows, grouped_targets[task]))[index]
+        except (ZeroDivisionError, ValueError, IndexError):
+            continue
+    coef_values = [per_task_coef[task] for task in sorted(per_task_coef)]
+    if coef_values:
+        mean_coef = sum(coef_values) / len(coef_values)
+        coef_sd = statistics.stdev(coef_values) if len(coef_values) > 1 else 0.0
+        coef_se = coef_sd / math.sqrt(len(coef_values))
+        p_task = _t_two_sided_p(mean_coef / coef_se, len(coef_values) - 1) if coef_se > 0 else None
+    else:
+        mean_coef = coef_se = float("nan")
+        p_task = None
+
     rng = random.Random(seed)
     interaction_strata = strata_for_tasks(category_of, per_task)
     if not interaction_strata:
@@ -449,17 +535,38 @@ def interaction_on_degradation(observations: list[dict], *, models: list[str] | 
     estimates.sort()
     low = estimates[int(math.floor(0.025 * len(estimates)))]
     high = estimates[min(len(estimates) - 1, int(math.ceil(0.975 * len(estimates)) - 1))]
+
+    # 任务等权自助区间：与上面的任务等权点估计同口径。
+    rng_task = random.Random(seed)
+    task_boot = []
+    for _ in range(n_boot):
+        drawn = [coef_values[rng_task.randrange(len(coef_values))] for _ in range(len(coef_values))]
+        task_boot.append(sum(drawn) / len(drawn))
+    task_boot.sort()
+    tew_low = task_boot[int(math.floor(0.025 * len(task_boot)))]
+    tew_high = task_boot[min(len(task_boot) - 1, int(math.ceil(0.975 * len(task_boot)) - 1))]
+
     return {
         "models": model_values, "architectures": architecture_values,
-        "n_observations": len(observations),
-        "coefficient_condition_x_model_x_architecture": coefficient,
-        "std_error_cluster_robust": stderr if stderr == stderr else None,
-        "z": z if z == z else None,
-        "p_value": _normal_two_sided_p(z) if z == z else None,
-        "bootstrap_ci_low": low, "bootstrap_ci_high": high,
+        "n_observations": len(observations), "n_tasks": len(coef_values),
+        "estimand": "task_equal_weighted_interaction",
+        "coefficient_condition_x_model_x_architecture": mean_coef,
+        "std_error_task_equal": coef_se if coef_se == coef_se else None,
+        "p_value": p_task,
+        "bootstrap_ci_low": tew_low, "bootstrap_ci_high": tew_high,
         "bootstrap_resamples": n_boot,
+        "sensitivity_observation_weighted": {
+            "coefficient": coefficient,
+            "std_error_cluster_robust": stderr if stderr == stderr else None,
+            "z": z if z == z else None,
+            "p_value_normal": _normal_two_sided_p(z) if z == z else None,
+            "p_value_t15": _t_two_sided_p(z, len(set(clusters)) - 1) if z == z else None,
+            "bootstrap_ci": [low, high],
+            "note": "观测加权 OLS；与主口径（任务等权）不是同一估计量，仅列作敏感性分析。",
+        },
         "interpretation": ("该系数 >0 表示：某一 (model, architecture) 组合的故障退化量"
-                           "高于另一组合；即退化量上存在 Model × Architecture 交互。"),
+                           "高于另一组合；即退化量上存在 Model × Architecture 交互。"
+                           "区间与 p 均为任务等权口径；观测加权结果见 sensitivity_observation_weighted。"),
     }
 
 
@@ -477,29 +584,43 @@ def degradation_by_fault(pairs: list[dict], *, category_of: dict | None = None,
     任务取等权平均（任务内先平均掉模型/架构/重复），任务整群、按类别分层自助。
     """
     grouped: dict[str, dict[int, list[float]]] = defaultdict(lambda: defaultdict(list))
+    grouped_itt: dict[str, dict[int, list[float]]] = defaultdict(lambda: defaultdict(list))
     for pair in pairs:
+        grouped_itt[pair["fault_type"]][pair["task_id"]].append(float(pair["delta"]))
         if not pair.get("fault_applied", True):
-            continue                      # 未注入故障 → 不参与故障级退化
+            continue                      # 未注入故障 → 不参与"触发后"退化
         grouped[pair["fault_type"]][pair["task_id"]].append(float(pair["delta"]))
 
-    results = []
-    for fault, by_task in sorted(grouped.items()):
+    def _mean(by_task):
         per_task = {task: sum(values) / len(values) for task, values in by_task.items()}
-        mean_delta = sum(per_task.values()) / len(per_task) if per_task else float("nan")
+        return per_task, (sum(per_task.values()) / len(per_task) if per_task else float("nan"))
+
+    results = []
+    for fault in sorted(set(grouped) | set(grouped_itt)):
+        by_task = grouped.get(fault, {})
+        per_task, mean_delta = _mean(by_task)
+        itt_per_task, mean_delta_itt = _mean(grouped_itt.get(fault, {}))
         strata = strata_for_tasks(category_of, by_task)
         low, high = cluster_bootstrap_ci(by_task, strata=strata, n_boot=n_boot, seed=seed)
+        itt_strata = strata_for_tasks(category_of, grouped_itt.get(fault, {}))
+        itt_low, itt_high = cluster_bootstrap_ci(grouped_itt.get(fault, {}),
+                                                 strata=itt_strata, n_boot=n_boot, seed=seed)
         variance = statistics.variance(list(per_task.values())) if len(per_task) > 1 else 0.0
         stderr = math.sqrt(variance / len(per_task)) if per_task else float("nan")
-        z = mean_delta / stderr if stderr and stderr > 0 else float("nan")
+        t_stat = mean_delta / stderr if stderr and stderr > 0 else float("nan")
         results.append({
             "family_id": HOLM_FAMILY_ID,
             "fault_type": fault,
             "n_pairs": sum(len(values) for values in by_task.values()),
-            "n_tasks": len(by_task),
+            "n_pairs_itt": sum(len(values) for values in grouped_itt.get(fault, {}).values()),
+            "n_tasks": len(per_task),
             "degradation": mean_delta,
             "ci_low": low, "ci_high": high,
+            "degradation_itt": mean_delta_itt,
+            "ci_low_itt": itt_low, "ci_high_itt": itt_high,
             "std_error": stderr if stderr == stderr else None,
-            "p_value": _normal_two_sided_p(z) if z == z else None,
+            "p_value": (_t_two_sided_p(t_stat, len(per_task) - 1)
+                        if t_stat == t_stat and len(per_task) > 1 else None),
         })
     return results
 
@@ -655,6 +776,42 @@ def cap_exhaustion_summary(rows: list[dict]) -> dict:
                  "未知单独计入 unknown，既不进分子也不进分母。"),
     }
 
+def task_floor_ceiling(observations: list[dict], control_per_task: int = 24) -> dict:
+    """每任务在控制臂上的成功率，标出地板/天花板：这些任务不提供退化区分空间。
+
+    每个任务的控制臂共有 (main models) × (architectures) × (faults) × (seeds) 次，
+    本设计为 2×2×3×2 = 24。0/24 或 24/24 的任务既不能变差也不能变好，任何按任务
+    汇总的退化估计都会被它们稀释；必须如实报告，而不是事后删除再称预注册主分析。
+    """
+    by_task: dict[int, list[int]] = defaultdict(list)
+    for obs in observations:
+        if obs["condition"] == "control":
+            by_task[obs["task_id"]].append(int(obs["official_success"]))
+    rows = []
+    for task in sorted(by_task):
+        values = by_task[task]
+        successes = sum(values)
+        rows.append({
+            "task_id": task,
+            "control_successes": successes,
+            "control_total": len(values),
+            "floor": successes == 0,
+            "ceiling": successes == len(values),
+            "within_range": 0 < successes < len(values),
+        })
+    floor = [r["task_id"] for r in rows if r["floor"]]
+    ceiling = [r["task_id"] for r in rows if r["ceiling"]]
+    return {
+        "per_task": rows,
+        "floor_tasks": floor,
+        "ceiling_tasks": ceiling,
+        "n_within_range": sum(1 for r in rows if r["within_range"]),
+        "n_tasks": len(rows),
+        "note": ("地板/天花板任务对成功率退化没有区分度；它们被保留在预注册分析中，"
+                 "仅在此如实标注，不得据此事后剔除。"),
+    }
+
+
 def main_analysis(rows: list[dict], design: dict, *, n_boot: int = DEFAULT_BOOTSTRAP,
                   seed: int = DEFAULT_SEED) -> dict:
     """完整主分析：主模型 16 任务 + 验证模型共同 8 任务次级分析。
@@ -743,6 +900,7 @@ def main_analysis(rows: list[dict], design: dict, *, n_boot: int = DEFAULT_BOOTS
         "unpaired": unpaired,
         "degradation_by_cell": degradations,
         "degradation_by_fault": fault_level,
+        "floor_ceiling": task_floor_ceiling(main_observations),
         "cap_exhaustion": cap_exhaustion_summary(rows),
         "interaction": interaction,
         "holm_family": {
@@ -762,6 +920,12 @@ def main_analysis(rows: list[dict], design: dict, *, n_boot: int = DEFAULT_BOOTS
         "notes": [
             "退化量定义为 control 成功率减 fault 成功率（百分点 = ×100）。",
             "区间按任务整群、按四个预注册类别分层自助；重复 trial 不是独立样本。",
+            "逐格成功率与 Δ 使用同一批配对（故障真正注入者）；未注入配对的"
+            "按分配结果在 *_itt 字段单列，两者不得混用同一个 n。",
+            "故障级与逐格的 p 值用任务等权 t(df=n_tasks-1)，与所附自助区间同口径；"
+            "交互项主口径为任务等权，观测加权 OLS 见 sensitivity_observation_weighted。",
+            "floor_ceiling 如实列出控制臂 0/n 与 n/n 的任务：它们对退化没有区分度，"
+            "保留在预注册分析中，不做事后剔除。",
             "Holm 家族固定为三个故障级主对比；逐 (model, architecture, fault) 格子为描述性。",
             "矩阵不健康（缺格/未配对/评分报错）时不输出 p 值，只给描述性区间；"
             "不显著只能报告为功效不足，不能当作等价性证据。",
@@ -787,16 +951,18 @@ def format_report(report: dict) -> str:
     if report.get("unpaired"):
         lines.append(f"- ⚠️ 未配对条目: {len(report['unpaired'])}")
     lines.append("")
-    lines.append("| 故障 | 配对 | Δ(pp) | 95% CI | p | p(Holm) |")
-    lines.append("|---|---|---|---|---|---|")
+    lines.append("| 故障 | 配对(触发/ITT) | Δ_触发(pp) | 95% CI | p | p(Holm) | Δ_ITT(pp) |")
+    lines.append("|---|---|---|---|---|---|---|")
     for item in report.get("degradation_by_fault") or []:
-        lines.append("| {fault} | {n} | {d:+.1f} | [{lo:+.1f}, {hi:+.1f}] | {p} | {ph} |".format(
-            fault=item["fault_type"], n=item["n_pairs"],
-            d=100 * item["degradation"] if item["degradation"] == item["degradation"] else float("nan"),
-            lo=100 * item["ci_low"] if item["ci_low"] == item["ci_low"] else float("nan"),
-            hi=100 * item["ci_high"] if item["ci_high"] == item["ci_high"] else float("nan"),
+        def _pp(value):
+            return 100 * value if value is not None and value == value else float("nan")
+        lines.append("| {fault} | {n}/{n_itt} | {d:+.1f} | [{lo:+.1f}, {hi:+.1f}] | {p} | {ph} | {d_itt:+.1f} |".format(
+            fault=item["fault_type"], n=item["n_pairs"], n_itt=item.get("n_pairs_itt", "—"),
+            d=_pp(item["degradation"]),
+            lo=_pp(item["ci_low"]), hi=_pp(item["ci_high"]),
             p="—" if item["p_value"] is None else f"{item['p_value']:.4f}",
             ph="—" if item.get("p_value_holm") is None else f"{item['p_value_holm']:.4f}",
+            d_itt=_pp(item.get("degradation_itt")),
         ))
     cap = report.get("cap_exhaustion") or {}
     if cap.get("overall"):
@@ -837,17 +1003,35 @@ def format_report(report: dict) -> str:
         p_values += [item.get("p_value") for item in (report.get("degradation_by_cell") or [])]
         if any(value is None for value in p_values):
             lines.append("")
-            lines.append("> 表中 `—` 表示该对比的聚类稳健标准误为 0（无任务间变异），"
+            lines.append("> 表中 `—` 表示该对比在任务间没有变异（任务等权 SE 为 0），"
                          "无法给出 p 值；此时以整群自助区间为准。")
     lines.append("")
     if interaction.get("error"):
         lines.append(f"- 交互检验: 无法估计（{interaction['error']}）")
     else:
         p_text = "—" if interaction.get("p_value") is None else f"{interaction['p_value']:.4f}"
-        lines.append(f"- **Model × Architecture 交互**（condition:model:architecture）: "
+        lines.append(f"- **Model × Architecture 交互**（预估量: `{interaction.get('estimand')}`）: "
                      f"{interaction['coefficient_condition_x_model_x_architecture']:+.4f}, "
                      f"p={p_text}, "
-                     f"95% CI [{interaction['bootstrap_ci_low']:+.4f}, {interaction['bootstrap_ci_high']:+.4f}]")
+                     f"95% CI [{interaction['bootstrap_ci_low']:+.4f}, {interaction['bootstrap_ci_high']:+.4f}] "
+                     f"（任务等权口径，n_tasks={interaction.get('n_tasks')}）")
+        sensitivity = interaction.get("sensitivity_observation_weighted") or {}
+        if sensitivity:
+            def _num(value, pattern="{:.4f}"):
+                return "—" if value is None or value != value else pattern.format(value)
+            lines.append("  - 敏感性（观测加权 OLS）: 系数 "
+                         + _num(sensitivity.get("coefficient"), "{:+.4f}")
+                         + "，聚类稳健 SE " + _num(sensitivity.get("std_error_cluster_robust"))
+                         + "，p_normal=" + _num(sensitivity.get("p_value_normal"))
+                         + "，p_t15=" + _num(sensitivity.get("p_value_t15"))
+                         + "；该口径与主口径不同，不并入结论。")
+    floor_ceiling = report.get("floor_ceiling") or {}
+    if floor_ceiling.get("per_task"):
+        lines.append("")
+        lines.append(f"任务地板/天花板（控制臂 n=24/任务）：地板 {floor_ceiling['floor_tasks']}，"
+                     f"天花板 {floor_ceiling['ceiling_tasks']}；"
+                     f"有区分度 {floor_ceiling['n_within_range']}/{floor_ceiling['n_tasks']}。"
+                     "这些任务保留在预注册分析中，仅标注其无区分度。")
     lines.append("")
     lines.extend(["> " + note for note in (report.get("notes") or [])])
     return "\n".join(lines) + "\n"

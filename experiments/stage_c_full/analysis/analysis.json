@@ -59,21 +59,24 @@
       "fault_type": "agent_param_error",
       "n_pairs": 30,
       "n_tasks": 16,
-      "control_success_rate": 0.1875,
-      "fault_success_rate": 0.25,
+      "control_success_rate": 0.2,
+      "fault_success_rate": 0.26666666666666666,
       "control_wilson": [
-        0.08889544689565954,
-        0.3530915520137596
+        0.0950510717728987,
+        0.3730569641314825
       ],
       "fault_wilson": [
-        0.1325240091850904,
-        0.4210655899424448
+        0.14182663319596317,
+        0.4444796169518888
       ],
+      "n_pairs_itt": 32,
+      "control_success_rate_itt": 0.1875,
+      "fault_success_rate_itt": 0.25,
       "degradation": -0.0625,
       "ci_low": -0.15625,
       "ci_high": 0.03125,
       "std_error": 0.0625,
-      "p_value": 0.31731050786291415,
+      "p_value": 0.3331701359154774,
       "degenerate": false,
       "in_holm_family": false,
       "inference_permitted": true
@@ -94,11 +97,14 @@
         0.22933887309454212,
         0.5474559264692255
       ],
+      "n_pairs_itt": 32,
+      "control_success_rate_itt": 0.28125,
+      "fault_success_rate_itt": 0.375,
       "degradation": -0.09375,
       "ci_low": -0.21875,
       "ci_high": 0.03125,
       "std_error": 0.09375,
-      "p_value": 0.31731050786291415,
+      "p_value": 0.3331701359154774,
       "degenerate": false,
       "in_holm_family": false,
       "inference_permitted": true
@@ -119,11 +125,14 @@
         0.2551963484266544,
         0.5773997512461713
       ],
+      "n_pairs_itt": 32,
+      "control_success_rate_itt": 0.25,
+      "fault_success_rate_itt": 0.40625,
       "degradation": -0.15625,
       "ci_low": -0.28125,
       "ci_high": -0.03125,
       "std_error": 0.07525996611745185,
-      "p_value": 0.0378812823153869,
+      "p_value": 0.055487124843569297,
       "degenerate": false,
       "in_holm_family": false,
       "inference_permitted": true
@@ -134,16 +143,19 @@
       "fault_type": "agent_param_error",
       "n_pairs": 28,
       "n_tasks": 15,
-      "control_success_rate": 0.46875,
-      "fault_success_rate": 0.46875,
+      "control_success_rate": 0.5,
+      "fault_success_rate": 0.5,
       "control_wilson": [
-        0.30869387108068835,
-        0.6355048288102536
+        0.32633127457293465,
+        0.6736687254270654
       ],
       "fault_wilson": [
-        0.30869387108068835,
-        0.6355048288102536
+        0.32633127457293465,
+        0.6736687254270654
       ],
+      "n_pairs_itt": 32,
+      "control_success_rate_itt": 0.46875,
+      "fault_success_rate_itt": 0.46875,
       "degradation": 0.0,
       "ci_low": -0.06666666666666667,
       "ci_high": 0.06666666666666667,
@@ -169,11 +181,14 @@
         0.30869387108068835,
         0.6355048288102536
       ],
+      "n_pairs_itt": 32,
+      "control_success_rate_itt": 0.4375,
+      "fault_success_rate_itt": 0.46875,
       "degradation": -0.03125,
       "ci_low": -0.09375,
       "ci_high": 0.0,
       "std_error": 0.03125,
-      "p_value": 0.31731050786291415,
+      "p_value": 0.3331701359154774,
       "degenerate": false,
       "in_holm_family": false,
       "inference_permitted": true
@@ -194,11 +209,14 @@
         0.30869387108068835,
         0.6355048288102536
       ],
+      "n_pairs_itt": 32,
+      "control_success_rate_itt": 0.5625,
+      "fault_success_rate_itt": 0.46875,
       "degradation": 0.09375,
       "ci_low": -0.03125,
       "ci_high": 0.21875,
       "std_error": 0.08188851669597311,
-      "p_value": 0.2522716448411999,
+      "p_value": 0.2702110643932939,
       "degenerate": false,
       "in_holm_family": false,
       "inference_permitted": true
@@ -209,16 +227,19 @@
       "fault_type": "agent_param_error",
       "n_pairs": 31,
       "n_tasks": 16,
-      "control_success_rate": 0.375,
-      "fault_success_rate": 0.375,
+      "control_success_rate": 0.3870967741935484,
+      "fault_success_rate": 0.3870967741935484,
       "control_wilson": [
-        0.22933887309454212,
-        0.5474559264692255
+        0.23733101420380254,
+        0.5617589138033927
       ],
       "fault_wilson": [
-        0.22933887309454212,
-        0.5474559264692255
+        0.23733101420380254,
+        0.5617589138033927
       ],
+      "n_pairs_itt": 32,
+      "control_success_rate_itt": 0.375,
+      "fault_success_rate_itt": 0.375,
       "degradation": 0.0,
       "ci_low": 0.0,
       "ci_high": 0.0,
@@ -234,16 +255,19 @@
       "fault_type": "web_dom_missing",
       "n_pairs": 30,
       "n_tasks": 16,
-      "control_success_rate": 0.375,
-      "fault_success_rate": 0.375,
+      "control_success_rate": 0.4,
+      "fault_success_rate": 0.4,
       "control_wilson": [
-        0.22933887309454212,
-        0.5474559264692255
+        0.24590628116801852,
+        0.5767963974667752
       ],
       "fault_wilson": [
-        0.22933887309454212,
-        0.5474559264692255
+        0.24590628116801852,
+        0.5767963974667752
       ],
+      "n_pairs_itt": 32,
+      "control_success_rate_itt": 0.375,
+      "fault_success_rate_itt": 0.375,
       "degradation": 0.0,
       "ci_low": -0.125,
       "ci_high": 0.125,
@@ -259,21 +283,24 @@
       "fault_type": "web_http_error",
       "n_pairs": 31,
       "n_tasks": 16,
-      "control_success_rate": 0.4375,
-      "fault_success_rate": 0.3125,
+      "control_success_rate": 0.41935483870967744,
+      "fault_success_rate": 0.3225806451612903,
       "control_wilson": [
-        0.2816533111504036,
-        0.6067440886314801
+        0.2641554306731223,
+        0.5923373750463029
       ],
       "fault_wilson": [
-        0.17952541633609734,
-        0.4856667830095541
+        0.18569426566359176,
+        0.49858990691914357
       ],
+      "n_pairs_itt": 32,
+      "control_success_rate_itt": 0.4375,
+      "fault_success_rate_itt": 0.3125,
       "degradation": 0.125,
       "ci_low": 0.0,
       "ci_high": 0.25,
       "std_error": 0.07216878364870322,
-      "p_value": 0.08326451666355039,
+      "p_value": 0.10377091535368463,
       "degenerate": false,
       "in_holm_family": false,
       "inference_permitted": true
@@ -284,21 +311,24 @@
       "fault_type": "agent_param_error",
       "n_pairs": 27,
       "n_tasks": 16,
-      "control_success_rate": 0.5,
-      "fault_success_rate": 0.40625,
+      "control_success_rate": 0.5555555555555556,
+      "fault_success_rate": 0.48148148148148145,
       "control_wilson": [
-        0.33630882869327483,
-        0.6636911713067252
+        0.3731302451322448,
+        0.72414141822977
       ],
       "fault_wilson": [
-        0.2551963484266544,
-        0.5773997512461713
+        0.3074322697621846,
+        0.6601438424504771
       ],
+      "n_pairs_itt": 32,
+      "control_success_rate_itt": 0.5,
+      "fault_success_rate_itt": 0.40625,
       "degradation": 0.125,
       "ci_low": 0.0,
       "ci_high": 0.25,
       "std_error": 0.08539125638299665,
-      "p_value": 0.14323490752466972,
+      "p_value": 0.16387561365565428,
       "degenerate": false,
       "in_holm_family": false,
       "inference_permitted": true
@@ -319,11 +349,14 @@
         0.2551963484266544,
         0.5773997512461713
       ],
+      "n_pairs_itt": 32,
+      "control_success_rate_itt": 0.34375,
+      "fault_success_rate_itt": 0.40625,
       "degradation": -0.0625,
       "ci_low": -0.1875,
       "ci_high": 0.0625,
       "std_error": 0.0625,
-      "p_value": 0.31731050786291415,
+      "p_value": 0.3331701359154774,
       "degenerate": false,
       "in_holm_family": false,
       "inference_permitted": true
@@ -334,16 +367,19 @@
       "fault_type": "web_http_error",
       "n_pairs": 30,
       "n_tasks": 16,
-      "control_success_rate": 0.34375,
-      "fault_success_rate": 0.34375,
+      "control_success_rate": 0.36666666666666664,
+      "fault_success_rate": 0.36666666666666664,
       "control_wilson": [
-        0.20410437924433172,
-        0.5168891202103778
+        0.21873920806100708,
+        0.5448643634520511
       ],
       "fault_wilson": [
-        0.20410437924433172,
-        0.5168891202103778
+        0.21873920806100708,
+        0.5448643634520511
       ],
+      "n_pairs_itt": 32,
+      "control_success_rate_itt": 0.34375,
+      "fault_success_rate_itt": 0.34375,
       "degradation": 0.0,
       "ci_low": -0.125,
       "ci_high": 0.125,
@@ -359,12 +395,16 @@
       "family_id": "per_fault_primary",
       "fault_type": "agent_param_error",
       "n_pairs": 116,
+      "n_pairs_itt": 128,
       "n_tasks": 16,
       "degradation": 0.002232142857142856,
       "ci_low": -0.0390625,
       "ci_high": 0.04575892857142857,
+      "degradation_itt": 0.0078125,
+      "ci_low_itt": -0.0390625,
+      "ci_high_itt": 0.0625,
       "std_error": 0.02702644797797377,
-      "p_value": 0.9341767138819461,
+      "p_value": 0.9352687731004194,
       "p_value_holm": 1.0,
       "in_holm_family": true,
       "inference_permitted": true
@@ -373,13 +413,17 @@
       "family_id": "per_fault_primary",
       "fault_type": "web_dom_missing",
       "n_pairs": 126,
+      "n_pairs_itt": 128,
       "n_tasks": 16,
       "degradation": -0.046875,
       "ci_low": -0.109375,
       "ci_high": 0.0078125,
+      "degradation_itt": -0.046875,
+      "ci_low_itt": -0.109375,
+      "ci_high_itt": 0.0078125,
       "std_error": 0.035858155162621884,
-      "p_value": 0.1911332478646659,
-      "p_value_holm": 0.5733997435939977,
+      "p_value": 0.210817814215839,
+      "p_value_holm": 0.632453442647517,
       "in_holm_family": true,
       "inference_permitted": true
     },
@@ -387,17 +431,168 @@
       "family_id": "per_fault_primary",
       "fault_type": "web_http_error",
       "n_pairs": 125,
+      "n_pairs_itt": 128,
       "n_tasks": 16,
       "degradation": 0.010044642857142856,
       "ci_low": -0.045758928571428575,
       "ci_high": 0.07366071428571429,
+      "degradation_itt": 0.015625,
+      "ci_low_itt": -0.046875,
+      "ci_high_itt": 0.078125,
       "std_error": 0.03563863826245864,
-      "p_value": 0.7780608394690851,
+      "p_value": 0.7819121617398678,
       "p_value_holm": 1.0,
       "in_holm_family": true,
       "inference_permitted": true
     }
   ],
+  "floor_ceiling": {
+    "per_task": [
+      {
+        "task_id": 21,
+        "control_successes": 0,
+        "control_total": 24,
+        "floor": true,
+        "ceiling": false,
+        "within_range": false
+      },
+      {
+        "task_id": 22,
+        "control_successes": 8,
+        "control_total": 24,
+        "floor": false,
+        "ceiling": false,
+        "within_range": true
+      },
+      {
+        "task_id": 24,
+        "control_successes": 19,
+        "control_total": 24,
+        "floor": false,
+        "ceiling": false,
+        "within_range": true
+      },
+      {
+        "task_id": 25,
+        "control_successes": 0,
+        "control_total": 24,
+        "floor": true,
+        "ceiling": false,
+        "within_range": false
+      },
+      {
+        "task_id": 27,
+        "control_successes": 17,
+        "control_total": 24,
+        "floor": false,
+        "ceiling": false,
+        "within_range": true
+      },
+      {
+        "task_id": 28,
+        "control_successes": 18,
+        "control_total": 24,
+        "floor": false,
+        "ceiling": false,
+        "within_range": true
+      },
+      {
+        "task_id": 30,
+        "control_successes": 18,
+        "control_total": 24,
+        "floor": false,
+        "ceiling": false,
+        "within_range": true
+      },
+      {
+        "task_id": 66,
+        "control_successes": 0,
+        "control_total": 24,
+        "floor": true,
+        "ceiling": false,
+        "within_range": false
+      },
+      {
+        "task_id": 102,
+        "control_successes": 0,
+        "control_total": 24,
+        "floor": true,
+        "ceiling": false,
+        "within_range": false
+      },
+      {
+        "task_id": 118,
+        "control_successes": 24,
+        "control_total": 24,
+        "floor": false,
+        "ceiling": true,
+        "within_range": false
+      },
+      {
+        "task_id": 132,
+        "control_successes": 8,
+        "control_total": 24,
+        "floor": false,
+        "ceiling": false,
+        "within_range": true
+      },
+      {
+        "task_id": 133,
+        "control_successes": 5,
+        "control_total": 24,
+        "floor": false,
+        "ceiling": false,
+        "within_range": true
+      },
+      {
+        "task_id": 134,
+        "control_successes": 5,
+        "control_total": 24,
+        "floor": false,
+        "ceiling": false,
+        "within_range": true
+      },
+      {
+        "task_id": 258,
+        "control_successes": 0,
+        "control_total": 24,
+        "floor": true,
+        "ceiling": false,
+        "within_range": false
+      },
+      {
+        "task_id": 274,
+        "control_successes": 24,
+        "control_total": 24,
+        "floor": false,
+        "ceiling": true,
+        "within_range": false
+      },
+      {
+        "task_id": 308,
+        "control_successes": 0,
+        "control_total": 24,
+        "floor": true,
+        "ceiling": false,
+        "within_range": false
+      }
+    ],
+    "floor_tasks": [
+      21,
+      25,
+      66,
+      102,
+      258,
+      308
+    ],
+    "ceiling_tasks": [
+      118,
+      274
+    ],
+    "n_within_range": 8,
+    "n_tasks": 16,
+    "note": "地板/天花板任务对成功率退化没有区分度；它们被保留在预注册分析中，仅在此如实标注，不得据此事后剔除。"
+  },
   "cap_exhaustion": {
     "overall": {
       "present": 768,
@@ -2398,14 +2593,27 @@
       "react"
     ],
     "n_observations": 768,
-    "coefficient_condition_x_model_x_architecture": 0.15625,
-    "std_error_cluster_robust": 0.17432492145628856,
-    "z": 0.896314759213468,
-    "p_value": 0.37008467860658234,
-    "bootstrap_ci_low": 0.041666666666666664,
-    "bootstrap_ci_high": 0.2708333333333333,
+    "n_tasks": 16,
+    "estimand": "task_equal_weighted_interaction",
+    "coefficient_condition_x_model_x_architecture": 0.15624999999999997,
+    "std_error_task_equal": 0.07049551798203596,
+    "p_value": 0.04253720901668812,
+    "bootstrap_ci_low": 0.02083333333333333,
+    "bootstrap_ci_high": 0.29166666666666663,
     "bootstrap_resamples": 10000,
-    "interpretation": "该系数 >0 表示：某一 (model, architecture) 组合的故障退化量高于另一组合；即退化量上存在 Model × Architecture 交互。",
+    "sensitivity_observation_weighted": {
+      "coefficient": 0.15625,
+      "std_error_cluster_robust": 0.17432492145628856,
+      "z": 0.896314759213468,
+      "p_value_normal": 0.37008467860658234,
+      "p_value_t15": 0.38424398374577895,
+      "bootstrap_ci": [
+        0.041666666666666664,
+        0.2708333333333333
+      ],
+      "note": "观测加权 OLS；与主口径（任务等权）不是同一估计量，仅列作敏感性分析。"
+    },
+    "interpretation": "该系数 >0 表示：某一 (model, architecture) 组合的故障退化量高于另一组合；即退化量上存在 Model × Architecture 交互。区间与 p 均为任务等权口径；观测加权结果见 sensitivity_observation_weighted。",
     "inference_permitted": true
   },
   "holm_family": {
@@ -2418,13 +2626,13 @@
     ],
     "method": "Holm",
     "raw_p_values": [
-      0.9341767138819461,
-      0.1911332478646659,
-      0.7780608394690851
+      0.9352687731004194,
+      0.210817814215839,
+      0.7819121617398678
     ],
     "adjusted_p_values": [
       1.0,
-      0.5733997435939977,
+      0.632453442647517,
       1.0
     ]
   },
@@ -2437,6 +2645,9 @@
   "notes": [
     "退化量定义为 control 成功率减 fault 成功率（百分点 = ×100）。",
     "区间按任务整群、按四个预注册类别分层自助；重复 trial 不是独立样本。",
+    "逐格成功率与 Δ 使用同一批配对（故障真正注入者）；未注入配对的按分配结果在 *_itt 字段单列，两者不得混用同一个 n。",
+    "故障级与逐格的 p 值用任务等权 t(df=n_tasks-1)，与所附自助区间同口径；交互项主口径为任务等权，观测加权 OLS 见 sensitivity_observation_weighted。",
+    "floor_ceiling 如实列出控制臂 0/n 与 n/n 的任务：它们对退化没有区分度，保留在预注册分析中，不做事后剔除。",
     "Holm 家族固定为三个故障级主对比；逐 (model, architecture, fault) 格子为描述性。",
     "矩阵不健康（缺格/未配对/评分报错）时不输出 p 值，只给描述性区间；不显著只能报告为功效不足，不能当作等价性证据。",
     "V4 Pro 仅用于共同 8 任务次级分析，不进入主估计，也不报显著性。"
