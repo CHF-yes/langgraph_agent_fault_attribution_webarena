@@ -1869,3 +1869,67 @@ def test_interaction_reports_one_estimand_for_interval_and_p():
     assert result["p_value"] is not None and result["p_value"] < 0.05
     assert result["bootstrap_ci_low"] > 0
     assert "sensitivity_observation_weighted" in result
+
+
+# ==========================================================================
+# 19. 三明治协方差：乘法顺序回归
+# ==========================================================================
+
+def test_cluster_robust_cov_matches_an_independent_sandwich():
+    """回归：曾把 (X'X)^-1 @ meat @ (X'X)^-1 写成 meat @ (X'X)^-2，
+    使交互项 SE 被放大约 2.5 倍。这里用独立实现逐元素比对。"""
+    from standard_agent.stage_c_analysis import (
+        cluster_robust_cov, normal_equations, solve,
+    )
+
+    def matmul(a, b):
+        k = len(b)
+        return [[sum(a[i][m] * b[m][j] for m in range(k)) for j in range(len(b[0]))]
+                for i in range(len(a))]
+
+    def transpose(a):
+        return [list(r) for r in zip(*a)]
+
+    def invert(a):
+        n = len(a)
+        m = [row[:] + [1.0 if i == j else 0.0 for j in range(n)] for i, row in enumerate(a)]
+        for col in range(n):
+            piv = max(range(col, n), key=lambda r: abs(m[r][col]))
+            m[col], m[piv] = m[piv], m[col]
+            pv = m[col][col]
+            m[col] = [v / pv for v in m[col]]
+            for r in range(n):
+                if r != col and m[r][col]:
+                    f = m[r][col]
+                    m[r] = [x - f * y for x, y in zip(m[r], m[col])]
+        return [row[n:] for row in m]
+
+    # 两个聚类、每个聚类内若干行，X 含截距与一个二值列
+    X = [[1.0, 0.0], [1.0, 0.0], [1.0, 1.0],
+         [1.0, 1.0], [1.0, 0.0], [1.0, 1.0]]
+    y = [0.0, 1.0, 1.0, 1.0, 0.0, 0.0]
+    clusters = ["a", "a", "a", "b", "b", "b"]
+
+    xtx, xty = normal_equations(X, y)
+    beta = solve(xtx, xty)
+    u = [y[i] - sum(X[i][j] * beta[j] for j in range(len(beta))) for i in range(len(X))]
+    k = len(beta)
+    meat = [[0.0] * k for _ in range(k)]
+    for group in ("a", "b"):
+        idx = [i for i, c in enumerate(clusters) if c == group]
+        score = [sum(X[i][j] * u[i] for i in idx) for j in range(k)]
+        for i in range(k):
+            for j in range(k):
+                meat[i][j] += score[i] * score[j]
+    G = 2
+    meat = [[v * G / (G - 1) for v in row] for row in meat]
+    inv = invert(xtx)
+    reference = matmul(matmul(inv, meat), inv)
+
+    got = cluster_robust_cov(X, u, clusters)
+    for i in range(k):
+        for j in range(k):
+            assert abs(got[i][j] - reference[i][j]) < 1e-12
+    # 顺序写错时会与"meat @ inv^2"一致，这里显式排除
+    wrong = matmul(meat, matmul(inv, inv))
+    assert abs(got[1][1] - wrong[1][1]) > 1e-12

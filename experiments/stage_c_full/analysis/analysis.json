@@ -2598,20 +2598,23 @@
     "coefficient_condition_x_model_x_architecture": 0.15624999999999997,
     "std_error_task_equal": 0.07049551798203596,
     "p_value": 0.04253720901668812,
-    "bootstrap_ci_low": 0.02083333333333333,
-    "bootstrap_ci_high": 0.29166666666666663,
+    "bootstrap_ci_low": 0.04166666666666667,
+    "bootstrap_ci_high": 0.27083333333333326,
+    "bootstrap_stratified_by_category": true,
+    "bootstrap_ci_low_unstratified": 0.02083333333333333,
+    "bootstrap_ci_high_unstratified": 0.29166666666666663,
     "bootstrap_resamples": 10000,
     "sensitivity_observation_weighted": {
       "coefficient": 0.15625,
-      "std_error_cluster_robust": 0.17432492145628856,
-      "z": 0.896314759213468,
-      "p_value_normal": 0.37008467860658234,
-      "p_value_t15": 0.38424398374577895,
+      "std_error_cluster_robust": 0.07049551798203015,
+      "z": 2.216452967120964,
+      "p_value_normal": 0.02666049559845929,
+      "p_value_t15": 0.04253720901667309,
       "bootstrap_ci": [
         0.041666666666666664,
         0.2708333333333333
       ],
-      "note": "观测加权 OLS；与主口径（任务等权）不是同一估计量，仅列作敏感性分析。"
+      "note": "观测加权 OLS，聚类稳健（任务）。修复三明治乘法顺序后其 SE 与任务等权口径一致，作为交叉验证而非另一结论。"
     },
     "interpretation": "该系数 >0 表示：某一 (model, architecture) 组合的故障退化量高于另一组合；即退化量上存在 Model × Architecture 交互。区间与 p 均为任务等权口径；观测加权结果见 sensitivity_observation_weighted。",
     "inference_permitted": true

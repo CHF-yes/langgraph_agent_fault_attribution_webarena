@@ -283,6 +283,55 @@ def git_dirty(roots):
             "dirty": counts.get(True, 0), "clean": counts.get(False, 0)}
 
 
+def dirty_sensitivity(rows, design, category_of):
+    """Re-estimate the primary results with the git_dirty records removed.
+
+    git_dirty only proves a tracked file differed from HEAD; the two fix windows
+    changed both code (thinking flag, scheduling, analysis) and tracked experiment
+    artefacts, and the per-trial record does not say which, so the 86 records
+    cannot be assumed behaviour-identical.  Dropping them is the honest check.
+    """
+    import os
+    from standard_agent.stage_c_analysis import (
+        build_observations, pair_observations, degradation_by_fault,
+        interaction_on_degradation)
+
+    def is_dirty(row):
+        try:
+            rec = json.load(open(os.path.join(row["trial_dir"], "trial_record.json")))
+        except Exception:
+            return None
+        return bool((rec.get("code") or {}).get("git_dirty"))
+
+    def estimate(subset):
+        obs = build_observations(subset)
+        pairs, _ = pair_observations(obs)
+        faults = {x["fault_type"]: {"degradation": x["degradation"],
+                                    "ci": [x["ci_low"], x["ci_high"]],
+                                    "p_value": x["p_value"]}
+                  for x in degradation_by_fault(pairs, category_of=category_of,
+                                                n_boot=2000, seed=SEED)}
+        interaction = interaction_on_degradation(obs, models=design.get("main_models"),
+                                                 category_of=category_of,
+                                                 n_boot=2000, seed=SEED)
+        return {"n_pairs": len(pairs), "faults": faults,
+                "interaction": {
+                    "coefficient": interaction.get("coefficient_condition_x_model_x_architecture"),
+                    "ci": [interaction.get("bootstrap_ci_low"),
+                           interaction.get("bootstrap_ci_high")],
+                    "p_value": interaction.get("p_value"),
+                    "se_cluster_robust": (interaction.get("sensitivity_observation_weighted")
+                                          or {}).get("std_error_cluster_robust"),
+                    "p_t15": (interaction.get("sensitivity_observation_weighted")
+                              or {}).get("p_value_t15"),
+                }}
+
+    dirty_rows = [r for r in rows if is_dirty(r)]
+    clean_rows = [r for r in rows if not is_dirty(r)]
+    return {"n_dirty": len(dirty_rows), "n_clean": len(clean_rows),
+            "full": estimate(rows), "without_dirty": estimate(clean_rows)}
+
+
 def main():
     rows = json.load(open(ROWS))["rows"]
     design = json.load(open(DESIGN))
@@ -309,6 +358,7 @@ def main():
         "floor_ceiling": floor_ceiling(pairs),
         "interaction": interaction(rows),
         "git_dirty": git_dirty(roots),
+        "dirty_sensitivity": dirty_sensitivity(rows, design, category_of),
     }
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     json.dump(audit, open(OUT_DIR / "audit.json", "w"), indent=1)
@@ -330,7 +380,7 @@ def render_markdown(audit: dict):
         lines.append("| model | arch | fault | n | control | fault | Δ | CI(boot) | CI(t15) |")
         lines.append("|---|---|---|---|---|---|---|---|---|")
         for r in rows:
-            lines.append(f"| {r['model']} | {r['arch']} | {r['fault']} | {r['n_pairs']} | "
+            lines.append(f"| {r['model']} | {r['arch']} | {r['fault_type']} | {r['n_pairs']} | "
                          f"{r['control_rate']:.3f} | {r['fault_rate']:.3f} | {r['degradation']:+.3f} | "
                          f"[{r['ci_boot'][0]:+.3f},{r['ci_boot'][1]:+.3f}] | "
                          f"[{r['ci_t15'][0]:+.3f},{r['ci_t15'][1]:+.3f}] |")

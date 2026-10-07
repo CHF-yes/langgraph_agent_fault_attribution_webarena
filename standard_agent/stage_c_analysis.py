@@ -251,6 +251,13 @@ def matvec(matrix: list[list[float]], vector: list[float]) -> list[float]:
     return [sum(value * item for value, item in zip(row, vector)) for row in matrix]
 
 
+def matmul(a: list[list[float]], b: list[list[float]]) -> list[list[float]]:
+    """矩阵乘法。``matvec`` 只能做 M@v；这里补上 M@N，避免用错乘法顺序。"""
+    k = len(b)
+    return [[sum(a[i][m] * b[m][j] for m in range(k)) for j in range(len(b[0]))]
+            for i in range(len(a))]
+
+
 def outer(vector: list[float]) -> list[list[float]]:
     """向量外积。"""
     return [[a * b for b in vector] for a in vector]
@@ -289,12 +296,12 @@ def cluster_robust_cov(X: list[list[float]], residuals: list[float],
         correction = group_count / (group_count - 1)
         meat = [[value * correction for value in row] for row in meat]
     # xtx_inv @ meat @ xtx_inv
-    left = [matvec(xtx_inv, row) for row in meat]          # 行向量左乘
-    result = [[0.0] * k for _ in range(k)]
-    for i in range(k):
-        for j in range(k):
-            result[i][j] = sum(left[i][m] * xtx_inv[m][j] for m in range(k))
-    return result
+    #
+    # 这里曾经写成逐行 matvec(xtx_inv, row)，等价于 (meat @ xtx_inv) @ xtx_inv，
+    # 即把三明治的两片面饼乘在了一起而漏掉真正的顺序；由于矩阵不可交换，得到的
+    # SE 被放大约 2.5 倍（交互项 SE 0.1743 而非 0.0705），并让"聚类稳健 p"与
+    # 任务自助区间看似互相矛盾。矩阵乘法必须显式 matmul。
+    return matmul(matmul(xtx_inv, meat), xtx_inv)
 
 
 def holm_adjust(pvalues: list[float]) -> list[float]:
@@ -536,15 +543,28 @@ def interaction_on_degradation(observations: list[dict], *, models: list[str] | 
     low = estimates[int(math.floor(0.025 * len(estimates)))]
     high = estimates[min(len(estimates) - 1, int(math.ceil(0.975 * len(estimates)) - 1))]
 
-    # 任务等权自助区间：与上面的任务等权点估计同口径。
+    # 任务等权自助区间：主口径按预注册的四类任务分层抽样（类别内抽、每类任务数不变），
+    # 未分层版本仅作敏感性。此前主区间误用了未分层抽样。
+    strata_map = strata_for_tasks(category_of, per_task_coef)
+    if not strata_map:
+        strata_map = {"all": sorted(per_task_coef)}
     rng_task = random.Random(seed)
     task_boot = []
     for _ in range(n_boot):
-        drawn = [coef_values[rng_task.randrange(len(coef_values))] for _ in range(len(coef_values))]
-        task_boot.append(sum(drawn) / len(drawn))
+        drawn = resample_tasks_by_stratum(strata_map, rng_task)
+        task_boot.append(sum(per_task_coef[t] for t in drawn) / len(drawn))
     task_boot.sort()
     tew_low = task_boot[int(math.floor(0.025 * len(task_boot)))]
     tew_high = task_boot[min(len(task_boot) - 1, int(math.ceil(0.975 * len(task_boot)) - 1))]
+
+    rng_unstrat = random.Random(seed)
+    unstrat_boot = []
+    for _ in range(n_boot):
+        drawn = [coef_values[rng_unstrat.randrange(len(coef_values))] for _ in range(len(coef_values))]
+        unstrat_boot.append(sum(drawn) / len(drawn))
+    unstrat_boot.sort()
+    unstrat_low = unstrat_boot[int(math.floor(0.025 * len(unstrat_boot)))]
+    unstrat_high = unstrat_boot[min(len(unstrat_boot) - 1, int(math.ceil(0.975 * len(unstrat_boot)) - 1))]
 
     return {
         "models": model_values, "architectures": architecture_values,
@@ -554,6 +574,9 @@ def interaction_on_degradation(observations: list[dict], *, models: list[str] | 
         "std_error_task_equal": coef_se if coef_se == coef_se else None,
         "p_value": p_task,
         "bootstrap_ci_low": tew_low, "bootstrap_ci_high": tew_high,
+        "bootstrap_stratified_by_category": True,
+        "bootstrap_ci_low_unstratified": unstrat_low,
+        "bootstrap_ci_high_unstratified": unstrat_high,
         "bootstrap_resamples": n_boot,
         "sensitivity_observation_weighted": {
             "coefficient": coefficient,
@@ -562,7 +585,8 @@ def interaction_on_degradation(observations: list[dict], *, models: list[str] | 
             "p_value_normal": _normal_two_sided_p(z) if z == z else None,
             "p_value_t15": _t_two_sided_p(z, len(set(clusters)) - 1) if z == z else None,
             "bootstrap_ci": [low, high],
-            "note": "观测加权 OLS；与主口径（任务等权）不是同一估计量，仅列作敏感性分析。",
+            "note": ("观测加权 OLS，聚类稳健（任务）。修复三明治乘法顺序后其 SE 与任务等权"
+                     "口径一致，作为交叉验证而非另一结论。"),
         },
         "interpretation": ("该系数 >0 表示：某一 (model, architecture) 组合的故障退化量"
                            "高于另一组合；即退化量上存在 Model × Architecture 交互。"
@@ -866,6 +890,10 @@ def main_analysis(rows: list[dict], design: dict, *, n_boot: int = DEFAULT_BOOTS
             interaction["p_value"] = None
             interaction["inference_permitted"] = False
             interaction["inference"] = "blocked"
+            sensitivity = interaction.get("sensitivity_observation_weighted")
+            if sensitivity:                    # 阻断时连同交叉验证的 p 值一并清空
+                sensitivity["p_value_normal"] = None
+                sensitivity["p_value_t15"] = None
         interaction["blocked_reasons"] = reason
     else:
         for item in degradations:
@@ -1019,12 +1047,14 @@ def format_report(report: dict) -> str:
         if sensitivity:
             def _num(value, pattern="{:.4f}"):
                 return "—" if value is None or value != value else pattern.format(value)
-            lines.append("  - 敏感性（观测加权 OLS）: 系数 "
+            lines.append("  - 交叉验证（观测加权 OLS，任务聚类稳健）: 系数 "
                          + _num(sensitivity.get("coefficient"), "{:+.4f}")
-                         + "，聚类稳健 SE " + _num(sensitivity.get("std_error_cluster_robust"))
-                         + "，p_normal=" + _num(sensitivity.get("p_value_normal"))
+                         + "，SE " + _num(sensitivity.get("std_error_cluster_robust"))
                          + "，p_t15=" + _num(sensitivity.get("p_value_t15"))
-                         + "；该口径与主口径不同，不并入结论。")
+                         + "；修复三明治乘法顺序后与主口径一致，不再构成相反结论。")
+            lines.append(f"  - 未分层任务自助（敏感性）: "
+                         f"[{interaction['bootstrap_ci_low_unstratified']:+.4f}, "
+                         f"{interaction['bootstrap_ci_high_unstratified']:+.4f}]")
     floor_ceiling = report.get("floor_ceiling") or {}
     if floor_ceiling.get("per_task"):
         lines.append("")

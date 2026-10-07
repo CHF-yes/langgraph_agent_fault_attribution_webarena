@@ -1,42 +1,43 @@
-# Stage C 故障实验数据包
+# Stage C 故障实验数据包 (r3)
 
-- 生成时间(UTC): 2026-10-07T09:05:10Z
-- 代码版本: 4df685d（branch stagec-exec-chain）
-- 内容: 预注册 768 格网格（2 模型 × 2 架构 × 3 故障 × 16 任务 × 2 种子 × 2 条件）
-- 单元格(trial record): 768；故障 job 384，触发 367，未触发 17
-- 判分: 全部 native（0 缺格 / 0 未配对 / 0 评分错误）
+- 生成时间(UTC): 2026-10-07T09:15:24Z
+- 代码版本: e97ba38（branch stagec-exec-chain）
+- 网格: 768 格（2 模型 × 2 架构 × 3 故障 × 16 任务 × 2 种子 × 2 条件）
+- trial record: 768；故障 job 384，触发 367，未触发 17；判分全 native
 
 ## 目录
 - experiments/stage_c_slice{1,1b}: deepseek_v41_flash × react (seed 1/2)
-- experiments/stage_c_slice{2b,2c}: deepseek_v41_flash × plan_execute (seed 1/2，含提示词对等修复)
+- experiments/stage_c_slice{2b,2c}: deepseek_v41_flash × plan_execute (seed 1/2)
 - experiments/stage_c_slice{3,3b}: qwen38_flash × react (seed 1/2)
 - experiments/stage_c_slice{4,4b}: qwen38_flash × plan_execute (seed 1/2)
-- experiments/stage_c_slice2: 修复前 deepseek × plan_execute seed 1（对照保留，已被 2b 取代）
-- experiments/stage_c_full: 768 格合并 rows.json + 预注册分析（analysis.json/md，口径已统一）
-- experiments/stage_c_audit: 离线审计（audit.json/md）——分母一致性、交互项口径、地板/天花板、git_dirty
-- experiments/stage_c_pe_fixcheck: 提示词修复的单格验证
+- experiments/stage_c_slice2: 修复前对照（已被 2b 取代）
+- experiments/stage_c_full: 合并 rows.json + 预注册分析（口径已统一）
+- experiments/stage_c_audit: 离线审计（含交互协方差回归、脏记录敏感性）
 - experiments/HAR_MANIFEST.tsv: HAR 清单
 - traces/stage_c_slice*: 逐调用 provenance JSONL
 
-## traces 内容说明（重要，早前描述有误）
-每个 `llm_provenance` 事件并非只有计数，它**完整包含**：任务原文(task/intent)、页面 URL、
-页面观察(observation，含 accessibility tree 文本)、模型思维与动作(thought/action)、模型回答(answer)，
-以及用量与会话元数据(prompt/completion/total tokens、端点回显 served_model、latency)。
-因此 traces 含 WebArena 任务文本、站点内容与 agent 输出。
+## traces 内容（重要）
+每个 `llm_provenance` 事件含任务原文、页面 URL、页面观察（accessibility tree 文本）、
+thought/action、模型回答，以及 token 用量与端点回显 served_model。
 
-## 公开性评估
-- 密钥扫描：解包后 `sk-*` / api key 模式 0 命中；无 .env。
-- 但 traces/答案含站点内容与任务文本，**公开发布前须人工复审**；建议保持私有或仅分支内部共享。
+## 公开性（已核实）
+- 本仓库经未认证 GitHub API 查询为 **public**（HTTP 200）。
+- 因此 r1/r2 归档（含 traces 与回答）**已在公开分支上发布**；本节是"已公开内容的复审"，
+  不是发布前步骤。若需撤回，仅删除文件不够（历史仍在），须改写历史并强推——请先决定。
 
-## 未纳入
-- 768 个 network.har（约 6.6 GiB，见 HAR_MANIFEST.tsv）；原始页面/AX 快照；.env。
+## 统计口径（r3 修复）
+- **协方差计算修复**：`cluster_robust_cov` 曾把三明治写成 `meat @ (X'X)^{-2}`，
+  交互项 SE 被放大到 0.1743；改为 `(X'X)^{-1} meat (X'X)^{-1}` 后为 **0.0705**，
+  与任务等权 SE 一致。此前"两法结论相反"的表述**撤回**。
+- **交互主口径**：任务等权，预注册**四类分层**自助。全量 +0.1562，CI [+0.042,+0.271]，
+  p(t15)=0.0425；观测加权聚类稳健 SE 0.0705，p_t15=0.0425（一致）。
+- **稳健性**：剔除 86 条 `git_dirty` 记录后点估计不变（+0.1562），但 CI [+0.021,+0.281]、
+  p=0.078 → **不显著**。故交互项应作"提示性/功效不足"报告，不宜称显著。
+- **分母**：逐格成功率与 Δ 同用"已触发"配对；未触发 17 对单列 *_itt。
+- **地板/天花板**：控制臂 0/24 [21,25,66,102,258,308]、24/24 [118,274]，有区分度 8/16。
 
-## 审计结论摘要（详见 experiments/stage_c_audit/audit.md）
-- 分母：逐格成功率与 Δ 现使用同一批"已触发"配对；未触发 17 对单列 *_itt。
-- 交互项：主口径=任务等权，+0.156，CI(boot)[+0.021,+0.292]，p(t15)=0.043；观测加权 OLS 作为敏感性分析（p_normal=0.370）另列，不并入结论。
-- 地板/天花板：控制臂 0/24 任务 [21,25,66,102,258,308]，24/24 任务 [118,274]，有区分度 8/16，如实保留。
-- git_dirty：86/768 标脏，全部落在修复提交窗口（slice1 84、slice3 2），改动为 thinking/调度/分析，非 agent 决策逻辑。
-
-## 归档文件
-- \`stage_c_fault_data_20261007.tar.gz\`（r1，初版）+ SHA256SUMS
-- \`stage_c_fault_data_20261007.r2.tar.gz\`（r2，含审计与统一口径，**当前版本**）+ SHA256SUMS.r2
+## git_dirty（修正表述）
+- 86/768 标 `git_dirty=true`（84 slice1、2 slice3）。该标志**只证明被跟踪文件≠HEAD**。
+- 两个修复窗口同时改了代码（7、2 个文件：thinking 开关、调度、分析）与被跟踪**实验产物**
+  （308、345 个文件），逐 trial 未记录具体清单；thinking 改动**可能影响 LLM 行为**。
+- 因此**不能**断言"改动仅代码且不影响 Agent"。已给出剔除这 86 条的敏感性结果（见上）。
