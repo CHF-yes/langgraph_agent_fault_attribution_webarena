@@ -1,0 +1,12 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    {
+      "username": "11ej25",
+      "post_title": "A billing expert investigated her husband's ER bill. She was able to knock thousands off the charge.",
+      "count": 7
+    }
+  ],
+  "error_details": null
+}

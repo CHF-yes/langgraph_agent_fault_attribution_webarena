@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "Post #8 in the top-10 Hot list — \"I just finished reading The Hobbit to my 6 year old daughter, and she loved it!\" — recommends exactly ONE book: The Hobbit (J.R.R. Tolkien). The Lord of the Rings is mentioned only as something NOT recommended for a 6-year-old, so it does not count as a recommendation. Status recorded: recommends exactly one book = YES."
+  ],
+  "error_details": null
+}

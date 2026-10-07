@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "The post detail page is displayed showing the post title \"A Coastal Massachusetts Gem\", author \"graemeknows\", and the comment section with 65 comments."
+  ],
+  "error_details": null
+}

@@ -1,0 +1,6 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "NOT_FOUND_ERROR",
+  "retrieved_data": null,
+  "error_details": "On Page 2 of the reviews there are only two entries: 'AZ Guy' (\"Gorgeous pictures, high quality product\") and 'CT' (\"...sleek design...\"). Neither reviewer's visible/extractable text contains any mention of an 'under water' / 'underwater' photo — AZ Guy's snippet references a Fuji S5200 and CT's references taking a picture of their son in the snow. Based on the accessible review text on this page, NO reviewer on Page 2 mentions an under-water photo. (Note: the AX tree truncates these two review bodies, so the hidden tail could not be expanded with the available tools; the visible content shows no underwater reference.)"
+}

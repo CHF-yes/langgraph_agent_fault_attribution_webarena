@@ -1,0 +1,51 @@
+{
+  "task_id": 25,
+  "intent_template_id": 222,
+  "sites": [
+    "shopping"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"Low-rated reviews (3 stars or less, indicated by 20% = 1 star) identified on page 1:\\n1. \\\"Poorly designed, lousy performance\\\" (20%, 1 star) — by Bob in Vegas\\n2. \\\"HORRIBLE IN EVERY WAY!\\\" (20%, 1 star) — by AMAZON SHOPAHOLIC\\n3. \\\"ll save lots of time\\\" (20%, 1 star) — by Dylan Spears\\n\\nNote: Other reviews on this page do not display an explicit star rating percentage, so only these three are confirmed as 3 stars or less.\"\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "retrieved_data": [
+          "low rated reviews (3 stars or less, indicated by 20% = 1 star) identified on page 1: 1. \"poorly designed, lousy performance\" (20%, 1 star) -- by bob in vegas 2. \"horrible in every way!\" (20%, 1 star) -- by amazon shopaholic 3. \"ll save lots of time\" (20%, 1 star) -- by dylan spears note: other reviews on this page do not display an explicit star rating percentage, so only these three are confirmed as 3 stars or less."
+        ],
+        "status": "success",
+        "task_type": "retrieve"
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "roxanne brandon coffey",
+          "nelson"
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/2), Missing: 2, Extra: 1",
+            "Expected: [roxanne brandon coffey, nelson], Got: [low rated reviews (3 stars or less, indicated by 20% = 1 star) identified on page 1: 1. \"poorly designed, lousy performance\" (20%, 1 star) -- by bob in vegas 2. \"horrible in every way!\" (20%, 1 star) -- by amazon shopaholic 3. \"ll save lots of time\" (20%, 1 star) -- by dylan spears note: other reviews on this page do not display an explicit star rating percentage, so only these three are confirmed as 3 stars or less.]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false
+}

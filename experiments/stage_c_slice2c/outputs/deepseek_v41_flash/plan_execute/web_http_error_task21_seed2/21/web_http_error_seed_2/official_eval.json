@@ -1,0 +1,53 @@
+{
+  "task_id": 21,
+  "intent_template_id": 222,
+  "sites": [
+    "shopping"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"Product detail page loaded: \\\"Harphonic E7 Active Noise Cancelling Headphones Bluetooth Headphones Wireless Headphones Over Ear with Microphone Deep Bass, Comfortable Protein Earpads, 30 Hours Playtime for Travel/Work, Black\\\" (SKU B098NVF3HJ, $34.99, 12 Reviews). The Reviews (12) tab is available to inspect reviewer comments about small ear cups.\"\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "retrieved_data": [
+          "product detail page loaded: \"harphonic e7 active noise cancelling headphones bluetooth headphones wireless headphones over ear with microphone deep bass, comfortable protein earpads, 30 hours playtime for travel/work, black\" (sku b098nvf3hj, $34.99, 12 reviews). the reviews (12) tab is available to inspect reviewer comments about small ear cups."
+        ],
+        "status": "success",
+        "task_type": "retrieve"
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "catso",
+          "dibbins",
+          "anglebert dinkherhump",
+          "michelle davis"
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/4), Missing: 4, Extra: 1",
+            "Expected: [catso, dibbins, ..., michelle davis], Got: [product detail page loaded: \"harphonic e7 active noise cancelling headphones bluetooth headphones wireless headphones over ear with microphone deep bass, comfortable protein earpads, 30 hours playtime for travel/work, black\" (sku b098nvf3hj, $34.99, 12 reviews). the reviews (12) tab is available to inspect reviewer comments about small ear cups.]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false
+}

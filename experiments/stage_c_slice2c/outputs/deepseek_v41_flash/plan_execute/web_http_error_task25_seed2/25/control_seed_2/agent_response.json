@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "Low-rated reviews (≤3 stars) identified on page 1 (all showing 20% = 1 star):\n1. \"Poorly designed, lousy performance\" (20%) - by Bob in Vegas\n2. \"HORRIBLE IN EVERY WAY!\" (20%) - by AMAZON SHOPAHOLIC\n3. \"ll save lots of time\" (20%) - by Dylan Spears\n\nNote: The 80% review (Imajin8) is 4 stars and excluded. Other reviews lack explicit star percentages on this page."
+  ],
+  "error_details": null
+}

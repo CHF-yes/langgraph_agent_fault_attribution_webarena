@@ -1,0 +1,6 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": null,
+  "error_details": "On page 2 of the customer reviews, the two visible reviews are by \"AZ Guy\" and \"CT\". Neither review's visible text mentions \"under water\" or \"underwater\" photo. Therefore, no review on the current page (page 2) mentions under water/underwater photo."
+}

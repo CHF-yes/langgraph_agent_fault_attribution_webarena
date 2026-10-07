@@ -1,0 +1,51 @@
+{
+  "task_id": 25,
+  "intent_template_id": 222,
+  "sites": [
+    "shopping"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"Page 2 review assessment complete. Page 2 contains 2 reviews:\\n1. \\\"Great true AIO - ups and considerations depending on what you are looking for\\\" by Imajin8 — Rating: 80% (4 stars, NOT ≤3). Does not mention print quality.\\n2. Review by Jennifer Healy Keintz — text about ink being wasted (\\\"t tell you how much ink has been wasted\\\"). No explicit print quality mention, and no star rating ≤3 confirmed.\\n\\nConclusion: No reviews on page 2 have a rating of 3 stars or less that explicitly mention print quality. (Note: The review mentioning \\\"great print quality\\\" by GoldfishGoldfish appears on page 1, not page 2.)\"\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "retrieved_data": [
+          "page 2 review assessment complete. page 2 contains 2 reviews: 1. \"great true aio - ups and considerations depending on what you are looking for\" by imajin8 -- rating: 80% (4 stars, not <=3). does not mention print quality. 2. review by jennifer healy keintz -- text about ink being wasted (\"t tell you how much ink has been wasted\"). no explicit print quality mention, and no star rating <=3 confirmed. conclusion: no reviews on page 2 have a rating of 3 stars or less that explicitly mention print quality. (note: the review mentioning \"great print quality\" by goldfishgoldfish appears on page 1, not page 2.)"
+        ],
+        "status": "success",
+        "task_type": "retrieve"
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "roxanne brandon coffey",
+          "nelson"
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/2), Missing: 2, Extra: 1",
+            "Expected: [roxanne brandon coffey, nelson], Got: [page 2 review assessment complete. page 2 contains 2 reviews: 1. \"great true aio - ups and considerations depending on what you are looking for\" by imajin8 -- rating: 80% (4 stars, not <=3). does not mention print quality. 2. review by jennifer healy keintz -- text about ink being wasted (\"t tell you how much ink has been wasted\"). no explicit print quality mention, and no star rating <=3 confirmed. conclusion: no reviews on page 2 have a rating of 3 stars or less that explicitly mention print quality. (note: the review mentioning \"great print quality\" by goldfishgoldfish appears on page 1, not page 2.)]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false
+}

@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "The Books forum posts are already sorted by 'Hot' (the sort control shows \"Sort by: Hot\"). No change was needed."
+  ],
+  "error_details": null
+}

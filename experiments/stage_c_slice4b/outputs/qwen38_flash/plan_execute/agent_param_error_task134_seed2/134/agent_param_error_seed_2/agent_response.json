@@ -1,0 +1,10 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    {
+      "error": "Cannot sign in to GitLab: no valid credentials were provided. Attempts with username 'kilian' returned 'Invalid login or password.'"
+    }
+  ],
+  "error_details": null
+}

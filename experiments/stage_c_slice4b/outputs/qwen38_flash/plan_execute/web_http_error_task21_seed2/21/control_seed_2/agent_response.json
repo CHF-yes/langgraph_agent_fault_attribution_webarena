@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "The reviewer who mentions the ear cups being small is **Dibbins**, in a review titled \"Cup for ears very small,\" which states: \"The ear cups MAY be ok for children... but for adult sized ears they are way too small.\" \n\nI checked both pages of reviews; no other reviewer on page 2 (Michelle Davis or Amazon Customer) explicitly mentions the ear cups being small."
+  ],
+  "error_details": null
+}

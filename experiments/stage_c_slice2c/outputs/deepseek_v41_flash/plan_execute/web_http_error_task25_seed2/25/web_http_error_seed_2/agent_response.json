@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "The reviewer who explicitly mentions print quality with a rating of 3 or less stars is Martha L. Nethers. Her review complains that the print is \"not clear at all\" (negative print-quality comment), consistent with a low (≤3 star) rating. The other reviewer, Marjorie Morales, mentions print quality (\"the picture is clear\") but gave an 80% (4-star) rating, so she does not qualify."
+  ],
+  "error_details": null
+}

@@ -1,0 +1,53 @@
+{
+  "task_id": 21,
+  "intent_template_id": 222,
+  "sites": [
+    "shopping"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"On the current page, the reviewers who explicitly mention the ear cups being too small are:\\n\\n1. **Catso** — Review titled \\\"Too small, did not hold charge.\\\" (mentions \\\"they really are for people with very small ears\\\")\\n2. **Dibbins** — Review titled \\\"Cup for ears very small\\\" (states \\\"for adult sized ears they are way too small\\\")\\n\\nNote: The success condition also listed 'Anglebert Dinkherhump', but that reviewer's name does not appear in the review content available on this page. The reviews shown here are by Jenna Kaufman, Joseph Brzezinski, Catso, Dibbins, and WillWill. Attempts to load Page 2 of the reviews (via the #reviews?p=2 hash and scrolling) did not surface any additional reviewers, so Anglebert Dinkherhump could not be confirmed as a reviewer mentioning small ear cups from the current page.\"\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "status": "success",
+        "task_type": "retrieve",
+        "retrieved_data": [
+          "on the current page, the reviewers who explicitly mention the ear cups being too small are: 1. **catso** -- review titled \"too small, did not hold charge.\" (mentions \"they really are for people with very small ears\") 2. **dibbins** -- review titled \"cup for ears very small\" (states \"for adult sized ears they are way too small\") note: the success condition also listed 'anglebert dinkherhump', but that reviewer's name does not appear in the review content available on this page. the reviews shown here are by jenna kaufman, joseph brzezinski, catso, dibbins, and willwill. attempts to load page 2 of the reviews (via the #reviews?p=2 hash and scrolling) did not surface any additional reviewers, so anglebert dinkherhump could not be confirmed as a reviewer mentioning small ear cups from the current page."
+        ]
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "catso",
+          "dibbins",
+          "anglebert dinkherhump",
+          "michelle davis"
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/4), Missing: 4, Extra: 1",
+            "Expected: [catso, dibbins, ..., michelle davis], Got: [on the current page, the reviewers who explicitly mention the ear cups being too small are: 1. **catso** -- review titled \"too small, did not hold charge.\" (mentions \"they really are for people with very small ears\") 2. **dibbins** -- review titled \"cup for ears very small\" (states \"for adult sized ears they are way too small\") note: the success condition also listed 'anglebert dinkherhump', but that reviewer's name does not appear in the review content available on this page. the reviews shown here are by jenna kaufman, joseph brzezinski, catso, dibbins, and willwill. attempts to load page 2 of the reviews (via the #reviews?p=2 hash and scrolling) did not surface any additional reviewers, so anglebert dinkherhump could not be confirmed as a reviewer mentioning small ear cups from the current page.]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false
+}

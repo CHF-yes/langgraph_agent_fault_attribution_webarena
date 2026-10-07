@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "Page 2 review assessment complete. Page 2 contains 2 reviews:\n1. \"Great true AIO - ups and considerations depending on what you are looking for\" by Imajin8 — Rating: 80% (4 stars, NOT ≤3). Does not mention print quality.\n2. Review by Jennifer Healy Keintz — text about ink being wasted (\"t tell you how much ink has been wasted\"). No explicit print quality mention, and no star rating ≤3 confirmed.\n\nConclusion: No reviews on page 2 have a rating of 3 stars or less that explicitly mention print quality. (Note: The review mentioning \"great print quality\" by GoldfishGoldfish appears on page 1, not page 2.)"
+  ],
+  "error_details": null
+}

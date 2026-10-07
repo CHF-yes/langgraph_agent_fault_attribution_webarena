@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "The user with the most commits to the primer/design project is **mperrotti**, with 108 commits (ranked #1 on the Contributors graph for all time).\n\nFor reference, the top contributors by commit count are:\n1. mperrotti — 108 commits\n2. yaili — 106 commits\n3. shawnbot — 95 commits\n4. auareyou — 83 commits\n5. emilybrick — 81 commits\n\nSo the username of the user with the most commits is: mperrotti."
+  ],
+  "error_details": null
+}

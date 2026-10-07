@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "已成功切换到第 2 页评论。第 2 页显示的评论内容为：1) Imajin8 — 标题 \"Great true AIO - ups and considerations depending on what you are looking for\"，评分 80%（即 4 星），正文以 \"I...\" 开头；2) Jennifer Healy Keintz — 正文片段 \"t tell you how much ink has been wasted (that...\"，其评分与完整文本在当前视图中被截断、未明确显示。注意：第 1 页中唯一明确提到 \"print quality\" 的是 GoldfishGoldfish 的评论（\"It gives great print quality as long as you use the premium paper settings\"），但其星级评分在可访问性树中未显示数值。当前两页可见文本中，除 Goldfish 外没有其他评论明确出现 \"print quality\" 字样，且低分（20%，约 1 星）评论如 Bob in Vegas、AMAZON SHOPAHOLIC、Dylan Spears 等的可见文本均未直接提及 \"print quality\"。"
+  ],
+  "error_details": null
+}

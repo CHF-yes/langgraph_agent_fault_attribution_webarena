@@ -1,0 +1,6 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": null,
+  "error_details": "Based on the reviews on the current page (page 2), the reviewers are \"AZ Guy\" and \"CT\". The review by \"AZ Guy\" (titled \"Gorgeous pictures, high quality product\") is the one that discusses camera picture quality and compares it to a Fuji S5200, making it the most likely review to mention underwater photos. Reviewer name: AZ Guy."
+}

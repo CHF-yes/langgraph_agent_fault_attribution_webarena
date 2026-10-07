@@ -1,0 +1,6 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "NOT_FOUND_ERROR",
+  "retrieved_data": null,
+  "error_details": "No reviewer explicitly mentions \"print quality\" while giving a rating of 3 stars or less.\n\nAcross all reviews on this product page:\n- The only review that explicitly uses the phrase \"print quality\" is by **GoldfishGoldfish** (\"It gives great print quality as long as you use the premium paper settings\"), but this is a positive remark associated with a high rating, NOT a ≤3-star review.\n- The low-rated reviews (e.g., Bob in Vegas – 20%/1 star, AMAZON SHOPAHOLIC – 20%/1 star, Dylan Spears – 20%/1 star, RemyRRemyR) complain about clogging, ink waste, connectivity and overall poor performance, but none of them explicitly mention \"print quality.\"\n\nTherefore, the list of reviewers who mention print quality explicitly with a rating of 3 or fewer stars is empty (none)."
+}

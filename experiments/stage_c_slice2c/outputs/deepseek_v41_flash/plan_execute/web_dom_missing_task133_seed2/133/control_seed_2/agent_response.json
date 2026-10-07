@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "Unable to sign in: all attempted credentials (root/password, admin/password, root/password123) returned \"Invalid login or password.\" Valid credentials were not available, so authentication could not be completed."
+  ],
+  "error_details": null
+}

@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "On page 2 of the Harphonic E7 headphones reviews, the reviewer who mentions ear cups being a size/fit issue (describing that the ear cups pressed on the edge of the ears) is **Kyle P.** The other review on this page (by Ethan Zink) does not mention ear cups being small. Therefore, the reviewer mentioning small ear cups is Kyle P."
+  ],
+  "error_details": null
+}

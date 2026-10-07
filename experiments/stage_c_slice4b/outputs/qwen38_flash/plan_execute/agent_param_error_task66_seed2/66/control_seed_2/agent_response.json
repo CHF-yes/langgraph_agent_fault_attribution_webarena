@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "The /f/books forum is already sorted by 'Hot' (the sort control displays \"Sort by: Hot\"). The top 10 hottest posts are displayed in order of engagement: 1) T. S. Eliot letters released (3,591), 2) Friendly reminder bookshop.org exists (3,085), 3) Appalachian prison book project (1,716), 4) Lin Oliver/Henry Winkler collaboration (1,695), 5) Misty of Chincoteague museum appeal (1,539), 6) Ukrainian publishers fighting to survive (1,434), 7) The simple greatness of Agatha Christie (1,423), 8) Reading The Hobbit to my daughter (1,423), 9) Apple Books free A Christmas Carol audiobook (1,335), 10) What Is It That Makes Used Bookstores So Wonderful? (1,334). Sorting requirement satisfied."
+  ],
+  "error_details": null
+}

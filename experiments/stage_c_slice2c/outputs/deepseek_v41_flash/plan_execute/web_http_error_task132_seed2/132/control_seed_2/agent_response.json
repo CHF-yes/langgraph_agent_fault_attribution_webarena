@@ -1,0 +1,11 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    {
+      "status": "failed",
+      "reason": "Unable to sign in to GitLab: the credentials attempted (root/password, admin@example.com) returned 'Invalid login or password.' Valid credentials are not available, so the authentication sub-goal cannot be completed."
+    }
+  ],
+  "error_details": null
+}

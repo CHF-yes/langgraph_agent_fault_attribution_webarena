@@ -1,0 +1,6 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "NOT_FOUND_ERROR",
+  "retrieved_data": null,
+  "error_details": "No reviewer on Page 2 mentions an \"under water photo\". Page 2 contains only two reviews: AZ Guy (\"Gorgeous pictures, high quality product\") and CT (about the slide cover breaking while taking a picture in the snow). Neither review references underwater photography."
+}

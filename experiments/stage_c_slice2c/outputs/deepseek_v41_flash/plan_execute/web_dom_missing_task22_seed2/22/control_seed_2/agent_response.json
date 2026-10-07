@@ -1,0 +1,6 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": null,
+  "error_details": "Scanned the full reviews list for the Fujifilm FinePix Z200fd camera (12 reviews across 2 pages). The visible review text does not contain any mention of 'under water' or 'underwater' photo. Reviewers found: badkat, DrummerGirlLB, G. Matsusaki, Razzberry, Nic, CA Guy, Kenan, CT, romance lover, AZ Guy. No review explicitly mentions an underwater/under water photo. Note: some review texts appear truncated in the accessibility tree, so a definitive match could not be confirmed."
+}
