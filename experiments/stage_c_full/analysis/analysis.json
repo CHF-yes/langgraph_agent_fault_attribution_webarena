@@ -1,0 +1,2444 @@
+{
+  "scope": {
+    "validation_model": "deepseek_v4_pro",
+    "allowed_tasks": [
+      22,
+      25,
+      27,
+      66,
+      102,
+      118,
+      132,
+      308
+    ],
+    "violations": [],
+    "ok": true
+  },
+  "matrix_health": {
+    "expected_cells": 768,
+    "evaluated_cells": 768,
+    "missing_cells": [],
+    "incomplete_cells": [],
+    "unevaluated_cells": [],
+    "error_cells": [],
+    "unpaired_pairs": [],
+    "formal_inference_allowed": true,
+    "blocked_reasons": []
+  },
+  "formal_inference_allowed": true,
+  "main_models": [
+    "deepseek_v41_flash",
+    "qwen38_flash"
+  ],
+  "main_tasks": [
+    21,
+    22,
+    24,
+    25,
+    27,
+    28,
+    30,
+    66,
+    102,
+    118,
+    132,
+    133,
+    134,
+    258,
+    274,
+    308
+  ],
+  "n_observations_main": 768,
+  "n_pairs_main": 384,
+  "pairs_fault_not_applied": 17,
+  "unpaired": [],
+  "degradation_by_cell": [
+    {
+      "model_profile": "deepseek_v41_flash",
+      "architecture": "plan_execute",
+      "fault_type": "agent_param_error",
+      "n_pairs": 30,
+      "n_tasks": 16,
+      "control_success_rate": 0.1875,
+      "fault_success_rate": 0.25,
+      "control_wilson": [
+        0.08889544689565954,
+        0.3530915520137596
+      ],
+      "fault_wilson": [
+        0.1325240091850904,
+        0.4210655899424448
+      ],
+      "degradation": -0.0625,
+      "ci_low": -0.15625,
+      "ci_high": 0.03125,
+      "std_error": 0.0625,
+      "p_value": 0.31731050786291415,
+      "degenerate": false,
+      "in_holm_family": false,
+      "inference_permitted": true
+    },
+    {
+      "model_profile": "deepseek_v41_flash",
+      "architecture": "plan_execute",
+      "fault_type": "web_dom_missing",
+      "n_pairs": 32,
+      "n_tasks": 16,
+      "control_success_rate": 0.28125,
+      "fault_success_rate": 0.375,
+      "control_wilson": [
+        0.15564580497742764,
+        0.45374509425916565
+      ],
+      "fault_wilson": [
+        0.22933887309454212,
+        0.5474559264692255
+      ],
+      "degradation": -0.09375,
+      "ci_low": -0.21875,
+      "ci_high": 0.03125,
+      "std_error": 0.09375,
+      "p_value": 0.31731050786291415,
+      "degenerate": false,
+      "in_holm_family": false,
+      "inference_permitted": true
+    },
+    {
+      "model_profile": "deepseek_v41_flash",
+      "architecture": "plan_execute",
+      "fault_type": "web_http_error",
+      "n_pairs": 32,
+      "n_tasks": 16,
+      "control_success_rate": 0.25,
+      "fault_success_rate": 0.40625,
+      "control_wilson": [
+        0.1325240091850904,
+        0.4210655899424448
+      ],
+      "fault_wilson": [
+        0.2551963484266544,
+        0.5773997512461713
+      ],
+      "degradation": -0.15625,
+      "ci_low": -0.28125,
+      "ci_high": -0.03125,
+      "std_error": 0.07525996611745185,
+      "p_value": 0.0378812823153869,
+      "degenerate": false,
+      "in_holm_family": false,
+      "inference_permitted": true
+    },
+    {
+      "model_profile": "deepseek_v41_flash",
+      "architecture": "react",
+      "fault_type": "agent_param_error",
+      "n_pairs": 28,
+      "n_tasks": 15,
+      "control_success_rate": 0.46875,
+      "fault_success_rate": 0.46875,
+      "control_wilson": [
+        0.30869387108068835,
+        0.6355048288102536
+      ],
+      "fault_wilson": [
+        0.30869387108068835,
+        0.6355048288102536
+      ],
+      "degradation": 0.0,
+      "ci_low": -0.06666666666666667,
+      "ci_high": 0.06666666666666667,
+      "std_error": 0.04879500364742666,
+      "p_value": 1.0,
+      "degenerate": false,
+      "in_holm_family": false,
+      "inference_permitted": true
+    },
+    {
+      "model_profile": "deepseek_v41_flash",
+      "architecture": "react",
+      "fault_type": "web_dom_missing",
+      "n_pairs": 32,
+      "n_tasks": 16,
+      "control_success_rate": 0.4375,
+      "fault_success_rate": 0.46875,
+      "control_wilson": [
+        0.2816533111504036,
+        0.6067440886314801
+      ],
+      "fault_wilson": [
+        0.30869387108068835,
+        0.6355048288102536
+      ],
+      "degradation": -0.03125,
+      "ci_low": -0.09375,
+      "ci_high": 0.0,
+      "std_error": 0.03125,
+      "p_value": 0.31731050786291415,
+      "degenerate": false,
+      "in_holm_family": false,
+      "inference_permitted": true
+    },
+    {
+      "model_profile": "deepseek_v41_flash",
+      "architecture": "react",
+      "fault_type": "web_http_error",
+      "n_pairs": 32,
+      "n_tasks": 16,
+      "control_success_rate": 0.5625,
+      "fault_success_rate": 0.46875,
+      "control_wilson": [
+        0.3932559113685198,
+        0.7183466888495963
+      ],
+      "fault_wilson": [
+        0.30869387108068835,
+        0.6355048288102536
+      ],
+      "degradation": 0.09375,
+      "ci_low": -0.03125,
+      "ci_high": 0.21875,
+      "std_error": 0.08188851669597311,
+      "p_value": 0.2522716448411999,
+      "degenerate": false,
+      "in_holm_family": false,
+      "inference_permitted": true
+    },
+    {
+      "model_profile": "qwen38_flash",
+      "architecture": "plan_execute",
+      "fault_type": "agent_param_error",
+      "n_pairs": 31,
+      "n_tasks": 16,
+      "control_success_rate": 0.375,
+      "fault_success_rate": 0.375,
+      "control_wilson": [
+        0.22933887309454212,
+        0.5474559264692255
+      ],
+      "fault_wilson": [
+        0.22933887309454212,
+        0.5474559264692255
+      ],
+      "degradation": 0.0,
+      "ci_low": 0.0,
+      "ci_high": 0.0,
+      "std_error": 0.0,
+      "p_value": null,
+      "degenerate": false,
+      "in_holm_family": false,
+      "inference_permitted": true
+    },
+    {
+      "model_profile": "qwen38_flash",
+      "architecture": "plan_execute",
+      "fault_type": "web_dom_missing",
+      "n_pairs": 30,
+      "n_tasks": 16,
+      "control_success_rate": 0.375,
+      "fault_success_rate": 0.375,
+      "control_wilson": [
+        0.22933887309454212,
+        0.5474559264692255
+      ],
+      "fault_wilson": [
+        0.22933887309454212,
+        0.5474559264692255
+      ],
+      "degradation": 0.0,
+      "ci_low": -0.125,
+      "ci_high": 0.125,
+      "std_error": 0.06454972243679027,
+      "p_value": 1.0,
+      "degenerate": false,
+      "in_holm_family": false,
+      "inference_permitted": true
+    },
+    {
+      "model_profile": "qwen38_flash",
+      "architecture": "plan_execute",
+      "fault_type": "web_http_error",
+      "n_pairs": 31,
+      "n_tasks": 16,
+      "control_success_rate": 0.4375,
+      "fault_success_rate": 0.3125,
+      "control_wilson": [
+        0.2816533111504036,
+        0.6067440886314801
+      ],
+      "fault_wilson": [
+        0.17952541633609734,
+        0.4856667830095541
+      ],
+      "degradation": 0.125,
+      "ci_low": 0.0,
+      "ci_high": 0.25,
+      "std_error": 0.07216878364870322,
+      "p_value": 0.08326451666355039,
+      "degenerate": false,
+      "in_holm_family": false,
+      "inference_permitted": true
+    },
+    {
+      "model_profile": "qwen38_flash",
+      "architecture": "react",
+      "fault_type": "agent_param_error",
+      "n_pairs": 27,
+      "n_tasks": 16,
+      "control_success_rate": 0.5,
+      "fault_success_rate": 0.40625,
+      "control_wilson": [
+        0.33630882869327483,
+        0.6636911713067252
+      ],
+      "fault_wilson": [
+        0.2551963484266544,
+        0.5773997512461713
+      ],
+      "degradation": 0.125,
+      "ci_low": 0.0,
+      "ci_high": 0.25,
+      "std_error": 0.08539125638299665,
+      "p_value": 0.14323490752466972,
+      "degenerate": false,
+      "in_holm_family": false,
+      "inference_permitted": true
+    },
+    {
+      "model_profile": "qwen38_flash",
+      "architecture": "react",
+      "fault_type": "web_dom_missing",
+      "n_pairs": 32,
+      "n_tasks": 16,
+      "control_success_rate": 0.34375,
+      "fault_success_rate": 0.40625,
+      "control_wilson": [
+        0.20410437924433172,
+        0.5168891202103778
+      ],
+      "fault_wilson": [
+        0.2551963484266544,
+        0.5773997512461713
+      ],
+      "degradation": -0.0625,
+      "ci_low": -0.1875,
+      "ci_high": 0.0625,
+      "std_error": 0.0625,
+      "p_value": 0.31731050786291415,
+      "degenerate": false,
+      "in_holm_family": false,
+      "inference_permitted": true
+    },
+    {
+      "model_profile": "qwen38_flash",
+      "architecture": "react",
+      "fault_type": "web_http_error",
+      "n_pairs": 30,
+      "n_tasks": 16,
+      "control_success_rate": 0.34375,
+      "fault_success_rate": 0.34375,
+      "control_wilson": [
+        0.20410437924433172,
+        0.5168891202103778
+      ],
+      "fault_wilson": [
+        0.20410437924433172,
+        0.5168891202103778
+      ],
+      "degradation": 0.0,
+      "ci_low": -0.125,
+      "ci_high": 0.125,
+      "std_error": 0.07905694150420949,
+      "p_value": 1.0,
+      "degenerate": false,
+      "in_holm_family": false,
+      "inference_permitted": true
+    }
+  ],
+  "degradation_by_fault": [
+    {
+      "family_id": "per_fault_primary",
+      "fault_type": "agent_param_error",
+      "n_pairs": 116,
+      "n_tasks": 16,
+      "degradation": 0.002232142857142856,
+      "ci_low": -0.0390625,
+      "ci_high": 0.04575892857142857,
+      "std_error": 0.02702644797797377,
+      "p_value": 0.9341767138819461,
+      "p_value_holm": 1.0,
+      "in_holm_family": true,
+      "inference_permitted": true
+    },
+    {
+      "family_id": "per_fault_primary",
+      "fault_type": "web_dom_missing",
+      "n_pairs": 126,
+      "n_tasks": 16,
+      "degradation": -0.046875,
+      "ci_low": -0.109375,
+      "ci_high": 0.0078125,
+      "std_error": 0.035858155162621884,
+      "p_value": 0.1911332478646659,
+      "p_value_holm": 0.5733997435939977,
+      "in_holm_family": true,
+      "inference_permitted": true
+    },
+    {
+      "family_id": "per_fault_primary",
+      "fault_type": "web_http_error",
+      "n_pairs": 125,
+      "n_tasks": 16,
+      "degradation": 0.010044642857142856,
+      "ci_low": -0.045758928571428575,
+      "ci_high": 0.07366071428571429,
+      "std_error": 0.03563863826245864,
+      "p_value": 0.7780608394690851,
+      "p_value_holm": 1.0,
+      "in_holm_family": true,
+      "inference_permitted": true
+    }
+  ],
+  "cap_exhaustion": {
+    "overall": {
+      "present": 768,
+      "known": 768,
+      "exhausted": 97,
+      "not_exhausted": 671,
+      "unknown": 0,
+      "rate": 0.12630208333333334,
+      "unknown_rate": 0.0,
+      "mean_steps_when_exhausted": 20.0
+    },
+    "by_condition": {
+      "fault": {
+        "present": 384,
+        "known": 384,
+        "exhausted": 43,
+        "not_exhausted": 341,
+        "unknown": 0,
+        "rate": 0.11197916666666667,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "control": {
+        "present": 384,
+        "known": 384,
+        "exhausted": 54,
+        "not_exhausted": 330,
+        "unknown": 0,
+        "rate": 0.140625,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      }
+    },
+    "by_fault": {
+      "agent_param_error": {
+        "present": 256,
+        "known": 256,
+        "exhausted": 36,
+        "not_exhausted": 220,
+        "unknown": 0,
+        "rate": 0.140625,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "web_dom_missing": {
+        "present": 256,
+        "known": 256,
+        "exhausted": 34,
+        "not_exhausted": 222,
+        "unknown": 0,
+        "rate": 0.1328125,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "web_http_error": {
+        "present": 256,
+        "known": 256,
+        "exhausted": 27,
+        "not_exhausted": 229,
+        "unknown": 0,
+        "rate": 0.10546875,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      }
+    },
+    "by_cell": {
+      "deepseek_v41_flash/react/agent_param_error/102": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/react/agent_param_error/118": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/react/agent_param_error/132": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 2,
+        "not_exhausted": 2,
+        "unknown": 0,
+        "rate": 0.5,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "deepseek_v41_flash/react/agent_param_error/133": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 1,
+        "not_exhausted": 3,
+        "unknown": 0,
+        "rate": 0.25,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "deepseek_v41_flash/react/agent_param_error/134": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/react/agent_param_error/21": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/react/agent_param_error/22": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 2,
+        "not_exhausted": 2,
+        "unknown": 0,
+        "rate": 0.5,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "deepseek_v41_flash/react/agent_param_error/24": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/react/agent_param_error/258": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/react/agent_param_error/25": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 3,
+        "not_exhausted": 1,
+        "unknown": 0,
+        "rate": 0.75,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "deepseek_v41_flash/react/agent_param_error/274": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/react/agent_param_error/27": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/react/agent_param_error/28": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/react/agent_param_error/308": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/react/agent_param_error/30": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/react/agent_param_error/66": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 4,
+        "not_exhausted": 0,
+        "unknown": 0,
+        "rate": 1.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "deepseek_v41_flash/react/web_dom_missing/102": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/react/web_dom_missing/118": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/react/web_dom_missing/132": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 2,
+        "not_exhausted": 2,
+        "unknown": 0,
+        "rate": 0.5,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "deepseek_v41_flash/react/web_dom_missing/133": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 2,
+        "not_exhausted": 2,
+        "unknown": 0,
+        "rate": 0.5,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "deepseek_v41_flash/react/web_dom_missing/134": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 3,
+        "not_exhausted": 1,
+        "unknown": 0,
+        "rate": 0.75,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "deepseek_v41_flash/react/web_dom_missing/21": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/react/web_dom_missing/22": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 4,
+        "not_exhausted": 0,
+        "unknown": 0,
+        "rate": 1.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "deepseek_v41_flash/react/web_dom_missing/24": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/react/web_dom_missing/258": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/react/web_dom_missing/25": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 2,
+        "not_exhausted": 2,
+        "unknown": 0,
+        "rate": 0.5,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "deepseek_v41_flash/react/web_dom_missing/274": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/react/web_dom_missing/27": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/react/web_dom_missing/28": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/react/web_dom_missing/308": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/react/web_dom_missing/30": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/react/web_dom_missing/66": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 3,
+        "not_exhausted": 1,
+        "unknown": 0,
+        "rate": 0.75,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "deepseek_v41_flash/react/web_http_error/102": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/react/web_http_error/118": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/react/web_http_error/132": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/react/web_http_error/133": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/react/web_http_error/134": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 1,
+        "not_exhausted": 3,
+        "unknown": 0,
+        "rate": 0.25,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "deepseek_v41_flash/react/web_http_error/21": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/react/web_http_error/22": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 3,
+        "not_exhausted": 1,
+        "unknown": 0,
+        "rate": 0.75,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "deepseek_v41_flash/react/web_http_error/24": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/react/web_http_error/258": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/react/web_http_error/25": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 4,
+        "not_exhausted": 0,
+        "unknown": 0,
+        "rate": 1.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "deepseek_v41_flash/react/web_http_error/274": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/react/web_http_error/27": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/react/web_http_error/28": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/react/web_http_error/308": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 1,
+        "not_exhausted": 3,
+        "unknown": 0,
+        "rate": 0.25,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "deepseek_v41_flash/react/web_http_error/30": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/react/web_http_error/66": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 3,
+        "not_exhausted": 1,
+        "unknown": 0,
+        "rate": 0.75,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "deepseek_v41_flash/plan_execute/agent_param_error/102": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 3,
+        "not_exhausted": 1,
+        "unknown": 0,
+        "rate": 0.75,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "deepseek_v41_flash/plan_execute/agent_param_error/118": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/plan_execute/agent_param_error/132": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 2,
+        "not_exhausted": 2,
+        "unknown": 0,
+        "rate": 0.5,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "deepseek_v41_flash/plan_execute/agent_param_error/133": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 3,
+        "not_exhausted": 1,
+        "unknown": 0,
+        "rate": 0.75,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "deepseek_v41_flash/plan_execute/agent_param_error/134": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 2,
+        "not_exhausted": 2,
+        "unknown": 0,
+        "rate": 0.5,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "deepseek_v41_flash/plan_execute/agent_param_error/21": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/plan_execute/agent_param_error/22": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/plan_execute/agent_param_error/24": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/plan_execute/agent_param_error/258": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/plan_execute/agent_param_error/25": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 1,
+        "not_exhausted": 3,
+        "unknown": 0,
+        "rate": 0.25,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "deepseek_v41_flash/plan_execute/agent_param_error/274": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/plan_execute/agent_param_error/27": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/plan_execute/agent_param_error/28": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/plan_execute/agent_param_error/308": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 3,
+        "not_exhausted": 1,
+        "unknown": 0,
+        "rate": 0.75,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "deepseek_v41_flash/plan_execute/agent_param_error/30": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 1,
+        "not_exhausted": 3,
+        "unknown": 0,
+        "rate": 0.25,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "deepseek_v41_flash/plan_execute/agent_param_error/66": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/plan_execute/web_dom_missing/102": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/plan_execute/web_dom_missing/118": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/plan_execute/web_dom_missing/132": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 1,
+        "not_exhausted": 3,
+        "unknown": 0,
+        "rate": 0.25,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "deepseek_v41_flash/plan_execute/web_dom_missing/133": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 2,
+        "not_exhausted": 2,
+        "unknown": 0,
+        "rate": 0.5,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "deepseek_v41_flash/plan_execute/web_dom_missing/134": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 2,
+        "not_exhausted": 2,
+        "unknown": 0,
+        "rate": 0.5,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "deepseek_v41_flash/plan_execute/web_dom_missing/21": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/plan_execute/web_dom_missing/22": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/plan_execute/web_dom_missing/24": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/plan_execute/web_dom_missing/258": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/plan_execute/web_dom_missing/25": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/plan_execute/web_dom_missing/274": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/plan_execute/web_dom_missing/27": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/plan_execute/web_dom_missing/28": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/plan_execute/web_dom_missing/308": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 3,
+        "not_exhausted": 1,
+        "unknown": 0,
+        "rate": 0.75,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "deepseek_v41_flash/plan_execute/web_dom_missing/30": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/plan_execute/web_dom_missing/66": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/plan_execute/web_http_error/102": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/plan_execute/web_http_error/118": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/plan_execute/web_http_error/132": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/plan_execute/web_http_error/133": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 1,
+        "not_exhausted": 3,
+        "unknown": 0,
+        "rate": 0.25,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "deepseek_v41_flash/plan_execute/web_http_error/134": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 1,
+        "not_exhausted": 3,
+        "unknown": 0,
+        "rate": 0.25,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "deepseek_v41_flash/plan_execute/web_http_error/21": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/plan_execute/web_http_error/22": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/plan_execute/web_http_error/24": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/plan_execute/web_http_error/258": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/plan_execute/web_http_error/25": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/plan_execute/web_http_error/274": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/plan_execute/web_http_error/27": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/plan_execute/web_http_error/28": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/plan_execute/web_http_error/308": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 3,
+        "not_exhausted": 1,
+        "unknown": 0,
+        "rate": 0.75,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "deepseek_v41_flash/plan_execute/web_http_error/30": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "deepseek_v41_flash/plan_execute/web_http_error/66": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/react/agent_param_error/102": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/react/agent_param_error/118": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/react/agent_param_error/132": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/react/agent_param_error/133": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/react/agent_param_error/134": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/react/agent_param_error/21": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/react/agent_param_error/22": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 2,
+        "not_exhausted": 2,
+        "unknown": 0,
+        "rate": 0.5,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "qwen38_flash/react/agent_param_error/24": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/react/agent_param_error/258": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/react/agent_param_error/25": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 3,
+        "not_exhausted": 1,
+        "unknown": 0,
+        "rate": 0.75,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "qwen38_flash/react/agent_param_error/274": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/react/agent_param_error/27": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/react/agent_param_error/28": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/react/agent_param_error/308": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/react/agent_param_error/30": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/react/agent_param_error/66": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/react/web_dom_missing/102": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/react/web_dom_missing/118": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/react/web_dom_missing/132": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/react/web_dom_missing/133": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 1,
+        "not_exhausted": 3,
+        "unknown": 0,
+        "rate": 0.25,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "qwen38_flash/react/web_dom_missing/134": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/react/web_dom_missing/21": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/react/web_dom_missing/22": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 3,
+        "not_exhausted": 1,
+        "unknown": 0,
+        "rate": 0.75,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "qwen38_flash/react/web_dom_missing/24": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/react/web_dom_missing/258": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/react/web_dom_missing/25": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 3,
+        "not_exhausted": 1,
+        "unknown": 0,
+        "rate": 0.75,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "qwen38_flash/react/web_dom_missing/274": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/react/web_dom_missing/27": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/react/web_dom_missing/28": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/react/web_dom_missing/308": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/react/web_dom_missing/30": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/react/web_dom_missing/66": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/react/web_http_error/102": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/react/web_http_error/118": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/react/web_http_error/132": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/react/web_http_error/133": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/react/web_http_error/134": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/react/web_http_error/21": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 1,
+        "not_exhausted": 3,
+        "unknown": 0,
+        "rate": 0.25,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "qwen38_flash/react/web_http_error/22": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 4,
+        "not_exhausted": 0,
+        "unknown": 0,
+        "rate": 1.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "qwen38_flash/react/web_http_error/24": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 1,
+        "not_exhausted": 3,
+        "unknown": 0,
+        "rate": 0.25,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "qwen38_flash/react/web_http_error/258": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/react/web_http_error/25": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 2,
+        "not_exhausted": 2,
+        "unknown": 0,
+        "rate": 0.5,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "qwen38_flash/react/web_http_error/274": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/react/web_http_error/27": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/react/web_http_error/28": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/react/web_http_error/308": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/react/web_http_error/30": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/react/web_http_error/66": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/agent_param_error/102": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 1,
+        "not_exhausted": 3,
+        "unknown": 0,
+        "rate": 0.25,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "qwen38_flash/plan_execute/agent_param_error/118": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/agent_param_error/132": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/agent_param_error/133": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 1,
+        "not_exhausted": 3,
+        "unknown": 0,
+        "rate": 0.25,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "qwen38_flash/plan_execute/agent_param_error/134": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/agent_param_error/21": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/agent_param_error/22": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/agent_param_error/24": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/agent_param_error/258": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/agent_param_error/25": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/agent_param_error/274": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/agent_param_error/27": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/agent_param_error/28": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/agent_param_error/308": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 2,
+        "not_exhausted": 2,
+        "unknown": 0,
+        "rate": 0.5,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "qwen38_flash/plan_execute/agent_param_error/30": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/agent_param_error/66": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/web_dom_missing/102": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/web_dom_missing/118": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/web_dom_missing/132": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/web_dom_missing/133": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 1,
+        "not_exhausted": 3,
+        "unknown": 0,
+        "rate": 0.25,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "qwen38_flash/plan_execute/web_dom_missing/134": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/web_dom_missing/21": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/web_dom_missing/22": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/web_dom_missing/24": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/web_dom_missing/258": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/web_dom_missing/25": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/web_dom_missing/274": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/web_dom_missing/27": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/web_dom_missing/28": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/web_dom_missing/308": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 2,
+        "not_exhausted": 2,
+        "unknown": 0,
+        "rate": 0.5,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "qwen38_flash/plan_execute/web_dom_missing/30": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/web_dom_missing/66": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/web_http_error/102": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/web_http_error/118": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/web_http_error/132": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/web_http_error/133": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/web_http_error/134": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/web_http_error/21": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/web_http_error/22": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 1,
+        "not_exhausted": 3,
+        "unknown": 0,
+        "rate": 0.25,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      },
+      "qwen38_flash/plan_execute/web_http_error/24": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/web_http_error/258": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/web_http_error/25": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/web_http_error/274": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/web_http_error/27": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/web_http_error/28": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/web_http_error/308": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/web_http_error/30": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 0,
+        "not_exhausted": 4,
+        "unknown": 0,
+        "rate": 0.0,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": null
+      },
+      "qwen38_flash/plan_execute/web_http_error/66": {
+        "present": 4,
+        "known": 4,
+        "exhausted": 1,
+        "not_exhausted": 3,
+        "unknown": 0,
+        "rate": 0.25,
+        "unknown_rate": 0.0,
+        "mean_steps_when_exhausted": 20.0
+      }
+    },
+    "mean_steps": 8.283854166666666,
+    "note": "描述性指标：耗尽格仍按官方 evaluator 判定计入成功率，二者不得替换；比率只以已知状态为分母（known = exhausted + not_exhausted），未知单独计入 unknown，既不进分子也不进分母。"
+  },
+  "interaction": {
+    "models": [
+      "deepseek_v41_flash",
+      "qwen38_flash"
+    ],
+    "architectures": [
+      "plan_execute",
+      "react"
+    ],
+    "n_observations": 768,
+    "coefficient_condition_x_model_x_architecture": 0.15625,
+    "std_error_cluster_robust": 0.17432492145628856,
+    "z": 0.896314759213468,
+    "p_value": 0.37008467860658234,
+    "bootstrap_ci_low": 0.041666666666666664,
+    "bootstrap_ci_high": 0.2708333333333333,
+    "bootstrap_resamples": 10000,
+    "interpretation": "该系数 >0 表示：某一 (model, architecture) 组合的故障退化量高于另一组合；即退化量上存在 Model × Architecture 交互。",
+    "inference_permitted": true
+  },
+  "holm_family": {
+    "family_id": "per_fault_primary",
+    "description": "三个故障各自的配对退化（两个主模型 × 两个架构合并，任务整群、按类别分层）",
+    "members": [
+      "agent_param_error",
+      "web_dom_missing",
+      "web_http_error"
+    ],
+    "method": "Holm",
+    "raw_p_values": [
+      0.9341767138819461,
+      0.1911332478646659,
+      0.7780608394690851
+    ],
+    "adjusted_p_values": [
+      1.0,
+      0.5733997435939977,
+      1.0
+    ]
+  },
+  "secondary_validation_model": {
+    "model_profile": "deepseek_v4_pro",
+    "tasks": [],
+    "n_pairs": 0,
+    "degradation_by_cell": []
+  },
+  "notes": [
+    "退化量定义为 control 成功率减 fault 成功率（百分点 = ×100）。",
+    "区间按任务整群、按四个预注册类别分层自助；重复 trial 不是独立样本。",
+    "Holm 家族固定为三个故障级主对比；逐 (model, architecture, fault) 格子为描述性。",
+    "矩阵不健康（缺格/未配对/评分报错）时不输出 p 值，只给描述性区间；不显著只能报告为功效不足，不能当作等价性证据。",
+    "V4 Pro 仅用于共同 8 任务次级分析，不进入主估计，也不报显著性。"
+  ]
+}
