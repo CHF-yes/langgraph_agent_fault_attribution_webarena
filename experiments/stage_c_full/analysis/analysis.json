@@ -597,10 +597,10 @@
     "overall": {
       "present": 768,
       "known": 768,
-      "exhausted": 97,
-      "not_exhausted": 671,
+      "exhausted": 98,
+      "not_exhausted": 670,
       "unknown": 0,
-      "rate": 0.12630208333333334,
+      "rate": 0.12760416666666666,
       "unknown_rate": 0.0,
       "mean_steps_when_exhausted": 20.0
     },
@@ -608,10 +608,10 @@
       "fault": {
         "present": 384,
         "known": 384,
-        "exhausted": 43,
-        "not_exhausted": 341,
+        "exhausted": 44,
+        "not_exhausted": 340,
         "unknown": 0,
-        "rate": 0.11197916666666667,
+        "rate": 0.11458333333333333,
         "unknown_rate": 0.0,
         "mean_steps_when_exhausted": 20.0
       },
@@ -630,10 +630,10 @@
       "agent_param_error": {
         "present": 256,
         "known": 256,
-        "exhausted": 36,
-        "not_exhausted": 220,
+        "exhausted": 37,
+        "not_exhausted": 219,
         "unknown": 0,
-        "rate": 0.140625,
+        "rate": 0.14453125,
         "unknown_rate": 0.0,
         "mean_steps_when_exhausted": 20.0
       },
@@ -722,10 +722,10 @@
       "deepseek_v41_flash/react/agent_param_error/22": {
         "present": 4,
         "known": 4,
-        "exhausted": 2,
-        "not_exhausted": 2,
+        "exhausted": 3,
+        "not_exhausted": 1,
         "unknown": 0,
-        "rate": 0.5,
+        "rate": 0.75,
         "unknown_rate": 0.0,
         "mean_steps_when_exhausted": 20.0
       },
@@ -2580,7 +2580,7 @@
         "mean_steps_when_exhausted": 20.0
       }
     },
-    "mean_steps": 8.283854166666666,
+    "mean_steps": 8.299479166666666,
     "note": "描述性指标：耗尽格仍按官方 evaluator 判定计入成功率，二者不得替换；比率只以已知状态为分母（known = exhausted + not_exhausted），未知单独计入 unknown，既不进分子也不进分母。"
   },
   "interaction": {

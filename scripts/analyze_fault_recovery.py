@@ -161,7 +161,7 @@ def main():
                 "task": task, "seed": seed, "observed": fault_step is not None,
                 "fault_step": fault_step, "dom_detection_uncertain": dom_uncertain,
                 "continued": continued, "retried_same_tool": retried,
-                "retry_succeeded": retry_succeeded,
+                "same_tool_next_ok": retry_succeeded,
                 "step_delta": step_delta, "llm_delta": llm_delta,
                 "success": official.get((model, arch, fault, task, seed, "fault")),
                 "control_success": official.get((model, arch, fault, task, seed, "control")),
@@ -186,7 +186,7 @@ def main():
             "dom_detection_uncertain": fault == "web_dom_missing",
             "continued_rate": rate(observed, "continued"),
             "retried_rate": rate(observed, "retried_same_tool"),
-            "retry_succeeded_rate": rate(observed, "retry_succeeded"),
+            "same_tool_next_ok_rate": rate(observed, "same_tool_next_ok"),
             "step_delta_mean": mean(rows, "step_delta"),
             "llm_delta_mean": mean(rows, "llm_delta"),
             "official_success_observed": rate(observed, "success"),
@@ -197,18 +197,18 @@ def main():
     OUT.mkdir(parents=True, exist_ok=True)
     json.dump({"records": records, "by_fault": summary}, open(OUT / "recovery.json", "w"), indent=1)
     lines = ["# 故障后行为与配对代价（现有 trace，官方判定）", "",
-             "| 故障 | 触发n | 看到 | 继续执行 | 重试同工具 | 重试成功 | Δ步数(配对) | ΔLLM | 成功(看到) | 控制臂 | 备注 |",
+             "| 故障 | 触发n | 看到 | 继续执行 | 重试同工具 | 同类工具下一步无报错 | Δ步数(配对) | ΔLLM | 成功(看到) | 控制臂 | 备注 |",
              "|---|---|---|---|---|---|---|---|---|---|---|"]
     for fault in FAULTS:
         s = summary[fault]
         note = "观察率检测不确定" if s["dom_detection_uncertain"] else ""
         lines.append(f"| {fault} | {s['n_triggered']} | {s['n_observed']} ({s['observed_rate']}) | "
-                     f"{s['continued_rate']} | {s['retried_rate']} | {s['retry_succeeded_rate']} | "
+                     f"{s['continued_rate']} | {s['retried_rate']} | {s['same_tool_next_ok_rate']} | "
                      f"{s['step_delta_mean']:+} | {s['llm_delta_mean']:+} | "
                      f"{s['official_success_observed']} | {s['official_success_control_paired']} | {note} |")
     lines.append("")
-    lines.append("> 「继续执行」= 下一步无报错/离开假错误页；「重试成功」= 下一步与原动作同工具且无报错；"
-                 "二者都不等于最终成功。Δ步数为故障臂减配对控制臂。")
+    lines.append("> 「继续执行」= 下一步无报错/离开假错误页；「同类工具下一步无报错」= 下一步与原动作同工具且无报错；"
+                 "二者都不核对是否重试了同一目标，也不等于最终成功。Δ步数为故障臂减配对控制臂。")
     open(OUT / "recovery.md", "w").write("\n".join(lines) + "\n")
     print(json.dumps(summary, indent=1))
 

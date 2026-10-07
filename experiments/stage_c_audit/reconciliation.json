@@ -1,0 +1,78 @@
+{
+ "roots": [
+  "stage_c_slice1",
+  "stage_c_slice1b",
+  "stage_c_slice2b",
+  "stage_c_slice2c",
+  "stage_c_slice3",
+  "stage_c_slice3b",
+  "stage_c_slice4",
+  "stage_c_slice4b"
+ ],
+ "rows": 768,
+ "patched": 4,
+ "missing_records": 0,
+ "patched_rows": [
+  {
+   "trial_dir": "experiments/stage_c_slice1/outputs/deepseek_v41_flash/react/agent_param_error_task118_seed1/118/agent_param_error_seed_1",
+   "run_id": "20261005T130556-74b742",
+   "changes": {
+    "steps": {
+     "merged": 6,
+     "record": 5
+    },
+    "llm_calls": {
+     "merged": 6,
+     "record": 5
+    }
+   }
+  },
+  {
+   "trial_dir": "experiments/stage_c_slice1/outputs/deepseek_v41_flash/react/agent_param_error_task22_seed1/22/agent_param_error_seed_1",
+   "run_id": "20261005T131150-3d5f9d",
+   "changes": {
+    "steps": {
+     "merged": 7,
+     "record": 20
+    },
+    "llm_calls": {
+     "merged": 7,
+     "record": 20
+    },
+    "cap_exhausted": {
+     "merged": false,
+     "record": true
+    }
+   }
+  },
+  {
+   "trial_dir": "experiments/stage_c_slice1/outputs/deepseek_v41_flash/react/web_http_error_task118_seed1/118/control_seed_1",
+   "run_id": "20261005T130540-5464e9",
+   "changes": {
+    "steps": {
+     "merged": 4,
+     "record": 5
+    },
+    "llm_calls": {
+     "merged": 4,
+     "record": 5
+    }
+   }
+  },
+  {
+   "trial_dir": "experiments/stage_c_slice1/outputs/deepseek_v41_flash/react/web_http_error_task118_seed1/118/web_http_error_seed_1",
+   "run_id": "20261005T130556-0fa760",
+   "changes": {
+    "steps": {
+     "merged": 6,
+     "record": 5
+    },
+    "llm_calls": {
+     "merged": 6,
+     "record": 5
+    }
+   }
+  }
+ ],
+ "label_changes": []
+}
