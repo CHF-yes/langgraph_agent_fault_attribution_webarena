@@ -259,7 +259,7 @@ def interaction(rows):
         "ols_coefficient": beta[idx],
         "observationally_weighted": {"se_cluster_robust": se_ols, "z": z,
                                      "p_normal": p_norm,
-                                     "p_t15": 2 * student_t_sf(abs(z), 15)},
+                                     "p_t15": student_t_sf(abs(z), 15)},
         "task_equal_weighted": {
             "coefficient": -mean,  # flip to the OLS sign convention
             "se": se_task,
