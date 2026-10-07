@@ -1,23 +1,28 @@
-"""Post-fault recovery behaviour from the existing traces.
+"""Post-fault behaviour from the existing traces, with paired controls.
 
-Question: the three injected faults barely move the overall success rate.  Is that
-because the fault is rarely visible to the agent, because the agent retries and
-recovers immediately, or because the affected step is not on the critical path?
+Three things the earlier pass got wrong and this one fixes:
 
-Everything here reads existing artefacts (status injection_step, trace step
-events, trial records); no new trials.  A fault arm is "observed" when the trace
-shows the fault's signature at (or after) its injection step:
+1. It picked ``traces[0]``. Some cells have more than one trace (reruns); the
+   official one is whatever ``trial_record.paths.trace`` records, so the analysis
+   now follows that exact path.
+2. "Recovered" only meant "the next event did not error" (or, for HTTP, "the next
+   observation left the fake error page"). That shows the agent continued, not
+   that it retried successfully, and it cannot by itself explain the final
+   success rate. Three separate metrics are reported instead: continued,
+   retried and succeeded, and official final success.
+3. web_dom_missing was "observed" by diffing AX element ids against the control at
+   the same step, which also fires when the two arms simply navigated apart. Its
+   visibility is reported as detection-uncertain rather than as a rate.
 
-  500 Internal Server Error / about:error   web_http_error's substituted page
-  invalid_<n> not found in current page     agent_param_error's rewritten id
-  not found in current page                 web_dom_missing leaving a stale id
-
-Writes experiments/stage_c_audit/recovery.json and recovery.md.
+The step cost is the paired difference fault minus control in the trial records,
+not the number of steps after the fault.  Reads existing artefacts only.
 """
 from __future__ import annotations
 
 import json
-from collections import Counter, defaultdict
+import re
+import statistics
+from collections import defaultdict
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -42,18 +47,21 @@ SIGNATURES = {
 }
 
 
-def fault_observed(fault: str, observation: str) -> bool:
+def fault_signature(fault: str, observation: str) -> bool:
     text = (observation or "").lower()
     return any(marker in text for marker in SIGNATURES[fault])
 
 
-def step_events(trace_path: Path):
+def element_ids(observation: str) -> set:
+    return {int(m) for m in re.findall(r"\[(\d+)\]", observation or "")}
+
+
+def load_events(trace_path: str | Path):
+    path = Path(trace_path)
+    if not path.exists():
+        return []
     events = []
-    try:
-        lines = trace_path.read_text(encoding="utf-8", errors="ignore").splitlines()
-    except OSError:
-        return events
-    for line in lines:
+    for line in path.read_text(encoding="utf-8", errors="ignore").splitlines():
         try:
             event = json.loads(line)
         except json.JSONDecodeError:
@@ -63,45 +71,20 @@ def step_events(trace_path: Path):
     return sorted(events, key=lambda e: (e.get("step") or 0))
 
 
-def element_ids(observation: str) -> set:
-    """AX 文本里的元素编号集合，形如 ``[12] link '...'``。"""
-    import re
-    return {int(m) for m in re.findall(r"\[(\d+)\]", observation or "")}
+def trial_dir(root, model, arch, fault, task, seed, condition):
+    arm = f"control_seed_{seed}" if condition == "control" else f"{fault}_seed_{seed}"
+    return (ROOT / "experiments" / root / "outputs" / model / arch
+            / f"{fault}_task{task}_seed{seed}" / str(task) / arm)
 
 
-def dom_removal_step(fault_events, control_events):
-    """web_dom_missing 的检测：与匹配控制臂逐步比对，首个"故障臂元素集合
-    真子集"的步即删元素发生处。文本签名（not found）只覆盖极少数，因为观察
-    每步重建，删掉的元素通常不再被引用，不会报错。"""
-    control_by_step = {e.get("step"): e for e in control_events}
-    for event in fault_events:
-        step = event.get("step")
-        other = control_by_step.get(step)
-        if other is None:
-            continue
-        fault_ids = element_ids(event.get("observation") or "")
-        control_ids = element_ids(other.get("observation") or "")
-        if fault_ids and control_ids and fault_ids < control_ids:
-            return step
-    return None
-
-
-def trial_success(path: Path):
-    """Official evaluator verdict, not the agent's self-reported status.
-
-    trial_record.success is the agent's submitted verdict (~0.82); the official
-    success rate is ~0.39, and the recovery question is about the latter.
-    """
+def read_trial(path: Path):
     try:
-        record = json.load(open(path))
+        return json.load(open(path / "trial_record.json"))
     except Exception:
-        return None
-    return record.get("official_success")
+        return {}
 
 
 def official_success_index():
-    """(model, arch, fault, task, seed, condition) -> official_success from the
-    committed pipeline rows."""
     rows = json.load(open(ROOT / "experiments/stage_c_full/rows.json"))["rows"]
     index = {}
     for row in rows:
@@ -125,88 +108,107 @@ def main():
             if fault not in FAULTS or not status.get("fault_triggered"):
                 continue
             task, seed = job.get("task_id"), job.get("seed")
-            injection_step = job.get("injection_step")
-            trace_dir = ROOT / "traces" / root
-            traces = list(trace_dir.glob(f"**/*{fault}__task{task}__seed{seed}__fault*"))
-            if not traces:
+            fault_record = read_trial(trial_dir(root, model, arch, fault, task, seed, "fault"))
+            control_record = read_trial(trial_dir(root, model, arch, fault, task, seed, "control"))
+            fault_trace = (fault_record.get("paths") or {}).get("trace")
+            control_trace = (control_record.get("paths") or {}).get("trace")
+            if not fault_trace:
                 continue
-            events = step_events(traces[0])
-            by_step = {e.get("step"): e for e in events}
-            # 锚定故障步：用观察里的故障签名首现位置，不依赖 status.injection_step。
-            # 两者对 web_http_error 差 1（status 记 2，签名在 trace step 1），
-            # 用签名更稳健；status 值仅记录以便对照。
+            events = load_events(fault_trace)
+
+            # anchor on the fault's own signature
             fault_step = None
             for event in events:
-                if fault_observed(fault, json.dumps(event.get("observation") or "", ensure_ascii=False)):
+                if fault_signature(fault, json.dumps(event.get("observation") or "", ensure_ascii=False)):
                     fault_step = event.get("step")
                     break
-            if fault == "web_dom_missing" and fault_step is None:
-                controls = list(trace_dir.glob(f"**/*{fault}__task{task}__seed{seed}__control*"))
-                if controls:
-                    removal = dom_removal_step(events, step_events(controls[0]))
-                    if removal is not None:
-                        fault_step = removal
-            observed = fault_step is not None
-            faulted = by_step.get(fault_step) or {}
-            after = [e for e in events if (e.get("step") or 0) > (fault_step or 0)]
+            dom_uncertain = False
+            if fault == "web_dom_missing" and fault_step is None and control_trace:
+                control_events = load_events(control_trace)
+                control_by_step = {e.get("step"): e for e in control_events}
+                for event in events:
+                    other = control_by_step.get(event.get("step"))
+                    if other is None:
+                        continue
+                    f_ids = element_ids(event.get("observation") or "")
+                    c_ids = element_ids(other.get("observation") or "")
+                    if f_ids and c_ids and f_ids < c_ids:
+                        fault_step = event.get("step")
+                        dom_uncertain = True      # AX diff can also mean divergent paths
+                        break
+
+            by_step = {e.get("step"): e for e in events}
+            after = [e for e in events if (e.get("step") or 0) > (fault_step if fault_step is not None else -1)]
             next_event = after[0] if after else None
+            faulted = by_step.get(fault_step) or {}
+            retried = bool(next_event and next_event.get("action") == faulted.get("action"))
             if fault == "web_http_error":
-                # 该故障把页面替换成假 500 页（工具层 err=False），恢复应看下一观察
-                # 是否已回到真实页面，而不是看 err。
-                recovered = bool(next_event and not fault_observed(
+                continued = bool(next_event and not fault_signature(
                     fault, json.dumps(next_event.get("observation") or "", ensure_ascii=False)))
             else:
-                recovered = bool(next_event and not next_event.get("error"))
-            retried_same_tool = bool(next_event and next_event.get("action") == faulted.get("action"))
+                continued = bool(next_event and not next_event.get("error"))
+            retry_succeeded = bool(retried and continued)
+
+            step_delta = None
+            if fault_record.get("steps") is not None and control_record.get("steps") is not None:
+                step_delta = fault_record["steps"] - control_record["steps"]
+            llm_delta = None
+            if fault_record.get("llm_calls") is not None and control_record.get("llm_calls") is not None:
+                llm_delta = fault_record["llm_calls"] - control_record["llm_calls"]
+
             records.append({
                 "root": root, "model": model, "architecture": arch, "fault": fault,
-                "task": task, "seed": seed,
-                "status_injection_step": injection_step, "fault_step": fault_step,
-                "observed": observed,
-                "retried_same_tool": retried_same_tool,
-                "recovered": recovered,
-                "steps_after_fault": len(after),
-                "error_at_fault": bool(faulted.get("error")),
-                "reached_stop": any(e.get("action") == "stop" for e in events),
+                "task": task, "seed": seed, "observed": fault_step is not None,
+                "fault_step": fault_step, "dom_detection_uncertain": dom_uncertain,
+                "continued": continued, "retried_same_tool": retried,
+                "retry_succeeded": retry_succeeded,
+                "step_delta": step_delta, "llm_delta": llm_delta,
                 "success": official.get((model, arch, fault, task, seed, "fault")),
                 "control_success": official.get((model, arch, fault, task, seed, "control")),
             })
 
+    def rate(rows, key):
+        vals = [r[key] for r in rows if r[key] is not None]
+        return round(sum(vals) / len(vals), 4) if vals else None
+
+    def mean(rows, key):
+        vals = [r[key] for r in rows if r[key] is not None]
+        return round(statistics.mean(vals), 3) if vals else None
+
     summary = {}
     for fault in FAULTS:
-        rows = [r for r in records if r["fault"] == fault and r["success"] is not None]
+        rows = [r for r in records if r["fault"] == fault]
         observed = [r for r in rows if r["observed"]]
         summary[fault] = {
-            "n": len(rows),
-            "observed": len(observed),
+            "n_triggered": len(rows),
+            "n_observed": len(observed),
             "observed_rate": round(len(observed) / len(rows), 4) if rows else None,
-            "retry_same_tool_rate": round(sum(r["retried_same_tool"] for r in observed)
-                                          / len(observed), 4) if observed else None,
-            "recovered_rate": round(sum(r["recovered"] for r in observed)
-                                          / len(observed), 4) if observed else None,
-            "mean_steps_after_fault": round(sum(r["steps_after_fault"] for r in rows)
-                                            / len(rows), 2) if rows else None,
-            "success_observed": round(sum(r["success"] for r in observed) / len(observed), 4)
-                                if observed else None,
-            "success_not_observed": round(sum(r["success"] for r in rows if not r["observed"])
-                                          / max(1, len(rows) - len(observed)), 4),
-            "control_success_observed": round(sum(r["control_success"] for r in observed
-                                                  if r["control_success"] is not None)
-                                              / max(1, sum(1 for r in observed
-                                                           if r["control_success"] is not None)), 4),
+            "dom_detection_uncertain": fault == "web_dom_missing",
+            "continued_rate": rate(observed, "continued"),
+            "retried_rate": rate(observed, "retried_same_tool"),
+            "retry_succeeded_rate": rate(observed, "retry_succeeded"),
+            "step_delta_mean": mean(rows, "step_delta"),
+            "llm_delta_mean": mean(rows, "llm_delta"),
+            "official_success_observed": rate(observed, "success"),
+            "official_success_control_paired": rate(observed, "control_success"),
+            "official_success_all": rate(rows, "success"),
         }
 
     OUT.mkdir(parents=True, exist_ok=True)
     json.dump({"records": records, "by_fault": summary}, open(OUT / "recovery.json", "w"), indent=1)
-    lines = ["# 故障后恢复行为（基于现有 trace，无新 trial）", "",
-             "| 故障 | n | 观察到 | 立即重试 | 下一步恢复 | 故障后均步数 | 官方成功(观察) | 控制臂(观察) | 成功(未见) |",
-             "|---|---|---|---|---|---|---|---|"]
+    lines = ["# 故障后行为与配对代价（现有 trace，官方判定）", "",
+             "| 故障 | 触发n | 看到 | 继续执行 | 重试同工具 | 重试成功 | Δ步数(配对) | ΔLLM | 成功(看到) | 控制臂 | 备注 |",
+             "|---|---|---|---|---|---|---|---|---|---|---|"]
     for fault in FAULTS:
         s = summary[fault]
-        lines.append(f"| {fault} | {s['n']} | {s['observed']} ({s['observed_rate']}) | "
-                     f"{s['retry_same_tool_rate']} | {s['recovered_rate']} | "
-                     f"{s['mean_steps_after_fault']} | {s['success_observed']} | "
-                     f"{s['control_success_observed']} | {s['success_not_observed']} |")
+        note = "观察率检测不确定" if s["dom_detection_uncertain"] else ""
+        lines.append(f"| {fault} | {s['n_triggered']} | {s['n_observed']} ({s['observed_rate']}) | "
+                     f"{s['continued_rate']} | {s['retried_rate']} | {s['retry_succeeded_rate']} | "
+                     f"{s['step_delta_mean']:+} | {s['llm_delta_mean']:+} | "
+                     f"{s['official_success_observed']} | {s['official_success_control_paired']} | {note} |")
+    lines.append("")
+    lines.append("> 「继续执行」= 下一步无报错/离开假错误页；「重试成功」= 下一步与原动作同工具且无报错；"
+                 "二者都不等于最终成功。Δ步数为故障臂减配对控制臂。")
     open(OUT / "recovery.md", "w").write("\n".join(lines) + "\n")
     print(json.dumps(summary, indent=1))
 
