@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "The user with the most commits to the primer/design project is **Shawn Allen** (commit author email: shawn.allen@github.com) with **95 commits**.\n\nDetails from the Contributors page (http://localhost:8023/primer/design/-/graphs/main), which lists contributors sorted by commit count on the main branch (excluding merge commits):\n1. Shawn Allen – 95 commits (shawn.allen@github.com) ← most commits\n2. Inayaili León – 77 commits (yaili@github.com)\n3. Aurora Pleguezuelo – 66 commits (auareyou@github.com)\n4. Joshua Shao – 54 commits (jhuashao@github.com)\n\nThere is a single clear leader (no tie). Note: \"Shawn Allen\" is the git commit author name; this GitLab instance has no registered user account matching that name (a Users search returned 0 results), so the identifier available for this top committer is the author name/email shown above."
+  ],
+  "error_details": null
+}

@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "The user with the most commits to the primer/design project is **Shawn Allen** (email shawn.allen@github.com) with **95 commits**. This clearly leads the next contributors: Inayaili León (77 commits) and Aurora Pleguezuelo (66 commits). Data source: GitLab Repository → Contributors/Graph page for the main branch."
+  ],
+  "error_details": null
+}

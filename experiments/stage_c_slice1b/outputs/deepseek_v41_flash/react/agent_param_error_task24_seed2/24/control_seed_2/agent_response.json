@@ -1,0 +1,6 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": null,
+  "error_details": "Based on the reviews on the product page, there are two reviewers: \"Jay\" and \"Josef Bürger\". The review by \"Jay\" (summary \"Wonderful!\", body \"Nothing.....everyday use.\") is the only English review whose text appears truncated and could potentially reference the price. The review by \"Josef Bürger\" (in German: \"Die Haflinger sind wie beschrieben und erwartet sehr gut\") does not mention price. Neither review's visible text explicitly states the price is unfair. The most likely reviewer mentioning price being unfair is \"Jay\"."
+}

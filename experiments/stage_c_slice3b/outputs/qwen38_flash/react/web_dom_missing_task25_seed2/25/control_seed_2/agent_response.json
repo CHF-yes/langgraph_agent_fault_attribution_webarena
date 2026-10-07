@@ -1,0 +1,6 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "NOT_FOUND_ERROR",
+  "retrieved_data": null,
+  "error_details": "No reviewer meets both criteria. The only reviewer who explicitly mentions \"print quality\" is GoldfishGoldfish (\"It gives great print quality...\"), but that review has a rating of 80% = 4 stars, which exceeds the 3-star limit. All other reviews rated 3 stars or less (e.g., J. B. Shirey II, AMAZON SHOPAHOLIC, Jennifer Healy Keintz at 20%/1 star) discuss issues like clogged print heads, ink cost, and connectivity, but do NOT explicitly mention \"print quality.\" Therefore, there are no reviewers who mention print quality explicitly with a rating of 3 or fewer stars."
+}

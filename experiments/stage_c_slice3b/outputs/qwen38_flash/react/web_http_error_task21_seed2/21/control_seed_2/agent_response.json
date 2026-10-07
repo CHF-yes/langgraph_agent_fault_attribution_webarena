@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "The reviewer who explicitly mentions the ear cups being small is **Dibbins** — their review is titled \"Cup for ears very small\" and states: \"The ear cups MAY be ok for children... but for adult sized ears they are way too small.\" \n\n(Related but less specific mentions of small fit/ears: Catso — \"they really are for people with very small ears\"; Michelle Davis — padding only goes over kids' small ears, not her adult-sized ears.)"
+  ],
+  "error_details": null
+}

@@ -1,0 +1,51 @@
+{
+  "task_id": 25,
+  "intent_template_id": 222,
+  "sites": [
+    "shopping"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"Reviewer(s) who explicitly mention print quality with a rating of 3 or fewer stars:\\n\\n• **Bob in Vegas** – Review titled \\\"Poorly designed, lousy performance\\\" rated 20% (≈1 star), describing poor print/performance quality.\\n• **AMAZON SHOPAHOLIC** – Review titled \\\"HORRIBLE IN EVERY WAY!\\\" rated 20% (≈1 star), explicitly criticizing the printing/ink output quality.\\n\\n(Note: GoldfishGoldfish also mentions \\\"great print quality\\\" but gave a high/positive rating, so does not qualify.)\"\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "status": "success",
+        "retrieved_data": [
+          "reviewer(s) who explicitly mention print quality with a rating of 3 or fewer stars: * **bob in vegas** - review titled \"poorly designed, lousy performance\" rated 20% (1 star), describing poor print/performance quality. * **amazon shopaholic** - review titled \"horrible in every way!\" rated 20% (1 star), explicitly criticizing the printing/ink output quality. (note: goldfishgoldfish also mentions \"great print quality\" but gave a high/positive rating, so does not qualify.)"
+        ],
+        "task_type": "retrieve"
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "roxanne brandon coffey",
+          "nelson"
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/2), Missing: 2, Extra: 1",
+            "Expected: [roxanne brandon coffey, nelson], Got: [reviewer(s) who explicitly mention print quality with a rating of 3 or fewer stars: * **bob in vegas** - review titled \"poorly designed, lousy performance\" rated 20% (1 star), describing poor print/performance quality. * **amazon shopaholic** - review titled \"horrible in every way!\" rated 20% (1 star), explicitly criticizing the printing/ink output quality. (note: goldfishgoldfish also mentions \"great print quality\" but gave a high/positive rating, so does not qualify.)]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false
+}

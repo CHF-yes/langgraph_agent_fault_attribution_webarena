@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "pairing_scheme": "seed-paired-v2",
+  "trial_id": "model=deepseek_v41_flash|arch=react|fault=agent_param_error|task=25|seed=2|cond=control|rep=0",
+  "file_stem": "deepseek_v41_flash__react__agent_param_error__task25__seed2__control__rep0",
+  "pair_key": "model=deepseek_v41_flash|arch=react|fault=agent_param_error|task=25|seed=2|cond=-|rep=0",
+  "condition": "control",
+  "model_profile": "deepseek_v41_flash",
+  "architecture": "react",
+  "fault_type": "agent_param_error",
+  "task_id": 25,
+  "fault_seed": 2,
+  "replicate": 0,
+  "run_config": {
+    "run_id": "20261007T161336-bbf7a6",
+    "response_schema_clamped": false,
+    "thinking_mode": "disabled",
+    "task_id": 25,
+    "site": "shopping",
+    "url": "http://localhost:7770/epson-workforce-wf-3620-wifi-direct-all-in-one-color-inkjet-printer-copier-scanner-amazon-dash-replenishment-ready.html",
+    "max_steps": 20,
+    "fault_intensity": "off",
+    "fault_label": "control",
+    "injection_step": null,
+    "trial_index": 0
+  },
+  "paths": {
+    "agent_response": "experiments/stage_c_slice1b/outputs/deepseek_v41_flash/react/agent_param_error_task25_seed2/25/control_seed_2/agent_response.json",
+    "network_har": "experiments/stage_c_slice1b/outputs/deepseek_v41_flash/react/agent_param_error_task25_seed2/25/control_seed_2/network.har",
+    "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/stage_c_slice1b/20261007T161336-bbf7a6/deepseek_v41_flash__react__agent_param_error__task25__seed2__control__rep0.jsonl"
+  },
+  "completed": false,
+  "success": false,
+  "injection_count": 0,
+  "steps": 20,
+  "cap_exhausted": true,
+  "llm_calls": 20,
+  "time_sec": 81.312,
+  "error": null,
+  "code": {
+    "repo_root": "/data/webarena/langgraph_agent_fault_attribution_webarena",
+    "git_sha": "d8962c0b59f5c7f82ec989466743f2773a59cb1e",
+    "git_branch": "stagec-exec-chain",
+    "git_dirty": false,
+    "recorded_at": 1791360897.6007252
+  },
+  "created_at": 1791360897.6007264
+}

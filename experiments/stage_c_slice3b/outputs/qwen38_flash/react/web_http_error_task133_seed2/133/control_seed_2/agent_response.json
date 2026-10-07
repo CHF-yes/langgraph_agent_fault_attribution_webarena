@@ -1,0 +1,11 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    {
+      "answer": 2,
+      "explanation": "On March 2, 2023, Eric Bailey made 2 commits to a11yproject.com: 'Copy tweaks (#1523)' (SHA a323cbb6) and 'Add Are you making these five mistakes when writing alt text? post (#1522)' (SHA 9bf4ae35)."
+    }
+  ],
+  "error_details": null
+}

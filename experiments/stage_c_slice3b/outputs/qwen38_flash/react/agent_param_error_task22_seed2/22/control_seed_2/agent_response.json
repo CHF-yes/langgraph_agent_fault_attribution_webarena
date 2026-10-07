@@ -1,0 +1,6 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "NOT_FOUND_ERROR",
+  "retrieved_data": null,
+  "error_details": "No reviewer on this page mentions an \"under water\" photo for the product. After loading all 12 customer reviews (via limit=50), none of the review texts reference underwater photography. The reviews cover topics such as appearance/ease of use (badkat), \"worked great\" (DrummerGirlLB), the PINK color and viewing screen (G. Matsusaki), the dual-flash feature and picture quality disappointment (Razzberry), replacing a Canon used in the snow (Nic), the viewfinder (CA Guy), image quality (Kenan), the slide-cover design failing in the snow (CT), long-term use and gorgeous color (romance lover), and comparisons to the Fuji S5200 (AZ Guy). Therefore there are no reviewers who mention an under water photo."
+}

@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "The user with the most commits to the primer/design project is Shawn Allen, with 95 commits (username/email: shawn.allen@github.com). This is the top entry on the Contributors page (/-/graphs/main), which lists contributors in descending order of commit count."
+  ],
+  "error_details": null
+}

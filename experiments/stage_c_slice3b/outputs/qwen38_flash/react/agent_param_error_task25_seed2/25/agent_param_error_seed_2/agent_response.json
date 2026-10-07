@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "Reviewer(s) who explicitly mention print quality with a rating of 3 or fewer stars:\n\n• **Bob in Vegas** – Review titled \"Poorly designed, lousy performance\" rated 20% (≈1 star), describing poor print/performance quality.\n• **AMAZON SHOPAHOLIC** – Review titled \"HORRIBLE IN EVERY WAY!\" rated 20% (≈1 star), explicitly criticizing the printing/ink output quality.\n\n(Note: GoldfishGoldfish also mentions \"great print quality\" but gave a high/positive rating, so does not qualify.)"
+  ],
+  "error_details": null
+}
