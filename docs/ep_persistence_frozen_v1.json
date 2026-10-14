@@ -1,0 +1,18 @@
+{
+  "schema": "experiment_freeze/1",
+  "experiment_id": "ep-persistence-v1",
+  "git_commit": "137b5a65b549a009808025efb0cbc4810c5ff831",
+  "git_branch": "stagec-exec-chain",
+  "git_dirty": false,
+  "target_policy_name": "legacy_first_draw_then_semantic_target_lock_v1",
+  "target_policy_version": "semantic-target-lock-v1",
+  "window_steps": 5,
+  "variants": {
+    "single": 1,
+    "repeat3": 3
+  },
+  "pairing_scheme": "seed-paired-v2",
+  "evaluator_adapter_version": "stage-c-eval-adapter/1",
+  "dataset_path": "/data/webarena/webarena-dataset/webarena-verified.json",
+  "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30"
+}
