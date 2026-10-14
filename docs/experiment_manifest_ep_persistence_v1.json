@@ -1,0 +1,85 @@
+{
+  "schema": "experiment_design_proposal/1",
+  "experiment_id": "ep-persistence-v1",
+  "status": "proposed_not_implemented_not_run",
+  "created_date": "2026-10-14",
+  "reviewed_framework_commit": "35cda5c",
+  "study_type": "follow_up_exploratory_mechanism_study",
+  "historical_stage_c_trials": 768,
+  "historical_trials_in_new_primary_contrast": false,
+  "main_models": ["deepseek_v41_flash", "qwen38_flash"],
+  "architectures": ["react", "plan_execute"],
+  "faults": ["web_http_error", "agent_param_error", "web_dom_missing"],
+  "conditions": ["control", "fault"],
+  "variants": {
+    "single": {"max_injections": 1},
+    "repeat3": {"max_injections": 3}
+  },
+  "common_fault_policy": {
+    "intensity": "high",
+    "active_window_proxy_execution_steps": 5,
+    "window_includes_first_actual_injection": true,
+    "one_injection_max_per_action_uid": true,
+    "stable_target_reused": true,
+    "retarget_if_absent_or_ambiguous": false,
+    "first_injection_policy": {
+      "web_http_error": {"index": 2, "unit": "proxy_execution_step"},
+      "web_dom_missing": {"index": 2, "unit": "proxy_execution_step"},
+      "agent_param_error": {"index": 1, "unit": "parameter_action"}
+    },
+    "http_mechanism": "synthetic_observation_replacement_not_real_network_outage",
+    "target_policy": "legacy_first_draw_then_semantic_target_lock_v1",
+    "target_policy_implementation_frozen": false
+  },
+  "categories": [
+    {"name": "shopping_review_retrieval", "task_ids": [24]},
+    {"name": "reddit_post_retrieval", "task_ids": [27]},
+    {"name": "gitlab_public_repository_retrieval", "task_ids": [132]},
+    {"name": "public_navigation", "task_ids": [118]}
+  ],
+  "task_selection_uses_historical_outcomes": true,
+  "max_steps": 20,
+  "legacy_job_timeout_minutes": 45,
+  "timeout_scope": "job_not_assumed_per_arm",
+  "seeds": [1, 2],
+  "independent_control_per_variant": true,
+  "primary_analysis_population": "all_assigned_validly_scored_pairs_including_untriggered",
+  "primary_contrast": "(control_minus_fault)_repeat3 - (control_minus_fault)_single",
+  "task_equal_weighting": true,
+  "confirmatory_p_values_enabled_for_four_task_design": false,
+  "stratified_bootstrap_enabled_for_four_task_design": false,
+  "pilot": {
+    "models": ["deepseek_v41_flash"],
+    "architectures": ["react", "plan_execute"],
+    "task_ids": [24, 118],
+    "seeds": [1],
+    "variants": ["single", "repeat3"],
+    "conditions": ["control", "fault"],
+    "jobs": 24,
+    "trials": 48,
+    "purpose": "implementation_and_budget_feasibility_not_significance_screening"
+  },
+  "full_exploratory_matrix": {
+    "models": 2,
+    "architectures": 2,
+    "faults": 3,
+    "tasks": 4,
+    "seeds": 2,
+    "variants": 2,
+    "conditions": 2,
+    "jobs": 192,
+    "trials": 384,
+    "includes_pilot_only_if_same_frozen_protocol": true,
+    "remaining_after_eligible_pilot": 336
+  },
+  "execution_authorized": false,
+  "implementation_required_before_execution": true,
+  "execution_requirements": [
+    "freeze_and_hash_semantic_target_policy",
+    "record_model_endpoint_thinking_temperature_dataset_evaluator_and_code_versions",
+    "pass_offline_state_machine_legacy_compatibility_and_artifact_integrity_checks",
+    "write_interleaved_block_schedule_before_running",
+    "explicit_authorization_for_paid_pilot",
+    "report_pilot_integrity_and_actual_cost_before_authorizing_remaining_matrix"
+  ]
+}
