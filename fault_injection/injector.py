@@ -65,6 +65,31 @@ class FaultInjector:
         self.config = config
         self._step_counter = 0           # 当前任务步数
         self._last_obs: Optional[dict] = None
+        self._current_action_uid: Optional[str] = None
+        # E-P 持久化实验走 episode 引擎；Stage C（experiment_id=stage-c）保持原路径。
+        self._engine = None
+        if getattr(config, "experiment_id", "stage-c") == "ep-persistence-v1":
+            from fault_injection.persistence import PersistenceEngine
+            self._engine = PersistenceEngine(config)
+
+    # ---- E-P 辅助 ----
+
+    def _begin_action(self, name: str) -> None:
+        """推进动作步并标记 action_uid（同一动作内重复读取观察不额外计次）。"""
+        self._step_counter += 1
+        self.config.set_execution_step(self._step_counter)
+        self._current_action_uid = f"{name}:{self._step_counter}"
+
+    def _param_error(self, action: str, *, element_id, text=None):
+        """参数动作故障：E-P 走引擎（同目标重放），Stage C 走原实现。"""
+        if self._engine is None:
+            return inject_param_error(self.config, action, element_id=element_id, text=text)
+        obs = self._last_obs or {}
+        return self._engine.apply_param(
+            action=action, element_id=element_id, text=text,
+            proxy_step=self._step_counter, action_uid=self._current_action_uid,
+            elements=obs.get("elements") or {}, page_url=obs.get("url", ""),
+        )
 
     # ---- 生命周期 ----
 
@@ -100,8 +125,7 @@ class FaultInjector:
 
     def goto(self, url: str):
         """导航 + 故障注入。"""
-        self._step_counter += 1
-        self.config.set_execution_step(self._step_counter)
+        self._begin_action("goto")
 
         # 注入点B: 超时
         inject_timeout(self.config)
@@ -119,14 +143,11 @@ class FaultInjector:
 
     def click(self, element_id: str):
         """点击 + 故障注入。"""
-        self._step_counter += 1
-        self.config.set_execution_step(self._step_counter)
+        self._begin_action("click")
 
         # 注入点B: 超时 + 参数错误
         inject_timeout(self.config)
-        new_eid, _ = inject_param_error(
-            self.config, "click", element_id=element_id
-        )
+        new_eid, _ = self._param_error("click", element_id=element_id)
 
         # 获取元素名（用于 GitLab 故障匹配）
         elem_name = self._get_element_name(new_eid)
@@ -150,14 +171,11 @@ class FaultInjector:
 
     def type_text(self, element_id: str, text: str):
         """输入文本 + 故障注入。"""
-        self._step_counter += 1
-        self.config.set_execution_step(self._step_counter)
+        self._begin_action("type_text")
 
         # 注入点B: 超时 + 参数错误
         inject_timeout(self.config)
-        new_eid, new_text = inject_param_error(
-            self.config, "type_text", element_id=element_id, text=text
-        )
+        new_eid, new_text = self._param_error("type_text", element_id=element_id, text=text)
 
         result = self._env.type_text(new_eid, new_text)
         obs = self._to_dict(result)
@@ -166,8 +184,7 @@ class FaultInjector:
 
     def scroll(self, direction: str):
         """滚动 + 故障注入（超时）。"""
-        self._step_counter += 1
-        self.config.set_execution_step(self._step_counter)
+        self._begin_action("scroll")
         inject_timeout(self.config)
         result = self._env.scroll(direction)
         obs = self._cache_faulted_observation(self._to_dict(result))
@@ -175,8 +192,7 @@ class FaultInjector:
 
     def go_back(self):
         """后退 + 故障注入（超时）。"""
-        self._step_counter += 1
-        self.config.set_execution_step(self._step_counter)
+        self._begin_action("go_back")
         inject_timeout(self.config)
         result = self._env.go_back()
         obs = self._cache_faulted_observation(self._to_dict(result))
@@ -184,8 +200,7 @@ class FaultInjector:
 
     def go_forward(self):
         """前进 + 故障注入（超时）。"""
-        self._step_counter += 1
-        self.config.set_execution_step(self._step_counter)
+        self._begin_action("go_forward")
         inject_timeout(self.config)
         result = self._env.go_forward()
         obs = self._cache_faulted_observation(self._to_dict(result))
@@ -193,24 +208,18 @@ class FaultInjector:
 
     def select_option(self, element_id: str, option: str):
         """选择 + 故障注入。"""
-        self._step_counter += 1
-        self.config.set_execution_step(self._step_counter)
+        self._begin_action("select_option")
         inject_timeout(self.config)
-        new_eid, _ = inject_param_error(
-            self.config, "select_option", element_id=element_id
-        )
+        new_eid, _ = self._param_error("select_option", element_id=element_id)
         result = self._env.select_option(new_eid, option)
         obs = self._cache_faulted_observation(self._to_dict(result))
         return self._wrap_result(result, obs)
 
     def hover(self, element_id: str):
         """悬停 + 故障注入（超时）。"""
-        self._step_counter += 1
-        self.config.set_execution_step(self._step_counter)
+        self._begin_action("hover")
         inject_timeout(self.config)
-        new_eid, _ = inject_param_error(
-            self.config, "hover", element_id=element_id
-        )
+        new_eid, _ = self._param_error("hover", element_id=element_id)
         result = self._env.hover(new_eid)
         obs = self._cache_faulted_observation(self._to_dict(result))
         return self._wrap_result(result, obs)
@@ -228,8 +237,18 @@ class FaultInjector:
         }
 
     def _cache_faulted_observation(self, obs: dict) -> dict:
-        """Apply observation faults once and cache the resulting page."""
+        """Apply observation faults once and cache the resulting page.
+
+        E-P：观察层故障交给 episode 引擎（同目标、限窗口重复）；Stage C 保持原链条。
+        """
         obs = inject_state_misjudge(self.config, obs)
+        if self._engine is not None:
+            obs = self._engine.apply_dom(obs, proxy_step=self._step_counter,
+                                         action_uid=self._current_action_uid)
+            obs = self._engine.apply_http(obs, proxy_step=self._step_counter,
+                                          action_uid=self._current_action_uid)
+            self._last_obs = dict(obs)
+            return obs
         obs = inject_dom_missing(self.config, obs)
         obs = inject_popup(self.config, obs)
         obs = inject_http_error(self.config, obs)

@@ -22,7 +22,8 @@ from fault_injection.episode import FaultEpisode, TARGET_ABSENT, TARGET_OK
 from fault_injection.targets import (TARGET_AMBIGUOUS, TARGET_POLICY_VERSION,
                                      dom_identity, match_identity, normalize_url,
                                      param_identity)
-from fault_injection.web_faults import HTTP_ERROR_PAGES
+from fault_injection.web_faults import (HTTP_ERROR_PAGES, _combinations,
+                                        _sample_multiple)
 
 
 def _error_page(sample: dict) -> dict:
@@ -44,9 +45,14 @@ class PersistenceEngine:
         self._param_target: Optional[dict] = None
         self._param_corruption: Optional[dict] = None
         self._param_action_index: int = 0
+        self._enabled = {name for name in ("web_http_error", "web_dom_missing",
+                                           "agent_param_error")
+                         if getattr(config, name, False)}
 
     # ---- HTTP ----
     def apply_http(self, obs: dict, *, proxy_step: int, action_uid: str) -> dict:
+        if "web_http_error" not in self._enabled:
+            return obs
         page_url = obs.get("url", "")
         if self._http_sample is not None:
             target = self.episode.target or {}
@@ -63,7 +69,9 @@ class PersistenceEngine:
         # 首次抽取：仍由固定注入步把关（与 Stage C 一致）
         if proxy_step != self.config.injection_step:
             return obs
-        sample = HTTP_ERROR_PAGES["500"]
+        # 复用 Stage C 的抽样顺序（同 seed 首次扰动与 single 相同）
+        error_type = self.config.rng.pick(["500", "503"])
+        sample = HTTP_ERROR_PAGES[error_type]
         self._http_sample = sample
         self.episode.record_injection(
             proxy_step=proxy_step, action_uid=action_uid,
@@ -73,6 +81,8 @@ class PersistenceEngine:
 
     # ---- DOM ----
     def apply_dom(self, obs: dict, *, proxy_step: int, action_uid: str) -> dict:
+        if "web_dom_missing" not in self._enabled:
+            return obs
         elements = obs.get("elements") or {}
         page_url = obs.get("url", "")
         if self._dom_targets is not None:
@@ -100,11 +110,15 @@ class PersistenceEngine:
             return obs
         count = {"low": 1, "medium": 2}.get(self.config.intensity, 3)
         all_ids = list(elements.keys())
-        if not all_ids:
+        if not all_ids or len(all_ids) <= 1:
             self.episode.record_skip(proxy_step=proxy_step, action_uid=action_uid,
                                      reason="target_absent")
             return obs
-        chosen = all_ids[:max(1, min(count, len(all_ids) - 1))] if len(all_ids) > 1 else all_ids
+        count = max(1, min(count, len(all_ids) - 1))
+        chosen = (self.config.rng.pick(_combinations(all_ids, count))
+                  if count == 1 else _sample_multiple(self.config.rng, all_ids, count))
+        if not isinstance(chosen, list):
+            chosen = [chosen]
         self._dom_targets = [dom_identity(elements[eid], page_url) for eid in chosen]
         self._dom_remove_count = len(chosen)
         self.episode.record_injection(proxy_step=proxy_step, action_uid=action_uid,
@@ -124,6 +138,8 @@ class PersistenceEngine:
     # ---- 参数动作 ----
     def apply_param(self, *, action: str, element_id, text, proxy_step: int, action_uid: str,
                     elements: dict, page_url: str):
+        if "agent_param_error" not in self._enabled:
+            return element_id, text
         current = elements.get(str(element_id)) if isinstance(elements, dict) else None
         if self._param_target is not None:
             eid, status = match_identity(self._param_target, elements or {}, page_url)

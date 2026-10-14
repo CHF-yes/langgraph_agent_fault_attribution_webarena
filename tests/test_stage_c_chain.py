@@ -2256,12 +2256,12 @@ def test_persistence_http_replays_same_sample_on_the_same_page():
     page = "http://localhost:7770/a"
     first = engine.apply_http({"url": page, "elements": {}, "page_content": ""},
                               proxy_step=2, action_uid="goto-1")
-    assert "500 Internal Server Error" in first["page_content"]
+    assert engine._http_sample is not None                     # 抽到 500 或 503 之一
     assert engine.episode.target["page_url"] == page
-    # 刷新同一页（新观察）仍故障，且是同一个样本
+    # 刷新同一页（新观察）仍故障，且重放**同一个**样本
     again = engine.apply_http({"url": page, "elements": {}, "page_content": "real"},
                               proxy_step=3, action_uid="goto-2")
-    assert "500 Internal Server Error" in again["page_content"]
+    assert again["page_content"] == first["page_content"]
     # 别的 URL 不受影响
     other = engine.apply_http({"url": "http://localhost:7770/b", "elements": {},
                                "page_content": "real-b"}, proxy_step=3, action_uid="goto-3")
@@ -2323,3 +2323,79 @@ def test_persistence_param_replays_the_same_corruption():
                                      proxy_step=4, action_uid="p3",
                                      elements={"88": other}, page_url=page)
     assert (eid3, text3) == ("88", None)
+
+
+# ==========================================================================
+# 25. FaultInjector ↔ PersistenceEngine 接线（mock 环境，离线）
+# ==========================================================================
+
+class _FakeEnv:
+    """最小 mock 环境：只提供 goto/click/observe，返回 PageObservation。"""
+
+    def __init__(self, page_elements=None):
+        from standard_agent.environment.browser import PageObservation
+        self._PageObservation = PageObservation
+        self.url = "about:blank"
+        self.elements = page_elements or {}
+        self.clicked = []
+
+    def start(self): pass
+    def stop(self): pass
+
+    def _page(self, url):
+        return self._PageObservation(url=url, ax_tree_text="[1] text 'real'",
+                                     element_map=self.elements)
+
+    def observe(self):
+        return self._page(self.url)
+
+    def goto(self, url):
+        self.url = url
+        return self._page(url)
+
+    def click(self, element_id):
+        self.clicked.append(str(element_id))
+        return self._page(self.url)
+
+
+def test_stage_c_injector_keeps_the_legacy_path():
+    from fault_injection.config import FaultConfig
+    from fault_injection.injector import FaultInjector
+    config = FaultConfig(intensity="high", seed=7, web_http_error=True, injection_step=2)
+    injector = FaultInjector(_FakeEnv(), config)
+    assert injector._engine is None                       # Stage C 不启用引擎
+    injector.goto("http://h/a")                           # step 1
+    page = injector.goto("http://h/b")                    # step 2 → 注入
+    assert "500" in page.ax_tree_text or "503" in page.ax_tree_text
+
+
+def test_injector_repeat3_persists_http_and_replays_param():
+    from fault_injection.config import FaultConfig
+    from fault_injection.injector import FaultInjector
+    # HTTP：同页刷新重复故障，别的 URL 不受影响
+    cfg = FaultConfig(intensity="high", seed=7, web_http_error=True, injection_step=2,
+                      experiment_id="ep-persistence-v1", fault_variant="repeat3")
+    injector = FaultInjector(_FakeEnv(), cfg)
+    assert injector._engine is not None
+    injector.goto("http://h/a")                           # step 1：正常
+    first = injector.goto("http://h/b")                   # step 2：注入
+    assert "500" in first.ax_tree_text or "503" in first.ax_tree_text
+    again = injector.goto("http://h/b")                   # step 3：同页刷新仍故障
+    assert "500" in again.ax_tree_text or "503" in again.ax_tree_text
+    other = injector.goto("http://h/c")                   # step 4：别的 URL 正常
+    assert "500" not in other.ax_tree_text and "503" not in other.ax_tree_text
+    assert injector._engine.episode.target["page_url"] == "http://h/b"
+
+    # 参数：同目标重放同一损坏规则
+    button = {"role": "button", "name": "Place order", "attrs": {}, "role_index": 0}
+    env = _FakeEnv(page_elements={"9": button})
+    cfg2 = FaultConfig(intensity="high", seed=7, agent_param_error=True, injection_step=1,
+                       experiment_id="ep-persistence-v1", fault_variant="repeat3")
+    injector2 = FaultInjector(env, cfg2)
+    injector2.observe()                                   # 建立 _last_obs
+    injector2.click("9")                                  # 首次 → invalid_
+    first_eid = env.clicked[-1]
+    assert first_eid.startswith("invalid_")
+    env.elements = {"77": button}                         # 重建后换 id，语义目标不变
+    injector2.click("77")                                 # 重放同一损坏规则
+    assert env.clicked[-1] == first_eid
