@@ -1,7 +1,7 @@
 {
   "schema": "experiment_freeze/1",
   "experiment_id": "ep-persistence-v1",
-  "git_commit": "f617e6cbef3122762521e032499279420d95eeab",
+  "git_commit": "3a9bf6a42d1eaf5a90a8c1f6d1e7a8d3bf1977a0",
   "git_branch": "stagec-exec-chain",
   "git_dirty": false,
   "target_policy_name": "legacy_first_draw_then_semantic_target_lock_v1",
