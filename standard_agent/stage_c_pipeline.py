@@ -16,6 +16,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import sys
 import time
@@ -26,6 +27,9 @@ TRIAL_RECORD = "trial_record.json"
 NETWORK_HAR = "network.har"
 OFFICIAL_EVAL = "official_eval.json"
 OFFICIAL_EVAL_JOURNAL = "official_eval.re-evaluate.json"
+
+#: 适配器/评分路径的版本号；与上游 webarena 版本一起进入评分绑定。
+EVALUATOR_ADAPTER_VERSION = "stage-c-eval-adapter/1"
 
 EVALUATION_STATUS_NATIVE = "native"
 EVALUATION_STATUS_COMPATIBILITY = "compatibility"
@@ -272,6 +276,35 @@ def resolve_evaluator_config(config_path: str | Path | None, out_dir: str | Path
     return {"config_path": config_path, "substitutions": substitutions}
 
 
+def _sha256_file(path: Path) -> str | None:
+    try:
+        digest = hashlib.sha256()
+        with open(path, "rb") as handle:
+            for chunk in iter(lambda: handle.read(1 << 20), b""):
+                digest.update(chunk)
+        return digest.hexdigest()
+    except OSError:
+        return None
+
+
+def evaluation_binding(trial_dir: str | Path, config_path, result: dict | None = None) -> dict:
+    """把评分与其输入绑定：response、HAR、实际评分配置、evaluator 版本。
+
+    没有这层绑定，"响应已换、评分仍旧"无法被发现——这正是护栏只能防覆盖、
+    防不了错配的地方。旧评分缺少该字段时只能标为**来源未验证**，绝不能事后
+    补一个哈希就宣称已验证。
+    """
+    trial_dir = Path(trial_dir)
+    return {
+        "agent_response_sha256": _sha256_file(trial_dir / AGENT_RESPONSE),
+        "network_har_sha256": _sha256_file(trial_dir / NETWORK_HAR),
+        "config_sha256": _sha256_file(Path(config_path)) if config_path else None,
+        "evaluator_adapter_version": EVALUATOR_ADAPTER_VERSION,
+        "webarena_verified_version": (result or {}).get("webarena_verified_version")
+        if isinstance(result, dict) else None,
+    }
+
+
 def read_official_eval(trial_dir: str | Path):
     """返回 ``(记录, 读取错误)``。文件不存在返回 ``(None, None)``。"""
     path = Path(trial_dir) / OFFICIAL_EVAL
@@ -316,7 +349,20 @@ def evaluate_trial(trial_dir: str | Path, *, task_id: int, config_path,
     if existing is not None and not force_re_evaluate:
         classification = classify_evaluation(existing)
         if classification["evaluation_status"] != EVALUATION_STATUS_ERROR:
-            return {"result": existing, **classification, "source": "reused"}
+            current = evaluation_binding(trial_dir, config_path, existing)
+            recorded = existing.get("_evaluation_binding")
+            if recorded is None:
+                # 旧评分没有绑定：可以复用，但必须标为来源未验证，且不事后补哈希。
+                return {"result": existing, **classification, "binding": current,
+                        "source": "reused_unverified"}
+            if recorded == current:
+                return {"result": existing, **classification, "binding": current,
+                        "source": "reused"}
+            warn(f"⚠️ {path} 的评分绑定与当前 response/HAR/config 不一致；"
+                 "不视为可复用，保留原文件。需要重评请显式传 --force-re-evaluate。")
+            return {"result": existing, "evaluation_status": EVALUATION_STATUS_ERROR,
+                    "official_success": None, "reason": "evaluation binding mismatch",
+                    "binding": current, "source": "stale_binding"}
         warn(f"⚠️ {path} 已有但判定为 error（{classification.get('reason') or '无 evaluator 结果'}）；"
              "保留原文件，不覆盖。需要重评请显式传 --force-re-evaluate。")
         return {"result": existing, **classification, "source": "existing_invalid"}
@@ -337,6 +383,10 @@ def evaluate_trial(trial_dir: str | Path, *, task_id: int, config_path,
         network_trace_path=trial_dir / NETWORK_HAR, config_path=config_path,
     )
     classification = classify_evaluation(result)
+    if isinstance(result, dict):
+        # 新评分写入时绑定其输入，供以后判定"这份评分还配得上这份响应吗"。
+        result = {**result,
+                  "_evaluation_binding": evaluation_binding(trial_dir, config_path, result)}
     path.write_text(json.dumps(result, ensure_ascii=False, indent=2, default=str) + "\n",
                     encoding="utf-8")
     if force_re_evaluate:

@@ -1947,9 +1947,11 @@ def _eval_result(success=True, status="success"):
 
 
 def test_evaluate_trial_reuses_a_valid_existing_eval(tmp_path):
-    from standard_agent.stage_c_pipeline import evaluate_trial
+    from standard_agent.stage_c_pipeline import evaluate_trial, evaluation_binding
     trial = _trial_dir(tmp_path)
-    (trial / "official_eval.json").write_text(json.dumps(_eval_result()), encoding="utf-8")
+    bound = {**_eval_result(),
+             "_evaluation_binding": evaluation_binding(trial, None, _eval_result())}
+    (trial / "official_eval.json").write_text(json.dumps(bound), encoding="utf-8")
     before = (trial / "official_eval.json").read_text()
 
     def boom(*args, **kwargs):
@@ -2001,7 +2003,8 @@ def test_audit_reads_existing_eval_without_evaluating(tmp_path):
     rows = collect_rows(tmp_path, evaluate=False)
     by_task = {str((row["cell"] or {}).get("task_id")): row for row in rows}
     assert by_task["118"]["official_success"] is True
-    assert by_task["118"]["evaluation_source"] == "reused"
+    # 旧评分没有绑定：只读复用但标记为来源未验证
+    assert by_task["118"]["evaluation_source"] == "reused_unverified"
     assert by_task["21"]["evaluation_status"] == "skipped"
 
 
@@ -2030,3 +2033,139 @@ def test_cli_rejects_force_re_evaluate_on_audit(tmp_path, monkeypatch, capsys):
         "stage_c_pipeline.py", "audit", "--root", str(tmp_path), "--force-re-evaluate"])
     assert pipeline_main() == 2
     assert "--force-re-evaluate" in capsys.readouterr().err
+
+
+# ==========================================================================
+# 21. E-P episode 状态机（纯逻辑）
+# ==========================================================================
+
+def test_single_variant_injects_once_then_releases():
+    from fault_injection.episode import FaultEpisode
+    episode = FaultEpisode("single", window_steps=5)
+    ok, reason = episode.decide(proxy_step=2, action_uid="a1")
+    assert (ok, reason) == (True, "inject")
+    episode.record_injection(proxy_step=2, action_uid="a1", target={"kind": "url"})
+    assert episode.injections == 1 and episode.released == "budget_reached"
+    # 之后任何步都不再注入
+    assert episode.decide(proxy_step=3, action_uid="a2") == (False, "released")
+
+
+def test_repeat3_window_and_budget_release():
+    from fault_injection.episode import FaultEpisode
+    episode = FaultEpisode("repeat3", window_steps=5)
+    episode.record_injection(proxy_step=2, action_uid="a1", target={"id": "T"})
+    assert episode.t0 == 2 and episode.window_end == 6
+    # 同动作去重
+    assert episode.decide(proxy_step=3, action_uid="a1") == (False, "action_already_injected")
+    # 目标不符 → 不注入、不耗次数
+    assert episode.decide(proxy_step=3, action_uid="a2", matches_locked=False) == (False, "off_target")
+    # 窗口内同目标可再注入，累计到 3 次后释放
+    assert episode.decide(proxy_step=3, action_uid="a2")[0] is True
+    episode.record_injection(proxy_step=3, action_uid="a2")
+    episode.record_injection(proxy_step=4, action_uid="a3")
+    assert episode.injections == 3 and episode.released == "budget_reached"
+    # 另一 episode：窗口过期释放
+    other = FaultEpisode("repeat3", window_steps=5)
+    other.record_injection(proxy_step=2, action_uid="b1", target={"id": "T"})
+    other.note_step(7)                       # 2 + 5 = 7 > window_end(6)
+    assert other.released == "window_expired"
+    assert other.decide(proxy_step=7, action_uid="b2") == (False, "released")
+
+
+def test_episode_records_ambiguous_and_absent_without_consuming_dose():
+    from fault_injection.episode import FaultEpisode
+    episode = FaultEpisode("repeat3")
+    assert episode.decide(proxy_step=2, action_uid="a1", target_status="ambiguous") == (False, "target_ambiguous")
+    assert episode.decide(proxy_step=2, action_uid="a1", target_status="absent") == (False, "target_absent")
+    assert episode.injections == 0 and episode.t0 is None
+
+
+def test_episode_locks_the_first_target():
+    from fault_injection.episode import FaultEpisode
+    episode = FaultEpisode("repeat3", target_policy_version="legacy-v1")
+    episode.record_injection(proxy_step=2, action_uid="a1", target={"role": "link", "name": "Next"})
+    assert episode.target == {"role": "link", "name": "Next"}
+    episode.record_injection(proxy_step=3, action_uid="a2", target={"role": "link", "name": "Other"})
+    assert episode.target == {"role": "link", "name": "Next"}    # 不被后续覆盖
+    assert episode.snapshot()["target_policy_version"] == "legacy-v1"
+
+
+def test_episodes_do_not_share_counters():
+    from fault_injection.episode import FaultEpisode
+    a, b = FaultEpisode("repeat3"), FaultEpisode("repeat3")
+    a.record_injection(proxy_step=2, action_uid="x")
+    assert b.injections == 0 and b.t0 is None
+
+
+def test_classify_injection_log_is_variant_aware():
+    from fault_injection.episode import classify_injection_log
+    inj = lambda step, uid: {"event": "injection", "proxy_step": step, "action_uid": uid}
+    assert classify_injection_log([], variant="repeat3")["dose_class"] == "not_triggered"
+    assert classify_injection_log([inj(2, "a")], variant="repeat3")["dose_class"] == "partial_dose"
+    full = classify_injection_log([inj(2, "a"), inj(3, "b"), inj(4, "c")], variant="repeat3")
+    assert full["dose_class"] == "full_dose" and full["valid"]
+    dup = classify_injection_log([inj(2, "a"), inj(3, "a")], variant="repeat3")
+    assert not dup["valid"] and any("more than once" in e for e in dup["errors"])
+    outside = classify_injection_log([inj(2, "a"), inj(9, "b")], variant="repeat3")
+    assert not outside["valid"] and any("outside window" in e for e in outside["errors"])
+    over = classify_injection_log([inj(2, "a"), inj(3, "b"), inj(4, "c"), inj(5, "d")],
+                                  variant="repeat3")
+    assert not over["valid"] and over["dose_class"] == "implementation_error"
+    # single 仍要求恰好一次
+    assert classify_injection_log([inj(2, "a")], variant="single")["valid"] is True
+    assert classify_injection_log([inj(2, "a"), inj(3, "b")], variant="single")["valid"] is False
+    assert classify_injection_log([], variant="single")["valid"] is False
+
+
+# ==========================================================================
+# 22. 评分绑定：响应/HAR/config 变更后旧评分不可复用
+# ==========================================================================
+
+def test_new_evaluation_is_bound_to_its_inputs(tmp_path):
+    import hashlib
+    from standard_agent.stage_c_pipeline import evaluate_trial
+    trial = _trial_dir(tmp_path)
+    evaluate_trial(trial, task_id=118, config_path=None,
+                   evaluate_fn=lambda *a, **k: _eval_result(), evaluate=True)
+    written = json.loads((trial / "official_eval.json").read_text())
+    binding = written["_evaluation_binding"]
+    actual = hashlib.sha256((trial / "agent_response.json").read_bytes()).hexdigest()
+    assert binding["agent_response_sha256"] == actual
+    assert binding["network_har_sha256"] == hashlib.sha256(
+        (trial / "network.har").read_bytes()).hexdigest()
+    assert binding["evaluator_adapter_version"]
+
+
+def test_stale_binding_is_not_reused(tmp_path):
+    from standard_agent.stage_c_pipeline import evaluate_trial
+    trial = _trial_dir(tmp_path)
+    evaluate_trial(trial, task_id=118, config_path=None,
+                   evaluate_fn=lambda *a, **k: _eval_result(), evaluate=True)
+    before = (trial / "official_eval.json").read_text()
+    # 响应被换成另一条：绑定不再匹配
+    (trial / "agent_response.json").write_text(json.dumps(
+        {"task_type": "NAVIGATE", "status": "SUCCESS",
+         "retrieved_data": ["different"], "error_details": None}), encoding="utf-8")
+    warnings = []
+
+    def boom(*args, **kwargs):
+        raise AssertionError("stale binding must not silently re-evaluate")
+
+    out = evaluate_trial(trial, task_id=118, config_path=None, evaluate_fn=boom,
+                         evaluate=True, warn=warnings.append)
+    assert out["source"] == "stale_binding"
+    assert out["official_success"] is None
+    assert (trial / "official_eval.json").read_text() == before
+    assert warnings and "绑定" in warnings[0]
+
+
+def test_legacy_eval_without_binding_is_unverified(tmp_path):
+    from standard_agent.stage_c_pipeline import evaluate_trial
+    trial = _trial_dir(tmp_path)
+    (trial / "official_eval.json").write_text(json.dumps(_eval_result()), encoding="utf-8")
+
+    def boom(*args, **kwargs):
+        raise AssertionError("legacy eval must reuse without evaluating")
+
+    out = evaluate_trial(trial, task_id=118, config_path=None, evaluate_fn=boom, evaluate=True)
+    assert out["source"] == "reused_unverified"

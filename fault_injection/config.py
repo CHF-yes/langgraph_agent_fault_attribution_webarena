@@ -9,6 +9,13 @@ import time
 from dataclasses import dataclass, field
 from typing import Optional
 
+from fault_injection.episode import (
+    DEFAULT_WINDOW_STEPS,
+    EXPERIMENT_ID_STAGE_C,
+    FAULT_VARIANTS,
+    FaultEpisode,
+)
+
 
 # ============================================================
 # SeededRandom — 可复现随机数
@@ -160,6 +167,11 @@ class FaultConfig:
     enabled: bool = True             # 总开关
     injection_step: Optional[int] = None  # 固定 action step；None 保持概率模式
 
+    # ---- E-P 实验身份（Stage C 默认值保证旧行为不变）----
+    experiment_id: str = EXPERIMENT_ID_STAGE_C   # "stage-c" | "ep-persistence-v1"
+    fault_variant: str = "single"                # "single" | "repeat3"
+    fault_window_steps: int = DEFAULT_WINDOW_STEPS
+
     # ---- ① Web底层故障 ----
     web_timeout: bool = False        # 接口超时（动作前注入延迟）
     web_http_error: bool = False     # 500/503（goto 返回假错误页面）
@@ -184,6 +196,7 @@ class FaultConfig:
     _parameter_action_count: int = field(default=0, repr=False)
     _parameter_action_index: int = field(default=0, repr=False)
     _deterministic_injected: bool = field(default=False, repr=False)
+    _episode: Optional[FaultEpisode] = field(default=None, repr=False)
 
     def __post_init__(self):
         if self.intensity not in {"off", *INTENSITY_PRESETS}:
@@ -191,6 +204,13 @@ class FaultConfig:
                 f"Unknown fault intensity '{self.intensity}'. "
                 "Expected one of: off, low, medium, high"
             )
+        if self.fault_variant not in FAULT_VARIANTS:
+            raise ValueError(
+                f"Unknown fault variant '{self.fault_variant}'. "
+                f"Expected one of: {sorted(FAULT_VARIANTS)}"
+            )
+        if self.fault_window_steps < 1:
+            raise ValueError("fault_window_steps must be >= 1")
         self._rng = SeededRandom(self.seed)
         self._intensity_config = INTENSITY_PRESETS.get(
             self.intensity, INTENSITY_PRESETS["low"]
@@ -200,8 +220,22 @@ class FaultConfig:
         self._parameter_action_count = 0
         self._parameter_action_index = 0
         self._deterministic_injected = False
+        self._episode = FaultEpisode(self.fault_variant,
+                                     window_steps=self.fault_window_steps,
+                                     experiment_id=self.experiment_id)
 
     # ---- 属性访问 ----
+
+    @property
+    def episode(self) -> FaultEpisode:
+        """本 trial 的 E-P episode 状态机（每 config 独立，绝不放全局）。"""
+        return self._episode
+
+    @property
+    def variant_label(self) -> str:
+        return f"{self.experiment_id}:{self.fault_variant}"
+
+    # ---- 属性访问（续） ----
 
     @property
     def probability(self) -> float:
