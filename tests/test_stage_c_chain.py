@@ -2236,3 +2236,90 @@ def test_param_identity_requires_action_and_target():
     assert identity["kind"] == "param" and identity["action"] == "click"
     found, status = match_identity(identity, {"9": _elem(role="button", name="Place order")}, page)
     assert (found, status) == ("9", "ok")
+
+
+# ==========================================================================
+# 24. E-P 持久化引擎（同目标重复故障，离线）
+# ==========================================================================
+
+def _ep_config(**kw):
+    from fault_injection.config import FaultConfig
+    base = dict(intensity="high", seed=7, injection_step=2,
+                experiment_id="ep-persistence-v1", fault_variant="repeat3")
+    base.update(kw)
+    return FaultConfig(**base)
+
+
+def test_persistence_http_replays_same_sample_on_the_same_page():
+    from fault_injection.persistence import PersistenceEngine
+    engine = PersistenceEngine(_ep_config(web_http_error=True))
+    page = "http://localhost:7770/a"
+    first = engine.apply_http({"url": page, "elements": {}, "page_content": ""},
+                              proxy_step=2, action_uid="goto-1")
+    assert "500 Internal Server Error" in first["page_content"]
+    assert engine.episode.target["page_url"] == page
+    # 刷新同一页（新观察）仍故障，且是同一个样本
+    again = engine.apply_http({"url": page, "elements": {}, "page_content": "real"},
+                              proxy_step=3, action_uid="goto-2")
+    assert "500 Internal Server Error" in again["page_content"]
+    # 别的 URL 不受影响
+    other = engine.apply_http({"url": "http://localhost:7770/b", "elements": {},
+                               "page_content": "real-b"}, proxy_step=3, action_uid="goto-3")
+    assert other["page_content"] == "real-b"
+    # 第 3 次后预算用尽释放，后续不再注入
+    engine.apply_http({"url": page, "elements": {}, "page_content": "real"},
+                      proxy_step=4, action_uid="goto-4")
+    released = engine.apply_http({"url": page, "elements": {}, "page_content": "real"},
+                                 proxy_step=5, action_uid="goto-5")
+    assert released["page_content"] == "real"
+    assert engine.episode.released == "budget_reached"
+
+
+def test_persistence_dom_hides_the_same_elements_after_rebuild():
+    from fault_injection.persistence import PersistenceEngine
+    page = "http://localhost:7770/list"
+    e = lambda r, n, i: {"role": r, "name": n, "attrs": {}, "role_index": i}
+    obs = {"url": page,
+           "page_content": "[1] link 'Next'\n[2] text 'body'\n[3] link 'Other'",
+           "elements": {"1": e("link", "Next", 0), "2": e("text", "body", 0),
+                        "3": e("link", "Other", 0)}}
+    engine = PersistenceEngine(_ep_config(web_dom_missing=True))
+    first = engine.apply_dom(obs, proxy_step=2, action_uid="a1")
+    assert engine._dom_targets and first["elements"] != obs["elements"]
+    hidden_names = {v["name"] for v in first["elements"].values()}
+    # 重建后换了 id，但被屏蔽的是同一批语义元素
+    rebuilt = {"url": page,
+               "page_content": "[10] link 'Next'\n[20] text 'body'\n[30] link 'Other'",
+               "elements": {"10": e("link", "Next", 0), "20": e("text", "body", 0),
+                            "30": e("link", "Other", 0)}}
+    second = engine.apply_dom(rebuilt, proxy_step=3, action_uid="a2")
+    assert {v["name"] for v in second["elements"].values()} == hidden_names
+    # 锁定元素之一缺失 → 跳过且不消耗剂量、不改动观察
+    before_injections = engine.episode.injections
+    missing = {"url": page, "page_content": "[40] link 'Next'",
+               "elements": {"40": e("link", "Next", 0)}}
+    third = engine.apply_dom(missing, proxy_step=4, action_uid="a3")
+    assert third == missing
+    assert engine.episode.injections == before_injections
+
+
+def test_persistence_param_replays_the_same_corruption():
+    from fault_injection.persistence import PersistenceEngine
+    page = "http://localhost:7770/checkout"
+    button = {"role": "button", "name": "Place order", "attrs": {}, "role_index": 0}
+    engine = PersistenceEngine(_ep_config(agent_param_error=True, injection_step=1))
+    eid, text = engine.apply_param(action="click", element_id="9", text=None,
+                                   proxy_step=2, action_uid="p1",
+                                   elements={"9": button}, page_url=page)
+    assert eid.startswith("invalid_") and engine._param_target is not None
+    # 同目标再次出现（新 AX id）→ 重放同一损坏规则
+    eid2, _ = engine.apply_param(action="click", element_id="77", text=None,
+                                 proxy_step=3, action_uid="p2",
+                                 elements={"77": button}, page_url=page)
+    assert eid2 == eid
+    # 换成别的目标 → 跳过，不改写参数
+    other = {"role": "button", "name": "Apply coupon", "attrs": {}, "role_index": 0}
+    eid3, text3 = engine.apply_param(action="click", element_id="88", text=None,
+                                     proxy_step=4, action_uid="p3",
+                                     elements={"88": other}, page_url=page)
+    assert (eid3, text3) == ("88", None)
