@@ -3098,3 +3098,154 @@ def test_freeze_binds_run_parameters(tmp_path, monkeypatch):
     args_bad = build_parser().parse_args(base + ["--max-steps", "30"])
     ok, note = check_freeze(args_bad, schedule)
     assert ok is False and "max_steps" in note
+
+
+# ==========================================================================
+# 34. resume：注入步解析 + 两臂都要通过
+# ==========================================================================
+
+def _write_arm(block_dir, *, condition, fault_type, task, seed, variant="repeat3",
+               model="m1", arch="react", injection_step=2, intensity="high",
+               task_type="RETRIEVE"):
+    from standard_agent.trial_metadata import build_trial_record, write_trial_record
+    label = "control" if condition == "control" else fault_type
+    arm = block_dir / str(task) / f"{label}_seed_{seed}"
+    arm.mkdir(parents=True, exist_ok=True)
+    (arm / "agent_response.json").write_text(json.dumps(
+        {"task_type": task_type, "status": "SUCCESS", "retrieved_data": None,
+         "error_details": None}), encoding="utf-8")
+    (arm / "network.har").write_text('{"log": {"entries": []}}', encoding="utf-8")
+    if condition == "control":
+        run_config = {"max_steps": 20, "injection_step": None, "fault_intensity": "off"}
+    else:
+        run_config = {"max_steps": 20, "injection_step": injection_step,
+                      "fault_intensity": intensity}
+    record = build_trial_record(
+        model_profile=model, architecture=arch, fault_type=fault_type, task_id=task,
+        seed=seed, condition=condition, replicate=0, run_config=run_config,
+        experiment_id="ep-persistence-v1", fault_variant=variant)
+    write_trial_record(arm / "trial_record.json", record)
+    return arm
+
+
+def test_block_artifacts_check_resolves_injection_step(monkeypatch):
+    import scripts.ep_run_schedule as runner
+    captured = {}
+
+    def fake_job_arms_ok(job_dir, **kwargs):
+        captured.update(kwargs)
+        return True, []
+
+    monkeypatch.setattr(runner, "job_arms_ok", fake_job_arms_ok)
+    args = runner.build_parser().parse_args(["--schedule", "s", "--experiment-root", "/tmp/e"])
+    assert args.fault_injection_step is None
+    job = {"variant": "repeat3", "model_profile": "m1", "architecture": "react",
+           "fault_type": "web_http_error", "task_id": 24, "seed": 1}
+    runner._block_artifacts_ok(Path("/tmp/e"), job, args, "ep-persistence-v1")
+    assert captured["injection_step"] == 2          # HTTP 解析为 2，而不是 None
+    job_param = dict(job, fault_type="agent_param_error")
+    runner._block_artifacts_ok(Path("/tmp/e"), job_param, args, "ep-persistence-v1")
+    assert captured["injection_step"] == 1          # 参数故障解析为 1
+    args7 = runner.build_parser().parse_args(
+        ["--schedule", "s", "--experiment-root", "/tmp/e", "--fault-injection-step", "7"])
+    runner._block_artifacts_ok(Path("/tmp/e"), job, args7, "ep-persistence-v1")
+    assert captured["injection_step"] == 7          # 显式值优先
+
+
+def _resume_setup(tmp_path, monkeypatch):
+    from standard_agent.ep_schedule import build_schedule, write_schedule
+    schedule = build_schedule(models=["m1"], architectures=["react"],
+                              faults=["web_http_error"], tasks=[24], seeds=[1],
+                              schedule_seed=4)
+    schedule["window_steps"] = 5
+    path = write_schedule(schedule, tmp_path / "schedule.json")
+    root = tmp_path / "ep"
+    block = root / "repeat3" / "outputs" / "m1" / "react" / "web_http_error_task24_seed1"
+    _write_arm(block, condition="control", fault_type="web_http_error", task=24, seed=1)
+    _write_arm(block, condition="fault", fault_type="web_http_error", task=24, seed=1,
+               injection_step=2)
+    import scripts.ep_run_schedule as runner
+    for item in runner._commands(
+            runner.build_parser().parse_args(["--schedule", str(path),
+                                              "--experiment-root", str(root)]),
+            schedule,
+            [j for j in runner.plan_jobs(schedule) if j["variant"] == "repeat3"]):
+        p = Path(item["status_path"])
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text(json.dumps({"returncode": 0, "infrastructure_error": False,
+                                 "mechanism_error": False}), encoding="utf-8")
+    return runner, schedule, path, root
+
+
+def test_resume_skips_only_when_both_arms_are_complete(tmp_path, monkeypatch):
+    runner, schedule, path, root = _resume_setup(tmp_path, monkeypatch)
+    started = []
+
+    class FakeProc:
+        def __init__(self, command, cwd=None, stdout=None, stderr=None,
+                     text=None, start_new_session=None):
+            started.append(command)
+            self.pid = 1
+            self.returncode = 0
+
+        def wait(self, timeout=None): return 0
+        def poll(self): return 0
+
+    monkeypatch.setattr(runner.subprocess, "Popen", FakeProc)
+    import sys as _sys
+    monkeypatch.setattr(_sys, "argv", ["ep_run_schedule.py", "--schedule", str(path),
+                                       "--experiment-root", str(root), "--execute",
+                                       "--allow-unfrozen", "--resume",
+                                       "--job-timeout-minutes", "1"])
+    assert runner.main() == 0
+    # 完整配对的 repeat3 块必须全部跳过；single 块无产物，正常启动，与本用例无关
+    assert not any("repeat3" in " ".join(cmd) for cmd in started)
+
+
+def test_resume_does_not_skip_when_the_other_arm_errored(tmp_path, monkeypatch):
+    runner, schedule, path, root = _resume_setup(tmp_path, monkeypatch)
+    # 把故障臂的 status 改成机制错误 → 整块不得跳过
+    bad = None
+    for p in root.rglob("*.status.json"):
+        text = p.read_text()
+        if "web_http_error_seed_1" in str(p) or "repeat3" in str(p):
+            if "fault" in str(p):
+                bad = p
+    if bad is None:
+        bad = sorted(root.rglob("*.status.json"))[0]
+    bad.write_text(json.dumps({"returncode": 0, "infrastructure_error": False,
+                               "mechanism_error": True}), encoding="utf-8")
+    started = []
+
+    class FakeProc:
+        def __init__(self, command, cwd=None, stdout=None, stderr=None,
+                     text=None, start_new_session=None):
+            started.append(command)
+            self.pid = 1
+            self.returncode = 0
+            stdout.write("        injection_count=0 fault_seed=1 faults=[] steps=[]\n")
+
+        def wait(self, timeout=None): return 0
+        def poll(self): return 0
+
+    monkeypatch.setattr(runner.subprocess, "Popen", FakeProc)
+    import sys as _sys
+    monkeypatch.setattr(_sys, "argv", ["ep_run_schedule.py", "--schedule", str(path),
+                                       "--experiment-root", str(root), "--execute",
+                                       "--allow-unfrozen", "--resume",
+                                       "--job-timeout-minutes", "1"])
+    runner.main()
+    assert started      # 未跳过 → 确实启动了 job
+
+
+def test_resume_on_a_fresh_directory_is_refused(tmp_path, monkeypatch):
+    from standard_agent.ep_schedule import build_schedule, write_schedule
+    import scripts.ep_run_schedule as runner
+    schedule = build_schedule(models=["m1"], architectures=["react"],
+                              faults=["web_http_error"], tasks=[24], seeds=[1])
+    path = write_schedule(schedule, tmp_path / "schedule.json")
+    import sys as _sys
+    monkeypatch.setattr(_sys, "argv", ["ep_run_schedule.py", "--schedule", str(path),
+                                       "--experiment-root", str(tmp_path / "fresh"),
+                                       "--execute", "--allow-unfrozen", "--resume"])
+    assert runner.main() == 3

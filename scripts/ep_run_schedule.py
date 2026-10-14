@@ -28,6 +28,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from run_baseline import load_tasks, resolve_start_url  # noqa: E402
+from fault_injection.config import resolve_injection_step  # noqa: E402
 from scripts.run_fault_matrix import classify_log, command_for  # noqa: E402
 from standard_agent.stage_c_pipeline import job_arms_ok  # noqa: E402
 from standard_agent.trial_metadata import git_status  # noqa: E402
@@ -209,12 +210,18 @@ def _block_dir(root: Path, job: dict) -> Path:
 
 
 def _block_artifacts_ok(root: Path, job: dict, args, experiment_id: str | None = None) -> bool:
-    """整块（control+fault）产物完整且身份/配置一致，才允许跳过。"""
+    """整块（control+fault）产物完整且身份/配置一致，才允许跳过。
+
+    注入步必须与**实际运行相同地解析**：`--fault-injection-step` 缺省时，HTTP/DOM 会
+    解析成 2、参数故障解析成 1；若直接传 None 去比对记录，完整的产物也会被误判不一致
+    而再次付费重跑。
+    """
     ok, _ = job_arms_ok(_block_dir(root, job), fault_type=job["fault_type"],
                         task_id=job["task_id"], seed=job["seed"],
                         model_profile=job["model_profile"],
                         architecture=job["architecture"], max_steps=args.max_steps,
-                        injection_step=args.fault_injection_step,
+                        injection_step=resolve_injection_step(
+                            job["fault_type"], args.fault_injection_step),
                         fault_intensity=args.fault_intensity,
                         dataset_path=os.getenv("WEBARENA_DATASET"),
                         condition_scope="both",
@@ -232,32 +239,44 @@ def _resumable(status: dict) -> bool:
 
 def run_planned(args, planned, freeze_note, experiment_id: str | None = None) -> int:
     root = Path(args.experiment_root)
+    if args.resume and not _has_run_artifacts(root):
+        print(f"error: {root} 没有可续跑的运行产物；全新目录请去掉 --resume",
+              file=sys.stderr)
+        return 3
     if _has_run_artifacts(root) and not args.resume:
         print(f"error: {root} 已存在运行产物（logs/status/trials）；"
               "首批要求空目录；如需续跑请显式加 --resume", file=sys.stderr)
         return 3
     skipped = 0
     if _has_run_artifacts(root) and args.resume:
-        # 按 block 判定：整块（control+fault）产物完整且身份/参数一致才跳过；
-        # 只看 status 会漏掉"有 status 无产物"的假完成。
-        checked: dict = {}
+        # 按 block 判定，且**两臂都要**：两臂 status 正常（跑完、非基础设施、非机制错误）
+        # 且两臂产物完整一致，才允许跳过。只检查首先遇到的那一臂，可能把另一臂的机制
+        # 错误一起跳过。
+        blocks: dict = {}
         for item in planned:
             job = item["job"]
-            block = (job["variant"], job["model_profile"], job["architecture"],
-                     job["fault_type"], job["task_id"], job["seed"])
-            if block not in checked:
-                status_path = Path(item["status_path"])
-                status_clean = True
-                if status_path.exists():
+            key = (job["variant"], job["model_profile"], job["architecture"],
+                   job["fault_type"], job["task_id"], job["seed"])
+            blocks.setdefault(key, []).append(item)
+        for key, items in blocks.items():
+            ok = _block_artifacts_ok(root, items[0]["job"], args, experiment_id)
+            if ok:
+                for item in items:
+                    status_path = Path(item["status_path"])
+                    if not status_path.exists():
+                        ok = False
+                        break
                     try:
-                        status_clean = _resumable(json.loads(status_path.read_text(encoding="utf-8")))
+                        if not _resumable(json.loads(status_path.read_text(encoding="utf-8"))):
+                            ok = False
+                            break
                     except json.JSONDecodeError:
-                        status_clean = False
-                checked[block] = status_clean and _block_artifacts_ok(
-                    root, job, args, experiment_id)
-            if checked[block]:
-                item["_skip"] = True
-                skipped += 1
+                        ok = False
+                        break
+            for item in items:
+                if ok:
+                    item["_skip"] = True
+            skipped += len(items) if ok else 0
     manifest = {"experiment_id": None, "freeze": freeze_note, "resumed_skipped": skipped,
                 "jobs": [{k: item[k] for k in ("key", "block", "log_path", "status_path")}
                          for item in planned],
