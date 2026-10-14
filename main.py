@@ -116,6 +116,14 @@ Examples:
                              help="Random seed for reproducible faults (default: 42)")
     fault_group.add_argument("--fault-injection-step", type=int, default=None,
                              help="Inject the selected fault exactly once at this action step")
+    fault_group.add_argument("--experiment-id", type=str, default="stage-c",
+                             help="Experiment identity; ep-persistence-v1 enables the "
+                                  "E-P episode engine (default: stage-c)")
+    fault_group.add_argument("--fault-variant", type=str, default="single",
+                             choices=["single", "repeat3"],
+                             help="single = one-shot (Stage C behaviour); repeat3 = bounded repeats")
+    fault_group.add_argument("--fault-window-steps", type=int, default=5,
+                             help="E-P active window length in proxy execution steps (default: 5)")
     benchmark_group = parser.add_argument_group("benchmark outputs")
     benchmark_group.add_argument("--webarena-output-dir", default=None,
                                  help="Write per-trial agent_response.json, network.har, and evaluator result")
@@ -686,6 +694,18 @@ def run_benchmark(args):
                 f"faults={[entry.get('fault') for entry in log]} "
                 f"steps={[entry.get('step') for entry in log]}"
             )
+            # E-P：把 episode 的结构化证据单独打一行，供矩阵侧按 variant 校验
+            # （同目标、窗口、每 action 一次、剂量），而不是只看总次数。
+            if getattr(fault_config, "experiment_id", "stage-c") == "ep-persistence-v1":
+                import json as _json
+                _episode = fault_config.episode
+                print("        fault_episode=" + _json.dumps({
+                    "experiment_id": fault_config.experiment_id,
+                    "variant": fault_config.fault_variant,
+                    "window_steps": fault_config.fault_window_steps,
+                    "injections": [e for e in _episode.events if e.get("event") == "injection"],
+                    "snapshot": _episode.snapshot(),
+                }, ensure_ascii=False))
             for entry in log:
                 print(f"        injection={entry}")
 
@@ -831,6 +851,9 @@ def _build_fault_config(args) -> "FaultConfig":
         return FaultConfig.single_fault(
             args.fault_type, intensity=args.fault_intensity, seed=args.fault_seed,
             injection_step=step,
+            experiment_id=getattr(args, "experiment_id", "stage-c"),
+            fault_variant=getattr(args, "fault_variant", "single"),
+            fault_window_steps=getattr(args, "fault_window_steps", 5),
         )
 
     if args.fault_all:

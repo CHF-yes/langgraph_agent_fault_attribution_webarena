@@ -387,7 +387,10 @@ class FaultConfig:
 
     @classmethod
     def single_fault(cls, fault_name: str, intensity: str = "medium",
-                     seed: int = 42, injection_step: Optional[int] = None) -> "FaultConfig":
+                     seed: int = 42, injection_step: Optional[int] = None,
+                     experiment_id: str = EXPERIMENT_ID_STAGE_C,
+                     fault_variant: str = "single",
+                     fault_window_steps: int = DEFAULT_WINDOW_STEPS) -> "FaultConfig":
         """Build a config with exactly one enabled fault for ablation studies."""
         valid_names = {
             "web_timeout", "web_http_error", "web_dom_missing", "web_popup_block",
@@ -397,7 +400,8 @@ class FaultConfig:
         if fault_name not in valid_names:
             raise ValueError(f"Unknown fault '{fault_name}'")
         return cls(intensity=intensity, seed=seed, injection_step=injection_step,
-                   **{fault_name: True})
+                   experiment_id=experiment_id, fault_variant=fault_variant,
+                   fault_window_steps=fault_window_steps, **{fault_name: True})
 
     # ---- 工厂方法 ----
 

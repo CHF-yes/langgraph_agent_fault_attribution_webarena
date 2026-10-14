@@ -2399,3 +2399,64 @@ def test_injector_repeat3_persists_http_and_replays_param():
     env.elements = {"77": button}                         # 重建后换 id，语义目标不变
     injector2.click("77")                                 # 重放同一损坏规则
     assert env.clicked[-1] == first_eid
+
+
+# ==========================================================================
+# 26. run_fault_matrix：variant 校验与 CLI 透传
+# ==========================================================================
+
+def _count_line(count, seed=1, faults="'web_http_error'"):
+    return (f"        injection_count={count} fault_seed={seed} faults=[{faults}] "
+            f"steps={list(range(2, 2 + count))}\n")
+
+
+def test_classify_log_single_rule_unchanged():
+    from scripts.run_fault_matrix import classify_log
+    one = classify_log(_count_line(1), expect_fault=True)
+    assert one["fault_triggered"] and not one["fault_invalid"] and not one["fault_missing"]
+    two = classify_log(_count_line(2), expect_fault=True)
+    assert two["fault_invalid"] is True
+    none = classify_log("no fault lines here\n", expect_fault=True)
+    assert none["fault_missing"] is True and none["fault_triggered"] is False
+
+
+def test_classify_log_repeat3_uses_structured_episode():
+    import json as _json
+    from scripts.run_fault_matrix import classify_log
+    injections = [{"event": "injection", "proxy_step": s, "action_uid": f"goto:{s}"}
+                  for s in (2, 3, 4)]
+    payload = {"experiment_id": "ep-persistence-v1", "variant": "repeat3",
+               "window_steps": 5, "injections": injections}
+    text = _count_line(3) + "        fault_episode=" + _json.dumps(payload) + "\n"
+    out = classify_log(text, expect_fault=True, fault_variant="repeat3", window_steps=5)
+    assert out["fault_count"] == 3 and out["fault_triggered"] and not out["fault_invalid"]
+
+    # 0 剂量：合法未触发，不算 missing、不算 invalid
+    zero = {"experiment_id": "ep-persistence-v1", "variant": "repeat3",
+            "window_steps": 5, "injections": []}
+    text0 = _count_line(0) + "        fault_episode=" + _json.dumps(zero) + "\n"
+    out0 = classify_log(text0, expect_fault=True, fault_variant="repeat3", window_steps=5)
+    assert out0["fault_triggered"] is False and out0["fault_invalid"] is False
+    assert out0["fault_missing"] is False
+
+    # 同一 action_uid 注入两次 → 实现错误
+    dup = {"experiment_id": "ep-persistence-v1", "variant": "repeat3", "window_steps": 5,
+           "injections": [{"event": "injection", "proxy_step": 2, "action_uid": "a"},
+                          {"event": "injection", "proxy_step": 3, "action_uid": "a"}]}
+    textd = _count_line(2) + "        fault_episode=" + _json.dumps(dup) + "\n"
+    outd = classify_log(textd, expect_fault=True, fault_variant="repeat3")
+    assert outd["fault_invalid"] is True
+
+
+def test_command_for_passes_experiment_identity():
+    from scripts.run_fault_matrix import build_parser, command_for
+    args = build_parser().parse_args([
+        "--output-dir", "/tmp/x", "--model-profile", "m1", "--architecture", "react",
+        "--experiment-id", "ep-persistence-v1", "--fault-variant", "repeat3",
+        "--fault-window-steps", "5"])
+    job = {"site": "shopping", "start_url": "http://h/a", "intent": "do it",
+           "task_id": 24, "seed": 1, "fault_type": "web_http_error"}
+    command = command_for(args, job)
+    assert "--experiment-id" in command and "ep-persistence-v1" in command
+    assert "--fault-variant" in command and "repeat3" in command
+    assert "--fault-window-steps" in command and "5" in command

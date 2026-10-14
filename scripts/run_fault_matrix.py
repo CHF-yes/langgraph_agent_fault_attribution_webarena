@@ -49,6 +49,12 @@ def build_parser():
                         help="Run multiple fault types in one matrix")
     parser.add_argument("--fault-intensity", default="high")
     parser.add_argument("--fault-seed", type=int, default=1)
+    parser.add_argument("--experiment-id", default="stage-c",
+                        help="stage-c（默认）或 ep-persistence-v1")
+    parser.add_argument("--fault-variant", choices=["single", "repeat3"], default="single",
+                        help="single=一次性（Stage C）；repeat3=E-P 有限重复")
+    parser.add_argument("--fault-window-steps", type=int, default=5,
+                        help="E-P 活跃窗口（proxy 执行步）")
     parser.add_argument("--fault-injection-step", type=int, default=None)
     # T0 是控制批：condition=control 时每个 job 只跑控制臂，故障槽位退化为作业容器。
     parser.add_argument("--condition", choices=["control", "fault", "both"], default="both",
@@ -142,6 +148,9 @@ def command_for(args, job):
         "--fault-intensity", args.fault_intensity,
         "--fault-seed", str(job["seed"]),
         "--fault-injection-step", str(injection_step),
+        "--experiment-id", str(getattr(args, "experiment_id", "stage-c")),
+        "--fault-variant", str(getattr(args, "fault_variant", "single")),
+        "--fault-window-steps", str(getattr(args, "fault_window_steps", 5)),
     ]
     # T0 是控制批：condition=control 时只跑控制臂，fault 槽位仅作为作业容器。
     if getattr(args, "condition", "both") != "both":
@@ -166,7 +175,7 @@ def resumable_status(status: dict) -> bool:
                 and not status.get("infrastructure_error"))
 
 
-def classify_log(text, *, expect_fault=True):
+def classify_log(text, *, expect_fault=True, fault_variant="single", window_steps=5):
     infrastructure_patterns = (
         r"Traceback \(most recent call last\)",
         r"(?:HTTP|status|status_code|response[_ ]code)[^\n]{0,24}(?:429|502|503)",
@@ -190,13 +199,44 @@ def classify_log(text, *, expect_fault=True):
     ]
     fault_counts = [count for count, _, faults in fault_records if faults.strip()]
     fault_labels = [faults for _, _, faults in fault_records]
-    fault_triggered = any(count == 1 for count in fault_counts)
-    fault_invalid = not fault_counts or any(count != 1 for count in fault_counts)
+
+    # E-P：优先用结构化 episode 证据按 variant 校验（同目标/窗口/每 action 一次/剂量），
+    # 只看总次数不足以证明"重复故障真的生效"。
+    episode_payload = None
+    match = re.search(r"fault_episode=(\{.*\})\s*$", text, re.MULTILINE)
+    if match:
+        try:
+            episode_payload = json.loads(match.group(1))
+        except json.JSONDecodeError:
+            episode_payload = None
+
+    if episode_payload is not None:
+        from fault_injection.episode import classify_injection_log
+        verdict = classify_injection_log(
+            episode_payload.get("injections") or [],
+            variant=episode_payload.get("variant", fault_variant),
+            window_steps=episode_payload.get("window_steps", window_steps))
+        fault_count = verdict["count"]
+        fault_triggered = verdict["count"] > 0
+        fault_invalid = not verdict["valid"]
+        fault_missing = fault_invalid          # repeat3 的 0 剂量是合法未触发
+    elif fault_variant == "single":
+        fault_count = fault_counts[-1] if fault_counts else 0
+        fault_triggered = any(count == 1 for count in fault_counts)
+        fault_invalid = not fault_counts or any(count != 1 for count in fault_counts)
+        fault_missing = fault_invalid
+    else:
+        # 无结构化证据时的 repeat3 兜底：0 合法、>3 越界
+        fault_count = fault_counts[-1] if fault_counts else 0
+        fault_triggered = any(count >= 1 for count in fault_counts)
+        fault_invalid = any(count > 3 for count in fault_counts)
+        fault_missing = fault_invalid
     if not expect_fault:
         # T0 是控制批：本来就没有故障臂，"没有注入"是预期结果而不是异常。
         # 否则每个控制 job 都会被判 fault_invalid，并触发"连续故障缺失即停止"策略。
         fault_triggered = False
         fault_invalid = False
+        fault_missing = False
     infrastructure_error = any(
         re.search(pattern, text, re.IGNORECASE)
         for pattern in infrastructure_patterns
@@ -209,8 +249,8 @@ def classify_log(text, *, expect_fault=True):
         "infrastructure_error": infrastructure_error,
         "task_error": any(marker in text for marker in task_error),
         "fault_expected": bool(expect_fault),
-        "fault_missing": fault_invalid,
-        "fault_count": fault_counts[-1] if fault_counts else 0,
+        "fault_missing": fault_missing,
+        "fault_count": fault_count,
         "fault_triggered": fault_triggered,
         "fault_invalid": fault_invalid,
     }
@@ -410,7 +450,11 @@ def main():
                 continue
             log_file.close()
             text = (output_dir / f"{key}.log").read_text(encoding="utf-8", errors="replace")
-            status = classify_log(text, expect_fault=(getattr(args, "condition", "both") != "control"))
+            status = classify_log(
+                    text,
+                    expect_fault=(getattr(args, "condition", "both") != "control"),
+                    fault_variant=getattr(args, "fault_variant", "single"),
+                    window_steps=getattr(args, "fault_window_steps", 5))
             result = {"job": job, "design_fingerprint": fingerprint,
                       "returncode": process.returncode, **status, "timed_out": False}
             (output_dir / f"{key}.status.json").write_text(
