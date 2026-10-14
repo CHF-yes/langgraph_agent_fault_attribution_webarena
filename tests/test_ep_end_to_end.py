@@ -17,7 +17,20 @@ MODEL = "deepseek_v41_flash"
 ARCH = "react"
 
 
+def _forbid_network(monkeypatch):
+    """socket 级禁网：mock 缺失时任何真实连接都会立刻失败，而不是悄悄打出去。"""
+    import socket
+
+    def _blocked(*args, **kwargs):
+        raise AssertionError("测试禁止联网（mock 缺失即失败）")
+
+    monkeypatch.setattr(socket.socket, "connect", _blocked, raising=False)
+    monkeypatch.setattr(socket.socket, "connect_ex", _blocked, raising=False)
+    monkeypatch.setattr(socket, "create_connection", _blocked, raising=False)
+
+
 def _install_fakes(monkeypatch, navigations: int):
+    _forbid_network(monkeypatch)
     """替换浏览器与 agent 图；agent 只做 `navigations` 次同页导航后结束。
 
     同时把 `create_llm` 换成抛错：mock 缺失时**绝不回退到真实 API**。
