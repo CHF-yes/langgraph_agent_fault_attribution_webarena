@@ -2556,3 +2556,81 @@ def test_design_fingerprint_includes_variant_and_policy():
                                     "--experiment-id", "ep-persistence-v1",
                                     "--fault-variant", "repeat3", "--fault-window-steps", "9"])
     assert fp(a5) != fp(a9)                            # 窗口进指纹
+
+
+# ==========================================================================
+# 29. E-P 交错调度与 D_f 分析
+# ==========================================================================
+
+def test_ep_schedule_is_deterministic_and_interleaved():
+    from standard_agent.ep_schedule import build_schedule, first_variant_per_block
+    kwargs = dict(models=["m1"], architectures=["react"], faults=["web_http_error"],
+                  tasks=[24, 118], seeds=[1], schedule_seed=11)
+    a = build_schedule(**kwargs)
+    b = build_schedule(**kwargs)
+    assert a == b                                        # 同 seed 同顺序
+    assert a["blocks"] == 2 and a["cells"] == 8
+    # 每个 block 四个 cell 各不相同
+    for block in {e["block"] for e in a["entries"]}:
+        cells = {(e["variant"], e["condition"]) for e in a["entries"] if e["block"] == block}
+        assert cells == {("single", "control"), ("single", "fault"),
+                         ("repeat3", "control"), ("repeat3", "fault")}
+    assert len(first_variant_per_block(a)) == 2
+    assert len(set(first_variant_per_block(a))) == 2     # 首 variant 轮换
+    # pair_key 不同 variant 不同，file_stem 带 exp__variant
+    stems = {e["file_stem"] for e in a["entries"]}
+    assert len(stems) == len(a["entries"])
+    assert all(s.startswith("ep-persistence-v1__") for s in stems)
+
+
+def test_ep_schedule_seed_changes_order():
+    from standard_agent.ep_schedule import build_schedule
+    base = dict(models=["m1"], architectures=["react"], faults=["f"],
+                tasks=[1, 2], seeds=[1])
+    assert build_schedule(**base, schedule_seed=1) != build_schedule(**base, schedule_seed=2)
+
+
+def _ep_row(variant, condition, success, task=24, fault="web_http_error",
+            injections=1, steps=8, llm_calls=10):
+    return {"cell": {"model_profile": "m1", "architecture": "react", "fault_type": fault,
+                     "task_id": task, "fault_seed": 1, "condition": condition},
+            "experiment_id": "ep-persistence-v1", "fault_variant": variant,
+            "official_success": success, "injection_count": injections,
+            "steps": steps, "llm_calls": llm_calls}
+
+
+def test_ep_analysis_computes_difference_in_differences():
+    from standard_agent.ep_analysis import ep_analysis
+    rows = []
+    for task in (24, 118):
+        # single：control 成功、fault 成功 → Δ_single = 0
+        rows += [_ep_row("single", "control", True, task),
+                 _ep_row("single", "fault", True, task)]
+        # repeat3：control 成功、fault 失败 → Δ_repeat3 = 1
+        rows += [_ep_row("repeat3", "control", True, task),
+                 _ep_row("repeat3", "fault", False, task)]
+    analysis = ep_analysis(rows)
+    entry = analysis["by_fault"]["web_http_error"]
+    assert entry["delta_single"]["task_equal_weighted"] == 0
+    assert entry["delta_repeat3"]["task_equal_weighted"] == 1
+    assert entry["D_f"] == 1                              # 差中差
+    # 4 任务版本不做确认性推断：不得出现任何 p 值键
+    assert analysis["confirmatory_inference"] is False
+    assert "p_value" not in json.dumps(analysis)
+
+
+def test_ep_analysis_reports_dose_distribution_and_paired_cost():
+    from standard_agent.ep_analysis import ep_analysis
+    rows = [
+        _ep_row("single", "control", True, injections=0),
+        _ep_row("single", "fault", False, injections=1, steps=9),
+        _ep_row("repeat3", "control", True, injections=0),
+        _ep_row("repeat3", "fault", False, injections=3, steps=12, llm_calls=15),
+    ]
+    analysis = ep_analysis(rows)
+    doses = analysis["dose_distribution"]["repeat3"]["web_http_error"]
+    assert doses.get("full_dose") == 1
+    single_doses = analysis["dose_distribution"]["single"]["web_http_error"]
+    assert single_doses.get("full_dose") == 1            # single 的 1 次即 full_dose
+    cost = analysis["paired_step_delta"]["repeat3:web_http_error"]
+    assert cost["step_delta_mean"] == 12 - 8             # fault − control

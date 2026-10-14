@@ -1,0 +1,33 @@
+{
+  "unit": "tokens_per_trial",
+  "source": "Stage C traces (llm_provenance)",
+  "matched_trace_roots": [
+    "stage_c_slice1",
+    "stage_c_slice1b",
+    "stage_c_slice2",
+    "stage_c_slice2b",
+    "stage_c_slice2c",
+    "stage_c_slice3",
+    "stage_c_slice3b",
+    "stage_c_slice4",
+    "stage_c_slice4b"
+  ],
+  "estimates": {
+    "pilot_48": {
+      "observed_trials": 118,
+      "mean_prompt_tokens": 47366,
+      "mean_completion_tokens": 977,
+      "planned_trials": 48,
+      "est_prompt_tokens": 2273566,
+      "est_completion_tokens": 46908
+    },
+    "full_384": {
+      "observed_trials": 284,
+      "mean_prompt_tokens": 52834,
+      "mean_completion_tokens": 1332,
+      "planned_trials": 384,
+      "est_prompt_tokens": 20288151,
+      "est_completion_tokens": 511296
+    }
+  }
+}

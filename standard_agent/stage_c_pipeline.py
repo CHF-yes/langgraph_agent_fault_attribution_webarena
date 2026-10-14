@@ -466,6 +466,9 @@ def collect_rows(root: str | Path, *, config_path=None, evaluate_fn=None,
             row["cell"] = {key: record[key] for key in (
                 "model_profile", "architecture", "fault_type", "task_id",
                 "fault_seed", "condition")}
+            # E-P 维度：旧产物没有这两个字段，默认 legacy/single，E-P 分析据此分组。
+            row["experiment_id"] = record.get("experiment_id", "stage-c")
+            row["fault_variant"] = record.get("fault_variant", "single")
         response = integrity.get("agent_response")
         if response:
             row["submitted_success"] = str(response.get("status") or "").casefold() == "success"

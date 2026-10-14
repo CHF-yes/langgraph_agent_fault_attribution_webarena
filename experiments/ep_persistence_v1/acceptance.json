@@ -1,0 +1,9 @@
+{
+  "experiment_id": "ep-persistence-v1",
+  "kind": "offline_acceptance",
+  "criteria_module": "tests/test_ep_acceptance.py",
+  "returncode": 0,
+  "summary": "9 passed in 1.16s",
+  "passed": true,
+  "note": "标准：同目标重复故障确实生效、记录完整、成本可接受；不要求成功率下降。"
+}
