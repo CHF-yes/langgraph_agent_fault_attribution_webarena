@@ -2169,3 +2169,70 @@ def test_legacy_eval_without_binding_is_unverified(tmp_path):
 
     out = evaluate_trial(trial, task_id=118, config_path=None, evaluate_fn=boom, evaluate=True)
     assert out["source"] == "reused_unverified"
+
+
+# ==========================================================================
+# 23. E-P 目标匹配策略（跨刷新语义身份）
+# ==========================================================================
+
+def _elem(role="link", name="Next", url=None, role_index=0):
+    attrs = {"url": url} if url else {}
+    return {"role": role, "name": name, "attrs": attrs, "role_index": role_index}
+
+
+def test_target_identity_survives_ax_id_change():
+    from fault_injection.targets import identify_element, match_identity
+    page = "http://localhost:7770/review/product/list?p=2"
+    identity = identify_element({"116": _elem(role="link", name="Next")}, "116", page)
+    # 刷新后同一元素换了 id（60），但语义身份不变 → 仍能匹配
+    found, status = match_identity(identity, {"60": _elem(role="link", name="Next")}, page)
+    assert (found, status) == ("60", "ok")
+
+
+def test_target_absent_when_page_or_element_changes():
+    from fault_injection.targets import identify_element, match_identity
+    page = "http://localhost:7770/a"
+    identity = identify_element({"1": _elem(name="Buy now")}, "1", page)
+    # 换了页面 → absent（不跨页继续注入）
+    assert match_identity(identity, {"2": _elem(name="Buy now")}, "http://localhost:7770/b") == (None, "absent")
+    # 元素消失 → absent
+    assert match_identity(identity, {"2": _elem(name="Other")}, page) == (None, "absent")
+
+
+def test_ambiguous_target_is_never_guessed():
+    from fault_injection.targets import identify_element, match_identity
+    page = "http://localhost:7770/a"
+    identity = identify_element({"1": _elem(name="Read more")}, "1", page)
+    # 两个同名同 role 的候选且无 role_index 线索 → ambiguous，绝不随便挑
+    found, status = match_identity(identity, {"7": _elem(name="Read more"),
+                                              "8": _elem(name="Read more")}, page)
+    assert (found, status) == (None, "ambiguous")
+    # role_index 恰好唯一 → 可消歧
+    identity2 = identify_element({"1": _elem(name="Read more", role_index=1)}, "1", page)
+    found2, status2 = match_identity(identity2, {"7": _elem(name="Read more", role_index=0),
+                                                 "8": _elem(name="Read more", role_index=1)}, page)
+    assert (found2, status2) == ("8", "ok")
+
+
+def test_href_and_normalization_rules():
+    from fault_injection.targets import (dom_identity, match_identity, normalize_text,
+                                         normalize_url)
+    assert normalize_url("http://h/p?a=1#frag") == "http://h/p?a=1"      # 只去 fragment
+    assert normalize_url("http://h/p?a=1") != "http://h/p?a=2"          # 保留 query 差异
+    assert normalize_text("  a \n b ") == "a b"
+    page = "http://h/p#top"
+    identity = dom_identity(_elem(name="Docs", url="http://h/docs"), "http://h/p")
+    # fragment 归一化后仍同页；href 不同 → 不匹配
+    found, status = match_identity(identity, {"5": _elem(name="Docs", url="http://h/other")}, page)
+    assert (found, status) == (None, "absent")
+    found2, status2 = match_identity(identity, {"5": _elem(name="Docs", url="http://h/docs")}, page)
+    assert (found2, status2) == ("5", "ok")
+
+
+def test_param_identity_requires_action_and_target():
+    from fault_injection.targets import param_identity, match_identity
+    page = "http://localhost:7770/checkout"
+    identity = param_identity("click", _elem(role="button", name="Place order"), page)
+    assert identity["kind"] == "param" and identity["action"] == "click"
+    found, status = match_identity(identity, {"9": _elem(role="button", name="Place order")}, page)
+    assert (found, status) == ("9", "ok")

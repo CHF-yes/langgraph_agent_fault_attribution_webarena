@@ -1,0 +1,126 @@
+"""E-P 目标匹配策略（版本化、纯逻辑）。
+
+`repeat3` 的全部可证伪性都落在这里：故障必须**锁定同一个语义目标**，在页面刷新、
+AX 数字 id 变化之后仍能重新识别它；识别不到或有歧义时只记录并跳过，绝不换目标凑剂量。
+
+可用字段（来自 ``standard_agent/environment/browser.py``）：
+    element_map: {eid: {"role": str, "name": str, "attrs": dict, "role_index": int}}
+其中 ``attrs`` 在链接上可能带 ``url``（即 href）。
+
+规范化与判定：
+* 页面 URL：**只移除 fragment**，保留 scheme/host/port/path/query（不合并分页与不同资源）；
+* 文本：折叠空白并 strip，比较区分大小写（不做 casefold，避免把不同条目判成同一个）；
+* 目标身份 = (kind, page_url, role, name, href|None)；参数动作再带 action 类型；
+* 匹配：先按页面 URL 与 (role,name,href) 取候选；0 个 → ``absent``；
+  1 个 → ``ok``；多个 → 用 ``role_index``（**仅同页内**的同类第几次出现）消歧，
+  仍不唯一 → ``ambiguous``。
+
+``role_index`` 只在同一页渲染内有意义，因此只作同页消歧，**不作为跨刷新的身份锚**。
+版本号在实现通过离线 fixture 后冻结；改动判定逻辑必须同时升版本号。
+"""
+
+from __future__ import annotations
+
+import re
+
+TARGET_POLICY_VERSION = "semantic-target-lock-v1"
+TARGET_POLICY_NAME = "legacy_first_draw_then_semantic_target_lock_v1"
+
+TARGET_OK = "ok"
+TARGET_AMBIGUOUS = "ambiguous"
+TARGET_ABSENT = "absent"
+
+_WS = re.compile(r"\s+")
+
+
+def normalize_url(url: str) -> str:
+    """只移除 fragment；其余（含 query、端口、大小写）保留。"""
+    text = str(url or "").strip()
+    return text.split("#", 1)[0]
+
+
+def normalize_text(value: str) -> str:
+    return _WS.sub(" ", str(value or "").strip())
+
+
+def dom_identity(element: dict, page_url: str) -> dict:
+    """由一个元素信息构造语义身份。缺失 role/name 时仍可用 href 或返回空身份。"""
+    element = element if isinstance(element, dict) else {}
+    attrs = element.get("attrs") if isinstance(element.get("attrs"), dict) else {}
+    return {
+        "kind": "dom",
+        "page_url": normalize_url(page_url),
+        "role": normalize_text(element.get("role")),
+        "name": normalize_text(element.get("name")),
+        "href": normalize_url(attrs.get("url")) if attrs.get("url") else None,
+        "role_index": element.get("role_index"),
+        "policy_version": TARGET_POLICY_VERSION,
+    }
+
+
+def identify_element(elements: dict, element_id, page_url: str) -> dict | None:
+    """从当前观测里取某个数字 id 的语义身份；该 id 不存在返回 None。"""
+    info = (elements or {}).get(str(element_id))
+    if not isinstance(info, dict):
+        return None
+    return dom_identity(info, page_url)
+
+
+def param_identity(action: str, element: dict, page_url: str) -> dict:
+    """参数动作的目标身份：页面 + 动作类型 + 目标元素语义身份。"""
+    identity = dom_identity(element, page_url)
+    identity["kind"] = "param"
+    identity["action"] = normalize_text(action)
+    return identity
+
+
+def _same_target(identity: dict, element: dict, page_url: str) -> bool:
+    if normalize_url(page_url) != identity.get("page_url"):
+        return False
+    if normalize_text(element.get("role")) != identity.get("role"):
+        return False
+    if normalize_text(element.get("name")) != identity.get("name"):
+        return False
+    wanted_href = identity.get("href")
+    if wanted_href is not None:
+        attrs = element.get("attrs") if isinstance(element.get("attrs"), dict) else {}
+        if normalize_url(attrs.get("url")) != wanted_href:
+            return False
+    return True
+
+
+def match_identity(identity: dict, elements: dict, page_url: str) -> tuple[str | None, str]:
+    """在当前页重新识别被锁定的目标。
+
+    Returns:
+        ``(element_id | None, status)``，status ∈ ``ok`` / ``ambiguous`` / ``absent``。
+        ``absent`` 含"换到了别的页面"这种情况（页面 URL 不匹配）。
+    """
+    if not identity or identity.get("kind") not in ("dom", "param"):
+        return None, TARGET_ABSENT
+    if normalize_url(page_url) != identity.get("page_url"):
+        return None, TARGET_ABSENT
+    candidates = [str(eid) for eid, info in (elements or {}).items()
+                  if isinstance(info, dict) and _same_target(identity, info, page_url)]
+    if not candidates:
+        return None, TARGET_ABSENT
+    if len(candidates) == 1:
+        return candidates[0], TARGET_OK
+    # 多个候选：仅用同页 role_index 消歧，绝不"随便挑一个"。
+    wanted_index = identity.get("role_index")
+    if wanted_index is not None:
+        exact = [eid for eid in candidates
+                 if (elements.get(eid) or {}).get("role_index") == wanted_index]
+        if len(exact) == 1:
+            return exact[0], TARGET_OK
+    return None, TARGET_AMBIGUOUS
+
+
+def describe(identity: dict) -> str:
+    if not identity:
+        return "<none>"
+    if identity.get("kind") == "param":
+        return (f"param action={identity.get('action')!r} role={identity.get('role')!r} "
+                f"name={identity.get('name')!r} @ {identity.get('page_url')}")
+    return (f"dom role={identity.get('role')!r} name={identity.get('name')!r} "
+            f"href={identity.get('href')!r} @ {identity.get('page_url')}")
