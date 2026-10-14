@@ -1,12 +1,15 @@
 {
   "schema": "experiment_freeze/1",
   "experiment_id": "ep-persistence-v1",
-  "git_commit": "d1717f1224a619d9b24766e8de94ffef3288429d",
+  "git_commit": "cfbb7e66a865c7d36908ac9358ed79cefc5480a7",
   "git_branch": "stagec-exec-chain",
   "git_dirty": false,
   "target_policy_name": "legacy_first_draw_then_semantic_target_lock_v1",
   "target_policy_version": "semantic-target-lock-v1",
   "window_steps": 5,
+  "max_steps": 20,
+  "fault_intensity": "high",
+  "fault_injection_step": null,
   "variants": {
     "single": 1,
     "repeat3": 3
