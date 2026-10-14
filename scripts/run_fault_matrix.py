@@ -230,11 +230,12 @@ def classify_log(text, *, expect_fault=True, fault_variant="single", window_step
             window_steps=episode_payload.get("window_steps", window_steps))
         fault_count = verdict["count"]
         fault_triggered = verdict["count"] > 0
-        fault_invalid = not verdict["valid"]
-        # 机制错误（缺证据/次数越界/重复 action_uid/窗口外）必须停止运行，而不是
-        # 与"合法未触发"混为一谈；repeat3 的 0 剂量在 verdict 有效时是合法的。
+        # 结构性错误（次数越界/重复 action_uid/窗口外）才是机制错误；
+        # single 的 0 次是"合法未触发"，只按 Stage C 契约记 fault_invalid，不阻断。
         mechanism_error = not verdict["valid"]
-        fault_missing = mechanism_error
+        fault_invalid = mechanism_error or (
+            verdict.get("variant", fault_variant) == "single" and verdict["count"] != 1)
+        fault_missing = fault_invalid and not mechanism_error
     elif fault_variant == "single":
         fault_count = fault_counts[-1] if fault_counts else 0
         fault_triggered = any(count == 1 for count in fault_counts)

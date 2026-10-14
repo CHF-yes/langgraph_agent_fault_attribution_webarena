@@ -30,8 +30,19 @@ def _sha256(path: Path):
         return None
 
 
+def build_parser():
+    import argparse
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--max-steps", type=int, default=20)
+    parser.add_argument("--fault-intensity", default="high")
+    parser.add_argument("--fault-injection-step", type=int, default=None,
+                        help="None 表示按各故障的 Stage C 默认步")
+    return parser
+
+
 def main() -> int:
     import os
+    args = build_parser().parse_args()
     status = git_status(ROOT)
     dataset = os.getenv("WEBARENA_DATASET")
     payload = {
@@ -43,6 +54,9 @@ def main() -> int:
         "target_policy_name": TARGET_POLICY_NAME,
         "target_policy_version": TARGET_POLICY_VERSION,
         "window_steps": DEFAULT_WINDOW_STEPS,
+        "max_steps": args.max_steps,
+        "fault_intensity": args.fault_intensity,
+        "fault_injection_step": args.fault_injection_step,
         "variants": FAULT_VARIANTS,
         "pairing_scheme": PAIRING_SCHEME,
         "evaluator_adapter_version": EVALUATOR_ADAPTER_VERSION,

@@ -2111,10 +2111,11 @@ def test_classify_injection_log_is_variant_aware():
     over = classify_injection_log([inj(2, "a"), inj(3, "b"), inj(4, "c"), inj(5, "d")],
                                   variant="repeat3")
     assert not over["valid"] and over["dose_class"] == "implementation_error"
-    # single 仍要求恰好一次
+    # single：0 次是"合法未触发"（结构上有效，由上层按契约记 missing）；两次才越界
     assert classify_injection_log([inj(2, "a")], variant="single")["valid"] is True
+    assert classify_injection_log([], variant="single")["valid"] is True
+    assert classify_injection_log([], variant="single")["dose_class"] == "not_triggered"
     assert classify_injection_log([inj(2, "a"), inj(3, "b")], variant="single")["valid"] is False
-    assert classify_injection_log([], variant="single")["valid"] is False
 
 
 # ==========================================================================
@@ -2999,3 +3000,101 @@ def test_freeze_allows_record_files_but_not_code(tmp_path, monkeypatch):
     ok, note = check_freeze(args, {"experiment_id": "ep-persistence-v1", "window_steps": 5,
                                    "variants": ["single", "repeat3"]})
     assert ok is False and "代码有改动" in note
+
+
+# ==========================================================================
+# 33. 合法未触发 vs 机制错误（E-P single/重复剂量）
+# ==========================================================================
+
+def test_single_with_structured_zero_dose_is_legal_not_mechanism_error():
+    import json as _json
+    from scripts.run_fault_matrix import classify_log
+    payload = {"variant": "single", "window_steps": 5, "injections": []}
+    out = classify_log(_count_line(0) + "        fault_episode=" + _json.dumps(payload) + "\n",
+                       expect_fault=True, fault_variant="single")
+    # 合法未触发：不阻断运行（mechanism_error False），但按 Stage C 契约记为 missing
+    assert out["mechanism_error"] is False
+    assert out["fault_missing"] is True and out["fault_triggered"] is False
+    # single 出现两次注入才是结构性错误
+    two = {"variant": "single", "window_steps": 5,
+           "injections": [{"event": "injection", "proxy_step": 2, "action_uid": "a"},
+                          {"event": "injection", "proxy_step": 3, "action_uid": "b"}]}
+    bad = classify_log(_count_line(2) + "        fault_episode=" + _json.dumps(two) + "\n",
+                       expect_fault=True, fault_variant="single")
+    assert bad["mechanism_error"] is True
+
+
+def test_runner_refuses_when_only_a_log_exists(tmp_path, monkeypatch):
+    """有上次日志但没有 status 时要拦住，而不是当空目录重跑覆盖。"""
+    from scripts.ep_run_schedule import build_parser, plan_jobs, _commands
+    from standard_agent.ep_schedule import build_schedule, write_schedule
+    schedule = build_schedule(models=["m1"], architectures=["react"],
+                              faults=["web_http_error"], tasks=[24], seeds=[1])
+    path = write_schedule(schedule, tmp_path / "schedule.json")
+    args = build_parser().parse_args(["--schedule", str(path),
+                                      "--experiment-root", str(tmp_path / "ep")])
+    planned = _commands(args, schedule, plan_jobs(schedule))
+    log_path = Path(planned[0]["log_path"])
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    log_path.write_text("stale log\n", encoding="utf-8")      # 只有日志，没有 status
+    runner = _runner_with(monkeypatch, tmp_path, "", extra_argv=())
+    # 用同一 experiment-root 走真实入口
+    import sys as _sys
+    monkeypatch.setattr(_sys, "argv", ["ep_run_schedule.py", "--schedule", str(path),
+                                       "--experiment-root", str(tmp_path / "ep"),
+                                       "--execute", "--allow-unfrozen"])
+    assert runner.main() == 3                                  # 拒绝重跑
+
+
+def test_runner_resume_requires_artifacts_not_just_status(tmp_path, monkeypatch):
+    """status 说完成了但产物缺失 → 不得跳过（必须重跑）。"""
+    from standard_agent.ep_schedule import build_schedule, write_schedule
+    from scripts.ep_run_schedule import build_parser, plan_jobs, _commands
+    schedule = build_schedule(models=["m1"], architectures=["react"],
+                              faults=["web_http_error"], tasks=[24], seeds=[1])
+    path = write_schedule(schedule, tmp_path / "schedule.json")
+    args = build_parser().parse_args(["--schedule", str(path),
+                                      "--experiment-root", str(tmp_path / "ep")])
+    planned = _commands(args, schedule, plan_jobs(schedule))
+    for item in planned:
+        p = Path(item["status_path"])
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text(json.dumps({"returncode": 0, "infrastructure_error": False,
+                                 "mechanism_error": False}), encoding="utf-8")
+    # 只有 status、没有 trial 产物 → 不能跳过
+    runner = _runner_with(monkeypatch, tmp_path,
+                          "        injection_count=0 fault_seed=1 faults=[] steps=[]\n")
+    import sys as _sys
+    monkeypatch.setattr(_sys, "argv", ["ep_run_schedule.py", "--schedule", str(path),
+                                       "--experiment-root", str(tmp_path / "ep"),
+                                       "--execute", "--allow-unfrozen", "--resume"])
+    rc = runner.main()
+    assert rc != 0                       # 未跳过 → 真的执行了（假进程给出机制错误→2）
+
+
+def test_freeze_binds_run_parameters(tmp_path, monkeypatch):
+    from scripts.ep_run_schedule import build_parser, check_freeze
+    frozen = tmp_path / "frozen.json"
+    frozen.write_text(json.dumps({
+        "git_commit": "c" * 40, "git_dirty": False, "experiment_id": "ep-persistence-v1",
+        "window_steps": 5, "variants": {"single": 1, "repeat3": 3},
+        "target_policy_version": "semantic-target-lock-v1",
+        "max_steps": 20, "fault_intensity": "high", "fault_injection_step": None}))
+    monkeypatch.setattr("scripts.ep_run_schedule.git_status",
+                        lambda root: {"head": "c" * 40, "dirty": False, "branch": "x"})
+    import subprocess as _sp
+
+    class _Diff:
+        returncode = 0
+        stdout = "docs/ep_persistence_frozen_v1.json\n"
+
+    monkeypatch.setattr(_sp, "run", lambda *a, **k: _Diff())
+    base = ["--schedule", str(tmp_path / "s.json"), "--experiment-root", str(tmp_path / "ep"),
+            "--freeze", str(frozen)]
+    args_ok = build_parser().parse_args(base + ["--max-steps", "20", "--fault-intensity", "high"])
+    schedule = {"experiment_id": "ep-persistence-v1", "window_steps": 5,
+                "variants": ["single", "repeat3"]}
+    assert check_freeze(args_ok, schedule)[0] is True
+    args_bad = build_parser().parse_args(base + ["--max-steps", "30"])
+    ok, note = check_freeze(args_bad, schedule)
+    assert ok is False and "max_steps" in note

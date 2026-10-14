@@ -29,6 +29,7 @@ sys.path.insert(0, str(ROOT))
 
 from run_baseline import load_tasks, resolve_start_url  # noqa: E402
 from scripts.run_fault_matrix import classify_log, command_for  # noqa: E402
+from standard_agent.stage_c_pipeline import job_arms_ok  # noqa: E402
 from standard_agent.trial_metadata import git_status  # noqa: E402
 
 DEFAULT_FREEZE = ROOT / "docs/ep_persistence_frozen_v1.json"
@@ -161,6 +162,14 @@ def check_freeze(args, schedule: dict | None = None) -> tuple[bool, str]:
         if actual != expected_sha:
             return False, f"数据集哈希不符（{str(actual)[:12]} != {expected_sha[:12]}）"
 
+    # 运行参数必须与冻结清单一致：否则"换了 max_steps/强度/注入步"也会显示冻结通过。
+    for field, actual in (("max_steps", getattr(args, "max_steps", None)),
+                          ("fault_intensity", getattr(args, "fault_intensity", None)),
+                          ("fault_injection_step", getattr(args, "fault_injection_step", None))):
+        if field in frozen and frozen.get(field) != actual:
+            return False, (f"运行参数 {field}={actual!r} 与冻结清单 "
+                           f"{frozen.get(field)!r} 不符")
+
     # 运行配置：实验身份、窗口、目标策略版本
     from fault_injection.targets import TARGET_POLICY_VERSION
     if TARGET_POLICY_VERSION != frozen.get("target_policy_version"):
@@ -177,6 +186,43 @@ def check_freeze(args, schedule: dict | None = None) -> tuple[bool, str]:
     return True, f"frozen@{frozen_commit[:12]}"
 
 
+def _has_run_artifacts(root: Path) -> bool:
+    """是否存在**真实运行产物**（logs/status/trial 记录）。
+
+    根级预置 JSON（schedule、验收清单等）不算占用；只看 `run/` 与 `outputs/` 下的产物，
+    这样"已有上次日志但没 status"也会被拦住，而不是当成空目录重跑覆盖。
+    """
+    if not root.exists():
+        return False
+    for path in root.rglob("*"):
+        if not path.is_file():
+            continue
+        parts = path.parts
+        if "run" in parts or "outputs" in parts:
+            return True
+    return False
+
+
+def _block_dir(root: Path, job: dict) -> Path:
+    return (root / job["variant"] / "outputs" / job["model_profile"] / job["architecture"]
+            / f"{job['fault_type']}_task{job['task_id']}_seed{job['seed']}")
+
+
+def _block_artifacts_ok(root: Path, job: dict, args, experiment_id: str | None = None) -> bool:
+    """整块（control+fault）产物完整且身份/配置一致，才允许跳过。"""
+    ok, _ = job_arms_ok(_block_dir(root, job), fault_type=job["fault_type"],
+                        task_id=job["task_id"], seed=job["seed"],
+                        model_profile=job["model_profile"],
+                        architecture=job["architecture"], max_steps=args.max_steps,
+                        injection_step=args.fault_injection_step,
+                        fault_intensity=args.fault_intensity,
+                        dataset_path=os.getenv("WEBARENA_DATASET"),
+                        condition_scope="both",
+                        experiment_id=experiment_id,
+                        fault_variant=job["variant"])
+    return ok
+
+
 def _resumable(status: dict) -> bool:
     """已有 status 是否可跳过：跑完且既非基础设施错误也非机制错误。"""
     return bool(status.get("returncode") == 0
@@ -184,24 +230,34 @@ def _resumable(status: dict) -> bool:
                 and not status.get("mechanism_error"))
 
 
-def run_planned(args, planned, freeze_note) -> int:
+def run_planned(args, planned, freeze_note, experiment_id: str | None = None) -> int:
     root = Path(args.experiment_root)
-    existing = list(root.rglob("*.status.json")) if root.exists() else []
-    if existing and not args.resume:
-        print(f"error: {root} 已存在 {len(existing)} 个 status 产物；"
+    if _has_run_artifacts(root) and not args.resume:
+        print(f"error: {root} 已存在运行产物（logs/status/trials）；"
               "首批要求空目录；如需续跑请显式加 --resume", file=sys.stderr)
         return 3
     skipped = 0
-    if existing and args.resume:
+    if _has_run_artifacts(root) and args.resume:
+        # 按 block 判定：整块（control+fault）产物完整且身份/参数一致才跳过；
+        # 只看 status 会漏掉"有 status 无产物"的假完成。
+        checked: dict = {}
         for item in planned:
-            path = Path(item["status_path"])
-            if path.exists():
-                try:
-                    if _resumable(json.loads(path.read_text(encoding="utf-8"))):
-                        item["_skip"] = True
-                        skipped += 1
-                except json.JSONDecodeError:
-                    pass
+            job = item["job"]
+            block = (job["variant"], job["model_profile"], job["architecture"],
+                     job["fault_type"], job["task_id"], job["seed"])
+            if block not in checked:
+                status_path = Path(item["status_path"])
+                status_clean = True
+                if status_path.exists():
+                    try:
+                        status_clean = _resumable(json.loads(status_path.read_text(encoding="utf-8")))
+                    except json.JSONDecodeError:
+                        status_clean = False
+                checked[block] = status_clean and _block_artifacts_ok(
+                    root, job, args, experiment_id)
+            if checked[block]:
+                item["_skip"] = True
+                skipped += 1
     manifest = {"experiment_id": None, "freeze": freeze_note, "resumed_skipped": skipped,
                 "jobs": [{k: item[k] for k in ("key", "block", "log_path", "status_path")}
                          for item in planned],
@@ -289,7 +345,7 @@ def main() -> int:
               file=sys.stderr)
         return 2
     print(json.dumps({"plan": plan}, ensure_ascii=False))
-    return run_planned(args, planned, note)
+    return run_planned(args, planned, note, schedule.get("experiment_id"))
 
 
 if __name__ == "__main__":

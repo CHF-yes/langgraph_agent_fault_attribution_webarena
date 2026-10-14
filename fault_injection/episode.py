@@ -198,9 +198,9 @@ def classify_injection_log(entries: list, *, variant: str,
         if t0 is not None and step is not None and step > t0 + window_steps - 1:
             errors.append(f"injection at proxy_step {step} outside window "
                           f"[{t0}, {t0 + window_steps - 1}]")
-    if variant == "single" and count != 1:
-        # Stage C 口径要求恰好一次；0 与 >1 都不合法
-        errors.append(f"single expects exactly 1 injection, got {count}")
+    # 注意：这里**不**把 single 的 0 次当成错误——"合法未触发"（agent 从未做该动作）
+    # 与"实现错误"是两件事。single 的 0 次由上层按 Stage C 契约记为 fault_missing；
+    # >limit 才是结构性错误。
     return {
         "variant": variant,
         "count": count,

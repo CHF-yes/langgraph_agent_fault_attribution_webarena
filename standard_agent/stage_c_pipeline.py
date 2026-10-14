@@ -691,6 +691,13 @@ def arm_artifacts_ok(arm_dir: str | Path, *, expect: dict,
         if actual != wanted:
             reasons.append(f"trial_record {field}={actual!r} != design {wanted!r}")
 
+    # E-P：记录里的实验身份与 variant 也必须与期望一致（旧产物没有这两个字段时，
+    # expect 里也不会带它们，保持兼容）。
+    for field in ("experiment_id", "fault_variant"):
+        if field in expect and record.get(field) != expect[field]:
+            reasons.append(f"trial_record {field}={record.get(field)!r} "
+                           f"!= design {expect[field]!r}")
+
     run_config = record.get("run_config") or {}
     for field in ("max_steps", "injection_step", "fault_intensity"):
         if field in expect and run_config.get(field) != expect[field]:
@@ -712,7 +719,9 @@ def job_arms_ok(job_dir: str | Path, *, fault_type: str, task_id: int, seed: int
                 model_profile: str, architecture: str, max_steps: int,
                 injection_step: int | None, fault_intensity: str,
                 dataset_path: str | Path | None = None,
-                condition_scope: str = "both") -> tuple[bool, list[str]]:
+                condition_scope: str = "both",
+                experiment_id: str | None = None,
+                fault_variant: str | None = None) -> tuple[bool, list[str]]:
     """控制臂与故障臂**都**完整且一致，调用方才能跳过这个格子。
 
     ``--resume`` 的语义是"这个格子已经按当前设计跑完了"，单臂完整不足以支持这个
@@ -753,15 +762,16 @@ def job_arms_ok(job_dir: str | Path, *, fault_type: str, task_id: int, seed: int
             arm_intensity, arm_step = "off", None
         else:
             arm_intensity, arm_step = fault_intensity, injection_step
-        ok, why = arm_artifacts_ok(
-            arm_dir,
-            expect={"model_profile": model_profile, "architecture": architecture,
-                    "fault_type": fault_type, "task_id": int(task_id),
-                    "fault_seed": int(seed), "condition": condition,
-                    "max_steps": max_steps, "injection_step": arm_step,
-                    "fault_intensity": arm_intensity},
-            task_type=task_type,
-        )
+        expect = {"model_profile": model_profile, "architecture": architecture,
+                  "fault_type": fault_type, "task_id": int(task_id),
+                  "fault_seed": int(seed), "condition": condition,
+                  "max_steps": max_steps, "injection_step": arm_step,
+                  "fault_intensity": arm_intensity}
+        if experiment_id is not None:
+            expect["experiment_id"] = experiment_id
+        if fault_variant is not None:
+            expect["fault_variant"] = fault_variant
+        ok, why = arm_artifacts_ok(arm_dir, expect=expect, task_type=task_type)
         if not ok:
             reasons.extend(f"{condition}: {reason}" for reason in why)
     return (not reasons), reasons
