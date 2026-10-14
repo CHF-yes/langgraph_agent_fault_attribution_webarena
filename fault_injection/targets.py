@@ -102,6 +102,14 @@ def matches_param(identity: dict, action: str, element, page_url: str) -> bool:
     return _same_target(identity, element, page_url)
 
 
+def count_matches(identity: dict, elements: dict, page_url: str) -> int:
+    """当前页上有多少元素与给定身份相同（用于识别"同名元素"歧义）。"""
+    if not identity or normalize_url(page_url) != identity.get("page_url"):
+        return 0
+    return sum(1 for info in (elements or {}).values()
+               if isinstance(info, dict) and _same_target(identity, info, page_url))
+
+
 def match_identity(identity: dict, elements: dict, page_url: str) -> tuple[str | None, str]:
     """在当前页重新识别被锁定的目标。
 

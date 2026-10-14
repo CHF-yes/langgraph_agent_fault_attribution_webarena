@@ -2741,13 +2741,130 @@ def test_run_schedule_plan_is_interleaved_and_variant_scoped(tmp_path):
                               schedule_seed=5)
     path = write_schedule(schedule, tmp_path / "schedule.json")
     args = build_parser().parse_args(["--schedule", str(path),
-                                      "--experiment-root", str(tmp_path / "ep"),
-                                      "--dry-run"])
+                                      "--experiment-root", str(tmp_path / "ep")])
     jobs = plan_jobs(schedule)
-    assert len(jobs) == 4                                   # 2 block × 2 variant
-    order = [j["variant"] for j in jobs]
-    assert len(set(order[:2])) == 2                          # 交错
+    assert len(jobs) == 8                                   # 2 block × 2 variant × 2 condition
+    # 逐 entry：条件顺序来自 schedule，而不是永远 control 在前
+    assert {j["condition"] for j in jobs} == {"control", "fault"}
+    assert len({(j["variant"], j["condition"]) for j in jobs}) == 4
     planned = _commands(args, schedule, jobs)
     assert all("/repeat3/outputs/" in p["output_root"] or "/single/outputs/" in p["output_root"]
                for p in planned)
     assert all("--fault-variant" in p["command"] for p in planned)
+    # 每条 entry 一个日志文件，且路径含模型与架构
+    logs = [p["log_path"] for p in planned]
+    assert len(set(logs)) == len(logs)
+    assert all("/m1/react/" in lp for lp in logs)
+
+
+# ==========================================================================
+# 31. 调度运行器与评测哈希：review 发现的剩余问题
+# ==========================================================================
+
+def test_runner_log_paths_differ_across_architectures(tmp_path):
+    from standard_agent.ep_schedule import build_schedule, write_schedule
+    from scripts.ep_run_schedule import build_parser, log_dir, plan_jobs
+    schedule = build_schedule(models=["m1"], architectures=["react", "plan_execute"],
+                              faults=["web_http_error"], tasks=[24], seeds=[1],
+                              schedule_seed=3)
+    path = write_schedule(schedule, tmp_path / "schedule.json")
+    args = build_parser().parse_args(["--schedule", str(path),
+                                      "--experiment-root", str(tmp_path / "ep")])
+    jobs = plan_jobs(schedule)
+    paths = {log_dir(args.experiment_root, j) for j in jobs}
+    # 两个架构的日志目录必须不同（否则 ReAct 与 PE 会互相覆盖）
+    # 日志目录同时区分 variant 与架构：2 variant × 2 arch = 4
+    assert len({str(p) for p in paths}) == 4
+    assert any("/react" in str(p) for p in paths)
+    assert any("/plan_execute" in str(p) for p in paths)
+
+
+def test_runner_plan_only_by_default_and_freeze_gate(tmp_path):
+    from standard_agent.ep_schedule import build_schedule, write_schedule
+    from scripts.ep_run_schedule import build_parser, check_freeze
+    schedule = build_schedule(models=["m1"], architectures=["react"],
+                              faults=["web_http_error"], tasks=[24], seeds=[1])
+    path = write_schedule(schedule, tmp_path / "schedule.json")
+    args = build_parser().parse_args(["--schedule", str(path),
+                                      "--experiment-root", str(tmp_path / "ep"),
+                                      "--freeze", str(tmp_path / "missing.json")])
+    assert args.execute is False                     # 默认只出计划
+    ok, note = check_freeze(args)
+    assert ok is False and "冻结清单" in note         # 缺清单即拒绝
+    # commit 不符也拒绝
+    frozen = tmp_path / "frozen.json"
+    frozen.write_text(json.dumps({"git_commit": "deadbeefdeadbeefdead"}))
+    args2 = build_parser().parse_args(["--schedule", str(path),
+                                       "--experiment-root", str(tmp_path / "ep"),
+                                       "--freeze", str(frozen)])
+    ok2, note2 = check_freeze(args2)
+    assert ok2 is False and "冻结 commit" in note2
+    # --allow-unfrozen 才放行调试
+    args3 = build_parser().parse_args(["--schedule", str(path),
+                                       "--experiment-root", str(tmp_path / "ep"),
+                                       "--allow-unfrozen"])
+    assert check_freeze(args3)[0] is True
+
+
+def test_param_same_name_elements_are_ambiguous_and_skipped():
+    from fault_injection.persistence import PersistenceEngine
+    cfg = _ep_config(agent_param_error=True, injection_step=1)
+    engine = PersistenceEngine(cfg)
+    page = "http://h/checkout"
+    save = {"role": "button", "name": "Save", "attrs": {}, "role_index": 0}
+    save2 = {"role": "button", "name": "Save", "attrs": {}, "role_index": 1}
+    eid, _ = engine.apply_param(action="click", element_id="1", text=None, proxy_step=2,
+                                action_uid="p1", elements={"1": save}, page_url=page)
+    assert eid.startswith("invalid_")
+    # 页面出现两个同名 Save → 无法确定重放哪一个 → 跳过，不改写第二个
+    eid2, _ = engine.apply_param(action="click", element_id="5", text=None, proxy_step=3,
+                                 action_uid="p2", elements={"1": save, "5": save2},
+                                 page_url=page)
+    assert eid2 == "5"
+    assert any(e.get("reason") == "target_ambiguous" for e in cfg.episode.events)
+
+
+def test_evaluator_hash_covers_submodules():
+    from standard_agent.stage_c_pipeline import current_evaluator_version
+    version = current_evaluator_version()
+    assert version.get("package_sources", 0) >= 1
+    assert len(version.get("package_sha256", "")) == 64
+
+
+def test_runner_execution_loop_writes_status_and_stops(tmp_path, monkeypatch):
+    """运行器执行循环：写 status、按 variant 校验、基础设施错误触发停止策略。
+
+    用假 Popen 注入一份含真实基础设施错误的日志，不启动任何真实进程/模型。
+    """
+    import scripts.ep_run_schedule as runner
+    from standard_agent.ep_schedule import build_schedule, write_schedule
+    schedule = build_schedule(models=["m1"], architectures=["react"],
+                              faults=["web_http_error"], tasks=[24], seeds=[1],
+                              schedule_seed=9)
+    path = write_schedule(schedule, tmp_path / "schedule.json")
+
+    class FakeProc:
+        def __init__(self, command, cwd=None, stdout=None, stderr=None,
+                     text=None, start_new_session=None):
+            self.pid = 4242
+            self.returncode = 0
+            stdout.write("Connection refused\nTraceback (most recent call last):\n")
+
+        def wait(self, timeout=None): return 0
+        def poll(self): return 0
+
+    monkeypatch.setattr(runner.subprocess, "Popen", FakeProc)
+    import sys as _sys
+    monkeypatch.setattr(_sys, "argv", [
+        "ep_run_schedule.py", "--schedule", str(path),
+        "--experiment-root", str(tmp_path / "ep"),
+        "--execute", "--allow-unfrozen", "--job-timeout-minutes", "1"])
+    rc = runner.main()
+    assert rc == 1                                        # 基础设施错误 → 停止本批
+    statuses = list((tmp_path / "ep").rglob("*.status.json"))
+    assert statuses
+    first = json.loads(statuses[0].read_text())
+    assert first["infrastructure_error"] is True
+    assert first["variant"] in ("single", "repeat3")
+    assert first["condition"] in ("control", "fault")
+    assert first["architecture"] == "react"

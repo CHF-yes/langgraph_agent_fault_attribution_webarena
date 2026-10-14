@@ -4,7 +4,6 @@
 import argparse
 import hashlib
 import json
-from fault_injection.web_faults import HTTP_ERROR_PAGES
 import os
 import re
 import signal
@@ -17,6 +16,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
+from fault_injection.web_faults import HTTP_ERROR_PAGES
 from run_baseline import load_tasks, resolve_start_url
 from standard_agent.stage_c_pipeline import job_arms_ok
 from standard_agent.trial_metadata import PAIRING_SCHEME, TRIAL_RECORD_SCHEMA_VERSION

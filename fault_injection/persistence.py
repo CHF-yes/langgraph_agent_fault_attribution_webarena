@@ -20,8 +20,8 @@ from typing import Optional
 
 from fault_injection.episode import FaultEpisode, TARGET_ABSENT, TARGET_OK
 from fault_injection.targets import (TARGET_AMBIGUOUS, TARGET_POLICY_VERSION,
-                                     dom_identity, match_identity, matches_param,
-                                     normalize_url, param_identity)
+                                     count_matches, dom_identity, match_identity,
+                                     matches_param, normalize_url, param_identity)
 from fault_injection.web_faults import (HTTP_ERROR_PAGES, _combinations,
                                         _sample_multiple)
 
@@ -156,6 +156,12 @@ class PersistenceEngine:
             return element_id, text
         current = elements.get(str(element_id)) if isinstance(elements, dict) else None
         if self._param_target is not None:
+            # 同名元素歧义：页面上有多个身份相同的目标时无法确定要重放哪一个，
+            # 记 ambiguous 并跳过（不耗剂量），绝不"随便挑一个"。
+            if count_matches(self._param_target, elements or {}, page_url) > 1:
+                self._skip(proxy_step=proxy_step, action_uid=action_uid,
+                           reason="target_ambiguous")
+                return element_id, text
             # 关键：不仅"原目标还在页面上"，还要**当前动作确实针对它**且动作类型相同；
             # 否则点击别的元素、或对原目标做 hover 都会被误改。
             if not matches_param(self._param_target, action, current, page_url):

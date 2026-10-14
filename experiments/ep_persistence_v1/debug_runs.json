@@ -1,0 +1,40 @@
+{
+  "schema": "ep_debug_runs/1",
+  "experiment_id": "ep-persistence-v1",
+  "purpose": "记录一次误跑的调试数据，明确排除在正式 48 条之外",
+  "excluded_from_formal_matrix": true,
+  "why": "定位控制臂身份 bug 的临时脚本未套 mock，直接调用 main.main()，真实浏览器与真实模型各跑了一条。",
+  "counts_toward_pilot_budget": false,
+  "runs": [
+    {
+      "run_id": "20261014T093847-51e110",
+      "condition": "control",
+      "variant": "repeat3",
+      "model_profile": "deepseek_v41_flash",
+      "architecture": "react",
+      "fault_type": "web_http_error",
+      "task_id": 24,
+      "fault_seed": 1,
+      "injection_count": 0,
+      "steps": 2,
+      "artifacts_dir": "/tmp/kilo/e2e_debug/repeat3/outputs/deepseek_v41_flash/react/web_http_error_task24_seed1/24/control_seed_1",
+      "trace": "traces/20261014T093847-51e110/deepseek_v41_flash__react__web_http_error__task24__seed1__control__rep0.jsonl"
+    },
+    {
+      "run_id": "20261014T093855-d0d563",
+      "condition": "fault",
+      "variant": "repeat3",
+      "model_profile": "deepseek_v41_flash",
+      "architecture": "react",
+      "fault_type": "web_http_error",
+      "task_id": 24,
+      "fault_seed": 1,
+      "injection_count": 1,
+      "steps": 3,
+      "artifacts_dir": "/tmp/kilo/e2e_debug/repeat3/outputs/deepseek_v41_flash/react/web_http_error_task24_seed1/24/web_http_error_seed_1",
+      "trace": "traces/20261014T093855-d0d563/deepseek_v41_flash__react__web_http_error__task24__seed1__fault__rep0.jsonl"
+    }
+  ],
+  "actual_usage": {"llm_calls": 5, "prompt_tokens": 17642, "completion_tokens": 769},
+  "note": "产物目录位于 /tmp（易失）；trace 在仓库 traces/ 下。如需保留请复制产物到 experiments/ep_persistence_v1/debug_runs/。"
+}

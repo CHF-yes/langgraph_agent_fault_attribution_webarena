@@ -305,12 +305,23 @@ def current_evaluator_version() -> dict:
     except Exception:                                  # noqa: BLE001
         pass
     try:
-        # 用 find_spec 定位包文件，**不导入**：导入 webarena_verified 会初始化其全局
+        # 用 find_spec 定位包目录，**不导入**：导入 webarena_verified 会初始化其全局
         # 状态，污染同进程里其它评测测试（实测会让 smoke 的缺失文件用例返回 ERROR）。
         import importlib.util
         spec = importlib.util.find_spec("webarena_verified")
         if spec and spec.origin:
-            version["package_sha256"] = _sha256_file(Path(spec.origin))
+            package_dir = Path(spec.origin).parent
+            sources = sorted(package_dir.rglob("*.py"))
+            if sources:
+                # 覆盖包内**所有**源码，而不只是入口文件：任一子模块变化都会改变哈希。
+                digest = hashlib.sha256()
+                for source in sources:
+                    digest.update(source.name.encode("utf-8"))
+                    digest.update((source.read_bytes()))
+                version["package_sources"] = len(sources)
+                version["package_sha256"] = digest.hexdigest()
+            else:
+                version["package_sha256"] = _sha256_file(Path(spec.origin))
     except Exception:                                  # noqa: BLE001
         pass
     return version

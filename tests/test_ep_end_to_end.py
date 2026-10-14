@@ -18,8 +18,17 @@ ARCH = "react"
 
 
 def _install_fakes(monkeypatch, navigations: int):
-    """替换浏览器与 agent 图；agent 只做 `navigations` 次同页导航后结束。"""
+    """替换浏览器与 agent 图；agent 只做 `navigations` 次同页导航后结束。
+
+    同时把 `create_llm` 换成抛错：mock 缺失时**绝不回退到真实 API**。
+    """
+    import standard_agent.llm.provider as provider_mod
     import standard_agent.core.graph as graph_mod
+
+    def _no_real_llm(*args, **kwargs):
+        raise AssertionError("测试不得调用真实模型（mock 缺失即失败）")
+
+    monkeypatch.setattr(provider_mod, "create_llm", _no_real_llm, raising=False)
     import standard_agent.environment.browser as browser_mod
     import standard_agent.tools.web_tools as web_tools
     from standard_agent.environment.browser import PageObservation
@@ -141,3 +150,41 @@ def test_control_arm_identity_flows_through_the_real_interface(tmp_path, monkeyp
     assert control["fault_variant"] == "repeat3"
     assert control["experiment_id"] == "ep-persistence-v1"
     assert control["injection_count"] == 0
+
+
+@pytest.mark.parametrize("architecture", ["react", "plan_execute"])
+def test_end_to_end_covers_both_architectures(tmp_path, monkeypatch, architecture):
+    """两个架构都走一遍真实 main.py（mock 浏览器/模型），确认身份与剂量一致。"""
+    import main as _main
+    # 覆盖架构参数
+    orig = _main  # noqa: F841 - 仅为可读性
+
+    out_root = tmp_path / f"ep_{architecture}"
+    _install_fakes(monkeypatch, navigations=4)
+    argv = [
+        "main.py", "--benchmark", "--site", "shopping", "--url", PAGE,
+        "--task", "find the next page", "--task-id", "24",
+        "--model-profile", MODEL, "--architecture", architecture,
+        "--max-steps", "20", "--trials", "1",
+        "--fault-type", "web_http_error", "--fault-intensity", "high",
+        "--fault-seed", "1", "--fault-injection-step", "2",
+        "--experiment-id", "ep-persistence-v1", "--fault-variant", "repeat3",
+        "--fault-window-steps", "5",
+        "--webarena-output-dir", str(out_root / "repeat3" / "outputs" / MODEL
+                                     / architecture / "web_http_error_task24_seed1"),
+    ]
+    monkeypatch.setattr(sys, "argv", argv)
+    _main.main()
+
+    fault = out_root / "repeat3" / "outputs" / MODEL / architecture \
+        / "web_http_error_task24_seed1" / "24" / "web_http_error_seed_1"
+    control = fault.parent / "control_seed_1"
+    frecord = json.loads((fault / "trial_record.json").read_text())
+    crecord = json.loads((control / "trial_record.json").read_text())
+    assert frecord["architecture"] == architecture
+    assert frecord["experiment_id"] == "ep-persistence-v1"
+    assert frecord["fault_variant"] == "repeat3"
+    assert crecord["fault_variant"] == "repeat3"
+    assert frecord["injection_count"] == 3      # 窗口内三次
+    assert crecord["injection_count"] == 0
+    assert Path(frecord["paths"]["trace"]).name.startswith("ep-persistence-v1__repeat3__")
