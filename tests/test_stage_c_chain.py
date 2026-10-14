@@ -2460,3 +2460,39 @@ def test_command_for_passes_experiment_identity():
     assert "--experiment-id" in command and "ep-persistence-v1" in command
     assert "--fault-variant" in command and "repeat3" in command
     assert "--fault-window-steps" in command and "5" in command
+
+
+# ==========================================================================
+# 27. 暴露日志：故障"被交付"而非声称模型识别
+# ==========================================================================
+
+def test_exposure_log_records_delivery_not_awareness():
+    from fault_injection.config import FaultConfig
+    from fault_injection.injector import FaultInjector
+    cfg = FaultConfig(intensity="high", seed=7, web_http_error=True, injection_step=2,
+                      experiment_id="ep-persistence-v1", fault_variant="repeat3")
+    injector = FaultInjector(_FakeEnv(), cfg)
+    injector.goto("http://h/a")                    # 未注入
+    injector.goto("http://h/b")                    # 注入
+    injector.goto("http://h/c")                    # 别的 URL，未注入
+    exposures = injector.get_exposure_log()
+    assert len(exposures) == 3
+    assert [e["delivered"] for e in exposures] == [False, True, False]
+    assert exposures[1]["faults_delivered"] == ["web_http_error"]
+    # uid 唯一且绑定来源动作
+    uids = {e["observation_uid"] for e in exposures}
+    assert len(uids) == 3
+    assert exposures[1]["source_action_uid"] == "goto:2"
+    assert all(e["variant"] == "repeat3" for e in exposures)
+
+
+def test_exposure_log_also_covers_stage_c():
+    from fault_injection.config import FaultConfig
+    from fault_injection.injector import FaultInjector
+    cfg = FaultConfig(intensity="high", seed=7, web_http_error=True, injection_step=2)
+    injector = FaultInjector(_FakeEnv(), cfg)
+    injector.goto("http://h/a")
+    injector.goto("http://h/b")
+    exposures = injector.get_exposure_log()
+    assert [e["delivered"] for e in exposures] == [False, True]
+    assert exposures[1]["faults_delivered"] == ["web_http_error"]

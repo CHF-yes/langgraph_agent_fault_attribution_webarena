@@ -699,6 +699,9 @@ def run_benchmark(args):
             if getattr(fault_config, "experiment_id", "stage-c") == "ep-persistence-v1":
                 import json as _json
                 _episode = fault_config.episode
+                print("        fault_exposures=" + _json.dumps(
+                    proxy.get_exposure_log() if hasattr(proxy, "get_exposure_log") else [],
+                    ensure_ascii=False))
                 print("        fault_episode=" + _json.dumps({
                     "experiment_id": fault_config.experiment_id,
                     "variant": fault_config.fault_variant,

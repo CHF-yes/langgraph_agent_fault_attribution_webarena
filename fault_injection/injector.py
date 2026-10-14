@@ -66,6 +66,8 @@ class FaultInjector:
         self._step_counter = 0           # 当前任务步数
         self._last_obs: Optional[dict] = None
         self._current_action_uid: Optional[str] = None
+        self._observation_seq = 0        # 每次"交付给模型的观察"计数
+        self._exposure_log: list[dict] = []
         # E-P 持久化实验走 episode 引擎；Stage C（experiment_id=stage-c）保持原路径。
         self._engine = None
         if getattr(config, "experiment_id", "stage-c") == "ep-persistence-v1":
@@ -243,17 +245,49 @@ class FaultInjector:
         """
         obs = inject_state_misjudge(self.config, obs)
         if self._engine is not None:
+            before_dom = obs
             obs = self._engine.apply_dom(obs, proxy_step=self._step_counter,
                                          action_uid=self._current_action_uid)
+            dom_delivered = obs != before_dom
+            before_http = obs
             obs = self._engine.apply_http(obs, proxy_step=self._step_counter,
                                           action_uid=self._current_action_uid)
+            http_delivered = obs != before_http
+            delivered = [name for name, hit in (("web_dom_missing", dom_delivered),
+                                                ("web_http_error", http_delivered)) if hit]
+            self._record_exposure(delivered)
             self._last_obs = dict(obs)
             return obs
+        before = len(self.config.log)
         obs = inject_dom_missing(self.config, obs)
         obs = inject_popup(self.config, obs)
         obs = inject_http_error(self.config, obs)
+        # 记录本观察实际投递了哪些故障（来自注入日志增量），而不是猜测模型是否察觉。
+        delivered = [entry.get("fault") for entry in self.config.log[before:]]
+        self._record_exposure([n for n in delivered if n])
         self._last_obs = dict(obs)
         return obs
+
+    def _record_exposure(self, delivered: list) -> dict:
+        """记录一次"交付给模型的观察"：uid、来源动作、实际含有的故障标记。
+
+        这只证明故障**被交付**，不声称模型在心理上识别了它（设计第 8 节）。
+        """
+        self._observation_seq += 1
+        entry = {
+            "observation_uid": f"{self._current_action_uid or 'initial'}#{self._observation_seq}",
+            "source_action_uid": self._current_action_uid,
+            "experiment_id": getattr(self.config, "experiment_id", "stage-c"),
+            "variant": getattr(self.config, "fault_variant", "single"),
+            "step": self._step_counter,
+            "faults_delivered": list(delivered),
+            "delivered": bool(delivered),
+        }
+        self._exposure_log.append(entry)
+        return entry
+
+    def get_exposure_log(self) -> list[dict]:
+        return list(self._exposure_log)
 
     def _wrap_result(self, original, obs: dict):
         """
