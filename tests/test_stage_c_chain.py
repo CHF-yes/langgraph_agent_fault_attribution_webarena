@@ -2970,3 +2970,32 @@ def test_freeze_requires_readable_clean_git(tmp_path, monkeypatch):
     ok, note = check_freeze(args, {"experiment_id": "ep-persistence-v1",
                                    "window_steps": 5, "variants": ["single", "repeat3"]})
     assert ok is False and "不可确认" in note
+
+
+def test_freeze_allows_record_files_but_not_code(tmp_path, monkeypatch):
+    """冻结后只允许清单与 experiments/ep_persistence_v1/ 下的 JSON 记录变化。"""
+    import subprocess as _sp
+    from scripts.ep_run_schedule import build_parser, check_freeze
+    frozen = tmp_path / "frozen.json"
+    frozen.write_text(json.dumps({"git_commit": "b" * 40, "git_dirty": False,
+                                  "experiment_id": "ep-persistence-v1",
+                                  "window_steps": 5,
+                                  "variants": {"single": 1, "repeat3": 3},
+                                  "target_policy_version": "semantic-target-lock-v1"}))
+    args = build_parser().parse_args(["--schedule", str(tmp_path / "s.json"),
+                                      "--experiment-root", str(tmp_path / "ep"),
+                                      "--freeze", str(frozen)])
+    monkeypatch.setattr("scripts.ep_run_schedule.git_status",
+                        lambda root: {"head": "b" * 40, "dirty": False, "branch": "x"})
+
+    class _Diff:
+        def __init__(self, out): self.returncode = 0; self.stdout = out
+
+    monkeypatch.setattr(_sp, "run", lambda *a, **k: _Diff(
+        "docs/ep_persistence_frozen_v1.json\nexperiments/ep_persistence_v1/acceptance.json\n"))
+    assert check_freeze(args, {"experiment_id": "ep-persistence-v1", "window_steps": 5,
+                               "variants": ["single", "repeat3"]})[0] is True
+    monkeypatch.setattr(_sp, "run", lambda *a, **k: _Diff("standard_agent/ep_analysis.py\n"))
+    ok, note = check_freeze(args, {"experiment_id": "ep-persistence-v1", "window_steps": 5,
+                                   "variants": ["single", "repeat3"]})
+    assert ok is False and "代码有改动" in note

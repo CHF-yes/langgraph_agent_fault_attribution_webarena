@@ -138,8 +138,15 @@ def check_freeze(args, schedule: dict | None = None) -> tuple[bool, str]:
                           cwd=ROOT, capture_output=True, text=True)
     if diff.returncode != 0:
         return False, f"git diff 失败（rc={diff.returncode}），无法确认冻结版本"
-    unexpected = [path for path in diff.stdout.split()
-                  if path != "docs/ep_persistence_frozen_v1.json"]
+    # 冻结提交之后只允许**记录类**文件变化：冻结清单本身，以及
+    # experiments/ep_persistence_v1/ 下的 JSON 记录（验收/成本等）。任何代码、
+    # 配置或产物契约的改动都视为偏离冻结版本。
+    def _allowed(path: str) -> bool:
+        return (path == "docs/ep_persistence_frozen_v1.json"
+                or (path.startswith("experiments/ep_persistence_v1/")
+                    and path.endswith(".json")))
+
+    unexpected = [path for path in diff.stdout.split() if not _allowed(path)]
     if unexpected:
         return False, f"冻结后代码有改动: {unexpected[:3]}"
 
