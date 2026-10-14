@@ -2496,3 +2496,63 @@ def test_exposure_log_also_covers_stage_c():
     exposures = injector.get_exposure_log()
     assert [e["delivered"] for e in exposures] == [False, True]
     assert exposures[1]["faults_delivered"] == ["web_http_error"]
+
+
+# ==========================================================================
+# 28. E-P 身份：id/stem/pair_key/指纹都不得与 Stage C 碰撞
+# ==========================================================================
+
+def test_stage_c_identity_is_unchanged():
+    from standard_agent.trial_metadata import make_trial_id, pair_key, trial_file_stem
+    common = dict(model_profile="m", architecture="react", fault_type="f",
+                  task_id=24, seed=1)
+    assert make_trial_id(**common, condition="fault") == \
+        "model=m|arch=react|fault=f|task=24|seed=1|cond=fault"
+    assert trial_file_stem(**common, condition="fault") == "m__react__f__task24__seed1__fault"
+    # Stage C 的 pair_key 不带 exp/var
+    assert "exp=" not in pair_key(**common)
+
+
+def test_ep_identity_is_distinct_and_carries_variant():
+    from standard_agent.trial_metadata import make_trial_id, pair_key, trial_file_stem
+    common = dict(model_profile="m", architecture="react", fault_type="f",
+                  task_id=24, seed=1, condition="fault",
+                  experiment_id="ep-persistence-v1")
+    single = make_trial_id(**common, fault_variant="single")
+    repeat = make_trial_id(**common, fault_variant="repeat3")
+    assert single != repeat
+    assert "exp=ep-persistence-v1" in single and "var=single" in single
+    assert "var=repeat3" in repeat
+    assert trial_file_stem(**common, fault_variant="repeat3").startswith(
+        "ep-persistence-v1__repeat3__")
+    assert "var=repeat3" in pair_key(model_profile="m", architecture="react", fault_type="f",
+                                     task_id=24, seed=1,
+                                     experiment_id="ep-persistence-v1", fault_variant="repeat3")
+
+
+def test_build_trial_record_emits_experiment_identity():
+    from standard_agent.trial_metadata import build_trial_record
+    record = build_trial_record(
+        model_profile="m", architecture="react", fault_type="f", task_id=24, seed=1,
+        condition="fault", run_config={}, replicate=0,
+        experiment_id="ep-persistence-v1", fault_variant="repeat3")
+    assert record["experiment_id"] == "ep-persistence-v1"
+    assert record["fault_variant"] == "repeat3"
+    assert "var=repeat3" in record["pair_key"]
+    assert record["file_stem"].startswith("ep-persistence-v1__repeat3__")
+
+
+def test_design_fingerprint_includes_variant_and_policy():
+    from scripts.run_fault_matrix import build_parser, design_fingerprint
+    base = ["--output-dir", "/tmp/x", "--model-profile", "m1", "--architecture", "react",
+            "--experiment-id", "ep-persistence-v1", "--fault-window-steps", "5"]
+    args_single = build_parser().parse_args(base + ["--fault-variant", "single"])
+    args_repeat = build_parser().parse_args(base + ["--fault-variant", "repeat3"])
+    fp = lambda a: design_fingerprint(a, ["web_http_error"], {"web_http_error": 2}, [24])
+    assert fp(args_single) != fp(args_repeat)          # variant 进指纹
+    a5 = build_parser().parse_args(base + ["--fault-variant", "repeat3"])
+    a9 = build_parser().parse_args(["--output-dir", "/tmp/x", "--model-profile", "m1",
+                                    "--architecture", "react",
+                                    "--experiment-id", "ep-persistence-v1",
+                                    "--fault-variant", "repeat3", "--fault-window-steps", "9"])
+    assert fp(a5) != fp(a9)                            # 窗口进指纹

@@ -757,6 +757,13 @@ def run_benchmark(args):
                         "fault_label": fault_config.fault_label,
                         "injection_step": fault_config.injection_step,
                         "trial_index": trial_idx,
+                        "experiment_id": getattr(fault_config, "experiment_id", "stage-c"),
+                        "fault_variant": getattr(fault_config, "fault_variant", "single"),
+                        "fault_window_steps": getattr(fault_config, "fault_window_steps", None),
+                        "target_policy_version": (
+                            __import__("fault_injection.targets", fromlist=["x"]).TARGET_POLICY_VERSION
+                            if getattr(fault_config, "experiment_id", "stage-c") == "ep-persistence-v1"
+                            else None),
                     },
                     paths={
                         "agent_response": str(response_path),
@@ -768,6 +775,8 @@ def run_benchmark(args):
                     steps=steps, cap_exhausted=cap_exhausted,
                     llm_calls=result.get("llm_calls", 0),
                     time_sec=elapsed,
+                    experiment_id=getattr(fault_config, "experiment_id", "stage-c"),
+                    fault_variant=getattr(fault_config, "fault_variant", "single"),
                 )
                 write_trial_record(os.path.join(output_dir, "trial_record.json"), record)
                 trial.trace_path = str(trace_path)

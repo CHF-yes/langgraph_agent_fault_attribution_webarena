@@ -96,6 +96,16 @@ def design_fingerprint(args, fault_types, injection_steps, task_ids) -> str:
         "injection_steps": {key: injection_steps[key] for key in sorted(injection_steps)},
         "trials_per_task": args.trials,
         "task_ids": sorted({int(task_id) for task_id in task_ids}),
+        # E-P：实验身份、variant、窗口与目标策略版本都必须进指纹，否则
+        # single/repeat3 或不同窗口的产物会被当作同一试验恢复。
+        "experiment_id": getattr(args, "experiment_id", "stage-c"),
+        "fault_variant": getattr(args, "fault_variant", "single"),
+        "fault_window_steps": getattr(args, "fault_window_steps", 5)
+        if getattr(args, "fault_variant", "single") != "single" else None,
+        "target_policy_version": (
+            __import__("fault_injection.targets", fromlist=["x"]).TARGET_POLICY_VERSION
+            if getattr(args, "experiment_id", "stage-c") == "ep-persistence-v1"
+            else None),
     }
     canonical = json.dumps(payload, sort_keys=True, separators=(",", ":"))
     return hashlib.sha256(canonical.encode("utf-8")).hexdigest()[:16]

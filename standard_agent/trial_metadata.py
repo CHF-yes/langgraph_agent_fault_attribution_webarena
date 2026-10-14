@@ -46,13 +46,20 @@ def _safe(value: object) -> str:
 
 def make_trial_id(*, model_profile: str, architecture: str, fault_type: str,
                   task_id: object, seed: object, condition: str,
-                  replicate: object | None = None) -> str:
+                  replicate: object | None = None,
+                  experiment_id: str = "stage-c",
+                  fault_variant: str = "single") -> str:
     """Return the deterministic key of a formal trial.
 
     The id is stable across machines and runs so that a control record and its
-    fault record differ only in ``condition``.
+    fault record differ only in ``condition``.  E-P runs additionally carry the
+    experiment id and variant so they can never collide with Stage C keys; the
+    Stage C defaults keep the historical format byte-identical.
     """
-    parts = [
+    parts = []
+    if experiment_id != "stage-c" or fault_variant != "single":
+        parts += [f"exp={_safe(experiment_id)}", f"var={_safe(fault_variant)}"]
+    parts += [
         f"model={_safe(model_profile)}",
         f"arch={_safe(architecture)}",
         f"fault={_safe(fault_type)}",
@@ -66,11 +73,17 @@ def make_trial_id(*, model_profile: str, architecture: str, fault_type: str,
 
 
 def pair_key(*, model_profile: str, architecture: str, fault_type: str,
-             task_id: object, seed: object, replicate: object | None = None) -> str:
-    """Return the key shared by a control trial and its fault counterpart."""
+             task_id: object, seed: object, replicate: object | None = None,
+             experiment_id: str = "stage-c", fault_variant: str = "single") -> str:
+    """Return the key shared by a control trial and its fault counterpart.
+
+    计算 E-P 的 D_f 时需跨 variant 组成 block，因此 pair_key 必须带上 experiment
+    与 variant，绝不能与旧 Stage C 的 pair 混在一起。
+    """
     return make_trial_id(
         model_profile=model_profile, architecture=architecture, fault_type=fault_type,
         task_id=task_id, seed=seed, condition="*", replicate=replicate,
+        experiment_id=experiment_id, fault_variant=fault_variant,
     )
 
 
@@ -84,7 +97,9 @@ def arm_dir_name(*, fault_label: str, seed: object) -> str:
 
 def trial_file_stem(*, model_profile: str, architecture: str, fault_type: str,
                     task_id: object, seed: object, condition: str,
-                    replicate: object | None = None) -> str:
+                    replicate: object | None = None,
+                    experiment_id: str = "stage-c",
+                    fault_variant: str = "single") -> str:
     """Return a filesystem-safe stem for one trial's artifacts.
 
     Used for the trace file name, so a trace can be traced back to its trial
@@ -92,6 +107,9 @@ def trial_file_stem(*, model_profile: str, architecture: str, fault_type: str,
     """
     parts = [model_profile, architecture, fault_type, f"task{task_id}",
              f"seed{seed}", condition]
+    if experiment_id != "stage-c" or fault_variant != "single":
+        # trace 文件名同样带 E-P 维度，只靠目录隔离不足以防合并碰撞
+        parts = [experiment_id, fault_variant] + parts
     if replicate is not None:
         parts.append(f"rep{replicate}")
     return "__".join(_safe(part) for part in parts)
@@ -156,6 +174,8 @@ def build_trial_record(*, model_profile: str, architecture: str, fault_type: str
                        llm_calls: int | None = None,
                        time_sec: float | None = None,
                        error: str | None = None,
+                       experiment_id: str = "stage-c",
+                       fault_variant: str = "single",
                        repo_root: str | Path | None = None) -> dict:
     """Build one trial record.
 
@@ -166,17 +186,22 @@ def build_trial_record(*, model_profile: str, architecture: str, fault_type: str
     record = {
         "schema_version": TRIAL_RECORD_SCHEMA_VERSION,
         "pairing_scheme": PAIRING_SCHEME,
+        "experiment_id": experiment_id,
+        "fault_variant": fault_variant,
         "trial_id": make_trial_id(
             model_profile=model_profile, architecture=architecture, fault_type=fault_type,
-            task_id=task_id, seed=seed, condition=condition, replicate=replicate),
+            task_id=task_id, seed=seed, condition=condition, replicate=replicate,
+            experiment_id=experiment_id, fault_variant=fault_variant),
         # 与 trace / 产物文件名一致的键：trial_id 是管道格式的标识，file_stem 是文件键，
         # 两者格式不同，审计要 join 记录与 trace 时用 file_stem 最直接。
         "file_stem": trial_file_stem(
             model_profile=model_profile, architecture=architecture, fault_type=fault_type,
-            task_id=task_id, seed=seed, condition=condition, replicate=replicate),
+            task_id=task_id, seed=seed, condition=condition, replicate=replicate,
+            experiment_id=experiment_id, fault_variant=fault_variant),
         "pair_key": pair_key(
             model_profile=model_profile, architecture=architecture, fault_type=fault_type,
-            task_id=task_id, seed=seed, replicate=replicate),
+            task_id=task_id, seed=seed, replicate=replicate,
+            experiment_id=experiment_id, fault_variant=fault_variant),
         "condition": condition,
         "model_profile": model_profile,
         "architecture": architecture,
