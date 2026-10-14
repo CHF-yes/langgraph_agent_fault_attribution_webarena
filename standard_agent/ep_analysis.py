@@ -31,17 +31,37 @@ def _cell_key(cell: dict, variant: str) -> tuple:
             int(cell["task_id"]), int(cell["fault_seed"]), variant)
 
 
-def _pairs(rows: list[dict]) -> dict:
-    """按 (model, arch, fault, task, seed, variant) 归拢 control/fault 两臂。"""
+def _block_key(cell: dict) -> tuple:
+    """不含 variant 的 block 键：D_f 必须在同一 (model, arch, fault, task, seed) 内比较。"""
+    return (cell["model_profile"], cell["architecture"], cell["fault_type"],
+            int(cell["task_id"]), int(cell["fault_seed"]))
+
+
+def _pairs(rows: list[dict], *, experiment_id: str) -> tuple:
+    """归拢 control/fault 两臂，并**只保留 variant 完整配对的 block**。
+
+    返回 ``(pairs, blocks, excluded)``：
+    * ``pairs``：``(block, variant) -> {control, fault}``，两臂齐全者；
+    * ``blocks``：single 与 repeat3 都齐全的 block（D_f 只能在这些 block 上计算）；
+    * ``excluded``：只有单侧 variant 的 block（不参与 D_f，单列报告）。
+    """
     buckets: dict = defaultdict(dict)
     for row in rows:
+        if row.get("experiment_id") not in (None, experiment_id):
+            continue                       # 严格过滤实验身份，绝不并入 Stage C
         variant = row.get("fault_variant") or (row.get("cell") or {}).get("fault_variant")
         if variant not in EP_VARIANTS:
             continue
-        key = _cell_key(row["cell"], variant)
+        key = (_block_key(row["cell"]), variant)
         buckets[key][row["cell"]["condition"]] = row
-    return {key: arms for key, arms in buckets.items()
-            if "control" in arms and "fault" in arms}
+    pairs = {key: arms for key, arms in buckets.items()
+             if "control" in arms and "fault" in arms}
+    by_block: dict = defaultdict(set)
+    for block, variant in pairs:
+        by_block[block].add(variant)
+    blocks = {block for block, variants in by_block.items() if variants == set(EP_VARIANTS)}
+    excluded = sorted(block for block in by_block if block not in blocks)
+    return pairs, blocks, excluded
 
 
 def _success(row: dict):
@@ -50,7 +70,7 @@ def _success(row: dict):
 
 
 def ep_analysis(rows: list[dict], *, experiment_id: str = "ep-persistence-v1") -> dict:
-    pairs = _pairs(rows)
+    pairs, blocks, excluded = _pairs(rows, experiment_id=experiment_id)
     # Δ 与 D 的计算
     usable = []
     for key, arms in pairs.items():
@@ -60,17 +80,18 @@ def ep_analysis(rows: list[dict], *, experiment_id: str = "ep-persistence-v1") -
         usable.append((key, arms, control, fault))
 
     by_variant_fault: dict = defaultdict(list)
-    for key, arms, control, fault in usable:
-        _model, _arch, fault_type, _task, _seed, variant = key
+    for (block, variant), arms, control, fault in usable:
+        _model, _arch, fault_type, _task, _seed = block
         by_variant_fault[(variant, fault_type)].append(control - fault)
 
     # 任务内先按 (model, arch, seed) 平均，再跨任务等权
     per_task: dict = defaultdict(lambda: defaultdict(list))
-    for key, arms, control, fault in usable:
-        _model, _arch, fault_type, task, _seed, variant = key
+    for (block, variant), arms, control, fault in usable:
+        _model, _arch, fault_type, task, _seed = block
         per_task[(variant, fault_type)][task].append(control - fault)
 
     result = {"experiment_id": experiment_id, "confirmatory_inference": False,
+              "n_blocks": len(blocks), "excluded_incomplete_blocks": excluded,
               "n_pairs_by_variant": {}, "by_fault": {}, "dose_distribution": {},
               "paired_step_delta": {}, "notes": [
                   "主口径为按分配的全部合法评分配对（含未触发/部分剂量）。",
@@ -90,15 +111,34 @@ def ep_analysis(rows: list[dict], *, experiment_id: str = "ep-persistence-v1") -
             "n_pairs": len(deltas),
         }
 
+    # D_f 只在 single 与 repeat3 都齐全的 block 上计算（逐 block 作差，再跨任务等权），
+    # 绝不把"single 只有 task24、repeat3 只有 task118"这样不重叠的两组相减。
+    per_fault_block_d: dict = defaultdict(lambda: defaultdict(list))
+    for block in sorted(blocks):
+        _model, _arch, fault_type, task, _seed = block
+        deltas = {}
+        for variant in EP_VARIANTS:
+            arms = pairs.get((block, variant))
+            control, fault = (_success(arms["control"]), _success(arms["fault"])) if arms else (None, None)
+            if control is None or fault is None:
+                deltas = {}
+                break
+            deltas[variant] = control - fault
+        if len(deltas) == len(EP_VARIANTS):
+            per_fault_block_d[fault_type][task].append(deltas["repeat3"] - deltas["single"])
+    for fault_type, by_task in per_fault_block_d.items():
+        per_task = {task: statistics.mean(values) for task, values in by_task.items()}
+        result["by_fault"].setdefault(fault_type, {})["D_f"] = {
+            "per_task": per_task,
+            "task_equal_weighted": statistics.mean(per_task.values()) if per_task else None,
+            "n_blocks": sum(len(v) for v in by_task.values()),
+        }
     for fault_type in {key[1] for key in by_variant_fault}:
-        single = result["by_fault"].get(fault_type, {}).get("delta_single", {}).get("task_equal_weighted")
-        repeat = result["by_fault"].get(fault_type, {}).get("delta_repeat3", {}).get("task_equal_weighted")
-        result["by_fault"][fault_type]["D_f"] = (
-            None if single is None or repeat is None else repeat - single)
+        result["by_fault"][fault_type].setdefault("D_f", None)
 
     # 剂量分布（按 variant/fault 统计整臂 fault 的注入次数）
-    for key, arms in pairs.items():
-        _model, _arch, fault_type, _task, _seed, variant = key
+    for (block, variant), arms in pairs.items():
+        _model, _arch, fault_type, _task, _seed = block
         count = arms["fault"].get("injection_count")
         if count is None:
             continue
@@ -112,8 +152,8 @@ def ep_analysis(rows: list[dict], *, experiment_id: str = "ep-persistence-v1") -
             faults[fault_type] = dict(counter)
 
     # 配对步数/调用数差（fault − control）
-    for key, arms, control, fault in usable:
-        _model, _arch, fault_type, _task, _seed, variant = key
+    for (block, variant), arms, control, fault in usable:
+        _model, _arch, fault_type, _task, _seed = block
         fault_row, control_row = arms["fault"], arms["control"]
         if fault_row.get("steps") is None or control_row.get("steps") is None:
             continue

@@ -20,8 +20,8 @@ from typing import Optional
 
 from fault_injection.episode import FaultEpisode, TARGET_ABSENT, TARGET_OK
 from fault_injection.targets import (TARGET_AMBIGUOUS, TARGET_POLICY_VERSION,
-                                     dom_identity, match_identity, normalize_url,
-                                     param_identity)
+                                     dom_identity, match_identity, matches_param,
+                                     normalize_url, param_identity)
 from fault_injection.web_faults import (HTTP_ERROR_PAGES, _combinations,
                                         _sample_multiple)
 
@@ -49,6 +49,22 @@ class PersistenceEngine:
                                            "agent_param_error")
                          if getattr(config, name, False)}
 
+    def _record(self, fault_name: str, *, proxy_step: int, action_uid: str, **kwargs) -> dict:
+        """记录一次注入：episode 证据 + config.log。
+
+        ``config.log`` 是 ``injection_count`` 的来源；只写 episode 会让导出的
+        次数恒为 0，剂量分析随之出错。
+        """
+        entry = self.episode.record_injection(proxy_step=proxy_step, action_uid=action_uid,
+                                              **kwargs)
+        self.config.record_injection(fault_name, {"replayed": kwargs.get("detail", {}).get("replayed", False),
+                                                  "proxy_step": proxy_step,
+                                                  "action_uid": action_uid})
+        return entry
+
+    def _skip(self, *, proxy_step: int, action_uid: str, reason: str) -> None:
+        self.episode.record_skip(proxy_step=proxy_step, action_uid=action_uid, reason=reason)
+
     # ---- HTTP ----
     def apply_http(self, obs: dict, *, proxy_step: int, action_uid: str) -> dict:
         if "web_http_error" not in self._enabled:
@@ -63,8 +79,8 @@ class PersistenceEngine:
                 self.episode.record_skip(proxy_step=proxy_step, action_uid=action_uid,
                                          reason=reason)
                 return obs
-            self.episode.record_injection(proxy_step=proxy_step, action_uid=action_uid,
-                                          target=target, detail={"replayed": True})
+            self._record("web_http_error", proxy_step=proxy_step, action_uid=action_uid,
+                         target=target, detail={"replayed": True})
             return _error_page(self._http_sample)
         # 首次抽取：仍由固定注入步把关（与 Stage C 一致）
         if proxy_step != self.config.injection_step:
@@ -73,10 +89,9 @@ class PersistenceEngine:
         error_type = self.config.rng.pick(["500", "503"])
         sample = HTTP_ERROR_PAGES[error_type]
         self._http_sample = sample
-        self.episode.record_injection(
-            proxy_step=proxy_step, action_uid=action_uid,
-            target={"kind": "http", "page_url": normalize_url(page_url)},
-            detail={"sample": sample["content"].splitlines()[0]})
+        self._record("web_http_error", proxy_step=proxy_step, action_uid=action_uid,
+                     target={"kind": "http", "page_url": normalize_url(page_url)},
+                     detail={"sample": sample["content"].splitlines()[0]})
         return _error_page(sample)
 
     # ---- DOM ----
@@ -102,9 +117,8 @@ class PersistenceEngine:
             if not allowed:
                 self.episode.record_skip(proxy_step=proxy_step, action_uid=action_uid, reason=reason)
                 return obs
-            self.episode.record_injection(proxy_step=proxy_step, action_uid=action_uid,
-                                          detail={"replayed_ids": matched,
-                                                  "removed_count": len(matched)})
+            self._record("web_dom_missing", proxy_step=proxy_step, action_uid=action_uid,
+                         detail={"replayed_ids": matched, "removed_count": len(matched)})
             return self._hide(obs, matched)
         if proxy_step != self.config.injection_step:
             return obs
@@ -121,8 +135,8 @@ class PersistenceEngine:
             chosen = [chosen]
         self._dom_targets = [dom_identity(elements[eid], page_url) for eid in chosen]
         self._dom_remove_count = len(chosen)
-        self.episode.record_injection(proxy_step=proxy_step, action_uid=action_uid,
-                                      detail={"removed_ids": chosen})
+        self._record("web_dom_missing", proxy_step=proxy_step, action_uid=action_uid,
+                     detail={"removed_ids": chosen})
         return self._hide(obs, [str(eid) for eid in chosen])
 
     @staticmethod
@@ -142,18 +156,18 @@ class PersistenceEngine:
             return element_id, text
         current = elements.get(str(element_id)) if isinstance(elements, dict) else None
         if self._param_target is not None:
-            eid, status = match_identity(self._param_target, elements or {}, page_url)
-            if status != TARGET_OK:
-                self.episode.record_skip(proxy_step=proxy_step, action_uid=action_uid,
-                                         reason=f"target_{status}")
+            # 关键：不仅"原目标还在页面上"，还要**当前动作确实针对它**且动作类型相同；
+            # 否则点击别的元素、或对原目标做 hover 都会被误改。
+            if not matches_param(self._param_target, action, current, page_url):
+                self._skip(proxy_step=proxy_step, action_uid=action_uid, reason="off_target")
                 return element_id, text
             allowed, reason = self.episode.decide(proxy_step=proxy_step, action_uid=action_uid)
             if not allowed:
                 self.episode.record_skip(proxy_step=proxy_step, action_uid=action_uid, reason=reason)
                 return element_id, text
-            self.episode.record_injection(proxy_step=proxy_step, action_uid=action_uid,
-                                          detail={"replayed": True, "new_element_id":
-                                                  self._param_corruption["element_id"]})
+            self._record("agent_param_error", proxy_step=proxy_step, action_uid=action_uid,
+                         detail={"replayed": True,
+                                 "new_element_id": self._param_corruption["element_id"]})
             new_text = (f"{text}{self._param_corruption['text_suffix']}"
                         if text is not None and self._param_corruption.get("text_suffix") else text)
             return self._param_corruption["element_id"], new_text
@@ -168,10 +182,10 @@ class PersistenceEngine:
         suffix = " [输入确认失败，请重试]" if text is not None else None
         self._param_target = param_identity(action, current, page_url)
         self._param_corruption = {"element_id": invalid, "text_suffix": suffix}
-        self.episode.record_injection(proxy_step=proxy_step, action_uid=action_uid,
-                                      target=self._param_target,
-                                      detail={"original_element_id": str(element_id),
-                                              "new_element_id": invalid})
+        self._record("agent_param_error", proxy_step=proxy_step, action_uid=action_uid,
+                     target=self._param_target,
+                     detail={"original_element_id": str(element_id),
+                             "new_element_id": invalid})
         new_text = f"{text}{suffix}" if text is not None and suffix else text
         return invalid, new_text
 

@@ -204,23 +204,12 @@ class BenchmarkRunner:
             for config_label, fault_config in self._configs:
                 trials = []
                 for trial_idx in range(trials_per_config):
-                    # 每个 trial 重置 seed 以保持可复现
-                    trial_config = FaultConfig(
-                        intensity=fault_config.intensity,
-                        seed=fault_config.seed + trial_idx,  # 不同 trial 不同 seed
-                        enabled=fault_config.enabled,
-                        injection_step=fault_config.injection_step,
-                        web_timeout=fault_config.web_timeout,
-                        web_http_error=fault_config.web_http_error,
-                        web_dom_missing=fault_config.web_dom_missing,
-                        web_popup_block=fault_config.web_popup_block,
-                        gitlab_ci_offline=fault_config.gitlab_ci_offline,
-                         gitlab_permission=fault_config.gitlab_permission,
-                         gitlab_conflict=fault_config.gitlab_conflict,
-                         gitlab_quota=fault_config.gitlab_quota,
-                         agent_state_misjudge=fault_config.agent_state_misjudge,
-                         agent_param_error=fault_config.agent_param_error,
-                     )
+                    # 每个 trial 重置 seed 以保持可复现；用 dataclasses.replace 复制其余
+                    # 字段（含 experiment_id/fault_variant/window），避免每加一个新字段就
+                    # 在这里漏一次——曾把 E-P 身份丢成默认 stage-c/single。
+                    import dataclasses
+                    trial_config = dataclasses.replace(
+                        fault_config, seed=fault_config.seed + trial_idx)
 
                     print(f"  [{config_label}] {task_id} trial {trial_idx+1}/{trials_per_config} ...", end=" ")
                     result = self._run_fn(task_id, task_desc, url, trial_config, trial_idx)

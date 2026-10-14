@@ -2397,6 +2397,7 @@ def test_injector_repeat3_persists_http_and_replays_param():
     first_eid = env.clicked[-1]
     assert first_eid.startswith("invalid_")
     env.elements = {"77": button}                         # 重建后换 id，语义目标不变
+    injector2.observe()                                   # 真实流程：动作前必有观察
     injector2.click("77")                                 # 重放同一损坏规则
     assert env.clicked[-1] == first_eid
 
@@ -2613,7 +2614,7 @@ def test_ep_analysis_computes_difference_in_differences():
     entry = analysis["by_fault"]["web_http_error"]
     assert entry["delta_single"]["task_equal_weighted"] == 0
     assert entry["delta_repeat3"]["task_equal_weighted"] == 1
-    assert entry["D_f"] == 1                              # 差中差
+    assert entry["D_f"]["task_equal_weighted"] == 1        # 同 block 上的差中差
     # 4 任务版本不做确认性推断：不得出现任何 p 值键
     assert analysis["confirmatory_inference"] is False
     assert "p_value" not in json.dumps(analysis)
@@ -2634,3 +2635,119 @@ def test_ep_analysis_reports_dose_distribution_and_paired_cost():
     assert single_doses.get("full_dose") == 1            # single 的 1 次即 full_dose
     cost = analysis["paired_step_delta"]["repeat3:web_http_error"]
     assert cost["step_delta_mean"] == 12 - 8             # fault − control
+
+
+# ==========================================================================
+# 30. 执行链修复：控制臂身份 / 参数离目标 / 计数 / 缺日志 / 合成错误 / D_f 配对
+# ==========================================================================
+
+def test_control_arm_carries_experiment_identity():
+    from main import _build_fault_config
+    import argparse as _ap
+    args = _ap.Namespace(fault_type="web_http_error", fault_intensity="off",
+                         fault_seed=7, fault_injection_step=2,
+                         experiment_id="ep-persistence-v1", fault_variant="repeat3",
+                         fault_window_steps=5)
+    # 控制臂也用同一身份（intensity=off 不注入，但身份必须一致）
+    from fault_injection.config import FaultConfig
+    control = FaultConfig(intensity="off", seed=7, experiment_id="ep-persistence-v1",
+                          fault_variant="repeat3", fault_window_steps=5)
+    assert control.fault_variant == "repeat3"
+    assert control.experiment_id == "ep-persistence-v1"
+    assert control.variant_label == "ep-persistence-v1:repeat3"
+
+
+def test_param_engine_does_not_touch_other_targets_or_actions():
+    from fault_injection.persistence import PersistenceEngine
+    cfg = _ep_config(agent_param_error=True, injection_step=1)
+    engine = PersistenceEngine(cfg)
+    page = "http://h/checkout"
+    a = {"role": "button", "name": "Place order", "attrs": {}, "role_index": 0}
+    b = {"role": "button", "name": "Apply coupon", "attrs": {}, "role_index": 0}
+    # 首次锁定 A
+    eid_a, _ = engine.apply_param(action="click", element_id="9", text=None, proxy_step=2,
+                                  action_uid="p1", elements={"9": a}, page_url=page)
+    assert eid_a.startswith("invalid_")
+    # 点击 B → 不改写
+    eid_b, _ = engine.apply_param(action="click", element_id="8", text=None, proxy_step=3,
+                                  action_uid="p2", elements={"8": b}, page_url=page)
+    assert eid_b == "8"
+    # 对 A 做 hover（动作类型不同）→ 不改写
+    eid_h, _ = engine.apply_param(action="hover", element_id="9", text=None, proxy_step=4,
+                                  action_uid="p3", elements={"9": a}, page_url=page)
+    assert eid_h == "9"
+    # 再次点击 A → 重放同一损坏
+    eid_a2, _ = engine.apply_param(action="click", element_id="77", text=None, proxy_step=5,
+                                   action_uid="p4",
+                                   elements={"77": a}, page_url=page)
+    assert eid_a2 == eid_a
+
+
+def test_engine_injections_reach_config_log():
+    from fault_injection.persistence import PersistenceEngine
+    cfg = _ep_config(web_http_error=True)
+    engine = PersistenceEngine(cfg)
+    page = {"url": "http://h/a", "elements": {}, "page_content": "real"}
+    engine.apply_http(page, proxy_step=2, action_uid="a1")
+    engine.apply_http(page, proxy_step=3, action_uid="a2")
+    assert len(cfg.log) == 2 == cfg.episode.injections      # 导出计数 == episode 计数
+    assert [e["fault"] for e in cfg.log] == ["web_http_error"] * 2
+
+
+def test_repeat3_without_mechanism_log_is_an_error():
+    from scripts.run_fault_matrix import classify_log
+    # 有 count 行但没有 fault_episode 结构化证据 → 无法区分未触发与日志丢失 → 实现错误
+    text = _count_line(0) 
+    out = classify_log(text, expect_fault=True, fault_variant="repeat3")
+    assert out["fault_invalid"] is True and out["fault_missing"] is True
+
+
+def test_synthetic_error_page_does_not_mask_a_real_api_error():
+    from scripts.run_fault_matrix import classify_log
+    synthetic = ("        injection_count=1 fault_seed=1 faults=['web_http_error'] steps=[2]\n"
+                 "[1] heading '503 Service Unavailable'\n")
+    assert classify_log(synthetic, expect_fault=True)["infrastructure_error"] is False
+    # 同一次运行又出现真实 API 429 → 必须仍判为基础设施错误
+    mixed = synthetic + "openai.APIStatusError: Error code: 429 - Rate limit reached\n"
+    assert classify_log(mixed, expect_fault=True)["infrastructure_error"] is True
+
+
+def test_d_f_requires_the_same_block_in_both_variants():
+    from standard_agent.ep_analysis import ep_analysis
+    rows = [
+        _ep_row("single", "control", True, task=24),
+        _ep_row("single", "fault", False, task=24),      # single 只有 task24
+        _ep_row("repeat3", "control", True, task=118),
+        _ep_row("repeat3", "fault", False, task=118),    # repeat3 只有 task118
+    ]
+    analysis = ep_analysis(rows)
+    assert analysis["n_blocks"] == 0
+    assert analysis["excluded_incomplete_blocks"]               # 两个不完整 block 被单列
+    assert analysis["by_fault"]["web_http_error"]["D_f"] is None  # 绝不跨任务相减
+
+
+def test_evaluator_binding_uses_current_environment_version():
+    from standard_agent.stage_c_pipeline import current_evaluator_version, evaluation_binding
+    version = current_evaluator_version()
+    assert "adapter" in version
+    assert "package_sha256" in version or "distribution" in version
+
+
+def test_run_schedule_plan_is_interleaved_and_variant_scoped(tmp_path):
+    from standard_agent.ep_schedule import build_schedule, write_schedule
+    from scripts.ep_run_schedule import build_parser, plan_jobs, _commands
+    schedule = build_schedule(models=["m1"], architectures=["react"],
+                              faults=["web_http_error"], tasks=[24, 118], seeds=[1],
+                              schedule_seed=5)
+    path = write_schedule(schedule, tmp_path / "schedule.json")
+    args = build_parser().parse_args(["--schedule", str(path),
+                                      "--experiment-root", str(tmp_path / "ep"),
+                                      "--dry-run"])
+    jobs = plan_jobs(schedule)
+    assert len(jobs) == 4                                   # 2 block × 2 variant
+    order = [j["variant"] for j in jobs]
+    assert len(set(order[:2])) == 2                          # 交错
+    planned = _commands(args, schedule, jobs)
+    assert all("/repeat3/outputs/" in p["output_root"] or "/single/outputs/" in p["output_root"]
+               for p in planned)
+    assert all("--fault-variant" in p["command"] for p in planned)

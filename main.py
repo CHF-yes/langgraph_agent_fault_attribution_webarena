@@ -619,6 +619,8 @@ def run_benchmark(args):
             model_profile=model_profile, architecture=args.architecture,
             fault_type=record_fault_type, task_id=args.task_id,
             seed=fault_config.seed, condition=condition, replicate=trial_idx,
+            experiment_id=getattr(fault_config, "experiment_id", "stage-c"),
+            fault_variant=getattr(fault_config, "fault_variant", "single"),
         )
         # 每次 trial 一个 run id：trace 落在独立目录，重跑同一格不会续写旧 trace。
         run_id = f"{time.strftime('%Y%m%dT%H%M%S')}-{uuid.uuid4().hex[:6]}"
@@ -819,7 +821,13 @@ def run_benchmark(args):
     if args.condition != "fault":
         # Control 与故障臂共用同一次运行的 seed：control 不注入任何故障，
         # seed 只用于配对标识，因此两臂能用同一个 pair key 对上。
-        runner.add_config("control", FaultConfig(intensity="off", seed=args.fault_seed))
+        # 控制臂必须携带同一实验身份与 variant，否则 repeat3 的控制臂会被标成
+        # stage-c/single，paired 对不上、trace 命名也与记录不一致。
+        runner.add_config("control", FaultConfig(
+            intensity="off", seed=args.fault_seed,
+            experiment_id=getattr(args, "experiment_id", "stage-c"),
+            fault_variant=getattr(args, "fault_variant", "single"),
+            fault_window_steps=getattr(args, "fault_window_steps", 5)))
 
     # 实验组
     exp_label = f"fault_{args.fault_intensity}"

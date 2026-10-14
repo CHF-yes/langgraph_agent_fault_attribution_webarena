@@ -16,6 +16,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PILOT_TASKS = (24, 118)
 ALL_TASKS = (24, 27, 132, 118)
+# 只统计正式 8 个 root：排除被取代的修复前批次 stage_c_slice2，避免把旧批次与重跑
+# trace 混入 token 均值（此前默认 glob 把它们都算了进去）。
+FORMAL_ROOTS = ("stage_c_slice1", "stage_c_slice1b", "stage_c_slice2b", "stage_c_slice2c",
+                "stage_c_slice3", "stage_c_slice3b", "stage_c_slice4", "stage_c_slice4b")
 
 
 def tokens_for_tasks(tasks, roots):
@@ -44,15 +48,17 @@ def tokens_for_tasks(tasks, roots):
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--traces-glob", default="traces/stage_c_slice*")
+    parser.add_argument("--traces-roots", nargs="+", default=list(FORMAL_ROOTS),
+                        help="只统计这些正式 root（默认排除被取代的 slice2）")
     parser.add_argument("--price-in", type=float, default=None, help="元/百万 prompt token")
     parser.add_argument("--price-out", type=float, default=None, help="元/百万 completion token")
     parser.add_argument("--output", default="experiments/ep_persistence_v1/cost_estimate.json")
     args = parser.parse_args()
 
-    roots = sorted(glob.glob(str(ROOT / args.traces_glob)))
+    roots = [str(ROOT / "traces" / name) for name in args.traces_roots]
     out = {"unit": "tokens_per_trial", "source": "Stage C traces (llm_provenance)",
-           "matched_trace_roots": [Path(r).name for r in roots], "estimates": {}}
+           "matched_trace_roots": [Path(r).name for r in roots], "estimates": {},
+           "caveat": "仅正式 8 root；每 trial token 为跨 run 均值，属粗略参考。"}
     for label, tasks, n_trials in (("pilot_48", PILOT_TASKS, 48),
                                    ("full_384", ALL_TASKS, 384)):
         prompt, completion, n = tokens_for_tasks(tasks, roots)

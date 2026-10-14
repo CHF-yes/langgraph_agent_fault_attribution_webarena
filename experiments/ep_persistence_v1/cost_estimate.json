@@ -4,7 +4,6 @@
   "matched_trace_roots": [
     "stage_c_slice1",
     "stage_c_slice1b",
-    "stage_c_slice2",
     "stage_c_slice2b",
     "stage_c_slice2c",
     "stage_c_slice3",
@@ -14,20 +13,21 @@
   ],
   "estimates": {
     "pilot_48": {
-      "observed_trials": 118,
-      "mean_prompt_tokens": 47366,
-      "mean_completion_tokens": 977,
+      "observed_trials": 106,
+      "mean_prompt_tokens": 49557,
+      "mean_completion_tokens": 1005,
       "planned_trials": 48,
-      "est_prompt_tokens": 2273566,
-      "est_completion_tokens": 46908
+      "est_prompt_tokens": 2378713,
+      "est_completion_tokens": 48250
     },
     "full_384": {
-      "observed_trials": 284,
-      "mean_prompt_tokens": 52834,
-      "mean_completion_tokens": 1332,
+      "observed_trials": 254,
+      "mean_prompt_tokens": 52227,
+      "mean_completion_tokens": 1222,
       "planned_trials": 384,
-      "est_prompt_tokens": 20288151,
-      "est_completion_tokens": 511296
+      "est_prompt_tokens": 20055173,
+      "est_completion_tokens": 469373
     }
-  }
+  },
+  "caveat": "仅正式 8 root；每 trial token 为跨 run 均值，属粗略参考。"
 }

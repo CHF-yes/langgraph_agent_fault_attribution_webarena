@@ -89,6 +89,19 @@ def _same_target(identity: dict, element: dict, page_url: str) -> bool:
     return True
 
 
+def matches_param(identity: dict, action: str, element, page_url: str) -> bool:
+    """当前参数动作是否**针对被锁定的目标**：动作类型相同且元素语义身份一致。
+
+    这是"同目标、同类动作"的关键：只在页面上"还能找到原目标"是不够的——
+    对别的元素点击、或对原目标做 hover，都不应被改写。
+    """
+    if not isinstance(element, dict) or identity.get("kind") != "param":
+        return False
+    if normalize_text(action) != identity.get("action"):
+        return False
+    return _same_target(identity, element, page_url)
+
+
 def match_identity(identity: dict, elements: dict, page_url: str) -> tuple[str | None, str]:
     """在当前页重新识别被锁定的目标。
 

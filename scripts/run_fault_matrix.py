@@ -4,6 +4,7 @@
 import argparse
 import hashlib
 import json
+from fault_injection.web_faults import HTTP_ERROR_PAGES
 import os
 import re
 import signal
@@ -236,25 +237,32 @@ def classify_log(text, *, expect_fault=True, fault_variant="single", window_step
         fault_invalid = not fault_counts or any(count != 1 for count in fault_counts)
         fault_missing = fault_invalid
     else:
-        # 无结构化证据时的 repeat3 兜底：0 合法、>3 越界
+        # repeat3 必须带机制日志：缺结构化证据时无法区分"合法未触发"与"日志丢失"，
+        # 因此判为实现错误，而不是默默放行。
         fault_count = fault_counts[-1] if fault_counts else 0
         fault_triggered = any(count >= 1 for count in fault_counts)
-        fault_invalid = any(count > 3 for count in fault_counts)
-        fault_missing = fault_invalid
+        fault_invalid = True
+        fault_missing = True
     if not expect_fault:
         # T0 是控制批：本来就没有故障臂，"没有注入"是预期结果而不是异常。
         # 否则每个控制 job 都会被判 fault_invalid，并触发"连续故障缺失即停止"策略。
         fault_triggered = False
         fault_invalid = False
         fault_missing = False
+    # 注入的合成 500/503 是 web_http_error 的**预期负载**，不是外部服务故障；只把它
+    # 们自身的页面文本从扫描里剔除，真实 API 429/502/503 与连接错误仍会被检出。
+    scan_text = text
+    for page in HTTP_ERROR_PAGES.values():
+        scan_text = scan_text.replace(page["content"], "")
+    # 注入页在 AX 里表现为 heading 行（"[1] heading '503 Service Unavailable'"），
+    # 这类行不是真实 API 错误，单独剥掉；真正的 "503 Service Unavailable" API 报错
+    # 不带 AX heading 前缀，仍会被检出。
+    scan_text = re.sub(r"^\s*\[\d+\]\s*heading '50[03][^']*'.*$", "", scan_text,
+                       flags=re.MULTILINE)
     infrastructure_error = any(
-        re.search(pattern, text, re.IGNORECASE)
+        re.search(pattern, scan_text, re.IGNORECASE)
         for pattern in infrastructure_patterns
     )
-    # A synthetic 500/503 is the expected payload of web_http_error, not an
-    # external service failure. Keep genuine connection/API errors detectable.
-    if fault_triggered and any("web_http_error" in label for label in fault_labels):
-        infrastructure_error = False
     return {
         "infrastructure_error": infrastructure_error,
         "task_error": any(marker in text for marker in task_error),

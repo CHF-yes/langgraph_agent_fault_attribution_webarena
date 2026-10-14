@@ -287,6 +287,35 @@ def _sha256_file(path: Path) -> str | None:
         return None
 
 
+def current_evaluator_version() -> dict:
+    """**当前环境**里评测实现的版本指纹。
+
+    以前这里的版本是从旧评分自身读的，因此换掉了评测实现却仍会显示"绑定一致"。
+    现在从已安装的分布版本与包文件哈希计算，任何评测实现变更都会改变绑定。
+    """
+    version: dict = {"adapter": EVALUATOR_ADAPTER_VERSION}
+    try:
+        import importlib.metadata as metadata
+        for distribution in ("webarena-verified", "webarena_verified"):
+            try:
+                version["distribution"] = metadata.version(distribution)
+                break
+            except metadata.PackageNotFoundError:
+                continue
+    except Exception:                                  # noqa: BLE001
+        pass
+    try:
+        # 用 find_spec 定位包文件，**不导入**：导入 webarena_verified 会初始化其全局
+        # 状态，污染同进程里其它评测测试（实测会让 smoke 的缺失文件用例返回 ERROR）。
+        import importlib.util
+        spec = importlib.util.find_spec("webarena_verified")
+        if spec and spec.origin:
+            version["package_sha256"] = _sha256_file(Path(spec.origin))
+    except Exception:                                  # noqa: BLE001
+        pass
+    return version
+
+
 def evaluation_binding(trial_dir: str | Path, config_path, result: dict | None = None) -> dict:
     """把评分与其输入绑定：response、HAR、实际评分配置、evaluator 版本。
 
@@ -300,7 +329,9 @@ def evaluation_binding(trial_dir: str | Path, config_path, result: dict | None =
         "network_har_sha256": _sha256_file(trial_dir / NETWORK_HAR),
         "config_sha256": _sha256_file(Path(config_path)) if config_path else None,
         "evaluator_adapter_version": EVALUATOR_ADAPTER_VERSION,
-        "webarena_verified_version": (result or {}).get("webarena_verified_version")
+        # 版本取自当前环境，而不是被评分的旧结果；旧结果的版本只作参考记录。
+        "evaluator_version": current_evaluator_version(),
+        "scored_by_version": (result or {}).get("webarena_verified_version")
         if isinstance(result, dict) else None,
     }
 

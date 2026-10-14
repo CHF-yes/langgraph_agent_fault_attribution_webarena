@@ -204,7 +204,7 @@ def test_criterion7_keys_dont_collide_and_stale_binding_blocks(tmp_path):
 def test_criterion8_synthetic_vs_real_infrastructure():
     from scripts.run_fault_matrix import classify_log
     synthetic = (f"        injection_count=1 fault_seed=1 faults=['web_http_error'] steps=[2]\n"
-                 f"        HTTP status 503 from the injected error page\n")
+                 f"[1] heading '503 Service Unavailable'\n")
     out = classify_log(synthetic, expect_fault=True)
     assert out["fault_triggered"] and out["infrastructure_error"] is False  # 合成 503 不算基础设施故障
     real = "        Connection refused\n        Traceback (most recent call last):\n"
