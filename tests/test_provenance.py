@@ -38,25 +38,36 @@ def _load_provider():
     Stubbing just those two names lets the extractor (which needs neither) be
     exercised anywhere, including CI that never touches the agent runtime.
     """
-    if "langchain_openai" not in sys.modules:
-        stub = types.ModuleType("langchain_openai")
-        stub.ChatOpenAI = object  # only referenced as a return annotation
-        sys.modules["langchain_openai"] = stub
-    if "standard_agent.config" not in sys.modules:
-        pkg = types.ModuleType("standard_agent")
-        pkg.__path__ = []
-        cfg = types.ModuleType("standard_agent.config")
-        cfg.ModelProfile = type("ModelProfile", (), {})
-        cfg.settings = types.SimpleNamespace()
-        sys.modules["standard_agent"] = pkg
-        sys.modules["standard_agent.config"] = cfg
-    spec = importlib.util.spec_from_file_location(
-        "provider_under_test",
-        os.path.join(ROOT, "standard_agent", "llm", "provider.py"),
-    )
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
+    # 只在本函数内注入桩模块，加载完立即还原 sys.modules：否则这些假模块会残留，
+    # 污染后续测试（实测会让 smoke 的 evaluator 缺失文件用例返回 ERROR）。
+    stubbed = ("langchain_openai", "standard_agent", "standard_agent.config")
+    saved = {name: sys.modules.get(name) for name in stubbed}
+    try:
+        if "langchain_openai" not in sys.modules:
+            stub = types.ModuleType("langchain_openai")
+            stub.ChatOpenAI = object  # only referenced as a return annotation
+            sys.modules["langchain_openai"] = stub
+        if "standard_agent.config" not in sys.modules:
+            pkg = types.ModuleType("standard_agent")
+            pkg.__path__ = []
+            cfg = types.ModuleType("standard_agent.config")
+            cfg.ModelProfile = type("ModelProfile", (), {})
+            cfg.settings = types.SimpleNamespace()
+            sys.modules["standard_agent"] = pkg
+            sys.modules["standard_agent.config"] = cfg
+        spec = importlib.util.spec_from_file_location(
+            "provider_under_test",
+            os.path.join(ROOT, "standard_agent", "llm", "provider.py"),
+        )
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module
+    finally:
+        for name, value in saved.items():
+            if value is None:
+                sys.modules.pop(name, None)
+            else:
+                sys.modules[name] = value
 
 
 extract = _load_provider().extract_served_metadata

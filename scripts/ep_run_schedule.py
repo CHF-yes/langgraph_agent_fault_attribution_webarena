@@ -121,12 +121,19 @@ def check_freeze(args) -> tuple[bool, str]:
         return False, f"缺少冻结清单 {freeze_path}"
     frozen = json.loads(freeze_path.read_text(encoding="utf-8"))
     status = git_status(ROOT)
-    head = str(status.get("head") or "")
-    if not head.startswith(str(frozen.get("git_commit", ""))[:12]):
-        return False, f"HEAD {head[:12]} != 冻结 commit {str(frozen.get('git_commit'))[:12]}"
+    frozen_commit = str(frozen.get("git_commit") or "")
     if status.get("dirty"):
         return False, "工作区为脏（tracked 文件与 HEAD 不同）"
-    return True, f"frozen@{str(frozen.get('git_commit'))[:12]}"
+    # 冻结提交之后只允许冻结清单自身变化（典型的"提交代码→冻结→提交清单"两步）。
+    # 任何其它改动都视为已偏离冻结版本。
+    changed = subprocess.run(
+        ["git", "diff", "--name-only", frozen_commit, "HEAD"],
+        cwd=ROOT, capture_output=True, text=True).stdout.split()
+    unexpected = [path for path in changed
+                  if path != "docs/ep_persistence_frozen_v1.json"]
+    if unexpected:
+        return False, f"冻结后代码有改动: {unexpected[:3]}"
+    return True, f"frozen@{frozen_commit[:12]}"
 
 
 def run_planned(args, planned, freeze_note) -> int:

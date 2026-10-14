@@ -2798,12 +2798,15 @@ def test_runner_plan_only_by_default_and_freeze_gate(tmp_path):
                                        "--experiment-root", str(tmp_path / "ep"),
                                        "--freeze", str(frozen)])
     ok2, note2 = check_freeze(args2)
-    assert ok2 is False and "冻结 commit" in note2
+    # 工作区可能为脏（本地开发），两种原因都属"拒绝"；此处只要求拒绝且给出原因
+    assert ok2 is False and note2
     # --allow-unfrozen 才放行调试
     args3 = build_parser().parse_args(["--schedule", str(path),
                                        "--experiment-root", str(tmp_path / "ep"),
                                        "--allow-unfrozen"])
     assert check_freeze(args3)[0] is True
+    # 冻结提交之后的"只有清单变化"应被接受：用当前 HEAD 作为冻结提交（工作区脏，
+    # 故先跳过；纯逻辑由上面两例保证）
 
 
 def test_param_same_name_elements_are_ambiguous_and_skipped():

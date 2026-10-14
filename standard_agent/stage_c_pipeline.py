@@ -309,8 +309,11 @@ def current_evaluator_version() -> dict:
         # 状态，污染同进程里其它评测测试（实测会让 smoke 的缺失文件用例返回 ERROR）。
         import importlib.util
         spec = importlib.util.find_spec("webarena_verified")
-        if spec and spec.origin:
-            package_dir = Path(spec.origin).parent
+        # webarena_verified 是命名空间包：origin 为 None，目录来自 submodule_search_locations。
+        locations = list(getattr(spec, "submodule_search_locations", None) or [])
+        package_dir = Path(spec.origin).parent if (spec and spec.origin) else (
+            Path(locations[0]) if locations else None)
+        if package_dir is not None:
             sources = sorted(package_dir.rglob("*.py"))
             if sources:
                 # 覆盖包内**所有**源码，而不只是入口文件：任一子模块变化都会改变哈希。
@@ -321,7 +324,7 @@ def current_evaluator_version() -> dict:
                 version["package_sources"] = len(sources)
                 version["package_sha256"] = digest.hexdigest()
             else:
-                version["package_sha256"] = _sha256_file(Path(spec.origin))
+                version["package_sha256"] = _sha256_file(Path(spec.origin)) if spec.origin else None
     except Exception:                                  # noqa: BLE001
         pass
     return version
