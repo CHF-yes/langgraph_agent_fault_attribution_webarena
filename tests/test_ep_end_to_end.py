@@ -23,12 +23,16 @@ def _install_fakes(monkeypatch, navigations: int):
     同时把 `create_llm` 换成抛错：mock 缺失时**绝不回退到真实 API**。
     """
     import standard_agent.llm.provider as provider_mod
+    import standard_agent.core.nodes as nodes_mod
     import standard_agent.core.graph as graph_mod
 
     def _no_real_llm(*args, **kwargs):
         raise AssertionError("测试不得调用真实模型（mock 缺失即失败）")
 
+    # nodes.py 是 `from ... import create_llm`，只改 provider 不影响它的引用；
+    # 两个位置都替换，确保任何路径都不会打到真实 API。
     monkeypatch.setattr(provider_mod, "create_llm", _no_real_llm, raising=False)
+    monkeypatch.setattr(nodes_mod, "create_llm", _no_real_llm, raising=False)
     import standard_agent.environment.browser as browser_mod
     import standard_agent.tools.web_tools as web_tools
     from standard_agent.environment.browser import PageObservation

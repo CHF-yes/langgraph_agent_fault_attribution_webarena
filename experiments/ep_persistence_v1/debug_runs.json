@@ -35,6 +35,12 @@
       "trace": "traces/20261014T093855-d0d563/deepseek_v41_flash__react__web_http_error__task24__seed1__fault__rep0.jsonl"
     }
   ],
-  "actual_usage": {"llm_calls": 5, "prompt_tokens": 17642, "completion_tokens": 769},
-  "note": "产物目录位于 /tmp（易失）；trace 在仓库 traces/ 下。如需保留请复制产物到 experiments/ep_persistence_v1/debug_runs/。"
+  "actual_usage": {
+    "llm_calls": 5,
+    "prompt_tokens": 17642,
+    "completion_tokens": 769
+  },
+  "note": "产物目录位于 /tmp（易失）；trace 在仓库 traces/ 下。如需保留请复制产物到 experiments/ep_persistence_v1/debug_runs/。",
+  "counted_in_total_spend": true,
+  "spend_note": "这两条不计入正式 48 条配额，但真实用量必须计入项目总支出。"
 }

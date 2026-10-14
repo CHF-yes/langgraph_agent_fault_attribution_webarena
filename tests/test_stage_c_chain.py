@@ -2207,11 +2207,11 @@ def test_ambiguous_target_is_never_guessed():
     found, status = match_identity(identity, {"7": _elem(name="Read more"),
                                               "8": _elem(name="Read more")}, page)
     assert (found, status) == (None, "ambiguous")
-    # role_index 恰好唯一 → 可消歧
+    # 即便身份里有 role_index，也不得用它消歧（刷新后序号会变，可能屏蔽错元素）
     identity2 = identify_element({"1": _elem(name="Read more", role_index=1)}, "1", page)
     found2, status2 = match_identity(identity2, {"7": _elem(name="Read more", role_index=0),
                                                  "8": _elem(name="Read more", role_index=1)}, page)
-    assert (found2, status2) == ("8", "ok")
+    assert (found2, status2) == (None, "ambiguous")
 
 
 def test_href_and_normalization_rules():
@@ -2871,3 +2871,102 @@ def test_runner_execution_loop_writes_status_and_stops(tmp_path, monkeypatch):
     assert first["variant"] in ("single", "repeat3")
     assert first["condition"] in ("control", "fault")
     assert first["architecture"] == "react"
+
+
+# ==========================================================================
+# 32. 机制错误停止 / 恢复 / 冻结严格化 / DOM 歧义
+# ==========================================================================
+
+def test_classify_log_exposes_mechanism_error_separately():
+    from scripts.run_fault_matrix import classify_log
+    # repeat3 缺结构化证据 → mechanism_error
+    out = classify_log(_count_line(0), expect_fault=True, fault_variant="repeat3")
+    assert out["mechanism_error"] is True
+    # repeat3 有结构化证据且 0 剂量 → 合法未触发，不是机制错误
+    import json as _json
+    payload = {"variant": "repeat3", "window_steps": 5, "injections": []}
+    ok = classify_log(_count_line(0) + "        fault_episode=" + _json.dumps(payload) + "\n",
+                      expect_fault=True, fault_variant="repeat3")
+    assert ok["mechanism_error"] is False and ok["fault_missing"] is False
+    # 次数越界 → 机制错误
+    over = {"variant": "repeat3", "window_steps": 5,
+            "injections": [{"event": "injection", "proxy_step": s, "action_uid": f"a{s}"}
+                           for s in (2, 3, 4, 5)]}
+    bad = classify_log(_count_line(4) + "        fault_episode=" + _json.dumps(over) + "\n",
+                       expect_fault=True, fault_variant="repeat3")
+    assert bad["mechanism_error"] is True
+    # single 的 0 次是"合法未触发"，不是机制错误
+    single = classify_log(_count_line(0), expect_fault=True, fault_variant="single")
+    assert single["mechanism_error"] is False
+
+
+def _runner_with(monkeypatch, tmp_path, log_text, extra_argv=()):
+    import scripts.ep_run_schedule as runner
+    from standard_agent.ep_schedule import build_schedule, write_schedule
+    schedule = build_schedule(models=["m1"], architectures=["react"],
+                              faults=["web_http_error"], tasks=[24], seeds=[1],
+                              schedule_seed=2)
+    schedule["window_steps"] = 5
+    path = write_schedule(schedule, tmp_path / "schedule.json")
+
+    class FakeProc:
+        def __init__(self, command, cwd=None, stdout=None, stderr=None,
+                     text=None, start_new_session=None):
+            self.pid = 4242
+            self.returncode = 0
+            stdout.write(log_text)
+
+        def wait(self, timeout=None): return 0
+        def poll(self): return 0
+
+    monkeypatch.setattr(runner.subprocess, "Popen", FakeProc)
+    import sys as _sys
+    argv = ["ep_run_schedule.py", "--schedule", str(path),
+            "--experiment-root", str(tmp_path / "ep"),
+            "--execute", "--allow-unfrozen", *extra_argv]
+    monkeypatch.setattr(_sys, "argv", argv)
+    return runner
+
+
+def test_runner_stops_on_mechanism_error(tmp_path, monkeypatch):
+    # repeat3 缺机制日志（没有任何 fault_episode 行）→ 应停止且返回非零
+    runner = _runner_with(monkeypatch, tmp_path,
+                          "        injection_count=0 fault_seed=1 faults=[] steps=[]\n")
+    assert runner.main() != 0
+    statuses = list((tmp_path / "ep").rglob("*.status.json"))
+    assert statuses
+    assert json.loads(statuses[0].read_text())["mechanism_error"] is True
+
+
+def test_runner_requires_empty_dir_and_supports_resume(tmp_path, monkeypatch):
+    # 先跑一次（合法日志：single/control 无故障也合法）
+    log = ("        injection_count=0 fault_seed=1 faults=[] steps=[]\n"
+           "        fault_episode={\"variant\": \"repeat3\", \"window_steps\": 5, \"injections\": []}\n")
+    runner = _runner_with(monkeypatch, tmp_path, log)
+    assert runner.main() == 0
+    statuses = list((tmp_path / "ep").rglob("*.status.json"))
+    assert statuses
+    # 再次执行、未加 --resume → 拒绝（保留旧产物）
+    runner2 = _runner_with(monkeypatch, tmp_path, log)
+    assert runner2.main() == 3
+    # 加 --resume → 跳过已完成的 job
+    runner3 = _runner_with(monkeypatch, tmp_path, log, extra_argv=("--resume",))
+    assert runner3.main() == 0
+
+
+def test_freeze_requires_readable_clean_git(tmp_path, monkeypatch):
+    from scripts.ep_run_schedule import build_parser, check_freeze
+    frozen = tmp_path / "frozen.json"
+    frozen.write_text(json.dumps({"git_commit": "a" * 40, "git_dirty": False,
+                                 "experiment_id": "ep-persistence-v1",
+                                 "window_steps": 5, "variants": {"single": 1, "repeat3": 3},
+                                 "target_policy_version": "semantic-target-lock-v1"}))
+    args = build_parser().parse_args(["--schedule", str(tmp_path / "s.json"),
+                                      "--experiment-root", str(tmp_path / "ep"),
+                                      "--freeze", str(frozen)])
+    # Git 状态不可读（dirty=None）→ 必须拒绝，而不是放行
+    monkeypatch.setattr("scripts.ep_run_schedule.git_status",
+                        lambda root: {"head": "a" * 40, "dirty": None, "branch": "b"})
+    ok, note = check_freeze(args, {"experiment_id": "ep-persistence-v1",
+                                   "window_steps": 5, "variants": ["single", "repeat3"]})
+    assert ok is False and "不可确认" in note

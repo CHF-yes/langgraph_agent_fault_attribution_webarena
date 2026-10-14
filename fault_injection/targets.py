@@ -12,10 +12,9 @@ AX 数字 id 变化之后仍能重新识别它；识别不到或有歧义时只�
 * 文本：折叠空白并 strip，比较区分大小写（不做 casefold，避免把不同条目判成同一个）；
 * 目标身份 = (kind, page_url, role, name, href|None)；参数动作再带 action 类型；
 * 匹配：先按页面 URL 与 (role,name,href) 取候选；0 个 → ``absent``；
-  1 个 → ``ok``；多个 → 用 ``role_index``（**仅同页内**的同类第几次出现）消歧，
-  仍不唯一 → ``ambiguous``。
+  1 个 → ``ok``；多个 → ``ambiguous``（**不使用 role_index 消歧**，该序号会随刷新改变）。
 
-``role_index`` 只在同一页渲染内有意义，因此只作同页消歧，**不作为跨刷新的身份锚**。
+``role_index`` 只记录在身份里供日志阅读，判定时不参与匹配。
 版本号在实现通过离线 fixture 后冻结；改动判定逻辑必须同时升版本号。
 """
 
@@ -127,13 +126,8 @@ def match_identity(identity: dict, elements: dict, page_url: str) -> tuple[str |
         return None, TARGET_ABSENT
     if len(candidates) == 1:
         return candidates[0], TARGET_OK
-    # 多个候选：仅用同页 role_index 消歧，绝不"随便挑一个"。
-    wanted_index = identity.get("role_index")
-    if wanted_index is not None:
-        exact = [eid for eid in candidates
-                 if (elements.get(eid) or {}).get("role_index") == wanted_index]
-        if len(exact) == 1:
-            return exact[0], TARGET_OK
+    # 多个候选：一律 ambiguous。**不用 role_index 消歧**——它只是同页渲染中的
+    # 出现次序，刷新/重排后会变，用它挑元素可能屏蔽错元素。
     return None, TARGET_AMBIGUOUS
 
 

@@ -50,6 +50,8 @@ def build_parser() -> argparse.ArgumentParser:
                         help="跳过冻结门槛（仅调试用）")
     parser.add_argument("--execute", action="store_true",
                         help="真正执行；缺省只生成并打印计划")
+    parser.add_argument("--resume", action="store_true",
+                        help="续跑：跳过已跑完（非基础设施/机制错误）的 job")
     return parser
 
 
@@ -112,32 +114,88 @@ def _commands(args, schedule, jobs):
     return out
 
 
-def check_freeze(args) -> tuple[bool, str]:
-    """冻结门槛：commit 必须一致且工作区不脏（可用 --allow-unfrozen 跳过）。"""
+def check_freeze(args, schedule: dict | None = None) -> tuple[bool, str]:
+    """冻结门槛：代码版本、工作区、数据集与实际运行配置都必须吻合。
+
+    任一环节**无法验证**（git 不可读、命令非零退出、数据集读不到）都判为不通过，
+    绝不"读不到就当通过"。
+    """
     if args.allow_unfrozen:
         return True, "skipped(--allow-unfrozen)"
     freeze_path = Path(args.freeze)
     if not freeze_path.exists():
         return False, f"缺少冻结清单 {freeze_path}"
     frozen = json.loads(freeze_path.read_text(encoding="utf-8"))
-    status = git_status(ROOT)
     frozen_commit = str(frozen.get("git_commit") or "")
-    if status.get("dirty"):
-        return False, "工作区为脏（tracked 文件与 HEAD 不同）"
-    # 冻结提交之后只允许冻结清单自身变化（典型的"提交代码→冻结→提交清单"两步）。
-    # 任何其它改动都视为已偏离冻结版本。
-    changed = subprocess.run(
-        ["git", "diff", "--name-only", frozen_commit, "HEAD"],
-        cwd=ROOT, capture_output=True, text=True).stdout.split()
-    unexpected = [path for path in changed
+    if not frozen_commit:
+        return False, "冻结清单缺少 git_commit"
+
+    status = git_status(ROOT)
+    if status.get("dirty") is not False:
+        # dirty 为 True 或**未知**（None）都不放行。
+        return False, f"工作区状态不可确认或不干净: dirty={status.get('dirty')!r}"
+    diff = subprocess.run(["git", "diff", "--name-only", frozen_commit, "HEAD"],
+                          cwd=ROOT, capture_output=True, text=True)
+    if diff.returncode != 0:
+        return False, f"git diff 失败（rc={diff.returncode}），无法确认冻结版本"
+    unexpected = [path for path in diff.stdout.split()
                   if path != "docs/ep_persistence_frozen_v1.json"]
     if unexpected:
         return False, f"冻结后代码有改动: {unexpected[:3]}"
+
+    # 数据集哈希
+    dataset = os.getenv("WEBARENA_DATASET")
+    expected_sha = frozen.get("dataset_sha256")
+    if expected_sha:
+        if not dataset or not Path(dataset).exists():
+            return False, "无法读取数据集，不能校验数据集哈希"
+        from standard_agent.stage_c_pipeline import _sha256_file
+        actual = _sha256_file(Path(dataset))
+        if actual != expected_sha:
+            return False, f"数据集哈希不符（{str(actual)[:12]} != {expected_sha[:12]}）"
+
+    # 运行配置：实验身份、窗口、目标策略版本
+    from fault_injection.targets import TARGET_POLICY_VERSION
+    if TARGET_POLICY_VERSION != frozen.get("target_policy_version"):
+        return False, (f"目标策略版本不符（{TARGET_POLICY_VERSION} != "
+                       f"{frozen.get('target_policy_version')}）")
+    if schedule is not None:
+        if schedule.get("experiment_id") != frozen.get("experiment_id"):
+            return False, "调度 experiment_id 与冻结清单不符"
+        if schedule.get("window_steps") not in (None, frozen.get("window_steps")):
+            return False, ("调度窗口步数与冻结清单不符"
+                           f"（{schedule.get('window_steps')} != {frozen.get('window_steps')}）")
+        if set(schedule.get("variants") or []) != set(frozen.get("variants") or {}):
+            return False, "调度 variants 与冻结清单不符"
     return True, f"frozen@{frozen_commit[:12]}"
 
 
+def _resumable(status: dict) -> bool:
+    """已有 status 是否可跳过：跑完且既非基础设施错误也非机制错误。"""
+    return bool(status.get("returncode") == 0
+                and not status.get("infrastructure_error")
+                and not status.get("mechanism_error"))
+
+
 def run_planned(args, planned, freeze_note) -> int:
-    manifest = {"experiment_id": None, "freeze": freeze_note,
+    root = Path(args.experiment_root)
+    existing = list(root.rglob("*.status.json")) if root.exists() else []
+    if existing and not args.resume:
+        print(f"error: {root} 已存在 {len(existing)} 个 status 产物；"
+              "首批要求空目录；如需续跑请显式加 --resume", file=sys.stderr)
+        return 3
+    skipped = 0
+    if existing and args.resume:
+        for item in planned:
+            path = Path(item["status_path"])
+            if path.exists():
+                try:
+                    if _resumable(json.loads(path.read_text(encoding="utf-8"))):
+                        item["_skip"] = True
+                        skipped += 1
+                except json.JSONDecodeError:
+                    pass
+    manifest = {"experiment_id": None, "freeze": freeze_note, "resumed_skipped": skipped,
                 "jobs": [{k: item[k] for k in ("key", "block", "log_path", "status_path")}
                          for item in planned],
                 "started_at": time.time()}
@@ -148,6 +206,9 @@ def run_planned(args, planned, freeze_note) -> int:
     infrastructure_errors = 0
     failures = 0
     for item in planned:
+        if item.get("_skip"):
+            print(f"SKIP {item['key']} (resume: already complete)", flush=True)
+            continue
         job = item["job"]
         Path(item["log_path"]).parent.mkdir(parents=True, exist_ok=True)
         timed_out = False
@@ -188,10 +249,16 @@ def run_planned(args, planned, freeze_note) -> int:
         if process.returncode not in (0, None) or status.get("infrastructure_error"):
             infrastructure_errors += 1 if status.get("infrastructure_error") else 0
             failures += 1
-            if infrastructure_errors >= STOP_AFTER_INFRASTRUCTURE_ERRORS:
-                print(f"STOP policy: {infrastructure_errors} infrastructure errors; "
-                      "stopping this batch.", flush=True)
-                return 1
+        if status.get("mechanism_error"):
+            # 缺机制日志/次数越界/重复 action_uid 等属实现错误：**立即停止本批**，
+            # 而不是记一笔继续跑（那会把坏数据当正常结果收下来）。
+            print(f"STOP policy: mechanism error on {item['key']}; stopping this batch.",
+                  flush=True)
+            return 2
+        if infrastructure_errors >= STOP_AFTER_INFRASTRUCTURE_ERRORS:
+            print(f"STOP policy: {infrastructure_errors} infrastructure errors; "
+                  "stopping this batch.", flush=True)
+            return 1
     return 1 if failures else 0
 
 
@@ -200,7 +267,7 @@ def main() -> int:
     schedule = json.loads(Path(args.schedule).read_text(encoding="utf-8"))
     jobs = plan_jobs(schedule)
     planned = _commands(args, schedule, jobs)
-    ok, note = check_freeze(args)
+    ok, note = check_freeze(args, schedule)
     plan = {"experiment_id": schedule.get("experiment_id"), "jobs": len(planned),
             "variant_order": [p["job"]["variant"] for p in planned],
             "condition_order": [p["job"]["condition"] for p in planned],

@@ -221,6 +221,7 @@ def classify_log(text, *, expect_fault=True, fault_variant="single", window_step
         except json.JSONDecodeError:
             episode_payload = None
 
+    mechanism_error = False
     if episode_payload is not None:
         from fault_injection.episode import classify_injection_log
         verdict = classify_injection_log(
@@ -230,7 +231,10 @@ def classify_log(text, *, expect_fault=True, fault_variant="single", window_step
         fault_count = verdict["count"]
         fault_triggered = verdict["count"] > 0
         fault_invalid = not verdict["valid"]
-        fault_missing = fault_invalid          # repeat3 的 0 剂量是合法未触发
+        # 机制错误（缺证据/次数越界/重复 action_uid/窗口外）必须停止运行，而不是
+        # 与"合法未触发"混为一谈；repeat3 的 0 剂量在 verdict 有效时是合法的。
+        mechanism_error = not verdict["valid"]
+        fault_missing = mechanism_error
     elif fault_variant == "single":
         fault_count = fault_counts[-1] if fault_counts else 0
         fault_triggered = any(count == 1 for count in fault_counts)
@@ -238,17 +242,19 @@ def classify_log(text, *, expect_fault=True, fault_variant="single", window_step
         fault_missing = fault_invalid
     else:
         # repeat3 必须带机制日志：缺结构化证据时无法区分"合法未触发"与"日志丢失"，
-        # 因此判为实现错误，而不是默默放行。
+        # 因此判为实现错误并停止本批，而不是默默放行。
         fault_count = fault_counts[-1] if fault_counts else 0
         fault_triggered = any(count >= 1 for count in fault_counts)
         fault_invalid = True
         fault_missing = True
+        mechanism_error = True
     if not expect_fault:
         # T0 是控制批：本来就没有故障臂，"没有注入"是预期结果而不是异常。
         # 否则每个控制 job 都会被判 fault_invalid，并触发"连续故障缺失即停止"策略。
         fault_triggered = False
         fault_invalid = False
         fault_missing = False
+        mechanism_error = False
     # 注入的合成 500/503 是 web_http_error 的**预期负载**，不是外部服务故障；只把它
     # 们自身的页面文本从扫描里剔除，真实 API 429/502/503 与连接错误仍会被检出。
     scan_text = text
@@ -271,6 +277,7 @@ def classify_log(text, *, expect_fault=True, fault_variant="single", window_step
         "fault_count": fault_count,
         "fault_triggered": fault_triggered,
         "fault_invalid": fault_invalid,
+        "mechanism_error": mechanism_error,
     }
 
 
