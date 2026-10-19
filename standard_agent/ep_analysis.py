@@ -178,9 +178,14 @@ def format_report(analysis: dict) -> str:
         single = entry.get("delta_single", {}).get("task_equal_weighted")
         repeat = entry.get("delta_repeat3", {}).get("task_equal_weighted")
         d_f = entry.get("D_f")
+        if isinstance(d_f, dict):
+            d_f_value, d_f_blocks = d_f.get("task_equal_weighted"), d_f.get("n_blocks")
+        else:
+            d_f_value, d_f_blocks = d_f, None
         fmt = lambda v: "—" if v is None else f"{v:+.3f}"
         lines.append(f"- **{fault_type}**: Δ_single={fmt(single)}，Δ_repeat3={fmt(repeat)}，"
-                     f"D_f={fmt(d_f)}")
+                     f"D_f={fmt(d_f_value)}"
+                     + (f"（完整 block {d_f_blocks}）" if d_f_blocks is not None else ""))
         for variant in EP_VARIANTS:
             per_task = entry.get(f"delta_{variant}", {}).get("per_task") or {}
             if per_task:

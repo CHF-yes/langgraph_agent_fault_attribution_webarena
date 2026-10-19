@@ -17,6 +17,7 @@
 from __future__ import annotations
 
 import hashlib
+import os
 import json
 import sys
 import time
@@ -288,45 +289,70 @@ def _sha256_file(path: Path) -> str | None:
 
 
 def current_evaluator_version() -> dict:
-    """**当前环境**里评测实现的版本指纹。
+    """**当前环境**里评测实现的版本指纹（跨进程确定）。
 
-    以前这里的版本是从旧评分自身读的，因此换掉了评测实现却仍会显示"绑定一致"。
-    现在从已安装的分布版本与包文件哈希计算，任何评测实现变更都会改变绑定。
+    * 分布版本；
+    * 包内**所有** .py 的哈希（优先模块目录，其次分布文件清单）；
+    * 都拿不到时退化为 ``distribution:<ver>`` 字符串——绝不留 ``None``，否则同一
+      实现对不同进程会得到不同绑定而被误判为 stale。
     """
     version: dict = {"adapter": EVALUATOR_ADAPTER_VERSION}
+    dist_version = None
     try:
         import importlib.metadata as metadata
         for distribution in ("webarena-verified", "webarena_verified"):
             try:
-                version["distribution"] = metadata.version(distribution)
+                dist_version = metadata.version(distribution)
+                version["distribution"] = dist_version
                 break
             except metadata.PackageNotFoundError:
                 continue
     except Exception:                                  # noqa: BLE001
         pass
+
+    sources = []
+    # 首选适配器实际使用的源码根（WEBARENA_VERIFIED_ROOT/src/webarena_verified）：
+    # 该目录是 editable/源码安装的真实实现，覆盖全部子模块。
     try:
-        # 用 find_spec 定位包目录，**不导入**：导入 webarena_verified 会初始化其全局
-        # 状态，污染同进程里其它评测测试（实测会让 smoke 的缺失文件用例返回 ERROR）。
+        source_root = Path(os.getenv("WEBARENA_VERIFIED_ROOT", "/root/webarena-verified")) \
+            / "src" / "webarena_verified"
+        if source_root.is_dir():
+            sources = sorted(source_root.rglob("*.py"))
+    except Exception:                                  # noqa: BLE001
+        sources = []
+    try:
         import importlib.util
         spec = importlib.util.find_spec("webarena_verified")
-        # webarena_verified 是命名空间包：origin 为 None，目录来自 submodule_search_locations。
-        locations = list(getattr(spec, "submodule_search_locations", None) or [])
-        package_dir = Path(spec.origin).parent if (spec and spec.origin) else (
-            Path(locations[0]) if locations else None)
-        if package_dir is not None:
-            sources = sorted(package_dir.rglob("*.py"))
-            if sources:
-                # 覆盖包内**所有**源码，而不只是入口文件：任一子模块变化都会改变哈希。
-                digest = hashlib.sha256()
-                for source in sources:
-                    digest.update(source.name.encode("utf-8"))
-                    digest.update((source.read_bytes()))
-                version["package_sources"] = len(sources)
-                version["package_sha256"] = digest.hexdigest()
-            else:
-                version["package_sha256"] = _sha256_file(Path(spec.origin)) if spec.origin else None
+        dirs = []
+        if spec is not None:
+            if spec.origin:
+                dirs.append(Path(spec.origin).parent)
+            dirs.extend(Path(loc) for loc in (spec.submodule_search_locations or []))
+        if not sources:
+            for directory in dict.fromkeys(dirs):
+                files = sorted(directory.rglob("*.py"))
+                if files:
+                    sources = files
+                    break
     except Exception:                                  # noqa: BLE001
         pass
+    if not sources:
+        try:
+            import importlib.metadata as metadata
+            sources = sorted(Path(f.locate()) for f in (metadata.files("webarena-verified") or [])
+                             if str(f).endswith(".py"))
+        except Exception:                              # noqa: BLE001
+            sources = []
+
+    if sources:
+        digest = hashlib.sha256()
+        for source in sources:
+            digest.update(source.name.encode("utf-8"))
+            digest.update(source.read_bytes())
+        version["package_sources"] = len(sources)
+        version["package_sha256"] = digest.hexdigest()
+    else:
+        version["package_sha256"] = f"distribution:{dist_version or 'unknown'}"
     return version
 
 
@@ -363,7 +389,8 @@ def read_official_eval(trial_dir: str | Path):
 
 def evaluate_trial(trial_dir: str | Path, *, task_id: int, config_path,
                    evaluate_fn=None, evaluate: bool = True,
-                   force_re_evaluate: bool = False, warn=None) -> dict:
+                   force_re_evaluate: bool = False, warn=None,
+                   binding_config_path=None) -> dict:
     """评分策略（护栏）。
 
     评分文件一旦生成就不应是"顺手覆盖"的产物：本函数默认**不覆盖**已有的
@@ -382,6 +409,8 @@ def evaluate_trial(trial_dir: str | Path, *, task_id: int, config_path,
     trial_dir = Path(trial_dir)
     evaluate_fn = evaluate_fn or default_evaluate
     warn = warn or (lambda message: print(message, file=sys.stderr))
+    # 评分配置 ≠ 绑定配置：评分用解析后的配置，绑定用用户传入的原始配置（跨次稳定）。
+    bind_config = binding_config_path if binding_config_path is not None else config_path
     path = trial_dir / OFFICIAL_EVAL
     existing, read_error = read_official_eval(trial_dir)
 
@@ -394,7 +423,7 @@ def evaluate_trial(trial_dir: str | Path, *, task_id: int, config_path,
     if existing is not None and not force_re_evaluate:
         classification = classify_evaluation(existing)
         if classification["evaluation_status"] != EVALUATION_STATUS_ERROR:
-            current = evaluation_binding(trial_dir, config_path, existing)
+            current = evaluation_binding(trial_dir, bind_config, existing)
             recorded = existing.get("_evaluation_binding")
             if recorded is None:
                 # 旧评分没有绑定：可以复用，但必须标为来源未验证，且不事后补哈希。
@@ -431,12 +460,13 @@ def evaluate_trial(trial_dir: str | Path, *, task_id: int, config_path,
     if isinstance(result, dict):
         # 新评分写入时绑定其输入，供以后判定"这份评分还配得上这份响应吗"。
         result = {**result,
-                  "_evaluation_binding": evaluation_binding(trial_dir, config_path, result)}
+                  "_evaluation_binding": evaluation_binding(trial_dir, bind_config, result)}
     path.write_text(json.dumps(result, ensure_ascii=False, indent=2, default=str) + "\n",
                     encoding="utf-8")
     if force_re_evaluate:
         journal = {
             "trial_dir": str(trial_dir), "config_path": str(config_path),
+            "binding_config_path": str(bind_config),
             "backup": str(backup) if backup else None,
             "old": None if existing is None else {
                 "status": existing.get("status"),
@@ -543,7 +573,8 @@ def collect_rows(root: str | Path, *, config_path=None, evaluate_fn=None,
             outcome = evaluate_trial(trial_dir, task_id=task_id,
                                      config_path=evaluated_config["config_path"],
                                      evaluate_fn=evaluate_fn, evaluate=evaluate,
-                                     force_re_evaluate=force_re_evaluate)
+                                     force_re_evaluate=force_re_evaluate,
+                                     binding_config_path=config_path)
             row.update({key: outcome.get(key) for key in (
                 "evaluation_status", "official_success", "reason")})
             row["evaluation_source"] = outcome.get("source")
