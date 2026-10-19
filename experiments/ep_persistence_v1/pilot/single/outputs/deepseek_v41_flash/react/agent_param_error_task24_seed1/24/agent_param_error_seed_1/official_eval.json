@@ -1,0 +1,58 @@
+{
+  "task_id": 24,
+  "intent_template_id": 222,
+  "sites": [
+    "shopping"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": null,\n  \"error_details\": \"THOUGHT: I need to read the reviews to find reviewers mentioning price being unfair. I'll click the \\\"Reviews (2)\\\" tab.\"\n}\n",
+      "actual_normalized": {
+        "status": "success",
+        "retrieved_data": null,
+        "task_type": "retrieve"
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "not_found_error",
+        "retrieved_data": null
+      },
+      "assertions": [
+        {
+          "assertion_name": "agent_response.status_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Expected not_found_error, got success"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false,
+  "_evaluation_binding": {
+    "agent_response_sha256": "f440c3aa7ffcb1c00abd7153a5aadde9adc56c1c58aee6b0f56c13071a1ac04f",
+    "network_har_sha256": "6aca2f67b1126380fb52398f772a2ca3ec402d8b2bb04948286494142b08b761",
+    "config_sha256": "54fff8f40f1a476c6b1944439f522972a63c9788ba2e06fc820221fdd7a08faf",
+    "evaluator_adapter_version": "stage-c-eval-adapter/1",
+    "evaluator_version": {
+      "adapter": "stage-c-eval-adapter/1",
+      "distribution": "1.2.3.post1.dev0",
+      "package_sources": 74,
+      "package_sha256": "41334a7a30567811b3c42fc125b64140e64069b08ff7793643c0ed68931a68d8"
+    },
+    "scored_by_version": "1.2.3.post1.dev0"
+  }
+}

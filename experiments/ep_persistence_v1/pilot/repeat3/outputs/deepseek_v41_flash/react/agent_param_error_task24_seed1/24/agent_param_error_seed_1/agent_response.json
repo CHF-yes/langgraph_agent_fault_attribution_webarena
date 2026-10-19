@@ -1,0 +1,6 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": null,
+  "error_details": "THOUGHT: I need to read the reviews to find reviewers mentioning price being unfair. I'll click the \"Reviews (2)\" tab."
+}

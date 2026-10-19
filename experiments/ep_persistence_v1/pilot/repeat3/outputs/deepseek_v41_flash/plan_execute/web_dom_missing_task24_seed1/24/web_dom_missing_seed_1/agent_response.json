@@ -1,0 +1,6 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "NOT_FOUND_ERROR",
+  "retrieved_data": null,
+  "error_details": "The Reviews tab is active and shows all 2 customer reviews for this product:\n1. \"Wonderful!\" by Jay (4/18/23) — \"Nothing.....everyday use.\"\n2. \"Joe Die Haflinger sind wie beschrieben und erwartet sehr gut\" by Josef Bürger (4/18/23) — a German review saying the slippers are as described and very good.\n\nNeither reviewer mentions the price being unfair. No reviewer complains about pricing."
+}

@@ -1,0 +1,14 @@
+{
+  "trial_dir": "experiments/ep_persistence_v1/pilot_block1/single/outputs/deepseek_v41_flash/react/web_http_error_task24_seed1/24/control_seed_1",
+  "config_path": "experiments/ep_persistence_v1/pilot_block1/single/pipeline/evaluator_config.resolved.json",
+  "binding_config_path": "experiments/webarena_local_config.json",
+  "backup": "experiments/ep_persistence_v1/pilot_block1/single/outputs/deepseek_v41_flash/react/web_http_error_task24_seed1/24/control_seed_1/official_eval.json.pre-re-evaluate-20261019T114209Z.json",
+  "old": {
+    "status": "failure",
+    "official_success": false
+  },
+  "new": {
+    "status": "failure",
+    "official_success": false
+  }
+}

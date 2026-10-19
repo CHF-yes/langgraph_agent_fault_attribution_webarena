@@ -1,0 +1,58 @@
+{
+  "task_id": 24,
+  "intent_template_id": 222,
+  "sites": [
+    "shopping"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": null,\n  \"error_details\": \"I reviewed both customer reviews on the product page (\\\"Bulk Headphones Kids Headphones 5pack...\\\"):\\n\\n1. Christopher Jordan Soto — \\\"Suitable for children\\\" (100%): praises the product as small, easy to carry, colorful, and suitable for children. No mention of price.\\n\\n2. MrsjHyde — \\\"Very disappointing!\\\" (40%): complains about VERY poor quality (two pairs stopped working within an hour, another the next day), with the only positive being the pretty colors. This expresses dissatisfaction with value/quality but does NOT explicitly mention the price being unfair.\\n\\nConclusion: Neither reviewer explicitly mentions the price being unfair. The reviewer expressing the strongest dissatisfaction (and the closest to a value complaint) is MrsjHyde, but no review directly states the price is unfair.\"\n}\n",
+      "actual_normalized": {
+        "status": "success",
+        "retrieved_data": null,
+        "task_type": "retrieve"
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "not_found_error",
+        "retrieved_data": null
+      },
+      "assertions": [
+        {
+          "assertion_name": "agent_response.status_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Expected not_found_error, got success"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false,
+  "_evaluation_binding": {
+    "agent_response_sha256": "75fd726d484365256688b67b1ab229ff7da8396607c477d7ec7c9e787f90e5a6",
+    "network_har_sha256": "4a6fb6c71e1833e56f38948be9f1d546aa2c74773c2c266136b2e0ecd1b6c72f",
+    "config_sha256": "0b7e7e9326d16a5d070adea30c4e4247cd65137832a8544352f581a2b71b64c9",
+    "evaluator_adapter_version": "stage-c-eval-adapter/1",
+    "evaluator_version": {
+      "adapter": "stage-c-eval-adapter/1",
+      "distribution": "1.2.3.post1.dev0",
+      "package_sources": 74,
+      "package_sha256": "41334a7a30567811b3c42fc125b64140e64069b08ff7793643c0ed68931a68d8"
+    },
+    "scored_by_version": "1.2.3.post1.dev0"
+  }
+}

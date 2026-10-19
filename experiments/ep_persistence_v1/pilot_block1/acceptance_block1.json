@@ -1,0 +1,57 @@
+{
+  "schema": "ep_pilot_block_acceptance/1",
+  "experiment_id": "ep-persistence-v1",
+  "block": 0,
+  "task_id": 24,
+  "fault_type": "web_http_error",
+  "seed": 1,
+  "arms": 4,
+  "checks": {
+    "identity_on_all_arms": true,
+    "repeat3_same_target_repetition": {
+      "injections": 2,
+      "same_page_url": true,
+      "steps": [
+        2,
+        4
+      ],
+      "window": [
+        2,
+        6
+      ],
+      "release": "window_expired",
+      "dose_class": "partial_dose"
+    },
+    "single_fault": {
+      "injections": 0,
+      "reason": "agent used final_answer at step 1; the pinned injection step 2 was never reached",
+      "legal_not_triggered": true
+    },
+    "control_arms_uncontaminated": {
+      "injections": 0,
+      "no_error_page": true
+    },
+    "artifacts": {
+      "trial_record": 4,
+      "trace": 4,
+      "har": 4,
+      "agent_response": 4
+    },
+    "official_scoring": {
+      "native": 4,
+      "errors": 0,
+      "official_success": 0.0
+    },
+    "evaluation_binding": {
+      "present": true,
+      "evaluator_package_sources": 74
+    }
+  },
+  "usage": {
+    "llm_calls": 12,
+    "prompt_tokens": 77573,
+    "completion_tokens": 1148
+  },
+  "decision": "mechanism accepted; single non-trigger is a legitimate task fact, not an implementation error",
+  "note": "Whether a single arm fires depends on whether the agent reaches step 2; the pilot's remaining blocks include longer tasks."
+}

@@ -1,0 +1,74 @@
+{
+  "schema": "ep_schedule/1",
+  "experiment_id": "ep-persistence-v1",
+  "schedule_seed": 20261014,
+  "variants": [
+    "single",
+    "repeat3"
+  ],
+  "conditions": [
+    "control",
+    "fault"
+  ],
+  "window_steps": 5,
+  "blocks": 1,
+  "cells": 4,
+  "entries": [
+    {
+      "block": 0,
+      "block_order": 0,
+      "model_profile": "deepseek_v41_flash",
+      "architecture": "react",
+      "fault_type": "web_http_error",
+      "task_id": 24,
+      "fault_seed": 1,
+      "experiment_id": "ep-persistence-v1",
+      "variant": "single",
+      "condition": "control",
+      "pair_key": "exp=ep-persistence-v1|var=single|model=deepseek_v41_flash|arch=react|fault=web_http_error|task=24|seed=1|cond=-",
+      "file_stem": "ep-persistence-v1__single__deepseek_v41_flash__react__web_http_error__task24__seed1__control"
+    },
+    {
+      "block": 0,
+      "block_order": 1,
+      "model_profile": "deepseek_v41_flash",
+      "architecture": "react",
+      "fault_type": "web_http_error",
+      "task_id": 24,
+      "fault_seed": 1,
+      "experiment_id": "ep-persistence-v1",
+      "variant": "single",
+      "condition": "fault",
+      "pair_key": "exp=ep-persistence-v1|var=single|model=deepseek_v41_flash|arch=react|fault=web_http_error|task=24|seed=1|cond=-",
+      "file_stem": "ep-persistence-v1__single__deepseek_v41_flash__react__web_http_error__task24__seed1__fault"
+    },
+    {
+      "block": 0,
+      "block_order": 2,
+      "model_profile": "deepseek_v41_flash",
+      "architecture": "react",
+      "fault_type": "web_http_error",
+      "task_id": 24,
+      "fault_seed": 1,
+      "experiment_id": "ep-persistence-v1",
+      "variant": "repeat3",
+      "condition": "control",
+      "pair_key": "exp=ep-persistence-v1|var=repeat3|model=deepseek_v41_flash|arch=react|fault=web_http_error|task=24|seed=1|cond=-",
+      "file_stem": "ep-persistence-v1__repeat3__deepseek_v41_flash__react__web_http_error__task24__seed1__control"
+    },
+    {
+      "block": 0,
+      "block_order": 3,
+      "model_profile": "deepseek_v41_flash",
+      "architecture": "react",
+      "fault_type": "web_http_error",
+      "task_id": 24,
+      "fault_seed": 1,
+      "experiment_id": "ep-persistence-v1",
+      "variant": "repeat3",
+      "condition": "fault",
+      "pair_key": "exp=ep-persistence-v1|var=repeat3|model=deepseek_v41_flash|arch=react|fault=web_http_error|task=24|seed=1|cond=-",
+      "file_stem": "ep-persistence-v1__repeat3__deepseek_v41_flash__react__web_http_error__task24__seed1__fault"
+    }
+  ]
+}

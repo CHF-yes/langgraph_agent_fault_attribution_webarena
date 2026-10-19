@@ -1,0 +1,93 @@
+{
+  "task_id": 118,
+  "intent_template_id": 151,
+  "sites": [
+    "shopping"
+  ],
+  "task_revision": 2,
+  "status": "success",
+  "score": 1.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "success",
+      "score": 1.0,
+      "actual": "{\n  \"task_type\": \"NAVIGATE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": null,\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "status": "success",
+        "task_type": "navigate",
+        "retrieved_data": null
+      },
+      "expected": {
+        "task_type": "navigate",
+        "status": "success",
+        "retrieved_data": null
+      },
+      "assertions": null,
+      "error_msg": null,
+      "should_not_exist": null
+    },
+    {
+      "evaluator_name": "NetworkEventEvaluator",
+      "status": "success",
+      "score": 1.0,
+      "actual": [
+        {
+          "url": "http://localhost:7770/remi-at-home-custom-night-guard-kit-create-the-best-fitting-dental-grade-top-and-bottom-2-mouth-guards-for-grinding-teeth-bruxism-tmj-relief-night-guard.html",
+          "headers": null,
+          "query_params": null,
+          "post_data": null,
+          "response_content": null,
+          "response_status": 200,
+          "http_method": "GET",
+          "response_cookies": null
+        }
+      ],
+      "actual_normalized": [
+        {
+          "url": {
+            "base_url": "__SHOPPING__/remi-at-home-custom-night-guard-kit-create-the-best-fitting-dental-grade-top-and-bottom-2-mouth-guards-for-grinding-teeth-bruxism-tmj-relief-night-guard.html",
+            "query_params": {}
+          },
+          "response_status": 200,
+          "http_method": "GET",
+          "post_data": null,
+          "response_content": null,
+          "response_cookies": null
+        }
+      ],
+      "expected": {
+        "url": {
+          "base_url": "^__SHOPPING__/[a-z0-9-]*(?:guard|mouth|teeth|night|dental|bruxism)[a-z0-9-]*\\.html$",
+          "query_params": {}
+        },
+        "response_status": 200,
+        "http_method": "GET",
+        "post_data": null,
+        "response_content": null,
+        "response_cookies": null
+      },
+      "assertions": null,
+      "error_msg": null,
+      "should_not_exist": false
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": true,
+  "_evaluation_binding": {
+    "agent_response_sha256": "6af6f817e0baf7324e0447d74cfcff9f4068cddfb6ae151e41bc43eb94d3a5a5",
+    "network_har_sha256": "cbc17883a24c3c592cff4af87db3a7581a0a3197ec4a374b5cabe105e738d7b6",
+    "config_sha256": "0b7e7e9326d16a5d070adea30c4e4247cd65137832a8544352f581a2b71b64c9",
+    "evaluator_adapter_version": "stage-c-eval-adapter/1",
+    "evaluator_version": {
+      "adapter": "stage-c-eval-adapter/1",
+      "distribution": "1.2.3.post1.dev0",
+      "package_sources": 74,
+      "package_sha256": "41334a7a30567811b3c42fc125b64140e64069b08ff7793643c0ed68931a68d8"
+    },
+    "scored_by_version": "1.2.3.post1.dev0"
+  }
+}

@@ -1,0 +1,165 @@
+{
+  "experiment_id": "ep-persistence-v1",
+  "confirmatory_inference": false,
+  "n_blocks": 12,
+  "excluded_incomplete_blocks": [],
+  "n_pairs_by_variant": {
+    "single": {
+      "web_http_error": 4,
+      "agent_param_error": 4,
+      "web_dom_missing": 4
+    },
+    "repeat3": {
+      "web_http_error": 4,
+      "agent_param_error": 4,
+      "web_dom_missing": 4
+    }
+  },
+  "by_fault": {
+    "web_http_error": {
+      "delta_single": {
+        "per_task": {
+          "24": 0,
+          "118": 0
+        },
+        "task_equal_weighted": 0,
+        "n_pairs": 4
+      },
+      "delta_repeat3": {
+        "per_task": {
+          "24": 0.5,
+          "118": 0
+        },
+        "task_equal_weighted": 0.25,
+        "n_pairs": 4
+      },
+      "D_f": {
+        "per_task": {
+          "24": 0.5,
+          "118": 0
+        },
+        "task_equal_weighted": 0.25,
+        "n_blocks": 4
+      }
+    },
+    "agent_param_error": {
+      "delta_single": {
+        "per_task": {
+          "118": 0,
+          "24": 0
+        },
+        "task_equal_weighted": 0,
+        "n_pairs": 4
+      },
+      "delta_repeat3": {
+        "per_task": {
+          "118": 0,
+          "24": 0
+        },
+        "task_equal_weighted": 0,
+        "n_pairs": 4
+      },
+      "D_f": {
+        "per_task": {
+          "24": 0,
+          "118": 0
+        },
+        "task_equal_weighted": 0,
+        "n_blocks": 4
+      }
+    },
+    "web_dom_missing": {
+      "delta_single": {
+        "per_task": {
+          "118": 0,
+          "24": 0
+        },
+        "task_equal_weighted": 0,
+        "n_pairs": 4
+      },
+      "delta_repeat3": {
+        "per_task": {
+          "118": 0,
+          "24": 0
+        },
+        "task_equal_weighted": 0,
+        "n_pairs": 4
+      },
+      "D_f": {
+        "per_task": {
+          "24": 0,
+          "118": 0
+        },
+        "task_equal_weighted": 0,
+        "n_blocks": 4
+      }
+    }
+  },
+  "dose_distribution": {
+    "single": {
+      "web_http_error": {
+        "not_triggered": 1,
+        "full_dose": 3
+      },
+      "agent_param_error": {
+        "full_dose": 3,
+        "not_triggered": 1
+      },
+      "web_dom_missing": {
+        "full_dose": 3,
+        "not_triggered": 1
+      }
+    },
+    "repeat3": {
+      "web_http_error": {
+        "partial_dose": 4
+      },
+      "agent_param_error": {
+        "partial_dose": 3,
+        "not_triggered": 1
+      },
+      "web_dom_missing": {
+        "partial_dose": 3,
+        "not_triggered": 1
+      }
+    }
+  },
+  "paired_step_delta": {
+    "single:web_http_error": {
+      "step_delta_mean": 2.75,
+      "llm_delta_mean": 6,
+      "n": 4
+    },
+    "repeat3:web_http_error": {
+      "step_delta_mean": 4.25,
+      "llm_delta_mean": 6.75,
+      "n": 4
+    },
+    "single:agent_param_error": {
+      "step_delta_mean": 0.5,
+      "llm_delta_mean": 1.25,
+      "n": 4
+    },
+    "single:web_dom_missing": {
+      "step_delta_mean": 0,
+      "llm_delta_mean": 0,
+      "n": 4
+    },
+    "repeat3:agent_param_error": {
+      "step_delta_mean": 0.25,
+      "llm_delta_mean": 1,
+      "n": 4
+    },
+    "repeat3:web_dom_missing": {
+      "step_delta_mean": 0,
+      "llm_delta_mean": 0.25,
+      "n": 4
+    }
+  },
+  "notes": [
+    "主口径为按分配的全部合法评分配对（含未触发/部分剂量）。",
+    "D_f = Δ_repeat3 − Δ_single；先在任务内平均，再跨任务等权。",
+    "4 任务版本不做确认性推断：不输出 p 值，也不把区间当泛化证据。",
+    "实际剂量子集只作机制描述，不是随机分配的因果效果。"
+  ]
+}
