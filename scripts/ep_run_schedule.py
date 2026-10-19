@@ -237,7 +237,8 @@ def _resumable(status: dict) -> bool:
                 and not status.get("mechanism_error"))
 
 
-def run_planned(args, planned, freeze_note, experiment_id: str | None = None) -> int:
+def run_planned(args, planned, freeze_note, experiment_id: str | None = None,
+                verify_trial=None) -> int:
     root = Path(args.experiment_root)
     if args.resume and not _has_run_artifacts(root):
         print(f"error: {root} 没有可续跑的运行产物；全新目录请去掉 --resume",
@@ -277,7 +278,7 @@ def run_planned(args, planned, freeze_note, experiment_id: str | None = None) ->
                 if ok:
                     item["_skip"] = True
             skipped += len(items) if ok else 0
-    manifest = {"experiment_id": None, "freeze": freeze_note, "resumed_skipped": skipped,
+    manifest = {"experiment_id": experiment_id, "freeze": freeze_note, "resumed_skipped": skipped,
                 "jobs": [{k: item[k] for k in ("key", "block", "log_path", "status_path")}
                          for item in planned],
                 "started_at": time.time()}
@@ -317,13 +318,19 @@ def run_planned(args, planned, freeze_note, experiment_id: str | None = None) ->
         status = classify_log(text,
                               expect_fault=(job["condition"] == "fault"),
                               fault_variant=job["variant"],
-                              window_steps=job.get("window_steps", 5))
+                              window_steps=job.get("window_steps", 5),
+                              experiment_id=experiment_id)
         status.update({"variant": job["variant"], "condition": job["condition"],
                        "model_profile": job["model_profile"],
                        "architecture": job["architecture"],
                        "returncode": process.returncode, "timed_out": timed_out})
         if timed_out:
             status["infrastructure_error"] = True
+        if verify_trial is not None:
+            artifact_errors = verify_trial(item, args)
+            if artifact_errors:
+                status["mechanism_error"] = True
+                status["artifact_errors"] = artifact_errors
         Path(item["status_path"]).parent.mkdir(parents=True, exist_ok=True)
         Path(item["status_path"]).write_text(
             json.dumps(status, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

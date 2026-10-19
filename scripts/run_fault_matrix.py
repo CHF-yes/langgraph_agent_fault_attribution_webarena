@@ -52,11 +52,12 @@ def build_parser():
     parser.add_argument("--fault-seed", type=int, default=1)
     parser.add_argument("--experiment-id", default="stage-c",
                         help="stage-c（默认）或 ep-persistence-v1")
-    parser.add_argument("--fault-variant", choices=["single", "repeat3"], default="single",
+    parser.add_argument("--fault-variant", choices=["single", "repeat3", "persistent"], default="single",
                         help="single=一次性（Stage C）；repeat3=E-P 有限重复")
     parser.add_argument("--fault-window-steps", type=int, default=5,
                         help="E-P 活跃窗口（proxy 执行步）")
     parser.add_argument("--fault-injection-step", type=int, default=None)
+    parser.add_argument("--fault-target-url", default=None)
     # T0 是控制批：condition=control 时每个 job 只跑控制臂，故障槽位退化为作业容器。
     parser.add_argument("--condition", choices=["control", "fault", "both"], default="both",
                         help="T0 控制批传 control；默认 both（控制+故障各一次，保持既有行为）")
@@ -108,6 +109,12 @@ def design_fingerprint(args, fault_types, injection_steps, task_ids) -> str:
             if getattr(args, "experiment_id", "stage-c") == "ep-persistence-v1"
             else None),
     }
+    if getattr(args, "experiment_id", "stage-c") == "ep-http-persistence-v2":
+        from fault_injection.http_persistence import TARGET_POLICY_VERSION, resource_url
+        target = getattr(args, "fault_target_url", None)
+        payload.update(target_policy_version=TARGET_POLICY_VERSION,
+                       fault_target_url=resource_url(target) if target is not None else None,
+                       fault_window_steps=getattr(args, "fault_window_steps", 5))
     canonical = json.dumps(payload, sort_keys=True, separators=(",", ":"))
     return hashlib.sha256(canonical.encode("utf-8")).hexdigest()[:16]
 
@@ -137,6 +144,22 @@ def task_jobs(args):
     return jobs
 
 
+def protocol_injection_step(args, fault_type):
+    if getattr(args, "experiment_id", "stage-c") == "ep-http-persistence-v2":
+        from fault_injection.config import FaultConfig
+        FaultConfig.single_fault(
+            fault_type, intensity=args.fault_intensity,
+            experiment_id=args.experiment_id,
+            fault_variant=getattr(args, "fault_variant", "single"),
+            injection_step=getattr(args, "fault_injection_step", None),
+            fault_window_steps=getattr(args, "fault_window_steps", 5),
+            fault_target_url=getattr(args, "fault_target_url", None))
+        return None
+    if getattr(args, "fault_target_url", None) is not None:
+        raise ValueError("--fault-target-url requires ep-http-persistence-v2")
+    return resolve_injection_step(fault_type, getattr(args, "fault_injection_step", None))
+
+
 def command_for(args, job):
     # job 里通常带 fault_type；没有时才回落到 args，避免在 job 有值时仍去读
     # 一个可能不存在的属性（旧写法 job.get(k, args.k) 会立即求值 args.k）。
@@ -144,9 +167,7 @@ def command_for(args, job):
     # Single source of truth: Stage C pins the step per fault (agent_param_error
     # on the first parameter action, others on the second step); an explicit
     # --fault-injection-step is a Stage E sweep and is passed through as given.
-    injection_step = resolve_injection_step(
-        fault_type, getattr(args, "fault_injection_step", None)
-    )
+    injection_step = protocol_injection_step(args, fault_type)
     command = [
         sys.executable, "main.py", "--benchmark",
         "--site", job["site"], "--url", job["start_url"],
@@ -158,11 +179,14 @@ def command_for(args, job):
         "--fault-type", fault_type,
         "--fault-intensity", args.fault_intensity,
         "--fault-seed", str(job["seed"]),
-        "--fault-injection-step", str(injection_step),
         "--experiment-id", str(getattr(args, "experiment_id", "stage-c")),
         "--fault-variant", str(getattr(args, "fault_variant", "single")),
         "--fault-window-steps", str(getattr(args, "fault_window_steps", 5)),
     ]
+    if injection_step is not None:
+        command += ["--fault-injection-step", str(injection_step)]
+    if getattr(args, "fault_target_url", None) is not None:
+        command += ["--fault-target-url", args.fault_target_url]
     # T0 是控制批：condition=control 时只跑控制臂，fault 槽位仅作为作业容器。
     if getattr(args, "condition", "both") != "both":
         command += ["--condition", args.condition]
@@ -186,7 +210,8 @@ def resumable_status(status: dict) -> bool:
                 and not status.get("infrastructure_error"))
 
 
-def classify_log(text, *, expect_fault=True, fault_variant="single", window_steps=5):
+def classify_log(text, *, expect_fault=True, fault_variant="single", window_steps=5,
+                 experiment_id=None):
     infrastructure_patterns = (
         r"Traceback \(most recent call last\)",
         r"(?:HTTP|status|status_code|response[_ ]code)[^\n]{0,24}(?:429|502|503)",
@@ -222,7 +247,20 @@ def classify_log(text, *, expect_fault=True, fault_variant="single", window_step
             episode_payload = None
 
     mechanism_error = False
-    if episode_payload is not None:
+    is_http_v2 = experiment_id == "ep-http-persistence-v2" or (
+        episode_payload or {}).get("experiment_id") == "ep-http-persistence-v2"
+    if is_http_v2:
+        from fault_injection.http_persistence import classify_episode
+        verdict = classify_episode(episode_payload or {}, expected_variant=fault_variant,
+                                   expected_window=window_steps)
+        fault_count = verdict["count"]
+        fault_triggered = fault_count > 0
+        mechanism_error = not verdict["valid"]
+        if not expect_fault and fault_count:
+            mechanism_error = True
+        fault_invalid = mechanism_error
+        fault_missing = not fault_triggered
+    elif episode_payload is not None:
         from fault_injection.episode import classify_injection_log
         verdict = classify_injection_log(
             episode_payload.get("injections") or [],
@@ -255,7 +293,8 @@ def classify_log(text, *, expect_fault=True, fault_variant="single", window_step
         fault_triggered = False
         fault_invalid = False
         fault_missing = False
-        mechanism_error = False
+        if not is_http_v2:
+            mechanism_error = False
     # 注入的合成 500/503 是 web_http_error 的**预期负载**，不是外部服务故障；只把它
     # 们自身的页面文本从扫描里剔除，真实 API 429/502/503 与连接错误仍会被检出。
     scan_text = text
@@ -307,6 +346,8 @@ def stop_all(active):
 
 def main():
     args = parse_args()
+    if args.experiment_id == "ep-http-persistence-v2" and args.resume:
+        raise SystemExit("HTTP v2 development probes require a fresh directory; resume is unsupported")
     if args.workers < 1 or args.trials < 1:
         raise SystemExit("workers and trials must be positive")
     output_dir = Path(args.output_dir)
@@ -314,16 +355,16 @@ def main():
     jobs = task_jobs(args)
     fault_types = args.fault_types or [args.fault_type]
     injection_steps = {
-        fault_type: resolve_injection_step(fault_type, args.fault_injection_step)
+        fault_type: protocol_injection_step(args, fault_type)
         for fault_type in fault_types
     }
     # Record the step on every job so a status/record file is self-describing
     # even when the manifest is separated from the logs.
     for job in jobs:
         job["injection_step"] = injection_steps[job.get("fault_type", args.fault_type)]
-        job["injection_step_units"] = injection_step_units(
-            job.get("fault_type", args.fault_type)
-        )
+        job["injection_step_units"] = ("agent_navigation_event"
+            if args.experiment_id == "ep-http-persistence-v2" else
+            injection_step_units(job.get("fault_type", args.fault_type)))
     fingerprint = design_fingerprint(args, fault_types, injection_steps,
                                      [job["task_id"] for job in jobs])
     stale_status_files = []
@@ -392,9 +433,11 @@ def main():
         "fault_types": fault_types,
         "fault_intensity": args.fault_intensity,
         "fault_injection_steps": injection_steps,
-        "injection_step_mode": injection_step_mode(args.fault_injection_step),
+        "injection_step_mode": ("agent_navigation_event" if args.experiment_id == "ep-http-persistence-v2"
+                                else injection_step_mode(args.fault_injection_step)),
         "injection_step_units": {
-            fault_type: injection_step_units(fault_type) for fault_type in fault_types
+            fault_type: ("agent_navigation_event" if args.experiment_id == "ep-http-persistence-v2"
+                         else injection_step_units(fault_type)) for fault_type in fault_types
         },
         "workers": args.workers,
         "trials_per_task": args.trials,
@@ -480,7 +523,8 @@ def main():
                     text,
                     expect_fault=(getattr(args, "condition", "both") != "control"),
                     fault_variant=getattr(args, "fault_variant", "single"),
-                    window_steps=getattr(args, "fault_window_steps", 5))
+                    window_steps=getattr(args, "fault_window_steps", 5),
+                    experiment_id=getattr(args, "experiment_id", "stage-c"))
             result = {"job": job, "design_fingerprint": fingerprint,
                       "returncode": process.returncode, **status, "timed_out": False}
             (output_dir / f"{key}.status.json").write_text(

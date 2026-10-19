@@ -2936,7 +2936,11 @@ def test_runner_stops_on_mechanism_error(tmp_path, monkeypatch):
     assert runner.main() != 0
     statuses = list((tmp_path / "ep").rglob("*.status.json"))
     assert statuses
-    assert json.loads(statuses[0].read_text())["mechanism_error"] is True
+    # Directory traversal order differs across filesystems; the earlier control
+    # and single statuses are legitimately clean. Inspect the failing arm.
+    failed = [path for path in statuses if path.name.startswith("repeat3_fault_")]
+    assert len(failed) == 1
+    assert json.loads(failed[0].read_text())["mechanism_error"] is True
 
 
 def test_runner_requires_empty_dir_and_supports_resume(tmp_path, monkeypatch):

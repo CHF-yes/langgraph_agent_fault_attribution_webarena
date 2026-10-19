@@ -68,6 +68,13 @@ class FaultInjector:
         self._current_action_uid: Optional[str] = None
         self._observation_seq = 0        # 每次"交付给模型的观察"计数
         self._exposure_log: list[dict] = []
+        self._raw_url = None
+        self._action_start_url = None
+        self._action_name = None
+        self._http_resource_engine = None
+        if config.experiment_id == "ep-http-persistence-v2":
+            from fault_injection.http_persistence import HttpPersistenceEngine
+            self._http_resource_engine = HttpPersistenceEngine(config)
         # E-P 持久化实验走 episode 引擎；Stage C（experiment_id=stage-c）保持原路径。
         self._engine = None
         if getattr(config, "experiment_id", "stage-c") == "ep-persistence-v1":
@@ -81,6 +88,15 @@ class FaultInjector:
         self._step_counter += 1
         self.config.set_execution_step(self._step_counter)
         self._current_action_uid = f"{name}:{self._step_counter}"
+        self._action_name = name
+        self._action_start_url = self._raw_url
+        if self._http_resource_engine is not None:
+            self.config.episode.note_step(self._step_counter)
+
+    def arm_http_fault(self):
+        """Call after clean bootstrap navigation, immediately before agent execution."""
+        if self._http_resource_engine is not None:
+            self._http_resource_engine.arm(self._step_counter)
 
     def _param_error(self, action: str, *, element_id, text=None):
         """参数动作故障：E-P 走引擎（同目标重放），Stage C 走原实现。"""
@@ -107,7 +123,7 @@ class FaultInjector:
         """获取当前页面观测（注入 Web 底层 + Agent 连锁故障）。"""
         raw = self._env.observe()
         obs = self._to_dict(raw)
-        return self._cache_faulted_observation(obs)
+        return self._cache_faulted_observation(obs, allow_activation=False)
 
     def get_obs(self):
         """
@@ -238,11 +254,22 @@ class FaultInjector:
             "elements": getattr(result, "element_map", {}),
         }
 
-    def _cache_faulted_observation(self, obs: dict) -> dict:
+    def _cache_faulted_observation(self, obs: dict, *, allow_activation=True) -> dict:
         """Apply observation faults once and cache the resulting page.
 
         E-P：观察层故障交给 episode 引擎（同目标、限窗口重复）；Stage C 保持原链条。
         """
+        self._raw_url = obs.get("url", "")
+        if self._http_resource_engine is not None:
+            obs = self._http_resource_engine.apply_http(
+                obs, proxy_step=self._step_counter, action_uid=self._current_action_uid,
+                action=self._action_name, previous_url=self._action_start_url,
+                allow_activation=allow_activation)
+            evidence = self._http_resource_engine.last_decision
+            self._record_exposure(["web_http_error"] if evidence["fault_delivered"] else [],
+                                  evidence=evidence)
+            self._last_obs = dict(obs)
+            return obs
         obs = inject_state_misjudge(self.config, obs)
         if self._engine is not None:
             before_dom = obs
@@ -268,7 +295,7 @@ class FaultInjector:
         self._last_obs = dict(obs)
         return obs
 
-    def _record_exposure(self, delivered: list) -> dict:
+    def _record_exposure(self, delivered: list, *, evidence=None) -> dict:
         """记录一次"交付给模型的观察"：uid、来源动作、实际含有的故障标记。
 
         这只证明故障**被交付**，不声称模型在心理上识别了它（设计第 8 节）。
@@ -283,6 +310,8 @@ class FaultInjector:
             "faults_delivered": list(delivered),
             "delivered": bool(delivered),
         }
+        if evidence is not None:
+            entry.update(evidence)
         self._exposure_log.append(entry)
         return entry
 
@@ -306,6 +335,8 @@ class FaultInjector:
                 element_map=obs.get("elements", original.element_map),
                 raw_ax=original.raw_ax,
             )
+        if self._http_resource_engine is not None and isinstance(original, dict):
+            return obs
         return original
 
     def _get_element_name(self, element_id: str) -> str:
@@ -355,4 +386,11 @@ class FaultInjector:
         self._step_counter = 0
         self._last_obs = None
         self.config.reset()
+        if self._http_resource_engine is not None:
+            from fault_injection.http_persistence import HttpPersistenceEngine
+            self._http_resource_engine = HttpPersistenceEngine(self.config)
+            self._raw_url = self._action_start_url = self._action_name = None
+            self._current_action_uid = None
+            self._observation_seq = 0
+            self._exposure_log = []
         reset_state_misjudge()

@@ -118,12 +118,14 @@ Examples:
                              help="Inject the selected fault exactly once at this action step")
     fault_group.add_argument("--experiment-id", type=str, default="stage-c",
                              help="Experiment identity; ep-persistence-v1 enables the "
-                                  "E-P episode engine (default: stage-c)")
+                                  "E-P episode engine; ep-http-persistence-v2 enables HTTP event faults")
     fault_group.add_argument("--fault-variant", type=str, default="single",
-                             choices=["single", "repeat3"],
+                             choices=["single", "repeat3", "persistent"],
                              help="single = one-shot (Stage C behaviour); repeat3 = bounded repeats")
     fault_group.add_argument("--fault-window-steps", type=int, default=5,
                              help="E-P active window length in proxy execution steps (default: 5)")
+    fault_group.add_argument("--fault-target-url", default=None,
+                             help="HTTP v2 only: exact resource URL filter (fragment ignored)")
     benchmark_group = parser.add_argument_group("benchmark outputs")
     benchmark_group.add_argument("--webarena-output-dir", default=None,
                                  help="Write per-trial agent_response.json, network.har, and evaluator result")
@@ -173,6 +175,10 @@ Examples:
     bench_group.add_argument("--condition", choices=["control", "fault"], default=None)
 
     args = parser.parse_args()
+    if args.experiment_id == "ep-http-persistence-v2" and not args.benchmark:
+        parser.error("ep-http-persistence-v2 currently requires --benchmark")
+    if args.experiment_id == "ep-http-persistence-v2" and args.fault_type != "web_http_error":
+        parser.error("ep-http-persistence-v2 requires --fault-type web_http_error")
 
     # --list-sites
     if args.list_sites:
@@ -646,6 +652,7 @@ def run_benchmark(args):
 
             # 导航
             proxy.goto(page_url)
+            proxy.arm_http_fault()
 
             # 运行 agent
             app = build_graph(args.architecture)
@@ -698,19 +705,27 @@ def run_benchmark(args):
             )
             # E-P：把 episode 的结构化证据单独打一行，供矩阵侧按 variant 校验
             # （同目标、窗口、每 action 一次、剂量），而不是只看总次数。
-            if getattr(fault_config, "experiment_id", "stage-c") == "ep-persistence-v1":
+            if getattr(fault_config, "experiment_id", "stage-c") in {
+                    "ep-persistence-v1", "ep-http-persistence-v2"}:
                 import json as _json
                 _episode = fault_config.episode
                 print("        fault_exposures=" + _json.dumps(
                     proxy.get_exposure_log() if hasattr(proxy, "get_exposure_log") else [],
                     ensure_ascii=False))
-                print("        fault_episode=" + _json.dumps({
+                episode_payload = {
                     "experiment_id": fault_config.experiment_id,
                     "variant": fault_config.fault_variant,
                     "window_steps": fault_config.fault_window_steps,
                     "injections": [e for e in _episode.events if e.get("event") == "injection"],
                     "snapshot": _episode.snapshot(),
-                }, ensure_ascii=False))
+                }
+                print("        fault_episode=" + _json.dumps(episode_payload, ensure_ascii=False))
+                if fault_config.experiment_id == "ep-http-persistence-v2" and output_dir:
+                    from pathlib import Path
+                    Path(output_dir, "fault_evidence.json").write_text(_json.dumps({
+                        **episode_payload, "events": _episode.events,
+                        "exposures": proxy.get_exposure_log(),
+                    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
             for entry in log:
                 print(f"        injection={entry}")
 
@@ -745,6 +760,13 @@ def run_benchmark(args):
                 )
                 from standard_agent.core.trace import get_trace_path
                 trace_path = get_trace_path(stem)
+                http_protocol = {}
+                if fault_config.experiment_id == "ep-http-persistence-v2":
+                    from fault_injection.http_persistence import protocol_metadata
+                    http_protocol = protocol_metadata(fault_config)
+                    import hashlib
+                    http_protocol["fault_evidence_sha256"] = hashlib.sha256(
+                        Path(output_dir, "fault_evidence.json").read_bytes()).hexdigest()
                 record = build_trial_record(
                     model_profile=model_profile, architecture=args.architecture,
                     fault_type=record_fault_type, task_id=args.task_id,
@@ -766,11 +788,14 @@ def run_benchmark(args):
                             __import__("fault_injection.targets", fromlist=["x"]).TARGET_POLICY_VERSION
                             if getattr(fault_config, "experiment_id", "stage-c") == "ep-persistence-v1"
                             else None),
+                        **http_protocol,
                     },
                     paths={
                         "agent_response": str(response_path),
                         "network_har": str(har_path) if har_path else None,
                         "trace": str(trace_path),
+                        **({"fault_evidence": os.path.join(output_dir, "fault_evidence.json")}
+                           if http_protocol else {}),
                     },
                     completed=completed, success=success,
                     injection_count=len(log), error=None,
@@ -827,7 +852,8 @@ def run_benchmark(args):
             intensity="off", seed=args.fault_seed,
             experiment_id=getattr(args, "experiment_id", "stage-c"),
             fault_variant=getattr(args, "fault_variant", "single"),
-            fault_window_steps=getattr(args, "fault_window_steps", 5)))
+            fault_window_steps=getattr(args, "fault_window_steps", 5),
+            fault_target_url=getattr(args, "fault_target_url", None)))
 
     # 实验组
     exp_label = f"fault_{args.fault_intensity}"
@@ -846,8 +872,11 @@ def run_benchmark(args):
     if args.condition != "control" and args.fault_type:
         from fault_injection.config import injection_step_mode, injection_step_units
         step = exp_config.injection_step
-        print(f"   注入步: {step} ({injection_step_units(args.fault_type)}), "
-              f"口径={injection_step_mode(args.fault_injection_step)}\n")
+        if exp_config.experiment_id == "ep-http-persistence-v2":
+            print("   注入触发: 首次合格 Agent 导航；初始导航不注入\n")
+        else:
+            print(f"   注入步: {step} ({injection_step_units(args.fault_type)}), "
+                  f"口径={injection_step_mode(args.fault_injection_step)}\n")
     if args.expected_answer:
         print(f"   评估模式: 答案匹配 ({len(args.expected_answer)} 个可接受答案)\n")
     else:
@@ -867,13 +896,19 @@ def _build_fault_config(args) -> "FaultConfig":
         # contract (agent_param_error -> 1st parameter action, everything else
         # -> 2nd execution step). Stage E is the stage that sweeps the step and
         # passes an explicit value; the matrix records which mode was used.
-        step = resolve_injection_step(args.fault_type, args.fault_injection_step)
+        if getattr(args, "experiment_id", "stage-c") == "ep-http-persistence-v2":
+            if args.fault_injection_step is not None:
+                raise ValueError("HTTP v2 is event-triggered; omit --fault-injection-step")
+            step = None
+        else:
+            step = resolve_injection_step(args.fault_type, args.fault_injection_step)
         return FaultConfig.single_fault(
             args.fault_type, intensity=args.fault_intensity, seed=args.fault_seed,
             injection_step=step,
             experiment_id=getattr(args, "experiment_id", "stage-c"),
             fault_variant=getattr(args, "fault_variant", "single"),
             fault_window_steps=getattr(args, "fault_window_steps", 5),
+            fault_target_url=getattr(args, "fault_target_url", None),
         )
 
     if args.fault_all:

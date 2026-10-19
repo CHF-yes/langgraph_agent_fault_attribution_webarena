@@ -376,10 +376,14 @@ class TestConfigSecurity(unittest.TestCase):
         self.assertNotIn("test1234", source)
 
     def test_health_check_does_not_require_credentials_by_default(self):
+        from unittest.mock import patch
         from scripts.health_check import check_all_sites
 
-        result = check_all_sites(require_auth=False, sites=["shopping"])
-        self.assertTrue(result["ok"] or "error" in result)
+        # Test the auth default without requiring a live shopping server.
+        with patch("scripts.health_check._check_url", return_value={"ok": True}):
+            result = check_all_sites(require_auth=False, sites=["shopping"])
+        self.assertTrue(result["ok"])
+        self.assertNotIn("auth_state_present", result["sites"]["shopping"])
 
 
 class TestEvaluation(unittest.TestCase):

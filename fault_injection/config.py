@@ -171,6 +171,7 @@ class FaultConfig:
     experiment_id: str = EXPERIMENT_ID_STAGE_C   # "stage-c" | "ep-persistence-v1"
     fault_variant: str = "single"                # "single" | "repeat3"
     fault_window_steps: int = DEFAULT_WINDOW_STEPS
+    fault_target_url: Optional[str] = None       # v2: optional exact resource filter
 
     # ---- ① Web底层故障 ----
     web_timeout: bool = False        # 接口超时（动作前注入延迟）
@@ -204,10 +205,12 @@ class FaultConfig:
                 f"Unknown fault intensity '{self.intensity}'. "
                 "Expected one of: off, low, medium, high"
             )
-        if self.fault_variant not in FAULT_VARIANTS:
+        from fault_injection.http_persistence import EXPERIMENT_ID as HTTP_V2, VARIANTS
+        variants = VARIANTS if self.experiment_id == HTTP_V2 else FAULT_VARIANTS
+        if self.fault_variant not in variants:
             raise ValueError(
                 f"Unknown fault variant '{self.fault_variant}'. "
-                f"Expected one of: {sorted(FAULT_VARIANTS)}"
+                f"Expected one of: {sorted(variants)}"
             )
         if self.fault_window_steps < 1:
             raise ValueError("fault_window_steps must be >= 1")
@@ -220,9 +223,22 @@ class FaultConfig:
         self._parameter_action_count = 0
         self._parameter_action_index = 0
         self._deterministic_injected = False
-        self._episode = FaultEpisode(self.fault_variant,
-                                     window_steps=self.fault_window_steps,
-                                     experiment_id=self.experiment_id)
+        if self.experiment_id == HTTP_V2:
+            from fault_injection.http_persistence import HttpResourceEpisode, resource_url
+            if self.injection_step is not None:
+                raise ValueError("HTTP v2 is event-triggered; do not set injection_step")
+            if set(self.enabled_faults) - {"web_http_error"}:
+                raise ValueError("HTTP v2 only supports web_http_error")
+            if self.fault_target_url is not None:
+                self.fault_target_url = resource_url(self.fault_target_url)
+            self._episode = HttpResourceEpisode(self.fault_variant,
+                                               window_steps=self.fault_window_steps)
+        else:
+            if self.fault_target_url is not None:
+                raise ValueError("fault_target_url is only supported by HTTP v2")
+            self._episode = FaultEpisode(self.fault_variant,
+                                         window_steps=self.fault_window_steps,
+                                         experiment_id=self.experiment_id)
 
     # ---- 属性访问 ----
 
@@ -277,6 +293,8 @@ class FaultConfig:
     @property
     def fault_layer(self) -> str:
         """Classify the configured faults by their experimental injection layer."""
+        if self.experiment_id == "ep-http-persistence-v2":
+            return "observation" if self.enabled_faults else "none"
         layers = {
             "web_timeout": "environment",
             "web_http_error": "environment",
@@ -359,6 +377,8 @@ class FaultConfig:
             "agent_state_misjudge": "observation",
             "agent_param_error": "action",
         }.get(fault_name, "unknown")
+        if self.experiment_id == "ep-http-persistence-v2" and fault_name == "web_http_error":
+            layer = "observation"
         entry = {
             "fault": fault_name,
             "fault_layer": layer,
@@ -380,6 +400,10 @@ class FaultConfig:
         self._parameter_action_count = 0
         self._parameter_action_index = 0
         self._deterministic_injected = False
+        from fault_injection.http_persistence import EXPERIMENT_ID as HTTP_V2, HttpResourceEpisode
+        if self.experiment_id == HTTP_V2:
+            self._episode = HttpResourceEpisode(self.fault_variant,
+                                               window_steps=self.fault_window_steps)
 
     def set_execution_step(self, step: int) -> None:
         """Attach the current Agent action step to subsequent fault events."""
@@ -390,7 +414,8 @@ class FaultConfig:
                      seed: int = 42, injection_step: Optional[int] = None,
                      experiment_id: str = EXPERIMENT_ID_STAGE_C,
                      fault_variant: str = "single",
-                     fault_window_steps: int = DEFAULT_WINDOW_STEPS) -> "FaultConfig":
+                     fault_window_steps: int = DEFAULT_WINDOW_STEPS,
+                     fault_target_url: Optional[str] = None) -> "FaultConfig":
         """Build a config with exactly one enabled fault for ablation studies."""
         valid_names = {
             "web_timeout", "web_http_error", "web_dom_missing", "web_popup_block",
@@ -401,7 +426,8 @@ class FaultConfig:
             raise ValueError(f"Unknown fault '{fault_name}'")
         return cls(intensity=intensity, seed=seed, injection_step=injection_step,
                    experiment_id=experiment_id, fault_variant=fault_variant,
-                   fault_window_steps=fault_window_steps, **{fault_name: True})
+                   fault_window_steps=fault_window_steps, fault_target_url=fault_target_url,
+                   **{fault_name: True})
 
     # ---- 工厂方法 ----
 
