@@ -1,0 +1,66 @@
+{
+  "config_substitutions": {
+    "test_data_file": {
+      "from": "/root/webarena-dataset/webarena-verified.json",
+      "to": "/data/webarena/webarena-dataset/webarena-verified.json"
+    }
+  },
+  "rows": [
+    {
+      "trial_dir": "experiments/ep_http_persistence_v2/probe_task24_react/single/outputs/deepseek_v41_flash/react/web_http_error_task24_seed1/24/control_seed_1",
+      "complete": true,
+      "reasons": [],
+      "evaluation_status": "native",
+      "official_success": false,
+      "submitted_success": true,
+      "trial_id": "exp=ep-http-persistence-v2|var=single|model=deepseek_v41_flash|arch=react|fault=web_http_error|task=24|seed=1|cond=control|rep=0",
+      "pair_key": "exp=ep-http-persistence-v2|var=single|model=deepseek_v41_flash|arch=react|fault=web_http_error|task=24|seed=1|cond=-|rep=0",
+      "condition": "control",
+      "steps": 1,
+      "cap_exhausted": false,
+      "llm_calls": 1,
+      "injection_count": 0,
+      "cell": {
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "web_http_error",
+        "task_id": 24,
+        "fault_seed": 1,
+        "condition": "control"
+      },
+      "experiment_id": "ep-http-persistence-v2",
+      "fault_variant": "single",
+      "cap_exhausted_source": "trial_record",
+      "reason": "",
+      "evaluation_source": "evaluated"
+    },
+    {
+      "trial_dir": "experiments/ep_http_persistence_v2/probe_task24_react/single/outputs/deepseek_v41_flash/react/web_http_error_task24_seed1/24/web_http_error_seed_1",
+      "complete": true,
+      "reasons": [],
+      "evaluation_status": "native",
+      "official_success": false,
+      "submitted_success": true,
+      "trial_id": "exp=ep-http-persistence-v2|var=single|model=deepseek_v41_flash|arch=react|fault=web_http_error|task=24|seed=1|cond=fault|rep=0",
+      "pair_key": "exp=ep-http-persistence-v2|var=single|model=deepseek_v41_flash|arch=react|fault=web_http_error|task=24|seed=1|cond=-|rep=0",
+      "condition": "fault",
+      "steps": 1,
+      "cap_exhausted": false,
+      "llm_calls": 1,
+      "injection_count": 0,
+      "cell": {
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "web_http_error",
+        "task_id": 24,
+        "fault_seed": 1,
+        "condition": "fault"
+      },
+      "experiment_id": "ep-http-persistence-v2",
+      "fault_variant": "single",
+      "cap_exhausted_source": "trial_record",
+      "reason": "",
+      "evaluation_source": "evaluated"
+    }
+  ]
+}

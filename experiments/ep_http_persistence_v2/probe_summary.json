@@ -1,0 +1,76 @@
+{
+  "schema": "http_persistence_v2_probe/1",
+  "experiment_id": "ep-http-persistence-v2",
+  "development_probe": true,
+  "frozen": false,
+  "model_profile": "deepseek_v41_flash",
+  "architecture": "react",
+  "window_steps": 10,
+  "max_steps": 20,
+  "arms": 8,
+  "probes": [
+    {
+      "task_id": 24,
+      "root": "probe_task24_react",
+      "result": "all_four_arms_not_triggered",
+      "why": "the agent answered at step 1, so no qualified navigation occurred after arming",
+      "single": {
+        "injections": 0,
+        "released": null
+      },
+      "persistent": {
+        "injections": 0,
+        "released": null
+      },
+      "controls": {
+        "injections": 0
+      },
+      "official_success": {
+        "single_control": false,
+        "single_fault": false,
+        "persistent_control": false,
+        "persistent_fault": false
+      }
+    },
+    {
+      "task_id": 118,
+      "root": "probe_task118_react",
+      "result": "event_trigger_works_repeat_did_not_occur",
+      "single": {
+        "injections": 1,
+        "t0": 4,
+        "action": "click:4",
+        "error_type": "500",
+        "released": "single_completed"
+      },
+      "persistent": {
+        "injections": 1,
+        "t0": 4,
+        "action": "click:4",
+        "error_type": "500",
+        "released": null,
+        "why_only_once": "after the fault the agent switched the search URL (mouth+guard -> night+guard) and never revisited the locked resource; the trial ended at step 6"
+      },
+      "controls": {
+        "injections": 0
+      },
+      "official_success": {
+        "single_control": true,
+        "single_fault": true,
+        "persistent_control": true,
+        "persistent_fault": true
+      }
+    }
+  ],
+  "usage": {
+    "llm_calls": 26,
+    "prompt_tokens": 208997,
+    "completion_tokens": 3002
+  },
+  "conclusions": [
+    "event-triggered first injection fixes the v1 pinned-step miss: task 118 fired at step 4",
+    "persistent repetition is still agent-dependent: the agent routed around the locked URL",
+    "both fault arms on task 118 still scored success, so the block shows no outcome effect",
+    "no mechanism errors, control contamination or evidence-hash failures"
+  ]
+}

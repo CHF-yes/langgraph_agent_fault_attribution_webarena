@@ -1,0 +1,187 @@
+{
+  "experiment_id": "ep-http-persistence-v2",
+  "variant": "single",
+  "window_steps": 10,
+  "injections": [
+    {
+      "event": "injection",
+      "experiment_id": "ep-http-persistence-v2",
+      "variant": "single",
+      "injection_index": 1,
+      "proxy_step": 4,
+      "action_uid": "click:4",
+      "target": {
+        "kind": "http",
+        "page_url": "http://localhost:7770/catalogsearch/result/?q=night+guard"
+      },
+      "error_type": "500",
+      "timestamp": 1792503817.629729
+    }
+  ],
+  "snapshot": {
+    "experiment_id": "ep-http-persistence-v2",
+    "variant": "single",
+    "target_policy_version": "first-agent-navigation-url-lock-v2",
+    "armed": true,
+    "armed_after_step": 1,
+    "target": {
+      "kind": "http",
+      "page_url": "http://localhost:7770/catalogsearch/result/?q=night+guard"
+    },
+    "t0": 4,
+    "window_steps": 10,
+    "window_end": 13,
+    "injections": 1,
+    "released": "single_completed",
+    "exposure_class": "once"
+  },
+  "events": [
+    {
+      "event": "skip",
+      "proxy_step": 1,
+      "action_uid": "goto:1",
+      "reason": "not_armed",
+      "detail": {
+        "raw_url": "http://localhost:7770/"
+      }
+    },
+    {
+      "event": "skip",
+      "proxy_step": 2,
+      "action_uid": "click:2",
+      "reason": "not_navigation",
+      "detail": {
+        "raw_url": "http://localhost:7770/"
+      }
+    },
+    {
+      "event": "skip",
+      "proxy_step": 3,
+      "action_uid": "type_text:3",
+      "reason": "not_navigation",
+      "detail": {
+        "raw_url": "http://localhost:7770/"
+      }
+    },
+    {
+      "event": "injection",
+      "experiment_id": "ep-http-persistence-v2",
+      "variant": "single",
+      "injection_index": 1,
+      "proxy_step": 4,
+      "action_uid": "click:4",
+      "target": {
+        "kind": "http",
+        "page_url": "http://localhost:7770/catalogsearch/result/?q=night+guard"
+      },
+      "error_type": "500",
+      "timestamp": 1792503817.629729
+    },
+    {
+      "event": "skip",
+      "proxy_step": 5,
+      "action_uid": "goto:5",
+      "reason": "single_completed",
+      "detail": {
+        "raw_url": "http://localhost:7770/catalogsearch/result/?q=night+guard"
+      }
+    },
+    {
+      "event": "skip",
+      "proxy_step": 6,
+      "action_uid": "click:6",
+      "reason": "off_target",
+      "detail": {
+        "raw_url": "http://localhost:7770/remi-at-home-custom-night-guard-kit-create-the-best-fitting-dental-grade-top-and-bottom-2-mouth-guards-for-grinding-teeth-bruxism-tmj-relief-night-guard.html"
+      }
+    }
+  ],
+  "exposures": [
+    {
+      "observation_uid": "goto:1#1",
+      "source_action_uid": "goto:1",
+      "experiment_id": "ep-http-persistence-v2",
+      "variant": "single",
+      "step": 1,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/",
+      "target_url": null,
+      "matches_target": false,
+      "reason": "not_armed",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "click:2#2",
+      "source_action_uid": "click:2",
+      "experiment_id": "ep-http-persistence-v2",
+      "variant": "single",
+      "step": 2,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/",
+      "target_url": null,
+      "matches_target": false,
+      "reason": "not_navigation",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "type_text:3#3",
+      "source_action_uid": "type_text:3",
+      "experiment_id": "ep-http-persistence-v2",
+      "variant": "single",
+      "step": 3,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/",
+      "target_url": null,
+      "matches_target": false,
+      "reason": "not_navigation",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "click:4#4",
+      "source_action_uid": "click:4",
+      "experiment_id": "ep-http-persistence-v2",
+      "variant": "single",
+      "step": 4,
+      "faults_delivered": [
+        "web_http_error"
+      ],
+      "delivered": true,
+      "raw_url": "http://localhost:7770/catalogsearch/result/?q=night+guard",
+      "target_url": "http://localhost:7770/catalogsearch/result/?q=night+guard",
+      "matches_target": true,
+      "reason": "injected_or_same_action_replay",
+      "fault_delivered": true
+    },
+    {
+      "observation_uid": "goto:5#5",
+      "source_action_uid": "goto:5",
+      "experiment_id": "ep-http-persistence-v2",
+      "variant": "single",
+      "step": 5,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/catalogsearch/result/?q=night+guard",
+      "target_url": "http://localhost:7770/catalogsearch/result/?q=night+guard",
+      "matches_target": true,
+      "reason": "single_completed",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "click:6#6",
+      "source_action_uid": "click:6",
+      "experiment_id": "ep-http-persistence-v2",
+      "variant": "single",
+      "step": 6,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/remi-at-home-custom-night-guard-kit-create-the-best-fitting-dental-grade-top-and-bottom-2-mouth-guards-for-grinding-teeth-bruxism-tmj-relief-night-guard.html",
+      "target_url": "http://localhost:7770/catalogsearch/result/?q=night+guard",
+      "matches_target": false,
+      "reason": "off_target",
+      "fault_delivered": false
+    }
+  ]
+}

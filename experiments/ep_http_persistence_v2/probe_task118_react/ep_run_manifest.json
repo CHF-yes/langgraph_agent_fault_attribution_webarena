@@ -1,0 +1,32 @@
+{
+  "experiment_id": "ep-http-persistence-v2",
+  "freeze": "development_probe_unfrozen",
+  "resumed_skipped": 0,
+  "jobs": [
+    {
+      "key": "single_control_web_http_error_task118_seed1",
+      "block": 0,
+      "log_path": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/ep_http_persistence_v2/probe_task118_react/single/run/deepseek_v41_flash/react/single_control_web_http_error_task118_seed1.log",
+      "status_path": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/ep_http_persistence_v2/probe_task118_react/single/run/deepseek_v41_flash/react/single_control_web_http_error_task118_seed1.status.json"
+    },
+    {
+      "key": "single_fault_web_http_error_task118_seed1",
+      "block": 0,
+      "log_path": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/ep_http_persistence_v2/probe_task118_react/single/run/deepseek_v41_flash/react/single_fault_web_http_error_task118_seed1.log",
+      "status_path": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/ep_http_persistence_v2/probe_task118_react/single/run/deepseek_v41_flash/react/single_fault_web_http_error_task118_seed1.status.json"
+    },
+    {
+      "key": "persistent_control_web_http_error_task118_seed1",
+      "block": 0,
+      "log_path": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/ep_http_persistence_v2/probe_task118_react/persistent/run/deepseek_v41_flash/react/persistent_control_web_http_error_task118_seed1.log",
+      "status_path": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/ep_http_persistence_v2/probe_task118_react/persistent/run/deepseek_v41_flash/react/persistent_control_web_http_error_task118_seed1.status.json"
+    },
+    {
+      "key": "persistent_fault_web_http_error_task118_seed1",
+      "block": 0,
+      "log_path": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/ep_http_persistence_v2/probe_task118_react/persistent/run/deepseek_v41_flash/react/persistent_fault_web_http_error_task118_seed1.log",
+      "status_path": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/ep_http_persistence_v2/probe_task118_react/persistent/run/deepseek_v41_flash/react/persistent_fault_web_http_error_task118_seed1.status.json"
+    }
+  ],
+  "started_at": 1792503785.0320082
+}

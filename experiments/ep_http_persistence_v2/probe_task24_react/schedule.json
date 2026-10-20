@@ -1,0 +1,84 @@
+{
+  "schema": "ep_schedule/1",
+  "experiment_id": "ep-http-persistence-v2",
+  "schedule_seed": 20261019,
+  "variants": [
+    "single",
+    "persistent"
+  ],
+  "conditions": [
+    "control",
+    "fault"
+  ],
+  "blocks": 1,
+  "cells": 4,
+  "entries": [
+    {
+      "block": 0,
+      "block_order": 0,
+      "model_profile": "deepseek_v41_flash",
+      "architecture": "react",
+      "fault_type": "web_http_error",
+      "task_id": 24,
+      "fault_seed": 1,
+      "experiment_id": "ep-http-persistence-v2",
+      "variant": "single",
+      "condition": "control",
+      "pair_key": "exp=ep-http-persistence-v2|var=single|model=deepseek_v41_flash|arch=react|fault=web_http_error|task=24|seed=1|cond=-",
+      "file_stem": "ep-http-persistence-v2__single__deepseek_v41_flash__react__web_http_error__task24__seed1__control"
+    },
+    {
+      "block": 0,
+      "block_order": 1,
+      "model_profile": "deepseek_v41_flash",
+      "architecture": "react",
+      "fault_type": "web_http_error",
+      "task_id": 24,
+      "fault_seed": 1,
+      "experiment_id": "ep-http-persistence-v2",
+      "variant": "single",
+      "condition": "fault",
+      "pair_key": "exp=ep-http-persistence-v2|var=single|model=deepseek_v41_flash|arch=react|fault=web_http_error|task=24|seed=1|cond=-",
+      "file_stem": "ep-http-persistence-v2__single__deepseek_v41_flash__react__web_http_error__task24__seed1__fault"
+    },
+    {
+      "block": 0,
+      "block_order": 2,
+      "model_profile": "deepseek_v41_flash",
+      "architecture": "react",
+      "fault_type": "web_http_error",
+      "task_id": 24,
+      "fault_seed": 1,
+      "experiment_id": "ep-http-persistence-v2",
+      "variant": "persistent",
+      "condition": "control",
+      "pair_key": "exp=ep-http-persistence-v2|var=persistent|model=deepseek_v41_flash|arch=react|fault=web_http_error|task=24|seed=1|cond=-",
+      "file_stem": "ep-http-persistence-v2__persistent__deepseek_v41_flash__react__web_http_error__task24__seed1__control"
+    },
+    {
+      "block": 0,
+      "block_order": 3,
+      "model_profile": "deepseek_v41_flash",
+      "architecture": "react",
+      "fault_type": "web_http_error",
+      "task_id": 24,
+      "fault_seed": 1,
+      "experiment_id": "ep-http-persistence-v2",
+      "variant": "persistent",
+      "condition": "fault",
+      "pair_key": "exp=ep-http-persistence-v2|var=persistent|model=deepseek_v41_flash|arch=react|fault=web_http_error|task=24|seed=1|cond=-",
+      "file_stem": "ep-http-persistence-v2__persistent__deepseek_v41_flash__react__web_http_error__task24__seed1__fault"
+    }
+  ],
+  "window_steps": 10,
+  "protocol": {
+    "mechanism": "synthetic_http_observation_replacement",
+    "trigger_policy": "first-agent-navigation-url-lock-v2",
+    "target_policy_version": "first-agent-navigation-url-lock-v2",
+    "fault_target_url": null,
+    "window_steps": 10,
+    "window_unit": "proxy_execution_step",
+    "bootstrap_navigation_faulted": false,
+    "retarget": false
+  }
+}
