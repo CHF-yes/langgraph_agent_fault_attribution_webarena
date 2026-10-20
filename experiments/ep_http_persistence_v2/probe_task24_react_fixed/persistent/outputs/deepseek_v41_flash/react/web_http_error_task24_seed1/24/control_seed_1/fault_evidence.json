@@ -1,0 +1,70 @@
+{
+  "experiment_id": "ep-http-persistence-v2",
+  "variant": "persistent",
+  "window_steps": 10,
+  "injections": [],
+  "snapshot": {
+    "experiment_id": "ep-http-persistence-v2",
+    "variant": "persistent",
+    "target_policy_version": "first-agent-navigation-url-lock-v2",
+    "armed": true,
+    "armed_after_step": 1,
+    "target": null,
+    "t0": null,
+    "window_steps": 10,
+    "window_end": null,
+    "injections": 0,
+    "released": null,
+    "exposure_class": "not_triggered"
+  },
+  "events": [
+    {
+      "event": "skip",
+      "proxy_step": 1,
+      "action_uid": "goto:1",
+      "reason": "control_or_disabled",
+      "detail": {
+        "raw_url": "http://localhost:7770/haflinger-men-s-wool-felt-open-back-slippers-beige-550-peat-us-7.html"
+      }
+    },
+    {
+      "event": "skip",
+      "proxy_step": 2,
+      "action_uid": "click:2",
+      "reason": "control_or_disabled",
+      "detail": {
+        "raw_url": "http://localhost:7770/haflinger-men-s-wool-felt-open-back-slippers-beige-550-peat-us-7.html"
+      }
+    }
+  ],
+  "exposures": [
+    {
+      "observation_uid": "goto:1#1",
+      "source_action_uid": "goto:1",
+      "experiment_id": "ep-http-persistence-v2",
+      "variant": "persistent",
+      "step": 1,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/haflinger-men-s-wool-felt-open-back-slippers-beige-550-peat-us-7.html",
+      "target_url": null,
+      "matches_target": false,
+      "reason": "control_or_disabled",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "click:2#2",
+      "source_action_uid": "click:2",
+      "experiment_id": "ep-http-persistence-v2",
+      "variant": "persistent",
+      "step": 2,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/haflinger-men-s-wool-felt-open-back-slippers-beige-550-peat-us-7.html",
+      "target_url": null,
+      "matches_target": false,
+      "reason": "control_or_disabled",
+      "fault_delivered": false
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "task_id": 24,
+  "intent_template_id": 222,
+  "sites": [
+    "shopping"
+  ],
+  "task_revision": 2,
+  "status": "success",
+  "score": 1.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "success",
+      "score": 1.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"NOT_FOUND_ERROR\",\n  \"retrieved_data\": null,\n  \"error_details\": \"No reviewer mentions the price being unfair. The product has only two reviews: \\\"Wonderful!\\\" by Jay (mentions \\\"Nothing.....everyday use.\\\") and a German review by Josef Bürger (\\\"Die Haflinger sind wie beschrieben und erwartet sehr gut\\\" — the slippers are as described and very good as expected). Neither review discusses price at all.\"\n}\n",
+      "actual_normalized": {
+        "task_type": "retrieve",
+        "retrieved_data": null,
+        "status": "not_found_error"
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "not_found_error",
+        "retrieved_data": null
+      },
+      "assertions": null,
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": true,
+  "_evaluation_binding": {
+    "agent_response_sha256": "f5e85a49eb98d592dd525702c17e8b3a8e6053c94f8cc5ae6e70417e1c645f39",
+    "network_har_sha256": "0f16d25a0d65b7b5adca710d8b449f8c065f07ab093b65668df3ff831d93a491",
+    "config_sha256": "54fff8f40f1a476c6b1944439f522972a63c9788ba2e06fc820221fdd7a08faf",
+    "evaluator_adapter_version": "stage-c-eval-adapter/1",
+    "evaluator_version": {
+      "adapter": "stage-c-eval-adapter/1",
+      "distribution": "1.2.3.post1.dev0",
+      "package_sources": 74,
+      "package_sha256": "41334a7a30567811b3c42fc125b64140e64069b08ff7793643c0ed68931a68d8"
+    },
+    "scored_by_version": "1.2.3.post1.dev0"
+  }
+}

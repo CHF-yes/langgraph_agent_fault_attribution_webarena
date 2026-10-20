@@ -1,5 +1,5 @@
 {
-  "schema": "http_persistence_v2_probe/1",
+  "schema": "http_persistence_v2_probe/2",
   "experiment_id": "ep-http-persistence-v2",
   "development_probe": true,
   "frozen": false,
@@ -7,70 +7,91 @@
   "architecture": "react",
   "window_steps": 10,
   "max_steps": 20,
-  "arms": 8,
-  "probes": [
+  "diagnosis": {
+    "symptom": "task 24 arms ended at step 1 with done=True, error=False and the answer text 'THOUGHT: ... I'll click the Reviews (2) tab.'",
+    "root_cause": "THOUGHT_REMINDER was appended as a SystemMessage after the HumanMessage; on that sequence deepseek-flash returned finish_reason=stop and tool_calls=[]",
+    "reproduction": "same system prompt: with the trailing SystemMessage -> tool_calls=[] (finish_reason=stop); without it -> click(element_id=119) (finish_reason=tool_calls)",
+    "fix": "reminder moved into the system prompt; no-tool-call replies retried once with a HumanMessage nudge; if still absent, a tool_call_required protocol violation is recorded, the submitted answer is empty and error=no_tool_call",
+    "scope": "ReAct and plan-execute executor message assembly; old records untouched"
+  },
+  "runs": [
     {
+      "name": "task24_original",
       "task_id": 24,
       "root": "probe_task24_react",
-      "result": "all_four_arms_not_triggered",
-      "why": "the agent answered at step 1, so no qualified navigation occurred after arming",
-      "single": {
-        "injections": 0,
-        "released": null
+      "harness": "pre-fix",
+      "agent_level": "abnormal: four arms returned intent-only text and were recorded as final answers",
+      "injections": {
+        "single_fault": 0,
+        "persistent_fault": 0,
+        "controls": 0
       },
-      "persistent": {
-        "injections": 0,
-        "released": null
+      "official_success": 0.0,
+      "note": "kept as the record of the harness bug; not a valid behavioural sample"
+    },
+    {
+      "name": "task24_fixed",
+      "task_id": 24,
+      "root": "probe_task24_react_fixed",
+      "harness": "post-fix",
+      "agent_level": "normal: 2-4 steps, one tool call per step, no no_tool_call terminations",
+      "injections": {
+        "single_fault": 0,
+        "persistent_fault": 0,
+        "controls": 0
       },
-      "controls": {
-        "injections": 0
-      },
+      "why_zero": "the task is completed with same-page clicks and a scroll; v2 activates only on a navigation that changes the resource URL",
       "official_success": {
-        "single_control": false,
-        "single_fault": false,
+        "single_control": true,
+        "single_fault": true,
         "persistent_control": false,
-        "persistent_fault": false
+        "persistent_fault": true
+      },
+      "usage": {
+        "llm_calls": 12,
+        "prompt_tokens": 64191,
+        "completion_tokens": 1446
       }
     },
     {
+      "name": "task118_mechanism_case",
       "task_id": 118,
       "root": "probe_task118_react",
-      "result": "event_trigger_works_repeat_did_not_occur",
+      "harness": "pre-fix, but every step already produced tool calls",
       "single": {
-        "injections": 1,
+        "target": "q=night+guard",
         "t0": 4,
-        "action": "click:4",
-        "error_type": "500",
+        "injections": 1,
+        "behaviour": "revisited the same URL after the error and recovered",
         "released": "single_completed"
       },
       "persistent": {
-        "injections": 1,
+        "target": "q=mouth+guard",
         "t0": 4,
-        "action": "click:4",
-        "error_type": "500",
-        "released": null,
-        "why_only_once": "after the fault the agent switched the search URL (mouth+guard -> night+guard) and never revisited the locked resource; the trial ended at step 6"
+        "injections": 1,
+        "behaviour": "switched the query to q=night+guard and completed; never revisited the locked URL, so never saw a second fault",
+        "released": null
       },
       "controls": {
+        "steps": 5,
         "injections": 0
+      },
+      "fault_arms": {
+        "steps": 6
       },
       "official_success": {
         "single_control": true,
         "single_fault": true,
         "persistent_control": true,
         "persistent_fault": true
-      }
+      },
+      "claim": "one 500 was followed by retry (single) or query change (persistent); both completed with one extra step. This is a mechanism case, not evidence about persistence, because the two arms locked different URLs and persistent never experienced a second exposure."
     }
   ],
-  "usage": {
-    "llm_calls": 26,
-    "prompt_tokens": 208997,
-    "completion_tokens": 3002
-  },
-  "conclusions": [
-    "event-triggered first injection fixes the v1 pinned-step miss: task 118 fired at step 4",
-    "persistent repetition is still agent-dependent: the agent routed around the locked URL",
-    "both fault arms on task 118 still scored success, so the block shows no outcome effect",
-    "no mechanism errors, control contamination or evidence-hash failures"
-  ]
+  "fault_object_note": "v2 targets the exact resource URL. Changing the query string is a different resource and a legitimate route around the fault. A service-level fault covering several queries would be a different protocol and needs its own freeze; the target must not be broadened during a run.",
+  "usage_total": {
+    "llm_calls": 38,
+    "prompt_tokens": 273188,
+    "completion_tokens": 4448
+  }
 }

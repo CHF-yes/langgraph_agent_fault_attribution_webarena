@@ -92,3 +92,15 @@ python scripts/stage_c_pipeline.py evaluate \
 
 若你的评分环境需要显式配置，沿用原批次的 `--config` 和数据集设置。
 旧 `ep_analysis.py` 只支持 v1 的 single/repeat3，本版没有用它生成持续性统计结论。
+
+## 开发 probe 结果（2026-10-20）
+
+**先修了一个 harness 问题，再重跑。** task 24 的 four-arm probe 初次出现四臂都在第 1 步结束、`done=True, error=False`，答案文本是 "THOUGHT: … I'll click the Reviews (2) tab."。根因是 `THOUGHT_REMINDER` 被作为**尾部 SystemMessage** 追加在 HumanMessage 之后：同一 prompt 去掉该消息后模型立即返回 `click(element_id=119)`（`finish_reason=tool_calls`）；保留它则为 `finish_reason=stop`、`tool_calls=[]`。修复为把提醒并入 system prompt；无工具调用时先用 HumanMessage 重试一次，仍无则记 `tool_call_required` 协议违规、提交答案置空、`error=no_tool_call`（见提交 `9322a5b`）。旧 probe 记录保留。
+
+修复后 task 24：agent 正常执行 2–4 步、每步一个 tool call；但**仍 0 注入**——该任务用同页 click/scroll 完成，没有改变资源 URL 的导航，而 v2 只在合格导航上激活。官方评分 3/4（single 1/2、persistent 2/2），说明任务本身可通过，只是不适合检验 v2 的触发。
+
+task 118 是机制个案：single 锁定 `q=night+guard`，出错后回访同一 URL 并恢复；persistent 锁定 `q=mouth+guard`，看到一次 500 后换成 `q=night+guard` 并完成，**从未回访锁定 URL，因此没有第二次暴露**。两故障臂均 6 步、控制臂 5 步，官方评分全部成功。它只能说明"单次错误后出现重试或换查询两种应对，均完成且多一步"，不能用于持续性效果或"persistent 更难"的结论。
+
+**故障对象**：v2 锁定完整资源 URL；换 query 是另一个资源，属于合法绕行。若研究问题是"搜索服务持续失效"，应另立服务级协议（覆盖不同 query），并在运行前冻结，不能在运行中扩大目标。
+
+**用量**：三个 probe 共 38 次调用、273,188 prompt、4,448 completion token。
