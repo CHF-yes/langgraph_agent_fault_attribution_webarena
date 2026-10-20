@@ -247,6 +247,7 @@ def classify_log(text, *, expect_fault=True, fault_variant="single", window_step
             episode_payload = None
 
     mechanism_error = False
+    not_triggered = False
     is_http_v2 = experiment_id == "ep-http-persistence-v2" or (
         episode_payload or {}).get("experiment_id") == "ep-http-persistence-v2"
     if is_http_v2:
@@ -259,7 +260,9 @@ def classify_log(text, *, expect_fault=True, fault_variant="single", window_step
         if not expect_fault and fault_count:
             mechanism_error = True
         fault_invalid = mechanism_error
-        fault_missing = not fault_triggered
+        # v2 的"全程没有合格导航"是合法未触发（not_triggered），不是"缺日志"。
+        fault_missing = not verdict["valid"]
+        not_triggered = verdict["valid"] and not fault_triggered
     elif episode_payload is not None:
         from fault_injection.episode import classify_injection_log
         verdict = classify_injection_log(
@@ -274,11 +277,13 @@ def classify_log(text, *, expect_fault=True, fault_variant="single", window_step
         fault_invalid = mechanism_error or (
             verdict.get("variant", fault_variant) == "single" and verdict["count"] != 1)
         fault_missing = fault_invalid and not mechanism_error
+        not_triggered = verdict["count"] == 0
     elif fault_variant == "single":
         fault_count = fault_counts[-1] if fault_counts else 0
         fault_triggered = any(count == 1 for count in fault_counts)
         fault_invalid = not fault_counts or any(count != 1 for count in fault_counts)
         fault_missing = fault_invalid
+        not_triggered = not fault_counts
     else:
         # repeat3 必须带机制日志：缺结构化证据时无法区分"合法未触发"与"日志丢失"，
         # 因此判为实现错误并停止本批，而不是默默放行。
@@ -318,6 +323,7 @@ def classify_log(text, *, expect_fault=True, fault_variant="single", window_step
         "fault_triggered": fault_triggered,
         "fault_invalid": fault_invalid,
         "mechanism_error": mechanism_error,
+        "not_triggered": not_triggered,
     }
 
 

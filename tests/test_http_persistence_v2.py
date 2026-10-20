@@ -330,3 +330,50 @@ def test_probe_refuses_to_overwrite_existing_runs(tmp_path, monkeypatch, dataset
     monkeypatch.setattr(probe, "run_planned", lambda *a, **k: pytest.fail("must not execute"))
     assert probe.main() == 3
     assert (root / "single" / "run" / "old.log").read_text() == "preserve me"
+
+
+def test_v2_untriggered_is_not_missing_and_release_semantics():
+    from scripts.run_fault_matrix import classify_log
+    # 合法未触发：有效证据 + 0 注入 → not_triggered，而不是 missing
+    p = proxy("single")
+    p.goto(PAGE)
+    p.arm_http_fault()
+    payload = evidence(p)
+    assert payload["snapshot"]["injections"] == 0
+    out = classify_log("fault_episode=" + json.dumps(payload),
+                       experiment_id=EXPERIMENT_ID, fault_variant="single", window_steps=5)
+    assert out["not_triggered"] is True
+    assert out["fault_missing"] is False and out["mechanism_error"] is False
+
+    # 触发的 single 必须因 single_completed 释放
+    p2 = proxy("single")
+    p2.goto(PAGE)
+    p2.arm_http_fault()
+    p2.goto(PAGE)
+    data = evidence(p2)
+    assert classify_episode(data)["valid"]
+    tampered = copy.deepcopy(data)
+    tampered["snapshot"]["released"] = "window_expired"
+    assert not classify_episode(tampered)["valid"]
+
+    # persistent：错误的释放原因、错误的 window_end、提前释放事件都必须被拒
+    p3 = proxy("persistent")
+    p3.goto(PAGE)
+    p3.arm_http_fault()
+    p3.goto(PAGE)
+    for _ in range(5):
+        p3.goto(PAGE)
+    data3 = evidence(p3)
+    assert data3["snapshot"]["released"] == "window_expired"
+    assert classify_episode(data3)["valid"]
+
+    bad_reason = copy.deepcopy(data3); bad_reason["snapshot"]["released"] = "single_completed"
+    assert not classify_episode(bad_reason)["valid"]
+
+    bad_end = copy.deepcopy(data3); bad_end["snapshot"]["window_end"] += 1
+    assert not classify_episode(bad_end)["valid"]
+
+    early = copy.deepcopy(data3)
+    early["events"] = [{"event": "release", "proxy_step": data3["snapshot"]["t0"],
+                        "reason": "window_expired"}]
+    assert not classify_episode(early)["valid"]

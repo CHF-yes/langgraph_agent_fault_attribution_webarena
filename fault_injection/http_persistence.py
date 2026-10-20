@@ -240,6 +240,31 @@ def classify_episode(payload, *, expected_variant=None, expected_window=None):
         errors.append("snapshot window mismatch")
     if snapshot.get("target_policy_version") != TARGET_POLICY_VERSION:
         errors.append("target policy mismatch")
+
+    # 释放语义：single 必须且只能因"单次完成"释放；persistent 只能在窗口后释放。
+    # 这能挡住"永不释放/提前释放"一类 bug——它们此前能通过证据校验。
+    released = snapshot.get("released")
+    t0 = snapshot.get("t0")
+    window_end = snapshot.get("window_end")
+    if isinstance(t0, int) and isinstance(window, int):
+        if window_end != t0 + window - 1:
+            errors.append("snapshot window_end mismatch")
+    if variant == "single" and entries:
+        # 未触发的 single 释放原因为 None 是合法的；只有真的注入过才要求 single_completed。
+        if released != "single_completed":
+            errors.append("single release reason mismatch")
+    elif variant == "persistent":
+        if released not in (None, "window_expired"):
+            errors.append("invalid persistent release reason")
+        if released == "window_expired":
+            events = [e for e in (payload.get("events") or []) if isinstance(e, dict)]
+            release_events = [e for e in events if e.get("event") == "release"]
+            if events and not release_events:
+                errors.append("missing release event")
+            steps = [e.get("proxy_step") for e in release_events]
+            if steps and any(not isinstance(step, int) or step <= (window_end or -1)
+                             for step in steps):
+                errors.append("window release before window end")
     if entries and (not snapshot.get("armed") or not isinstance(snapshot.get("armed_after_step"), int)
                     or first_step is None or first_step <= snapshot["armed_after_step"]):
         errors.append("injection before agent activation")
