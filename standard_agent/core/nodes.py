@@ -106,11 +106,42 @@ Call stop() with your best answer based on what you have found so far.
 """
 
 # 运行时提醒：放在每条 LLM 输入末尾，强制模型先输出 THOUGHT 再调用工具
-THOUGHT_REMINDER = SystemMessage(
-    content="REMINDER: Your reply MUST begin with 'THOUGHT:' followed by "
-            "your reasoning, and ONLY THEN call a tool. "
-            "Calling a tool with empty text content is a protocol violation."
+THOUGHT_REMINDER_TEXT = (
+    "REMINDER: Your reply MUST begin with 'THOUGHT:' followed by "
+    "your reasoning, and ONLY THEN call a tool. "
+    "Calling a tool with empty text content is a protocol violation."
 )
+THOUGHT_REMINDER = SystemMessage(content=THOUGHT_REMINDER_TEXT)
+
+
+def _with_thought_reminder(system_prompt: str) -> str:
+    """把 THOUGHT 提醒并入 **system prompt**。
+
+    绝不能把它作为尾部 SystemMessage 追加在 HumanMessage 之后：实测
+    deepseek-flash 在该消息序列下会返回 finish_reason=stop、tool_calls=[] 的纯文本
+    （"I'll click …"），把行动意图当成最终答案；同一 prompt 去掉尾部 system 消息
+    后会正常返回 tool call。这是 harness 的消息组装问题，不是模型不会用工具。
+    """
+    return f"{system_prompt}\n\n{THOUGHT_REMINDER_TEXT}"
+
+
+_ACTION_INTENT = re.compile(
+    r"(?i)\b(?:i'?ll|i will|i'm going to|i am going to|let me|i need to|i should)\b"
+    r"[^.]{0,120}\b(?:click|type|scroll|navigate|goto|go to|open|select|hover|search|read|check)\b")
+
+
+def _looks_like_action_intent(text: str) -> bool:
+    return bool(_ACTION_INTENT.search(str(text or "")))
+
+
+def _react_full_messages(system_prompt: str, task: str, url: str, messages) -> list:
+    """ReAct 消息序列：system + human + 历史（**不追加尾部 SystemMessage**）。"""
+    return [
+        SystemMessage(content=_with_thought_reminder(system_prompt)),
+        HumanMessage(content=(f"Please continue completing this task: {task}\n"
+                              f"Current page: {url}")),
+        *list(messages),
+    ]
 
 
 def _retrieval_completeness_context(task: str) -> str:
@@ -296,14 +327,9 @@ def agent_node(state: AgentState, config: RunnableConfig) -> dict:
     # ---- 构建消息 ----
     # 每轮重新注入任务、最新观测和工具协议。系统消息没有写入 state，避免
     # 状态膨胀；但也不能只在首轮注入，否则多步任务会丢失任务约束。
-    system_msg = SystemMessage(content=_react_system_prompt(
-        task, current_url, page_content, plan_context=plan_context,
-    ))
-    task_msg = HumanMessage(content=(
-        f"Please continue completing this task: {task}\n"
-        f"Current page: {current_url}"
-    ))
-    full_messages = [system_msg, task_msg, *list(messages), THOUGHT_REMINDER]
+    full_messages = _react_full_messages(
+        _react_system_prompt(task, current_url, page_content, plan_context=plan_context),
+        task, current_url, messages)
 
     if settings.TRACE_CONSOLE:
         print(f"[ReAct][step={new_step_count}] QUESTION task={task}")
@@ -355,6 +381,29 @@ def agent_node(state: AgentState, config: RunnableConfig) -> dict:
 
     llm_calls = state.get("llm_calls", 0) + 1
     executor_calls = state.get("executor_calls", 0) + 1
+
+    if not (getattr(response, "tool_calls", None) or []):
+        # 纯文本且无工具调用：先记录，再用一条 HumanMessage 要求"现在必须调用一个工具"。
+        # 不用尾部 SystemMessage（那正是根因），也不静默当作最终答案。
+        append_event(thread_id, event="no_tool_call", step=new_step_count,
+                     task=task, url=current_url,
+                     data={"architecture": architecture, "phase": "executor",
+                           "content": str(getattr(response, "content", "")),
+                           "finish_reason": (getattr(response, "response_metadata", {}) or {}).get("finish_reason"),
+                           "intent_like": _looks_like_action_intent(getattr(response, "content", ""))})
+        nudge = HumanMessage(content=(
+            "Your previous reply did not call a tool. Call exactly ONE tool now. "
+            "If the task is finished, call stop(answer)."))
+        retry = llm_with_tools.invoke([*full_messages, response, nudge])
+        _trace_provenance(thread_id, new_step_count, task, current_url, retry,
+                          model_profile, architecture, "executor_retry", time.time() - _t0)
+        llm_calls += 1
+        append_event(thread_id, event="llm_retry", step=new_step_count,
+                     task=task, url=current_url,
+                     data={"architecture": architecture, "phase": "executor",
+                           "content": str(getattr(retry, "content", "")),
+                           "tool_calls": len(getattr(retry, "tool_calls", None) or [])})
+        response = retry
 
     if settings.TRACE_LLM_IO:
         append_event(
@@ -413,23 +462,32 @@ def agent_node(state: AgentState, config: RunnableConfig) -> dict:
     }
 
     if not has_tool_calls:
-        # LLM 返回了纯文本而非 tool_call：标准 ReAct 的 Final Answer
-        answer = response.content
+        # 重试后仍无 tool_call：这是协议失败，而不是"最终答案"。保留原文本用于排查，
+        # 但提交答案为**空**，使 completion 判为未完成，避免把行动意图计为成功。
+        raw_text = str(getattr(response, "content", "") or "")
+        intent_like = _looks_like_action_intent(raw_text)
+        append_event(thread_id, event="protocol_violation", step=new_step_count,
+                     task=task, url=current_url,
+                     data={"architecture": architecture, "phase": "executor",
+                           "rule": "tool_call_required", "intent_like": intent_like,
+                           "content": raw_text, "retried": True})
         update["done"] = True
-        update["answer"] = answer
+        update["answer"] = ""
+        update["error"] = "no_tool_call"
         update["action_history"] = [{
             "step": new_step_count,
-            "thought": answer,
+            "thought": raw_text,
             "action": "final_answer",
             "args": {},
             "observation": "",
-            "error": False,
+            "error": True,
         }]
         append_trace(thread_id, make_entry(
             thread_id, step=new_step_count, task=task, url=current_url,
-            thought=answer, action="final_answer", args={},
-            observation="", error=False, done=True, answer=answer,
-            extra={"architecture": architecture, "phase": "executor"},
+            thought=raw_text, action="final_answer", args={},
+            observation="", error=True, done=True, answer="",
+            extra={"architecture": architecture, "phase": "executor",
+                   "no_tool_call": True, "intent_like": intent_like},
         ))
 
     return update
@@ -590,10 +648,10 @@ def plan_executor_node(state: AgentState, config: RunnableConfig) -> dict:
     if step_count >= max_steps:
         return _force_stop(messages, step_count, max_steps, thread_id, task, url, architecture)
 
-    prompt = SystemMessage(content=_plan_executor_prompt(
+    prompt = SystemMessage(content=_with_thought_reminder(_plan_executor_prompt(
         task, current_step, url, page_content,
-    ))
-    full_messages = [prompt, *list(messages), THOUGHT_REMINDER]
+    )))
+    full_messages = [prompt, *list(messages)]
     llm = create_llm(profile_name=model_profile).bind_tools(ALL_TOOLS)
     _t0 = time.time()
     response = llm.invoke(full_messages)

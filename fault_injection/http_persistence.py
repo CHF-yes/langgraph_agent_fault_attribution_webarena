@@ -256,15 +256,31 @@ def classify_episode(payload, *, expected_variant=None, expected_window=None):
     elif variant == "persistent":
         if released not in (None, "window_expired"):
             errors.append("invalid persistent release reason")
-        if released == "window_expired":
-            events = [e for e in (payload.get("events") or []) if isinstance(e, dict)]
-            release_events = [e for e in events if e.get("event") == "release"]
-            if events and not release_events:
-                errors.append("missing release event")
-            steps = [e.get("proxy_step") for e in release_events]
-            if steps and any(not isinstance(step, int) or step <= (window_end or -1)
-                             for step in steps):
-                errors.append("window release before window end")
+
+    # 完整时序/状态一致性（只有证据文件带 events 时才可校验）：
+    #  * 窗口末步之后仍有事件，但 snapshot 仍显示未释放 → 非法；
+    #  * 存在 release 事件但 snapshot 未释放 → 非法；
+    #  * release 事件原因与 snapshot 不符、或发生在窗口内 → 非法；
+    #  * window_expired 却没有 release 事件 → 非法。
+    events = [e for e in (payload.get("events") or []) if isinstance(e, dict)]
+    if events:
+        release_events = [e for e in events if e.get("event") == "release"]
+        if isinstance(window_end, int):
+            late = [e for e in events
+                    if isinstance(e.get("proxy_step"), int) and e["proxy_step"] > window_end]
+            if late and released is None:
+                errors.append("events after window end without release state")
+        if release_events:
+            if released is None:
+                errors.append("release event with open snapshot")
+            for event in release_events:
+                if event.get("reason") != released:
+                    errors.append("release reason mismatch")
+                step = event.get("proxy_step")
+                if not isinstance(step, int) or (isinstance(window_end, int) and step <= window_end):
+                    errors.append("release event not after window end")
+        if released == "window_expired" and not release_events:
+            errors.append("window_expired without release event")
     if entries and (not snapshot.get("armed") or not isinstance(snapshot.get("armed_after_step"), int)
                     or first_step is None or first_step <= snapshot["armed_after_step"]):
         errors.append("injection before agent activation")

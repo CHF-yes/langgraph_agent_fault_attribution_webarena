@@ -377,3 +377,35 @@ def test_v2_untriggered_is_not_missing_and_release_semantics():
     early["events"] = [{"event": "release", "proxy_step": data3["snapshot"]["t0"],
                         "reason": "window_expired"}]
     assert not classify_episode(early)["valid"]
+
+
+def test_release_state_and_event_timeline_must_agree():
+    """用户给的两个反例：窗口后仍有事件但未释放；提前 release 事件但 snapshot 未释放。"""
+    p = proxy("persistent")
+    p.goto(PAGE)
+    p.arm_http_fault()
+    p.goto(PAGE)
+    for _ in range(5):
+        p.goto(PAGE)
+    base = evidence(p)
+    events = list(p.config.episode.events)
+    base["events"] = events
+    assert classify_episode(base)["valid"]
+
+    # 反例 1：窗口末步之后出现事件，但 snapshot 仍显示未释放
+    after = copy.deepcopy(base)
+    after["snapshot"]["released"] = None
+    after["events"] = events + [{"event": "skip", "proxy_step": base["snapshot"]["window_end"] + 1,
+                                 "action_uid": "late", "reason": "off_target"}]
+    verdict = classify_episode(after)
+    assert not verdict["valid"]
+    assert any("after window end" in e for e in verdict["errors"])
+
+    # 反例 2：存在移动过的 release 事件，但 snapshot 未释放
+    early = copy.deepcopy(base)
+    early["snapshot"]["released"] = None
+    early["events"] = events + [{"event": "release", "reason": "window_expired",
+                                 "proxy_step": base["snapshot"]["t0"]}]
+    verdict2 = classify_episode(early)
+    assert not verdict2["valid"]
+    assert any("release event with open snapshot" in e for e in verdict2["errors"])

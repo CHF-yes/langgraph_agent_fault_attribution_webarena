@@ -798,7 +798,7 @@ def run_benchmark(args):
                            if http_protocol else {}),
                     },
                     completed=completed, success=success,
-                    injection_count=len(log), error=None,
+                    injection_count=len(log), error=result.get("error"),
                     steps=steps, cap_exhausted=cap_exhausted,
                     llm_calls=result.get("llm_calls", 0),
                     time_sec=elapsed,
