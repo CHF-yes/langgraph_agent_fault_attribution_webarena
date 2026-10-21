@@ -1,10 +1,11 @@
 {
   "schema": "experiment_freeze/1",
   "experiment_id": "ep-http-service-v1",
-  "status": "candidate",
-  "approved_for_paid_runs": false,
+  "status": "frozen",
+  "approved_for_paid_runs": true,
+  "approval_scope": "one contemporaneous four-arm block on task 118 (react)",
   "paid_trials_so_far": 0,
-  "git_commit": "88fd76708f54b5abfc25ab6012b3a59a2130bd3c",
+  "git_commit": "c53f8b6ef27a1b2ff7f94bd1ec2b86ec34d17316",
   "git_branch": "codex/http-service-v1",
   "git_dirty": false,
   "target_policy_version": "endpoint-path-segment-v1",
@@ -38,6 +39,6 @@
     "observation-layer simulation; not a real network failure",
     "endpoint matching ignores the entire query string",
     "non-search pagination and other paths stay clean",
-    "freeze is a candidate; approval and a fresh directory are required before running"
+    "approval limited to one four-arm block; no automatic expansion"
   ]
 }
