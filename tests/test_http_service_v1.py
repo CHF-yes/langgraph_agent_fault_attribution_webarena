@@ -173,3 +173,131 @@ def test_service_probe_plan_is_four_arms_and_does_not_execute(tmp_path):
     assert all("--fault-target-endpoint" in c for c in plan["commands"])
     assert all("--fault-injection-step" not in c for c in plan["commands"])
     assert not (tmp_path / "ep").exists()        # 计划模式不写文件、不启动
+
+
+# ==========================================================================
+# 冻结执行门槛：未批准/不符必须在启动子进程之前停止
+# ==========================================================================
+
+def _freeze_payload(tmp_path, **overrides):
+    from standard_agent.stage_c_pipeline import (EVALUATOR_ADAPTER_VERSION,
+                                                 current_evaluator_version)
+    import os, hashlib
+    dataset = os.getenv("WEBARENA_DATASET")
+    sha = hashlib.sha256(Path(dataset).read_bytes()).hexdigest() if dataset else None
+    payload = {
+        "experiment_id": EXPERIMENT_ID, "status": "frozen",
+        "approved_for_paid_runs": True,
+        "target_policy_version": "endpoint-path-segment-v1",
+        "endpoint": {"scheme": "http", "host": "localhost", "port": 7770,
+                     "path": "/catalogsearch/result"},
+        "window_steps": 10, "max_steps": 20, "fault_intensity": "high",
+        "fault_types": ["web_http_error"],
+        "evaluator_adapter_version": EVALUATOR_ADAPTER_VERSION,
+        "evaluator_version": current_evaluator_version(),
+        "dataset_sha256": sha, "git_commit": "a" * 40,
+    }
+    payload.update(overrides)
+    path = tmp_path / "freeze.json"
+    path.write_text(json.dumps(payload), encoding="utf-8")
+    return path
+
+
+def test_freeze_gate_rejects_unapproved_and_mismatches(tmp_path, monkeypatch):
+    import scripts.http_service_probe as probe
+
+    class Diff:
+        returncode = 0
+        stdout = "docs/ep_http_service_v1_frozen.json\n"
+
+    monkeypatch.setattr(probe, "git_status",
+                        lambda root: {"head": "a" * 40, "dirty": False, "branch": "b"})
+    monkeypatch.setattr(probe.subprocess, "run", lambda *a, **k: Diff())
+    args = probe.build_parser().parse_args([
+        "--experiment-root", str(tmp_path / "ep"), "--endpoint", ENDPOINT,
+        "--task-id", "118", "--fault-window-steps", "10", "--max-steps", "20",
+        "--freeze", str(_freeze_payload(tmp_path, approved_for_paid_runs=False))])
+    endpoint = ServiceEndpoint.from_url(ENDPOINT)
+    ok, note = probe.check_freeze(args, endpoint)
+    assert ok is False and "未批准" in note
+
+    for overrides, keyword in (
+            ({"status": "candidate"}, "不是 frozen"),
+            ({"endpoint": {"scheme": "http", "host": "localhost", "port": 7770,
+                           "path": "/other"}}, "endpoint"),
+            ({"window_steps": 5}, "window_steps"),
+            ({"max_steps": 30}, "max_steps"),
+            ({"dataset_sha256": "0" * 64}, "数据集")):
+        args.freeze = str(_freeze_payload(tmp_path, **overrides))
+        ok, note = probe.check_freeze(args, endpoint)
+        assert ok is False and keyword in note, (overrides, note)
+
+    # git diff 失败（例如冻结 commit 不存在）→ 拒绝，而不是当作通过
+    class BadDiff:
+        returncode = 1
+        stdout = ""
+
+    monkeypatch.setattr(probe.subprocess, "run", lambda *a, **k: BadDiff())
+    args.freeze = str(_freeze_payload(tmp_path, git_commit="b" * 40))
+    ok, note = probe.check_freeze(args, endpoint)
+    assert ok is False and "git diff 失败" in note
+
+    # 干净且完全匹配 → 通过
+    monkeypatch.setattr(probe.subprocess, "run", lambda *a, **k: Diff())
+    args.freeze = str(_freeze_payload(tmp_path))
+    assert probe.check_freeze(args, endpoint)[0] is True
+
+
+def test_execute_stops_before_spawning_when_freeze_is_not_approved(tmp_path, monkeypatch):
+    import scripts.http_service_probe as probe
+    spawned = []
+
+    class Boom:
+        def __init__(self, *a, **k):
+            spawned.append(True)
+            raise AssertionError("must not spawn a trial process")
+
+    monkeypatch.setattr(probe.subprocess, "Popen", Boom)
+    freeze = _freeze_payload(tmp_path, approved_for_paid_runs=False, status="candidate")
+    default = dict(root=str(tmp_path / "ep"), endpoint=ENDPOINT, task="118",
+                   arch="react", freeze=str(freeze), execute=True)
+    monkeypatch.setattr(sys, "argv", [
+        "http_service_probe.py", "--experiment-root", default["root"],
+        "--endpoint", default["endpoint"], "--task-id", default["task"], "--architecture",
+        default["arch"], "--fault-window-steps", "10", "--max-steps", "20",
+        "--freeze", default["freeze"], "--execute"])
+    rc = probe.main()
+    assert rc == 2
+    assert spawned == []                       # 未启动任何子进程
+
+
+def test_execute_spawns_only_with_a_valid_freeze(tmp_path, monkeypatch):
+    import scripts.http_service_probe as probe
+    spawned = []
+
+    class FakeProc:
+        def __init__(self, command, cwd=None, stdout=None, stderr=None,
+                     text=None, start_new_session=None):
+            spawned.append(command)
+            self.pid = 1
+            self.returncode = 0
+
+        def wait(self, timeout=None): return 0
+        def poll(self): return 0
+
+    class Diff:
+        returncode = 0
+        stdout = "docs/ep_http_service_v1_frozen.json\n"
+
+    monkeypatch.setattr(probe, "git_status",
+                        lambda root: {"head": "a" * 40, "dirty": False, "branch": "b"})
+    monkeypatch.setattr(probe.subprocess, "run", lambda *a, **k: Diff())
+    monkeypatch.setattr(probe.subprocess, "Popen", FakeProc)
+    freeze = _freeze_payload(tmp_path)
+    monkeypatch.setattr(sys, "argv", [
+        "http_service_probe.py", "--experiment-root", str(tmp_path / "ep"),
+        "--endpoint", ENDPOINT, "--task-id", "118", "--architecture", "react",
+        "--fault-window-steps", "10", "--max-steps", "20",
+        "--freeze", str(freeze), "--execute"])
+    probe.main()
+    assert spawned                            # 通过门槛后才启动

@@ -12,6 +12,8 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
+import subprocess
 import sys
 from pathlib import Path
 
@@ -27,6 +29,11 @@ from run_baseline import load_tasks, resolve_start_url
 from scripts.ep_run_schedule import _has_run_artifacts, job_key, log_dir, run_planned
 from scripts.run_fault_matrix import command_for
 from standard_agent.ep_schedule import build_schedule
+from standard_agent.stage_c_pipeline import (
+    EVALUATOR_ADAPTER_VERSION, current_evaluator_version,
+)
+from standard_agent.trial_metadata import git_status
+from fault_injection.http_service import TARGET_POLICY_VERSION
 
 
 def build_parser():
@@ -42,8 +49,76 @@ def build_parser():
     parser.add_argument("--fault-seed", type=int, default=1)
     parser.add_argument("--schedule-seed", type=int, default=20261021)
     parser.add_argument("--job-timeout-minutes", type=int, default=45)
+    parser.add_argument("--freeze", default=str(ROOT / "docs/ep_http_service_v1_frozen.json"),
+                        help="候选/正式冻结清单；--execute 必须通过其校验")
     parser.add_argument("--execute", action="store_true")
     return parser
+
+
+def _sha256(path: str | None):
+    try:
+        return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+    except (OSError, TypeError):
+        return None
+
+
+def _record_only(path: str) -> bool:
+    return (path == "docs/ep_http_service_v1_frozen.json"
+            or (path.startswith("experiments/ep_http_service_v1/")
+                and (path.endswith(".json") or path.endswith(".md"))))
+
+
+def check_freeze(args, endpoint) -> tuple[bool, str]:
+    """执行前冻结校验：未批准、版本/参数/数据不符都必须在起子进程之前拒绝。"""
+    freeze_path = Path(args.freeze)
+    if not freeze_path.exists():
+        return False, f"缺少冻结清单 {freeze_path}"
+    frozen = json.loads(freeze_path.read_text(encoding="utf-8"))
+    if frozen.get("experiment_id") != EXPERIMENT_ID:
+        return False, "冻结清单 experiment_id 不符"
+    if frozen.get("status") != "frozen":
+        return False, f"冻结清单状态为 {frozen.get('status')!r}，不是 frozen"
+    if frozen.get("approved_for_paid_runs") is not True:
+        return False, "冻结清单未批准付费运行（approved_for_paid_runs != true）"
+    if frozen.get("target_policy_version") != TARGET_POLICY_VERSION:
+        return False, "目标策略版本不符"
+    if (frozen.get("endpoint") or {}).get("scheme") != endpoint.scheme \
+            or (frozen.get("endpoint") or {}).get("host") != endpoint.host \
+            or (frozen.get("endpoint") or {}).get("port") != endpoint.port \
+            or (frozen.get("endpoint") or {}).get("path") != endpoint.path:
+        return False, "endpoint 与冻结清单不符"
+    if frozen.get("window_steps") != args.fault_window_steps:
+        return False, f"window_steps 不符（{args.fault_window_steps} != {frozen.get('window_steps')}）"
+    if frozen.get("max_steps") != args.max_steps:
+        return False, f"max_steps 不符（{args.max_steps} != {frozen.get('max_steps')}）"
+    if frozen.get("fault_intensity") != "high":
+        return False, "fault_intensity 与协议默认不符"
+    if frozen.get("fault_types") != ["web_http_error"]:
+        return False, "fault_types 与冻结清单不符"
+    if frozen.get("evaluator_adapter_version") != EVALUATOR_ADAPTER_VERSION:
+        return False, "evaluator adapter 版本不符"
+    current_eval = current_evaluator_version()
+    frozen_eval = frozen.get("evaluator_version") or {}
+    if frozen_eval.get("package_sha256") != current_eval.get("package_sha256"):
+        return False, "evaluator 源码指纹不符"
+    dataset = os.getenv("WEBARENA_DATASET")
+    if frozen.get("dataset_sha256") and _sha256(dataset) != frozen.get("dataset_sha256"):
+        return False, "数据集哈希不符（或无法读取数据集）"
+
+    status = git_status(ROOT)
+    if status.get("dirty") is not False:
+        return False, f"工作区状态不可确认或不干净: dirty={status.get('dirty')!r}"
+    frozen_commit = str(frozen.get("git_commit") or "")
+    if not frozen_commit:
+        return False, "冻结清单缺少 git_commit"
+    diff = subprocess.run(["git", "diff", "--name-only", frozen_commit, "HEAD"],
+                          cwd=ROOT, capture_output=True, text=True)
+    if diff.returncode != 0:
+        return False, f"git diff 失败（rc={diff.returncode}）"
+    unexpected = [path for path in diff.stdout.split() if not _record_only(path)]
+    if unexpected:
+        return False, f"冻结后代码有改动: {unexpected[:3]}"
+    return True, f"frozen@{frozen_commit[:12]}"
 
 
 def build_plan(args):
@@ -156,6 +231,10 @@ def main():
     if not args.execute:
         return 0
     root = Path(args.experiment_root)
+    ok, freeze_note = check_freeze(args, endpoint)
+    if not ok:
+        print(f"error: 冻结校验未通过：{freeze_note}", file=sys.stderr)
+        return 2
     if _has_run_artifacts(root):
         print("error: output directory already contains run artifacts; use a fresh directory",
               file=sys.stderr)
@@ -164,7 +243,7 @@ def main():
     (root / "schedule.json").write_text(json.dumps(schedule, ensure_ascii=False, indent=2) + "\n",
                                        encoding="utf-8")
     args.resume = False
-    return run_planned(args, planned, "development_probe_unfrozen", EXPERIMENT_ID,
+    return run_planned(args, planned, freeze_note, EXPERIMENT_ID,
                        verify_trial=validate_trial_artifacts)
 
 
