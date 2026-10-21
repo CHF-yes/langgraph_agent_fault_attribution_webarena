@@ -193,6 +193,10 @@ def _freeze_payload(tmp_path, **overrides):
                      "path": "/catalogsearch/result"},
         "window_steps": 10, "max_steps": 20, "fault_intensity": "high",
         "fault_types": ["web_http_error"],
+        "scope": {"task_id": 118, "architecture": "react",
+                  "model_profile": "deepseek_v41_flash", "fault_seed": 1,
+                  "variants": ["single", "persistent"],
+                  "conditions": ["control", "fault"], "blocks": 1, "cells": 4},
         "evaluator_adapter_version": EVALUATOR_ADAPTER_VERSION,
         "evaluator_version": current_evaluator_version(),
         "dataset_sha256": sha, "git_commit": "a" * 40,
@@ -301,3 +305,52 @@ def test_execute_spawns_only_with_a_valid_freeze(tmp_path, monkeypatch):
         "--freeze", str(freeze), "--execute"])
     probe.main()
     assert spawned                            # 通过门槛后才启动
+
+
+def _fake_plan(args, cells=None):
+    cells = cells or [("single", "control"), ("single", "fault"),
+                      ("persistent", "control"), ("persistent", "fault")]
+    return [{"job": {"variant": v, "condition": c, "task_id": args.task_id,
+                     "model_profile": args.model_profile,
+                     "architecture": args.architecture,
+                     "seed": args.fault_seed, "fault_type": "web_http_error"}}
+            for v, c in cells]
+
+
+def test_freeze_gate_enforces_the_approved_run_scope(tmp_path, monkeypatch):
+    import scripts.http_service_probe as probe
+
+    class Diff:
+        returncode = 0
+        stdout = "docs/ep_http_service_v1_frozen.json\n"
+
+    monkeypatch.setattr(probe, "git_status",
+                        lambda root: {"head": "a" * 40, "dirty": False, "branch": "b"})
+    monkeypatch.setattr(probe.subprocess, "run", lambda *a, **k: Diff())
+    base = ["--experiment-root", str(tmp_path / "ep"), "--endpoint", ENDPOINT,
+            "--task-id", "118", "--architecture", "react",
+            "--model-profile", "deepseek_v41_flash", "--fault-seed", "1",
+            "--fault-window-steps", "10", "--max-steps", "20"]
+    args = probe.build_parser().parse_args(base + ["--freeze", str(_freeze_payload(tmp_path))])
+    endpoint = ServiceEndpoint.from_url(ENDPOINT)
+    assert probe.check_freeze(args, endpoint, _fake_plan(args))[0] is True
+
+    # 任务 / 架构 / 模型 / seed 任一偏离 → 拒绝
+    for override, keyword in (("--task-id", "task_id"), ("--architecture", "architecture"),
+                              ("--model-profile", "model_profile"), ("--fault-seed", "fault_seed")):
+        changed = list(base)
+        idx = changed.index(override)
+        changed[idx + 1] = {"--task-id": "24", "--architecture": "plan_execute",
+                            "--model-profile": "qwen38_flash", "--fault-seed": "99"}[override]
+        a = probe.build_parser().parse_args(
+            changed + ["--freeze", str(_freeze_payload(tmp_path))])
+        ok, note = probe.check_freeze(a, endpoint, _fake_plan(a))
+        assert ok is False and keyword in note, (override, note)
+
+    # 计划缺少或多出一个臂 → 拒绝
+    for cells in ([("single", "control"), ("single", "fault"), ("persistent", "control")],
+                  _fake_plan(args) and [("single", "control"), ("single", "fault"),
+                                        ("persistent", "control"), ("persistent", "fault"),
+                                        ("single", "control")]):
+        ok, note = probe.check_freeze(args, endpoint, _fake_plan(args, cells))
+        assert ok is False and "四臂组合" in note

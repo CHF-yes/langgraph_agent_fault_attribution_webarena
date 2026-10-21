@@ -68,7 +68,15 @@ def _record_only(path: str) -> bool:
                 and (path.endswith(".json") or path.endswith(".md"))))
 
 
-def check_freeze(args, endpoint) -> tuple[bool, str]:
+def _scope_of(frozen: dict) -> dict:
+    return frozen.get("scope") or {}
+
+
+def _plan_cells(planned) -> list[tuple[str, str]]:
+    return [(item["job"]["variant"], item["job"]["condition"]) for item in planned]
+
+
+def check_freeze(args, endpoint, planned=None) -> tuple[bool, str]:
     """执行前冻结校验：未批准、版本/参数/数据不符都必须在起子进程之前拒绝。"""
     freeze_path = Path(args.freeze)
     if not freeze_path.exists():
@@ -95,6 +103,34 @@ def check_freeze(args, endpoint) -> tuple[bool, str]:
         return False, "fault_intensity 与协议默认不符"
     if frozen.get("fault_types") != ["web_http_error"]:
         return False, "fault_types 与冻结清单不符"
+
+    # 批准的运行范围（不是文字说明）：task / architecture / model / seed / 四臂组合。
+    scope = _scope_of(frozen)
+    expected_scope = {"task_id": args.task_id, "architecture": args.architecture,
+                      "model_profile": args.model_profile, "fault_seed": args.fault_seed}
+    for key, actual in expected_scope.items():
+        if scope.get(key) != actual:
+            return False, f"运行范围 {key}={actual!r} 与冻结清单 {scope.get(key)!r} 不符"
+    approved_variants = list(scope.get("variants") or [])
+    approved_conditions = list(scope.get("conditions") or [])
+    if set(approved_variants) != {"single", "persistent"} \
+            or set(approved_conditions) != {"control", "fault"}:
+        return False, "冻结清单的四臂组合必须是 single/persistent × control/fault"
+    if scope.get("blocks") not in (None, 1) or scope.get("cells") not in (None, 4):
+        return False, "冻结清单只批准一个四臂块"
+    if planned is not None:
+        cells = _plan_cells(planned)
+        expected_cells = {(v, c) for v in approved_variants for c in approved_conditions}
+        if len(planned) != 4 or set(cells) != expected_cells or len(cells) != len(set(cells)):
+            return False, f"实际计划不是已批准的四臂组合: {sorted(cells)}"
+        for item in planned:
+            job = item["job"]
+            if (job.get("task_id") != args.task_id
+                    or job.get("model_profile") != args.model_profile
+                    or job.get("architecture") != args.architecture
+                    or job.get("seed") != args.fault_seed
+                    or job.get("fault_type") != "web_http_error"):
+                return False, f"计划中的 job 超出批准范围: {job}"
     if frozen.get("evaluator_adapter_version") != EVALUATOR_ADAPTER_VERSION:
         return False, "evaluator adapter 版本不符"
     current_eval = current_evaluator_version()
@@ -231,7 +267,7 @@ def main():
     if not args.execute:
         return 0
     root = Path(args.experiment_root)
-    ok, freeze_note = check_freeze(args, endpoint)
+    ok, freeze_note = check_freeze(args, endpoint, planned)
     if not ok:
         print(f"error: 冻结校验未通过：{freeze_note}", file=sys.stderr)
         return 2
