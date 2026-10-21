@@ -1,0 +1,134 @@
+{
+  "study_id": "agent-stress-v1-proposal",
+  "status": "proposal_not_frozen",
+  "created": "2026-10-21",
+  "approved_for_paid_runs": false,
+  "implemented": false,
+  "paid_trials_so_far": 0,
+  "scope": {
+    "model_profiles": [
+      "deepseek_v41_flash"
+    ],
+    "architectures": [
+      "react",
+      "plan_execute"
+    ],
+    "max_steps": 20,
+    "independent_repetitions": 3,
+    "primary_unit": "intent_template_cluster",
+    "final_tasks": 24,
+    "final_templates": 12
+  },
+  "fault_boundary": "synthetic_agent_observation; backend/evaluator truth unchanged; all model-visible channels must agree",
+  "conditions": [
+    {
+      "id": "clean",
+      "family": "clean",
+      "duration": null
+    },
+    {
+      "id": "H_single",
+      "family": "critical_resource_unavailable",
+      "duration": "single"
+    },
+    {
+      "id": "H_window10",
+      "family": "critical_resource_unavailable",
+      "duration": "window10"
+    },
+    {
+      "id": "H_episode",
+      "family": "critical_resource_unavailable",
+      "duration": "episode"
+    },
+    {
+      "id": "C_single",
+      "family": "critical_fact_corruption",
+      "duration": "single"
+    },
+    {
+      "id": "C_window10",
+      "family": "critical_fact_corruption",
+      "duration": "window10"
+    },
+    {
+      "id": "C_episode",
+      "family": "critical_fact_corruption",
+      "duration": "episode"
+    },
+    {
+      "id": "HC_episode",
+      "family": "critical_resource_unavailable+critical_fact_corruption",
+      "duration": "episode",
+      "requires_joint_recovery_path_validation": true
+    }
+  ],
+  "enrollment": {
+    "candidate_tasks": 58,
+    "development_candidates": 18,
+    "holdout_candidates": 40,
+    "development_templates": 6,
+    "holdout_candidate_templates": 14,
+    "screening_repetitions_per_architecture": 3,
+    "minimum_clean_successes_per_architecture": 2,
+    "development_target_tasks": 12,
+    "holdout_target_tasks": 24,
+    "holdout_target_templates": 12,
+    "requires_budget_feasible_recovery_paths": true,
+    "minimum_sites": 3,
+    "no_fault_outcome_based_holdout_selection": true
+  },
+  "stages": [
+    {
+      "id": "screening",
+      "tasks": 58,
+      "architectures": 2,
+      "repetitions": 3,
+      "conditions": 1,
+      "max_steps": 20,
+      "planned_trials": 348
+    },
+    {
+      "id": "development",
+      "tasks": 12,
+      "architectures": 2,
+      "repetitions": 3,
+      "conditions": 6,
+      "max_steps": 20,
+      "planned_trials": 432
+    },
+    {
+      "id": "heldout_primary",
+      "tasks": 24,
+      "architectures": 2,
+      "repetitions": 3,
+      "conditions": 8,
+      "max_steps": 20,
+      "planned_trials": 1152
+    },
+    {
+      "id": "budget_validation",
+      "tasks": 8,
+      "architectures": 2,
+      "repetitions": 3,
+      "conditions": 4,
+      "condition_ids": [
+        "clean",
+        "H_episode",
+        "C_episode",
+        "HC_episode"
+      ],
+      "max_steps": 40,
+      "planned_trials": 192
+    }
+  ],
+  "planned_total_trials": 2124,
+  "runtime_contract": "Proposal only; condition IDs are not CLI options and have not been implemented.",
+  "candidate_tasks_file": "故障压力测试候选任务.json",
+  "notes": [
+    "Shared contemporaneous control is one independent trial, not seven duplicated control observations.",
+    "Development may optimize failure rate; final heldout rules and sample are fixed before fault outcomes.",
+    "Candidate enrollment and recovery paths are not yet validated; shortages require prospective pool amendments.",
+    "No second model, V4 Pro, verifier architecture, or additional development round included in stated count."
+  ]
+}
