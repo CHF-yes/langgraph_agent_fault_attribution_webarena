@@ -51,7 +51,8 @@
         "llm_calls": 12,
         "prompt_tokens": 64191,
         "completion_tokens": 1446
-      }
+      },
+      "comparison_caveat": "all four arms had zero injections; the single 1/2 vs persistent 2/2 difference is independent-run variation and must not be read as a persistence effect"
     },
     {
       "name": "task118_mechanism_case",
