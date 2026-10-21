@@ -46,7 +46,10 @@ def main() -> int:
             "control_arm_zero_injections": True,
             "evidence_hash_and_release_timeline": True,
             "both_architectures_same_retry_failure_path": True,
+            "freeze_gate_blocks_before_spawn_when_unapproved_or_mismatched": True,
         },
+        "freeze_manifest": "docs/ep_http_service_v1_frozen.json",
+        "freeze_approval_scope": "one four-arm block on task 118 (react)",
         "real_run_coverage": "not_started",
         "real_run_items_to_mark_in_the_four_arm_block": [
             "first qualified navigation actually matches the endpoint",

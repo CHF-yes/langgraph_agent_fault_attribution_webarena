@@ -7,7 +7,7 @@
     "tests/test_ep_acceptance.py"
   ],
   "returncode": 0,
-  "summary": "21 passed in 4.83s",
+  "summary": "24 passed in 4.87s",
   "passed": true,
   "code_behaviour_covered": {
     "scheme_host_port_exact": true,
@@ -18,8 +18,11 @@
     "single_release_and_window_release": true,
     "control_arm_zero_injections": true,
     "evidence_hash_and_release_timeline": true,
-    "both_architectures_same_retry_failure_path": true
+    "both_architectures_same_retry_failure_path": true,
+    "freeze_gate_blocks_before_spawn_when_unapproved_or_mismatched": true
   },
+  "freeze_manifest": "docs/ep_http_service_v1_frozen.json",
+  "freeze_approval_scope": "one four-arm block on task 118 (react)",
   "real_run_coverage": "not_started",
   "real_run_items_to_mark_in_the_four_arm_block": [
     "first qualified navigation actually matches the endpoint",
