@@ -126,6 +126,9 @@ Examples:
                              help="E-P active window length in proxy execution steps (default: 5)")
     fault_group.add_argument("--fault-target-url", default=None,
                              help="HTTP v2 only: exact resource URL filter (fragment ignored)")
+    fault_group.add_argument("--fault-target-endpoint", default=None,
+                             help="HTTP service v1 only: endpoint URL, e.g. "
+                                  "http://localhost:7770/catalogsearch/result/ (query ignored)")
     benchmark_group = parser.add_argument_group("benchmark outputs")
     benchmark_group.add_argument("--webarena-output-dir", default=None,
                                  help="Write per-trial agent_response.json, network.har, and evaluator result")
@@ -179,6 +182,15 @@ Examples:
         parser.error("ep-http-persistence-v2 currently requires --benchmark")
     if args.experiment_id == "ep-http-persistence-v2" and args.fault_type != "web_http_error":
         parser.error("ep-http-persistence-v2 requires --fault-type web_http_error")
+    if args.experiment_id == "ep-http-service-v1":
+        if not args.benchmark:
+            parser.error("ep-http-service-v1 requires --benchmark")
+        if args.fault_type != "web_http_error":
+            parser.error("ep-http-service-v1 requires --fault-type web_http_error")
+        if not args.fault_target_endpoint:
+            parser.error("ep-http-service-v1 requires --fault-target-endpoint")
+        if args.fault_injection_step is not None:
+            parser.error("ep-http-service-v1 is event-triggered; omit --fault-injection-step")
 
     # --list-sites
     if args.list_sites:
@@ -706,7 +718,7 @@ def run_benchmark(args):
             # E-P：把 episode 的结构化证据单独打一行，供矩阵侧按 variant 校验
             # （同目标、窗口、每 action 一次、剂量），而不是只看总次数。
             if getattr(fault_config, "experiment_id", "stage-c") in {
-                    "ep-persistence-v1", "ep-http-persistence-v2"}:
+                    "ep-persistence-v1", "ep-http-persistence-v2", "ep-http-service-v1"}:
                 import json as _json
                 _episode = fault_config.episode
                 print("        fault_exposures=" + _json.dumps(
@@ -720,7 +732,8 @@ def run_benchmark(args):
                     "snapshot": _episode.snapshot(),
                 }
                 print("        fault_episode=" + _json.dumps(episode_payload, ensure_ascii=False))
-                if fault_config.experiment_id == "ep-http-persistence-v2" and output_dir:
+                if fault_config.experiment_id in {"ep-http-persistence-v2",
+                                                  "ep-http-service-v1"} and output_dir:
                     from pathlib import Path
                     Path(output_dir, "fault_evidence.json").write_text(_json.dumps({
                         **episode_payload, "events": _episode.events,
@@ -764,6 +777,10 @@ def run_benchmark(args):
                 if fault_config.experiment_id == "ep-http-persistence-v2":
                     from fault_injection.http_persistence import protocol_metadata
                     http_protocol = protocol_metadata(fault_config)
+                elif fault_config.experiment_id == "ep-http-service-v1":
+                    from fault_injection.http_service import protocol_metadata
+                    http_protocol = protocol_metadata(fault_config)
+                if http_protocol:
                     import hashlib
                     http_protocol["fault_evidence_sha256"] = hashlib.sha256(
                         Path(output_dir, "fault_evidence.json").read_bytes()).hexdigest()
@@ -853,7 +870,12 @@ def run_benchmark(args):
             experiment_id=getattr(args, "experiment_id", "stage-c"),
             fault_variant=getattr(args, "fault_variant", "single"),
             fault_window_steps=getattr(args, "fault_window_steps", 5),
-            fault_target_url=getattr(args, "fault_target_url", None)))
+            fault_target_url=getattr(args, "fault_target_url", None),
+            fault_target_endpoint=(
+                __import__("fault_injection.http_service", fromlist=["x"]).ServiceEndpoint
+                .from_url(args.fault_target_endpoint).spec()
+                if getattr(args, "experiment_id", None) == "ep-http-service-v1"
+                and getattr(args, "fault_target_endpoint", None) else None)))
 
     # 实验组
     exp_label = f"fault_{args.fault_intensity}"
@@ -874,6 +896,8 @@ def run_benchmark(args):
         step = exp_config.injection_step
         if exp_config.experiment_id == "ep-http-persistence-v2":
             print("   注入触发: 首次合格 Agent 导航；初始导航不注入\n")
+        elif exp_config.experiment_id == "ep-http-service-v1":
+            print("   注入触发: 首次命中搜索端点的合格导航（query 不参与匹配）\n")
         else:
             print(f"   注入步: {step} ({injection_step_units(args.fault_type)}), "
                   f"口径={injection_step_mode(args.fault_injection_step)}\n")
@@ -896,6 +920,18 @@ def _build_fault_config(args) -> "FaultConfig":
         # contract (agent_param_error -> 1st parameter action, everything else
         # -> 2nd execution step). Stage E is the stage that sweeps the step and
         # passes an explicit value; the matrix records which mode was used.
+        if getattr(args, "experiment_id", "stage-c") == "ep-http-service-v1":
+            from fault_injection.http_service import ServiceEndpoint
+            if not args.fault_target_endpoint:
+                raise ValueError("HTTP service v1 requires --fault-target-endpoint")
+            endpoint = ServiceEndpoint.from_url(args.fault_target_endpoint).spec()
+            return FaultConfig.single_fault(
+                args.fault_type, intensity=args.fault_intensity, seed=args.fault_seed,
+                injection_step=None,
+                experiment_id="ep-http-service-v1",
+                fault_variant=getattr(args, "fault_variant", "single"),
+                fault_window_steps=getattr(args, "fault_window_steps", 10),
+                fault_target_endpoint=endpoint)
         if getattr(args, "experiment_id", "stage-c") == "ep-http-persistence-v2":
             if args.fault_injection_step is not None:
                 raise ValueError("HTTP v2 is event-triggered; omit --fault-injection-step")

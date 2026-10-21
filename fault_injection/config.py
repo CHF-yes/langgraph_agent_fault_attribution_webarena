@@ -167,11 +167,15 @@ class FaultConfig:
     enabled: bool = True             # 总开关
     injection_step: Optional[int] = None  # 固定 action step；None 保持概率模式
 
+    # ---- 服务级协议端点（仅 ep-http-service-v1）----
+    endpoint: Optional[object] = field(default=None, repr=False)
+
     # ---- E-P 实验身份（Stage C 默认值保证旧行为不变）----
     experiment_id: str = EXPERIMENT_ID_STAGE_C   # "stage-c" | "ep-persistence-v1"
     fault_variant: str = "single"                # "single" | "repeat3"
     fault_window_steps: int = DEFAULT_WINDOW_STEPS
     fault_target_url: Optional[str] = None       # v2: optional exact resource filter
+    fault_target_endpoint: Optional[dict] = None # service v1: scheme/host/port/path
 
     # ---- ① Web底层故障 ----
     web_timeout: bool = False        # 接口超时（动作前注入延迟）
@@ -206,7 +210,12 @@ class FaultConfig:
                 "Expected one of: off, low, medium, high"
             )
         from fault_injection.http_persistence import EXPERIMENT_ID as HTTP_V2, VARIANTS
-        variants = VARIANTS if self.experiment_id == HTTP_V2 else FAULT_VARIANTS
+        from fault_injection.http_service import EXPERIMENT_ID as SERVICE_ID
+        from fault_injection.http_service import VARIANTS as SERVICE_VARIANTS
+        if self.experiment_id in (HTTP_V2, SERVICE_ID):
+            variants = SERVICE_VARIANTS
+        else:
+            variants = FAULT_VARIANTS
         if self.fault_variant not in variants:
             raise ValueError(
                 f"Unknown fault variant '{self.fault_variant}'. "
@@ -223,7 +232,20 @@ class FaultConfig:
         self._parameter_action_count = 0
         self._parameter_action_index = 0
         self._deterministic_injected = False
-        if self.experiment_id == HTTP_V2:
+        if self.experiment_id == SERVICE_ID:
+            from fault_injection.http_service import ServiceEndpoint, ServiceEpisode
+            if self.injection_step is not None:
+                raise ValueError("HTTP service v1 is event-triggered; do not set injection_step")
+            if set(self.enabled_faults) - {"web_http_error"}:
+                raise ValueError("HTTP service v1 only supports web_http_error")
+            if self.fault_target_url is not None:
+                raise ValueError("fault_target_url is not supported by HTTP service v1")
+            if not self.fault_target_endpoint:
+                raise ValueError("HTTP service v1 requires fault_target_endpoint")
+            self.endpoint = ServiceEndpoint.from_spec(self.fault_target_endpoint)
+            self._episode = ServiceEpisode(self.fault_variant,
+                                          window_steps=self.fault_window_steps)
+        elif self.experiment_id == HTTP_V2:
             from fault_injection.http_persistence import HttpResourceEpisode, resource_url
             if self.injection_step is not None:
                 raise ValueError("HTTP v2 is event-triggered; do not set injection_step")
@@ -293,7 +315,7 @@ class FaultConfig:
     @property
     def fault_layer(self) -> str:
         """Classify the configured faults by their experimental injection layer."""
-        if self.experiment_id == "ep-http-persistence-v2":
+        if self.experiment_id in {"ep-http-persistence-v2", "ep-http-service-v1"}:
             return "observation" if self.enabled_faults else "none"
         layers = {
             "web_timeout": "environment",
@@ -377,7 +399,8 @@ class FaultConfig:
             "agent_state_misjudge": "observation",
             "agent_param_error": "action",
         }.get(fault_name, "unknown")
-        if self.experiment_id == "ep-http-persistence-v2" and fault_name == "web_http_error":
+        if self.experiment_id in {"ep-http-persistence-v2", "ep-http-service-v1"} \
+                and fault_name == "web_http_error":
             layer = "observation"
         entry = {
             "fault": fault_name,
@@ -401,9 +424,13 @@ class FaultConfig:
         self._parameter_action_index = 0
         self._deterministic_injected = False
         from fault_injection.http_persistence import EXPERIMENT_ID as HTTP_V2, HttpResourceEpisode
+        from fault_injection.http_service import EXPERIMENT_ID as SERVICE_ID, ServiceEpisode
         if self.experiment_id == HTTP_V2:
             self._episode = HttpResourceEpisode(self.fault_variant,
                                                window_steps=self.fault_window_steps)
+        elif self.experiment_id == SERVICE_ID:
+            self._episode = ServiceEpisode(self.fault_variant,
+                                           window_steps=self.fault_window_steps)
 
     def set_execution_step(self, step: int) -> None:
         """Attach the current Agent action step to subsequent fault events."""
@@ -415,7 +442,8 @@ class FaultConfig:
                      experiment_id: str = EXPERIMENT_ID_STAGE_C,
                      fault_variant: str = "single",
                      fault_window_steps: int = DEFAULT_WINDOW_STEPS,
-                     fault_target_url: Optional[str] = None) -> "FaultConfig":
+                     fault_target_url: Optional[str] = None,
+                     fault_target_endpoint: Optional[dict] = None) -> "FaultConfig":
         """Build a config with exactly one enabled fault for ablation studies."""
         valid_names = {
             "web_timeout", "web_http_error", "web_dom_missing", "web_popup_block",
@@ -427,6 +455,7 @@ class FaultConfig:
         return cls(intensity=intensity, seed=seed, injection_step=injection_step,
                    experiment_id=experiment_id, fault_variant=fault_variant,
                    fault_window_steps=fault_window_steps, fault_target_url=fault_target_url,
+                   fault_target_endpoint=fault_target_endpoint,
                    **{fault_name: True})
 
     # ---- 工厂方法 ----

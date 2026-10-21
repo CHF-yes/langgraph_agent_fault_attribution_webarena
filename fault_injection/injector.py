@@ -72,9 +72,13 @@ class FaultInjector:
         self._action_start_url = None
         self._action_name = None
         self._http_resource_engine = None
+        self._service_engine = None
         if config.experiment_id == "ep-http-persistence-v2":
             from fault_injection.http_persistence import HttpPersistenceEngine
             self._http_resource_engine = HttpPersistenceEngine(config)
+        elif config.experiment_id == "ep-http-service-v1":
+            from fault_injection.http_service import ServicePersistenceEngine
+            self._service_engine = ServicePersistenceEngine(config)
         # E-P 持久化实验走 episode 引擎；Stage C（experiment_id=stage-c）保持原路径。
         self._engine = None
         if getattr(config, "experiment_id", "stage-c") == "ep-persistence-v1":
@@ -92,11 +96,15 @@ class FaultInjector:
         self._action_start_url = self._raw_url
         if self._http_resource_engine is not None:
             self.config.episode.note_step(self._step_counter)
+        if self._service_engine is not None:
+            self.config.episode.note_step(self._step_counter)
 
     def arm_http_fault(self):
         """Call after clean bootstrap navigation, immediately before agent execution."""
         if self._http_resource_engine is not None:
             self._http_resource_engine.arm(self._step_counter)
+        if self._service_engine is not None:
+            self._service_engine.arm(self._step_counter)
 
     def _param_error(self, action: str, *, element_id, text=None):
         """参数动作故障：E-P 走引擎（同目标重放），Stage C 走原实现。"""
@@ -260,6 +268,16 @@ class FaultInjector:
         E-P：观察层故障交给 episode 引擎（同目标、限窗口重复）；Stage C 保持原链条。
         """
         self._raw_url = obs.get("url", "")
+        if self._service_engine is not None:
+            obs = self._service_engine.apply_http(
+                obs, proxy_step=self._step_counter, action_uid=self._current_action_uid,
+                action=self._action_name, previous_url=self._action_start_url,
+                allow_activation=allow_activation)
+            evidence = self._service_engine.last_decision
+            self._record_exposure(["web_http_error"] if evidence["fault_delivered"] else [],
+                                  evidence=evidence)
+            self._last_obs = dict(obs)
+            return obs
         if self._http_resource_engine is not None:
             obs = self._http_resource_engine.apply_http(
                 obs, proxy_step=self._step_counter, action_uid=self._current_action_uid,
@@ -335,7 +353,8 @@ class FaultInjector:
                 element_map=obs.get("elements", original.element_map),
                 raw_ax=original.raw_ax,
             )
-        if self._http_resource_engine is not None and isinstance(original, dict):
+        if (self._http_resource_engine is not None or self._service_engine is not None) \
+                and isinstance(original, dict):
             return obs
         return original
 
@@ -389,6 +408,13 @@ class FaultInjector:
         if self._http_resource_engine is not None:
             from fault_injection.http_persistence import HttpPersistenceEngine
             self._http_resource_engine = HttpPersistenceEngine(self.config)
+            self._raw_url = self._action_start_url = self._action_name = None
+            self._current_action_uid = None
+            self._observation_seq = 0
+            self._exposure_log = []
+        if self._service_engine is not None:
+            from fault_injection.http_service import ServicePersistenceEngine
+            self._service_engine = ServicePersistenceEngine(self.config)
             self._raw_url = self._action_start_url = self._action_name = None
             self._current_action_uid = None
             self._observation_seq = 0

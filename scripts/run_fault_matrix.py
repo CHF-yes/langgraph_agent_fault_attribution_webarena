@@ -58,6 +58,8 @@ def build_parser():
                         help="E-P 活跃窗口（proxy 执行步）")
     parser.add_argument("--fault-injection-step", type=int, default=None)
     parser.add_argument("--fault-target-url", default=None)
+    parser.add_argument("--fault-target-endpoint", default=None,
+                        help="HTTP service v1 only: endpoint URL (query ignored)")
     # T0 是控制批：condition=control 时每个 job 只跑控制臂，故障槽位退化为作业容器。
     parser.add_argument("--condition", choices=["control", "fault", "both"], default="both",
                         help="T0 控制批传 control；默认 both（控制+故障各一次，保持既有行为）")
@@ -115,6 +117,12 @@ def design_fingerprint(args, fault_types, injection_steps, task_ids) -> str:
         payload.update(target_policy_version=TARGET_POLICY_VERSION,
                        fault_target_url=resource_url(target) if target is not None else None,
                        fault_window_steps=getattr(args, "fault_window_steps", 5))
+    if getattr(args, "experiment_id", "stage-c") == "ep-http-service-v1":
+        from fault_injection.http_service import ServiceEndpoint, TARGET_POLICY_VERSION
+        endpoint = ServiceEndpoint.from_url(args.fault_target_endpoint).spec()
+        payload.update(target_policy_version=TARGET_POLICY_VERSION,
+                       fault_target_endpoint=endpoint,
+                       fault_window_steps=getattr(args, "fault_window_steps", 10))
     canonical = json.dumps(payload, sort_keys=True, separators=(",", ":"))
     return hashlib.sha256(canonical.encode("utf-8")).hexdigest()[:16]
 
@@ -145,6 +153,22 @@ def task_jobs(args):
 
 
 def protocol_injection_step(args, fault_type):
+    if getattr(args, "experiment_id", "stage-c") == "ep-http-service-v1":
+        from fault_injection.config import FaultConfig
+        if fault_type != "web_http_error":
+            raise ValueError("ep-http-service-v1 only supports web_http_error")
+        if not getattr(args, "fault_target_endpoint", None):
+            raise ValueError("ep-http-service-v1 requires --fault-target-endpoint")
+        FaultConfig.single_fault(
+            fault_type, intensity=args.fault_intensity,
+            experiment_id="ep-http-service-v1",
+            fault_variant=getattr(args, "fault_variant", "single"),
+            injection_step=getattr(args, "fault_injection_step", None),
+            fault_window_steps=getattr(args, "fault_window_steps", 10),
+            fault_target_endpoint=__import__(
+                "fault_injection.http_service", fromlist=["x"]).ServiceEndpoint
+            .from_url(args.fault_target_endpoint).spec())
+        return None
     if getattr(args, "experiment_id", "stage-c") == "ep-http-persistence-v2":
         from fault_injection.config import FaultConfig
         FaultConfig.single_fault(
@@ -187,6 +211,8 @@ def command_for(args, job):
         command += ["--fault-injection-step", str(injection_step)]
     if getattr(args, "fault_target_url", None) is not None:
         command += ["--fault-target-url", args.fault_target_url]
+    if getattr(args, "fault_target_endpoint", None) is not None:
+        command += ["--fault-target-endpoint", args.fault_target_endpoint]
     # T0 是控制批：condition=control 时只跑控制臂，fault 槽位仅作为作业容器。
     if getattr(args, "condition", "both") != "both":
         command += ["--condition", args.condition]
@@ -250,7 +276,22 @@ def classify_log(text, *, expect_fault=True, fault_variant="single", window_step
     not_triggered = False
     is_http_v2 = experiment_id == "ep-http-persistence-v2" or (
         episode_payload or {}).get("experiment_id") == "ep-http-persistence-v2"
-    if is_http_v2:
+    is_service = experiment_id == "ep-http-service-v1" or (
+        episode_payload or {}).get("experiment_id") == "ep-http-service-v1"
+    if is_service:
+        from fault_injection.http_service import classify_service_episode
+        verdict = classify_service_episode(episode_payload or {},
+                                           expected_variant=fault_variant,
+                                           expected_window=window_steps)
+        fault_count = verdict["count"]
+        fault_triggered = fault_count > 0
+        mechanism_error = not verdict["valid"]
+        if not expect_fault and fault_count:
+            mechanism_error = True
+        fault_invalid = mechanism_error
+        fault_missing = not verdict["valid"]
+        not_triggered = verdict["valid"] and not fault_triggered
+    elif is_http_v2:
         from fault_injection.http_persistence import classify_episode
         verdict = classify_episode(episode_payload or {}, expected_variant=fault_variant,
                                    expected_window=window_steps)
