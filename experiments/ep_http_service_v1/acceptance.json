@@ -1,0 +1,33 @@
+{
+  "experiment_id": "ep-http-service-v1",
+  "kind": "offline_acceptance",
+  "tests": [
+    "tests/test_http_service_v1.py",
+    "tests/test_agent_protocol.py",
+    "tests/test_ep_acceptance.py"
+  ],
+  "returncode": 0,
+  "summary": "21 passed in 4.83s",
+  "passed": true,
+  "code_behaviour_covered": {
+    "scheme_host_port_exact": true,
+    "path_segment_boundary_and_searching_excluded": true,
+    "query_values_p_sort_ignored": true,
+    "search_endpoint_pagination_still_faulted": true,
+    "non_search_pagination_clean": true,
+    "single_release_and_window_release": true,
+    "control_arm_zero_injections": true,
+    "evidence_hash_and_release_timeline": true,
+    "both_architectures_same_retry_failure_path": true
+  },
+  "real_run_coverage": "not_started",
+  "real_run_items_to_mark_in_the_four_arm_block": [
+    "first qualified navigation actually matches the endpoint",
+    "a query change on the same endpoint is still replaced (covered/not covered)",
+    "non-endpoint pages stay clean in a real agent trajectory",
+    "window expiry restores the endpoint in a real trajectory",
+    "control arm remains uncontaminated"
+  ],
+  "paid_trials": 0,
+  "note": "Offline tests prove code behaviour only; they do not certify real-run coverage."
+}
