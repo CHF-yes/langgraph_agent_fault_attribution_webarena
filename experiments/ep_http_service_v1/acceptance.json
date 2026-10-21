@@ -23,7 +23,7 @@
   },
   "freeze_manifest": "docs/ep_http_service_v1_frozen.json",
   "freeze_approval_scope": "one four-arm block on task 118 (react)",
-  "real_run_coverage": "not_started",
+  "real_run_coverage": "one_block_completed",
   "real_run_items_to_mark_in_the_four_arm_block": [
     "first qualified navigation actually matches the endpoint",
     "a query change on the same endpoint is still replaced (covered/not covered)",
@@ -32,5 +32,6 @@
     "control arm remains uncontaminated"
   ],
   "paid_trials": 0,
-  "note": "Offline tests prove code behaviour only; they do not certify real-run coverage."
+  "note": "Offline tests prove code behaviour only; they do not certify real-run coverage.",
+  "real_run_record": "experiments/ep_http_service_v1/block1_task118_react/coverage.json"
 }

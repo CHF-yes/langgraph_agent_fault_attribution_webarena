@@ -1,0 +1,98 @@
+{
+  "schema": "ep_schedule/1",
+  "experiment_id": "ep-http-service-v1",
+  "schedule_seed": 20261021,
+  "variants": [
+    "single",
+    "persistent"
+  ],
+  "conditions": [
+    "control",
+    "fault"
+  ],
+  "blocks": 1,
+  "cells": 4,
+  "entries": [
+    {
+      "block": 0,
+      "block_order": 0,
+      "model_profile": "deepseek_v41_flash",
+      "architecture": "react",
+      "fault_type": "web_http_error",
+      "task_id": 118,
+      "fault_seed": 1,
+      "experiment_id": "ep-http-service-v1",
+      "variant": "single",
+      "condition": "control",
+      "pair_key": "exp=ep-http-service-v1|var=single|model=deepseek_v41_flash|arch=react|fault=web_http_error|task=118|seed=1|cond=-",
+      "file_stem": "ep-http-service-v1__single__deepseek_v41_flash__react__web_http_error__task118__seed1__control"
+    },
+    {
+      "block": 0,
+      "block_order": 1,
+      "model_profile": "deepseek_v41_flash",
+      "architecture": "react",
+      "fault_type": "web_http_error",
+      "task_id": 118,
+      "fault_seed": 1,
+      "experiment_id": "ep-http-service-v1",
+      "variant": "single",
+      "condition": "fault",
+      "pair_key": "exp=ep-http-service-v1|var=single|model=deepseek_v41_flash|arch=react|fault=web_http_error|task=118|seed=1|cond=-",
+      "file_stem": "ep-http-service-v1__single__deepseek_v41_flash__react__web_http_error__task118__seed1__fault"
+    },
+    {
+      "block": 0,
+      "block_order": 2,
+      "model_profile": "deepseek_v41_flash",
+      "architecture": "react",
+      "fault_type": "web_http_error",
+      "task_id": 118,
+      "fault_seed": 1,
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "condition": "control",
+      "pair_key": "exp=ep-http-service-v1|var=persistent|model=deepseek_v41_flash|arch=react|fault=web_http_error|task=118|seed=1|cond=-",
+      "file_stem": "ep-http-service-v1__persistent__deepseek_v41_flash__react__web_http_error__task118__seed1__control"
+    },
+    {
+      "block": 0,
+      "block_order": 3,
+      "model_profile": "deepseek_v41_flash",
+      "architecture": "react",
+      "fault_type": "web_http_error",
+      "task_id": 118,
+      "fault_seed": 1,
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "condition": "fault",
+      "pair_key": "exp=ep-http-service-v1|var=persistent|model=deepseek_v41_flash|arch=react|fault=web_http_error|task=118|seed=1|cond=-",
+      "file_stem": "ep-http-service-v1__persistent__deepseek_v41_flash__react__web_http_error__task118__seed1__fault"
+    }
+  ],
+  "window_steps": 10,
+  "protocol": {
+    "mechanism": "synthetic_http_observation_replacement",
+    "trigger_policy": "endpoint-path-segment-v1",
+    "target_policy_version": "endpoint-path-segment-v1",
+    "fault_target_endpoint": {
+      "scheme": "http",
+      "host": "localhost",
+      "port": 7770,
+      "path": "/catalogsearch/result",
+      "target_policy_version": "endpoint-path-segment-v1"
+    },
+    "window_steps": 10,
+    "window_unit": "proxy_execution_step",
+    "bootstrap_navigation_faulted": false,
+    "retarget": false,
+    "query_matching": "ignored"
+  },
+  "endpoint": {
+    "scheme": "http",
+    "host": "localhost",
+    "port": 7770,
+    "path": "/catalogsearch/result",
+    "target_policy_version": "endpoint-path-segment-v1"
+  }
+}

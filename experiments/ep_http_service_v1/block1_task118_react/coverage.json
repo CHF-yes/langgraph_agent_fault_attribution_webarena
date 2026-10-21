@@ -1,0 +1,88 @@
+{
+  "schema": "http_service_coverage/1",
+  "experiment_id": "ep-http-service-v1",
+  "block": "block1_task118_react",
+  "task_id": 118,
+  "architecture": "react",
+  "model_profile": "deepseek_v41_flash",
+  "fault_seed": 1,
+  "endpoint": {
+    "scheme": "http",
+    "host": "localhost",
+    "port": 7770,
+    "path": "/catalogsearch/result"
+  },
+  "window_steps": 10,
+  "arms": {
+    "single_control": {
+      "steps": 5,
+      "injections": 0,
+      "official_success": true
+    },
+    "single_fault": {
+      "steps": 10,
+      "injections": 1,
+      "released": "single_completed",
+      "injected_queries": [
+        "q=night+guard+bruxism"
+      ],
+      "official_success": true
+    },
+    "persistent_control": {
+      "steps": 5,
+      "injections": 0,
+      "official_success": true
+    },
+    "persistent_fault": {
+      "steps": 12,
+      "injections": 2,
+      "released": null,
+      "t0": 4,
+      "window_end": 13,
+      "injected_queries": [
+        "q=night+guard",
+        "q=mouth+guard"
+      ],
+      "official_success": true
+    }
+  },
+  "coverage": {
+    "first_qualified_navigation_matches_endpoint": {
+      "status": "covered",
+      "evidence": "both fault arms injected at step 4 on /catalogsearch/result"
+    },
+    "query_change_on_the_same_endpoint_is_still_blocked": {
+      "status": "covered",
+      "evidence": "persistent injected q=night+guard (step 4) and then q=mouth+guard (step 5) on the same endpoint"
+    },
+    "non_endpoint_pages_stay_clean": {
+      "status": "covered",
+      "evidence": "steps 6-12 are off_endpoint; the agent completed via category/product pages"
+    },
+    "control_arms_uncontaminated": {
+      "status": "covered",
+      "evidence": "both control arms: 0 injections, 5 steps"
+    },
+    "search_endpoint_pagination_still_blocked": {
+      "status": "offline_only",
+      "reason": "the real trajectory never requested a paginated search URL; do not rerun to force it"
+    },
+    "window_release": {
+      "status": "not_covered",
+      "reason": "the persistent trial ended at step 12, one step before window_end 13; released=None is correct and is not a failure"
+    }
+  },
+  "route_around_behaviour": "after two 500 responses the agent stopped using the search endpoint and completed through category/product navigation",
+  "usage": {
+    "llm_calls": 32,
+    "prompt_tokens": 365305,
+    "completion_tokens": 3783
+  },
+  "cost_observation": "persistent fault +7 steps vs its control; single fault +5 steps; both fault arms still scored success",
+  "caveats": [
+    "one block only; this is mechanism evidence, not a success-rate estimate",
+    "window release and search pagination are not covered in the real run and are not to be forced by rerunning",
+    "service-level results are separate from v1/v2 and are not pooled with them"
+  ],
+  "paid_trials": 4
+}

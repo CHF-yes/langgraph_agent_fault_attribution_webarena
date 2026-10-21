@@ -1,0 +1,66 @@
+{
+  "config_substitutions": {
+    "test_data_file": {
+      "from": "/root/webarena-dataset/webarena-verified.json",
+      "to": "/data/webarena/webarena-dataset/webarena-verified.json"
+    }
+  },
+  "rows": [
+    {
+      "trial_dir": "experiments/ep_http_service_v1/block1_task118_react/single/outputs/deepseek_v41_flash/react/web_http_error_task118_seed1/118/control_seed_1",
+      "complete": true,
+      "reasons": [],
+      "evaluation_status": "native",
+      "official_success": true,
+      "submitted_success": true,
+      "trial_id": "exp=ep-http-service-v1|var=single|model=deepseek_v41_flash|arch=react|fault=web_http_error|task=118|seed=1|cond=control|rep=0",
+      "pair_key": "exp=ep-http-service-v1|var=single|model=deepseek_v41_flash|arch=react|fault=web_http_error|task=118|seed=1|cond=-|rep=0",
+      "condition": "control",
+      "steps": 5,
+      "cap_exhausted": false,
+      "llm_calls": 5,
+      "injection_count": 0,
+      "cell": {
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "web_http_error",
+        "task_id": 118,
+        "fault_seed": 1,
+        "condition": "control"
+      },
+      "experiment_id": "ep-http-service-v1",
+      "fault_variant": "single",
+      "cap_exhausted_source": "trial_record",
+      "reason": "",
+      "evaluation_source": "evaluated"
+    },
+    {
+      "trial_dir": "experiments/ep_http_service_v1/block1_task118_react/single/outputs/deepseek_v41_flash/react/web_http_error_task118_seed1/118/web_http_error_seed_1",
+      "complete": true,
+      "reasons": [],
+      "evaluation_status": "native",
+      "official_success": true,
+      "submitted_success": true,
+      "trial_id": "exp=ep-http-service-v1|var=single|model=deepseek_v41_flash|arch=react|fault=web_http_error|task=118|seed=1|cond=fault|rep=0",
+      "pair_key": "exp=ep-http-service-v1|var=single|model=deepseek_v41_flash|arch=react|fault=web_http_error|task=118|seed=1|cond=-|rep=0",
+      "condition": "fault",
+      "steps": 10,
+      "cap_exhausted": false,
+      "llm_calls": 10,
+      "injection_count": 1,
+      "cell": {
+        "model_profile": "deepseek_v41_flash",
+        "architecture": "react",
+        "fault_type": "web_http_error",
+        "task_id": 118,
+        "fault_seed": 1,
+        "condition": "fault"
+      },
+      "experiment_id": "ep-http-service-v1",
+      "fault_variant": "single",
+      "cap_exhausted_source": "trial_record",
+      "reason": "",
+      "evaluation_source": "evaluated"
+    }
+  ]
+}

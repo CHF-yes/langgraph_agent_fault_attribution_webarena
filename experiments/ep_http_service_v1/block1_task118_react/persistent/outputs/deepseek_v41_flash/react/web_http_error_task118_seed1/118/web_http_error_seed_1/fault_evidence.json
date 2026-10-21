@@ -1,0 +1,620 @@
+{
+  "experiment_id": "ep-http-service-v1",
+  "variant": "persistent",
+  "window_steps": 10,
+  "injections": [
+    {
+      "event": "injection",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "injection_index": 1,
+      "proxy_step": 4,
+      "action_uid": "click:4",
+      "target": {
+        "kind": "endpoint",
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "error_type": "500",
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "query": "q=night+guard"
+      },
+      "timestamp": 1792551841.2235446
+    },
+    {
+      "event": "injection",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "injection_index": 2,
+      "proxy_step": 5,
+      "action_uid": "goto:5",
+      "target": {
+        "kind": "endpoint",
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "error_type": "500",
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "query": "q=mouth+guard"
+      },
+      "timestamp": 1792551844.250414
+    }
+  ],
+  "snapshot": {
+    "experiment_id": "ep-http-service-v1",
+    "variant": "persistent",
+    "target_policy_version": "endpoint-path-segment-v1",
+    "armed": true,
+    "armed_after_step": 1,
+    "target": {
+      "kind": "endpoint",
+      "scheme": "http",
+      "host": "localhost",
+      "port": 7770,
+      "path": "/catalogsearch/result",
+      "target_policy_version": "endpoint-path-segment-v1"
+    },
+    "t0": 4,
+    "window_steps": 10,
+    "window_end": 13,
+    "injections": 2,
+    "released": null,
+    "exposure_class": "repeated"
+  },
+  "events": [
+    {
+      "event": "skip",
+      "proxy_step": 1,
+      "action_uid": "goto:1",
+      "reason": "not_armed",
+      "detail": {
+        "raw_url": "http://localhost:7770/",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/",
+          "query": ""
+        }
+      }
+    },
+    {
+      "event": "skip",
+      "proxy_step": 2,
+      "action_uid": "click:2",
+      "reason": "not_navigation",
+      "detail": {
+        "raw_url": "http://localhost:7770/",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/",
+          "query": ""
+        }
+      }
+    },
+    {
+      "event": "skip",
+      "proxy_step": 3,
+      "action_uid": "type_text:3",
+      "reason": "not_navigation",
+      "detail": {
+        "raw_url": "http://localhost:7770/",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/",
+          "query": ""
+        }
+      }
+    },
+    {
+      "event": "injection",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "injection_index": 1,
+      "proxy_step": 4,
+      "action_uid": "click:4",
+      "target": {
+        "kind": "endpoint",
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "error_type": "500",
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "query": "q=night+guard"
+      },
+      "timestamp": 1792551841.2235446
+    },
+    {
+      "event": "injection",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "injection_index": 2,
+      "proxy_step": 5,
+      "action_uid": "goto:5",
+      "target": {
+        "kind": "endpoint",
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "error_type": "500",
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "query": "q=mouth+guard"
+      },
+      "timestamp": 1792551844.250414
+    },
+    {
+      "event": "skip",
+      "proxy_step": 6,
+      "action_uid": "goto:6",
+      "reason": "off_endpoint",
+      "detail": {
+        "raw_url": "http://localhost:7770/",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/",
+          "query": ""
+        }
+      }
+    },
+    {
+      "event": "skip",
+      "proxy_step": 7,
+      "action_uid": "click:7",
+      "reason": "off_endpoint",
+      "detail": {
+        "raw_url": "http://localhost:7770/health-household.html",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/health-household.html",
+          "query": ""
+        }
+      }
+    },
+    {
+      "event": "skip",
+      "proxy_step": 8,
+      "action_uid": "click:8",
+      "reason": "off_endpoint",
+      "detail": {
+        "raw_url": "http://localhost:7770/catalogsearch/advanced/",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/catalogsearch/advanced",
+          "query": ""
+        }
+      }
+    },
+    {
+      "event": "skip",
+      "proxy_step": 9,
+      "action_uid": "click:9",
+      "reason": "off_endpoint",
+      "detail": {
+        "raw_url": "http://localhost:7770/catalogsearch/advanced/",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/catalogsearch/advanced",
+          "query": ""
+        }
+      }
+    },
+    {
+      "event": "skip",
+      "proxy_step": 10,
+      "action_uid": "type_text:10",
+      "reason": "off_endpoint",
+      "detail": {
+        "raw_url": "http://localhost:7770/catalogsearch/advanced/",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/catalogsearch/advanced",
+          "query": ""
+        }
+      }
+    },
+    {
+      "event": "skip",
+      "proxy_step": 11,
+      "action_uid": "click:11",
+      "reason": "off_endpoint",
+      "detail": {
+        "raw_url": "http://localhost:7770/catalogsearch/advanced/result/?name=night+guard&sku=&description=&short_description=&price%5Bfrom%5D=&price%5Bto%5D=&price%5Bcurrency%5D=USD",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/catalogsearch/advanced/result",
+          "query": "name=night+guard&sku=&description=&short_description=&price%5Bfrom%5D=&price%5Bto%5D=&price%5Bcurrency%5D=USD"
+        }
+      }
+    },
+    {
+      "event": "skip",
+      "proxy_step": 12,
+      "action_uid": "click:12",
+      "reason": "off_endpoint",
+      "detail": {
+        "raw_url": "http://localhost:7770/dentemp-ora-guard-custom-fit-dental-guard-bruxism-night-guard-for-teeth-grinding-two-pack-mouth-guard-for-clenching-teeth-at-night-mouth-guard-for-sleeping-relieve-soreness-in-jaw-muscles.html",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/dentemp-ora-guard-custom-fit-dental-guard-bruxism-night-guard-for-teeth-grinding-two-pack-mouth-guard-for-clenching-teeth-at-night-mouth-guard-for-sleeping-relieve-soreness-in-jaw-muscles.html",
+          "query": ""
+        }
+      }
+    }
+  ],
+  "exposures": [
+    {
+      "observation_uid": "goto:1#1",
+      "source_action_uid": "goto:1",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 1,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/",
+        "query": ""
+      },
+      "reason": "not_armed",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "click:2#2",
+      "source_action_uid": "click:2",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 2,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/",
+        "query": ""
+      },
+      "reason": "not_navigation",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "type_text:3#3",
+      "source_action_uid": "type_text:3",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 3,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/",
+        "query": ""
+      },
+      "reason": "not_navigation",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "click:4#4",
+      "source_action_uid": "click:4",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 4,
+      "faults_delivered": [
+        "web_http_error"
+      ],
+      "delivered": true,
+      "raw_url": "http://localhost:7770/catalogsearch/result/?q=night+guard",
+      "matched_endpoint": true,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "query": "q=night+guard"
+      },
+      "reason": "injected_or_same_action_replay",
+      "fault_delivered": true
+    },
+    {
+      "observation_uid": "goto:5#5",
+      "source_action_uid": "goto:5",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 5,
+      "faults_delivered": [
+        "web_http_error"
+      ],
+      "delivered": true,
+      "raw_url": "http://localhost:7770/catalogsearch/result/?q=mouth+guard",
+      "matched_endpoint": true,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "query": "q=mouth+guard"
+      },
+      "reason": "injected_or_same_action_replay",
+      "fault_delivered": true
+    },
+    {
+      "observation_uid": "goto:6#6",
+      "source_action_uid": "goto:6",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 6,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/",
+        "query": ""
+      },
+      "reason": "off_endpoint",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "click:7#7",
+      "source_action_uid": "click:7",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 7,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/health-household.html",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/health-household.html",
+        "query": ""
+      },
+      "reason": "off_endpoint",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "click:8#8",
+      "source_action_uid": "click:8",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 8,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/catalogsearch/advanced/",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/advanced",
+        "query": ""
+      },
+      "reason": "off_endpoint",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "click:9#9",
+      "source_action_uid": "click:9",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 9,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/catalogsearch/advanced/",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/advanced",
+        "query": ""
+      },
+      "reason": "off_endpoint",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "type_text:10#10",
+      "source_action_uid": "type_text:10",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 10,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/catalogsearch/advanced/",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/advanced",
+        "query": ""
+      },
+      "reason": "off_endpoint",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "click:11#11",
+      "source_action_uid": "click:11",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 11,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/catalogsearch/advanced/result/?name=night+guard&sku=&description=&short_description=&price%5Bfrom%5D=&price%5Bto%5D=&price%5Bcurrency%5D=USD",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/advanced/result",
+        "query": "name=night+guard&sku=&description=&short_description=&price%5Bfrom%5D=&price%5Bto%5D=&price%5Bcurrency%5D=USD"
+      },
+      "reason": "off_endpoint",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "click:12#12",
+      "source_action_uid": "click:12",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 12,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/dentemp-ora-guard-custom-fit-dental-guard-bruxism-night-guard-for-teeth-grinding-two-pack-mouth-guard-for-clenching-teeth-at-night-mouth-guard-for-sleeping-relieve-soreness-in-jaw-muscles.html",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/dentemp-ora-guard-custom-fit-dental-guard-bruxism-night-guard-for-teeth-grinding-two-pack-mouth-guard-for-clenching-teeth-at-night-mouth-guard-for-sleeping-relieve-soreness-in-jaw-muscles.html",
+        "query": ""
+      },
+      "reason": "off_endpoint",
+      "fault_delivered": false
+    }
+  ]
+}

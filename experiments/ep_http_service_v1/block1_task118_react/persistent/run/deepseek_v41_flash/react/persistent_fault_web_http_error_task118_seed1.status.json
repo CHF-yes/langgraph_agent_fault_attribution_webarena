@@ -1,0 +1,17 @@
+{
+  "infrastructure_error": false,
+  "task_error": false,
+  "fault_expected": true,
+  "fault_missing": false,
+  "fault_count": 2,
+  "fault_triggered": true,
+  "fault_invalid": false,
+  "mechanism_error": false,
+  "not_triggered": false,
+  "variant": "persistent",
+  "condition": "fault",
+  "model_profile": "deepseek_v41_flash",
+  "architecture": "react",
+  "returncode": 0,
+  "timed_out": false
+}

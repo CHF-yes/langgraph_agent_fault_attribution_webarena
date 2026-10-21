@@ -20,7 +20,7 @@
     "blocks": 1,
     "cells": 4
   },
-  "paid_trials_so_far": 0,
+  "paid_trials_so_far": 4,
   "git_commit": "6fb7c416c65a40ac0c273423d66e5bafe217924a",
   "git_branch": "codex/http-service-v1",
   "git_dirty": false,
@@ -52,5 +52,8 @@
     "endpoint matching ignores the entire query string",
     "non-search pagination and other paths stay clean",
     "approval limited to one four-arm block; no automatic expansion"
-  ]
+  ],
+  "executed_scope": "block1_task118_react",
+  "coverage_record": "experiments/ep_http_service_v1/block1_task118_react/coverage.json",
+  "approval_consumed": true
 }
