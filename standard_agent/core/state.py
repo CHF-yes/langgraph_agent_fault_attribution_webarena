@@ -48,6 +48,10 @@ class AgentState(TypedDict):
     # 最终答案（stop 工具传入）
     answer: str
 
+    # 终止原因（如 no_tool_call）。必须显式声明，否则 LangGraph 会在图输出中丢弃它，
+    # 导致 main.py 的 result.get("error") 永远为 None。
+    error: str | None
+
     # ---- 追踪字段 ----
     # 动作历史列表: [{"step": 1, "thought": "...", "action": "click(123)", "result": "..."}, ...]
     action_history: Annotated[list[dict], add_action_history]

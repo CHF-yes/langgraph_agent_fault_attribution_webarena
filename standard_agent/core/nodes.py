@@ -678,20 +678,53 @@ def plan_executor_node(state: AgentState, config: RunnableConfig) -> dict:
                 "content": executor_thought,
             },
         )
+    if not (getattr(response, "tool_calls", None) or []):
+        # 与 ReAct 臂完全一致：先记录，再用 HumanMessage 重试一次；不用尾部 SystemMessage。
+        append_event(thread_id, event="no_tool_call", step=new_step,
+                     task=task, url=url,
+                     data={"architecture": architecture, "phase": "executor",
+                           "content": str(getattr(response, "content", "")),
+                           "finish_reason": (getattr(response, "response_metadata", {}) or {}).get("finish_reason"),
+                           "intent_like": _looks_like_action_intent(getattr(response, "content", ""))})
+        nudge = HumanMessage(content=(
+            "Your previous reply did not call a tool. Call exactly ONE tool now. "
+            "If the task is finished, call stop(answer)."))
+        retry = llm.invoke([*full_messages, response, nudge])
+        _trace_provenance(thread_id, new_step, task, url, retry,
+                          model_profile, "plan_execute", "executor_retry", time.time() - _t0)
+        llm_calls += 1
+        append_event(thread_id, event="llm_retry", step=new_step,
+                     task=task, url=url,
+                     data={"architecture": architecture, "phase": "executor",
+                           "content": str(getattr(retry, "content", "")),
+                           "tool_calls": len(getattr(retry, "tool_calls", None) or [])})
+        response = retry
+
     tool_calls = getattr(response, "tool_calls", []) or []
     if len(tool_calls) > 1:
         response = response.model_copy(update={"tool_calls": tool_calls[:1]})
     if not getattr(response, "tool_calls", None):
-        answer = str(getattr(response, "content", "") or "")
+        # 重试后仍无 tool_call：协议失败，而不是最终答案（提交答案置空）。
+        raw_text = str(getattr(response, "content", "") or "")
+        intent_like = _looks_like_action_intent(raw_text)
+        append_event(thread_id, event="protocol_violation", step=new_step,
+                     task=task, url=url,
+                     data={"architecture": architecture, "phase": "executor",
+                           "rule": "tool_call_required", "intent_like": intent_like,
+                           "content": raw_text, "retried": True,
+                           "plan_step": current})
         append_trace(thread_id, make_entry(
             thread_id, step=new_step, task=task, url=url,
-            thought=answer, action="final_answer", args={}, observation="",
-            error=False, done=True, answer=answer,
-            extra={"architecture": architecture, "phase": "executor", "plan_step": current},
+            thought=raw_text, action="final_answer", args={}, observation="",
+            error=True, done=True, answer="",
+            extra={"architecture": architecture, "phase": "executor",
+                   "plan_step": current, "no_tool_call": True,
+                   "intent_like": intent_like},
         ))
         return {
             "messages": [response], "step_count": new_step, "done": True,
-            "answer": answer, "url": url, "page_content": page_content,
+            "answer": "", "error": "no_tool_call",
+            "url": url, "page_content": page_content,
             "llm_calls": llm_calls, "executor_calls": executor_calls,
         }
     return {

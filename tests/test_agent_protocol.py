@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import json
 import sys
+from pathlib import Path
 
 from langchain_core.messages import AIMessage
 
@@ -88,3 +89,94 @@ def test_two_text_only_replies_are_a_protocol_failure(monkeypatch, tmp_path):
     # append_event 把 data 字段平铺到事件上
     assert violations and violations[-1].get("rule") == "tool_call_required"
     assert violations[-1].get("intent_like") is True
+
+
+def test_error_survives_the_compiled_graph_and_reaches_the_record(tmp_path):
+    """节点 → 真实编译图 → trial record，在独立进程里验证（避免跨测试模块污染）。"""
+    import os
+    import subprocess
+    import textwrap
+
+    script = textwrap.dedent("""
+        import json, os
+        from langchain_core.messages import AIMessage
+        import standard_agent.core.nodes as nodes
+
+        class Bound:
+            def __init__(self):
+                self.calls = 0
+
+            def invoke(self, messages):
+                self.calls += 1
+                return AIMessage(content="THOUGHT: I need to read the reviews. I'll click Reviews.")
+
+        class Fake:
+            def __init__(self):
+                self.bound = Bound()
+
+            def bind_tools(self, tools):
+                return self.bound
+
+        nodes.create_llm = lambda **kwargs: Fake()
+        from standard_agent.core.graph import build_graph
+        from standard_agent.trial_metadata import build_trial_record
+
+        state = {
+            "task": "t", "model_profile": "m", "url": "http://example.test/p",
+            "page_content": "AX", "step_count": 0, "max_steps": 5,
+            "done": False, "answer": "", "action_history": [], "architecture": "react",
+            "plan": "", "plan_steps": [], "current_plan_step": 0, "plan_revision": 0,
+            "replan_required": False, "llm_calls": 0, "planning_calls": 0,
+            "executor_calls": 0, "replanning_calls": 0, "messages": [],
+        }
+        app = build_graph("react")
+        out = app.invoke(state, {"configurable": {"thread_id": "graph-state-test"}})
+        record = build_trial_record(
+            model_profile="m", architecture="react", fault_type="f", task_id=24,
+            seed=1, condition="fault", run_config={}, replicate=0,
+            error=out.get("error"))
+        print("RESULT" + json.dumps({"error": out.get("error"),
+                                     "answer": out.get("answer"),
+                                     "record_error": record["error"]}))
+    """)
+    root = Path(__file__).resolve().parents[1]
+    env = dict(os.environ)
+    env["TRACE_DIR"] = str(tmp_path)
+    env["PYTHONPATH"] = os.pathsep.join(
+        [str(root), str(root / ".venv311/lib/python3.11/site-packages"),
+         env.get("PYTHONPATH", "")]).strip(os.pathsep)
+    proc = subprocess.run([sys.executable, "-c", script], cwd=root, env=env,
+                          capture_output=True, text=True, timeout=120)
+    results = [line[6:] for line in proc.stdout.splitlines() if line.startswith("RESULT")]
+    assert results, proc.stderr[-2000:]
+    data = json.loads(results[-1])
+    assert data == {"error": "no_tool_call", "answer": "", "record_error": "no_tool_call"}
+
+
+def test_plan_executor_has_the_same_retry_and_failure_semantics(tmp_path, monkeypatch):
+    text = AIMessage(content="THOUGHT: I'll click the Reviews tab.")
+    call = AIMessage(content="THOUGHT: clicking now.",
+                     tool_calls=[{"name": "click", "args": {"element_id": "1"},
+                                  "id": "c1", "type": "tool_call"}])
+    monkeypatch.setenv("TRACE_DIR", str(tmp_path))
+    monkeypatch.setattr(nodes, "get_current_observation",
+                        lambda: {"url": "http://example.test/p", "page_content": "AX"})
+    state = _state()
+    state.update(architecture="plan_execute",
+                 plan_steps=[{"id": 1, "goal": "read reviews", "success_condition": "done"}],
+                 current_plan_step=0)
+
+    # 第一次纯文本 → 重试得到 tool call，继续执行
+    fake = _FakeLLM([text, call])
+    monkeypatch.setattr(nodes, "create_llm", lambda **kw: fake)
+    out = nodes.plan_executor_node(state, {"configurable": {"thread_id": "pe-retry"}})
+    assert len(fake.bound.calls) == 2
+    assert out["messages"][-1].tool_calls
+    assert "error" not in out
+
+    # 两次纯文本 → 协议失败：空答案 + error，而不是把文本当答案
+    fake2 = _FakeLLM([text, text])
+    monkeypatch.setattr(nodes, "create_llm", lambda **kw: fake2)
+    out2 = nodes.plan_executor_node(state, {"configurable": {"thread_id": "pe-fail"}})
+    assert out2["done"] is True
+    assert out2["answer"] == "" and out2["error"] == "no_tool_call"
