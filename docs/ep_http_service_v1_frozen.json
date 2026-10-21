@@ -3,9 +3,25 @@
   "experiment_id": "ep-http-service-v1",
   "status": "frozen",
   "approved_for_paid_runs": true,
-  "approval_scope": "one contemporaneous four-arm block on task 118 (react)",
+  "approval_scope": "one contemporaneous four-arm block: task 118, react, deepseek_v41_flash, seed 1",
+  "scope": {
+    "task_id": 118,
+    "architecture": "react",
+    "model_profile": "deepseek_v41_flash",
+    "fault_seed": 1,
+    "variants": [
+      "single",
+      "persistent"
+    ],
+    "conditions": [
+      "control",
+      "fault"
+    ],
+    "blocks": 1,
+    "cells": 4
+  },
   "paid_trials_so_far": 0,
-  "git_commit": "c53f8b6ef27a1b2ff7f94bd1ec2b86ec34d17316",
+  "git_commit": "6fb7c416c65a40ac0c273423d66e5bafe217924a",
   "git_branch": "codex/http-service-v1",
   "git_dirty": false,
   "target_policy_version": "endpoint-path-segment-v1",
@@ -16,10 +32,6 @@
     "path": "/catalogsearch/result"
   },
   "window_steps": 10,
-  "variants": {
-    "single": "one exposure",
-    "persistent": "bounded by window, no count cap"
-  },
   "max_steps": 20,
   "fault_intensity": "high",
   "fault_types": [
