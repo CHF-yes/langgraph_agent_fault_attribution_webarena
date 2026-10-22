@@ -105,40 +105,44 @@ def estimate(matrix, assumptions):
     }
 
 
-def check_decision_impact(item):
-    """C/HC 的关键检查：污染值是否**可能改变任务要求的答案/决策**。
+def _verify_module():
+    import sys
+    if str(ROOT) not in sys.path:
+        sys.path.insert(0, str(ROOT))
+    from scripts.agent_stress_decision import verify
+    return verify
 
-    仅证明注入、暴露或"事实被使用"不够：价格变了但输出只要名称、日期偏移仍落在
-    同一筛选区间、或官方容差仍接受污染值时，成功率不会下降。本检查只看事前固定的
-    任务计算，不看模型结果。
+
+def _decision_examples(root=ROOT):
+    """Run the recomputation verifier on the committed positive/negative examples."""
+    verify = _verify_module()
+    examples = {}
+    for name, expected in (("fixture_reviews", True), ("task118_title", False)):
+        path = root / "experiments/agent_stress_v1/decisions" / name / "evidence.json"
+        if not path.exists():
+            examples[name] = "missing"
+            continue
+        result = verify(read_json(path), root=root)
+        examples[name] = "passed" if result["passed"] else "rejected"
+        if result["passed"] is not expected:
+            examples[name] += ":unexpected"
+    return examples
+
+
+def check_decision_impact(item, *, root=ROOT):
+    """已验证契约必须提供**可复算证据**；仅声明布尔字段不足以通过。
+
+    这里调用 agent_stress_decision.verify()：它会重跑 computation、核对真值/污染/
+    保护源输出、官方规则与工件哈希。声明层只用于早期提示，不能作为通过依据。
     """
+    if item.get("status") != "verified":
+        return []
     di = item.get("decision_impact")
-    if not isinstance(di, dict):
-        return ["missing decision_impact"] if item.get("status") == "verified" else []
-    required = ("required_output", "computation", "transform", "truth_value",
-                "polluted_value", "changes_required_output",
-                "official_tolerance_accepts_polluted",
-                "protected_source_output_matches_truth", "decision_check")
-    missing = [key for key in required if key not in di]
-    if missing:
-        return [f"decision_impact missing {','.join(missing)}"]
-    errors = []
-    if di.get("polluted_value") == di.get("truth_value"):
-        errors.append("decision_impact: polluted value equals the truth")
-    if di.get("changes_required_output") is not True:
-        errors.append("decision_impact: polluted value cannot change the required output")
-    if di.get("official_tolerance_accepts_polluted") is not False:
-        errors.append("decision_impact: official tolerance would accept the polluted value")
-    if di.get("protected_source_output_matches_truth") is not True:
-        errors.append("decision_impact: protected source does not reproduce the truth")
-    if di.get("decision_check") != "pass":
-        errors.append("decision_impact: decision_check is not pass")
-    if "HC_episode" in (item.get("recovery_references") or {}):
-        scopes = di.get("hc_scopes") or {}
-        if (scopes.get("scopes_distinct") is not True
-                or scopes.get("c_content_visible_under_h") is not True):
-            errors.append("decision_impact: HC scopes are not distinct or C content is hidden under H")
-    return errors
+    if not isinstance(di, dict) or not di.get("evidence"):
+        return ["decision_impact: declaration without recomputable evidence"]
+    verify = _verify_module()
+    result = verify(di["evidence"], root=root)
+    return [f"decision_impact: {e}" for e in result["errors"]]
 
 
 def audit(candidates, contracts, protocol, matrix, *, artifact_root=ROOT):
@@ -214,7 +218,7 @@ def audit(candidates, contracts, protocol, matrix, *, artifact_root=ROOT):
         blockers.append("task-specific bindings/replays still unresolved")
     if not matrix.get("enrolled_holdout_task_ids"):
         blockers.append("heldout task enrollment not frozen")
-    if not any(check_decision_impact(item) == [] and item.get("decision_impact")
+    if not any(item.get("status") == "verified" and check_decision_impact(item) == []
                for item in profiles.values()):
         blockers.append("decision-impact evidence not established")
     return {
@@ -227,6 +231,10 @@ def audit(candidates, contracts, protocol, matrix, *, artifact_root=ROOT):
         "ready_for_paid_runs": not errors and not blockers,
         "unresolved_tasks": unresolved,
         "login_requirements_by_split": login_by_split,
+        "decision_impact_examples": _decision_examples(),
+        "decision_impact_verified_contracts": sum(
+            1 for item in profiles.values()
+            if item.get("status") == "verified" and check_decision_impact(item) == []),
         "validation_scope": "identity/readiness/linked-artifact checks; does not execute H/C or verify real browser solvability",
         "paid_trials_executed_by_this_tool": 0,
     }

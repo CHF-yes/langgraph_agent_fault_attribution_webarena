@@ -364,6 +364,12 @@
       "HC: H scope and C scope are distinct and C content is visible under H"
     ],
     "selection": "pre-fixed; never chosen from heldout fault outcomes or model failures",
-    "verification": "deterministic task computation plus reference trajectory, not a paid model run"
+    "verification": "recompute with the recorded computation script on truth/polluted/protected inputs, compare to reported outputs, verify artifact hashes, evaluate the official rule on the complete output (not the raw mutated field), and inspect HC payloads. A declaration without evidence is rejected by the offline audit.",
+    "evidence_required": [
+      "computation",
+      "inputs",
+      "reported",
+      "official"
+    ]
   }
 }

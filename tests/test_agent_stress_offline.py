@@ -81,62 +81,68 @@ if __name__ == "__main__":
     unittest.main()
 
 
-class TestDecisionImpact(unittest.TestCase):
+class TestDecisionImpactEvidence(unittest.TestCase):
+    """声明布尔不再充分；已验证契约必须能重算并被官方规则拒绝污染输出。"""
+
     def setUp(self):
         self.matrix = read_json(ROOT / "docs/故障压力测试矩阵草案.json")
         self.candidates = read_json(ROOT / "docs/故障压力测试候选任务.json")
         self.contracts = read_json(SPEC / "task_contracts.json")
         self.protocol = read_json(SPEC / "protocol_spec.json")
+        self.decisions = ROOT / "experiments/agent_stress_v1/decisions"
 
-    def _di(self, **overrides):
-        base = {
-            "required_output": "reviewer names mentioning price",
-            "computation": "filter reviews by price complaint; emit author",
-            "transform": {"field": "price", "delta": "-20%"},
-            "truth_value": 100,
-            "polluted_value": 80,
+    def test_declaration_without_evidence_is_rejected(self):
+        from scripts.agent_stress_offline import check_decision_impact
+        item = {"status": "verified", "decision_impact": {
             "changes_required_output": True,
             "official_tolerance_accepts_polluted": False,
             "protected_source_output_matches_truth": True,
-            "decision_check": "pass",
-        }
-        base.update(overrides)
-        return base
-
-    def test_passing_decision_impact_has_no_errors(self):
-        from scripts.agent_stress_offline import check_decision_impact
-        item = {"status": "verified", "decision_impact": self._di(),
-                "recovery_references": {"C_episode": {}}}
-        self.assertEqual(check_decision_impact(item), [])
-
-    def test_corruption_that_cannot_change_the_output_is_rejected(self):
-        from scripts.agent_stress_offline import check_decision_impact
-        cases = [
-            ({"changes_required_output": False}, "cannot change"),
-            ({"polluted_value": 100}, "equals the truth"),
-            ({"official_tolerance_accepts_polluted": True}, "tolerance"),
-            ({"protected_source_output_matches_truth": False}, "protected source"),
-            ({"decision_check": "pending"}, "not pass"),
-        ]
-        for override, keyword in cases:
-            item = {"status": "verified", "decision_impact": self._di(**override),
-                    "recovery_references": {"C_episode": {}}}
-            errors = check_decision_impact(item)
-            self.assertTrue(any(keyword in e for e in errors), (override, errors))
-
-    def test_hc_scopes_must_be_distinct_and_c_visible(self):
-        from scripts.agent_stress_offline import check_decision_impact
-        item = {"status": "verified", "recovery_references": {"HC_episode": {}},
-                "decision_impact": self._di(hc_scopes={
-                    "H_scope": "search results", "C_scope": "search results",
-                    "scopes_distinct": False, "c_content_visible_under_h": False})}
+            "decision_check": "pass"}}
         errors = check_decision_impact(item)
-        self.assertTrue(any("HC scopes" in e for e in errors))
+        self.assertEqual(errors, ["decision_impact: declaration without recomputable evidence"])
 
-    def test_unresolved_contracts_without_decision_impact_are_not_errors(self):
-        from scripts.agent_stress_offline import check_decision_impact
-        self.assertEqual(check_decision_impact({"status": "unresolved",
-                                               "decision_impact": None}), [])
+    def test_fixture_evidence_recomputes_and_passes(self):
+        from scripts.agent_stress_decision import verify
+        evidence = read_json(self.decisions / "fixture_reviews/evidence.json")
+        result = verify(evidence)
+        self.assertTrue(result["passed"], result["errors"])
+        # 污染确实改变任务输出：[] -> ["Josef Bürger"]
+        self.assertEqual(result["outputs"]["truth"], {"authors": []})
+        self.assertEqual(result["outputs"]["polluted"], {"authors": ["Josef Bürger"]})
+
+    def test_real_task118_title_change_has_no_decision_impact(self):
+        from scripts.agent_stress_decision import verify
+        evidence = read_json(self.decisions / "task118_title/evidence.json")
+        result = verify(evidence)
+        self.assertFalse(result["passed"])
+        self.assertTrue(any("official:polluted" in e for e in result["errors"]))
+        self.assertTrue(any("protected source" in e for e in result["errors"]))
+
+    def test_hash_tampering_is_rejected(self):
+        import copy
+        from scripts.agent_stress_decision import verify
+        evidence = copy.deepcopy(read_json(self.decisions / "fixture_reviews/evidence.json"))
+        evidence["inputs"]["truth"]["sha256"] = "0" * 64
+        result = verify(evidence)
+        self.assertFalse(result["passed"])
+        self.assertTrue(any("sha256 mismatch" in e for e in result["errors"]))
+
+    def test_hc_payload_with_hidden_c_content_is_rejected(self):
+        import copy, hashlib, json
+        from scripts.agent_stress_decision import verify
+        evidence = copy.deepcopy(read_json(self.decisions / "fixture_reviews/evidence.json"))
+        payload = ROOT / "experiments/agent_stress_v1/decisions/_hc_hidden_test.json"
+        try:
+            payload.write_text(json.dumps({"marker": "RESOURCE UNAVAILABLE: reviews list"}),
+                               encoding="utf-8")
+            evidence["hc"]["hc_payload"] = {
+                "path": str(payload.relative_to(ROOT)),
+                "sha256": hashlib.sha256(payload.read_bytes()).hexdigest()}
+            result = verify(evidence)
+        finally:
+            payload.unlink(missing_ok=True)
+        self.assertFalse(result["passed"])
+        self.assertTrue(any("C content" in e for e in result["errors"]))
 
     def test_audit_reports_login_requirements_separately_by_split(self):
         report = audit(self.candidates, self.contracts, self.protocol, self.matrix)
@@ -146,3 +152,8 @@ class TestDecisionImpact(unittest.TestCase):
         self.assertEqual(sum(split["holdout_candidate"].values()), 40)
         self.assertIn("decision-impact evidence not established",
                       report["paid_run_blockers"])
+
+
+if __name__ == "__main__":
+    unittest.main()
+

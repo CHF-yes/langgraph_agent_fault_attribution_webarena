@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "errors": [],
+  "outputs": {
+    "truth": {
+      "authors": []
+    },
+    "polluted": {
+      "authors": [
+        "Josef Bürger"
+      ]
+    },
+    "protected": {
+      "authors": []
+    }
+  }
+}

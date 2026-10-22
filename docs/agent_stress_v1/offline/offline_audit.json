@@ -1057,6 +1057,11 @@
       "unknown": 31
     }
   },
+  "decision_impact_examples": {
+    "fixture_reviews": "passed",
+    "task118_title": "rejected"
+  },
+  "decision_impact_verified_contracts": 0,
   "validation_scope": "identity/readiness/linked-artifact checks; does not execute H/C or verify real browser solvability",
   "paid_trials_executed_by_this_tool": 0
 }

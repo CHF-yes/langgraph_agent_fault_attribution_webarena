@@ -476,69 +476,53 @@
         {
           "type": "object",
           "required": [
-            "required_output",
-            "computation",
-            "transform",
-            "truth_value",
-            "polluted_value",
-            "changes_required_output",
-            "official_tolerance_accepts_polluted",
-            "protected_source_output_matches_truth",
-            "decision_check"
+            "evidence"
           ],
           "properties": {
-            "required_output": {
-              "type": "string"
-            },
-            "computation": {
-              "type": "string"
-            },
-            "transform": {
-              "type": "object"
-            },
-            "truth_value": {},
-            "polluted_value": {},
-            "changes_required_output": {
-              "type": "boolean"
-            },
-            "official_tolerance_accepts_polluted": {
-              "type": "boolean"
-            },
-            "protected_source_output_matches_truth": {
-              "type": "boolean"
-            },
-            "deterministic_recompute": {
-              "type": [
-                "string",
-                "null"
-              ]
-            },
-            "decision_check": {
-              "enum": [
-                "pending",
-                "pass",
-                "fail"
-              ]
-            },
-            "hc_scopes": {
-              "type": [
-                "object",
-                "null"
+            "evidence": {
+              "type": "object",
+              "required": [
+                "computation",
+                "inputs",
+                "reported",
+                "official"
               ],
               "properties": {
-                "H_scope": {
-                  "type": "string"
+                "computation": {
+                  "type": "object",
+                  "required": [
+                    "path",
+                    "sha256"
+                  ]
                 },
-                "C_scope": {
-                  "type": "string"
+                "inputs": {
+                  "type": "object",
+                  "required": [
+                    "truth",
+                    "polluted",
+                    "protected"
+                  ]
                 },
-                "scopes_distinct": {
-                  "type": "boolean"
+                "reported": {
+                  "type": "object"
                 },
-                "c_content_visible_under_h": {
-                  "type": "boolean"
+                "official": {
+                  "type": "object",
+                  "required": [
+                    "truth",
+                    "polluted"
+                  ]
+                },
+                "hc": {
+                  "type": [
+                    "object",
+                    "null"
+                  ]
                 }
               }
+            },
+            "note": {
+              "type": "string"
             }
           }
         }

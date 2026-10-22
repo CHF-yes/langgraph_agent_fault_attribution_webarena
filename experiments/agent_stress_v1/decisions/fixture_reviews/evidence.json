@@ -1,0 +1,66 @@
+{
+  "computation": {
+    "path": "experiments/agent_stress_v1/decisions/fixture_reviews/compute.py",
+    "sha256": "bf2415940be6f0e997afa814b5851b19022303fae8814cd825049d84c42326d7"
+  },
+  "inputs": {
+    "truth": {
+      "path": "experiments/agent_stress_v1/decisions/fixture_reviews/truth_input.json",
+      "sha256": "0e5494b2f2d142a3773dee11753d8e151632bcfb51f4b5dcfbdb009a4fd8c1e7"
+    },
+    "polluted": {
+      "path": "experiments/agent_stress_v1/decisions/fixture_reviews/polluted_input.json",
+      "sha256": "5f185a20bfcf262f5e346f9397f0fd3c4a95c16534502ac96c8987a346d05402"
+    },
+    "protected": {
+      "path": "experiments/agent_stress_v1/decisions/fixture_reviews/protected_input.json",
+      "sha256": "0e5494b2f2d142a3773dee11753d8e151632bcfb51f4b5dcfbdb009a4fd8c1e7"
+    }
+  },
+  "reported": {
+    "truth": {
+      "authors": []
+    },
+    "polluted": {
+      "authors": [
+        "Josef Bürger"
+      ]
+    },
+    "protected": {
+      "authors": []
+    }
+  },
+  "official": {
+    "truth": {
+      "rule": "fixture_list_equality_v1",
+      "artifact": {
+        "path": "experiments/agent_stress_v1/decisions/fixture_reviews/official_truth.json",
+        "sha256": "6620f1c828068d03b7b3562c6f519d4ff1d66f17d50e8f4993d62ed86a21872b"
+      }
+    },
+    "polluted": {
+      "rule": "fixture_list_equality_v1",
+      "artifact": {
+        "path": "experiments/agent_stress_v1/decisions/fixture_reviews/official_polluted.json",
+        "sha256": "995cf56cbb1b165ca28c292e23fe2af6650157ec81851e6fdb89625d034fe807"
+      }
+    }
+  },
+  "hc": {
+    "h_payload": {
+      "path": "experiments/agent_stress_v1/decisions/fixture_reviews/h_payload.json",
+      "sha256": "bea8a784bc9f4a93db4f4036631e656e5015246e9149e1e72ec7a504a5455b28"
+    },
+    "hc_payload": {
+      "path": "experiments/agent_stress_v1/decisions/fixture_reviews/hc_payload.json",
+      "sha256": "025af10cce6291cd5ebc6d392ffcb89fa76047b68e4fa404c950332ccc460af4"
+    },
+    "h_marker": "RESOURCE UNAVAILABLE: reviews list",
+    "c_field": "review_text",
+    "c_value": "ear cups are too small",
+    "scopes": {
+      "H": "reviews-list",
+      "C": "review-author-field"
+    }
+  }
+}
