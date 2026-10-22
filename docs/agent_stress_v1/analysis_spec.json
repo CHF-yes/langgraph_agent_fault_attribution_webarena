@@ -1,0 +1,70 @@
+{
+  "schema": "agent_stress_analysis/1",
+  "status": "planned_not_preregistered",
+  "study_id": "agent-stress-v1-proposal",
+  "outcome": "native official success, with infrastructure/evaluator failure separately classified",
+  "primary_population": "all assigned heldout trials; include legitimate non-trigger, early termination and partial exposure",
+  "unit": "template cluster; tasks and repetitions nested within template",
+  "shared_control": {
+    "one_clean_trial_per": [
+      "task_id",
+      "architecture",
+      "repetition"
+    ],
+    "fault_comparisons_share_this_trial": true,
+    "duplicate_control_rows_as_independent_observations": false,
+    "variance_policy": "resample entire multi-condition template blocks jointly; preserve common clean and all paired conditions"
+  },
+  "estimator": {
+    "within_task": "d[t,a,c] = mean_r(y[t,a,r,clean] - y[t,a,r,c])",
+    "within_template": "d[g,a,c] = mean_tasks_in_template(d[t,a,c])",
+    "reported_effect": "Delta[a,c] = mean_templates(d[g,a,c]); percentage points = 100*Delta",
+    "primary_architecture_average": "Delta[c] = mean_architectures(Delta[a,c])",
+    "relative_drop": "Delta[c] divided by same-weight contemporaneous clean rate; undefined when clean rate is zero"
+  },
+  "primary_comparisons": [
+    "H_episode vs clean",
+    "C_episode vs clean",
+    "HC_episode vs clean"
+  ],
+  "intervals": {
+    "method": "nonparametric whole-template cluster bootstrap",
+    "replicates": 10000,
+    "seed": 20261022,
+    "resample_all_conditions_and_architectures_together": true,
+    "nominal_pointwise_interval": [
+      0.025,
+      0.975
+    ],
+    "primary_three_comparison_familywise_interval": "Bonferroni percentile intervals: quantiles 0.05/(2*3), 1-0.05/(2*3)",
+    "p_values": "no confirmatory p-values in this analysis specification",
+    "small_cluster_caveat": "12 template clusters yield limited precision; bootstrap intervals do not guarantee broad benchmark generalization",
+    "template_family_sensitivity": "repeat using prospectively assigned related-template families as coarser clusters"
+  },
+  "secondary": [
+    "single/window10/episode contrasts",
+    "architecture-by-fault contrasts using paired Delta differences",
+    "HC interaction",
+    "exposure-only mechanism summaries"
+  ],
+  "termination_labels": [
+    "official_success",
+    "official_failure_budget_exhausted",
+    "official_failure_early_abstention",
+    "official_failure_wrong_answer",
+    "agent_protocol_error",
+    "infrastructure_error",
+    "evaluator_error"
+  ],
+  "budget_interpretation": {
+    "20_step_exhaustion": "failure to complete within stated 20-step budget; valid task outcome if scored",
+    "unbounded_recovery_claim": false,
+    "40_step_panel": "preselected 8 tasks, fresh controls, report both budgets without outcome-based task selection"
+  },
+  "missingness": {
+    "planned_denominator_reported": true,
+    "infrastructure_or_evaluator_error_not_encoded_as_model_failure": true,
+    "incomplete_block": "report incomplete/missingness; no silent complete-case claim",
+    "repairs": "rerun infrastructure-invalid cells under original identity without replacing task or using observed fault effect"
+  }
+}

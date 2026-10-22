@@ -1,0 +1,37 @@
+{
+  "stage": "screening",
+  "checks": {
+    "dataset_bound": false,
+    "evaluator_config_readable": true,
+    "evaluator_dataset_binding": false,
+    "evaluator_site_bindings": true,
+    "dependency:langgraph": false,
+    "dependency:langchain_openai": false,
+    "dependency:playwright": false,
+    "dependency:dotenv": false,
+    "native_evaluator_sources": false,
+    "model_profile_configured": false,
+    "chromium_installed": false,
+    "site:gitlab": false,
+    "site:reddit": false,
+    "site:shopping": false
+  },
+  "blockers": [
+    "dataset_bound",
+    "evaluator_dataset_binding",
+    "dependency:langgraph",
+    "dependency:langchain_openai",
+    "dependency:playwright",
+    "dependency:dotenv",
+    "native_evaluator_sources",
+    "model_profile_configured",
+    "chromium_installed",
+    "site:gitlab",
+    "site:reddit",
+    "site:shopping"
+  ],
+  "environment_ready": false,
+  "evaluator_version": {},
+  "paid_trials_executed": 0,
+  "access_scope": "site-level only; task/account availability is measured during screening"
+}

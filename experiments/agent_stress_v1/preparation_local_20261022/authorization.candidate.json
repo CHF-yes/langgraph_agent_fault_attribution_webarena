@@ -1,0 +1,18 @@
+{
+  "status": "candidate",
+  "approved_for_paid_runs": false,
+  "experiment_id": "agent-stress-v1-screening",
+  "stage": "screening",
+  "plan_sha256": "6980d629f2782396690cec6892e044b8029751dd696031cd6c17621c9a3836af",
+  "code_sha256": "159030356e630b45e9e47732904cb6b3222784994d3e17cbf52ce61d2ad1dad7",
+  "dataset_sha256": null,
+  "evaluator_config_sha256": "54fff8f40f1a476c6b1944439f522972a63c9788ba2e06fc820221fdd7a08faf",
+  "evaluator_package_sha256": null,
+  "model_identity_sha256": null,
+  "max_trials": 348,
+  "max_steps": 20,
+  "job_timeout_seconds": 2700,
+  "prompt_token_stop_before_next_trial": null,
+  "approval_consumed": false,
+  "note": "Candidate only. Fill a positive prompt-token limit and authorize explicitly. No H/C approval is inherited."
+}

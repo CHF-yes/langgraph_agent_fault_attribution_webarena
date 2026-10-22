@@ -1,0 +1,8 @@
+{
+  "rule": "exact_output_v1",
+  "expected_output": {
+    "authors": []
+  },
+  "evidence_kind": "synthetic_fixture",
+  "not_native_official_grading": true
+}

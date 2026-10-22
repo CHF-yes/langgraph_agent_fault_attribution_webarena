@@ -1,0 +1,25 @@
+{
+  "passed": true,
+  "errors": [],
+  "outputs": {
+    "truth": {
+      "authors": []
+    },
+    "polluted": {
+      "authors": [
+        "Josef Bürger"
+      ]
+    },
+    "protected": {
+      "authors": []
+    }
+  },
+  "grading": {
+    "truth": true,
+    "polluted": false,
+    "protected": true
+  },
+  "native_results": {},
+  "real_contract_eligible": false,
+  "validation_level": "example_only"
+}
