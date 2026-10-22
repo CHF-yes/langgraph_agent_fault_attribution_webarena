@@ -346,5 +346,24 @@
     "replacement_after_fault_outcomes": "no replacement in current cohort; report operational exclusions/missingness and use a new cohort for amendments",
     "newly_unavailable_task": "preserve task identity and record failure category; do not silently choose another successful task"
   },
-  "offline_validation_scope": "contract and metadata checks only; no H/C engine or browser replay is implemented by these documents"
+  "offline_validation_scope": "contract and metadata checks only; no H/C engine or browser replay is implemented by these documents",
+  "decision_impact": {
+    "version": "decision-impact-v1",
+    "required_for": [
+      "C_single",
+      "C_window10",
+      "C_episode",
+      "HC_episode"
+    ],
+    "why": "注入、暴露与事实使用都成立，仍可能不改变任务要求的答案；必须事前验证污染值可能改变计算/筛选/排序/提交内容。",
+    "checks": [
+      "polluted_value != truth_value",
+      "transform changes the required output/computation/filter/sort/submission",
+      "official tolerance does NOT accept the polluted value",
+      "protected source reproduces the truth",
+      "HC: H scope and C scope are distinct and C content is visible under H"
+    ],
+    "selection": "pre-fixed; never chosen from heldout fault outcomes or model failures",
+    "verification": "deterministic task computation plus reference trajectory, not a paid model run"
+  }
 }

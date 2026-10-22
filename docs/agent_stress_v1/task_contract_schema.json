@@ -17,7 +17,8 @@
     "evidence_mapping",
     "use_judgment",
     "recovery_references",
-    "screening_evidence"
+    "screening_evidence",
+    "decision_impact"
   ],
   "properties": {
     "task_id": {
@@ -464,6 +465,82 @@
         },
         {
           "type": "null"
+        }
+      ]
+    },
+    "decision_impact": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "required": [
+            "required_output",
+            "computation",
+            "transform",
+            "truth_value",
+            "polluted_value",
+            "changes_required_output",
+            "official_tolerance_accepts_polluted",
+            "protected_source_output_matches_truth",
+            "decision_check"
+          ],
+          "properties": {
+            "required_output": {
+              "type": "string"
+            },
+            "computation": {
+              "type": "string"
+            },
+            "transform": {
+              "type": "object"
+            },
+            "truth_value": {},
+            "polluted_value": {},
+            "changes_required_output": {
+              "type": "boolean"
+            },
+            "official_tolerance_accepts_polluted": {
+              "type": "boolean"
+            },
+            "protected_source_output_matches_truth": {
+              "type": "boolean"
+            },
+            "deterministic_recompute": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "decision_check": {
+              "enum": [
+                "pending",
+                "pass",
+                "fail"
+              ]
+            },
+            "hc_scopes": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "properties": {
+                "H_scope": {
+                  "type": "string"
+                },
+                "C_scope": {
+                  "type": "string"
+                },
+                "scopes_distinct": {
+                  "type": "boolean"
+                },
+                "c_content_visible_under_h": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
         }
       ]
     }

@@ -11,6 +11,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SPEC_DIR = ROOT / "docs" / "agent_stress_v1"
 REQUIRED_BINDINGS = (
+    "decision_impact",
     "access_evidence", "main_resource", "entity_identity", "field_contract",
     "detector_profile", "protected_sources", "evidence_mapping",
     "use_judgment", "recovery_references", "screening_evidence",
@@ -104,6 +105,42 @@ def estimate(matrix, assumptions):
     }
 
 
+def check_decision_impact(item):
+    """C/HC 的关键检查：污染值是否**可能改变任务要求的答案/决策**。
+
+    仅证明注入、暴露或"事实被使用"不够：价格变了但输出只要名称、日期偏移仍落在
+    同一筛选区间、或官方容差仍接受污染值时，成功率不会下降。本检查只看事前固定的
+    任务计算，不看模型结果。
+    """
+    di = item.get("decision_impact")
+    if not isinstance(di, dict):
+        return ["missing decision_impact"] if item.get("status") == "verified" else []
+    required = ("required_output", "computation", "transform", "truth_value",
+                "polluted_value", "changes_required_output",
+                "official_tolerance_accepts_polluted",
+                "protected_source_output_matches_truth", "decision_check")
+    missing = [key for key in required if key not in di]
+    if missing:
+        return [f"decision_impact missing {','.join(missing)}"]
+    errors = []
+    if di.get("polluted_value") == di.get("truth_value"):
+        errors.append("decision_impact: polluted value equals the truth")
+    if di.get("changes_required_output") is not True:
+        errors.append("decision_impact: polluted value cannot change the required output")
+    if di.get("official_tolerance_accepts_polluted") is not False:
+        errors.append("decision_impact: official tolerance would accept the polluted value")
+    if di.get("protected_source_output_matches_truth") is not True:
+        errors.append("decision_impact: protected source does not reproduce the truth")
+    if di.get("decision_check") != "pass":
+        errors.append("decision_impact: decision_check is not pass")
+    if "HC_episode" in (item.get("recovery_references") or {}):
+        scopes = di.get("hc_scopes") or {}
+        if (scopes.get("scopes_distinct") is not True
+                or scopes.get("c_content_visible_under_h") is not True):
+            errors.append("decision_impact: HC scopes are not distinct or C content is hidden under H")
+    return errors
+
+
 def audit(candidates, contracts, protocol, matrix, *, artifact_root=ROOT):
     errors = []
     source = {t["task_id"]: t for t in candidates["tasks"]}
@@ -115,8 +152,13 @@ def audit(candidates, contracts, protocol, matrix, *, artifact_root=ROOT):
     if set(source) != set(profiles):
         errors.append("candidate/contract identity sets differ")
     split_templates = {}
+    login_by_split = {}
     for item in candidates["tasks"]:
         split_templates.setdefault(item["split_role"], set()).add(item["intent_template_id"])
+        bucket = login_by_split.setdefault(item["split_role"],
+                                           {"true": 0, "false": 0, "unknown": 0})
+        value = item.get("requires_login")
+        bucket["true" if value is True else "false" if value is False else "unknown"] += 1
         if item.get("requires_login") is not None and type(item["requires_login"]) is not bool:
             errors.append(f"task {item['task_id']}: invalid requires_login")
     if split_templates.get("development", set()) & split_templates.get("holdout_candidate", set()):
@@ -136,6 +178,8 @@ def audit(candidates, contracts, protocol, matrix, *, artifact_root=ROOT):
             continue
         if missing:
             errors.append(f"task {task_id}: claims verified with missing bindings")
+        for message in check_decision_impact(item):
+            errors.append(f"task {task_id}: {message}")
         for protected in item.get("protected_sources", []):
             if protected.get("excluded_from_H") is not True or protected.get("excluded_from_C") is not True:
                 errors.append(f"task {task_id}: protected source not excluded from both faults")
@@ -170,6 +214,9 @@ def audit(candidates, contracts, protocol, matrix, *, artifact_root=ROOT):
         blockers.append("task-specific bindings/replays still unresolved")
     if not matrix.get("enrolled_holdout_task_ids"):
         blockers.append("heldout task enrollment not frozen")
+    if not any(check_decision_impact(item) == [] and item.get("decision_impact")
+               for item in profiles.values()):
+        blockers.append("decision-impact evidence not established")
     return {
         "schema": "agent_stress_offline_audit/1",
         "candidate_count": len(source), "contract_count": len(profiles),
@@ -179,6 +226,7 @@ def audit(candidates, contracts, protocol, matrix, *, artifact_root=ROOT):
         "paid_run_blockers": blockers,
         "ready_for_paid_runs": not errors and not blockers,
         "unresolved_tasks": unresolved,
+        "login_requirements_by_split": login_by_split,
         "validation_scope": "identity/readiness/linked-artifact checks; does not execute H/C or verify real browser solvability",
         "paid_trials_executed_by_this_tool": 0,
     }

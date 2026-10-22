@@ -23,7 +23,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "review_filter_extract"
+      "template_family": "review_filter_extract",
+      "decision_impact": null
     },
     {
       "task_id": 23,
@@ -43,7 +44,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "review_filter_extract"
+      "template_family": "review_filter_extract",
+      "decision_impact": null
     },
     {
       "task_id": 25,
@@ -63,7 +65,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "review_filter_extract"
+      "template_family": "review_filter_extract",
+      "decision_impact": null
     },
     {
       "task_id": 132,
@@ -83,7 +86,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "commit_time_count"
+      "template_family": "commit_time_count",
+      "decision_impact": null
     },
     {
       "task_id": 133,
@@ -103,7 +107,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "commit_time_count"
+      "template_family": "commit_time_count",
+      "decision_impact": null
     },
     {
       "task_id": 134,
@@ -123,7 +128,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "commit_time_count"
+      "template_family": "commit_time_count",
+      "decision_impact": null
     },
     {
       "task_id": 124,
@@ -143,7 +149,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "product_price_aggregation"
+      "template_family": "product_price_aggregation",
+      "decision_impact": null
     },
     {
       "task_id": 125,
@@ -163,7 +170,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "product_price_aggregation"
+      "template_family": "product_price_aggregation",
+      "decision_impact": null
     },
     {
       "task_id": 126,
@@ -183,7 +191,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "product_price_aggregation"
+      "template_family": "product_price_aggregation",
+      "decision_impact": null
     },
     {
       "task_id": 279,
@@ -203,7 +212,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "product_price_aggregation"
+      "template_family": "product_price_aggregation",
+      "decision_impact": null
     },
     {
       "task_id": 280,
@@ -223,7 +233,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "product_price_aggregation"
+      "template_family": "product_price_aggregation",
+      "decision_impact": null
     },
     {
       "task_id": 281,
@@ -243,7 +254,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "product_price_aggregation"
+      "template_family": "product_price_aggregation",
+      "decision_impact": null
     },
     {
       "task_id": 231,
@@ -263,7 +275,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "account_order_history"
+      "template_family": "account_order_history",
+      "decision_impact": null
     },
     {
       "task_id": 232,
@@ -283,7 +296,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "account_order_history"
+      "template_family": "account_order_history",
+      "decision_impact": null
     },
     {
       "task_id": 233,
@@ -303,7 +317,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "account_order_history"
+      "template_family": "account_order_history",
+      "decision_impact": null
     },
     {
       "task_id": 169,
@@ -323,7 +338,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "project_star_filter"
+      "template_family": "project_star_filter",
+      "decision_impact": null
     },
     {
       "task_id": 170,
@@ -343,7 +359,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "project_star_filter"
+      "template_family": "project_star_filter",
+      "decision_impact": null
     },
     {
       "task_id": 171,
@@ -363,7 +380,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "project_star_filter"
+      "template_family": "project_star_filter",
+      "decision_impact": null
     },
     {
       "task_id": 27,
@@ -383,7 +401,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "forum_comment_count"
+      "template_family": "forum_comment_count",
+      "decision_impact": null
     },
     {
       "task_id": 28,
@@ -403,7 +422,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "forum_comment_count"
+      "template_family": "forum_comment_count",
+      "decision_impact": null
     },
     {
       "task_id": 29,
@@ -423,7 +443,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "forum_comment_count"
+      "template_family": "forum_comment_count",
+      "decision_impact": null
     },
     {
       "task_id": 66,
@@ -443,7 +464,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "forum_post_filter"
+      "template_family": "forum_post_filter",
+      "decision_impact": null
     },
     {
       "task_id": 67,
@@ -463,7 +485,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "forum_post_filter"
+      "template_family": "forum_post_filter",
+      "decision_impact": null
     },
     {
       "task_id": 68,
@@ -483,7 +506,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "forum_post_filter"
+      "template_family": "forum_post_filter",
+      "decision_impact": null
     },
     {
       "task_id": 226,
@@ -503,7 +527,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "product_price_aggregation"
+      "template_family": "product_price_aggregation",
+      "decision_impact": null
     },
     {
       "task_id": 227,
@@ -523,7 +548,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "product_price_aggregation"
+      "template_family": "product_price_aggregation",
+      "decision_impact": null
     },
     {
       "task_id": 228,
@@ -543,7 +569,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "product_price_aggregation"
+      "template_family": "product_price_aggregation",
+      "decision_impact": null
     },
     {
       "task_id": 163,
@@ -563,7 +590,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "review_filter_extract"
+      "template_family": "review_filter_extract",
+      "decision_impact": null
     },
     {
       "task_id": 164,
@@ -583,7 +611,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "review_filter_extract"
+      "template_family": "review_filter_extract",
+      "decision_impact": null
     },
     {
       "task_id": 165,
@@ -603,7 +632,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "review_filter_extract"
+      "template_family": "review_filter_extract",
+      "decision_impact": null
     },
     {
       "task_id": 384,
@@ -623,7 +653,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "review_filter_extract"
+      "template_family": "review_filter_extract",
+      "decision_impact": null
     },
     {
       "task_id": 385,
@@ -643,7 +674,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "review_filter_extract"
+      "template_family": "review_filter_extract",
+      "decision_impact": null
     },
     {
       "task_id": 387,
@@ -663,7 +695,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "review_filter_extract"
+      "template_family": "review_filter_extract",
+      "decision_impact": null
     },
     {
       "task_id": 388,
@@ -683,7 +716,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "review_filter_extract"
+      "template_family": "review_filter_extract",
+      "decision_impact": null
     },
     {
       "task_id": 308,
@@ -703,7 +737,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "contributor_ranking"
+      "template_family": "contributor_ranking",
+      "decision_impact": null
     },
     {
       "task_id": 309,
@@ -723,7 +758,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "contributor_ranking"
+      "template_family": "contributor_ranking",
+      "decision_impact": null
     },
     {
       "task_id": 310,
@@ -743,7 +779,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "contributor_ranking"
+      "template_family": "contributor_ranking",
+      "decision_impact": null
     },
     {
       "task_id": 314,
@@ -763,7 +800,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "contributor_ranking"
+      "template_family": "contributor_ranking",
+      "decision_impact": null
     },
     {
       "task_id": 315,
@@ -783,7 +821,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "contributor_ranking"
+      "template_family": "contributor_ranking",
+      "decision_impact": null
     },
     {
       "task_id": 316,
@@ -803,7 +842,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "contributor_ranking"
+      "template_family": "contributor_ranking",
+      "decision_impact": null
     },
     {
       "task_id": 303,
@@ -823,7 +863,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "commit_time_count"
+      "template_family": "commit_time_count",
+      "decision_impact": null
     },
     {
       "task_id": 304,
@@ -843,7 +884,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "commit_time_count"
+      "template_family": "commit_time_count",
+      "decision_impact": null
     },
     {
       "task_id": 305,
@@ -863,7 +905,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "commit_time_count"
+      "template_family": "commit_time_count",
+      "decision_impact": null
     },
     {
       "task_id": 293,
@@ -883,7 +926,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "repository_identifier"
+      "template_family": "repository_identifier",
+      "decision_impact": null
     },
     {
       "task_id": 294,
@@ -903,7 +947,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "repository_identifier"
+      "template_family": "repository_identifier",
+      "decision_impact": null
     },
     {
       "task_id": 295,
@@ -923,7 +968,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "repository_identifier"
+      "template_family": "repository_identifier",
+      "decision_impact": null
     },
     {
       "task_id": 47,
@@ -943,7 +989,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "account_order_history"
+      "template_family": "account_order_history",
+      "decision_impact": null
     },
     {
       "task_id": 48,
@@ -963,7 +1010,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "account_order_history"
+      "template_family": "account_order_history",
+      "decision_impact": null
     },
     {
       "task_id": 49,
@@ -983,7 +1031,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "account_order_history"
+      "template_family": "account_order_history",
+      "decision_impact": null
     },
     {
       "task_id": 146,
@@ -1003,7 +1052,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "account_order_history"
+      "template_family": "account_order_history",
+      "decision_impact": null
     },
     {
       "task_id": 147,
@@ -1023,7 +1073,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "account_order_history"
+      "template_family": "account_order_history",
+      "decision_impact": null
     },
     {
       "task_id": 148,
@@ -1043,7 +1094,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "account_order_history"
+      "template_family": "account_order_history",
+      "decision_impact": null
     },
     {
       "task_id": 784,
@@ -1063,7 +1115,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "contributor_ranking"
+      "template_family": "contributor_ranking",
+      "decision_impact": null
     },
     {
       "task_id": 785,
@@ -1083,7 +1136,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "contributor_ranking"
+      "template_family": "contributor_ranking",
+      "decision_impact": null
     },
     {
       "task_id": 786,
@@ -1103,7 +1157,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "contributor_ranking"
+      "template_family": "contributor_ranking",
+      "decision_impact": null
     },
     {
       "task_id": 188,
@@ -1123,7 +1178,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "account_order_history"
+      "template_family": "account_order_history",
+      "decision_impact": null
     },
     {
       "task_id": 189,
@@ -1143,7 +1199,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "account_order_history"
+      "template_family": "account_order_history",
+      "decision_impact": null
     },
     {
       "task_id": 190,
@@ -1163,7 +1220,8 @@
       "recovery_references": {},
       "screening_evidence": null,
       "missing_reason": "Needs clean captured observations and executable H/C/HC recovery paths; no selector or protected source is invented.",
-      "template_family": "account_order_history"
+      "template_family": "account_order_history",
+      "decision_impact": null
     }
   ],
   "note": "Machine-readable slots are not completed or validated task-specific fault rules."
