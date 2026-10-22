@@ -1,0 +1,73 @@
+{
+  "schema": "agent_stress_cost_assumptions/1",
+  "study_id": "agent-stress-v1-proposal",
+  "as_of": "2026-10-22",
+  "baseline": {
+    "source": "user-reported service-v1 task118 four-arm block",
+    "observed_trials": 4,
+    "prompt_tokens_total": 365305,
+    "completion_tokens_total": 3783,
+    "calls_total": 32,
+    "representative_sample": false
+  },
+  "stage_multipliers": {
+    "screening": {
+      "prompt": 1.0,
+      "completion": 1.0
+    },
+    "development": {
+      "prompt": 1.0,
+      "completion": 1.0
+    },
+    "heldout_primary": {
+      "prompt": 1.0,
+      "completion": 1.0
+    },
+    "budget_validation": {
+      "prompt": 2.5,
+      "completion": 2.0
+    }
+  },
+  "workload_scenarios": {
+    "low": 0.5,
+    "base": 1.0,
+    "high": 2.0
+  },
+  "billing": {
+    "currency": "USD",
+    "actual_prompt_per_million": null,
+    "actual_completion_per_million": null,
+    "cache_hit_fraction": null,
+    "actual_cached_prompt_per_million": null,
+    "status": "actual endpoint tariff not provided; examples are illustrative only"
+  },
+  "illustrative_tariffs": [
+    {
+      "name": "illustrative_A",
+      "prompt_per_million": 0.1,
+      "completion_per_million": 0.2
+    },
+    {
+      "name": "illustrative_B",
+      "prompt_per_million": 0.3,
+      "completion_per_million": 0.6
+    },
+    {
+      "name": "illustrative_C",
+      "prompt_per_million": 1.0,
+      "completion_per_million": 2.0
+    }
+  ],
+  "planning_reserve_fraction": 0.2,
+  "limits": {
+    "paid_runs_authorized": false,
+    "per_stage_currency_caps": null
+  },
+  "notes": [
+    "No model calls occur when calculating this estimate.",
+    "40-step factors are scenario assumptions; token growth can exceed step growth due to accumulated context.",
+    "Four navigation trials are too few to estimate new retrieval workload precisely; update forecast from completed authorized stages.",
+    "Reserve changes token/currency forecast, not planned trial count.",
+    "No current provider price, cache discount, or account balance is assumed."
+  ]
+}

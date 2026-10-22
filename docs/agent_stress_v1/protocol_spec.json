@@ -1,0 +1,350 @@
+{
+  "schema": "agent_stress_protocol/1",
+  "study_id": "agent-stress-v1-proposal",
+  "revision_date": "2026-10-22",
+  "status": "specification_only",
+  "implemented": false,
+  "approved_for_paid_runs": false,
+  "paid_trials_so_far": 0,
+  "implementation_base": {
+    "commit": "2cdfea75641ed95f5fa7136def5055e0a8abab01",
+    "branch": "codex/http-service-v1",
+    "reuse": [
+      "agent protocol/no_tool_call",
+      "endpoint identity rules",
+      "evidence hash binding",
+      "control contamination checks",
+      "freeze scope checks"
+    ],
+    "must_add": [
+      "content-ready detector",
+      "task/field bindings",
+      "type-preserving C transforms",
+      "protected source validation",
+      "H/C/HC recovery references"
+    ],
+    "previous_service_approval_consumed": true,
+    "previous_approval_reusable": false
+  },
+  "boundary": {
+    "layer": "agent_observation",
+    "backend_truth_changed": false,
+    "evaluator_truth_changed": false,
+    "observation_adapter": "stress-observation/1",
+    "all_model_visible_channels_must_agree": true,
+    "original_payload_available_to_agent": false,
+    "screenshots": "must be synchronized or excluded equally from all conditions"
+  },
+  "task_contracts": "task_contracts.json",
+  "task_contract_schema": "task_contract_schema.json",
+  "target_policy": {
+    "version": "task-resource-entity-field-v1",
+    "runtime_inputs": [
+      "task intent",
+      "frozen resource and field bindings",
+      "current unmodified observation"
+    ],
+    "forbidden_runtime_inputs": [
+      "official expected answer",
+      "heldout fault outcome",
+      "desired model failure label"
+    ],
+    "identity": [
+      "resource_scope_id",
+      "entity_key",
+      "field_id"
+    ],
+    "retarget_after_activation": false,
+    "H_C_same_task_resource_policy": true,
+    "url_query_rule": "explicit per resource binding; no implicit global query ignoring"
+  },
+  "activation": {
+    "version": "content-ready-v1",
+    "phase": "after agent action, before payload enters model context",
+    "requires": [
+      "bootstrap_complete",
+      "agent_originated_action",
+      "resource_matches",
+      "required_anchor_fields_present",
+      "unique_entity_match",
+      "typed_value_in_domain",
+      "payload_edit_mapping_complete"
+    ],
+    "same_url_action_allowed": true,
+    "url_change_required": false,
+    "runtime_llm_judge": false,
+    "ambiguous_match": "skip_and_record_ambiguous",
+    "absent_target": "skip_and_record_absent",
+    "unsupported_channel": "mechanism_error_stop",
+    "no_eligible_observation": "valid_not_triggered_keep_in_ITT",
+    "delivery_count": "unique action_uid with changed payload; repeated reads do not add doses",
+    "model_exposure_count": "observations actually joined to model_call_id; distinct from injector delivery",
+    "passive_reread_can_activate": false
+  },
+  "duration": {
+    "counter": "proxy_execution_step",
+    "bootstrap": "recorded but unarmed",
+    "single": {
+      "new_actions_affected": 1,
+      "same_action_reads_consistent": true,
+      "release": "before next action"
+    },
+    "window10": {
+      "start": "first delivered target payload step t0",
+      "end_inclusive": "t0+9",
+      "release_before_step": "t0+10"
+    },
+    "episode": {
+      "end": "trial terminal event",
+      "count_cap": null,
+      "release_at_trial_end_is_not_window_expiry": true
+    },
+    "early_terminal_inside_window": "released may remain null; mark real expiry coverage not_covered"
+  },
+  "families": {
+    "H": {
+      "name": "critical_resource_unavailable",
+      "payload": "explicit synthetic unavailable observation; original data and actionable target elements hidden",
+      "changes_real_http_status": false
+    },
+    "C": {
+      "name": "critical_fact_corruption",
+      "preserve": [
+        "data type",
+        "format",
+        "units",
+        "entity identity",
+        "unrelated content"
+      ],
+      "operators": {
+        "integer_delta": {
+          "relative_magnitude_candidates": [
+            0.1,
+            0.2,
+            0.25
+          ],
+          "absolute_min_delta": 1,
+          "rounding": "integer",
+          "domain": "per-task bounded domain; changed value required"
+        },
+        "decimal_delta": {
+          "relative_magnitude_candidates": [
+            0.1,
+            0.2,
+            0.25
+          ],
+          "rounding": "per-field decimal precision",
+          "currency": "integer cents internally",
+          "domain": "per-task bounded domain; changed value required"
+        },
+        "rating_shift": {
+          "absolute_delta_candidates": [
+            -1,
+            1
+          ],
+          "domain": "per-field scale, normally 1..5"
+        },
+        "date_shift": {
+          "days_candidates": [
+            -3,
+            -1,
+            1,
+            3
+          ],
+          "format": "field-defined ISO or page format",
+          "invalid_dates": "reject"
+        },
+        "list_omission": {
+          "selection": "first item matching frozen goal-derived predicate",
+          "count": 1,
+          "expected_answer_used": false
+        },
+        "same_type_entity_swap": {
+          "source": "other entity in current declared resource",
+          "matching": "unique entity key and same type",
+          "same_value": "not_triggered"
+        },
+        "stale_field": {
+          "source": "captured previous value of same field/entity",
+          "must_have_old_value_evidence": true
+        }
+      },
+      "formal_operator_policy": "chosen on development only, fixed per task field type before heldout faults",
+      "sign_and_choice": "deterministic hash of fault seed, scope, entity key and field id",
+      "consistent_reexposure": "same entity/field returns same altered value during active episode",
+      "no_legal_changed_value": "not_triggered_reason=domain_boundary; do not change another field"
+    },
+    "HC": {
+      "components": [
+        "H_episode",
+        "C_episode"
+      ],
+      "independent_postcomposition_recovery_validation_required": true
+    }
+  },
+  "protected_sources": {
+    "required_for": [
+      "H_episode",
+      "C_episode",
+      "HC_episode"
+    ],
+    "requirements": [
+      "unique protected source identity",
+      "explicit scope exclusion from both H and C",
+      "same requested fact obtainable",
+      "reference trace reads it",
+      "native evaluator success"
+    ],
+    "same_entity_aliases": "enumerate scope so that protected source is not silently poisoned",
+    "unverified_sources": "not eligible for frozen heldout enrollment"
+  },
+  "evidence_schema": {
+    "schema": "agent_stress_evidence/1",
+    "required_event_fields": [
+      "run_id",
+      "condition",
+      "task_id",
+      "action_uid",
+      "proxy_execution_step",
+      "observation_uid",
+      "detector_version",
+      "resource_scope_id",
+      "entity_key",
+      "field_id",
+      "decision",
+      "reason"
+    ],
+    "delivery_fields": [
+      "raw_payload_sha256",
+      "delivered_payload_sha256",
+      "edit_spans",
+      "old_value",
+      "new_value",
+      "transformation",
+      "target_identity",
+      "target_scope_id",
+      "duration",
+      "window_start",
+      "window_end",
+      "release_reason"
+    ],
+    "model_exposure_fields": [
+      "model_call_id",
+      "observation_uid",
+      "model_input_payload_sha256"
+    ],
+    "decisions": [
+      "not_armed",
+      "off_resource",
+      "absent",
+      "ambiguous",
+      "eligible",
+      "delivered",
+      "reread_same_action",
+      "released"
+    ],
+    "edit_span_unit": "Unicode code point offsets plus channel/json-pointer; record adapter version",
+    "truth_storage": "audit artifacts only, never appended to model context"
+  },
+  "use_judgment": {
+    "schema": "agent_stress_fact_use/1",
+    "labels": [
+      "used_confirmed",
+      "mention_only",
+      "not_used",
+      "unknown"
+    ],
+    "minimum_for_confirmed": [
+      "entity/field alignment",
+      "matching altered value or documented derivation",
+      "final-answer field or downstream action argument",
+      "source exposure preceding use"
+    ],
+    "mere_string_match_sufficient": false,
+    "no_attribution": "unknown, not not_used",
+    "intended_vs_delivered_action_args_recorded": true,
+    "unobservable_internal_reasoning_inferred": false,
+    "analysis": "post-run mechanism outcome, never used to pick official heldout samples or change injection"
+  },
+  "recovery_reference": {
+    "schema": "agent_stress_recovery_reference/1",
+    "conditions": [
+      "H_episode",
+      "C_episode",
+      "HC_episode"
+    ],
+    "initial_state": "same reset baseline as agent trials; include triggering prefix and recovery suffix",
+    "budget": {
+      "max_proxy_execution_steps_total": 20,
+      "include_trigger_prefix": true,
+      "count_bootstrap_consistently": true,
+      "final_answer_not_a_browser_step": true
+    },
+    "required_artifacts": [
+      "reference_actions.json",
+      "agent_response.json",
+      "network.har",
+      "official_eval.json",
+      "fault_evidence.json",
+      "source_reads.json",
+      "verification.json"
+    ],
+    "verification_required": [
+      "reset succeeded",
+      "fault actually delivered",
+      "protected source excluded from injection",
+      "correct fact read from source",
+      "answer derived from source not hard-coded",
+      "native official success",
+      "total steps within budget",
+      "H/C/HC joint scope validated"
+    ],
+    "execution": "deterministic browser/tool replay with fixed script, no paid LLM required",
+    "source_truth_check": "performed in reference verifier, never by runtime injector",
+    "artifact_integrity": "relative paths and SHA256 per artifact; capture environment state/reset ID",
+    "status_before_actual_replay": "pending; schema validity is not a successful reference trajectory"
+  },
+  "development": {
+    "tasks": 12,
+    "architectures": [
+      "react",
+      "plan_execute"
+    ],
+    "repetitions": 3,
+    "conditions": [
+      "clean",
+      "H_episode",
+      "C_single",
+      "C_window10",
+      "C_episode",
+      "HC_episode"
+    ],
+    "trials": 432,
+    "initial_mechanism_subset_trials": 8,
+    "initial_subset_is_included": true,
+    "subset_conditions": [
+      "clean",
+      "H_episode",
+      "C_episode",
+      "HC_episode"
+    ],
+    "maximum_optional_revision_batches": 1,
+    "extra_revision_trials_not_in_2124": 432,
+    "holdout_parameter_tuning": false
+  },
+  "holdout_enrollment": {
+    "freeze_after": [
+      "candidate access checks",
+      "screening controls",
+      "all recovery references",
+      "development rule selection"
+    ],
+    "freeze_before": [
+      "first heldout fault execution",
+      "viewing any heldout fault outcome"
+    ],
+    "replacement_after_fault_outcomes": "no replacement in current cohort; report operational exclusions/missingness and use a new cohort for amendments",
+    "newly_unavailable_task": "preserve task identity and record failure category; do not silently choose another successful task"
+  },
+  "offline_validation_scope": "contract and metadata checks only; no H/C engine or browser replay is implemented by these documents"
+}

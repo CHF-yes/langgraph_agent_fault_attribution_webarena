@@ -1,0 +1,524 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:agent-stress:task-contract:1",
+  "title": "Task-specific H/C/HC contract, including unresolved draft slots",
+  "type": "object",
+  "required": [
+    "task_id",
+    "intent_template_id",
+    "status",
+    "requires_login",
+    "access_evidence",
+    "main_resource",
+    "entity_identity",
+    "field_contract",
+    "detector_profile",
+    "protected_sources",
+    "evidence_mapping",
+    "use_judgment",
+    "recovery_references",
+    "screening_evidence"
+  ],
+  "properties": {
+    "task_id": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "intent_template_id": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "status": {
+      "enum": [
+        "unresolved",
+        "bound_not_replayed",
+        "verified"
+      ]
+    },
+    "requires_login": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "access_evidence": {
+      "anyOf": [
+        {
+          "type": "object",
+          "required": [
+            "path",
+            "sha256"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "main_resource": {
+      "anyOf": [
+        {
+          "type": "object",
+          "required": [
+            "scope_id",
+            "matcher_version",
+            "scheme",
+            "host",
+            "port",
+            "path_rules",
+            "query_policy"
+          ],
+          "properties": {
+            "scope_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "matcher_version": {
+              "type": "string",
+              "minLength": 1
+            },
+            "scheme": {
+              "enum": [
+                "http",
+                "https"
+              ]
+            },
+            "host": {
+              "type": "string",
+              "minLength": 1
+            },
+            "port": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 65535
+            },
+            "path_rules": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "query_policy": {
+              "type": "object"
+            }
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "entity_identity": {
+      "anyOf": [
+        {
+          "type": "object",
+          "required": [
+            "key_fields",
+            "locator",
+            "ambiguity_policy"
+          ],
+          "properties": {
+            "key_fields": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "locator": {
+              "type": "object",
+              "minProperties": 1
+            },
+            "ambiguity_policy": {
+              "const": "skip"
+            }
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "field_contract": {
+      "anyOf": [
+        {
+          "type": "object",
+          "required": [
+            "field_id",
+            "field_type",
+            "domain",
+            "transformation",
+            "payload_edit_mapping"
+          ],
+          "properties": {
+            "field_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "field_type": {
+              "enum": [
+                "integer",
+                "decimal",
+                "rating",
+                "date",
+                "string",
+                "list",
+                "categorical"
+              ]
+            },
+            "domain": {
+              "type": "object",
+              "minProperties": 1
+            },
+            "transformation": {
+              "type": "object",
+              "required": [
+                "operator",
+                "parameters"
+              ]
+            },
+            "payload_edit_mapping": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "detector_profile": {
+      "anyOf": [
+        {
+          "type": "object",
+          "required": [
+            "version",
+            "required_anchors",
+            "unique_match"
+          ],
+          "properties": {
+            "version": {
+              "const": "content-ready-v1"
+            },
+            "unique_match": {
+              "const": true
+            }
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "protected_sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "source_id",
+          "resource_scope",
+          "fact_mapping",
+          "excluded_from_H",
+          "excluded_from_C",
+          "verification_artifact"
+        ],
+        "properties": {
+          "source_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "resource_scope": {
+            "type": "object",
+            "required": [
+              "scope_id",
+              "matcher_version",
+              "scheme",
+              "host",
+              "port",
+              "path_rules",
+              "query_policy"
+            ],
+            "properties": {
+              "scope_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "matcher_version": {
+                "type": "string",
+                "minLength": 1
+              },
+              "scheme": {
+                "enum": [
+                  "http",
+                  "https"
+                ]
+              },
+              "host": {
+                "type": "string",
+                "minLength": 1
+              },
+              "port": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 65535
+              },
+              "path_rules": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "query_policy": {
+                "type": "object"
+              }
+            }
+          },
+          "fact_mapping": {
+            "type": "object",
+            "minProperties": 1
+          },
+          "excluded_from_H": {
+            "const": true
+          },
+          "excluded_from_C": {
+            "const": true
+          },
+          "verification_artifact": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "evidence_mapping": {
+      "anyOf": [
+        {
+          "type": "object",
+          "minProperties": 1
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "use_judgment": {
+      "anyOf": [
+        {
+          "type": "object",
+          "required": [
+            "answer_fields",
+            "action_argument_fields",
+            "entity_field_alignment_rule"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "recovery_references": {
+      "type": "object",
+      "properties": {
+        "H_episode": {
+          "type": "object",
+          "required": [
+            "condition",
+            "total_steps",
+            "native_success",
+            "protected_fact_read",
+            "artifacts"
+          ],
+          "properties": {
+            "condition": {
+              "enum": [
+                "H_episode",
+                "C_episode",
+                "HC_episode"
+              ]
+            },
+            "total_steps": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 20
+            },
+            "native_success": {
+              "const": true
+            },
+            "protected_fact_read": {
+              "const": true
+            },
+            "artifacts": {
+              "type": "array",
+              "minItems": 7,
+              "items": {
+                "type": "object",
+                "required": [
+                  "path",
+                  "sha256"
+                ]
+              }
+            }
+          }
+        },
+        "C_episode": {
+          "type": "object",
+          "required": [
+            "condition",
+            "total_steps",
+            "native_success",
+            "protected_fact_read",
+            "artifacts"
+          ],
+          "properties": {
+            "condition": {
+              "enum": [
+                "H_episode",
+                "C_episode",
+                "HC_episode"
+              ]
+            },
+            "total_steps": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 20
+            },
+            "native_success": {
+              "const": true
+            },
+            "protected_fact_read": {
+              "const": true
+            },
+            "artifacts": {
+              "type": "array",
+              "minItems": 7,
+              "items": {
+                "type": "object",
+                "required": [
+                  "path",
+                  "sha256"
+                ]
+              }
+            }
+          }
+        },
+        "HC_episode": {
+          "type": "object",
+          "required": [
+            "condition",
+            "total_steps",
+            "native_success",
+            "protected_fact_read",
+            "artifacts"
+          ],
+          "properties": {
+            "condition": {
+              "enum": [
+                "H_episode",
+                "C_episode",
+                "HC_episode"
+              ]
+            },
+            "total_steps": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 20
+            },
+            "native_success": {
+              "const": true
+            },
+            "protected_fact_read": {
+              "const": true
+            },
+            "artifacts": {
+              "type": "array",
+              "minItems": 7,
+              "items": {
+                "type": "object",
+                "required": [
+                  "path",
+                  "sha256"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "screening_evidence": {
+      "anyOf": [
+        {
+          "type": "object",
+          "required": [
+            "react",
+            "plan_execute"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "verified"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "requires_login": {
+            "type": "boolean"
+          },
+          "access_evidence": {
+            "type": "object"
+          },
+          "main_resource": {
+            "type": "object"
+          },
+          "entity_identity": {
+            "type": "object"
+          },
+          "field_contract": {
+            "type": "object"
+          },
+          "detector_profile": {
+            "type": "object"
+          },
+          "protected_sources": {
+            "minItems": 1
+          },
+          "evidence_mapping": {
+            "type": "object"
+          },
+          "use_judgment": {
+            "type": "object"
+          },
+          "screening_evidence": {
+            "type": "object"
+          },
+          "recovery_references": {
+            "required": [
+              "H_episode",
+              "C_episode",
+              "HC_episode"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "description": "Passing this structural schema does not execute a replay or establish solvability."
+}

@@ -1,0 +1,991 @@
+{
+  "schema": "agent_stress_offline_audit/1",
+  "candidate_count": 58,
+  "contract_count": 58,
+  "verified_contracts": 0,
+  "unresolved_contract_count": 58,
+  "errors": [],
+  "structural_checks_passed": true,
+  "paid_run_blockers": [
+    "H/C runtime not implemented",
+    "no paid-run authorization",
+    "task-specific bindings/replays still unresolved",
+    "heldout task enrollment not frozen"
+  ],
+  "ready_for_paid_runs": false,
+  "unresolved_tasks": [
+    {
+      "task_id": 21,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 23,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 25,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 132,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 133,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 134,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 124,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 125,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 126,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 279,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 280,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 281,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 231,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 232,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 233,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 169,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 170,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 171,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 27,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 28,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 29,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 66,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 67,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 68,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 226,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 227,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 228,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 163,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 164,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 165,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 384,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 385,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 387,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 388,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 308,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 309,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 310,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 314,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 315,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 316,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 303,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 304,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 305,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 293,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 294,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 295,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 47,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 48,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 49,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 146,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 147,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 148,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 784,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 785,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 786,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence",
+        "requires_login"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 188,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 189,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence"
+      ],
+      "status": "unresolved"
+    },
+    {
+      "task_id": 190,
+      "missing": [
+        "access_evidence",
+        "main_resource",
+        "entity_identity",
+        "field_contract",
+        "detector_profile",
+        "protected_sources",
+        "evidence_mapping",
+        "use_judgment",
+        "recovery_references",
+        "screening_evidence"
+      ],
+      "status": "unresolved"
+    }
+  ],
+  "validation_scope": "identity/readiness/linked-artifact checks; does not execute H/C or verify real browser solvability",
+  "paid_trials_executed_by_this_tool": 0
+}

@@ -1,0 +1,126 @@
+{
+  "schema": "agent_stress_cost_estimate/1",
+  "planned_trials": 2124,
+  "baseline_prompt_per_trial": 91326.25,
+  "baseline_completion_per_trial": 945.75,
+  "uniform_baseline_prompt_tokens": 193976955.0,
+  "stage_adjusted_prompt_tokens": 220278915.0,
+  "stage_adjusted_completion_tokens": 2190357.0,
+  "stages": [
+    {
+      "stage": "screening",
+      "trials": 348,
+      "prompt_tokens": 31781535.0,
+      "completion_tokens": 329121.0
+    },
+    {
+      "stage": "development",
+      "trials": 432,
+      "prompt_tokens": 39452940.0,
+      "completion_tokens": 408564.0
+    },
+    {
+      "stage": "heldout_primary",
+      "trials": 1152,
+      "prompt_tokens": 105207840.0,
+      "completion_tokens": 1089504.0
+    },
+    {
+      "stage": "budget_validation",
+      "trials": 192,
+      "prompt_tokens": 43836600.0,
+      "completion_tokens": 363168.0
+    }
+  ],
+  "workload_scenarios": {
+    "low": {
+      "prompt_tokens": 110139457.5,
+      "completion_tokens": 1095178.5,
+      "prompt_tokens_with_reserve": 132167349.0,
+      "completion_tokens_with_reserve": 1314214.2,
+      "illustrative_costs_only": [
+        {
+          "tariff": "illustrative_A",
+          "currency": "USD",
+          "amount": 11.233,
+          "amount_with_reserve": 13.4796
+        },
+        {
+          "tariff": "illustrative_B",
+          "currency": "USD",
+          "amount": 33.6989,
+          "amount_with_reserve": 40.4387
+        },
+        {
+          "tariff": "illustrative_C",
+          "currency": "USD",
+          "amount": 112.3298,
+          "amount_with_reserve": 134.7958
+        }
+      ]
+    },
+    "base": {
+      "prompt_tokens": 220278915.0,
+      "completion_tokens": 2190357.0,
+      "prompt_tokens_with_reserve": 264334698.0,
+      "completion_tokens_with_reserve": 2628428.4,
+      "illustrative_costs_only": [
+        {
+          "tariff": "illustrative_A",
+          "currency": "USD",
+          "amount": 22.466,
+          "amount_with_reserve": 26.9592
+        },
+        {
+          "tariff": "illustrative_B",
+          "currency": "USD",
+          "amount": 67.3979,
+          "amount_with_reserve": 80.8775
+        },
+        {
+          "tariff": "illustrative_C",
+          "currency": "USD",
+          "amount": 224.6596,
+          "amount_with_reserve": 269.5916
+        }
+      ]
+    },
+    "high": {
+      "prompt_tokens": 440557830.0,
+      "completion_tokens": 4380714.0,
+      "prompt_tokens_with_reserve": 528669396.0,
+      "completion_tokens_with_reserve": 5256856.8,
+      "illustrative_costs_only": [
+        {
+          "tariff": "illustrative_A",
+          "currency": "USD",
+          "amount": 44.9319,
+          "amount_with_reserve": 53.9183
+        },
+        {
+          "tariff": "illustrative_B",
+          "currency": "USD",
+          "amount": 134.7958,
+          "amount_with_reserve": 161.7549
+        },
+        {
+          "tariff": "illustrative_C",
+          "currency": "USD",
+          "amount": 449.3193,
+          "amount_with_reserve": 539.1831
+        }
+      ]
+    }
+  },
+  "actual_tariff_supplied": false,
+  "actual_tariff_forecast_before_cache_or_reserve": null,
+  "forecast_is_actual_billing": false,
+  "paid_trials_executed_by_this_tool": 0,
+  "limitations": [
+    "No model calls occur when calculating this estimate.",
+    "40-step factors are scenario assumptions; token growth can exceed step growth due to accumulated context.",
+    "Four navigation trials are too few to estimate new retrieval workload precisely; update forecast from completed authorized stages.",
+    "Reserve changes token/currency forecast, not planned trial count.",
+    "No current provider price, cache discount, or account balance is assumed."
+  ]
+}

@@ -76,7 +76,8 @@
     "holdout_target_templates": 12,
     "requires_budget_feasible_recovery_paths": true,
     "minimum_sites": 3,
-    "no_fault_outcome_based_holdout_selection": true
+    "no_fault_outcome_based_holdout_selection": true,
+    "holdout_replacement_freeze": "before_heldout_fault_runs_and_before_viewing_any_heldout_fault_outcomes"
   },
   "stages": [
     {
@@ -95,7 +96,29 @@
       "repetitions": 3,
       "conditions": 6,
       "max_steps": 20,
-      "planned_trials": 432
+      "planned_trials": 432,
+      "condition_ids": [
+        "clean",
+        "H_episode",
+        "C_single",
+        "C_window10",
+        "C_episode",
+        "HC_episode"
+      ],
+      "initial_mechanism_acceptance": {
+        "tasks": 1,
+        "architectures": 2,
+        "repetitions": 1,
+        "condition_ids": [
+          "clean",
+          "H_episode",
+          "C_episode",
+          "HC_episode"
+        ],
+        "trials": 8,
+        "included_in_stage_trials": true,
+        "remaining_stage_trials_after_acceptance": 424
+      }
     },
     {
       "id": "heldout_primary",
@@ -129,6 +152,23 @@
     "Shared contemporaneous control is one independent trial, not seven duplicated control observations.",
     "Development may optimize failure rate; final heldout rules and sample are fixed before fault outcomes.",
     "Candidate enrollment and recovery paths are not yet validated; shortages require prospective pool amendments.",
-    "No second model, V4 Pro, verifier architecture, or additional development round included in stated count."
-  ]
+    "No second model, V4 Pro, verifier architecture, or additional development round included in stated count.",
+    "Development six conditions revised to clean/H_episode/C_single/C_window10/C_episode/HC_episode; 432 and overall 2124 remain unchanged.",
+    "First eight development trials are a mechanism acceptance subset of 432, not additional authorization or additional trials.",
+    "Candidate authentication requirements and all per-task bindings still require verification."
+  ],
+  "revision_date": "2026-10-22",
+  "implementation_base": {
+    "repository_ref": "origin/codex/http-service-v1",
+    "verified_commit": "2cdfea75641ed95f5fa7136def5055e0a8abab01",
+    "proposal_commit": "420738b",
+    "proposal_parent": "aaca1ce",
+    "policy": "Create future implementation branch from the verified service baseline and bring in proposal documents; do not assume proposal branch contains service runtime.",
+    "service_approval_consumed": true,
+    "authorizes_this_study": false
+  },
+  "protocol_spec_file": "agent_stress_v1/protocol_spec.json",
+  "task_contracts_file": "agent_stress_v1/task_contracts.json",
+  "cost_assumptions_file": "agent_stress_v1/cost_assumptions.json",
+  "analysis_spec_file": "agent_stress_v1/analysis_spec.json"
 }
