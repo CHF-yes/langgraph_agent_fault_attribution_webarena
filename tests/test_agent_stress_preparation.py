@@ -86,6 +86,27 @@ class ScreeningPreparation(unittest.TestCase):
         self.assertFalse(self.plan['requires_HC_runtime'])
         self.assertEqual(screening.build_plan(self.candidates, self.matrix), self.plan)
 
+    def test_requested_screening_defaults_to_existing_qwen_profile(self):
+        self.assertEqual(self.plan['model_profile'], 'qwen38_flash')
+        self.assertEqual({cell['model_profile'] for cell in self.plan['cells']}, {'qwen38_flash'})
+        self.assertEqual(self.plan['eligibility_applies_to_model_profile'], 'qwen38_flash')
+        self.assertFalse(self.plan['cross_model_eligibility_transfer_allowed'])
+        self.assertEqual(self.matrix['scope']['model_profiles'], ['deepseek_v41_flash'])
+
+    def test_model_switch_preserves_348_cells_but_changes_identity(self):
+        original=copy.deepcopy(self.matrix)
+        deepseek=screening.build_plan(self.candidates,self.matrix,model_profile='deepseek_v41_flash')
+        qwen=screening.build_plan(self.candidates,self.matrix,model_profile='qwen38_flash')
+        identity=lambda plan: [(cell['task_id'],cell['architecture'],cell['seed'],cell['condition']) for cell in plan['cells']]
+        self.assertEqual(identity(deepseek),identity(qwen))
+        self.assertEqual(len(qwen['cells']),348)
+        self.assertNotEqual(deepseek['experiment_id'],qwen['experiment_id'])
+        self.assertNotEqual(deepseek['plan_sha256'],qwen['plan_sha256'])
+        self.assertFalse({cell['key'] for cell in deepseek['cells']} & {cell['key'] for cell in qwen['cells']})
+        self.assertEqual(self.matrix,original)
+        with self.assertRaisesRegex(ValueError,'unsupported'):
+            screening.build_plan(self.candidates,self.matrix,model_profile='unconfigured_model')
+
     def test_dataset_must_bind_all_58_exact_task_definitions(self):
         rows = [{"task_id": task['task_id'], "intent_template_id": task['intent_template_id'],
                  "intent": task['intent'], "sites": [task['site']],
@@ -113,7 +134,7 @@ class ScreeningPreparation(unittest.TestCase):
             self.assertFalse(root.exists())
 
     def test_hash_and_scope_changes_are_rejected(self):
-        report = {'environment_ready': True, 'evaluator_version': {'package_sha256': 'version'},
+        report = {'model_profile': self.plan['model_profile'], 'environment_ready': True, 'evaluator_version': {'package_sha256': 'version'},
                   'model_identity_sha256': 'model'}
         with tempfile.NamedTemporaryFile() as config:
             plan = copy.deepcopy(self.plan)
@@ -127,7 +148,8 @@ class ScreeningPreparation(unittest.TestCase):
             self.assertEqual(screening.check_authorization(plan, auth, report, config.name), [])
             for key, value in (('plan_sha256', 'other'), ('max_trials', 349),
                                ('max_steps', 40), ('code_sha256', 'other'),
-                               ('dataset_sha256', 'other'), ('approval_consumed', True)):
+                               ('dataset_sha256', 'other'), ('approval_consumed', True),
+                               ('model_profile','deepseek_v41_flash')):
                 altered = dict(auth, **{key:value})
                 self.assertTrue(screening.check_authorization(plan, altered, report, config.name), key)
             plan['cells'][0]['condition'] = 'fault'
@@ -141,6 +163,25 @@ class ScreeningPreparation(unittest.TestCase):
         self.assertEqual(cmd[cmd.index('--trials')+1], '1')
         self.assertNotIn('--expected-answer', cmd)
         self.assertNotIn('--fault-type', cmd)
+        self.assertEqual(cmd[cmd.index('--model-profile')+1], 'qwen38_flash')
+
+    def test_different_model_authorization_never_starts_a_process(self):
+        report={'environment_ready':True,'model_profile':'qwen38_flash',
+                'evaluator_version':{'package_sha256':'version'},'model_identity_sha256':'model'}
+        with tempfile.TemporaryDirectory() as folder, patch.object(screening.subprocess,'run') as run:
+            config=Path(folder)/'config.json';config.write_text('{}')
+            plan=copy.deepcopy(self.plan)
+            plan['dataset_sha256']='dataset'
+            for cell in plan['cells']:
+                cell['start_url']='http://localhost:7770/test'
+            plan['plan_sha256']=screening.digest({k:v for k,v in plan.items() if k!='plan_sha256'})
+            auth=screening.authorization_template(plan,report,config)
+            auth.update(status='frozen',approved_for_paid_runs=True,
+                        prompt_token_stop_before_next_trial=1000000,model_profile='deepseek_v41_flash')
+            with self.assertRaisesRegex(ValueError,'model_profile'):
+                screening.execute(plan,auth,report,config,Path(folder)/'run',dataset='dataset',
+                                  authorization_path=Path(folder)/'auth.json')
+            run.assert_not_called()
 
     def test_trace_usage_is_actual_and_missing_usage_rejected(self):
         with tempfile.TemporaryDirectory() as folder:
@@ -153,7 +194,7 @@ class ScreeningPreparation(unittest.TestCase):
                 screening.trace_prompt_tokens(record)
 
     def test_runner_grades_records_usage_and_stops_before_next_trial(self):
-        report = {'environment_ready': True, 'evaluator_version': {'package_sha256': 'version'},
+        report = {'model_profile': self.plan['model_profile'], 'environment_ready': True, 'evaluator_version': {'package_sha256': 'version'},
                   'model_identity_sha256': 'model'}
         with tempfile.TemporaryDirectory() as folder:
             folder=Path(folder)
@@ -170,6 +211,8 @@ class ScreeningPreparation(unittest.TestCase):
             auth_path=folder/'auth.json'; auth_path.write_text(json.dumps(auth))
             run_root=folder/'run'
             def fake_child(cmd, **kwargs):
+                self.assertEqual(cmd[cmd.index('--model-profile')+1], 'qwen38_flash')
+                self.assertEqual(cmd[cmd.index('--experiment-id')+1], plan['experiment_id'])
                 cell=plan['cells'][0]
                 output=Path(cmd[cmd.index('--webarena-output-dir')+1])
                 arm=output/str(cell['task_id'])/f"control_seed_{cell['seed']}"
@@ -187,6 +230,8 @@ class ScreeningPreparation(unittest.TestCase):
                 self.assertEqual(run.call_count,1)
                 self.assertEqual(grade.call_count,1)
                 self.assertEqual(artifacts.call_args.kwargs['expect']['fault_type'],'control')
+                self.assertEqual(artifacts.call_args.kwargs['expect']['model_profile'],'qwen38_flash')
+                self.assertEqual(artifacts.call_args.kwargs['expect']['experiment_id'],plan['experiment_id'])
                 progress=screening.load(run_root/'progress.json')
                 self.assertEqual(progress['prompt_tokens'],100)
                 self.assertFalse(progress['completed'][0]['official_success'])

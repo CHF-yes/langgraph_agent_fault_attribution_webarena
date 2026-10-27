@@ -77,7 +77,12 @@
     "requires_budget_feasible_recovery_paths": true,
     "minimum_sites": 3,
     "no_fault_outcome_based_holdout_selection": true,
-    "holdout_replacement_freeze": "before_heldout_fault_runs_and_before_viewing_any_heldout_fault_outcomes"
+    "holdout_replacement_freeze": "before_heldout_fault_runs_and_before_viewing_any_heldout_fault_outcomes",
+    "screening_model_profiles": [
+      "qwen38_flash"
+    ],
+    "cross_model_clean_success_transfer_allowed": false,
+    "downstream_model_confirmation": "If downstream stages use a different model, obtain that model clean eligibility evidence before fault enrollment; additional confirmation trials are not budgeted in 2124."
   },
   "stages": [
     {
@@ -87,7 +92,11 @@
       "repetitions": 3,
       "conditions": 1,
       "max_steps": 20,
-      "planned_trials": 348
+      "planned_trials": 348,
+      "model_profiles": [
+        "qwen38_flash"
+      ],
+      "role": "initial Qwen-specific clean screening; does not verify downstream DeepSeek eligibility"
     },
     {
       "id": "development",
@@ -155,9 +164,10 @@
     "No second model, V4 Pro, verifier architecture, or additional development round included in stated count.",
     "Development six conditions revised to clean/H_episode/C_single/C_window10/C_episode/HC_episode; 432 and overall 2124 remain unchanged.",
     "First eight development trials are a mechanism acceptance subset of 432, not additional authorization or additional trials.",
-    "Candidate authentication requirements and all per-task bindings still require verification."
+    "Candidate authentication requirements and all per-task bindings still require verification.",
+    "2026-10-27 user requested the first 348 clean trials on existing qwen38_flash. Downstream model scope remains unchanged; Qwen success is not DeepSeek success. Planned arithmetic remains 2124; any added DeepSeek confirmation is a separate prospective amendment."
   ],
-  "revision_date": "2026-10-22",
+  "revision_date": "2026-10-27",
   "implementation_base": {
     "repository_ref": "origin/codex/http-service-v1",
     "verified_commit": "2cdfea75641ed95f5fa7136def5055e0a8abab01",

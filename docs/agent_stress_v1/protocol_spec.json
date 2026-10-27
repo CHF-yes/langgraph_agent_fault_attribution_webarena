@@ -1,7 +1,7 @@
 {
   "schema": "agent_stress_protocol/1",
   "study_id": "agent-stress-v1-proposal",
-  "revision_date": "2026-10-22",
+  "revision_date": "2026-10-27",
   "status": "specification_only",
   "implemented": false,
   "approved_for_paid_runs": false,
@@ -379,5 +379,14 @@
     "HC_runtime_implemented": false,
     "server_validation_reserved": true,
     "new_paid_trials": 0
+  },
+  "screening_stage_amendment": {
+    "date": "2026-10-27",
+    "model_profile": "qwen38_flash",
+    "trials": 348,
+    "faults_enabled": false,
+    "scope": "initial screening only; downstream model scope is unchanged",
+    "clean_eligibility_transfers_between_models": false,
+    "additional_cross_model_confirmation_included_in_2124": false
   }
 }

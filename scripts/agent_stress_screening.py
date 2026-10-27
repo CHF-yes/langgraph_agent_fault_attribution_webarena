@@ -23,6 +23,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 EXPERIMENT = "agent-stress-v1-screening"
+MODEL_PROFILES = ("deepseek_v41_flash", "qwen38_flash")
 PORTS = {"shopping": 7770, "reddit": 9999, "gitlab": 8023}
 
 
@@ -49,7 +50,8 @@ def code_sha(root=ROOT):
     return digest({str(path.relative_to(root)): file_sha(path) for path in sorted(paths)})
 
 
-def build_plan(candidates, matrix, dataset=None, *, host="localhost", schedule_seed=20261022):
+def build_plan(candidates, matrix, dataset=None, *, host="localhost", schedule_seed=20261022,
+               model_profile=None):
     tasks = candidates["tasks"]
     ids = [item["task_id"] for item in tasks]
     if len(ids) != len(set(ids)) or len(ids) != 58:
@@ -58,8 +60,12 @@ def build_plan(candidates, matrix, dataset=None, *, host="localhost", schedule_s
     if (stage["tasks"], stage["architectures"], stage["repetitions"],
         stage["conditions"], stage["max_steps"], stage["planned_trials"]) != (58, 2, 3, 1, 20, 348):
         raise ValueError("screening scope differs from 58 x 2 x 3 clean, 20 steps")
-    if matrix["scope"]["model_profiles"] != ["deepseek_v41_flash"]:
-        raise ValueError("screening model profile differs from the proposal")
+    stage_models = stage.get("model_profiles", matrix["scope"]["model_profiles"])
+    if len(stage_models) != 1 or stage_models[0] not in MODEL_PROFILES:
+        raise ValueError("screening requires one supported model profile")
+    model_profile = model_profile or stage_models[0]
+    if model_profile not in MODEL_PROFILES:
+        raise ValueError("unsupported screening model profile")
     if matrix["scope"]["architectures"] != ["react", "plan_execute"]:
         raise ValueError("screening architectures differ from the proposal")
     definitions = None
@@ -90,14 +96,18 @@ def build_plan(candidates, matrix, dataset=None, *, host="localhost", schedule_s
                 raise ValueError(f"task {task_id}: start URL does not match the bound site/host")
         for architecture in ("react", "plan_execute"):
             for seed in (1, 2, 3):
-                cells.append({"key": f"task{task_id}_{architecture}_seed{seed}",
+                cells.append({"key": f"{model_profile}_task{task_id}_{architecture}_seed{seed}",
                               "task_id": task_id, "site": site, "start_url": url,
                               "intent": item["intent"], "architecture": architecture,
-                              "model_profile": "deepseek_v41_flash", "seed": seed,
+                              "model_profile": model_profile, "seed": seed,
                               "max_steps": 20, "condition": "control"})
     random.Random(schedule_seed).shuffle(cells)
-    plan = {"schema": "agent_stress_screening_plan/1", "experiment_id": EXPERIMENT,
+    plan = {"schema": "agent_stress_screening_plan/2", "experiment_id": f"{EXPERIMENT}-{model_profile}",
             "stage": "screening", "planned_trials": len(cells), "host": host,
+            "model_profile": model_profile,
+            "eligibility_applies_to_model_profile": model_profile,
+            "downstream_proposal_model_profiles": matrix["scope"]["model_profiles"],
+            "cross_model_eligibility_transfer_allowed": False,
             "schedule_seed": schedule_seed, "candidates_sha256": digest(candidates),
             "dataset_sha256": file_sha(dataset), "cells": cells,
             "faults_enabled": False, "requires_HC_runtime": False}
@@ -133,12 +143,15 @@ def preflight(plan, config_path):
         checks["native_evaluator_sources"] = False
     try:
         from standard_agent.config import settings
-        profile = settings.get_model_profile("deepseek_v41_flash")
-        checks["model_profile_configured"] = profile.validate()
+        profile = settings.get_model_profile(plan["model_profile"])
+        checks["model_profile_configured"] = profile.name == plan["model_profile"] and profile.validate()
         # Public profile identity only; API keys and endpoint URLs are never emitted.
-        details["model_identity_sha256"] = digest({"model": profile.model,
+        details["model_identity_sha256"] = digest({"profile": profile.name, "model": profile.model,
                                                    "base_url": profile.base_url,
-                                                   "thinking": profile.thinking})
+                                                   "temperature": profile.temperature,
+                                                   "thinking": profile.thinking,
+                                                   "request_timeout": profile.request_timeout,
+                                                   "max_retries": profile.max_retries})
     except (ImportError, ValueError):
         checks["model_profile_configured"] = False
     try:
@@ -153,7 +166,7 @@ def preflight(plan, config_path):
                 checks[f"site:{site}"] = response.status == 200
         except Exception:
             checks[f"site:{site}"] = False
-    return {"stage": "screening", "checks": checks,
+    return {"stage": "screening", "model_profile": plan["model_profile"], "checks": checks,
             "blockers": [name for name, passed in checks.items() if not passed],
             "environment_ready": all(checks.values()), "evaluator_version": version,
             **details, "paid_trials_executed": 0,
@@ -162,7 +175,8 @@ def preflight(plan, config_path):
 
 def authorization_template(plan, report, config_path):
     return {"status": "candidate", "approved_for_paid_runs": False,
-            "experiment_id": EXPERIMENT, "stage": "screening",
+            "experiment_id": plan["experiment_id"], "stage": "screening",
+            "model_profile": plan["model_profile"],
             "plan_sha256": plan["plan_sha256"], "code_sha256": code_sha(),
             "dataset_sha256": plan["dataset_sha256"],
             "evaluator_config_sha256": file_sha(config_path),
@@ -182,8 +196,12 @@ def check_authorization(plan, frozen, report, config_path):
         errors.append("screening batch is not frozen and approved")
     if frozen.get("approval_consumed") is not False:
         errors.append("authorization already consumed or state missing")
+    if (plan.get("model_profile") not in MODEL_PROFILES
+            or {cell.get("model_profile") for cell in plan["cells"]} != {plan.get("model_profile")}
+            or report.get("model_profile") != plan.get("model_profile")):
+        errors.append("screening plan/cells/preflight model profile mismatch")
     expected = authorization_template(plan, report, config_path)
-    for key in ("experiment_id", "stage", "plan_sha256", "code_sha256", "dataset_sha256",
+    for key in ("experiment_id", "stage", "model_profile", "plan_sha256", "code_sha256", "dataset_sha256",
                 "evaluator_config_sha256", "evaluator_package_sha256", "model_identity_sha256",
                 "max_trials", "max_steps", "job_timeout_seconds"):
         if frozen.get(key) != expected[key] or expected[key] is None:
@@ -198,9 +216,9 @@ def check_authorization(plan, frozen, report, config_path):
     return errors
 
 
-def command(cell, output, python=sys.executable):
+def command(cell, output, python=sys.executable, *, experiment_id=EXPERIMENT):
     return [python, "main.py", "--benchmark", "--condition", "control",
-            "--experiment-id", EXPERIMENT, "--site", cell["site"],
+            "--experiment-id", experiment_id, "--site", cell["site"],
             "--url", cell["start_url"], "--task", cell["intent"],
             "--task-id", str(cell["task_id"]), "--model-profile", cell["model_profile"],
             "--architecture", cell["architecture"], "--fault-seed", str(cell["seed"]),
@@ -249,12 +267,12 @@ def execute(plan, frozen, report, config_path, output_root, *, dataset, authoriz
         root.mkdir()
         env = dict(os.environ, WEBARENA_DATASET=str(Path(dataset).resolve()), WEBARENA_HOST=plan["host"])
         with (root / "trial.log").open("x") as log:
-            proc = subprocess.run(command(cell, root / "outputs"), cwd=ROOT, env=env,
+            proc = subprocess.run(command(cell, root / "outputs", experiment_id=plan["experiment_id"]), cwd=ROOT, env=env,
                                   stdout=log, stderr=subprocess.STDOUT,
                                   timeout=frozen["job_timeout_seconds"])
         arm = root / "outputs" / str(cell["task_id"]) / f"control_seed_{cell['seed']}"
         expect = {key: cell[key] for key in ("task_id", "architecture", "model_profile", "max_steps", "condition")}
-        expect.update(experiment_id=EXPERIMENT, fault_seed=cell["seed"],
+        expect.update(experiment_id=plan["experiment_id"], fault_seed=cell["seed"],
                       fault_intensity="off", fault_type="control")
         _, problems = artifact_checker(arm, expect=expect)
         if proc.returncode != 0 or problems:
@@ -267,8 +285,11 @@ def execute(plan, frozen, report, config_path, output_root, *, dataset, authoriz
             raise RuntimeError(f"{cell['key']}: native grading unavailable")
         # Actual usage is read from the bound trace; unknown usage stops the batch.
         prompt_tokens += trace_prompt_tokens(record)
-        completed.append({"key": cell["key"], "official_success": evaluation.get("official_success")})
+        completed.append({"key": cell["key"], "model_profile": cell["model_profile"],
+                          "task_id": cell["task_id"], "architecture": cell["architecture"],
+                          "seed": cell["seed"], "official_success": evaluation.get("official_success")})
         (run_root / "progress.json").write_text(json.dumps({"completed": completed,
+            "experiment_id": plan["experiment_id"], "model_profile": plan["model_profile"],
             "prompt_tokens": prompt_tokens, "auto_retry": False}, indent=2))
     return {"completed_trials": len(completed), "prompt_tokens": prompt_tokens}
 
@@ -278,6 +299,8 @@ def main(argv=None):
     parser.add_argument("--dataset", default=os.getenv("WEBARENA_DATASET", "/root/webarena-dataset/webarena-verified.json"))
     parser.add_argument("--host", default=os.getenv("WEBARENA_HOST", "localhost"))
     parser.add_argument("--evaluator-config", default="experiments/webarena_local_config.json")
+    parser.add_argument("--model-profile", choices=MODEL_PROFILES,
+                        help="Override the screening-stage profile; default comes from the matrix stage.")
     parser.add_argument("--output-dir", type=Path)
     parser.add_argument("--check-environment", action="store_true")
     parser.add_argument("--authorization", type=Path)
@@ -287,9 +310,11 @@ def main(argv=None):
     try:
         dataset = args.dataset if file_sha(args.dataset) else None
         plan = build_plan(load(ROOT / "docs/故障压力测试候选任务.json"),
-                          load(ROOT / "docs/故障压力测试矩阵草案.json"), dataset, host=args.host)
+                          load(ROOT / "docs/故障压力测试矩阵草案.json"), dataset, host=args.host,
+                          model_profile=args.model_profile)
         report = preflight(plan, args.evaluator_config) if args.check_environment or args.execute else {
-            "stage": "screening", "environment_ready": False, "checks": {},
+            "stage": "screening", "model_profile": plan["model_profile"],
+            "environment_ready": False, "checks": {},
             "blockers": ["environment checks not requested"], "paid_trials_executed": 0}
         if args.output_dir:
             args.output_dir.mkdir(parents=True, exist_ok=True)
@@ -307,6 +332,7 @@ def main(argv=None):
             print(json.dumps(result))
         else:
             print(json.dumps({"planned_trials": plan["planned_trials"],
+                "model_profile": plan["model_profile"], "experiment_id": plan["experiment_id"],
                 "dataset_bound": bool(plan["dataset_sha256"]), "environment": report,
                 "paid_trials_executed": 0, "faults_enabled": False}, ensure_ascii=False, indent=2))
         return 0

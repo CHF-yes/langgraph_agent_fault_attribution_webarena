@@ -1,0 +1,10 @@
+{
+  "stage": "screening",
+  "model_profile": "qwen38_flash",
+  "environment_ready": false,
+  "checks": {},
+  "blockers": [
+    "environment checks not requested"
+  ],
+  "paid_trials_executed": 0
+}

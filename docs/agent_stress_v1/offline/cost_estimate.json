@@ -121,6 +121,7 @@
     "40-step factors are scenario assumptions; token growth can exceed step growth due to accumulated context.",
     "Four navigation trials are too few to estimate new retrieval workload precisely; update forecast from completed authorized stages.",
     "Reserve changes token/currency forecast, not planned trial count.",
-    "No current provider price, cache discount, or account balance is assumed."
+    "No current provider price, cache discount, or account balance is assumed.",
+    "2026-10-27: the first 348 clean trials now use qwen38_flash; the observed DeepSeek baseline remains a planning scenario, not measured Qwen usage or pricing. Extra DeepSeek eligibility confirmation is not included in 2124."
   ]
 }
