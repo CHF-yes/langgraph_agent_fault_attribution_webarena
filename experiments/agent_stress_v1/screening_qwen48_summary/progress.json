@@ -1,0 +1,395 @@
+{
+  "completed": [
+    {
+      "key": "qwen38_flash_task148_plan_execute_seed3",
+      "model_profile": "qwen38_flash",
+      "task_id": 148,
+      "architecture": "plan_execute",
+      "seed": 3,
+      "official_success": false
+    },
+    {
+      "key": "qwen38_flash_task148_react_seed1",
+      "model_profile": "qwen38_flash",
+      "task_id": 148,
+      "architecture": "react",
+      "seed": 1,
+      "official_success": false
+    },
+    {
+      "key": "qwen38_flash_task47_plan_execute_seed2",
+      "model_profile": "qwen38_flash",
+      "task_id": 47,
+      "architecture": "plan_execute",
+      "seed": 2,
+      "official_success": false
+    },
+    {
+      "key": "qwen38_flash_task189_plan_execute_seed1",
+      "model_profile": "qwen38_flash",
+      "task_id": 189,
+      "architecture": "plan_execute",
+      "seed": 1,
+      "official_success": false
+    },
+    {
+      "key": "qwen38_flash_task67_react_seed1",
+      "model_profile": "qwen38_flash",
+      "task_id": 67,
+      "architecture": "react",
+      "seed": 1,
+      "official_success": false
+    },
+    {
+      "key": "qwen38_flash_task387_react_seed1",
+      "model_profile": "qwen38_flash",
+      "task_id": 387,
+      "architecture": "react",
+      "seed": 1,
+      "official_success": false
+    },
+    {
+      "key": "qwen38_flash_task23_plan_execute_seed2",
+      "model_profile": "qwen38_flash",
+      "task_id": 23,
+      "architecture": "plan_execute",
+      "seed": 2,
+      "official_success": false
+    },
+    {
+      "key": "qwen38_flash_task784_plan_execute_seed2",
+      "model_profile": "qwen38_flash",
+      "task_id": 784,
+      "architecture": "plan_execute",
+      "seed": 2,
+      "official_success": false
+    },
+    {
+      "key": "qwen38_flash_task384_react_seed3",
+      "model_profile": "qwen38_flash",
+      "task_id": 384,
+      "architecture": "react",
+      "seed": 3,
+      "official_success": false
+    },
+    {
+      "key": "qwen38_flash_task23_react_seed1",
+      "model_profile": "qwen38_flash",
+      "task_id": 23,
+      "architecture": "react",
+      "seed": 1,
+      "official_success": false
+    },
+    {
+      "key": "qwen38_flash_task49_plan_execute_seed3",
+      "model_profile": "qwen38_flash",
+      "task_id": 49,
+      "architecture": "plan_execute",
+      "seed": 3,
+      "official_success": true
+    },
+    {
+      "key": "qwen38_flash_task66_react_seed1",
+      "model_profile": "qwen38_flash",
+      "task_id": 66,
+      "architecture": "react",
+      "seed": 1,
+      "official_success": false
+    },
+    {
+      "key": "qwen38_flash_task308_plan_execute_seed1",
+      "model_profile": "qwen38_flash",
+      "task_id": 308,
+      "architecture": "plan_execute",
+      "seed": 1,
+      "official_success": false
+    },
+    {
+      "key": "qwen38_flash_task228_plan_execute_seed3",
+      "model_profile": "qwen38_flash",
+      "task_id": 228,
+      "architecture": "plan_execute",
+      "seed": 3,
+      "official_success": false
+    },
+    {
+      "key": "qwen38_flash_task163_react_seed1",
+      "model_profile": "qwen38_flash",
+      "task_id": 163,
+      "architecture": "react",
+      "seed": 1,
+      "official_success": false
+    },
+    {
+      "key": "qwen38_flash_task133_react_seed3",
+      "model_profile": "qwen38_flash",
+      "task_id": 133,
+      "architecture": "react",
+      "seed": 3,
+      "official_success": false
+    },
+    {
+      "key": "qwen38_flash_task27_react_seed2",
+      "model_profile": "qwen38_flash",
+      "task_id": 27,
+      "architecture": "react",
+      "seed": 2,
+      "official_success": true
+    },
+    {
+      "key": "qwen38_flash_task148_react_seed3",
+      "model_profile": "qwen38_flash",
+      "task_id": 148,
+      "architecture": "react",
+      "seed": 3,
+      "official_success": false
+    },
+    {
+      "key": "qwen38_flash_task21_react_seed1",
+      "model_profile": "qwen38_flash",
+      "task_id": 21,
+      "architecture": "react",
+      "seed": 1,
+      "official_success": false
+    },
+    {
+      "key": "qwen38_flash_task169_plan_execute_seed1",
+      "model_profile": "qwen38_flash",
+      "task_id": 169,
+      "architecture": "plan_execute",
+      "seed": 1,
+      "official_success": false
+    },
+    {
+      "key": "qwen38_flash_task126_plan_execute_seed3",
+      "model_profile": "qwen38_flash",
+      "task_id": 126,
+      "architecture": "plan_execute",
+      "seed": 3,
+      "official_success": true
+    },
+    {
+      "key": "qwen38_flash_task786_react_seed1",
+      "model_profile": "qwen38_flash",
+      "task_id": 786,
+      "architecture": "react",
+      "seed": 1,
+      "official_success": false
+    },
+    {
+      "key": "qwen38_flash_task48_plan_execute_seed2",
+      "model_profile": "qwen38_flash",
+      "task_id": 48,
+      "architecture": "plan_execute",
+      "seed": 2,
+      "official_success": true
+    },
+    {
+      "key": "qwen38_flash_task280_plan_execute_seed1",
+      "model_profile": "qwen38_flash",
+      "task_id": 280,
+      "architecture": "plan_execute",
+      "seed": 1,
+      "official_success": false
+    },
+    {
+      "key": "qwen38_flash_task304_react_seed1",
+      "model_profile": "qwen38_flash",
+      "task_id": 304,
+      "architecture": "react",
+      "seed": 1,
+      "official_success": false
+    },
+    {
+      "key": "qwen38_flash_task309_react_seed3",
+      "model_profile": "qwen38_flash",
+      "task_id": 309,
+      "architecture": "react",
+      "seed": 3,
+      "official_success": false
+    },
+    {
+      "key": "qwen38_flash_task315_react_seed2",
+      "model_profile": "qwen38_flash",
+      "task_id": 315,
+      "architecture": "react",
+      "seed": 2,
+      "official_success": false
+    },
+    {
+      "key": "qwen38_flash_task67_react_seed3",
+      "model_profile": "qwen38_flash",
+      "task_id": 67,
+      "architecture": "react",
+      "seed": 3,
+      "official_success": false
+    },
+    {
+      "key": "qwen38_flash_task294_plan_execute_seed2",
+      "model_profile": "qwen38_flash",
+      "task_id": 294,
+      "architecture": "plan_execute",
+      "seed": 2,
+      "official_success": true
+    },
+    {
+      "key": "qwen38_flash_task232_react_seed2",
+      "model_profile": "qwen38_flash",
+      "task_id": 232,
+      "architecture": "react",
+      "seed": 2,
+      "official_success": false
+    },
+    {
+      "key": "qwen38_flash_task305_plan_execute_seed2",
+      "model_profile": "qwen38_flash",
+      "task_id": 305,
+      "architecture": "plan_execute",
+      "seed": 2,
+      "official_success": false
+    },
+    {
+      "key": "qwen38_flash_task171_react_seed3",
+      "model_profile": "qwen38_flash",
+      "task_id": 171,
+      "architecture": "react",
+      "seed": 3,
+      "official_success": false
+    },
+    {
+      "key": "qwen38_flash_task28_plan_execute_seed2",
+      "model_profile": "qwen38_flash",
+      "task_id": 28,
+      "architecture": "plan_execute",
+      "seed": 2,
+      "official_success": true
+    },
+    {
+      "key": "qwen38_flash_task293_plan_execute_seed1",
+      "model_profile": "qwen38_flash",
+      "task_id": 293,
+      "architecture": "plan_execute",
+      "seed": 1,
+      "official_success": false
+    },
+    {
+      "key": "qwen38_flash_task171_react_seed1",
+      "model_profile": "qwen38_flash",
+      "task_id": 171,
+      "architecture": "react",
+      "seed": 1,
+      "official_success": false
+    },
+    {
+      "key": "qwen38_flash_task124_plan_execute_seed2",
+      "model_profile": "qwen38_flash",
+      "task_id": 124,
+      "architecture": "plan_execute",
+      "seed": 2,
+      "official_success": false
+    },
+    {
+      "key": "qwen38_flash_task189_react_seed2",
+      "model_profile": "qwen38_flash",
+      "task_id": 189,
+      "architecture": "react",
+      "seed": 2,
+      "official_success": true
+    },
+    {
+      "key": "qwen38_flash_task305_react_seed3",
+      "model_profile": "qwen38_flash",
+      "task_id": 305,
+      "architecture": "react",
+      "seed": 3,
+      "official_success": false
+    },
+    {
+      "key": "qwen38_flash_task314_react_seed3",
+      "model_profile": "qwen38_flash",
+      "task_id": 314,
+      "architecture": "react",
+      "seed": 3,
+      "official_success": false
+    },
+    {
+      "key": "qwen38_flash_task165_react_seed1",
+      "model_profile": "qwen38_flash",
+      "task_id": 165,
+      "architecture": "react",
+      "seed": 1,
+      "official_success": false
+    },
+    {
+      "key": "qwen38_flash_task68_react_seed2",
+      "model_profile": "qwen38_flash",
+      "task_id": 68,
+      "architecture": "react",
+      "seed": 2,
+      "official_success": false
+    },
+    {
+      "key": "qwen38_flash_task309_react_seed2",
+      "model_profile": "qwen38_flash",
+      "task_id": 309,
+      "architecture": "react",
+      "seed": 2,
+      "official_success": false
+    },
+    {
+      "key": "qwen38_flash_task171_plan_execute_seed1",
+      "model_profile": "qwen38_flash",
+      "task_id": 171,
+      "architecture": "plan_execute",
+      "seed": 1,
+      "official_success": false
+    },
+    {
+      "key": "qwen38_flash_task188_react_seed3",
+      "model_profile": "qwen38_flash",
+      "task_id": 188,
+      "architecture": "react",
+      "seed": 3,
+      "official_success": true
+    },
+    {
+      "key": "qwen38_flash_task310_plan_execute_seed2",
+      "model_profile": "qwen38_flash",
+      "task_id": 310,
+      "architecture": "plan_execute",
+      "seed": 2,
+      "official_success": false
+    },
+    {
+      "key": "qwen38_flash_task148_plan_execute_seed1",
+      "model_profile": "qwen38_flash",
+      "task_id": 148,
+      "architecture": "plan_execute",
+      "seed": 1,
+      "official_success": false
+    },
+    {
+      "key": "qwen38_flash_task314_plan_execute_seed1",
+      "model_profile": "qwen38_flash",
+      "task_id": 314,
+      "architecture": "plan_execute",
+      "seed": 1,
+      "official_success": false
+    },
+    {
+      "key": "qwen38_flash_task304_react_seed3",
+      "model_profile": "qwen38_flash",
+      "task_id": 304,
+      "architecture": "react",
+      "seed": 3,
+      "official_success": true
+    }
+  ],
+  "experiment_id": "agent-stress-v1-screening-qwen38_flash",
+  "model_profile": "qwen38_flash",
+  "prompt_tokens": 8748261,
+  "auto_retry": false,
+  "skipped_completed": 0,
+  "stop_reason": null,
+  "batch_limit": 48
+}

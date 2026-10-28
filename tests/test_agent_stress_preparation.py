@@ -244,3 +244,104 @@ class ScreeningPreparation(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class ScreeningResume(unittest.TestCase):
+    """Resume is opt-in: only verified prior cells are skipped; --limit stops a batch."""
+
+    def setUp(self):
+        self.candidates = screening.load(ROOT / 'docs/故障压力测试候选任务.json')
+        self.matrix = screening.load(ROOT / 'docs/故障压力测试矩阵草案.json')
+
+    def _plan(self, folder, count=2):
+        plan = screening.build_plan(self.candidates, self.matrix)
+        plan['cells'] = plan['cells'][:count]
+        plan['planned_trials'] = count
+        for cell in plan['cells']:
+            cell['start_url'] = 'http://localhost:7770/test'
+        plan['dataset_sha256'] = 'dataset'
+        plan['plan_sha256'] = screening.digest({k: v for k, v in plan.items() if k != 'plan_sha256'})
+        report = {'model_profile': plan['model_profile'],
+                  'environment_ready': True, 'evaluator_version': {'package_sha256': 'version'},
+                  'model_identity_sha256': 'model'}
+        config = folder / 'config.json'; config.write_text('{}')
+        auth = screening.authorization_template(plan, report, config)
+        auth.update(status='frozen', approved_for_paid_runs=True,
+                    prompt_token_stop_before_next_trial=10_000_000)
+        auth_path = folder / 'auth.json'; auth_path.write_text(json.dumps(auth))
+        return plan, report, config, auth, auth_path
+
+    def _completed(self, run_root, cell, valid=True):
+        arm = (run_root / cell['key'] / 'outputs' / str(cell['task_id'])
+               / f"control_seed_{cell['seed']}")
+        arm.mkdir(parents=True, exist_ok=True)
+        trace = arm / 'trace.jsonl'
+        trace.write_text(json.dumps({'event': 'llm_provenance', 'prompt_tokens': 100}) + '\n')
+        (arm / 'trial_record.json').write_text(json.dumps({'injection_count': 0,
+                                                           'paths': {'trace': str(trace)}}))
+        (arm / 'network.har').write_text('{}')
+        (arm / 'agent_response.json').write_text('{}')
+        if valid:
+            (arm / 'official_eval.json').write_text(json.dumps({'official_success': False}))
+
+    def test_skip_completed_only_skips_verified_cells(self):
+        with tempfile.TemporaryDirectory() as folder:
+            folder = Path(folder)
+            plan, report, config, auth, auth_path = self._plan(folder, count=2)
+            prior = folder / 'prior' / 'run'; prior.mkdir(parents=True)
+            self._completed(prior, plan['cells'][0], valid=True)
+            (prior / 'progress.json').write_text(json.dumps({'completed': [
+                {'key': plan['cells'][0]['key'], 'official_success': False}], 'prompt_tokens': 100}))
+
+            def fake_child(cmd, **kwargs):
+                output = Path(cmd[cmd.index('--webarena-output-dir') + 1])
+                task = cmd[cmd.index('--task-id') + 1]
+                seed = cmd[cmd.index('--fault-seed') + 1]
+                arm = output / task / f"control_seed_{seed}"
+                arm.mkdir(parents=True)
+                trace = arm / 'trace.jsonl'
+                trace.write_text(json.dumps({'event': 'llm_provenance', 'prompt_tokens': 100}) + '\n')
+                (arm / 'trial_record.json').write_text(json.dumps({'injection_count': 0,
+                                                                   'paths': {'trace': str(trace)}}))
+                return SimpleNamespace(returncode=0)
+            with patch.object(screening.subprocess, 'run', side_effect=fake_child) as run, patch.dict('os.environ'):
+                result = screening.execute(plan, auth, report, config, folder / 'run2',
+                                           dataset=folder / 'dataset.json', authorization_path=auth_path,
+                                           artifact_checker=Mock(return_value=(True, [])),
+                                           evaluator=Mock(return_value={'evaluation_status': 'native',
+                                                                         'official_success': True}),
+                                           skip_paths=[prior / 'progress.json'])
+            self.assertEqual(result['skipped_completed'], 1)
+            self.assertEqual(result['completed_trials'], 1)
+            self.assertEqual(run.call_count, 1)
+
+    def test_invalid_prior_cell_is_rerun_and_limit_stops(self):
+        with tempfile.TemporaryDirectory() as folder:
+            folder = Path(folder)
+            plan, report, config, auth, auth_path = self._plan(folder, count=3)
+            prior = folder / 'prior' / 'run'; prior.mkdir(parents=True)
+            self._completed(prior, plan['cells'][0], valid=False)   # no official_eval -> rerun
+            (prior / 'progress.json').write_text(json.dumps({'completed': [
+                {'key': plan['cells'][0]['key'], 'official_success': False}], 'prompt_tokens': 100}))
+
+            def fake_child(cmd, **kwargs):
+                output = Path(cmd[cmd.index('--webarena-output-dir') + 1])
+                task = cmd[cmd.index('--task-id') + 1]
+                seed = cmd[cmd.index('--fault-seed') + 1]
+                arm = output / task / f"control_seed_{seed}"
+                arm.mkdir(parents=True)
+                trace = arm / 'trace.jsonl'
+                trace.write_text(json.dumps({'event': 'llm_provenance', 'prompt_tokens': 100}) + '\n')
+                (arm / 'trial_record.json').write_text(json.dumps({'injection_count': 0,
+                                                                   'paths': {'trace': str(trace)}}))
+                return SimpleNamespace(returncode=0)
+            with patch.object(screening.subprocess, 'run', side_effect=fake_child) as run, patch.dict('os.environ'):
+                result = screening.execute(plan, auth, report, config, folder / 'run2',
+                                           dataset=folder / 'dataset.json', authorization_path=auth_path,
+                                           artifact_checker=Mock(return_value=(True, [])),
+                                           evaluator=Mock(return_value={'evaluation_status': 'native',
+                                                                         'official_success': True}),
+                                           skip_paths=[prior / 'progress.json'], limit=1)
+            self.assertEqual(run.call_count, 1)              # invalid prior rerun, limit reached
+            self.assertEqual(result['stop_reason'], 'batch_limit_reached')
+            self.assertEqual(result['skipped_completed'], 0)

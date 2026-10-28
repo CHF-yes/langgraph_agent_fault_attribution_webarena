@@ -240,8 +240,50 @@ def trace_prompt_tokens(record):
     return sum(event["prompt_tokens"] for event in calls)
 
 
+def _completed_cell_ok(run_root, cell):
+    """A prior completed cell may be skipped only if its artifacts, zero injections,
+    native result and actual usage are all intact. Otherwise it is re-run."""
+    arm = (Path(run_root) / cell["key"] / "outputs" / str(cell["task_id"])
+           / f"control_seed_{cell['seed']}")
+    try:
+        record = load(arm / "trial_record.json")
+        evaluation = load(arm / "official_eval.json")
+        if record.get("injection_count") != 0:
+            return False
+        if type(evaluation.get("official_success")) is not bool:
+            return False
+        if not (arm / "network.har").exists() or not (arm / "agent_response.json").exists():
+            return False
+        trace = Path(record["paths"]["trace"])
+        if not trace.is_absolute():
+            trace = ROOT / trace
+        events = [json.loads(line) for line in trace.read_text(encoding="utf-8").splitlines() if line.strip()]
+        calls = [event for event in events if event.get("event") == "llm_provenance"]
+        if not calls or any(type(event.get("prompt_tokens")) is not int for event in calls):
+            return False
+        return True
+    except (OSError, ValueError, KeyError, TypeError):
+        return False
+
+
+def _skip_map(skip_paths):
+    mapping = {}
+    for path in skip_paths or []:
+        path = Path(path)
+        run_root = path.parent
+        try:
+            data = load(path)
+        except (OSError, ValueError):
+            continue
+        for entry in data.get("completed") or []:
+            key = entry.get("key") if isinstance(entry, dict) else entry
+            if key:
+                mapping.setdefault(key, set()).add(run_root)
+    return mapping
+
+
 def execute(plan, frozen, report, config_path, output_root, *, dataset, authorization_path,
-            artifact_checker=None, evaluator=None):
+            artifact_checker=None, evaluator=None, skip_paths=None, limit=None):
     errors = check_authorization(plan, frozen, report, config_path)
     if errors:
         raise ValueError("; ".join(errors))
@@ -259,8 +301,17 @@ def execute(plan, frozen, report, config_path, output_root, *, dataset, authoriz
         artifact_checker = artifact_checker or arm_artifacts_ok
         evaluator = evaluator or evaluate_trial
     os.environ["WEBARENA_DATASET"] = str(Path(dataset).resolve())
-    completed, prompt_tokens = [], 0
+    completed, prompt_tokens, skipped, ran = [], 0, 0, 0
+    stop_reason = None
+    skip_map = _skip_map(skip_paths)
     for cell in plan["cells"]:
+        roots = skip_map.get(cell["key"], set())
+        if any(_completed_cell_ok(root, cell) for root in roots):
+            skipped += 1
+            continue
+        if limit is not None and ran >= limit:
+            stop_reason = "batch_limit_reached"
+            break
         if prompt_tokens >= frozen["prompt_token_stop_before_next_trial"]:
             raise RuntimeError("batch prompt-token limit reached; no next trial started")
         root = run_root / cell["key"]
@@ -288,10 +339,14 @@ def execute(plan, frozen, report, config_path, output_root, *, dataset, authoriz
         completed.append({"key": cell["key"], "model_profile": cell["model_profile"],
                           "task_id": cell["task_id"], "architecture": cell["architecture"],
                           "seed": cell["seed"], "official_success": evaluation.get("official_success")})
+        ran += 1
         (run_root / "progress.json").write_text(json.dumps({"completed": completed,
             "experiment_id": plan["experiment_id"], "model_profile": plan["model_profile"],
-            "prompt_tokens": prompt_tokens, "auto_retry": False}, indent=2))
-    return {"completed_trials": len(completed), "prompt_tokens": prompt_tokens}
+            "prompt_tokens": prompt_tokens, "auto_retry": False,
+            "skipped_completed": skipped, "stop_reason": stop_reason,
+            "batch_limit": limit}, indent=2))
+    return {"completed_trials": len(completed), "prompt_tokens": prompt_tokens,
+            "skipped_completed": skipped, "stop_reason": stop_reason}
 
 
 def main(argv=None):
@@ -306,6 +361,10 @@ def main(argv=None):
     parser.add_argument("--authorization", type=Path)
     parser.add_argument("--execute", action="store_true")
     parser.add_argument("--run-root", type=Path)
+    parser.add_argument("--skip-completed", nargs="+", type=Path, default=[],
+                        help="prior progress.json files; skip cells whose artifacts/native/usage verify")
+    parser.add_argument("--limit", type=int, default=None,
+                        help="run at most N new cells, then stop without auto-retry")
     args = parser.parse_args(argv)
     try:
         dataset = args.dataset if file_sha(args.dataset) else None
@@ -327,8 +386,11 @@ def main(argv=None):
         if args.execute:
             if not args.authorization or not args.run_root or dataset is None:
                 raise ValueError("execution requires --authorization, --run-root and a readable --dataset")
+            if args.limit is not None and args.limit < 1:
+                raise ValueError("--limit must be a positive integer")
             result = execute(plan, load(args.authorization), report, args.evaluator_config,
-                             args.run_root, dataset=dataset, authorization_path=args.authorization)
+                             args.run_root, dataset=dataset, authorization_path=args.authorization,
+                             skip_paths=args.skip_completed, limit=args.limit)
             print(json.dumps(result))
         else:
             print(json.dumps({"planned_trials": plan["planned_trials"],
