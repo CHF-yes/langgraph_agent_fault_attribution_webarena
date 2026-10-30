@@ -1,0 +1,19 @@
+{
+  "status": "frozen",
+  "approved_for_paid_runs": true,
+  "experiment_id": "agent-stress-v1-screening-qwen38_flash",
+  "stage": "screening",
+  "model_profile": "qwen38_flash",
+  "plan_sha256": "76de200d2016a1efb4b5717311fbed327f500a989599eb6a4ac1ee9b0145db8d",
+  "code_sha256": "b89433ecb04a83b3a091dfb21851c7270c81827d6730b80d03ef8d8b7458ca8e",
+  "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "evaluator_config_sha256": "0b7e7e9326d16a5d070adea30c4e4247cd65137832a8544352f581a2b71b64c9",
+  "evaluator_package_sha256": "41334a7a30567811b3c42fc125b64140e64069b08ff7793643c0ed68931a68d8",
+  "model_identity_sha256": "dba90ace0d06d4b6fec982d8aa7c75baea6e2217e92c3b50dbba290484dd9264",
+  "max_trials": 348,
+  "max_steps": 20,
+  "job_timeout_seconds": 2700,
+  "prompt_token_stop_before_next_trial": 10000000,
+  "approval_consumed": false,
+  "note": "Local 48-trial Qwen shakedown requested by owner on 2026-10-28; batch cap 10M prompt tokens; --limit 48 stops after 48 new cells. Remaining 300 cells require a new authorization."
+}

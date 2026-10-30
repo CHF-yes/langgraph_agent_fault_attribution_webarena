@@ -1,0 +1,78 @@
+{
+  "task_id": 281,
+  "intent_template_id": 204,
+  "sites": [
+    "shopping"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    {\n      \"names\": [\n        \"Kids Toothbrush Replacement Heads for Oral B Kids Replaced Brush Heads Soft Precision Bristles Children Professional Care 16 Pack (16)\",\n        \"Oral-B Kids Extra Soft Replacement Brush Heads featuring STAR WARS, 2 count\",\n        \"Kids By Oral-b Stages Power Star Wars Replacement Heads 4 Pack\"\n      ],\n      \"min\": 12.99,\n      \"max\": 18.99\n    }\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          {
+            "names": [
+              "kids toothbrush replacement heads for oral b kids replaced brush heads soft precision bristles children professional care 16 pack (16)",
+              "oral b kids extra soft replacement brush heads featuring star wars, 2 count",
+              "kids by oral b stages power star wars replacement heads 4 pack"
+            ],
+            "min": "12.99",
+            "max": "18.99"
+          }
+        ]
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          {
+            "names": [
+              "oral b kids extra soft replacement brush heads featuring star wars, 2 count",
+              "kids by oral b stages power star wars replacement heads 4 pack"
+            ],
+            "min": "12.99",
+            "max": "14.98"
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/1), Missing: 1, Extra: 1",
+            "Expected: [{'names': (NormalizedString('Oral-B Kids Extra Soft Replacement Brush Heads featuring STAR WARS, 2 count' -> 'oral b kids extra soft replacement brush heads featuring star wars, 2 count'), NormalizedString('Kids By Oral-b Stages Power Star Wars Replacement Heads 4 Pack' -> 'kids by oral b stages power star wars replacement heads 4 pack')), 'min': Currency(12.99 -> Decimal('12.99')), 'max': Currency(14.98 -> Decimal('14.98'))}], Got: [{'names': (NormalizedString('Kids Toothbrush Replacement Heads for Oral B Kids Replaced Brush Heads Soft Precision Bristles Children Professional Care 16 Pack (16)' -> 'kids toothbrush replacement heads for oral b kids replaced brush heads soft precision bristles children professional care 16 pack (16)'), NormalizedString('Oral-B Kids Extra Soft Replacement Brush Heads featuring STAR WARS, 2 count' -> 'oral b kids extra soft replacement brush heads featuring star wars, 2 count'), NormalizedString('Kids By Oral-b Stages Power Star Wars Replacement Heads 4 Pack' -> 'kids by oral b stages power star wars replacement heads 4 pack')), 'min': Currency(12.99 -> Decimal('12.99')), 'max': Currency(18.99 -> Decimal('18.99'))}]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false,
+  "_evaluation_binding": {
+    "agent_response_sha256": "ee81f5de302096896bd76f208222bae33b8ab6cd9aa0687fe9323d8771e02443",
+    "network_har_sha256": "94863afbee9f7f40d2cc45f990bada49452043a9cdeb1f09ef9560ac2e3de4c4",
+    "config_sha256": "0b7e7e9326d16a5d070adea30c4e4247cd65137832a8544352f581a2b71b64c9",
+    "evaluator_adapter_version": "stage-c-eval-adapter/1",
+    "evaluator_version": {
+      "adapter": "stage-c-eval-adapter/1",
+      "distribution": "1.2.3.post1.dev0",
+      "package_sources": 74,
+      "package_sha256": "41334a7a30567811b3c42fc125b64140e64069b08ff7793643c0ed68931a68d8"
+    },
+    "scored_by_version": "1.2.3.post1.dev0"
+  }
+}

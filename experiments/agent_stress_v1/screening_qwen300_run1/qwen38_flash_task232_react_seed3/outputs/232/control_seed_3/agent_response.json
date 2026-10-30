@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "The most recent pending order is order #000000189 (dated 5/2/23, total $754.99, status Pending). It has the highest order number among the pending orders placed on that date."
+  ],
+  "error_details": null
+}

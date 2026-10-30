@@ -1,0 +1,68 @@
+{
+  "task_id": 387,
+  "intent_template_id": 1356,
+  "sites": [
+    "shopping"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"For the EYZUTAK Electroplated Magnetic Ring Holder Case (phone case), the reviewers who gave 4 or 5 stars (ratings of 80% or 100%) are:\\n\\n• MH — 5 stars (100%) — \\\"Gray color is so chic\\\"\\n• Amanda — 5 stars (100%) — \\\"Cute; scratches easily\\\"\\n• Cally — 5 stars (100%) — \\\"Pretty!\\\"\\n• Misba009 — 4 stars (80%) — \\\"beautiful\\\"\\n• Amazon Customer — 4 stars (80%) — \\\"Cute, but not magnetic\\\"\\n\\n(The other reviewers gave lower ratings: Lisa Lee and Diana Alcaraz at 60%/3 stars, and Evelyn Kurver and N Randall at 40%/2 stars.)\"\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "task_type": "retrieve",
+        "retrieved_data": [
+          "for the eyzutak electroplated magnetic ring holder case (phone case), the reviewers who gave 4 or 5 stars (ratings of 80% or 100%) are: * mh -- 5 stars (100%) -- \"gray color is so chic\" * amanda -- 5 stars (100%) -- \"cute; scratches easily\" * cally -- 5 stars (100%) -- \"pretty!\" * misba009 -- 4 stars (80%) -- \"beautiful\" * amazon customer -- 4 stars (80%) -- \"cute, but not magnetic\" (the other reviewers gave lower ratings: lisa lee and diana alcaraz at 60%/3 stars, and evelyn kurver and n randall at 40%/2 stars.)"
+        ],
+        "status": "success"
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "mh",
+          "misba009",
+          "amanda",
+          "amazon customer",
+          "cally",
+          "bethany robertson"
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/6), Missing: 6, Extra: 1",
+            "Expected: [mh, misba009, ..., bethany robertson], Got: [for the eyzutak electroplated magnetic ring holder case (phone case), the reviewers who gave 4 or 5 stars (ratings of 80% or 100%) are: * mh -- 5 stars (100%) -- \"gray color is so chic\" * amanda -- 5 stars (100%) -- \"cute; scratches easily\" * cally -- 5 stars (100%) -- \"pretty!\" * misba009 -- 4 stars (80%) -- \"beautiful\" * amazon customer -- 4 stars (80%) -- \"cute, but not magnetic\" (the other reviewers gave lower ratings: lisa lee and diana alcaraz at 60%/3 stars, and evelyn kurver and n randall at 40%/2 stars.)]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false,
+  "_evaluation_binding": {
+    "agent_response_sha256": "4b82a5583518beda64b5015c0bd674fa0a4c470b789cc5c2d52ef3afdf4c790f",
+    "network_har_sha256": "161d83fced847326fe68891fb07bf57bebcacdb67591af324a21ad424167f2c7",
+    "config_sha256": "0b7e7e9326d16a5d070adea30c4e4247cd65137832a8544352f581a2b71b64c9",
+    "evaluator_adapter_version": "stage-c-eval-adapter/1",
+    "evaluator_version": {
+      "adapter": "stage-c-eval-adapter/1",
+      "distribution": "1.2.3.post1.dev0",
+      "package_sources": 74,
+      "package_sha256": "41334a7a30567811b3c42fc125b64140e64069b08ff7793643c0ed68931a68d8"
+    },
+    "scored_by_version": "1.2.3.post1.dev0"
+  }
+}

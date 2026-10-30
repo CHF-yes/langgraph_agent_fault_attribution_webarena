@@ -1,0 +1,63 @@
+{
+  "task_id": 148,
+  "intent_template_id": 155,
+  "sites": [
+    "shopping"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"The picture frame you bought in September 2022 (Order #000000175, dated September 1, 2022) is the \\\"Forest Canvas Wall Art Print – Green Forest with Lake Reflection... Framed Wall Art.\\\" Its color is **Mist** (listed as \\\"Mist 16*24\\\", indicating the Mist color/finish in the 16×24 size).\"\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "the picture frame you bought in september 2022 (order #000000175, dated september 1, 2022) is the \"forest canvas wall art print - green forest with lake reflection... framed wall art.\" its color is **mist** (listed as \"mist 16*24\", indicating the mist color/finish in the 16x24 size)."
+        ]
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "mist 16*24"
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/1), Missing: 1, Extra: 1",
+            "Expected: [mist 16*24], Got: [the picture frame you bought in september 2022 (order #000000175, dated september 1, 2022) is the \"forest canvas wall art print - green forest with lake reflection... framed wall art.\" its color is **mist** (listed as \"mist 16*24\", indicating the mist color/finish in the 16x24 size).]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false,
+  "_evaluation_binding": {
+    "agent_response_sha256": "90dc4c2823985ac206f54f798036015f8b698284b5269ded515b73e7b1617870",
+    "network_har_sha256": "9cb793ce74552b1742ac631449f080b1bd33bc37c4c79b63e5b2783cc478c7d4",
+    "config_sha256": "0b7e7e9326d16a5d070adea30c4e4247cd65137832a8544352f581a2b71b64c9",
+    "evaluator_adapter_version": "stage-c-eval-adapter/1",
+    "evaluator_version": {
+      "adapter": "stage-c-eval-adapter/1",
+      "distribution": "1.2.3.post1.dev0",
+      "package_sources": 74,
+      "package_sha256": "41334a7a30567811b3c42fc125b64140e64069b08ff7793643c0ed68931a68d8"
+    },
+    "scored_by_version": "1.2.3.post1.dev0"
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "task_id": 316,
+  "intent_template_id": 324,
+  "sites": [
+    "gitlab"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"Top 3 contributors (by commit count) to facebook's create-react-app repo and their email addresses:\\n\\n1. Dan Abramov — 634 commits — dan.abramov@gmail.com\\n2. Joe Haddad — 292 commits — timer150@gmail.com\\n3. Ian Sutherland — 153 commits — ian@iansutherland.ca\\n\\n(Source: GitLab Contributors graph at /facebook/create-react-app/-/graphs/main, excluding merge commits, limited to 6,000 commits.)\"\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "top 3 contributors (by commit count) to facebook's create react app repo and their email addresses: 1. dan abramov -- 634 commits -- dan.abramov@gmail.com 2. joe haddad -- 292 commits -- timer150@gmail.com 3. ian sutherland -- 153 commits -- ian@iansutherland.ca (source: gitlab contributors graph at /facebook/create react app/-/graphs/main, excluding merge commits, limited to 6,000 commits.)"
+        ]
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "dan.abramov@gmail.com",
+          "timer150@gmail.com",
+          "ian@iansutherland.ca"
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/3), Missing: 3, Extra: 1",
+            "Expected: [dan.abramov@gmail.com, timer150@gmail.com, ian@iansutherland.ca], Got: [top 3 contributors (by commit count) to facebook's create react app repo and their email addresses: 1. dan abramov -- 634 commits -- dan.abramov@gmail.com 2. joe haddad -- 292 commits -- timer150@gmail.com 3. ian sutherland -- 153 commits -- ian@iansutherland.ca (source: gitlab contributors graph at /facebook/create react app/-/graphs/main, excluding merge commits, limited to 6,000 commits.)]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false,
+  "_evaluation_binding": {
+    "agent_response_sha256": "78c9f35066391d244c6c95121bfc9063c18e68bdd56e8a7e6901af177a8ce779",
+    "network_har_sha256": "5e50cfcc2ecdd53dd6111d6844ced1740e5db38d8f6fea1a51216e4073e6a011",
+    "config_sha256": "0b7e7e9326d16a5d070adea30c4e4247cd65137832a8544352f581a2b71b64c9",
+    "evaluator_adapter_version": "stage-c-eval-adapter/1",
+    "evaluator_version": {
+      "adapter": "stage-c-eval-adapter/1",
+      "distribution": "1.2.3.post1.dev0",
+      "package_sources": 74,
+      "package_sha256": "41334a7a30567811b3c42fc125b64140e64069b08ff7793643c0ed68931a68d8"
+    },
+    "scored_by_version": "1.2.3.post1.dev0"
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "task_id": 316,
+  "intent_template_id": 324,
+  "sites": [
+    "gitlab"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"The top 3 contributors to facebook/create-react-app by commit count (from the Contributors graph, excluding merge commits) are:\\n1. Dan Abramov — 634 commits — dan.abramov@gmail.com\\n2. Joe Haddad — 292 commits — timer150@gmail.com\\n3. Ian Sutherland — 153 commits — ian@iansutherland.ca\"\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "the top 3 contributors to facebook/create react app by commit count (from the contributors graph, excluding merge commits) are: 1. dan abramov -- 634 commits -- dan.abramov@gmail.com 2. joe haddad -- 292 commits -- timer150@gmail.com 3. ian sutherland -- 153 commits -- ian@iansutherland.ca"
+        ]
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "dan.abramov@gmail.com",
+          "timer150@gmail.com",
+          "ian@iansutherland.ca"
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/3), Missing: 3, Extra: 1",
+            "Expected: [dan.abramov@gmail.com, timer150@gmail.com, ian@iansutherland.ca], Got: [the top 3 contributors to facebook/create react app by commit count (from the contributors graph, excluding merge commits) are: 1. dan abramov -- 634 commits -- dan.abramov@gmail.com 2. joe haddad -- 292 commits -- timer150@gmail.com 3. ian sutherland -- 153 commits -- ian@iansutherland.ca]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false,
+  "_evaluation_binding": {
+    "agent_response_sha256": "843c289d3404b696fa4c4fc95a650338b26087c87b3e8b8f90ee4d51f21e5b3c",
+    "network_har_sha256": "70b7854c855ea16f698bd35d14caf8bc156ab753e8b688037227c290963868a9",
+    "config_sha256": "0b7e7e9326d16a5d070adea30c4e4247cd65137832a8544352f581a2b71b64c9",
+    "evaluator_adapter_version": "stage-c-eval-adapter/1",
+    "evaluator_version": {
+      "adapter": "stage-c-eval-adapter/1",
+      "distribution": "1.2.3.post1.dev0",
+      "package_sources": 74,
+      "package_sha256": "41334a7a30567811b3c42fc125b64140e64069b08ff7793643c0ed68931a68d8"
+    },
+    "scored_by_version": "1.2.3.post1.dev0"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "The top 3 contributors to the PyTorch-GAN repo (by commit count on master branch), with their email addresses, are:\n\n1. **Erik Linder-Norén** — 85 commits — eriklindernoren@live.se\n2. **eriklindernoren** — 60 commits — eriklindernoren@gmail.com\n3. **pinnacle** — 8 commits — pinnacle.chen@qq.com\n\nNote: The first two entries both belong to the project owner (Erik Linder-Norén) but appear as separate identities due to different commit email addresses. If you combine them, the single top contributor would be Erik Linder-Norén (145 total commits across both emails), followed by pinnacle (8 commits), then zhampel (3 commits, 17304040+zhampel@users.noreply.github.com)."
+  ],
+  "error_details": null
+}

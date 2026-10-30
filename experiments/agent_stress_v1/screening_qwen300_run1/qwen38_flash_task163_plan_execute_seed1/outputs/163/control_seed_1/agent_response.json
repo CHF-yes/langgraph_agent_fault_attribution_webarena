@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "Pagination check complete: there are 2 pages of reviews (12 total), and I inspected both.\n\nReviews with 2 stars or below (rating ≤ 40%):\n1. \"Memory Card Came Defective\" — 20% (1 star) — Review by Ernesto, posted 4/21/23\n\nThat is the only review title at 2 stars or lower for this product. All other reviews were rated 80% (4 stars) or 100% (5 stars). Note: two review entries on page 1 displayed truncated titles without an extractable rating value (\"...s used and the previous owners data has not been erased...This isn'\" by The EggMan, and \"...s real and has no issues so far. Pretty sure it\" by BrockNet); their visible text suggests neutral/positive content rather than a 2-star-or-below rating."
+  ],
+  "error_details": null
+}

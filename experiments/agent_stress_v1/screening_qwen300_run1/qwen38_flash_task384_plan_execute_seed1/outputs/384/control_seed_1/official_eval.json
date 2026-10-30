@@ -1,0 +1,66 @@
+{
+  "task_id": 384,
+  "intent_template_id": 666,
+  "sites": [
+    "shopping"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"Based on the customer reviews for the EYZUTAK Electroplated Magnetic Ring Holder Case, the following customers complained about the **quality** of the phone case:\\n\\n1. **Lisa Lee** — \\\"Cute but, the ring broke quickly\\\": The ring was already broken after less than a month of use.\\n\\n2. **Evelyn Kurver** — \\\"Read\\\": The gold is already peeling out after only 3 weeks.\\n\\n3. **Amanda** — \\\"Cute; scratches easily\\\": The gold on the edges started to rub away within the first week.\\n\\n4. **N Randall** — \\\"Cute but only for a short time\\\": It started chipping right away; the ring holder went from too tight to loosening completely and dangling from the phone, requiring immediate replacement.\\n\\n5. **Amazon Customer** — \\\"Cute, but not magnetic\\\": The case was not actually magnetic as the description claimed (it's only metal), so it didn't work with their magnetic car mount without buying an extra magnet.\\n\\nNote: Other reviewers (MH, Diana Alcaraz, Misba009, Cally, Bethany Robertson) did not raise genuine quality complaints — their remarks were either positive, about color/appearance mismatch rather than build quality, or about wireless charging compatibility.\"\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "based on the customer reviews for the eyzutak electroplated magnetic ring holder case, the following customers complained about the **quality** of the phone case: 1. **lisa lee** -- \"cute but, the ring broke quickly\": the ring was already broken after less than a month of use. 2. **evelyn kurver** -- \"read\": the gold is already peeling out after only 3 weeks. 3. **amanda** -- \"cute; scratches easily\": the gold on the edges started to rub away within the first week. 4. **n randall** -- \"cute but only for a short time\": it started chipping right away; the ring holder went from too tight to loosening completely and dangling from the phone, requiring immediate replacement. 5. **amazon customer** -- \"cute, but not magnetic\": the case was not actually magnetic as the description claimed (it's only metal), so it didn't work with their magnetic car mount without buying an extra magnet. note: other reviewers (mh, diana alcaraz, misba009, cally, bethany robertson) did not raise genuine quality complaints -- their remarks were either positive, about color/appearance mismatch rather than build quality, or about wireless charging compatibility."
+        ]
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "lisa lee",
+          "evelyn kurver",
+          "amanda",
+          "n randall"
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/4), Missing: 4, Extra: 1",
+            "Expected: [lisa lee, evelyn kurver, ..., n randall], Got: [based on the customer reviews for the eyzutak electroplated magnetic ring holder case, the following customers complained about the **quality** of the phone case: 1. **lisa lee** -- \"cute but, the ring broke quickly\": the ring was already broken after less than a month of use. 2. **evelyn kurver** -- \"read\": the gold is already peeling out after only 3 weeks. 3. **amanda** -- \"cute; scratches easily\": the gold on the edges started to rub away within the first week. 4. **n randall** -- \"cute but only for a short time\": it started chipping right away; the ring holder went from too tight to loosening completely and dangling from the phone, requiring immediate replacement. 5. **amazon customer** -- \"cute, but not magnetic\": the case was not actually magnetic as the description claimed (it's only metal), so it didn't work with their magnetic car mount without buying an extra magnet. note: other reviewers (mh, diana alcaraz, misba009, cally, bethany robertson) did not raise genuine quality complaints -- their remarks were either positive, about color/appearance mismatch rather than build quality, or about wireless charging compatibility.]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false,
+  "_evaluation_binding": {
+    "agent_response_sha256": "c51ac8eb7bbce4a61dc29e1c3e060053851287e7de767989a1eba1a8db91df1d",
+    "network_har_sha256": "1e5e01d93900b9d41474163fc8805a285ca3af2fc726156df0da601409d671cd",
+    "config_sha256": "0b7e7e9326d16a5d070adea30c4e4247cd65137832a8544352f581a2b71b64c9",
+    "evaluator_adapter_version": "stage-c-eval-adapter/1",
+    "evaluator_version": {
+      "adapter": "stage-c-eval-adapter/1",
+      "distribution": "1.2.3.post1.dev0",
+      "package_sources": 74,
+      "package_sha256": "41334a7a30567811b3c42fc125b64140e64069b08ff7793643c0ed68931a68d8"
+    },
+    "scored_by_version": "1.2.3.post1.dev0"
+  }
+}

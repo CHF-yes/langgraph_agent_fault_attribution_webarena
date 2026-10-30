@@ -1,0 +1,64 @@
+{
+  "task_id": 165,
+  "intent_template_id": 136,
+  "sites": [
+    "shopping"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"Review titles with 2 stars or below for the Sandgrens Swedish Handmade Wooden Clog Sandal | Copenhagen:\\n\\n1. \\\"So cute but too small\\\" — Rating 40% (2 stars) by k.d.\\n2. \\\"Toe rubbed\\\" — Rating 40% (2 stars) by Amazon Customer\\n\\n(The other two reviews, \\\"Best Shoe Ever\\\" at 100%/5 stars and the strap-related review at 60%/3 stars, are above 2 stars and excluded.)\"\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "review titles with 2 stars or below for the sandgrens swedish handmade wooden clog sandal | copenhagen: 1. \"so cute but too small\" -- rating 40% (2 stars) by k.d. 2. \"toe rubbed\" -- rating 40% (2 stars) by amazon customer (the other two reviews, \"best shoe ever\" at 100%/5 stars and the strap related review at 60%/3 stars, are above 2 stars and excluded.)"
+        ]
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "so cute but too small",
+          "toe rubbed"
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/2), Missing: 2, Extra: 1",
+            "Expected: [so cute but too small, toe rubbed], Got: [review titles with 2 stars or below for the sandgrens swedish handmade wooden clog sandal | copenhagen: 1. \"so cute but too small\" -- rating 40% (2 stars) by k.d. 2. \"toe rubbed\" -- rating 40% (2 stars) by amazon customer (the other two reviews, \"best shoe ever\" at 100%/5 stars and the strap related review at 60%/3 stars, are above 2 stars and excluded.)]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false,
+  "_evaluation_binding": {
+    "agent_response_sha256": "406042a11430c92f70c984439791aadb6b9af6d2fa2f9ee603968568fa9e88a1",
+    "network_har_sha256": "20207ed8a4df1a8b88a803d248e0398fe8576900c3b3ac8485ab59e71c516f3b",
+    "config_sha256": "0b7e7e9326d16a5d070adea30c4e4247cd65137832a8544352f581a2b71b64c9",
+    "evaluator_adapter_version": "stage-c-eval-adapter/1",
+    "evaluator_version": {
+      "adapter": "stage-c-eval-adapter/1",
+      "distribution": "1.2.3.post1.dev0",
+      "package_sources": 74,
+      "package_sha256": "41334a7a30567811b3c42fc125b64140e64069b08ff7793643c0ed68931a68d8"
+    },
+    "scored_by_version": "1.2.3.post1.dev0"
+  }
+}

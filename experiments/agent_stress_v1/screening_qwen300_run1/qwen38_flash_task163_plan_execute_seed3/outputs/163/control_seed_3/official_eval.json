@@ -1,0 +1,63 @@
+{
+  "task_id": 163,
+  "intent_template_id": 136,
+  "sites": [
+    "shopping"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"Review titles with 2 stars or below (rating ≤ 40%) for this product:\\n\\n1. **\\\"Memory Card Came Defective\\\"** — Rating 20% (1 star) — Review by Ernesto, posted 4/21/23. (\\\"I could not format the card so I wasn't able to use it for my VITA\\\")\\n\\nThis is the only qualifying review. All other reviews on both pages are rated 80% (4 stars) or 100% (5 stars), which are above the 2-star threshold. Note: two reviews (\\\"It's used...\\\" by The EggMan and \\\"...it's real and has no issues so far\\\" by BrockNet) appear truncated in the listing but correspond to higher-rated entries; no additional low-star reviews were found.\"\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "review titles with 2 stars or below (rating <= 40%) for this product: 1. **\"memory card came defective\"** -- rating 20% (1 star) -- review by ernesto, posted 4/21/23. (\"i could not format the card so i wasn't able to use it for my vita\") this is the only qualifying review. all other reviews on both pages are rated 80% (4 stars) or 100% (5 stars), which are above the 2 star threshold. note: two reviews (\"it's used...\" by the eggman and \"...it's real and has no issues so far\" by brocknet) appear truncated in the listing but correspond to higher rated entries; no additional low star reviews were found."
+        ]
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "memory card came defective"
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/1), Missing: 1, Extra: 1",
+            "Expected: [memory card came defective], Got: [review titles with 2 stars or below (rating <= 40%) for this product: 1. **\"memory card came defective\"** -- rating 20% (1 star) -- review by ernesto, posted 4/21/23. (\"i could not format the card so i wasn't able to use it for my vita\") this is the only qualifying review. all other reviews on both pages are rated 80% (4 stars) or 100% (5 stars), which are above the 2 star threshold. note: two reviews (\"it's used...\" by the eggman and \"...it's real and has no issues so far\" by brocknet) appear truncated in the listing but correspond to higher rated entries; no additional low star reviews were found.]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false,
+  "_evaluation_binding": {
+    "agent_response_sha256": "a2f13e2d1292d12714f32ff0cf2d9158acf051e0c22468a9f34484b682226c1d",
+    "network_har_sha256": "e0678d9255d2cd785b708f06f39b3c9723771505199932b6e13f45508f3d7a7e",
+    "config_sha256": "0b7e7e9326d16a5d070adea30c4e4247cd65137832a8544352f581a2b71b64c9",
+    "evaluator_adapter_version": "stage-c-eval-adapter/1",
+    "evaluator_version": {
+      "adapter": "stage-c-eval-adapter/1",
+      "distribution": "1.2.3.post1.dev0",
+      "package_sources": 74,
+      "package_sha256": "41334a7a30567811b3c42fc125b64140e64069b08ff7793643c0ed68931a68d8"
+    },
+    "scored_by_version": "1.2.3.post1.dev0"
+  }
+}

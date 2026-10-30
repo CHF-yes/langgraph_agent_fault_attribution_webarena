@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "Top 3 contributors (by commit count) to facebook's create-react-app repo and their email addresses:\n\n1. Dan Abramov — 634 commits — dan.abramov@gmail.com\n2. Joe Haddad — 292 commits — timer150@gmail.com\n3. Ian Sutherland — 153 commits — ian@iansutherland.ca\n\n(Source: GitLab Contributors graph at /facebook/create-react-app/-/graphs/main, excluding merge commits, limited to 6,000 commits.)"
+  ],
+  "error_details": null
+}

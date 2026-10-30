@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "The top 3 contributors (by commit count) to the PyTorch-GAN repo and their email addresses are:\n\n1. Erik Linder-Norén — 85 commits — eriklindernoren@live.se\n2. eriklindernoren — 60 commits — eriklindernoren@gmail.com\n3. pinnacle — 8 commits — pinnacle.chen@qq.com\n\n(Note: the next contributor, zhampel, has only 3 commits at 17304045+zhampel@users.noreply.github.com.)"
+  ],
+  "error_details": null
+}

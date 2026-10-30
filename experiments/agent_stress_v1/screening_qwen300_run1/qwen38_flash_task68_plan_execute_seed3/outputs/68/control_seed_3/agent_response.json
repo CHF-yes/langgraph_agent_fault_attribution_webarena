@@ -1,0 +1,11 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    {
+      "book": "A Christmas Carol",
+      "author": "Charles Dickens"
+    }
+  ],
+  "error_details": null
+}

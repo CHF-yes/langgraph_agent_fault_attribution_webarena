@@ -1,0 +1,64 @@
+{
+  "task_id": 25,
+  "intent_template_id": 222,
+  "sites": [
+    "shopping"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"On page 1, the reviewer(s) who explicitly mention \\\"print quality\\\" with a rating of 3 stars or less is: GoldfishGoldfish (whose review states \\\"It gives great print quality as long as you use the premium paper settings\\\"). Note: the page's accessibility data truncates each review body and only shows numeric star ratings for some entries (e.g., Bob in Vegas 20%, AMAZON SHOPAHOLIC 20%, Dylan Spears 20%, Imajin8 80%). Among all page‑1 reviews, the only one whose visible text explicitly contains the phrase \\\"print quality\\\" is GoldfishGoldfish's review. The other low-rated reviews (Bob in Vegas, AMAZON SHOPAHOLIC, Dylan Spears at 20%/1-star) do not contain the exact phrase \\\"print quality\\\" in their shown text. Therefore the qualifying reviewer name from page 1 is: GoldfishGoldfish.\"\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "on page 1, the reviewer(s) who explicitly mention \"print quality\" with a rating of 3 stars or less is: goldfishgoldfish (whose review states \"it gives great print quality as long as you use the premium paper settings\"). note: the page's accessibility data truncates each review body and only shows numeric star ratings for some entries (e.g., bob in vegas 20%, amazon shopaholic 20%, dylan spears 20%, imajin8 80%). among all page 1 reviews, the only one whose visible text explicitly contains the phrase \"print quality\" is goldfishgoldfish's review. the other low rated reviews (bob in vegas, amazon shopaholic, dylan spears at 20%/1 star) do not contain the exact phrase \"print quality\" in their shown text. therefore the qualifying reviewer name from page 1 is: goldfishgoldfish."
+        ]
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "roxanne brandon coffey",
+          "nelson"
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/2), Missing: 2, Extra: 1",
+            "Expected: [roxanne brandon coffey, nelson], Got: [on page 1, the reviewer(s) who explicitly mention \"print quality\" with a rating of 3 stars or less is: goldfishgoldfish (whose review states \"it gives great print quality as long as you use the premium paper settings\"). note: the page's accessibility data truncates each review body and only shows numeric star ratings for some entries (e.g., bob in vegas 20%, amazon shopaholic 20%, dylan spears 20%, imajin8 80%). among all page 1 reviews, the only one whose visible text explicitly contains the phrase \"print quality\" is goldfishgoldfish's review. the other low rated reviews (bob in vegas, amazon shopaholic, dylan spears at 20%/1 star) do not contain the exact phrase \"print quality\" in their shown text. therefore the qualifying reviewer name from page 1 is: goldfishgoldfish.]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false,
+  "_evaluation_binding": {
+    "agent_response_sha256": "6b41091c497354fc8482d1ae160d7ffae6f39aad09fe68e5144c6ebebf33371b",
+    "network_har_sha256": "b47b68ccaedaca8f969887949d95647f6436621317cfdefd615664276b033955",
+    "config_sha256": "0b7e7e9326d16a5d070adea30c4e4247cd65137832a8544352f581a2b71b64c9",
+    "evaluator_adapter_version": "stage-c-eval-adapter/1",
+    "evaluator_version": {
+      "adapter": "stage-c-eval-adapter/1",
+      "distribution": "1.2.3.post1.dev0",
+      "package_sources": 74,
+      "package_sha256": "41334a7a30567811b3c42fc125b64140e64069b08ff7793643c0ed68931a68d8"
+    },
+    "scored_by_version": "1.2.3.post1.dev0"
+  }
+}

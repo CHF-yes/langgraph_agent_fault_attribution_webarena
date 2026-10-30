@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "git@metis.lti.cs.cmu.edu:convexegg/chatgpt.git"
+  ],
+  "error_details": null
+}

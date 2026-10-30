@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "The minimum price visible on the current page of search results sorted by price ascending is $0.01."
+  ],
+  "error_details": null
+}

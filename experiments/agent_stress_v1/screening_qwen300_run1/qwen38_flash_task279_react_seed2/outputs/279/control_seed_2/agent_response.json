@@ -1,0 +1,19 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    {
+      "names": [
+        "SONY WH1000XM3 Bluetooth Wireless Noise Canceling Headphones Silver WH-1000XM3/S (Renewed)",
+        "Sony WH-CH710N/H Wireless Bluetooth Noise Cancelling Headphones",
+        "Sony WH-1000XM3B Wireless Bluetooth Noise-Canceling Over-Ear Headphones (Black) Basic Headphone Bundle Kit with Stylus",
+        "Sony Wireless Headphones WH-CH510: Wireless Bluetooth On-Ear Headset with Mic for Phone-Call, Black",
+        "Sony WHCH710N Wireless Bluetooth Noise Canceling Over-The-Ear Headphones (Black) with Kratos 18W PD Two-Port Power Adapter and Kratos 6-Feet Nylon Braided USB-C Cable Bundle (3 Items)",
+        "Sony MDRAS600BT Active Sports Bluetooth Headset (Black)"
+      ],
+      "min": 58.0,
+      "max": 247.99
+    }
+  ],
+  "error_details": null
+}

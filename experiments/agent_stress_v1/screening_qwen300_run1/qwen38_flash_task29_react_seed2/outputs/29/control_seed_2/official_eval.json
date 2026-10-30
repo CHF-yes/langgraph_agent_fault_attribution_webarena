@@ -1,0 +1,61 @@
+{
+  "task_id": 29,
+  "intent_template_id": 33,
+  "sites": [
+    "reddit"
+  ],
+  "task_revision": 2,
+  "status": "success",
+  "score": 1.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "success",
+      "score": 1.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    {\n      \"username\": \"ziostraccette\",\n      \"post_title\": \"How can I bring an HDMI cable from my pc downstairs to my TV upstairs?\",\n      \"count\": 0\n    }\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          {
+            "username": "ziostraccette",
+            "post_title": "how can i bring an hdmi cable from my pc downstairs to my tv upstairs?",
+            "count": 0.0
+          }
+        ]
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          {
+            "username": "ziostraccette",
+            "post_title": "how can i bring an hdmi cable from my pc downstairs to my tv upstairs?",
+            "count": 0.0
+          }
+        ]
+      },
+      "assertions": null,
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": true,
+  "_evaluation_binding": {
+    "agent_response_sha256": "257ca8614a7eb8c6cba7b8b314a66199447de8298e38e0830dc66f08dc39ba39",
+    "network_har_sha256": "1ab1903242094712ef8d8485a91132b14ca8948b0edd2a7a957f98ede10ea661",
+    "config_sha256": "0b7e7e9326d16a5d070adea30c4e4247cd65137832a8544352f581a2b71b64c9",
+    "evaluator_adapter_version": "stage-c-eval-adapter/1",
+    "evaluator_version": {
+      "adapter": "stage-c-eval-adapter/1",
+      "distribution": "1.2.3.post1.dev0",
+      "package_sources": 74,
+      "package_sha256": "41334a7a30567811b3c42fc125b64140e64069b08ff7793643c0ed68931a68d8"
+    },
+    "scored_by_version": "1.2.3.post1.dev0"
+  }
+}

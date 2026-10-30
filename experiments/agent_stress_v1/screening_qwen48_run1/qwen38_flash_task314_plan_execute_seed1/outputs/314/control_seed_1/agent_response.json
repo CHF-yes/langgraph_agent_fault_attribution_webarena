@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "The top 3 contributors to the primer/design repo (by commit count, on the main branch) are:\n\n1. **Shawn Allen** — 95 commits\n2. **Inayaili León** — 77 commits\n3. **Aurora Pleguezuelo** — 66 commits"
+  ],
+  "error_details": null
+}

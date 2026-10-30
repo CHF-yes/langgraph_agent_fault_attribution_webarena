@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "The user's (Byte Blaze / @byteblaze) personal projects that received the most stars are tied at 6 stars each:\n\n1. **empathy-prompts** — Project ID: **183** (6 stars)\n2. **millennials-to-snake-people** — Project ID: **187** (6 stars)\n\nAll other personal projects had fewer stars (a11y-webring.club=2, ericwbailey.website=2, a11y-syntax-highlighting=1, cloud-to-butt=0, timeit=0, dotfiles=0, remove-board-movement-events-from-the-github-issue-timeline=0).\n\nSo the project IDs of the most-starred personal project(s) are **183 and 187**."
+  ],
+  "error_details": null
+}

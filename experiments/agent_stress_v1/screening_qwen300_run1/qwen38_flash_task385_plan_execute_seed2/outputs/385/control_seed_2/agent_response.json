@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "Customers who think EYZUTAK phone cases are good looking (based on reviews mentioning appearance positively):\n\n1. **Lisa Lee** – \"The case is really cute and I've received compliments on it.\"\n2. **MH** – \"Gray color is so chic... Love the colors gray and rose gold. Very chic. I'm more impressed by the look in person than in the photos.\"\n3. **Misba009** – \"the case is beautiful\"\n4. **Amanda** – \"This case looks really nice. I get a lot of compliments.\"\n5. **Bethany Robertson** (page 2) – \"...is really classy and the plastic is very glossy.\"\n\nNote: On page 2, N Randall's review is titled \"Cute but only for a short time,\" but the content is negative (\"Do not buy this\"), so they are not counted as considering the case good looking. Diana Alcaraz and Evelyn Kurver also gave non-positive appearance feedback."
+  ],
+  "error_details": null
+}

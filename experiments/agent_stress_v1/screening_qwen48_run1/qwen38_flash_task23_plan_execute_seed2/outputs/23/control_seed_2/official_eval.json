@@ -1,0 +1,64 @@
+{
+  "task_id": 23,
+  "intent_template_id": 222,
+  "sites": [
+    "shopping"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"Rachel is the only reviewer who mentions good fingerprint resistance (\\\"It is super clear and fingerprint resistant\\\"). On page 2, the visible reviews (Andrew Sanders and DaniLee14) do not mention fingerprint resistance.\"\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "task_type": "retrieve",
+        "retrieved_data": [
+          "rachel is the only reviewer who mentions good fingerprint resistance (\"it is super clear and fingerprint resistant\"). on page 2, the visible reviews (andrew sanders and danilee14) do not mention fingerprint resistance."
+        ],
+        "status": "success"
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "rachel",
+          "t. gannon"
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/2), Missing: 2, Extra: 1",
+            "Expected: [rachel, t. gannon], Got: [rachel is the only reviewer who mentions good fingerprint resistance (\"it is super clear and fingerprint resistant\"). on page 2, the visible reviews (andrew sanders and danilee14) do not mention fingerprint resistance.]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false,
+  "_evaluation_binding": {
+    "agent_response_sha256": "2be6f59cffd23f31ae175964bf8ad2a4826a6823cd9bcf839d9319213e9c293d",
+    "network_har_sha256": "741572b39e21b18f94e8f5fda2e835087f1e46678de15542bd26310d92f13161",
+    "config_sha256": "0b7e7e9326d16a5d070adea30c4e4247cd65137832a8544352f581a2b71b64c9",
+    "evaluator_adapter_version": "stage-c-eval-adapter/1",
+    "evaluator_version": {
+      "adapter": "stage-c-eval-adapter/1",
+      "distribution": "1.2.3.post1.dev0",
+      "package_sources": 74,
+      "package_sha256": "41334a7a30567811b3c42fc125b64140e64069b08ff7793643c0ed68931a68d8"
+    },
+    "scored_by_version": "1.2.3.post1.dev0"
+  }
+}

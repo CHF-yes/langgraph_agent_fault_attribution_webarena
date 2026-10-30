@@ -1,0 +1,66 @@
+{
+  "task_id": 21,
+  "intent_template_id": 222,
+  "sites": [
+    "shopping"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"The reviewer who explicitly mentions the ear cups being small is **Dibbins**, whose review is titled \\\"Cup for ears very small\\\" and states: \\\"The ear cups MAY be ok for children... but for adult sized ears they are way too small.\\\"\\n\\n(Other reviewers touch on related sizing issues — e.g., Catso notes the headphones \\\"really are for people with very small ears,\\\" and Michelle Davis notes the padding only fits small/kid ears — but Dibbins is the one who directly describes the ear cups as small.)\"\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "the reviewer who explicitly mentions the ear cups being small is **dibbins**, whose review is titled \"cup for ears very small\" and states: \"the ear cups may be ok for children... but for adult sized ears they are way too small.\" (other reviewers touch on related sizing issues -- e.g., catso notes the headphones \"really are for people with very small ears,\" and michelle davis notes the padding only fits small/kid ears -- but dibbins is the one who directly describes the ear cups as small.)"
+        ]
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "catso",
+          "dibbins",
+          "anglebert dinkherhump",
+          "michelle davis"
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/4), Missing: 4, Extra: 1",
+            "Expected: [catso, dibbins, ..., michelle davis], Got: [the reviewer who explicitly mentions the ear cups being small is **dibbins**, whose review is titled \"cup for ears very small\" and states: \"the ear cups may be ok for children... but for adult sized ears they are way too small.\" (other reviewers touch on related sizing issues -- e.g., catso notes the headphones \"really are for people with very small ears,\" and michelle davis notes the padding only fits small/kid ears -- but dibbins is the one who directly describes the ear cups as small.)]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false,
+  "_evaluation_binding": {
+    "agent_response_sha256": "a748c764879e3593bfc37f1d45cbb13678fbd3ad4013a3d05cb311ffa38a2142",
+    "network_har_sha256": "c2dfe26b12ea922352996797329ecab4e6b95ded7e3947f33679bc459bcfb012",
+    "config_sha256": "0b7e7e9326d16a5d070adea30c4e4247cd65137832a8544352f581a2b71b64c9",
+    "evaluator_adapter_version": "stage-c-eval-adapter/1",
+    "evaluator_version": {
+      "adapter": "stage-c-eval-adapter/1",
+      "distribution": "1.2.3.post1.dev0",
+      "package_sources": 74,
+      "package_sha256": "41334a7a30567811b3c42fc125b64140e64069b08ff7793643c0ed68931a68d8"
+    },
+    "scored_by_version": "1.2.3.post1.dev0"
+  }
+}

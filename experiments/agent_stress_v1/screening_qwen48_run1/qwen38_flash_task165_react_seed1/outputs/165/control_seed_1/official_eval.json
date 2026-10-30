@@ -1,0 +1,64 @@
+{
+  "task_id": 165,
+  "intent_template_id": 136,
+  "sites": [
+    "shopping"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"There are 4 reviews total. Converting the percentage ratings to a 5-star scale (each star = 20%), the reviews with 2 stars or below (≤40%) are:\\n\\n1. \\\"So cute but too small\\\" — 40% (2 stars) by k.d.\\n2. \\\"Toe rubbed\\\" — 40% (2 stars) by Amazon Customer\\n\\nThe other two reviews (\\\"Best Shoe Ever\\\" at 100%/5 stars and \\\"The problem is that the strap is made of some really stiff leather and is painful to my heel\\\" at 60%/3 stars) exceed 2 stars and are excluded.\"\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "task_type": "retrieve",
+        "retrieved_data": [
+          "there are 4 reviews total. converting the percentage ratings to a 5 star scale (each star = 20%), the reviews with 2 stars or below (<=40%) are: 1. \"so cute but too small\" -- 40% (2 stars) by k.d. 2. \"toe rubbed\" -- 40% (2 stars) by amazon customer the other two reviews (\"best shoe ever\" at 100%/5 stars and \"the problem is that the strap is made of some really stiff leather and is painful to my heel\" at 60%/3 stars) exceed 2 stars and are excluded."
+        ],
+        "status": "success"
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "so cute but too small",
+          "toe rubbed"
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/2), Missing: 2, Extra: 1",
+            "Expected: [so cute but too small, toe rubbed], Got: [there are 4 reviews total. converting the percentage ratings to a 5 star scale (each star = 20%), the reviews with 2 stars or below (<=40%) are: 1. \"so cute but too small\" -- 40% (2 stars) by k.d. 2. \"toe rubbed\" -- 40% (2 stars) by amazon customer the other two reviews (\"best shoe ever\" at 100%/5 stars and \"the problem is that the strap is made of some really stiff leather and is painful to my heel\" at 60%/3 stars) exceed 2 stars and are excluded.]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false,
+  "_evaluation_binding": {
+    "agent_response_sha256": "3c1666ecb3ce990fc64fc9eae6f45f65afd523912978d34c0ee980f8ee6f1476",
+    "network_har_sha256": "15d8342598c2aaedb55e485000f0949119fb19d15c77a45bb6bc5d27d9ad624b",
+    "config_sha256": "0b7e7e9326d16a5d070adea30c4e4247cd65137832a8544352f581a2b71b64c9",
+    "evaluator_adapter_version": "stage-c-eval-adapter/1",
+    "evaluator_version": {
+      "adapter": "stage-c-eval-adapter/1",
+      "distribution": "1.2.3.post1.dev0",
+      "package_sources": 74,
+      "package_sha256": "41334a7a30567811b3c42fc125b64140e64069b08ff7793643c0ed68931a68d8"
+    },
+    "scored_by_version": "1.2.3.post1.dev0"
+  }
+}

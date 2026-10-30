@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "Reviews with 2 stars or below (rating ≤ 40% on the 5-star scale):\n\n1. \"So cute but too small\" — 2 stars (40%) by k.d.\n2. \"Toe rubbed\" — 2 stars (40%) by Amazon Customer\n\n(The other two reviews exceed 2 stars: \"Best Shoe Ever\" = 5 stars/100%, and \"The problem is that the strap is made of some really stiff leather and is painful to my heel\" = 3 stars/60%.)"
+  ],
+  "error_details": null
+}

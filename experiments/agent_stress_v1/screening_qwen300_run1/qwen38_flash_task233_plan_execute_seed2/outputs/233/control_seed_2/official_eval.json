@@ -1,0 +1,63 @@
+{
+  "task_id": 233,
+  "intent_template_id": 213,
+  "sites": [
+    "shopping"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"BLOCKED: Could not log in. The Customer Login page (http://localhost:7770/customer/account/login/) rejected every credential attempt with the error \\\"The account sign-in was incorrect or your account is disabled temporarily. Please wait and try again later.\\\" Tried: emma.rossi19@example.com / Password123, john.smith@example.com / Password.123, and emma.rossi19@example.com / Password.123 — all failed. No valid credentials were provided for this task, so the 'My Account' dashboard could not be reached and the most recent complete order number cannot yet be retrieved. Please supply the correct account email/password (or confirm the intended test user) before retrying; further guessing may trigger a temporary account lockout.\"\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "blocked: could not log in. the customer login page (__shopping__/customer/account/login/) rejected every credential attempt with the error \"the account sign in was incorrect or your account is disabled temporarily. please wait and try again later.\" tried: emma.rossi19@example.com / password123, john.smith@example.com / password.123, and emma.rossi19@example.com / password.123 -- all failed. no valid credentials were provided for this task, so the 'my account' dashboard could not be reached and the most recent complete order number cannot yet be retrieved. please supply the correct account email/password (or confirm the intended test user) before retrying; further guessing may trigger a temporary account lockout."
+        ]
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "^#?\\s*0*180$"
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/1), Missing: 1, Extra: 1",
+            "Expected: [^#?\\s*0*180$], Got: [blocked: could not log in. the customer login page (__shopping__/customer/account/login/) rejected every credential attempt with the error \"the account sign in was incorrect or your account is disabled temporarily. please wait and try again later.\" tried: emma.rossi19@example.com / password123, john.smith@example.com / password.123, and emma.rossi19@example.com / password.123 -- all failed. no valid credentials were provided for this task, so the 'my account' dashboard could not be reached and the most recent complete order number cannot yet be retrieved. please supply the correct account email/password (or confirm the intended test user) before retrying; further guessing may trigger a temporary account lockout.]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false,
+  "_evaluation_binding": {
+    "agent_response_sha256": "a111f4b04e57c86141de27424544cd46fbbb4449294f98344fe645c61716a9a0",
+    "network_har_sha256": "20f04a7192d38cb1a9be86ff72ffe8d78ab449a08ac62204265d3f15c8f3e7d0",
+    "config_sha256": "0b7e7e9326d16a5d070adea30c4e4247cd65137832a8544352f581a2b71b64c9",
+    "evaluator_adapter_version": "stage-c-eval-adapter/1",
+    "evaluator_version": {
+      "adapter": "stage-c-eval-adapter/1",
+      "distribution": "1.2.3.post1.dev0",
+      "package_sources": 74,
+      "package_sha256": "41334a7a30567811b3c42fc125b64140e64069b08ff7793643c0ed68931a68d8"
+    },
+    "scored_by_version": "1.2.3.post1.dev0"
+  }
+}

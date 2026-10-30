@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "The second post in the top 10 hottest list, \"Friendly reminder bookshop.org exists.\" (by smita16), does NOT qualify. Its description only promotes the bookshop.org website for supporting local indie bookstores and recommends zero specific books (no book title or author appears in the post body). So nothing to record for this post."
+  ],
+  "error_details": null
+}

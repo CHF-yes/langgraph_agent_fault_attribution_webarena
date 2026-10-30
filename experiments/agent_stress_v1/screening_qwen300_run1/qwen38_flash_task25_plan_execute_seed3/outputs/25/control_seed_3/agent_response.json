@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "On page 1, the reviewer(s) who explicitly mention \"print quality\" with a rating of 3 stars or less is: GoldfishGoldfish (whose review states \"It gives great print quality as long as you use the premium paper settings\"). Note: the page's accessibility data truncates each review body and only shows numeric star ratings for some entries (e.g., Bob in Vegas 20%, AMAZON SHOPAHOLIC 20%, Dylan Spears 20%, Imajin8 80%). Among all page‑1 reviews, the only one whose visible text explicitly contains the phrase \"print quality\" is GoldfishGoldfish's review. The other low-rated reviews (Bob in Vegas, AMAZON SHOPAHOLIC, Dylan Spears at 20%/1-star) do not contain the exact phrase \"print quality\" in their shown text. Therefore the qualifying reviewer name from page 1 is: GoldfishGoldfish."
+  ],
+  "error_details": null
+}

@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "The contributor with the most commits to the gh-pages branch has 79 commits, and their associated email address is: secupwn@users.noreply.github.com"
+  ],
+  "error_details": null
+}

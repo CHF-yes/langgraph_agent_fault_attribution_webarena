@@ -1,0 +1,63 @@
+{
+  "task_id": 308,
+  "intent_template_id": 323,
+  "sites": [
+    "gitlab"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"The user with the most commits to the primer/design project is **Shawn Allen**, with **95 commits** (email shawn.allen@github.com). \\n\\nThis was confirmed via the project's Contributors page (http://localhost:8023/primer/design/-/graphs/main), which lists contributors sorted by commit count. Shawn Allen is the clear leader, ahead of the second-place contributor Inayaili León (77 commits) and Aurora Pleguezuelo (66 commits). Note: this author is not linked to a registered GitLab account (the name links only to a mailto address), so \\\"Shawn Allen\\\" is the displayed username/name.\"\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "the user with the most commits to the primer/design project is **shawn allen**, with **95 commits** (email shawn.allen@github.com). this was confirmed via the project's contributors page (__gitlab__/primer/design/-/graphs/main), which lists contributors sorted by commit count. shawn allen is the clear leader, ahead of the second place contributor inayaili leon (77 commits) and aurora pleguezuelo (66 commits). note: this author is not linked to a registered gitlab account (the name links only to a mailto address), so \"shawn allen\" is the displayed username/name."
+        ]
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "shawn.allen@github.com"
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/1), Missing: 1, Extra: 1",
+            "Expected: [shawn.allen@github.com], Got: [the user with the most commits to the primer/design project is **shawn allen**, with **95 commits** (email shawn.allen@github.com). this was confirmed via the project's contributors page (__gitlab__/primer/design/-/graphs/main), which lists contributors sorted by commit count. shawn allen is the clear leader, ahead of the second place contributor inayaili leon (77 commits) and aurora pleguezuelo (66 commits). note: this author is not linked to a registered gitlab account (the name links only to a mailto address), so \"shawn allen\" is the displayed username/name.]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false,
+  "_evaluation_binding": {
+    "agent_response_sha256": "c6dda4aad22edf2baff3257d670486774d1aea96daed7c0897bbe16a1edbf1f9",
+    "network_har_sha256": "9535dd0967210f727a64fb08bec89219c2f7f9c6460af22152d50ec93439764f",
+    "config_sha256": "0b7e7e9326d16a5d070adea30c4e4247cd65137832a8544352f581a2b71b64c9",
+    "evaluator_adapter_version": "stage-c-eval-adapter/1",
+    "evaluator_version": {
+      "adapter": "stage-c-eval-adapter/1",
+      "distribution": "1.2.3.post1.dev0",
+      "package_sources": 74,
+      "package_sha256": "41334a7a30567811b3c42fc125b64140e64069b08ff7793643c0ed68931a68d8"
+    },
+    "scored_by_version": "1.2.3.post1.dev0"
+  }
+}

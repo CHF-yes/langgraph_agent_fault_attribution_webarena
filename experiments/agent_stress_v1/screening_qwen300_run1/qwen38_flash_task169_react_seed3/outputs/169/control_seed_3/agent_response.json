@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "My personal projects that received the most stars are tied at 6 stars each:\n- empathy-prompts — Project ID: 183\n- millennials-to-snake-people — Project ID: 187"
+  ],
+  "error_details": null
+}

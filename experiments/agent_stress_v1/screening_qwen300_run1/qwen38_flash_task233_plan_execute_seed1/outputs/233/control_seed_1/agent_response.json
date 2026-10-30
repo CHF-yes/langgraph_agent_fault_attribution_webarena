@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "The most recent complete order is #000000180 (dated 3/11/23, total $65.32, status \"Complete\"). All more recent orders (000000170 on 5/17/23 and 000000189/188/187 on 5/2/23) are either Canceled or Pending, so 000000180 is the latest order with a \"Complete\" status."
+  ],
+  "error_details": null
+}

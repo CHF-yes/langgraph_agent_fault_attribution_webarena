@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "Among my personal projects, two are tied for the most stars (6 each):\n\n1. **empathy-prompts** — Project ID: **183** (6 stars)\n2. **millennials-to-snake-people** — Project ID: **187** (6 stars)\n\nThe next-highest personal projects only had 2 stars (a11y-webring.club and ericwbailey.website), so these two IDs (183 and 187) are the answer."
+  ],
+  "error_details": null
+}

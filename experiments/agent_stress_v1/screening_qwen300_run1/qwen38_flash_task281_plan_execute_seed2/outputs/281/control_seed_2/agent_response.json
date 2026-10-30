@@ -1,0 +1,15 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    {
+      "names": [
+        "Oral-B Kids Extra Soft Replacement Brush Heads featuring STAR WARS, 2 count",
+        "Kids By Oral-b Stages Power Star Wars Replacement Heads 4 Pack"
+      ],
+      "min": 12.99,
+      "max": 14.98
+    }
+  ],
+  "error_details": null
+}

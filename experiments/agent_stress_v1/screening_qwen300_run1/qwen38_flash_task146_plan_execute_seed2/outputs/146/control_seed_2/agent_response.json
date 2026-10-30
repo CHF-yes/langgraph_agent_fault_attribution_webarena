@@ -1,0 +1,11 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    {
+      "width": 16,
+      "height": 24
+    }
+  ],
+  "error_details": null
+}

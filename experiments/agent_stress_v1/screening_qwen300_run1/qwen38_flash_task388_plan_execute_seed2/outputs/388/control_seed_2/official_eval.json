@@ -1,0 +1,64 @@
+{
+  "task_id": 388,
+  "intent_template_id": 1356,
+  "sites": [
+    "shopping"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"Reviewers who gave 1 or 2 stars for the EYZUTAK phone case (ratings shown as percentages: 20% = 1 star, 40% = 2 stars):\\n\\n- **Evelyn Kurver** – \\\"Read\\\" – 40% (2 stars): \\\"The gold is already peeling out and I've only had it for 3 weeks.\\\"\\n- **N Randall** – \\\"Cute but only for a short time\\\" – 40% (2 stars): \\\"Do not buy this. Trust me! ... It started chipping right away...\\\"\\n\\nThese are the reviewers with 1–2 star ratings identified from the current view of the EYZUTAK Electroplated Magnetic Ring Holder Case product reviews.\"\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "reviewers who gave 1 or 2 stars for the eyzutak phone case (ratings shown as percentages: 20% = 1 star, 40% = 2 stars): - **evelyn kurver** - \"read\" - 40% (2 stars): \"the gold is already peeling out and i've only had it for 3 weeks.\" - **n randall** - \"cute but only for a short time\" - 40% (2 stars): \"do not buy this. trust me! ... it started chipping right away...\" these are the reviewers with 1-2 star ratings identified from the current view of the eyzutak electroplated magnetic ring holder case product reviews."
+        ]
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "evelyn kurver",
+          "n randall"
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/2), Missing: 2, Extra: 1",
+            "Expected: [evelyn kurver, n randall], Got: [reviewers who gave 1 or 2 stars for the eyzutak phone case (ratings shown as percentages: 20% = 1 star, 40% = 2 stars): - **evelyn kurver** - \"read\" - 40% (2 stars): \"the gold is already peeling out and i've only had it for 3 weeks.\" - **n randall** - \"cute but only for a short time\" - 40% (2 stars): \"do not buy this. trust me! ... it started chipping right away...\" these are the reviewers with 1-2 star ratings identified from the current view of the eyzutak electroplated magnetic ring holder case product reviews.]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false,
+  "_evaluation_binding": {
+    "agent_response_sha256": "cf408bce29c2788b3fb73558c8c515aa346002d303a1fb86f8156b87eb9d3c7e",
+    "network_har_sha256": "637e51ac6cc820261b3423b42ee0e3f90ef7c8ec3ddab5d45228c32bbf33e412",
+    "config_sha256": "0b7e7e9326d16a5d070adea30c4e4247cd65137832a8544352f581a2b71b64c9",
+    "evaluator_adapter_version": "stage-c-eval-adapter/1",
+    "evaluator_version": {
+      "adapter": "stage-c-eval-adapter/1",
+      "distribution": "1.2.3.post1.dev0",
+      "package_sources": 74,
+      "package_sha256": "41334a7a30567811b3c42fc125b64140e64069b08ff7793643c0ed68931a68d8"
+    },
+    "scored_by_version": "1.2.3.post1.dev0"
+  }
+}

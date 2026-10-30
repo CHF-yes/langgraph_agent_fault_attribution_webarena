@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "There is only one review with a rating of 2 stars or below:\n\n- **\"Meh\"** — rated 20% (1 star) by catherine brown, posted 4/18/23 (\"Dry / Uneven color\")\n\nThe other two reviews (\"Yes\" and \"Loved It!\") are both rated 100% (5 stars), so they do not qualify."
+  ],
+  "error_details": null
+}

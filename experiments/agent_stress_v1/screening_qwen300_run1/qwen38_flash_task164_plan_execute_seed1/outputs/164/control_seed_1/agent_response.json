@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "All 3 reviews on the page were examined. Ratings are expressed as percentages: 100% = 5 stars, 20% = 1 star. Only one review is 2 stars or below:\n\n- \"Meh\" (rating 20% ≈ 1 star, by catherine brown — \"Dry / Uneven color\")\n\nThe other two reviews (\"Yes\" and \"Loved It!\") are both 100% (5 stars) and do not qualify."
+  ],
+  "error_details": null
+}

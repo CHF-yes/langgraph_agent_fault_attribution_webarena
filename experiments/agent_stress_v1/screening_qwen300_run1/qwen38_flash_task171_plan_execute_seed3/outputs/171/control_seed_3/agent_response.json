@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "The personal projects belonging to 'Byte Blaze' that received fewer than 5 stars, with their project IDs, are:\n\n1. a11y-syntax-highlighting — Project ID: 186 (1 star)\n2. a11y-webring.club — Project ID: 179 (2 stars)\n3. accessible-html-content-patterns — Project ID: 185 (1 star)\n4. cloud-to-butt — Project ID: 189 (0 stars)\n5. dotfiles — Project ID: 193 (0 stars)\n6. ericwbailey.website — Project ID: 182 (2 stars)\n7. gimmiethat.space — Project ID: 184 (0 stars)\n\nExcluded (5 or more stars): empathy-prompts (6 stars) and millennials-to-snake-people (Project ID 187, 6 stars)."
+  ],
+  "error_details": null
+}

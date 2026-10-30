@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "Rachel is the reviewer who mentions good fingerprint resistance for the product. Her review states: \"Best screen protectors I've used! ... It is super clear and fingerprint resistant.\" No other reviewer among the 12 total reviews mentions fingerprint resistance."
+  ],
+  "error_details": null
+}

@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "The sort option is already set to 'Hot' (button shows 'Sort by: Hot'). No change needed."
+  ],
+  "error_details": null
+}

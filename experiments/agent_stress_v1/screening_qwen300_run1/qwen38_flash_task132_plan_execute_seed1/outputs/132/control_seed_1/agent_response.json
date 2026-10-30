@@ -1,0 +1,11 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    {
+      "status": "failed",
+      "reason": "Unable to sign in to GitLab. Tried multiple credential combinations (kilian/Password123!, user/user, bytebase/Password123!) and all returned 'Invalid login or password.' No valid credentials are available, so the protected commits page for a11yproject.com could not be accessed."
+    }
+  ],
+  "error_details": null
+}

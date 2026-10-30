@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "The most recent order with status 'Complete' is Order #000000180, dated 5/17/23... correction: dated 3/11/23, total $65.32, shipped to Emma Lopez. The order number is 000000180."
+  ],
+  "error_details": null
+}

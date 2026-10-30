@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "Among the top 10 hottest posts in the \"Books\" forum, only two posts recommend exactly one book:\n\n1. \"I just finished reading The Hobbit to my 6 year old daughter, and she loved it!\" → recommends **The Hobbit**\n2. \"Apple Books has a free audiobook of A Christmas Carol narrated by LeVar Burton!\" → recommends **A Christmas Carol**\n\nThe other 8 posts are either news articles, discussions about authors/stores/general topics, or do not recommend a specific single book.\n\nBook titles (exactly as they appear in the post descriptions):\n- The Hobbit\n- A Christmas Carol"
+  ],
+  "error_details": null
+}

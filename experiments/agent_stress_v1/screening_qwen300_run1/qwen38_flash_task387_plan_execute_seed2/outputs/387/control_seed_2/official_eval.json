@@ -1,0 +1,68 @@
+{
+  "task_id": 387,
+  "intent_template_id": 1356,
+  "sites": [
+    "shopping"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"Based on the EYZUTAK phone case reviews (rating % maps to stars: 80% = 4 stars, 100% = 5 stars), the reviewers who gave 4 or 5 stars are:\\n\\n**5-star (100%) reviewers:**\\n- MH (\\\"Gray color is so chic\\\")\\n- Amanda (\\\"Cute; scratches easily\\\")\\n- Cally (\\\"Pretty!\\\")\\n\\n**4-star (80%) reviewers:**\\n- Misba009 (\\\"beautiful\\\")\\n- Amazon Customer (\\\"Cute, but not magnetic\\\")\\n\\nSo the people who gave 4 or 5 stars for this EYZUTAK phone case are: **MH, Amanda, Cally, Misba009, and Amazon Customer**.\\n\\nNote: The review list pagination did not load a separate \\\"page 2\\\" in the accessibility tree despite multiple scroll attempts—the full set of 4/5-star reviewers above was extracted from the available review data.\"\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "based on the eyzutak phone case reviews (rating % maps to stars: 80% = 4 stars, 100% = 5 stars), the reviewers who gave 4 or 5 stars are: **5 star (100%) reviewers:** - mh (\"gray color is so chic\") - amanda (\"cute; scratches easily\") - cally (\"pretty!\") **4 star (80%) reviewers:** - misba009 (\"beautiful\") - amazon customer (\"cute, but not magnetic\") so the people who gave 4 or 5 stars for this eyzutak phone case are: **mh, amanda, cally, misba009, and amazon customer**. note: the review list pagination did not load a separate \"page 2\" in the accessibility tree despite multiple scroll attempts the full set of 4/5 star reviewers above was extracted from the available review data."
+        ]
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "mh",
+          "misba009",
+          "amanda",
+          "amazon customer",
+          "cally",
+          "bethany robertson"
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/6), Missing: 6, Extra: 1",
+            "Expected: [mh, misba009, ..., bethany robertson], Got: [based on the eyzutak phone case reviews (rating % maps to stars: 80% = 4 stars, 100% = 5 stars), the reviewers who gave 4 or 5 stars are: **5 star (100%) reviewers:** - mh (\"gray color is so chic\") - amanda (\"cute; scratches easily\") - cally (\"pretty!\") **4 star (80%) reviewers:** - misba009 (\"beautiful\") - amazon customer (\"cute, but not magnetic\") so the people who gave 4 or 5 stars for this eyzutak phone case are: **mh, amanda, cally, misba009, and amazon customer**. note: the review list pagination did not load a separate \"page 2\" in the accessibility tree despite multiple scroll attempts the full set of 4/5 star reviewers above was extracted from the available review data.]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false,
+  "_evaluation_binding": {
+    "agent_response_sha256": "98a81cbf7bab4c92c7bb7c88566359341b113d0fbe3f24f0b31d52c647bc6208",
+    "network_har_sha256": "1717ad4e12c0616524f1d87ba44df845864b4b7ef0b831e575f81afa131dbaea",
+    "config_sha256": "0b7e7e9326d16a5d070adea30c4e4247cd65137832a8544352f581a2b71b64c9",
+    "evaluator_adapter_version": "stage-c-eval-adapter/1",
+    "evaluator_version": {
+      "adapter": "stage-c-eval-adapter/1",
+      "distribution": "1.2.3.post1.dev0",
+      "package_sources": 74,
+      "package_sha256": "41334a7a30567811b3c42fc125b64140e64069b08ff7793643c0ed68931a68d8"
+    },
+    "scored_by_version": "1.2.3.post1.dev0"
+  }
+}

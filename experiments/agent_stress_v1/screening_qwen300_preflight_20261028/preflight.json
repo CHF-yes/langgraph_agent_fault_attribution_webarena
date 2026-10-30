@@ -1,0 +1,31 @@
+{
+  "stage": "screening",
+  "model_profile": "qwen38_flash",
+  "checks": {
+    "dataset_bound": true,
+    "evaluator_config_readable": true,
+    "evaluator_dataset_binding": true,
+    "evaluator_site_bindings": true,
+    "dependency:langgraph": true,
+    "dependency:langchain_openai": true,
+    "dependency:playwright": true,
+    "dependency:dotenv": true,
+    "native_evaluator_sources": true,
+    "model_profile_configured": true,
+    "chromium_installed": true,
+    "site:gitlab": true,
+    "site:reddit": true,
+    "site:shopping": true
+  },
+  "blockers": [],
+  "environment_ready": true,
+  "evaluator_version": {
+    "adapter": "stage-c-eval-adapter/1",
+    "distribution": "1.2.3.post1.dev0",
+    "package_sources": 74,
+    "package_sha256": "41334a7a30567811b3c42fc125b64140e64069b08ff7793643c0ed68931a68d8"
+  },
+  "model_identity_sha256": "dba90ace0d06d4b6fec982d8aa7c75baea6e2217e92c3b50dbba290484dd9264",
+  "paid_trials_executed": 0,
+  "access_scope": "site-level only; task/account availability is measured during screening"
+}

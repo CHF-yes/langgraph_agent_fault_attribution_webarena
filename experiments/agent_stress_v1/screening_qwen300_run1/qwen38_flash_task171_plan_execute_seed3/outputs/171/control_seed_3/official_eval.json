@@ -1,0 +1,72 @@
+{
+  "task_id": 171,
+  "intent_template_id": 289,
+  "sites": [
+    "gitlab"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"The personal projects belonging to 'Byte Blaze' that received fewer than 5 stars, with their project IDs, are:\\n\\n1. a11y-syntax-highlighting — Project ID: 186 (1 star)\\n2. a11y-webring.club — Project ID: 179 (2 stars)\\n3. accessible-html-content-patterns — Project ID: 185 (1 star)\\n4. cloud-to-butt — Project ID: 189 (0 stars)\\n5. dotfiles — Project ID: 193 (0 stars)\\n6. ericwbailey.website — Project ID: 182 (2 stars)\\n7. gimmiethat.space — Project ID: 184 (0 stars)\\n\\nExcluded (5 or more stars): empathy-prompts (6 stars) and millennials-to-snake-people (Project ID 187, 6 stars).\"\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "The personal projects belonging to 'Byte Blaze' that received fewer than 5 stars, with their project IDs, are:\n\n1. a11y-syntax-highlighting — Project ID: 186 (1 star)\n2. a11y-webring.club — Project ID: 179 (2 stars)\n3. accessible-html-content-patterns — Project ID: 185 (1 star)\n4. cloud-to-butt — Project ID: 189 (0 stars)\n5. dotfiles — Project ID: 193 (0 stars)\n6. ericwbailey.website — Project ID: 182 (2 stars)\n7. gimmiethat.space — Project ID: 184 (0 stars)\n\nExcluded (5 or more stars): empathy-prompts (6 stars) and millennials-to-snake-people (Project ID 187, 6 stars)."
+        ]
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          182.0,
+          179.0,
+          186.0,
+          185.0,
+          193.0,
+          190.0,
+          189.0,
+          188.0,
+          184.0,
+          181.0
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/10), Missing: 10, Extra: 1",
+            "Expected: [182.0, 179.0, ..., 181.0], Got: [The personal projects belonging to 'Byte Blaze' that received fewer than 5 stars, with their project IDs, are:\n\n1. a11y-syntax-highlighting — Project ID: 186 (1 star)\n2. a11y-webring.club — Project ID: 179 (2 stars)\n3. accessible-html-content-patterns — Project ID: 185 (1 star)\n4. cloud-to-butt — Project ID: 189 (0 stars)\n5. dotfiles — Project ID: 193 (0 stars)\n6. ericwbailey.website — Project ID: 182 (2 stars)\n7. gimmiethat.space — Project ID: 184 (0 stars)\n\nExcluded (5 or more stars): empathy-prompts (6 stars) and millennials-to-snake-people (Project ID 187, 6 stars).]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false,
+  "_evaluation_binding": {
+    "agent_response_sha256": "e5d3dfb73a9f1172780491826fb8b597047ad7d82caf259413b90ecf864295e4",
+    "network_har_sha256": "928b4fe95aa3e2d5c9b1fa51a135ee9ace5ac1bc547f15763c9af6c0b87a4217",
+    "config_sha256": "0b7e7e9326d16a5d070adea30c4e4247cd65137832a8544352f581a2b71b64c9",
+    "evaluator_adapter_version": "stage-c-eval-adapter/1",
+    "evaluator_version": {
+      "adapter": "stage-c-eval-adapter/1",
+      "distribution": "1.2.3.post1.dev0",
+      "package_sources": 74,
+      "package_sha256": "41334a7a30567811b3c42fc125b64140e64069b08ff7793643c0ed68931a68d8"
+    },
+    "scored_by_version": "1.2.3.post1.dev0"
+  }
+}

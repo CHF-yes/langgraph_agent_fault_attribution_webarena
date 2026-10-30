@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "The user with the most commits to the AndroidSlidingUpPanel project (master branch) is **tokudu** (antonlopyrev@gmail.com), with 150 commits. This is far more than the next highest contributor (Sergii Pechenizkyi with 11 commits), so tokudu is the sole leader."
+  ],
+  "error_details": null
+}

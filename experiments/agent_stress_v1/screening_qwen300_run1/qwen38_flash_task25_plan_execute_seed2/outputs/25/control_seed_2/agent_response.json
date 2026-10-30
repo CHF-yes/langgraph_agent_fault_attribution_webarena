@@ -1,0 +1,6 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "NOT_FOUND_ERROR",
+  "retrieved_data": null,
+  "error_details": "No reviewer meets both criteria. After analyzing all 12 reviews on the product page, the only review that explicitly mentions \"print quality\" is by **Goldfish** (\"It gives great print quality as long as you use the premium paper settings…\"), but this is a positive review and is NOT rated 3 stars or less. The reviews rated 3 stars or lower (e.g., Bob in Vegas – 20%, AMAZON SHOPAHOLIC – 20%, Dylan Spears – 20%) do not explicitly mention \"print quality.\" Therefore, there are no reviewers who both mention print quality explicitly AND give a rating of 3 or fewer stars."
+}

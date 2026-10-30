@@ -1,0 +1,64 @@
+{
+  "task_id": 67,
+  "intent_template_id": 17,
+  "sites": [
+    "reddit"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"Among the top 10 hottest posts in the /f/books forum, only two posts recommend exactly one book:\\n\\n1. \\\"I just finished reading The Hobbit to my 6 year old daughter, and she loved it!\\\" → recommends **The Hobbit**\\n2. \\\"Apple Books has a free audiobook of A Christmas Carol narrated by LeVar Burton!\\\" → recommends **A Christmas Carol**\\n\\nThe other eight posts either were external news/article links (T.S. Eliot letters, Appalachian prison book project, Lin Oliver/Henry Winkler, Misty of Chincoteague, Ukrainian publishers, Used Bookstores essay), recommended a website rather than a book (bookshop.org), or discussed an author's works generally without naming a single book (Agatha Christie).\"\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "task_type": "retrieve",
+        "retrieved_data": [
+          "among the top 10 hottest posts in the /f/books forum, only two posts recommend exactly one book: 1. \"i just finished reading the hobbit to my 6 year old daughter, and she loved it!\" - recommends **the hobbit** 2. \"apple books has a free audiobook of a christmas carol narrated by levar burton!\" - recommends **a christmas carol** the other eight posts either were external news/article links (t.s. eliot letters, appalachian prison book project, lin oliver/henry winkler, misty of chincoteague, ukrainian publishers, used bookstores essay), recommended a website rather than a book (bookshop.org), or discussed an author's works generally without naming a single book (agatha christie)."
+        ],
+        "status": "success"
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "the hobbit",
+          "a christmas carol"
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/2), Missing: 2, Extra: 1",
+            "Expected: [the hobbit, a christmas carol], Got: [among the top 10 hottest posts in the /f/books forum, only two posts recommend exactly one book: 1. \"i just finished reading the hobbit to my 6 year old daughter, and she loved it!\" - recommends **the hobbit** 2. \"apple books has a free audiobook of a christmas carol narrated by levar burton!\" - recommends **a christmas carol** the other eight posts either were external news/article links (t.s. eliot letters, appalachian prison book project, lin oliver/henry winkler, misty of chincoteague, ukrainian publishers, used bookstores essay), recommended a website rather than a book (bookshop.org), or discussed an author's works generally without naming a single book (agatha christie).]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false,
+  "_evaluation_binding": {
+    "agent_response_sha256": "3effae967b23f1834f4c90276f13ff685b82f8e3f8f7672f08ee242f013aec52",
+    "network_har_sha256": "51ebda2925d9b7d15e9e9d02edfae4b34168540c0ca65d652077c5df9ba3cc96",
+    "config_sha256": "0b7e7e9326d16a5d070adea30c4e4247cd65137832a8544352f581a2b71b64c9",
+    "evaluator_adapter_version": "stage-c-eval-adapter/1",
+    "evaluator_version": {
+      "adapter": "stage-c-eval-adapter/1",
+      "distribution": "1.2.3.post1.dev0",
+      "package_sources": 74,
+      "package_sha256": "41334a7a30567811b3c42fc125b64140e64069b08ff7793643c0ed68931a68d8"
+    },
+    "scored_by_version": "1.2.3.post1.dev0"
+  }
+}

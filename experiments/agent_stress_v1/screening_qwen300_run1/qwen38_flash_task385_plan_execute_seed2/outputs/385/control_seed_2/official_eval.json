@@ -1,0 +1,68 @@
+{
+  "task_id": 385,
+  "intent_template_id": 666,
+  "sites": [
+    "shopping"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"Customers who think EYZUTAK phone cases are good looking (based on reviews mentioning appearance positively):\\n\\n1. **Lisa Lee** – \\\"The case is really cute and I've received compliments on it.\\\"\\n2. **MH** – \\\"Gray color is so chic... Love the colors gray and rose gold. Very chic. I'm more impressed by the look in person than in the photos.\\\"\\n3. **Misba009** – \\\"the case is beautiful\\\"\\n4. **Amanda** – \\\"This case looks really nice. I get a lot of compliments.\\\"\\n5. **Bethany Robertson** (page 2) – \\\"...is really classy and the plastic is very glossy.\\\"\\n\\nNote: On page 2, N Randall's review is titled \\\"Cute but only for a short time,\\\" but the content is negative (\\\"Do not buy this\\\"), so they are not counted as considering the case good looking. Diana Alcaraz and Evelyn Kurver also gave non-positive appearance feedback.\"\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "customers who think eyzutak phone cases are good looking (based on reviews mentioning appearance positively): 1. **lisa lee** - \"the case is really cute and i've received compliments on it.\" 2. **mh** - \"gray color is so chic... love the colors gray and rose gold. very chic. i'm more impressed by the look in person than in the photos.\" 3. **misba009** - \"the case is beautiful\" 4. **amanda** - \"this case looks really nice. i get a lot of compliments.\" 5. **bethany robertson** (page 2) - \"...is really classy and the plastic is very glossy.\" note: on page 2, n randall's review is titled \"cute but only for a short time,\" but the content is negative (\"do not buy this\"), so they are not counted as considering the case good looking. diana alcaraz and evelyn kurver also gave non positive appearance feedback."
+        ]
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "lisa lee",
+          "mh",
+          "misba009",
+          "amanda",
+          "cally",
+          "bethany robertson"
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/6), Missing: 6, Extra: 1",
+            "Expected: [lisa lee, mh, ..., bethany robertson], Got: [customers who think eyzutak phone cases are good looking (based on reviews mentioning appearance positively): 1. **lisa lee** - \"the case is really cute and i've received compliments on it.\" 2. **mh** - \"gray color is so chic... love the colors gray and rose gold. very chic. i'm more impressed by the look in person than in the photos.\" 3. **misba009** - \"the case is beautiful\" 4. **amanda** - \"this case looks really nice. i get a lot of compliments.\" 5. **bethany robertson** (page 2) - \"...is really classy and the plastic is very glossy.\" note: on page 2, n randall's review is titled \"cute but only for a short time,\" but the content is negative (\"do not buy this\"), so they are not counted as considering the case good looking. diana alcaraz and evelyn kurver also gave non positive appearance feedback.]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false,
+  "_evaluation_binding": {
+    "agent_response_sha256": "bf1054f2e441ff4c1d139c66c2d6b8b696d60cbe47392ce7b59bf2167ccee168",
+    "network_har_sha256": "573831eb48ff2720aa49d5b0f678ef0c0eef33307e2abb29eea565d8000926d9",
+    "config_sha256": "0b7e7e9326d16a5d070adea30c4e4247cd65137832a8544352f581a2b71b64c9",
+    "evaluator_adapter_version": "stage-c-eval-adapter/1",
+    "evaluator_version": {
+      "adapter": "stage-c-eval-adapter/1",
+      "distribution": "1.2.3.post1.dev0",
+      "package_sources": 74,
+      "package_sha256": "41334a7a30567811b3c42fc125b64140e64069b08ff7793643c0ed68931a68d8"
+    },
+    "scored_by_version": "1.2.3.post1.dev0"
+  }
+}

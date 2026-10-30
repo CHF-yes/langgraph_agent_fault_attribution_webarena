@@ -1,0 +1,63 @@
+{
+  "task_id": 233,
+  "intent_template_id": 213,
+  "sites": [
+    "shopping"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"The most recent complete order is Order # 000000180 (dated 3/11/23, total $65.32, status \\\"Complete\\\"). All more recent orders (e.g., 000000170 on 5/17/23 = Canceled, and 000000189/188/187 on 5/2/23 = Pending) are not in \\\"Complete\\\" status, so 000000180 is the latest completed order.\"\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "the most recent complete order is order # 000000180 (dated 3/11/23, total $65.32, status \"complete\"). all more recent orders (e.g., 000000170 on 5/17/23 = canceled, and 000000189/188/187 on 5/2/23 = pending) are not in \"complete\" status, so 000000180 is the latest completed order."
+        ]
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "^#?\\s*0*180$"
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/1), Missing: 1, Extra: 1",
+            "Expected: [^#?\\s*0*180$], Got: [the most recent complete order is order # 000000180 (dated 3/11/23, total $65.32, status \"complete\"). all more recent orders (e.g., 000000170 on 5/17/23 = canceled, and 000000189/188/187 on 5/2/23 = pending) are not in \"complete\" status, so 000000180 is the latest completed order.]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false,
+  "_evaluation_binding": {
+    "agent_response_sha256": "ecdd2fc8074a4cace027c8755f78c8dfbd28111013b9a5c1c37a0c94484a2c65",
+    "network_har_sha256": "5f2e54a7a885c11eaf0be7ea522743d12fcec2a96842c2bd23ae64454a78a75e",
+    "config_sha256": "0b7e7e9326d16a5d070adea30c4e4247cd65137832a8544352f581a2b71b64c9",
+    "evaluator_adapter_version": "stage-c-eval-adapter/1",
+    "evaluator_version": {
+      "adapter": "stage-c-eval-adapter/1",
+      "distribution": "1.2.3.post1.dev0",
+      "package_sources": 74,
+      "package_sha256": "41334a7a30567811b3c42fc125b64140e64069b08ff7793643c0ed68931a68d8"
+    },
+    "scored_by_version": "1.2.3.post1.dev0"
+  }
+}

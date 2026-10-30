@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "Review titles with 2 stars or below for the Sandgrens Swedish Handmade Wooden Clog Sandal | Copenhagen:\n\n1. \"So cute but too small\" — Rating 40% (2 stars) by k.d.\n2. \"Toe rubbed\" — Rating 40% (2 stars) by Amazon Customer\n\n(The other two reviews, \"Best Shoe Ever\" at 100%/5 stars and the strap-related review at 60%/3 stars, are above 2 stars and excluded.)"
+  ],
+  "error_details": null
+}

@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "Located September 2022 orders on page 3 of My Orders: Order #000000179 (9/29/22, $2,890.53, Complete) and Order #000000175 (9/1/22, $133.85, Complete). These are the candidate orders to inspect for the picture frame item."
+  ],
+  "error_details": null
+}

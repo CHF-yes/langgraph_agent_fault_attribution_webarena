@@ -1,0 +1,69 @@
+{
+  "task_id": 293,
+  "intent_template_id": 329,
+  "sites": [
+    "gitlab"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"Unable to sign in: the provided credentials did not work (\\\"Invalid login or password\\\" persisted after multiple attempts). No valid username/password was available in the task context, so the success condition (logged-in dashboard) could not be reached.\"\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          {
+            "base_url": "https://unable to sign in: the provided credentials did not work (\"invalid login or password\" persisted after multiple attempts). no valid username/password%20was%20available%20in%20the%20task%20context,%20so%20the%20success%20condition%20(logged-in%20dashboard)%20could%20not%20be%20reached.",
+            "query_params": {}
+          }
+        ]
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          {
+            "base_url": "git@__SSH_HOST__:convexegg/super_awesome_robot.git",
+            "query_params": {}
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/1), Missing: 1, Extra: 1",
+            "Expected: [git@__SSH_HOST__:convexegg/super_awesome_robot.git], Got: [https://unable to sign in: the provided credentials did not work (\"invalid login or password\" persisted after multiple attempts). no valid username/password%20was%20available%20in%20the%20task%20context,%20so%20the%20success%20condition%20(logged-in%20dashboard)%20could%20not%20be%20reached.]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false,
+  "_evaluation_binding": {
+    "agent_response_sha256": "9b38c9e84e4ffbea29e6c545c0e53fc0394a70a72cf4542c3bad9a43d7b90005",
+    "network_har_sha256": "e0c1f3f53d174037bad0f4d5dfced9817b031091ba4d8f15a3deb6217376e195",
+    "config_sha256": "0b7e7e9326d16a5d070adea30c4e4247cd65137832a8544352f581a2b71b64c9",
+    "evaluator_adapter_version": "stage-c-eval-adapter/1",
+    "evaluator_version": {
+      "adapter": "stage-c-eval-adapter/1",
+      "distribution": "1.2.3.post1.dev0",
+      "package_sources": 74,
+      "package_sha256": "41334a7a30567811b3c42fc125b64140e64069b08ff7793643c0ed68931a68d8"
+    },
+    "scored_by_version": "1.2.3.post1.dev0"
+  }
+}

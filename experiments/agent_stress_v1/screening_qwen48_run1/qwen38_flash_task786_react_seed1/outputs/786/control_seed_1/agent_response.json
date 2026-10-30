@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "The contributor with the most commits to branch master is Vinta Chen, with 414 commits (vinta.chen@gmail.com)."
+  ],
+  "error_details": null
+}

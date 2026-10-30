@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "The contributor with the most commits to branch master is SecUpwN (381 commits). Their email address is: secupwn@users.noreply.github.com"
+  ],
+  "error_details": null
+}

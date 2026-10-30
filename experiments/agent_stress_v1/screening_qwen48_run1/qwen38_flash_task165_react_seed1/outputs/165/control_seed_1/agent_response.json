@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "There are 4 reviews total. Converting the percentage ratings to a 5-star scale (each star = 20%), the reviews with 2 stars or below (≤40%) are:\n\n1. \"So cute but too small\" — 40% (2 stars) by k.d.\n2. \"Toe rubbed\" — 40% (2 stars) by Amazon Customer\n\nThe other two reviews (\"Best Shoe Ever\" at 100%/5 stars and \"The problem is that the strap is made of some really stiff leather and is painful to my heel\" at 60%/3 stars) exceed 2 stars and are excluded."
+  ],
+  "error_details": null
+}

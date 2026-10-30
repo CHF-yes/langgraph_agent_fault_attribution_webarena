@@ -1,0 +1,19 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    {
+      "names": [
+        "Anker USB C Charger 30W, 711 Charger, Compact Fast Charger (Not Foldable) for MacBook Air/iPhone 13/13 Mini/ 13 Pro/ 13 Pro Max/ 12, Galaxy S21, Note 20, iPad Pro, Pixel, and More",
+        "Anker USB C Charger 40W, 521 Charger (Nano Pro), PIQ 3.0 Durable Compact Fast Charger (Not Foldable) for iPhone 13/13 Mini/13 Pro/13 Pro Max/12, Galaxy, Pixel 4/3, iPad/iPad Mini (Cable Not Included)",
+        "Anker 10W Max Wireless Charger, 313 Wireless Charger (Pad), Qi-Certified Wireless Charging 7.5W for iPhone 12/12 Pro/12 mini/12 Pro Max, 10W for Galaxy S10 S9 S8, S9 Plus, Note 9 (No AC Adapter)",
+        "Anker Wireless Charger, 313 Wireless Charger (Stand), Qi-Certified for iPhone 12, 12 Pro Max, SE, 11, 11 Pro, 11 Pro Max, XR, XS Max, 10W Fast-Charging Galaxy S20, S10 (No AC Adapter)",
+        "USB Charger, Anker Elite Dual Port 24W Wall Charger, PowerPort 2 with PowerIQ and Foldable Plug, for iPhone 11/Xs/XS Max/XR/X/8/7/6/Plus, iPad Pro/Air 2/Mini 3/Mini 4, Samsung S4/S5, and More",
+        "iPhone 12 Charger, Anker 30W Compact USB-C Wall Charger with Power Delivery, PowerPort Atom for iPhone 12 / Mini/Pro/Pro Max / 11 / X/XS/XR, iPad Pro, MacBook 12"
+      ],
+      "min": 8.99,
+      "max": 35.99
+    }
+  ],
+  "error_details": null
+}

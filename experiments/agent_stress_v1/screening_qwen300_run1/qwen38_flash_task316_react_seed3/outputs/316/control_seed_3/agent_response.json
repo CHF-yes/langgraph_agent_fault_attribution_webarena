@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "The top 3 contributors (by commit count) to facebook's create-react-app repo (\"guide on building React apps\") and their email addresses are:\n\n1. Dan Abramov — 634 commits — dan.abramov@gmail.com\n2. Joe Haddad — 292 commits — timer150@gmail.com\n3. Ian Sutherland — 153 commits — ian@iansutherland.ca"
+  ],
+  "error_details": null
+}

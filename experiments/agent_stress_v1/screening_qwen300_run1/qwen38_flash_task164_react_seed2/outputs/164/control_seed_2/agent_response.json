@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "For the product \"Mineralogie All Natural Lip Gloss, Ruby Rose\", there are 3 reviews. Converting percentage ratings to stars (100% = 5 stars), only one review has 2 stars or below:\n\n- **\"Meh\"** — 20% rating (1 star), by catherine brown (\"Dry / Uneven color\")\n\nThe other two reviews (\"Yes\" and \"Loved It!\") are both 100% (5 stars) and do not qualify."
+  ],
+  "error_details": null
+}

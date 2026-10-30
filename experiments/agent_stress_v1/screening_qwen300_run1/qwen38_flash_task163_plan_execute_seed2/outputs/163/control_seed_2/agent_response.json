@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "There is only 1 review with 2 stars or below for this product:\n\n- **\"Memory Card Came Defective\"** — Rating 20% (1 star), by Ernesto, posted 4/21/23: \"I could not format the card so I wasn't able to use it for my VITA.\"\n\nAll other reviews on the product page have ratings of 80% (4 stars) or 100% (5 stars), so no additional reviews meet the 2-stars-or-below criterion."
+  ],
+  "error_details": null
+}

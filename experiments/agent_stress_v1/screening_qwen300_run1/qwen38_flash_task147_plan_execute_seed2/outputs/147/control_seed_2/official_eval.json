@@ -1,0 +1,71 @@
+{
+  "task_id": 147,
+  "intent_template_id": 155,
+  "sites": [
+    "shopping"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"UNKNOWN_ERROR\",\n  \"retrieved_data\": null,\n  \"error_details\": \"max_steps exhausted after 20 steps; no answer produced\"\n}\n",
+      "actual_normalized": {
+        "task_type": "retrieve",
+        "status": "unknown_error",
+        "retrieved_data": null
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          {
+            "width": "^16(?:\\.0+)?\\s*[-]?\\s*(?:inch(?:es)?|in\\.?|″|\"|'|')$",
+            "height": "^24(?:\\.0+)?\\s*[-]?\\s*(?:inch(?:es)?|in\\.?|″|\"|'|')$"
+          }
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "agent_response.status_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Expected success, got unknown_error"
+          ],
+          "error_msg": null
+        },
+        {
+          "assertion_name": "retrieved_data_missing_or_null",
+          "status": "failure",
+          "assertion_msgs": [
+            "Expected retrieved_data to be ({'width': NormalizedString('^16(?:\\\\.0+)?\\\\s*[-]?\\\\s*(?:inch(?:es)?|in\\\\.?|″|\"|\\'|\\')$'), 'height': NormalizedString('^24(?:\\\\.0+)?\\\\s*[-]?\\\\s*(?:inch(?:es)?|in\\\\.?|″|\"|\\'|\\')$')},), but got None or empty"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false,
+  "_evaluation_binding": {
+    "agent_response_sha256": "f7c1adc12761681dc1e7d8e15a5cc4f90f1a44fe469e71f7f10f6e688abc1336",
+    "network_har_sha256": "e01c49ff5093465d691f42044ef27f0223f4f5fee72a1f367f5993111df87715",
+    "config_sha256": "0b7e7e9326d16a5d070adea30c4e4247cd65137832a8544352f581a2b71b64c9",
+    "evaluator_adapter_version": "stage-c-eval-adapter/1",
+    "evaluator_version": {
+      "adapter": "stage-c-eval-adapter/1",
+      "distribution": "1.2.3.post1.dev0",
+      "package_sources": 74,
+      "package_sha256": "41334a7a30567811b3c42fc125b64140e64069b08ff7793643c0ed68931a68d8"
+    },
+    "scored_by_version": "1.2.3.post1.dev0"
+  }
+}

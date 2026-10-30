@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "Based on the EYZUTAK phone case reviews (rating % maps to stars: 80% = 4 stars, 100% = 5 stars), the reviewers who gave 4 or 5 stars are:\n\n**5-star (100%) reviewers:**\n- MH (\"Gray color is so chic\")\n- Amanda (\"Cute; scratches easily\")\n- Cally (\"Pretty!\")\n\n**4-star (80%) reviewers:**\n- Misba009 (\"beautiful\")\n- Amazon Customer (\"Cute, but not magnetic\")\n\nSo the people who gave 4 or 5 stars for this EYZUTAK phone case are: **MH, Amanda, Cally, Misba009, and Amazon Customer**.\n\nNote: The review list pagination did not load a separate \"page 2\" in the accessibility tree despite multiple scroll attempts—the full set of 4/5-star reviewers above was extracted from the available review data."
+  ],
+  "error_details": null
+}

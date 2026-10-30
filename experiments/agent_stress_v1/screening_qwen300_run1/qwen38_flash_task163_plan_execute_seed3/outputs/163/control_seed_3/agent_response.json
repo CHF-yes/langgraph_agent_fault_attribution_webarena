@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "Review titles with 2 stars or below (rating ≤ 40%) for this product:\n\n1. **\"Memory Card Came Defective\"** — Rating 20% (1 star) — Review by Ernesto, posted 4/21/23. (\"I could not format the card so I wasn't able to use it for my VITA\")\n\nThis is the only qualifying review. All other reviews on both pages are rated 80% (4 stars) or 100% (5 stars), which are above the 2-star threshold. Note: two reviews (\"It's used...\" by The EggMan and \"...it's real and has no issues so far\" by BrockNet) appear truncated in the listing but correspond to higher-rated entries; no additional low-star reviews were found."
+  ],
+  "error_details": null
+}
