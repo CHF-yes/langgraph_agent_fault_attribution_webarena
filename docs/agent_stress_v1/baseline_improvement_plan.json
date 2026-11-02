@@ -1,0 +1,73 @@
+{
+  "plan_id": "browser-baseline-improvement-v1",
+  "created": "2026-11-02",
+  "evidence_commit": "904ae28",
+  "status": "proposal_not_implemented",
+  "approved_for_paid_runs": false,
+  "paid_trials_executed_by_this_plan": 0,
+  "model_profile": "qwen38_flash",
+  "architectures": ["react", "plan_execute"],
+  "development_only_for_tuning": true,
+  "baseline_version": "resolve_from_screening_code_fingerprint_and_effective_config",
+  "improved_version": null,
+  "stages": [
+    {
+      "id": "existing_development_diagnosis",
+      "existing_trials": 108,
+      "new_model_trials": 0,
+      "requires_server_traces": true
+    },
+    {
+      "id": "contemporaneous_clean_version_comparison",
+      "task_ids": [21, 132, 126, 281, 231, 169],
+      "same_template_reserves": {
+        "21": [23, 25],
+        "132": [133, 134],
+        "126": [124, 125],
+        "281": [279, 280],
+        "231": [232, 233],
+        "169": [170, 171]
+      },
+      "replacements_fixed_before_model_runs": true,
+      "replicates": [1, 2, 3],
+      "versions": ["baseline", "improved"],
+      "conditions": ["clean"],
+      "max_steps": 20,
+      "planned_trials": 72,
+      "requires_resolved_versions_and_valid_reference_paths": true,
+      "primary_metric": "native_official_success",
+      "stop_or_expand_based_on_interim_success": false
+    },
+    {
+      "id": "single_development_task_mechanism",
+      "preferred_task_id": 281,
+      "final_task_id": null,
+      "replicates": [1],
+      "conditions": ["clean", "H_episode", "C_episode", "HC_episode"],
+      "max_steps": 20,
+      "planned_trials": 8,
+      "requires_real_verified_contract_runtime_and_reference_paths": true,
+      "requires_all_model_visible_observations_covered": true,
+      "requires_frozen_selected_execution_version": true,
+      "requires_native_decision_impact_verification": true,
+      "acceptance_requires_agent_failure": false
+    },
+    {
+      "id": "optional_budget_comparison",
+      "optional": true,
+      "task_ids": [132, 169, 126, 281],
+      "replicates": [1, 2, 3],
+      "versions": ["improved"],
+      "conditions": ["clean"],
+      "max_steps_levels": [20, 40],
+      "planned_trials": 48,
+      "run_only_if_budget_question_remains": true
+    }
+  ],
+  "mainline_planned_trials": 80,
+  "optional_planned_trials": 48,
+  "maximum_planned_trials": 128,
+  "accounting": "Additional exploratory Qwen batches; not automatically part of the previous 2124-trial proposal or its DeepSeek development matrix.",
+  "execution_ready": false,
+  "not_a_runner_authorization": true
+}
