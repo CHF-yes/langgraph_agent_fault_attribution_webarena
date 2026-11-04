@@ -1,0 +1,310 @@
+{
+  "schema": "agent_stress_development_diagnosis_summary/1",
+  "generated_at": "2026-11-04T03:02:58.665526+00:00",
+  "scope": "108 development trials; holdout not used for cause attribution",
+  "trial_count": 108,
+  "success": 12,
+  "failure": 96,
+  "end_modes": {
+    "answer": 83,
+    "step_cap": 25
+  },
+  "primary_cause_counts": {
+    "output_contract": 40,
+    "observation_or_tool": 26,
+    "retrieval_incomplete": 27,
+    "environment_or_truth": 2,
+    "reasoning_or_calculation": 1
+  },
+  "cause_counts_multilabel": {
+    "output_contract": 47,
+    "retrieval_incomplete": 61,
+    "observation_or_tool": 27,
+    "termination": 25,
+    "environment_or_truth": 2,
+    "reasoning_or_calculation": 1
+  },
+  "architecture": {
+    "plan_execute": {
+      "trials": 54,
+      "success": 4,
+      "causes": {
+        "output_contract": 26,
+        "retrieval_incomplete": 34,
+        "observation_or_tool": 14,
+        "termination": 9,
+        "reasoning_or_calculation": 1
+      }
+    },
+    "react": {
+      "trials": 54,
+      "success": 8,
+      "causes": {
+        "output_contract": 21,
+        "retrieval_incomplete": 27,
+        "observation_or_tool": 13,
+        "termination": 16,
+        "environment_or_truth": 2
+      }
+    }
+  },
+  "task": {
+    "21": {
+      "trials": 6,
+      "success": 0,
+      "causes": {
+        "output_contract": 6,
+        "retrieval_incomplete": 6
+      },
+      "cap": 0,
+      "auth": 0,
+      "split_role": "development",
+      "site": "shopping"
+    },
+    "23": {
+      "trials": 6,
+      "success": 0,
+      "causes": {
+        "output_contract": 6,
+        "retrieval_incomplete": 3
+      },
+      "cap": 0,
+      "auth": 0,
+      "split_role": "development",
+      "site": "shopping"
+    },
+    "25": {
+      "trials": 6,
+      "success": 0,
+      "causes": {
+        "output_contract": 2,
+        "retrieval_incomplete": 6,
+        "observation_or_tool": 4,
+        "termination": 3
+      },
+      "cap": 3,
+      "auth": 0,
+      "split_role": "development",
+      "site": "shopping"
+    },
+    "124": {
+      "trials": 6,
+      "success": 0,
+      "causes": {
+        "retrieval_incomplete": 6
+      },
+      "cap": 0,
+      "auth": 0,
+      "split_role": "development",
+      "site": "shopping"
+    },
+    "125": {
+      "trials": 6,
+      "success": 1,
+      "causes": {
+        "retrieval_incomplete": 5,
+        "termination": 1
+      },
+      "cap": 1,
+      "auth": 0,
+      "split_role": "development",
+      "site": "shopping"
+    },
+    "126": {
+      "trials": 6,
+      "success": 3,
+      "causes": {
+        "retrieval_incomplete": 3,
+        "termination": 2
+      },
+      "cap": 2,
+      "auth": 0,
+      "split_role": "development",
+      "site": "shopping"
+    },
+    "132": {
+      "trials": 6,
+      "success": 1,
+      "causes": {
+        "observation_or_tool": 2,
+        "output_contract": 5,
+        "environment_or_truth": 1
+      },
+      "cap": 0,
+      "auth": 3,
+      "split_role": "development",
+      "site": "gitlab"
+    },
+    "133": {
+      "trials": 6,
+      "success": 1,
+      "causes": {
+        "output_contract": 3,
+        "observation_or_tool": 3,
+        "termination": 2,
+        "environment_or_truth": 1
+      },
+      "cap": 2,
+      "auth": 3,
+      "split_role": "development",
+      "site": "gitlab"
+    },
+    "134": {
+      "trials": 6,
+      "success": 1,
+      "causes": {
+        "output_contract": 4,
+        "observation_or_tool": 2,
+        "termination": 1
+      },
+      "cap": 1,
+      "auth": 1,
+      "split_role": "development",
+      "site": "gitlab"
+    },
+    "169": {
+      "trials": 6,
+      "success": 0,
+      "causes": {
+        "output_contract": 2,
+        "reasoning_or_calculation": 1,
+        "observation_or_tool": 3,
+        "retrieval_incomplete": 3,
+        "termination": 3
+      },
+      "cap": 3,
+      "auth": 5,
+      "split_role": "development",
+      "site": "gitlab"
+    },
+    "170": {
+      "trials": 6,
+      "success": 0,
+      "causes": {
+        "observation_or_tool": 6,
+        "retrieval_incomplete": 6,
+        "termination": 6
+      },
+      "cap": 6,
+      "auth": 6,
+      "split_role": "development",
+      "site": "gitlab"
+    },
+    "171": {
+      "trials": 6,
+      "success": 0,
+      "causes": {
+        "observation_or_tool": 5,
+        "retrieval_incomplete": 6,
+        "termination": 5,
+        "output_contract": 1
+      },
+      "cap": 5,
+      "auth": 5,
+      "split_role": "development",
+      "site": "gitlab"
+    },
+    "231": {
+      "trials": 6,
+      "success": 0,
+      "causes": {
+        "output_contract": 6,
+        "retrieval_incomplete": 1
+      },
+      "cap": 0,
+      "auth": 0,
+      "split_role": "development",
+      "site": "shopping"
+    },
+    "232": {
+      "trials": 6,
+      "success": 0,
+      "causes": {
+        "output_contract": 6,
+        "retrieval_incomplete": 2
+      },
+      "cap": 0,
+      "auth": 0,
+      "split_role": "development",
+      "site": "shopping"
+    },
+    "233": {
+      "trials": 6,
+      "success": 0,
+      "causes": {
+        "output_contract": 6,
+        "observation_or_tool": 1,
+        "retrieval_incomplete": 1
+      },
+      "cap": 0,
+      "auth": 1,
+      "split_role": "development",
+      "site": "shopping"
+    },
+    "279": {
+      "trials": 6,
+      "success": 0,
+      "causes": {
+        "retrieval_incomplete": 6
+      },
+      "cap": 0,
+      "auth": 0,
+      "split_role": "development",
+      "site": "shopping"
+    },
+    "280": {
+      "trials": 6,
+      "success": 0,
+      "causes": {
+        "retrieval_incomplete": 6,
+        "termination": 2,
+        "observation_or_tool": 1
+      },
+      "cap": 2,
+      "auth": 0,
+      "split_role": "development",
+      "site": "shopping"
+    },
+    "281": {
+      "trials": 6,
+      "success": 5,
+      "causes": {
+        "retrieval_incomplete": 1
+      },
+      "cap": 0,
+      "auth": 0,
+      "split_role": "development",
+      "site": "shopping"
+    }
+  },
+  "tasks_with_authentication_evidence": [
+    132,
+    133,
+    134,
+    169,
+    170,
+    171,
+    233
+  ],
+  "output_contract_trials": 47,
+  "output_contract_by_task": {
+    "21": 6,
+    "23": 6,
+    "25": 2,
+    "132": 5,
+    "133": 3,
+    "134": 4,
+    "169": 2,
+    "171": 1,
+    "231": 6,
+    "232": 6,
+    "233": 6
+  },
+  "unknown_trials": [],
+  "limitations": [
+    "Traces record tool observations and assistant content, not the full assembled model prompt.",
+    "Observation coverage is an upper bound on what the model could have seen.",
+    "No reference-path verification was performed in this offline pass.",
+    "Automated cause labels need manual review for trials with only wrong-answer evidence."
+  ]
+}

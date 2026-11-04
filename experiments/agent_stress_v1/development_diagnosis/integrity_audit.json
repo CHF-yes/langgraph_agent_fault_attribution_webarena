@@ -1,0 +1,26 @@
+{
+  "schema": "agent_stress_screening_integrity/1",
+  "generated_at": "2026-11-04T03:02:58.740907+00:00",
+  "run_roots": {
+    "screening_qwen300_run1": {
+      "completed": 300,
+      "prompt_tokens": 53460514,
+      "stop_reason": null,
+      "skipped_completed": 48
+    },
+    "screening_qwen48_run1": {
+      "completed": 48,
+      "prompt_tokens": 8748261,
+      "stop_reason": null,
+      "skipped_completed": 0
+    }
+  },
+  "trial_count": 348,
+  "expected_trial_count": 348,
+  "unique_trial_count": 348,
+  "missing_count": 0,
+  "unexpected_count": 0,
+  "problem_count": 0,
+  "problems": [],
+  "hashed_har": false
+}
