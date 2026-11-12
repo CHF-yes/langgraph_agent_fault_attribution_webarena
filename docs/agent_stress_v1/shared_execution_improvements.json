@@ -1,0 +1,185 @@
+{
+  "schema": "agent_stress_shared_execution_freeze/1",
+  "recorded_at": "2026-11-12T12:38:16.460374+00:00",
+  "status": "candidate_ready_for_72_trial_block",
+  "code": {
+    "head": "eac2363b9a7ba1fa33ef4e5114bf0df76cef4b68",
+    "working_tree_dirty": true,
+    "fingerprint_sha256": "e18fc8acb3ddcef7a67e48036fe2dbbade6e27156e7540200bf1c08aafeada6c",
+    "file_sha256": {
+      "main.py": "c4d4c0848c7085dc89af1b50cec6e6a88a195d06db0a17f555ff4a074bb50163",
+      "standard_agent/submission_contract.py": "753ee5781e22588ea4f3aa1a4a3e27e5536b3efd2e12d374298057f86dc144a2",
+      "standard_agent/core/nodes.py": "1adea9919a89ddcb329392b6ad82f3ea17b81471a9048bc92b3499221bd46d82",
+      "standard_agent/core/state.py": "ca0d30a1048233fb2a34b4cf3bf0020e8f42f9725c9a69e13f95af9fd8670465",
+      "standard_agent/environment/webarena_config.py": "3ff8041cda7b6aed5477e04659dc1599bf9f1a5cef770d9eb34cfe77ada7e314",
+      "scripts/agent_stress_reference_paths.py": "ccdef1bfe26b4b5f8b9e3de3acefa4f003657d23afb9370d33bcd402b7a79e75",
+      "tests/test_submission_contract.py": "1a8758e6396d93b8f38e086bad95aac083cb21a4e581af912fd9089cd7606f53"
+    }
+  },
+  "arms": {
+    "baseline": {
+      "env": {
+        "SUBMISSION_CONTRACT": "0",
+        "RETRIEVAL_REPAIR": "0"
+      },
+      "cli": [
+        "--storage-state-dir",
+        "experiments/auth"
+      ],
+      "model_visible_changes": "Schema prompts and retrieval-repair guidance disabled; only the shared pre-authenticated login state is new."
+    },
+    "improved": {
+      "env": {
+        "SUBMISSION_CONTRACT": "1",
+        "RETRIEVAL_REPAIR": "1"
+      },
+      "cli": [
+        "--submission-contract",
+        "--storage-state-dir",
+        "experiments/auth"
+      ],
+      "model_visible_changes": "Schema-driven stop(answer) contract with one-turn rejection feedback; schema-aware retrieval completeness guidance."
+    }
+  },
+  "login_condition": {
+    "schema": "agent_stress_login_condition/1",
+    "recorded_at": "2026-11-12T12:28:59.371777+00:00",
+    "scope": "shared by baseline (improvement flags off) and improved (flags on) arms",
+    "states": [
+      {
+        "site": "shopping",
+        "state_path": "experiments/auth/shopping.json",
+        "state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+        "verified_url": "http://localhost:7770/sales/order/history/",
+        "verified": true
+      },
+      {
+        "site": "gitlab",
+        "state_path": "experiments/auth/gitlab.json",
+        "state_sha256": "de5c518f8baab6a02dfba7296cbbf7935278c1c6fcc4b88d385b265741e9e3cd",
+        "verified_url": "http://localhost:8023/dashboard/projects",
+        "verified": true
+      }
+    ]
+  },
+  "pilot_regression": {
+    "model_profile": "qwen38_flash",
+    "seed": 1,
+    "max_steps": 20,
+    "note": "Pilot regression only; not the 72-trial contemporaneous block.",
+    "results": [
+      {
+        "task_id": 231,
+        "arm": "improved",
+        "architecture": "react",
+        "steps": 3,
+        "official_success": true,
+        "official_status": "success",
+        "official_score": 1.0,
+        "submission_contract": true,
+        "retrieval_repair": true,
+        "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2"
+      },
+      {
+        "task_id": 231,
+        "arm": "improved",
+        "architecture": "plan_execute",
+        "steps": 3,
+        "official_success": true,
+        "official_status": "success",
+        "official_score": 1.0,
+        "submission_contract": true,
+        "retrieval_repair": true,
+        "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2"
+      },
+      {
+        "task_id": 281,
+        "arm": "improved",
+        "architecture": "react",
+        "steps": 10,
+        "official_success": true,
+        "official_status": "success",
+        "official_score": 1.0,
+        "submission_contract": true,
+        "retrieval_repair": true,
+        "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2"
+      },
+      {
+        "task_id": 281,
+        "arm": "improved",
+        "architecture": "plan_execute",
+        "steps": 12,
+        "official_success": true,
+        "official_status": "success",
+        "official_score": 1.0,
+        "submission_contract": true,
+        "retrieval_repair": true,
+        "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2"
+      },
+      {
+        "task_id": 169,
+        "arm": "baseline",
+        "architecture": "react",
+        "steps": 4,
+        "official_success": false,
+        "official_status": "failure",
+        "official_score": 0.0,
+        "submission_contract": false,
+        "retrieval_repair": false,
+        "storage_state_sha256": "de5c518f8baab6a02dfba7296cbbf7935278c1c6fcc4b88d385b265741e9e3cd"
+      },
+      {
+        "task_id": 169,
+        "arm": "baseline",
+        "architecture": "plan_execute",
+        "steps": 4,
+        "official_success": false,
+        "official_status": "failure",
+        "official_score": 0.0,
+        "submission_contract": false,
+        "retrieval_repair": false,
+        "storage_state_sha256": "de5c518f8baab6a02dfba7296cbbf7935278c1c6fcc4b88d385b265741e9e3cd"
+      },
+      {
+        "task_id": 169,
+        "arm": "improved",
+        "architecture": "react",
+        "steps": 4,
+        "official_success": true,
+        "official_status": "success",
+        "official_score": 1.0,
+        "submission_contract": true,
+        "retrieval_repair": true,
+        "storage_state_sha256": "de5c518f8baab6a02dfba7296cbbf7935278c1c6fcc4b88d385b265741e9e3cd"
+      },
+      {
+        "task_id": 169,
+        "arm": "improved",
+        "architecture": "plan_execute",
+        "steps": 4,
+        "official_success": true,
+        "official_status": "success",
+        "official_score": 1.0,
+        "submission_contract": true,
+        "retrieval_repair": true,
+        "storage_state_sha256": "de5c518f8baab6a02dfba7296cbbf7935278c1c6fcc4b88d385b265741e9e3cd"
+      }
+    ],
+    "summary_path": "experiments/agent_stress_v1/improved_regression_20261112/summary.json"
+  },
+  "tests": {
+    "command": ".venv311/bin/python -m pytest -q",
+    "passed": 391,
+    "subtests_passed": 4
+  },
+  "not_started": [
+    "72-trial contemporaneous baseline/improved block"
+  ],
+  "notes": [
+    "The pilot is a regression check, not the 72-trial comparison.",
+    "Both arms use the same storage-state hashes; baseline differs only by improvement flags.",
+    "The pilot ran before the final replanner rejection-routing tweak; that rejection path was not exercised in the pilot and is covered by tests/test_submission_contract.py.",
+    "HAR files contain session material and are gitignored; do not force-add them.",
+    "Freeze the commit SHA after this candidate is committed; the code fingerprint already binds the reviewed working tree."
+  ]
+}

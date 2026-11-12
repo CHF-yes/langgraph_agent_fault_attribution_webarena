@@ -1,0 +1,178 @@
+{
+  "schema": "agent_stress_shared_execution_regression/1",
+  "recorded_at": "2026-11-12T12:37:09.041925+00:00",
+  "model_profile": "qwen38_flash",
+  "seed": 1,
+  "max_steps": 20,
+  "note": "Pilot regression only; not the 72-trial contemporaneous block.",
+  "results": [
+    {
+      "arm_dir": "experiments/agent_stress_v1/improved_regression_20261112/231_react/231/control_seed_1",
+      "task_id": 231,
+      "arm": "improved",
+      "architecture": "react",
+      "steps": 3,
+      "answer": [
+        "000000170"
+      ],
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "traces/20261112T203010-677eba/qwen38_flash__react__control__task231__seed1__control__rep0.jsonl",
+      "agent_response": "experiments/agent_stress_v1/improved_regression_20261112/231_react/231/control_seed_1/agent_response.json",
+      "network_har": "experiments/agent_stress_v1/improved_regression_20261112/231_react/231/control_seed_1/network.har"
+    },
+    {
+      "arm_dir": "experiments/agent_stress_v1/improved_regression_20261112/231_plan_execute/231/control_seed_1",
+      "task_id": 231,
+      "arm": "improved",
+      "architecture": "plan_execute",
+      "steps": 3,
+      "answer": [
+        "000000170"
+      ],
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "traces/20261112T203045-5901af/qwen38_flash__plan_execute__control__task231__seed1__control__rep0.jsonl",
+      "agent_response": "experiments/agent_stress_v1/improved_regression_20261112/231_plan_execute/231/control_seed_1/agent_response.json",
+      "network_har": "experiments/agent_stress_v1/improved_regression_20261112/231_plan_execute/231/control_seed_1/network.har"
+    },
+    {
+      "arm_dir": "experiments/agent_stress_v1/improved_regression_20261112/281_react/281/control_seed_1",
+      "task_id": 281,
+      "arm": "improved",
+      "architecture": "react",
+      "steps": 10,
+      "answer": [
+        {
+          "names": [
+            "Kids By Oral-b Stages Power Star Wars Replacement Heads 4 Pack",
+            "Oral-B Kids Extra Soft Replacement Brush Heads featuring STAR WARS, 2 count"
+          ],
+          "min": 12.99,
+          "max": 14.98
+        }
+      ],
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "traces/20261112T203119-2a58af/qwen38_flash__react__control__task281__seed1__control__rep0.jsonl",
+      "agent_response": "experiments/agent_stress_v1/improved_regression_20261112/281_react/281/control_seed_1/agent_response.json",
+      "network_har": "experiments/agent_stress_v1/improved_regression_20261112/281_react/281/control_seed_1/network.har"
+    },
+    {
+      "arm_dir": "experiments/agent_stress_v1/improved_regression_20261112/281_plan_execute/281/control_seed_1",
+      "task_id": 281,
+      "arm": "improved",
+      "architecture": "plan_execute",
+      "steps": 12,
+      "answer": [
+        {
+          "names": [
+            "Kids By Oral-b Stages Power Star Wars Replacement Heads 4 Pack",
+            "Oral-B Kids Extra Soft Replacement Brush Heads featuring STAR WARS, 2 count"
+          ],
+          "min": 12.99,
+          "max": 14.98
+        }
+      ],
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "traces/20261112T203205-64be94/qwen38_flash__plan_execute__control__task281__seed1__control__rep0.jsonl",
+      "agent_response": "experiments/agent_stress_v1/improved_regression_20261112/281_plan_execute/281/control_seed_1/agent_response.json",
+      "network_har": "experiments/agent_stress_v1/improved_regression_20261112/281_plan_execute/281/control_seed_1/network.har"
+    },
+    {
+      "arm_dir": "experiments/agent_stress_v1/improved_regression_20261112/169_baseline_react/169/control_seed_1",
+      "task_id": 169,
+      "arm": "baseline",
+      "architecture": "react",
+      "steps": 4,
+      "answer": [
+        "Among my personal projects sorted by most stars, two are tied at the top with 6 stars each:\n\n- empathy-prompts — Project ID: 183\n- millennials-to-snake-people — Project ID: 187\n\n(The next most-starred personal project only had 2 stars.)"
+      ],
+      "official_success": false,
+      "official_status": "failure",
+      "official_score": 0.0,
+      "submission_contract": false,
+      "retrieval_repair": false,
+      "storage_state_sha256": "de5c518f8baab6a02dfba7296cbbf7935278c1c6fcc4b88d385b265741e9e3cd",
+      "trace": "traces/20261112T203335-42b26f/qwen38_flash__react__control__task169__seed1__control__rep0.jsonl",
+      "agent_response": "experiments/agent_stress_v1/improved_regression_20261112/169_baseline_react/169/control_seed_1/agent_response.json",
+      "network_har": "experiments/agent_stress_v1/improved_regression_20261112/169_baseline_react/169/control_seed_1/network.har"
+    },
+    {
+      "arm_dir": "experiments/agent_stress_v1/improved_regression_20261112/169_baseline_plan_execute/169/control_seed_1",
+      "task_id": 169,
+      "arm": "baseline",
+      "architecture": "plan_execute",
+      "steps": 4,
+      "answer": [
+        "The star count for 'empathy-prompts' is 6 (shown in the page header next to the Unstar button). Its Project ID is 183.\n\nAmong my personal projects sorted by Most stars, two are tied at the top with 6 stars each:\n- empathy-prompts — Project ID: 183 (6 stars)\n- millennials-to-snake-people — Project ID: 187 (6 stars)\n\nSo the project IDs of my personal project(s) that received the most stars are 183 and 187."
+      ],
+      "official_success": false,
+      "official_status": "failure",
+      "official_score": 0.0,
+      "submission_contract": false,
+      "retrieval_repair": false,
+      "storage_state_sha256": "de5c518f8baab6a02dfba7296cbbf7935278c1c6fcc4b88d385b265741e9e3cd",
+      "trace": "traces/20261112T203417-16bcce/qwen38_flash__plan_execute__control__task169__seed1__control__rep0.jsonl",
+      "agent_response": "experiments/agent_stress_v1/improved_regression_20261112/169_baseline_plan_execute/169/control_seed_1/agent_response.json",
+      "network_har": "experiments/agent_stress_v1/improved_regression_20261112/169_baseline_plan_execute/169/control_seed_1/network.har"
+    },
+    {
+      "arm_dir": "experiments/agent_stress_v1/improved_regression_20261112/169_improved_react/169/control_seed_1",
+      "task_id": 169,
+      "arm": "improved",
+      "architecture": "react",
+      "steps": 4,
+      "answer": [
+        187,
+        183
+      ],
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "de5c518f8baab6a02dfba7296cbbf7935278c1c6fcc4b88d385b265741e9e3cd",
+      "trace": "traces/20261112T203512-04d8eb/qwen38_flash__react__control__task169__seed1__control__rep0.jsonl",
+      "agent_response": "experiments/agent_stress_v1/improved_regression_20261112/169_improved_react/169/control_seed_1/agent_response.json",
+      "network_har": "experiments/agent_stress_v1/improved_regression_20261112/169_improved_react/169/control_seed_1/network.har"
+    },
+    {
+      "arm_dir": "experiments/agent_stress_v1/improved_regression_20261112/169_improved_plan_execute/169/control_seed_1",
+      "task_id": 169,
+      "arm": "improved",
+      "architecture": "plan_execute",
+      "steps": 4,
+      "answer": [
+        187,
+        183
+      ],
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "de5c518f8baab6a02dfba7296cbbf7935278c1c6fcc4b88d385b265741e9e3cd",
+      "trace": "traces/20261112T203553-34e25d/qwen38_flash__plan_execute__control__task169__seed1__control__rep0.jsonl",
+      "agent_response": "experiments/agent_stress_v1/improved_regression_20261112/169_improved_plan_execute/169/control_seed_1/agent_response.json",
+      "network_har": "experiments/agent_stress_v1/improved_regression_20261112/169_improved_plan_execute/169/control_seed_1/network.har"
+    }
+  ]
+}

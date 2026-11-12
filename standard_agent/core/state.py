@@ -48,6 +48,12 @@ class AgentState(TypedDict):
     # 最终答案（stop 工具传入）
     answer: str
 
+    # Official results schema (shape only, no expected values) for the
+    # opt-in one-turn submission contract. Both architectures share it.
+    submission_schema: dict | None
+    submission_task_type: str | None
+    submission_rejections: int
+
     # 终止原因（如 no_tool_call）。必须显式声明，否则 LangGraph 会在图输出中丢弃它，
     # 导致 main.py 的 result.get("error") 永远为 None。
     error: str | None

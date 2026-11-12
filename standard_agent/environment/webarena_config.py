@@ -19,6 +19,7 @@ WebArena 环境搭建：
 """
 
 import os
+from pathlib import Path
 
 # ============================================================
 # Docker 主机地址配置
@@ -189,6 +190,24 @@ def get_auto_login_headers(site_name: str) -> dict:
         for key, value in AUTO_LOGIN_HEADERS.get(site_name, {}).items()
         if value
     }
+
+
+def get_storage_state_path(site_name: str, state_dir: str | Path | None) -> str | None:
+    """Resolve the shared Playwright storage state for a site.
+
+    Both the baseline (flags off) and improved (flags on) arms receive the same
+    path so authentication is a shared harness condition, not a model variable.
+    """
+    if not state_dir:
+        return None
+    path = Path(state_dir) / f"{site_name}.json"
+    if not path.is_file():
+        raise FileNotFoundError(
+            f"storage state for {site_name!r} not found at {path}; "
+            "generate it with scripts/agent_stress_reference_paths.py "
+            "--write-storage-state-dir"
+        )
+    return str(path)
 
 
 def get_site_config(site_name: str) -> dict:

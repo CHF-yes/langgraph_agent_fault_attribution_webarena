@@ -26,6 +26,7 @@ from standard_agent.core.plan_decision import normalize_decision
 from standard_agent.core.state import AgentState
 from standard_agent.core.trace import append_event, append_trace, make_entry
 from standard_agent.config import settings
+from standard_agent.submission_contract import contract_context, validate_submission
 from standard_agent.llm.provider import (
     create_llm,
     extract_served_metadata,
@@ -144,17 +145,25 @@ def _react_full_messages(system_prompt: str, task: str, url: str, messages) -> l
     ]
 
 
-def _retrieval_completeness_context(task: str) -> str:
+def _retrieval_completeness_context(task: str,
+                                    submission_schema: dict | None = None) -> str:
     """Add conservative completeness guidance for likely multi-answer queries."""
     if os.getenv("RETRIEVAL_REPAIR", "0") != "1":
         return ""
     text = str(task or "").casefold()
     multi_answer = any(marker in text for marker in (
-        "name(s)", "username(s)", "reviewer(s)", "all ", "top ",
+        "name(s)", "username(s)", "reviewer(s)", "(s)", "all ", "top ",
         "list of", "each", "any", "how many",
     ))
     if not multi_answer:
         return ""
+    schema_type = str((submission_schema or {}).get("type") or "").casefold()
+    schema_note = ""
+    if schema_type in {"array", "object"}:
+        schema_note = (
+            " The official response schema is a JSON "
+            f"{schema_type}; every matching item must be included in that structure. "
+        )
     return (
         "\n## Retrieval Completeness\n"
         "This retrieval task may have multiple matching results. Do not stop "
@@ -164,12 +173,16 @@ def _retrieval_completeness_context(task: str) -> str:
         "page or explicitly verify that no next page exists. Deduplicate items and "
         "return every matching value as separate elements in the requested list/object format. "
         "If exhaustive inspection finds no match, explicitly state that no matching "
-        "result was found.\n"
+        "result was found."
+        + schema_note + "\n"
     )
 
 
-def _output_format_context(task: str) -> str:
-    """Require JSON only when the task itself requests structured output."""
+def _output_format_context(task: str, submission_schema: dict | None = None,
+                           submission_task_type: str | None = None) -> str:
+    """Require JSON only when the task requests or the schema requires it."""
+    if os.getenv("SUBMISSION_CONTRACT", "0") == "1" and submission_schema:
+        return contract_context(submission_schema, submission_task_type)
     text = str(task or "").casefold()
     structured_markers = (
         "return a list", "return an object", "return the value as",
@@ -186,7 +199,8 @@ def _output_format_context(task: str) -> str:
     )
 
 
-def _answer_contract_context(task: str) -> str:
+def _answer_contract_context(task: str, submission_schema: dict | None = None,
+                             submission_task_type: str | None = None) -> str:
     """两个架构**必须**拿到的同一段作答契约（检索完整性 + 输出格式）。
 
     react 与 plan-and-execute 的作答要求若不一致，架构对比就会被提示词差异污染：
@@ -194,21 +208,25 @@ def _answer_contract_context(task: str) -> str:
     PE 执行器反而被告知"只执行当前子目标"，于是倾向汇报进度式散文，在 array-schema
     检索任务上系统性失分。这里把契约收敛成单一来源，两个 prompt 组装函数共用。
     """
-    return _retrieval_completeness_context(task) + _output_format_context(task)
+    return (_retrieval_completeness_context(task, submission_schema)
+            + _output_format_context(task, submission_schema, submission_task_type))
 
 
 def _react_system_prompt(task: str, url: str, page_content: str,
-                         plan_context: str = "") -> str:
+                         plan_context: str = "", submission_schema: dict | None = None,
+                         submission_task_type: str | None = None) -> str:
     """react 臂的系统提示（含共享作答契约）。"""
     return SYSTEM_PROMPT.format(
         task=task, url=url, page_content=page_content, plan_context=plan_context,
-        retrieval_context=_retrieval_completeness_context(task),
-        output_format_context=_output_format_context(task),
+        retrieval_context=_retrieval_completeness_context(task, submission_schema),
+        output_format_context=_output_format_context(
+            task, submission_schema, submission_task_type),
     )
 
 
 def _plan_executor_prompt(task: str, current_step: dict, url: str,
-                          page_content: str) -> str:
+                          page_content: str, submission_schema: dict | None = None,
+                          submission_task_type: str | None = None) -> str:
     """plan-execute 执行器的系统提示（**与 react 相同的作答契约**）。"""
     return (
         "You are the executor in a plan-and-execute web agent.\n"
@@ -219,7 +237,7 @@ def _plan_executor_prompt(task: str, current_step: dict, url: str,
         f"Success condition: {current_step.get('success_condition', '')}\n"
         f"URL: {url}\nAccessibility Tree:\n{page_content}\n"
         "Your response must begin with THOUGHT:."
-        + _answer_contract_context(task)
+        + _answer_contract_context(task, submission_schema, submission_task_type)
     )
 
 
@@ -286,15 +304,14 @@ def agent_node(state: AgentState, config: RunnableConfig) -> dict:
     page_content = obs["page_content"] or state.get("page_content", "(empty page)")
     plan = state.get("plan", "")
     architecture = state.get("architecture", "react")
+    submission_schema = state.get("submission_schema")
+    submission_task_type = state.get("submission_task_type")
     plan_context = (
         "\n## High-Level Plan\n"
         "Follow this plan as a guide, revising it when observations contradict it:\n"
         f"{plan}\n"
         if plan else ""
     )
-    retrieval_context = _retrieval_completeness_context(task)
-    output_format_context = _output_format_context(task)
-
     # ---- 检查 stop 是否已调用（优先级最高，避免 max_steps 覆盖正确结果）----
     # `done` 属于 LangGraph task state，不能依赖模块级页面状态；否则连续
     # benchmark trial 会把前一个任务的终止信号泄漏到下一个任务。
@@ -328,7 +345,10 @@ def agent_node(state: AgentState, config: RunnableConfig) -> dict:
     # 每轮重新注入任务、最新观测和工具协议。系统消息没有写入 state，避免
     # 状态膨胀；但也不能只在首轮注入，否则多步任务会丢失任务约束。
     full_messages = _react_full_messages(
-        _react_system_prompt(task, current_url, page_content, plan_context=plan_context),
+        _react_system_prompt(
+            task, current_url, page_content, plan_context=plan_context,
+            submission_schema=submission_schema,
+            submission_task_type=submission_task_type),
         task, current_url, messages)
 
     if settings.TRACE_CONSOLE:
@@ -640,6 +660,8 @@ def plan_executor_node(state: AgentState, config: RunnableConfig) -> dict:
     page_content = obs.get("page_content") or state.get("page_content", "(empty page)")
     plan_steps = state.get("plan_steps", [])
     current = state.get("current_plan_step", 0)
+    submission_schema = state.get("submission_schema")
+    submission_task_type = state.get("submission_task_type")
     current_step = plan_steps[current] if current < len(plan_steps) else {
         "id": current + 1, "goal": "Complete the task", "success_condition": "Task is complete"
     }
@@ -650,6 +672,8 @@ def plan_executor_node(state: AgentState, config: RunnableConfig) -> dict:
 
     prompt = SystemMessage(content=_with_thought_reminder(_plan_executor_prompt(
         task, current_step, url, page_content,
+        submission_schema=submission_schema,
+        submission_task_type=submission_task_type,
     )))
     full_messages = [prompt, *list(messages)]
     llm = create_llm(profile_name=model_profile).bind_tools(ALL_TOOLS)
@@ -799,6 +823,13 @@ def replanner_node(state: AgentState, config: RunnableConfig) -> dict:
         )
     calls = state.get("llm_calls", 0) + 1
     replanning_calls = state.get("replanning_calls", 0) + 1
+    if decision == "finish" and latest.startswith("[Error] Submission rejected"):
+        # A rejected stop is feedback, not completion; never let the replanner
+        # convert it into a finished trial. Route straight back to the executor
+        # with the rejection message so the format fix costs one turn, not a
+        # full re-plan.
+        return {"replan_required": False, "llm_calls": calls,
+                "replanning_calls": replanning_calls}
     if decision == "finish":
         return {"done": True, "replan_required": "end", "llm_calls": calls,
                 "replanning_calls": replanning_calls}
@@ -834,16 +865,61 @@ def run_tools(state: AgentState, config: RunnableConfig) -> dict:
     task = state.get("task", "")
     url = state.get("url", "about:blank")
     architecture = state.get("architecture", "react")
+    contract_enabled = os.getenv("SUBMISSION_CONTRACT", "0") == "1"
+    submission_schema = state.get("submission_schema")
+    submission_task_type = state.get("submission_task_type")
+    rejections = int(state.get("submission_rejections", 0) or 0)
+    new_tool_msgs = list(tool_msgs)
 
     history_entries = []
     done = False
     answer = ""
     # 一条 AI message 可能携带多个 tool_call，LangGraph 按顺序返回 ToolMessage
-    for tc, tm in zip(tool_calls, tool_msgs):
+    for index, (tc, tm) in enumerate(zip(tool_calls, tool_msgs)):
         action_name = tc.get("name", "")
         args = tc.get("args", {})
         obs_text = tm.content if tm else ""
         error = isinstance(obs_text, str) and obs_text.startswith("[Error]")
+        rejected = False
+
+        if (action_name == "stop" and contract_enabled
+                and submission_schema is not None):
+            candidate = str(args.get("answer", ""))
+            check = validate_submission(
+                candidate, results_schema=submission_schema,
+                task_type=submission_task_type,
+            )
+            if not check.ok:
+                rejected = True
+                rejections += 1
+                obs_text = (
+                    f"[Error] Submission rejected: {check.error}. "
+                    "The task is NOT complete. Call stop again with a corrected answer."
+                )
+                error = True
+                if tm is not None:
+                    try:
+                        new_tool_msgs[index] = tm.model_copy(
+                            update={"content": obs_text})
+                    except AttributeError:
+                        new_tool_msgs[index] = ToolMessage(
+                            content=obs_text,
+                            tool_call_id=getattr(tm, "tool_call_id", ""),
+                            name=getattr(tm, "name", None),
+                        )
+                append_event(
+                    thread_id, event="submission_rejected", step=step_count,
+                    task=task, url=url,
+                    data={
+                        "architecture": architecture,
+                        "phase": "executor",
+                        "attempt": rejections,
+                        "answer": candidate,
+                        "error": check.error,
+                    },
+                )
+            else:
+                answer = check.normalized
 
         history_entries.append({
             "step": step_count,
@@ -866,14 +942,18 @@ def run_tools(state: AgentState, config: RunnableConfig) -> dict:
             extra={"architecture": architecture, "phase": "executor"},
         ))
 
-        if action_name == "stop":
+        if action_name == "stop" and not rejected:
             done = True
-            answer = str(args.get("answer", ""))
+            if not (contract_enabled and submission_schema is not None):
+                answer = str(args.get("answer", ""))
 
     update = {
         **result,
+        "messages": new_tool_msgs,
         "action_history": history_entries,
     }
+    if rejections != int(state.get("submission_rejections", 0) or 0):
+        update["submission_rejections"] = rejections
     if done:
         update["done"] = True
         update["answer"] = answer

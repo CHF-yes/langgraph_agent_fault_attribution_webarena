@@ -537,6 +537,74 @@ def reference_task_132(page: Page, recorder: Recorder, accounts: dict) -> tuple[
     return [count], evidence, notes
 
 
+def write_login_states(state_dir: Path, accounts: dict, *, headless: bool = True) -> dict:
+    """Create and verify the shared Playwright storage states for both arms.
+
+    The state files themselves live under ``experiments/auth/`` (gitignored);
+    only their SHA-256 hashes and verification markers are recorded.
+    """
+    state_dir.mkdir(parents=True, exist_ok=True)
+    log_dir = state_dir / "_verification"
+    log_dir.mkdir(parents=True, exist_ok=True)
+    jobs = {
+        "shopping": (
+            lambda page, recorder: login_shopping(page, recorder, accounts["shopping"]),
+            f"{SHOPPING}/sales/order/history/",
+        ),
+        "gitlab": (
+            lambda page, recorder: login_gitlab(page, recorder, accounts["gitlab"]),
+            f"{GITLAB}/dashboard/projects",
+        ),
+    }
+    results = []
+    with sync_playwright() as playwright:
+        browser = playwright.chromium.launch(headless=headless)
+        try:
+            for site, (login, verify_url) in jobs.items():
+                recorder = Recorder(log_dir)
+                (log_dir / "actions.jsonl").write_text("", encoding="utf-8")
+                context = browser.new_context(viewport={"width": 1400, "height": 1000})
+                page = context.new_page()
+                login(page, recorder)
+                state_path = state_dir / f"{site}.json"
+                context.storage_state(path=str(state_path))
+                context.close()
+
+                verify_context = browser.new_context(storage_state=str(state_path))
+                verify_page = verify_context.new_page()
+                verify_page.goto(verify_url, wait_until="domcontentloaded")
+                verify_page.wait_for_load_state("domcontentloaded")
+                body = verify_page.inner_text("body")
+                if site == "shopping":
+                    verified = ("Sign Out" in body
+                                and "/customer/account/login" not in verify_page.url)
+                else:
+                    verified = ("Yours" in body
+                                or accounts["gitlab"]["username"] in body)
+                results.append({
+                    "site": site,
+                    "state_path": str(state_path),
+                    "state_sha256": _sha(state_path),
+                    "verified_url": verify_page.url,
+                    "verified": verified,
+                })
+                verify_context.close()
+                if not verified:
+                    raise RuntimeError(f"{site} storage state did not authenticate at {verify_url}")
+        finally:
+            browser.close()
+    manifest = {
+        "schema": "agent_stress_login_condition/1",
+        "recorded_at": datetime.now(timezone.utc).isoformat(),
+        "scope": "shared by baseline (improvement flags off) and improved (flags on) arms",
+        "states": results,
+    }
+    manifest_path = ROOT / "experiments" / "agent_stress_v1" / "login_condition_20261112.json"
+    manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
+                             encoding="utf-8")
+    return manifest
+
+
 TASKS = {
     231: ("Get the order number of my most recent cancelled order", "shopping", reference_task_231),
     169: ("Get the project ID(s) of my personal project(s) that received the most stars", "gitlab", reference_task_169),
@@ -634,10 +702,20 @@ def main() -> int:
                         default=ROOT / "experiments" / "agent_stress_v1" / "reference_paths_20261112")
     parser.add_argument("--evaluator-config", type=Path, default=DEFAULT_CONFIG)
     parser.add_argument("--headed", action="store_true")
+    parser.add_argument("--write-storage-state-dir", type=Path,
+                        help="Create and verify <site>.json login states, then exit")
     args = parser.parse_args()
 
-    task_ids = args.task or [231, 169, 281]
     accounts = load_accounts()
+    if args.write_storage_state_dir:
+        manifest = write_login_states(args.write_storage_state_dir, accounts,
+                                      headless=not args.headed)
+        for state in manifest["states"]:
+            log(f"[login] {state['site']}: verified={state['verified']} "
+                f"sha256={state['state_sha256'][:12]}")
+        return 0
+
+    task_ids = args.task or [231, 169, 281]
     results = []
     for task_id in task_ids:
         log(f"[reference] task {task_id} ...")

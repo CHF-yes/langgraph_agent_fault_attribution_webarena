@@ -23,6 +23,7 @@ import json
 import argparse
 import os
 import time
+from pathlib import Path
 
 from standard_agent.config import settings
 from standard_agent.evaluation import evaluate_answer, is_cap_exhausted
@@ -30,7 +31,10 @@ from standard_agent.core.graph import build_graph
 from standard_agent.tools.web_tools import (
     use_browser, use_simulation, reset_page_state, set_page_state,
 )
-from standard_agent.environment.webarena_config import get_site_config, list_sites, get_task_prompt, get_auto_login_headers
+from standard_agent.environment.webarena_config import (
+    get_site_config, list_sites, get_task_prompt, get_auto_login_headers,
+    get_storage_state_path,
+)
 
 
 WELCOME = r"""
@@ -176,6 +180,10 @@ Examples:
         help="Run one named fault only; equivalent to enabling its fault flag",
     )
     bench_group.add_argument("--condition", choices=["control", "fault"], default=None)
+    bench_group.add_argument("--submission-contract", action="store_true",
+                             help="Enable the schema-driven one-turn stop(answer) validator")
+    bench_group.add_argument("--storage-state-dir", default=os.getenv("STORAGE_STATE_DIR"),
+                             help="Directory with <site>.json Playwright storage states shared by both arms")
 
     args = parser.parse_args()
     if args.experiment_id == "ep-http-persistence-v2" and not args.benchmark:
@@ -277,8 +285,13 @@ def run_browser_mode(args):
     label = args.site or args.url
     print(f"\n🌐 启动浏览器... (target={label}, headed={args.headed})")
     headers = get_auto_login_headers(args.site) if args.site else {}
-    env = SyncBrowserEnv(headless=not args.headed, slow_mo=args.slow_mo,
-                         extra_http_headers=headers)
+    storage_state = (get_storage_state_path(args.site, args.storage_state_dir)
+                     if args.site else None)
+    env_kwargs = {"headless": not args.headed, "slow_mo": args.slow_mo,
+                  "extra_http_headers": headers}
+    if storage_state:
+        env_kwargs["storage_state"] = storage_state
+    env = SyncBrowserEnv(**env_kwargs)
 
     # ---- 故障注入 ----
     injector = _build_fault_injector(args, env)
@@ -616,6 +629,24 @@ def run_benchmark(args):
         )
         print(f"\n任务 {args.task_id} 官方类型: {task_type_for(task_definition)}")
 
+    submission_contract = bool(
+        args.submission_contract or os.getenv("SUBMISSION_CONTRACT", "0") == "1")
+    if submission_contract and task_definition is None:
+        print("\n❌ --submission-contract 需要 --task-id 以加载官方 results_schema")
+        return
+    submission_schema = None
+    submission_task_type = None
+    if submission_contract and task_definition is not None:
+        submission_schema = (task_definition.get("eval") or [{}])[0].get("results_schema")
+        submission_task_type = task_type_for(task_definition)
+    retrieval_repair = os.getenv("RETRIEVAL_REPAIR", "0") == "1"
+    storage_state = (get_storage_state_path(args.site, args.storage_state_dir)
+                     if args.site else None)
+    storage_state_sha256 = None
+    if storage_state:
+        import hashlib
+        storage_state_sha256 = hashlib.sha256(Path(storage_state).read_bytes()).hexdigest()
+
     def run_one_trial(task_id: str, task_desc: str, page_url: str,
                       fault_config: FaultConfig, trial_idx: int) -> TrialResult:
         """执行单次 Agent 任务并返回 TrialResult。"""
@@ -654,7 +685,11 @@ def run_benchmark(args):
             )
             os.makedirs(output_dir, exist_ok=True)
         har_path = os.path.join(output_dir, "network.har") if output_dir else None
-        env = SyncBrowserEnv(headless=True, extra_http_headers=headers, har_path=har_path)
+        env_kwargs = {"headless": True, "extra_http_headers": headers,
+                      "har_path": har_path}
+        if storage_state:
+            env_kwargs["storage_state"] = storage_state
+        env = SyncBrowserEnv(**env_kwargs)
         t0 = time.time()
 
         try:
@@ -678,6 +713,9 @@ def run_benchmark(args):
                 "max_steps": args.max_steps or settings.MAX_STEPS,
                 "done": False,
                 "answer": "",
+                "submission_schema": submission_schema,
+                "submission_task_type": submission_task_type,
+                "submission_rejections": 0,
                 "action_history": [],
                 "architecture": args.architecture,
                 "plan": "",
@@ -791,6 +829,9 @@ def run_benchmark(args):
                     run_config={
                         "run_id": run_id,
                         "response_schema_clamped": schema_clamps_retrieved_data(task_definition),
+                        "submission_contract": submission_contract,
+                        "retrieval_repair": retrieval_repair,
+                        "storage_state_sha256": storage_state_sha256,
                         "thinking_mode": settings.get_model_profile(model_profile).thinking,
                         "task_id": args.task_id, "site": args.site, "url": page_url,
                         "max_steps": args.max_steps or settings.MAX_STEPS,
