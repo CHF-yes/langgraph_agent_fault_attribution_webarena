@@ -1,0 +1,87 @@
+Skip to content
+GitLab
+/
+13
+8
+5
+Help
+M
+millennials-to-snake-people
+Project information
+Repository
+Issues
+4
+Merge requests
+2
+CI/CD
+Security & Compliance
+Deployments
+Packages and registries
+Infrastructure
+Monitor
+Analytics
+Wiki
+Snippets
+Settings
+Collapse sidebar
+You can't push or pull repositories using SSH until you add an SSH key to your profile.
+Add SSH key
+Don't show again
+The Auto DevOps pipeline has been enabled and will be used if no alternative CI configuration file is found.
+Container registry is not enabled on this GitLab instance. Ask an administrator to enable it in order for Auto DevOps to work.
+Settings
+More information
+Byte Blaze
+millennials-to-snake-people
+M
+millennials-to-snake-people
+Project ID: 187 
+Star
+6
+Fork
+0
+137
+ Commits
+3
+ Branches
+1
+ Tag
+369 KB
+ Project Storage
+1
+ Release
+
+🐍 Chrome extension that replaces occurrences of 'Millennials' with 'Snake People'
+
+Bumped the versssssssion
+Eric Bailey authored 7 years ago
+9afbe9f6
+master
+millennials-to-snake-people
+Add to tree
+Find file
+Web IDE
+Select Archive Format
+Clone
+README
+Do What The F*ck You Want To Public License
+CONTRIBUTING
+Auto DevOps enabled
+Add CHANGELOG
+Add Kubernetes cluster
+Configure Integrations
+Name	Last commit	Last update
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	

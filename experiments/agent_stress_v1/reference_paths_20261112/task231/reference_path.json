@@ -1,0 +1,135 @@
+{
+  "schema": "agent_stress_reference_path/1",
+  "task_id": 231,
+  "intent": "Get the order number of my most recent cancelled order",
+  "recorded_at": "2026-11-12T11:57:02.215400+00:00",
+  "steps": 5,
+  "actions": [
+    {
+      "step": 1,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:7770/customer/account/login/"
+      },
+      "url_before": "about:blank",
+      "url_after": "http://localhost:7770/customer/account/login/",
+      "note": "open customer login"
+    },
+    {
+      "step": 2,
+      "action": "fill",
+      "args": {
+        "selector": "#email",
+        "value": "emma.lopez@gmail.com"
+      },
+      "url_before": "http://localhost:7770/customer/account/login/",
+      "url_after": "http://localhost:7770/customer/account/login/",
+      "note": "shopping email"
+    },
+    {
+      "step": 3,
+      "action": "fill",
+      "args": {
+        "selector": "#pass",
+        "value": "<redacted>"
+      },
+      "url_before": "http://localhost:7770/customer/account/login/",
+      "url_after": "http://localhost:7770/customer/account/login/",
+      "note": "shopping password"
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "args": {
+        "selector": "#send2"
+      },
+      "url_before": "http://localhost:7770/customer/account/",
+      "url_after": "http://localhost:7770/customer/account/",
+      "note": "submit customer login"
+    },
+    {
+      "step": 5,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:7770/sales/order/history/"
+      },
+      "url_before": "http://localhost:7770/customer/account/",
+      "url_after": "http://localhost:7770/sales/order/history/",
+      "note": "open order history"
+    }
+  ],
+  "pages": [
+    {
+      "step": 2,
+      "name": "shopping_login",
+      "url": "http://localhost:7770/customer/account/login/",
+      "text": "pages/02_shopping_login.txt"
+    },
+    {
+      "step": 5,
+      "name": "shopping_logged_in",
+      "url": "http://localhost:7770/customer/account/",
+      "text": "pages/05_shopping_logged_in.txt"
+    },
+    {
+      "step": 6,
+      "name": "order_history",
+      "url": "http://localhost:7770/sales/order/history/",
+      "text": "pages/06_order_history.txt",
+      "html": "pages/06_order_history.html"
+    }
+  ],
+  "answer": [
+    "000000170"
+  ],
+  "source_evidence": {
+    "rows_seen": 10,
+    "cancelled_rows": [
+      {
+        "order": "000000170",
+        "date": "5/17/23",
+        "status": "Canceled",
+        "href": "http://localhost:7770/sales/order/view/order_id/170/"
+      },
+      {
+        "order": "000000156",
+        "date": "2/24/23",
+        "status": "Canceled",
+        "href": "http://localhost:7770/sales/order/view/order_id/156/"
+      },
+      {
+        "order": "000000158",
+        "date": "2/11/23",
+        "status": "Canceled",
+        "href": "http://localhost:7770/sales/order/view/order_id/158/"
+      }
+    ],
+    "selected": {
+      "order": "000000170",
+      "date": "5/17/23",
+      "status": "Canceled",
+      "href": "http://localhost:7770/sales/order/view/order_id/170/"
+    },
+    "selection_rule": "first cancelled row in date-descending order history"
+  },
+  "notes": [
+    "Order history is sorted newest-first; the first Cancelled row is the most recent cancelled order.",
+    "Answer is the atomic order number only, matching the task's array-of-strings contract."
+  ],
+  "site": "shopping",
+  "public_output": {
+    "task_type": "RETRIEVE",
+    "status": "SUCCESS",
+    "retrieved_data": [
+      "000000170"
+    ],
+    "error_details": null
+  },
+  "official_success": true,
+  "official_status": "success",
+  "official_score": 1.0,
+  "official_eval": "official_eval.json",
+  "agent_response": "agent_response.json",
+  "network_har": "network.har",
+  "network_har_redacted": true
+}

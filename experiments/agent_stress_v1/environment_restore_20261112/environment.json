@@ -1,0 +1,15 @@
+{
+ "python": "3.11.15",
+ "executable": "/data/webarena/langgraph_agent_fault_attribution_webarena/.venv311/bin/python",
+ "packages": {
+  "langgraph": "1.2.11",
+  "langchain-openai": "1.6.0",
+  "langchain-core": "1.6.0",
+  "playwright": "1.62.0",
+  "pydantic": "2.12.0",
+  "pytest": "9.2.0",
+  "webarena-verified": "1.2.3.post1.dev0"
+ },
+ "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+ "note": "restored 2026-11-12; Python 3.11.15 instead of original 3.11.9"
+}

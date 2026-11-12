@@ -1,0 +1,110 @@
+{
+  "schema": "agent_stress_reference_path/1",
+  "task_id": 132,
+  "intent": "How many commits did kilian make to a11yproject.com on March 5, 2023?",
+  "recorded_at": "2026-11-12T11:57:17.454102+00:00",
+  "steps": 5,
+  "actions": [
+    {
+      "step": 1,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/users/sign_in"
+      },
+      "url_before": "about:blank",
+      "url_after": "http://localhost:8023/users/sign_in",
+      "note": "open GitLab login"
+    },
+    {
+      "step": 2,
+      "action": "fill",
+      "args": {
+        "selector": "[data-testid=\"username-field\"]",
+        "value": "byteblaze"
+      },
+      "url_before": "http://localhost:8023/users/sign_in",
+      "url_after": "http://localhost:8023/users/sign_in",
+      "note": "gitlab username"
+    },
+    {
+      "step": 3,
+      "action": "fill",
+      "args": {
+        "selector": "[data-testid=\"password-field\"]",
+        "value": "<redacted>"
+      },
+      "url_before": "http://localhost:8023/users/sign_in",
+      "url_after": "http://localhost:8023/users/sign_in",
+      "note": "gitlab password"
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "args": {
+        "selector": "[data-testid=\"sign-in-button\"]"
+      },
+      "url_before": "http://localhost:8023/",
+      "url_after": "http://localhost:8023/",
+      "note": "submit GitLab login"
+    },
+    {
+      "step": 5,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/a11yproject/a11yproject.com/-/commits/main?author=kilian&since=2023-03-05&until=2023-03-06"
+      },
+      "url_before": "http://localhost:8023/",
+      "url_after": "http://localhost:8023/a11yproject/a11yproject.com/-/commits/main?author=kilian&since=2023-03-05&until=2023-03-06",
+      "note": "open commits filtered by author and date"
+    }
+  ],
+  "pages": [
+    {
+      "step": 5,
+      "name": "gitlab_logged_in",
+      "url": "http://localhost:8023/",
+      "text": "pages/05_gitlab_logged_in.txt"
+    },
+    {
+      "step": 6,
+      "name": "commits_filtered",
+      "url": "http://localhost:8023/a11yproject/a11yproject.com/-/commits/main?author=kilian&since=2023-03-05&until=2023-03-06",
+      "text": "pages/06_commits_filtered.txt",
+      "html": "pages/06_commits_filtered.html"
+    }
+  ],
+  "answer": [
+    1
+  ],
+  "source_evidence": {
+    "filtered_url": "http://localhost:8023/a11yproject/a11yproject.com/-/commits/main?author=kilian&since=2023-03-05&until=2023-03-06",
+    "date_group": "05 Mar, 2023",
+    "group_count": 1,
+    "commit_rows_visible": [
+      "Fix typos in the code examples (#1524) Kilian Valkhof authored 3 years ago 081f0af1",
+      "Add Polypane as a developer tool (#1427) Kilian Valkhof authored 4 years ago 582c8c58",
+      "Add article about Fix Contrast (#1288) Kilian Valkhof authored 5 years ago 21356486"
+    ],
+    "selection_rule": "count shown by GitLab for the 05 Mar, 2023 group with author=kilian"
+  },
+  "notes": [
+    "Author and date filters are applied through the GitLab commits UI URL, not by scanning all commits.",
+    "The group heading reports one commit for 05 Mar, 2023."
+  ],
+  "site": "gitlab",
+  "public_output": {
+    "task_type": "RETRIEVE",
+    "status": "SUCCESS",
+    "retrieved_data": [
+      1
+    ],
+    "error_details": null
+  },
+  "official_success": true,
+  "official_status": "success",
+  "official_score": 1.0,
+  "official_eval": "official_eval.json",
+  "agent_response": "agent_response.json",
+  "network_har": "network.har",
+  "network_har_redacted": true
+}

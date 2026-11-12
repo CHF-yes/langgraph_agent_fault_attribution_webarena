@@ -1,0 +1,239 @@
+{
+  "schema": "agent_stress_reference_path/1",
+  "task_id": 169,
+  "intent": "Get the project ID(s) of my personal project(s) that received the most stars",
+  "recorded_at": "2026-11-12T11:57:06.232730+00:00",
+  "steps": 7,
+  "actions": [
+    {
+      "step": 1,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/users/sign_in"
+      },
+      "url_before": "about:blank",
+      "url_after": "http://localhost:8023/users/sign_in",
+      "note": "open GitLab login"
+    },
+    {
+      "step": 2,
+      "action": "fill",
+      "args": {
+        "selector": "[data-testid=\"username-field\"]",
+        "value": "byteblaze"
+      },
+      "url_before": "http://localhost:8023/users/sign_in",
+      "url_after": "http://localhost:8023/users/sign_in",
+      "note": "gitlab username"
+    },
+    {
+      "step": 3,
+      "action": "fill",
+      "args": {
+        "selector": "[data-testid=\"password-field\"]",
+        "value": "<redacted>"
+      },
+      "url_before": "http://localhost:8023/users/sign_in",
+      "url_after": "http://localhost:8023/users/sign_in",
+      "note": "gitlab password"
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "args": {
+        "selector": "[data-testid=\"sign-in-button\"]"
+      },
+      "url_before": "http://localhost:8023/",
+      "url_after": "http://localhost:8023/",
+      "note": "submit GitLab login"
+    },
+    {
+      "step": 5,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/dashboard/projects"
+      },
+      "url_before": "http://localhost:8023/",
+      "url_after": "http://localhost:8023/dashboard/projects",
+      "note": "open personal project list"
+    },
+    {
+      "step": 6,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/byteblaze/millennials-to-snake-people"
+      },
+      "url_before": "http://localhost:8023/dashboard/projects",
+      "url_after": "http://localhost:8023/byteblaze/millennials-to-snake-people",
+      "note": "open personal project Byte Blaze / millennials-to-snake-people"
+    },
+    {
+      "step": 7,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/byteblaze/empathy-prompts"
+      },
+      "url_before": "http://localhost:8023/byteblaze/millennials-to-snake-people",
+      "url_after": "http://localhost:8023/byteblaze/empathy-prompts",
+      "note": "open personal project Byte Blaze / empathy-prompts"
+    }
+  ],
+  "pages": [
+    {
+      "step": 5,
+      "name": "gitlab_logged_in",
+      "url": "http://localhost:8023/",
+      "text": "pages/05_gitlab_logged_in.txt"
+    },
+    {
+      "step": 6,
+      "name": "dashboard_projects",
+      "url": "http://localhost:8023/dashboard/projects",
+      "text": "pages/06_dashboard_projects.txt",
+      "html": "pages/06_dashboard_projects.html"
+    },
+    {
+      "step": 7,
+      "name": "project_187",
+      "url": "http://localhost:8023/byteblaze/millennials-to-snake-people",
+      "text": "pages/07_project_187.txt",
+      "html": "pages/07_project_187.html"
+    },
+    {
+      "step": 8,
+      "name": "project_183",
+      "url": "http://localhost:8023/byteblaze/empathy-prompts",
+      "text": "pages/08_project_183.txt",
+      "html": "pages/08_project_183.html"
+    }
+  ],
+  "answer": [
+    187,
+    183
+  ],
+  "source_evidence": {
+    "personal_projects": [
+      {
+        "href": "/byteblaze/millennials-to-snake-people",
+        "name": "Byte Blaze / millennials-to-snake-people",
+        "stars": 6,
+        "role": "Owner"
+      },
+      {
+        "href": "/byteblaze/empathy-prompts",
+        "name": "Byte Blaze / empathy-prompts",
+        "stars": 6,
+        "role": "Owner"
+      },
+      {
+        "href": "/byteblaze/a11y-webring.club",
+        "name": "Byte Blaze / a11y-webring.club",
+        "stars": 2,
+        "role": "Owner"
+      },
+      {
+        "href": "/byteblaze/ericwbailey.website",
+        "name": "Byte Blaze / ericwbailey.website",
+        "stars": 2,
+        "role": "Owner"
+      },
+      {
+        "href": "/byteblaze/accessible-html-content-patterns",
+        "name": "Byte Blaze / accessible-html-content-patterns",
+        "stars": 1,
+        "role": "Owner"
+      },
+      {
+        "href": "/byteblaze/a11y-syntax-highlighting",
+        "name": "Byte Blaze / a11y-syntax-highlighting",
+        "stars": 1,
+        "role": "Owner"
+      },
+      {
+        "href": "/byteblaze/dotfiles",
+        "name": "Byte Blaze / dotfiles",
+        "stars": 0,
+        "role": "Owner"
+      },
+      {
+        "href": "/byteblaze/remove-board-movement-events-from-the-github-issue-timeline",
+        "name": "Byte Blaze / remove-board-movement-events-from-the-github-issue-timeline",
+        "stars": 0,
+        "role": "Owner"
+      },
+      {
+        "href": "/byteblaze/solarized-prism-theme",
+        "name": "Byte Blaze / solarized-prism-theme",
+        "stars": 0,
+        "role": "Owner"
+      },
+      {
+        "href": "/byteblaze/cloud-to-butt",
+        "name": "Byte Blaze / cloud-to-butt",
+        "stars": 0,
+        "role": "Owner"
+      },
+      {
+        "href": "/byteblaze/timeit",
+        "name": "Byte Blaze / timeit",
+        "stars": 0,
+        "role": "Owner"
+      },
+      {
+        "href": "/byteblaze/gimmiethat.space",
+        "name": "Byte Blaze / gimmiethat.space",
+        "stars": 0,
+        "role": "Owner"
+      }
+    ],
+    "max_stars": 6,
+    "top_projects": [
+      {
+        "href": "/byteblaze/millennials-to-snake-people",
+        "name": "Byte Blaze / millennials-to-snake-people",
+        "stars": 6,
+        "role": "Owner"
+      },
+      {
+        "href": "/byteblaze/empathy-prompts",
+        "name": "Byte Blaze / empathy-prompts",
+        "stars": 6,
+        "role": "Owner"
+      }
+    ],
+    "project_pages": [
+      {
+        "name": "Byte Blaze / millennials-to-snake-people",
+        "url": "http://localhost:8023/byteblaze/millennials-to-snake-people",
+        "project_id": 187
+      },
+      {
+        "name": "Byte Blaze / empathy-prompts",
+        "url": "http://localhost:8023/byteblaze/empathy-prompts",
+        "project_id": 183
+      }
+    ],
+    "selection_rule": "personal namespace only; highest star count; project ID read from project page"
+  },
+  "notes": [
+    "The dashboard also lists contributed projects (a11yproject.com, primer/design); they are excluded because the task asks for personal projects.",
+    "Two personal projects tie at 6 stars; both project IDs are returned."
+  ],
+  "site": "gitlab",
+  "public_output": {
+    "task_type": "RETRIEVE",
+    "status": "SUCCESS",
+    "retrieved_data": [
+      187,
+      183
+    ],
+    "error_details": null
+  },
+  "official_success": true,
+  "official_status": "success",
+  "official_score": 1.0,
+  "official_eval": "official_eval.json",
+  "agent_response": "agent_response.json",
+  "network_har": "network.har",
+  "network_har_redacted": true
+}

@@ -1,0 +1,926 @@
+{
+  "schema": "agent_stress_reference_paths_summary/1",
+  "recorded_at": "2026-11-12T11:57:17.454442+00:00",
+  "evaluator_config": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/webarena_local_config.local.json",
+  "results": [
+    {
+      "schema": "agent_stress_reference_path/1",
+      "task_id": 231,
+      "intent": "Get the order number of my most recent cancelled order",
+      "recorded_at": "2026-11-12T11:57:02.215400+00:00",
+      "steps": 5,
+      "actions": [
+        {
+          "step": 1,
+          "action": "goto",
+          "args": {
+            "url": "http://localhost:7770/customer/account/login/"
+          },
+          "url_before": "about:blank",
+          "url_after": "http://localhost:7770/customer/account/login/",
+          "note": "open customer login"
+        },
+        {
+          "step": 2,
+          "action": "fill",
+          "args": {
+            "selector": "#email",
+            "value": "emma.lopez@gmail.com"
+          },
+          "url_before": "http://localhost:7770/customer/account/login/",
+          "url_after": "http://localhost:7770/customer/account/login/",
+          "note": "shopping email"
+        },
+        {
+          "step": 3,
+          "action": "fill",
+          "args": {
+            "selector": "#pass",
+            "value": "<redacted>"
+          },
+          "url_before": "http://localhost:7770/customer/account/login/",
+          "url_after": "http://localhost:7770/customer/account/login/",
+          "note": "shopping password"
+        },
+        {
+          "step": 4,
+          "action": "click",
+          "args": {
+            "selector": "#send2"
+          },
+          "url_before": "http://localhost:7770/customer/account/",
+          "url_after": "http://localhost:7770/customer/account/",
+          "note": "submit customer login"
+        },
+        {
+          "step": 5,
+          "action": "goto",
+          "args": {
+            "url": "http://localhost:7770/sales/order/history/"
+          },
+          "url_before": "http://localhost:7770/customer/account/",
+          "url_after": "http://localhost:7770/sales/order/history/",
+          "note": "open order history"
+        }
+      ],
+      "pages": [
+        {
+          "step": 2,
+          "name": "shopping_login",
+          "url": "http://localhost:7770/customer/account/login/",
+          "text": "pages/02_shopping_login.txt"
+        },
+        {
+          "step": 5,
+          "name": "shopping_logged_in",
+          "url": "http://localhost:7770/customer/account/",
+          "text": "pages/05_shopping_logged_in.txt"
+        },
+        {
+          "step": 6,
+          "name": "order_history",
+          "url": "http://localhost:7770/sales/order/history/",
+          "text": "pages/06_order_history.txt",
+          "html": "pages/06_order_history.html"
+        }
+      ],
+      "answer": [
+        "000000170"
+      ],
+      "source_evidence": {
+        "rows_seen": 10,
+        "cancelled_rows": [
+          {
+            "order": "000000170",
+            "date": "5/17/23",
+            "status": "Canceled",
+            "href": "http://localhost:7770/sales/order/view/order_id/170/"
+          },
+          {
+            "order": "000000156",
+            "date": "2/24/23",
+            "status": "Canceled",
+            "href": "http://localhost:7770/sales/order/view/order_id/156/"
+          },
+          {
+            "order": "000000158",
+            "date": "2/11/23",
+            "status": "Canceled",
+            "href": "http://localhost:7770/sales/order/view/order_id/158/"
+          }
+        ],
+        "selected": {
+          "order": "000000170",
+          "date": "5/17/23",
+          "status": "Canceled",
+          "href": "http://localhost:7770/sales/order/view/order_id/170/"
+        },
+        "selection_rule": "first cancelled row in date-descending order history"
+      },
+      "notes": [
+        "Order history is sorted newest-first; the first Cancelled row is the most recent cancelled order.",
+        "Answer is the atomic order number only, matching the task's array-of-strings contract."
+      ],
+      "site": "shopping",
+      "public_output": {
+        "task_type": "RETRIEVE",
+        "status": "SUCCESS",
+        "retrieved_data": [
+          "000000170"
+        ],
+        "error_details": null
+      },
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "official_eval": "official_eval.json",
+      "agent_response": "agent_response.json",
+      "network_har": "network.har",
+      "network_har_redacted": true
+    },
+    {
+      "schema": "agent_stress_reference_path/1",
+      "task_id": 169,
+      "intent": "Get the project ID(s) of my personal project(s) that received the most stars",
+      "recorded_at": "2026-11-12T11:57:06.232730+00:00",
+      "steps": 7,
+      "actions": [
+        {
+          "step": 1,
+          "action": "goto",
+          "args": {
+            "url": "http://localhost:8023/users/sign_in"
+          },
+          "url_before": "about:blank",
+          "url_after": "http://localhost:8023/users/sign_in",
+          "note": "open GitLab login"
+        },
+        {
+          "step": 2,
+          "action": "fill",
+          "args": {
+            "selector": "[data-testid=\"username-field\"]",
+            "value": "byteblaze"
+          },
+          "url_before": "http://localhost:8023/users/sign_in",
+          "url_after": "http://localhost:8023/users/sign_in",
+          "note": "gitlab username"
+        },
+        {
+          "step": 3,
+          "action": "fill",
+          "args": {
+            "selector": "[data-testid=\"password-field\"]",
+            "value": "<redacted>"
+          },
+          "url_before": "http://localhost:8023/users/sign_in",
+          "url_after": "http://localhost:8023/users/sign_in",
+          "note": "gitlab password"
+        },
+        {
+          "step": 4,
+          "action": "click",
+          "args": {
+            "selector": "[data-testid=\"sign-in-button\"]"
+          },
+          "url_before": "http://localhost:8023/",
+          "url_after": "http://localhost:8023/",
+          "note": "submit GitLab login"
+        },
+        {
+          "step": 5,
+          "action": "goto",
+          "args": {
+            "url": "http://localhost:8023/dashboard/projects"
+          },
+          "url_before": "http://localhost:8023/",
+          "url_after": "http://localhost:8023/dashboard/projects",
+          "note": "open personal project list"
+        },
+        {
+          "step": 6,
+          "action": "goto",
+          "args": {
+            "url": "http://localhost:8023/byteblaze/millennials-to-snake-people"
+          },
+          "url_before": "http://localhost:8023/dashboard/projects",
+          "url_after": "http://localhost:8023/byteblaze/millennials-to-snake-people",
+          "note": "open personal project Byte Blaze / millennials-to-snake-people"
+        },
+        {
+          "step": 7,
+          "action": "goto",
+          "args": {
+            "url": "http://localhost:8023/byteblaze/empathy-prompts"
+          },
+          "url_before": "http://localhost:8023/byteblaze/millennials-to-snake-people",
+          "url_after": "http://localhost:8023/byteblaze/empathy-prompts",
+          "note": "open personal project Byte Blaze / empathy-prompts"
+        }
+      ],
+      "pages": [
+        {
+          "step": 5,
+          "name": "gitlab_logged_in",
+          "url": "http://localhost:8023/",
+          "text": "pages/05_gitlab_logged_in.txt"
+        },
+        {
+          "step": 6,
+          "name": "dashboard_projects",
+          "url": "http://localhost:8023/dashboard/projects",
+          "text": "pages/06_dashboard_projects.txt",
+          "html": "pages/06_dashboard_projects.html"
+        },
+        {
+          "step": 7,
+          "name": "project_187",
+          "url": "http://localhost:8023/byteblaze/millennials-to-snake-people",
+          "text": "pages/07_project_187.txt",
+          "html": "pages/07_project_187.html"
+        },
+        {
+          "step": 8,
+          "name": "project_183",
+          "url": "http://localhost:8023/byteblaze/empathy-prompts",
+          "text": "pages/08_project_183.txt",
+          "html": "pages/08_project_183.html"
+        }
+      ],
+      "answer": [
+        187,
+        183
+      ],
+      "source_evidence": {
+        "personal_projects": [
+          {
+            "href": "/byteblaze/millennials-to-snake-people",
+            "name": "Byte Blaze / millennials-to-snake-people",
+            "stars": 6,
+            "role": "Owner"
+          },
+          {
+            "href": "/byteblaze/empathy-prompts",
+            "name": "Byte Blaze / empathy-prompts",
+            "stars": 6,
+            "role": "Owner"
+          },
+          {
+            "href": "/byteblaze/a11y-webring.club",
+            "name": "Byte Blaze / a11y-webring.club",
+            "stars": 2,
+            "role": "Owner"
+          },
+          {
+            "href": "/byteblaze/ericwbailey.website",
+            "name": "Byte Blaze / ericwbailey.website",
+            "stars": 2,
+            "role": "Owner"
+          },
+          {
+            "href": "/byteblaze/accessible-html-content-patterns",
+            "name": "Byte Blaze / accessible-html-content-patterns",
+            "stars": 1,
+            "role": "Owner"
+          },
+          {
+            "href": "/byteblaze/a11y-syntax-highlighting",
+            "name": "Byte Blaze / a11y-syntax-highlighting",
+            "stars": 1,
+            "role": "Owner"
+          },
+          {
+            "href": "/byteblaze/dotfiles",
+            "name": "Byte Blaze / dotfiles",
+            "stars": 0,
+            "role": "Owner"
+          },
+          {
+            "href": "/byteblaze/remove-board-movement-events-from-the-github-issue-timeline",
+            "name": "Byte Blaze / remove-board-movement-events-from-the-github-issue-timeline",
+            "stars": 0,
+            "role": "Owner"
+          },
+          {
+            "href": "/byteblaze/solarized-prism-theme",
+            "name": "Byte Blaze / solarized-prism-theme",
+            "stars": 0,
+            "role": "Owner"
+          },
+          {
+            "href": "/byteblaze/cloud-to-butt",
+            "name": "Byte Blaze / cloud-to-butt",
+            "stars": 0,
+            "role": "Owner"
+          },
+          {
+            "href": "/byteblaze/timeit",
+            "name": "Byte Blaze / timeit",
+            "stars": 0,
+            "role": "Owner"
+          },
+          {
+            "href": "/byteblaze/gimmiethat.space",
+            "name": "Byte Blaze / gimmiethat.space",
+            "stars": 0,
+            "role": "Owner"
+          }
+        ],
+        "max_stars": 6,
+        "top_projects": [
+          {
+            "href": "/byteblaze/millennials-to-snake-people",
+            "name": "Byte Blaze / millennials-to-snake-people",
+            "stars": 6,
+            "role": "Owner"
+          },
+          {
+            "href": "/byteblaze/empathy-prompts",
+            "name": "Byte Blaze / empathy-prompts",
+            "stars": 6,
+            "role": "Owner"
+          }
+        ],
+        "project_pages": [
+          {
+            "name": "Byte Blaze / millennials-to-snake-people",
+            "url": "http://localhost:8023/byteblaze/millennials-to-snake-people",
+            "project_id": 187
+          },
+          {
+            "name": "Byte Blaze / empathy-prompts",
+            "url": "http://localhost:8023/byteblaze/empathy-prompts",
+            "project_id": 183
+          }
+        ],
+        "selection_rule": "personal namespace only; highest star count; project ID read from project page"
+      },
+      "notes": [
+        "The dashboard also lists contributed projects (a11yproject.com, primer/design); they are excluded because the task asks for personal projects.",
+        "Two personal projects tie at 6 stars; both project IDs are returned."
+      ],
+      "site": "gitlab",
+      "public_output": {
+        "task_type": "RETRIEVE",
+        "status": "SUCCESS",
+        "retrieved_data": [
+          187,
+          183
+        ],
+        "error_details": null
+      },
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "official_eval": "official_eval.json",
+      "agent_response": "agent_response.json",
+      "network_har": "network.har",
+      "network_har_redacted": true
+    },
+    {
+      "schema": "agent_stress_reference_path/1",
+      "task_id": 281,
+      "intent": "Provide me with the full names of Oral B brush heads designed for children, and also share the price range for the available models. Return an object with keys \"names\" (list of product names), \"min\" and \"max\" (as numbers, e.g., 10.99) only, without any additional details.",
+      "recorded_at": "2026-11-12T11:57:09.331588+00:00",
+      "steps": 6,
+      "actions": [
+        {
+          "step": 1,
+          "action": "goto",
+          "args": {
+            "url": "http://localhost:7770/customer/account/login/"
+          },
+          "url_before": "about:blank",
+          "url_after": "http://localhost:7770/customer/account/login/",
+          "note": "open customer login"
+        },
+        {
+          "step": 2,
+          "action": "fill",
+          "args": {
+            "selector": "#email",
+            "value": "emma.lopez@gmail.com"
+          },
+          "url_before": "http://localhost:7770/customer/account/login/",
+          "url_after": "http://localhost:7770/customer/account/login/",
+          "note": "shopping email"
+        },
+        {
+          "step": 3,
+          "action": "fill",
+          "args": {
+            "selector": "#pass",
+            "value": "<redacted>"
+          },
+          "url_before": "http://localhost:7770/customer/account/login/",
+          "url_after": "http://localhost:7770/customer/account/login/",
+          "note": "shopping password"
+        },
+        {
+          "step": 4,
+          "action": "click",
+          "args": {
+            "selector": "#send2"
+          },
+          "url_before": "http://localhost:7770/customer/account/",
+          "url_after": "http://localhost:7770/customer/account/",
+          "note": "submit customer login"
+        },
+        {
+          "step": 5,
+          "action": "goto",
+          "args": {
+            "url": "http://localhost:7770/catalogsearch/result/?q=Oral-B+Kids+Replacement+Brush+Heads"
+          },
+          "url_before": "http://localhost:7770/customer/account/",
+          "url_after": "http://localhost:7770/catalogsearch/result/?q=Oral-B+Kids+Replacement+Brush+Heads",
+          "note": "search 'Oral-B Kids Replacement Brush Heads' page 1"
+        },
+        {
+          "step": 6,
+          "action": "goto",
+          "args": {
+            "url": "http://localhost:7770/catalogsearch/result/?q=Oral-B+Kids+Replacement+Brush+Heads&p=2"
+          },
+          "url_before": "http://localhost:7770/catalogsearch/result/?q=Oral-B+Kids+Replacement+Brush+Heads",
+          "url_after": "http://localhost:7770/catalogsearch/result/?q=Oral-B+Kids+Replacement+Brush+Heads&p=2",
+          "note": "search 'Oral-B Kids Replacement Brush Heads' page 2"
+        }
+      ],
+      "pages": [
+        {
+          "step": 2,
+          "name": "shopping_login",
+          "url": "http://localhost:7770/customer/account/login/",
+          "text": "pages/02_shopping_login.txt"
+        },
+        {
+          "step": 5,
+          "name": "shopping_logged_in",
+          "url": "http://localhost:7770/customer/account/",
+          "text": "pages/05_shopping_logged_in.txt"
+        },
+        {
+          "step": 6,
+          "name": "search_1",
+          "url": "http://localhost:7770/catalogsearch/result/?q=Oral-B+Kids+Replacement+Brush+Heads",
+          "text": "pages/06_search_1.txt",
+          "html": "pages/06_search_1.html"
+        },
+        {
+          "step": 7,
+          "name": "search_2",
+          "url": "http://localhost:7770/catalogsearch/result/?q=Oral-B+Kids+Replacement+Brush+Heads&p=2",
+          "text": "pages/07_search_2.txt"
+        }
+      ],
+      "answer": {
+        "names": [
+          "Oral-B Kids Extra Soft Replacement Brush Heads featuring STAR WARS, 2 count",
+          "Kids By Oral-b Stages Power Star Wars Replacement Heads 4 Pack"
+        ],
+        "min": 12.99,
+        "max": 14.98
+      },
+      "source_evidence": {
+        "search": {
+          "query": "Oral-B Kids Replacement Brush Heads",
+          "pages_visited": [
+            {
+              "page": 1,
+              "url": "http://localhost:7770/catalogsearch/result/?q=Oral-B+Kids+Replacement+Brush+Heads",
+              "items": 12
+            },
+            {
+              "page": 2,
+              "url": "http://localhost:7770/catalogsearch/result/?q=Oral-B+Kids+Replacement+Brush+Heads&p=2",
+              "items": 12
+            }
+          ]
+        },
+        "products_seen": 24,
+        "matched": [
+          {
+            "name": "Oral-B Kids Extra Soft Replacement Brush Heads featuring STAR WARS, 2 count",
+            "price": 12.99,
+            "href": "http://localhost:7770/oral-b-kids-extra-soft-replacement-brush-heads-featuring-star-wars-2-count.html"
+          },
+          {
+            "name": "Kids By Oral-b Stages Power Star Wars Replacement Heads 4 Pack",
+            "price": 14.98,
+            "href": "http://localhost:7770/kids-by-oral-b-stages-power-star-wars-replacement-heads-4-pack.html"
+          }
+        ],
+        "selection_rule": "genuine Oral-B kids replacement brush heads: name starts with Oral-B Kids or Kids By Oral-B, mentions brush/replacement heads, and is not a powered toothbrush unit"
+      },
+      "notes": [
+        "Page 1 contains both genuine Oral-B kids replacement brush heads; page 2 was checked for additional matches and returned none.",
+        "Compatible/third-party listings (Oral B, VINFANY, generic Braun-compatible) and powered toothbrush units are excluded by the brand/head rule.",
+        "Prices are the final displayed prices; min/max are computed from the matched products."
+      ],
+      "site": "shopping",
+      "public_output": {
+        "task_type": "RETRIEVE",
+        "status": "SUCCESS",
+        "retrieved_data": [
+          {
+            "names": [
+              "Oral-B Kids Extra Soft Replacement Brush Heads featuring STAR WARS, 2 count",
+              "Kids By Oral-b Stages Power Star Wars Replacement Heads 4 Pack"
+            ],
+            "min": 12.99,
+            "max": 14.98
+          }
+        ],
+        "error_details": null
+      },
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "official_eval": "official_eval.json",
+      "agent_response": "agent_response.json",
+      "network_har": "network.har",
+      "network_har_redacted": true
+    },
+    {
+      "schema": "agent_stress_reference_path/1",
+      "task_id": 21,
+      "intent": "Get name(s) of reviewer(s) who mention ear cups being small for the product on the current page",
+      "recorded_at": "2026-11-12T11:57:11.712051+00:00",
+      "steps": 1,
+      "actions": [
+        {
+          "step": 1,
+          "action": "goto",
+          "args": {
+            "url": "http://localhost:7770/6s-wireless-headphones-over-ear-noise-canceling-hi-fi-bass-foldable-stereo-wireless-kid-headsets-earbuds-with-built-in-mic-micro-sd-tf-fm-for-iphone-samsung-ipad-pc-black-gold.html#reviews"
+          },
+          "url_before": "about:blank",
+          "url_after": "http://localhost:7770/6s-wireless-headphones-over-ear-noise-canceling-hi-fi-bass-foldable-stereo-wireless-kid-headsets-earbuds-with-built-in-mic-micro-sd-tf-fm-for-iphone-samsung-ipad-pc-black-gold.html#reviews",
+          "note": "open product review section"
+        }
+      ],
+      "pages": [
+        {
+          "step": 2,
+          "name": "product_reviews",
+          "url": "http://localhost:7770/6s-wireless-headphones-over-ear-noise-canceling-hi-fi-bass-foldable-stereo-wireless-kid-headsets-earbuds-with-built-in-mic-micro-sd-tf-fm-for-iphone-samsung-ipad-pc-black-gold.html#reviews",
+          "text": "pages/02_product_reviews.txt",
+          "html": "pages/02_product_reviews.html"
+        }
+      ],
+      "answer": [
+        "Catso",
+        "Dibbins",
+        "Anglebert Dinkherhump",
+        "Michelle DavisMichelle Davis"
+      ],
+      "source_evidence": {
+        "reviews_seen": 10,
+        "matched_reviews": [
+          {
+            "author": "Catso",
+            "body": "Too small, did not hold charge. Rating 20% I returned to them. For one thing the battery was not lasting more than a couple hours after I charge them and it wasn't even able to couple them to any of my devices. So I charged it up overnight, try to couple it, go a way for a bit, come back in two hours, and no charge. Also they really are for people with very small ears Review by Catso Posted on 4/20/23"
+          },
+          {
+            "author": "Dibbins",
+            "body": "Cup for ears very small Rating 60% I wanted these to listen to music while cutting grass with a riding and walk-behind mower.The ear cups MAY be ok for children (dint have any to test this on), but for adult sized ears they are way too small - as such, they do very little to cancel any nose. Also, because they are so small, they tend to not be very comfortable to use for extended periods.The sound quality is OK, I guess, nothing special here. What they do, they do OK, also they were fairly easy to pair (wouldn't pair with my S10+ the 1st time around, paired well with Tab 6, then paired easily with S10+ the 2nd time)I will be keeping them, but will be looking for a better pair for mowing Review by Dibbins Posted on 4/20/23"
+          },
+          {
+            "author": "Anglebert Dinkherhump",
+            "body": "not bad and folding is good for travel Rating 80% I like that they fold and can get small for travel. These are NOT over the ear cups. I got about half my ear into it and the rest is on top so for long listening it may hurt the ears. But not horrible. Sound was good! surprisingly so. not audiophile of course but decent. and a big step up from listening on notebook speakers. the built in mic I have yet to try and havent tried noise canceling which there doesn't appear to be a switch for so another negative. I think the better ones are 60 bucks and dont fold . so for some basics for travel these are good. I have a even tinier super light headphone thats bluetooth but not noise canceling for airplanes so my dec for these was def for airlines. I will report back after i fly.Loudness - these get VERY LOUD! Bass - These have excellent BASS Vocals - decent to good not audiophile. Listened to bowie ashes to ashes on amazon music and was quite balanced. Headphone sizing - bands CLICK to positions. very good. Plugging in the USB-B charger mini jack - a huge pain. Has a micro SD slot. I think they would benefit from a audio graphic equalizer to rebalance. Review by Anglebert Dinkherhump Posted on 4/20/23"
+          },
+          {
+            "author": "Michelle DavisMichelle Davis",
+            "body": "Yeah so what that they are cheaply priced but they are worth it for kids and zoom meetings. Rating 100% Now for being cheap no name brand it works perfectly for the kids during zoom meetings for school. It has blue tooth and headphone jack so when the battery is low they can still use the provided wire to hear the meeting. Now I will say this. The microphone works plugged in to the head jack or Bluetooth but for it picking up the kids voice it has a hard time if they are talking in a low voice. They almost have to speak up for the microphone to hear them talking or it kinda cuts in and out. But for the price and quality and because I’m tired of loaning my kids my Bose and Powerbeats pro headphones for the meetings they work perfectly for what they need. Would definitely buy these again. For small ears the padding goes over their ears. It won’t go over mine as I’m an adult with adult sized ears ???? lol. But the kids really like them. I have them in red black. Blue black. And rose gold and white. Review by Michelle DavisMichelle Davis Posted on 4/20/23"
+          }
+        ],
+        "selection_rule": "review text mentions small ears, or mentions ear cups together with too small / not over the ear / half my ear"
+      },
+      "notes": [
+        "Authors are returned exactly as shown on the page; the contract accepts the page's duplicated Michelle Davis display value.",
+        "This page currently exposes the expected review set (Catso, Dibbins, Anglebert Dinkherhump, Michelle Davis), unlike the earlier server note that reported only Jay/Josef."
+      ],
+      "site": "shopping",
+      "public_output": {
+        "task_type": "RETRIEVE",
+        "status": "SUCCESS",
+        "retrieved_data": [
+          "Catso",
+          "Dibbins",
+          "Anglebert Dinkherhump",
+          "Michelle DavisMichelle Davis"
+        ],
+        "error_details": null
+      },
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "official_eval": "official_eval.json",
+      "agent_response": "agent_response.json",
+      "network_har": "network.har",
+      "network_har_redacted": true
+    },
+    {
+      "schema": "agent_stress_reference_path/1",
+      "task_id": 126,
+      "intent": "What is the price range of Canon photo printer in the One Stop Market?. Return an object with keys \"min\" and \"max\" (as numbers, e.g., 10.99) only, without any additional details.",
+      "recorded_at": "2026-11-12T11:57:14.666851+00:00",
+      "steps": 6,
+      "actions": [
+        {
+          "step": 1,
+          "action": "goto",
+          "args": {
+            "url": "http://localhost:7770/customer/account/login/"
+          },
+          "url_before": "about:blank",
+          "url_after": "http://localhost:7770/customer/account/login/",
+          "note": "open customer login"
+        },
+        {
+          "step": 2,
+          "action": "fill",
+          "args": {
+            "selector": "#email",
+            "value": "emma.lopez@gmail.com"
+          },
+          "url_before": "http://localhost:7770/customer/account/login/",
+          "url_after": "http://localhost:7770/customer/account/login/",
+          "note": "shopping email"
+        },
+        {
+          "step": 3,
+          "action": "fill",
+          "args": {
+            "selector": "#pass",
+            "value": "<redacted>"
+          },
+          "url_before": "http://localhost:7770/customer/account/login/",
+          "url_after": "http://localhost:7770/customer/account/login/",
+          "note": "shopping password"
+        },
+        {
+          "step": 4,
+          "action": "click",
+          "args": {
+            "selector": "#send2"
+          },
+          "url_before": "http://localhost:7770/customer/account/",
+          "url_after": "http://localhost:7770/customer/account/",
+          "note": "submit customer login"
+        },
+        {
+          "step": 5,
+          "action": "goto",
+          "args": {
+            "url": "http://localhost:7770/catalogsearch/result/?q=Canon+photo+printer"
+          },
+          "url_before": "http://localhost:7770/customer/account/",
+          "url_after": "http://localhost:7770/catalogsearch/result/?q=Canon+photo+printer",
+          "note": "search 'Canon photo printer' page 1"
+        },
+        {
+          "step": 6,
+          "action": "goto",
+          "args": {
+            "url": "http://localhost:7770/catalogsearch/result/?q=Canon+photo+printer&p=2"
+          },
+          "url_before": "http://localhost:7770/catalogsearch/result/?q=Canon+photo+printer",
+          "url_after": "http://localhost:7770/catalogsearch/result/?q=Canon+photo+printer&p=2",
+          "note": "search 'Canon photo printer' page 2"
+        }
+      ],
+      "pages": [
+        {
+          "step": 2,
+          "name": "shopping_login",
+          "url": "http://localhost:7770/customer/account/login/",
+          "text": "pages/02_shopping_login.txt"
+        },
+        {
+          "step": 5,
+          "name": "shopping_logged_in",
+          "url": "http://localhost:7770/customer/account/",
+          "text": "pages/05_shopping_logged_in.txt"
+        },
+        {
+          "step": 6,
+          "name": "search_1",
+          "url": "http://localhost:7770/catalogsearch/result/?q=Canon+photo+printer",
+          "text": "pages/06_search_1.txt",
+          "html": "pages/06_search_1.html"
+        },
+        {
+          "step": 7,
+          "name": "search_2",
+          "url": "http://localhost:7770/catalogsearch/result/?q=Canon+photo+printer&p=2",
+          "text": "pages/07_search_2.txt"
+        }
+      ],
+      "answer": {
+        "min": 2.56,
+        "max": 649.99
+      },
+      "source_evidence": {
+        "search": {
+          "query": "Canon photo printer",
+          "pages_visited": [
+            {
+              "page": 1,
+              "url": "http://localhost:7770/catalogsearch/result/?q=Canon+photo+printer",
+              "items": 12
+            },
+            {
+              "page": 2,
+              "url": "http://localhost:7770/catalogsearch/result/?q=Canon+photo+printer&p=2",
+              "items": 12
+            }
+          ]
+        },
+        "products_seen": 24,
+        "matched": [
+          {
+            "name": "Canon Pixma iP3500 Photo Printer (2170B002)",
+            "price": 184.99,
+            "href": "http://localhost:7770/canon-pixma-ip3500-photo-printer-2170b002.html"
+          },
+          {
+            "name": "Canon PIXMA iP4920 Premium Inkjet Photo Printer (5287B002)",
+            "price": 649.99,
+            "href": "http://localhost:7770/canon-pixma-ip4920-premium-inkjet-photo-printer-5287b002.html"
+          },
+          {
+            "name": "Canon MP620 Wireless All-in-One Photo Printer",
+            "price": 599.99,
+            "href": "http://localhost:7770/canon-mp620-wireless-all-in-one-photo-printer.html"
+          },
+          {
+            "name": "Canon PIXMA MG2120 Color Photo Printer with Scanner and Copier",
+            "price": 2.56,
+            "href": "http://localhost:7770/canon-pixma-mg2120-color-photo-printer-with-scanner-and-copier.html"
+          },
+          {
+            "name": "Canon PIXMA MG5420 Wireless Color Photo Printer (Discontinued by Manufacturer)",
+            "price": 500.42,
+            "href": "http://localhost:7770/canon-pixma-mg5420-wireless-color-photo-printer-discontinued-by-manufacturer.html"
+          },
+          {
+            "name": "Canon PIXMA MP560 Wireless Inkjet All-In-One Photo Printer (3747B002)",
+            "price": 56.78,
+            "href": "http://localhost:7770/canon-pixma-mp560-wireless-inkjet-all-in-one-photo-printer-3747b002.html"
+          },
+          {
+            "name": "Canon SELPHY CP1300 Compact Photo Printer (Black) with WiFi w/ 2X Color Ink and Paper Set",
+            "price": 208.99,
+            "href": "http://localhost:7770/canon-selphy-cp1300-compact-photo-printer-black-with-wifi-w-2x-color-ink-and-paper-set.html"
+          },
+          {
+            "name": "Canon TS202 Inkjet Photo Printer, Black",
+            "price": 49.54,
+            "href": "http://localhost:7770/canon-ts202-inkjet-photo-printer-black.html"
+          },
+          {
+            "name": "Canon PIXMA MG Series Wireless All-in-One Color Inkjet Printer with Mobile and Tablet Printing, Borderless Photos, Auto Duplex Printing, 4800 x 1200 dpi6, Black, 32GB Durlyfish USB Card",
+            "price": 169,
+            "href": "http://localhost:7770/canon-pixma-mg-series-wireless-all-in-one-color-inkjet-printer-with-mobile-and-tablet-printing-borderless-photos-auto-duplex-printing-4800-x-1200-dpi6-black-32gb-durlyfish-usb-card.html"
+          }
+        ],
+        "selection_rule": "name starts with Canon and contains photo + printer"
+      },
+      "notes": [
+        "Page 1 supplies both extremes ($2.56 and $649.99); page 2 was checked for a wider range and did not change them.",
+        "Accessories, compatible cables/printheads and Canon non-photo printers are excluded by the name rule."
+      ],
+      "site": "shopping",
+      "public_output": {
+        "task_type": "RETRIEVE",
+        "status": "SUCCESS",
+        "retrieved_data": [
+          {
+            "min": 2.56,
+            "max": 649.99
+          }
+        ],
+        "error_details": null
+      },
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "official_eval": "official_eval.json",
+      "agent_response": "agent_response.json",
+      "network_har": "network.har",
+      "network_har_redacted": true
+    },
+    {
+      "schema": "agent_stress_reference_path/1",
+      "task_id": 132,
+      "intent": "How many commits did kilian make to a11yproject.com on March 5, 2023?",
+      "recorded_at": "2026-11-12T11:57:17.454102+00:00",
+      "steps": 5,
+      "actions": [
+        {
+          "step": 1,
+          "action": "goto",
+          "args": {
+            "url": "http://localhost:8023/users/sign_in"
+          },
+          "url_before": "about:blank",
+          "url_after": "http://localhost:8023/users/sign_in",
+          "note": "open GitLab login"
+        },
+        {
+          "step": 2,
+          "action": "fill",
+          "args": {
+            "selector": "[data-testid=\"username-field\"]",
+            "value": "byteblaze"
+          },
+          "url_before": "http://localhost:8023/users/sign_in",
+          "url_after": "http://localhost:8023/users/sign_in",
+          "note": "gitlab username"
+        },
+        {
+          "step": 3,
+          "action": "fill",
+          "args": {
+            "selector": "[data-testid=\"password-field\"]",
+            "value": "<redacted>"
+          },
+          "url_before": "http://localhost:8023/users/sign_in",
+          "url_after": "http://localhost:8023/users/sign_in",
+          "note": "gitlab password"
+        },
+        {
+          "step": 4,
+          "action": "click",
+          "args": {
+            "selector": "[data-testid=\"sign-in-button\"]"
+          },
+          "url_before": "http://localhost:8023/",
+          "url_after": "http://localhost:8023/",
+          "note": "submit GitLab login"
+        },
+        {
+          "step": 5,
+          "action": "goto",
+          "args": {
+            "url": "http://localhost:8023/a11yproject/a11yproject.com/-/commits/main?author=kilian&since=2023-03-05&until=2023-03-06"
+          },
+          "url_before": "http://localhost:8023/",
+          "url_after": "http://localhost:8023/a11yproject/a11yproject.com/-/commits/main?author=kilian&since=2023-03-05&until=2023-03-06",
+          "note": "open commits filtered by author and date"
+        }
+      ],
+      "pages": [
+        {
+          "step": 5,
+          "name": "gitlab_logged_in",
+          "url": "http://localhost:8023/",
+          "text": "pages/05_gitlab_logged_in.txt"
+        },
+        {
+          "step": 6,
+          "name": "commits_filtered",
+          "url": "http://localhost:8023/a11yproject/a11yproject.com/-/commits/main?author=kilian&since=2023-03-05&until=2023-03-06",
+          "text": "pages/06_commits_filtered.txt",
+          "html": "pages/06_commits_filtered.html"
+        }
+      ],
+      "answer": [
+        1
+      ],
+      "source_evidence": {
+        "filtered_url": "http://localhost:8023/a11yproject/a11yproject.com/-/commits/main?author=kilian&since=2023-03-05&until=2023-03-06",
+        "date_group": "05 Mar, 2023",
+        "group_count": 1,
+        "commit_rows_visible": [
+          "Fix typos in the code examples (#1524) Kilian Valkhof authored 3 years ago 081f0af1",
+          "Add Polypane as a developer tool (#1427) Kilian Valkhof authored 4 years ago 582c8c58",
+          "Add article about Fix Contrast (#1288) Kilian Valkhof authored 5 years ago 21356486"
+        ],
+        "selection_rule": "count shown by GitLab for the 05 Mar, 2023 group with author=kilian"
+      },
+      "notes": [
+        "Author and date filters are applied through the GitLab commits UI URL, not by scanning all commits.",
+        "The group heading reports one commit for 05 Mar, 2023."
+      ],
+      "site": "gitlab",
+      "public_output": {
+        "task_type": "RETRIEVE",
+        "status": "SUCCESS",
+        "retrieved_data": [
+          1
+        ],
+        "error_details": null
+      },
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "official_eval": "official_eval.json",
+      "agent_response": "agent_response.json",
+      "network_har": "network.har",
+      "network_har_redacted": true
+    }
+  ]
+}

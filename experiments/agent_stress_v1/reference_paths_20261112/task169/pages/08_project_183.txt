@@ -1,0 +1,84 @@
+Skip to content
+GitLab
+/
+13
+8
+5
+Help
+E
+empathy-prompts
+Project information
+Repository
+Issues
+6
+Merge requests
+2
+CI/CD
+Security & Compliance
+Deployments
+Packages and registries
+Infrastructure
+Monitor
+Analytics
+Wiki
+Snippets
+Settings
+Collapse sidebar
+You can't push or pull repositories using SSH until you add an SSH key to your profile.
+Add SSH key
+Don't show again
+Byte Blaze
+empathy-prompts
+E
+empathy-prompts
+Project ID: 183 
+Unstar
+6
+Fork
+1
+152
+ Commits
+3
+ Branches
+1
+ Tag
+9.3 MB
+ Project Storage
+1
+ Release
+
+💡 Ideas to help consider Inclusive Design principles when making things for others to use.
+
+Update dependencies that break build for newish Node versions (#12) 
+Wayne Elgin authored 7 years ago
+3d54c962
+main
+empathy-prompts
+Add to tree
+Find file
+Web IDE
+Select Archive Format
+Clone
+README
+MIT License
+CHANGELOG
+CONTRIBUTING
+Enable Auto DevOps
+Add Kubernetes cluster
+Set up CI/CD
+Configure Integrations
+Name	Last commit	Last update
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	

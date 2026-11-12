@@ -1,0 +1,5 @@
+{"step": 1, "action": "goto", "args": {"url": "http://localhost:7770/customer/account/login/"}, "url_before": "about:blank", "url_after": "http://localhost:7770/customer/account/login/", "note": "open customer login"}
+{"step": 2, "action": "fill", "args": {"selector": "#email", "value": "emma.lopez@gmail.com"}, "url_before": "http://localhost:7770/customer/account/login/", "url_after": "http://localhost:7770/customer/account/login/", "note": "shopping email"}
+{"step": 3, "action": "fill", "args": {"selector": "#pass", "value": "<redacted>"}, "url_before": "http://localhost:7770/customer/account/login/", "url_after": "http://localhost:7770/customer/account/login/", "note": "shopping password"}
+{"step": 4, "action": "click", "args": {"selector": "#send2"}, "url_before": "http://localhost:7770/customer/account/", "url_after": "http://localhost:7770/customer/account/", "note": "submit customer login"}
+{"step": 5, "action": "goto", "args": {"url": "http://localhost:7770/sales/order/history/"}, "url_before": "http://localhost:7770/customer/account/", "url_after": "http://localhost:7770/sales/order/history/", "note": "open order history"}
