@@ -1,10 +1,10 @@
 {
   "schema": "agent_stress_shared_execution_freeze/1",
   "recorded_at": "2026-11-12T12:38:16.460374+00:00",
-  "status": "candidate_ready_for_72_trial_block",
+  "status": "frozen_for_72_trial_block",
   "code": {
-    "head": "eac2363b9a7ba1fa33ef4e5114bf0df76cef4b68",
-    "working_tree_dirty": true,
+    "head": "d266de099c66efd74a69a3a5049451144e15493f",
+    "working_tree_dirty": false,
     "fingerprint_sha256": "e18fc8acb3ddcef7a67e48036fe2dbbade6e27156e7540200bf1c08aafeada6c",
     "file_sha256": {
       "main.py": "c4d4c0848c7085dc89af1b50cec6e6a88a195d06db0a17f555ff4a074bb50163",
@@ -180,6 +180,7 @@
     "Both arms use the same storage-state hashes; baseline differs only by improvement flags.",
     "The pilot ran before the final replanner rejection-routing tweak; that rejection path was not exercised in the pilot and is covered by tests/test_submission_contract.py.",
     "HAR files contain session material and are gitignored; do not force-add them.",
-    "Freeze the commit SHA after this candidate is committed; the code fingerprint already binds the reviewed working tree."
-  ]
+    "Frozen at commit d266de099c66efd74a69a3a5049451144e15493f; the code fingerprint binds the reviewed tree."
+  ],
+  "freeze_commit": "d266de099c66efd74a69a3a5049451144e15493f"
 }
