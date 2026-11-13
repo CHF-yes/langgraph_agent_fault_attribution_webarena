@@ -1,0 +1,16 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    {
+      "names": [
+        "Kids Toothbrush Replacement Heads for Oral B Kids Replaced Brush Heads Soft Precision Bristles Children Professional Care 16 Pack (16)",
+        "Oral-B Kids Extra Soft Replacement Brush Heads featuring STAR WARS, 2 count",
+        "Kids By Oral-b Stages Power Star Wars Replacement Heads 4 Pack"
+      ],
+      "min": 12.99,
+      "max": 18.99
+    }
+  ],
+  "error_details": null
+}

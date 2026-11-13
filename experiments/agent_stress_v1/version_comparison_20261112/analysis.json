@@ -1,0 +1,359 @@
+{
+  "schema": "agent_stress_version_comparison_analysis/1",
+  "generated_at": "2026-11-12T14:51:32.536875+00:00",
+  "source": "summary.json",
+  "overall": {
+    "baseline": {
+      "trials": 36,
+      "successes": 9,
+      "success_rate": 0.25,
+      "steps_mean": 6.333333333333333,
+      "prompt_tokens": 3929222
+    },
+    "improved": {
+      "trials": 36,
+      "successes": 25,
+      "success_rate": 0.6944444444444444,
+      "steps_mean": 7.0,
+      "prompt_tokens": 4882373
+    },
+    "pairs_improved": 18,
+    "pairs_baseline": 2,
+    "pairs_tied": 16,
+    "mean_paired_effect": 0.4444444444444444
+  },
+  "by_architecture": {
+    "react": {
+      "baseline": {
+        "trials": 18,
+        "successes": 5,
+        "success_rate": 0.2777777777777778,
+        "prompt_tokens": 2307388,
+        "steps_mean": 7.111111111111111
+      },
+      "improved": {
+        "trials": 18,
+        "successes": 12,
+        "success_rate": 0.6666666666666666,
+        "prompt_tokens": 2597390,
+        "steps_mean": 7.888888888888889
+      }
+    },
+    "plan_execute": {
+      "baseline": {
+        "trials": 18,
+        "successes": 4,
+        "success_rate": 0.2222222222222222,
+        "prompt_tokens": 1621834,
+        "steps_mean": 5.555555555555555
+      },
+      "improved": {
+        "trials": 18,
+        "successes": 13,
+        "success_rate": 0.7222222222222222,
+        "prompt_tokens": 2284983,
+        "steps_mean": 6.111111111111111
+      }
+    }
+  },
+  "by_task_architecture": {
+    "21": {
+      "react": {
+        "baseline": {
+          "successes": 0,
+          "trials": 3
+        },
+        "improved": {
+          "successes": 0,
+          "trials": 3
+        }
+      },
+      "plan_execute": {
+        "baseline": {
+          "successes": 0,
+          "trials": 3
+        },
+        "improved": {
+          "successes": 1,
+          "trials": 3
+        }
+      }
+    },
+    "126": {
+      "react": {
+        "baseline": {
+          "successes": 1,
+          "trials": 3
+        },
+        "improved": {
+          "successes": 2,
+          "trials": 3
+        }
+      },
+      "plan_execute": {
+        "baseline": {
+          "successes": 2,
+          "trials": 3
+        },
+        "improved": {
+          "successes": 3,
+          "trials": 3
+        }
+      }
+    },
+    "132": {
+      "react": {
+        "baseline": {
+          "successes": 2,
+          "trials": 3
+        },
+        "improved": {
+          "successes": 3,
+          "trials": 3
+        }
+      },
+      "plan_execute": {
+        "baseline": {
+          "successes": 0,
+          "trials": 3
+        },
+        "improved": {
+          "successes": 3,
+          "trials": 3
+        }
+      }
+    },
+    "169": {
+      "react": {
+        "baseline": {
+          "successes": 0,
+          "trials": 3
+        },
+        "improved": {
+          "successes": 2,
+          "trials": 3
+        }
+      },
+      "plan_execute": {
+        "baseline": {
+          "successes": 0,
+          "trials": 3
+        },
+        "improved": {
+          "successes": 2,
+          "trials": 3
+        }
+      }
+    },
+    "231": {
+      "react": {
+        "baseline": {
+          "successes": 0,
+          "trials": 3
+        },
+        "improved": {
+          "successes": 3,
+          "trials": 3
+        }
+      },
+      "plan_execute": {
+        "baseline": {
+          "successes": 0,
+          "trials": 3
+        },
+        "improved": {
+          "successes": 3,
+          "trials": 3
+        }
+      }
+    },
+    "281": {
+      "react": {
+        "baseline": {
+          "successes": 2,
+          "trials": 3
+        },
+        "improved": {
+          "successes": 2,
+          "trials": 3
+        }
+      },
+      "plan_execute": {
+        "baseline": {
+          "successes": 2,
+          "trials": 3
+        },
+        "improved": {
+          "successes": 1,
+          "trials": 3
+        }
+      }
+    }
+  },
+  "anomalies": [
+    {
+      "cell_key": "task21_react_seed3_improved",
+      "task_id": 21,
+      "architecture": "react",
+      "seed": 3,
+      "steps": 5,
+      "reason": [
+        "incomplete_reviewer_extraction"
+      ],
+      "answer": [
+        "Catso",
+        "Dibbins",
+        "Michelle Davis"
+      ],
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T214221-f1adf4/qwen38_flash__react__control__task21__seed3__control__rep0.jsonl"
+    },
+    {
+      "cell_key": "task169_react_seed1_improved",
+      "task_id": 169,
+      "architecture": "react",
+      "seed": 1,
+      "steps": 3,
+      "reason": [
+        "empty_submission"
+      ],
+      "answer": [],
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T214813-030ab3/qwen38_flash__react__control__task169__seed1__control__rep0.jsonl"
+    },
+    {
+      "cell_key": "task21_react_seed2_improved",
+      "task_id": 21,
+      "architecture": "react",
+      "seed": 2,
+      "steps": 4,
+      "reason": [
+        "incomplete_reviewer_extraction"
+      ],
+      "answer": [
+        "Dibbins"
+      ],
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T215619-f7d799/qwen38_flash__react__control__task21__seed2__control__rep0.jsonl"
+    },
+    {
+      "cell_key": "task21_react_seed1_improved",
+      "task_id": 21,
+      "architecture": "react",
+      "seed": 1,
+      "steps": 6,
+      "reason": [
+        "incomplete_reviewer_extraction"
+      ],
+      "answer": [
+        "Dibbins"
+      ],
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T220002-291938/qwen38_flash__react__control__task21__seed1__control__rep0.jsonl"
+    },
+    {
+      "cell_key": "task169_plan_execute_seed2_improved",
+      "task_id": 169,
+      "architecture": "plan_execute",
+      "seed": 2,
+      "steps": 3,
+      "reason": [
+        "empty_submission"
+      ],
+      "answer": [],
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T220501-5a504d/qwen38_flash__plan_execute__control__task169__seed2__control__rep0.jsonl"
+    },
+    {
+      "cell_key": "task126_react_seed1_improved",
+      "task_id": 126,
+      "architecture": "react",
+      "seed": 1,
+      "steps": 20,
+      "reason": [
+        "budget_exhausted_20_steps"
+      ],
+      "answer": null,
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T220744-904f1f/qwen38_flash__react__control__task126__seed1__control__rep0.jsonl"
+    },
+    {
+      "cell_key": "task281_react_seed2_improved",
+      "task_id": 281,
+      "architecture": "react",
+      "seed": 2,
+      "steps": 20,
+      "reason": [
+        "budget_exhausted_20_steps"
+      ],
+      "answer": null,
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T221132-86ffd8/qwen38_flash__react__control__task281__seed2__control__rep0.jsonl"
+    },
+    {
+      "cell_key": "task21_plan_execute_seed3_improved",
+      "task_id": 21,
+      "architecture": "plan_execute",
+      "seed": 3,
+      "steps": 3,
+      "reason": [
+        "incomplete_reviewer_extraction"
+      ],
+      "answer": [
+        "Dibbins",
+        "Catso",
+        "Michelle Davis"
+      ],
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T221304-3ebf56/qwen38_flash__plan_execute__control__task21__seed3__control__rep0.jsonl"
+    },
+    {
+      "cell_key": "task281_plan_execute_seed1_improved",
+      "task_id": 281,
+      "architecture": "plan_execute",
+      "seed": 1,
+      "steps": 20,
+      "reason": [
+        "budget_exhausted_20_steps"
+      ],
+      "answer": null,
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T221455-010f24/qwen38_flash__plan_execute__control__task281__seed1__control__rep0.jsonl"
+    },
+    {
+      "cell_key": "task21_plan_execute_seed1_improved",
+      "task_id": 21,
+      "architecture": "plan_execute",
+      "seed": 1,
+      "steps": 3,
+      "reason": [
+        "incomplete_reviewer_extraction"
+      ],
+      "answer": [
+        "Dibbins",
+        "Michelle Davis"
+      ],
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T222133-fae002/qwen38_flash__plan_execute__control__task21__seed1__control__rep0.jsonl"
+    },
+    {
+      "cell_key": "task281_plan_execute_seed3_improved",
+      "task_id": 281,
+      "architecture": "plan_execute",
+      "seed": 3,
+      "steps": 5,
+      "reason": [
+        "included_non_target_listing"
+      ],
+      "answer": [
+        {
+          "names": [
+            "Kids Toothbrush Replacement Heads for Oral B Kids Replaced Brush Heads Soft Precision Bristles Children Professional Care 16 Pack (16)",
+            "Oral-B Kids Extra Soft Replacement Brush Heads featuring STAR WARS, 2 count",
+            "Kids By Oral-b Stages Power Star Wars Replacement Heads 4 Pack"
+          ],
+          "min": 12.99,
+          "max": 18.99
+        }
+      ],
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T222808-85add1/qwen38_flash__plan_execute__control__task281__seed3__control__rep0.jsonl"
+    }
+  ],
+  "notes": [
+    "Descriptive development result only; not a confirmatory significance test.",
+    "All 72 trials executed without harness failures; official failures are agent failures.",
+    "Improved successes are concentrated in 231/132/169/126; 281 is mixed/negative and task 21 remains weak.",
+    "Retrieval repair increases exploration; three improved trials exhausted the 20-step budget.",
+    "169 improved failures are model tool-hallucination/empty submissions, not login or schema-validation failures."
+  ]
+}

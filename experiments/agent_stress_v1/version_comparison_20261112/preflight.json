@@ -1,0 +1,8 @@
+{
+  "shopping": true,
+  "gitlab": true,
+  "model_key": true,
+  "freeze_fingerprint": true,
+  "storage_states": true,
+  "ok": true
+}

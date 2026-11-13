@@ -1,0 +1,57 @@
+{
+  "task_id": 169,
+  "intent_template_id": 289,
+  "sites": [
+    "gitlab"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"Your personal projects that received the most stars (tied at 6 stars each) are:\\n\\n1. **empathy-prompts** — Project ID: **183** (6 stars)\\n2. **millennials-to-snake-people** — Project ID: **187** (6 stars)\\n\\nAll other personal projects had fewer stars (a11y-webring.club and ericwbailey.website had 2; a11y-syntax-highlighting and accessible-html-content-patterns had 1; the rest had 0). So the project IDs of your most-starred personal projects are **183 and 187**.\"\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "task_type": "retrieve",
+        "retrieved_data": [
+          "Your personal projects that received the most stars (tied at 6 stars each) are:\n\n1. **empathy-prompts** — Project ID: **183** (6 stars)\n2. **millennials-to-snake-people** — Project ID: **187** (6 stars)\n\nAll other personal projects had fewer stars (a11y-webring.club and ericwbailey.website had 2; a11y-syntax-highlighting and accessible-html-content-patterns had 1; the rest had 0). So the project IDs of your most-starred personal projects are **183 and 187**."
+        ],
+        "status": "success"
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          187.0,
+          183.0
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/2), Missing: 2, Extra: 1",
+            "Expected: [187.0, 183.0], Got: [Your personal projects that received the most stars (tied at 6 stars each) are:\n\n1. **empathy-prompts** — Project ID: **183** (6 stars)\n2. **millennials-to-snake-people** — Project ID: **187** (6 stars)\n\nAll other personal projects had fewer stars (a11y-webring.club and ericwbailey.website had 2; a11y-syntax-highlighting and accessible-html-content-patterns had 1; the rest had 0). So the project IDs of your most-starred personal projects are **183 and 187**.]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false,
+  "_evaluation_binding": {
+    "agent_response_sha256": "3753b72263ca8d9a983cbee6b8a47be4df79eb27dd20016b46a30dbb454094b3",
+    "network_har_sha256": "77010f0fe3e0b89e01067ff2e8406fed933afa2ec2acefe5a4833747a1c49ac1",
+    "config_sha256": "0b7e7e9326d16a5d070adea30c4e4247cd65137832a8544352f581a2b71b64c9",
+    "evaluator_adapter_version": "stage-c-eval-adapter/1"
+  }
+}

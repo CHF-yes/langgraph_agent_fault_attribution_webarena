@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "Your most recent cancelled order is **Order # 000000170**, placed on 5/17/23 with an order total of $365.42.\n\nVerification details:\n- The My Orders history is sorted by date (most recent first).\n- On Page 1, the topmost order with status \"Canceled\" is 000000170 (5/17/23). Other cancelled orders on that page (000000156 on 2/24/23 and 000000158 on 2/11/23) are older.\n- On Page 2, all orders (000000148 through 000000176, spanning 10/22/22 to 1/29/23) have status \"Complete\" — no cancelled orders there, and they are all older than 5/17/23 anyway.\n\nTherefore, the most recent cancelled order number is **000000170**."
+  ],
+  "error_details": null
+}

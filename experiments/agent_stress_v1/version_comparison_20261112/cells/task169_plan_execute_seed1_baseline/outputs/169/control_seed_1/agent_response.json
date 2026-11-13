@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "Among my personal projects, two projects tie for the most stars (6 stars each):\n\n1. **millennials-to-snake-people** — Project ID: **187** (6 stars)\n2. **empathy-prompts** — Project ID: **183** (6 stars)\n\nAll other personal projects have fewer stars (a11y-webring.club: 2, ericwbailey.website: 2, a11y-syntax-highlighting: 1, accessible-html-content-patterns: 1, others: 0).\n\nSo the project IDs of the personal project(s) with the most stars are: **187 and 183**."
+  ],
+  "error_details": null
+}

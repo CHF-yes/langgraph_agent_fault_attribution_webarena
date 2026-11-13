@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "After filtering to Personal projects and sorting by Most stars, the highest star count is 6, shared by two personal projects: (1) Byte Blaze / millennials-to-snake-people [6 stars] and (2) Byte Blaze / empathy-prompts [6 stars]. All other personal projects have fewer stars (a11y-webring.club = 2, ericwbailey.website = 2, a11y-syntax-highlighting = 1, accessible-html-content-patterns = 1, others = 0). Next step: retrieve the numeric project IDs for these two projects from their project pages/URLs."
+  ],
+  "error_details": null
+}

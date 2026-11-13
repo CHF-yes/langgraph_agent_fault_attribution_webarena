@@ -1,0 +1,61 @@
+{
+  "task_id": 21,
+  "intent_template_id": 222,
+  "sites": [
+    "shopping"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"Catso\",\n    \"Dibbins\",\n    \"Michelle Davis\"\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "task_type": "retrieve",
+        "retrieved_data": [
+          "catso",
+          "dibbins",
+          "michelle davis"
+        ],
+        "status": "success"
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "catso",
+          "dibbins",
+          "anglebert dinkherhump",
+          "michelle davis"
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array is missing 1 expected element(s). Matched (3/4)",
+            "Expected: [catso, dibbins, ..., michelle davis], Got: [catso, dibbins, michelle davis]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false,
+  "_evaluation_binding": {
+    "agent_response_sha256": "4381c17c9c8d0561f873539870af480b2723d4a6a915aff9acfb608c86d81660",
+    "network_har_sha256": "b5e15e16faf5ecbc859bd3f67aa1c7422a143706e4074f986fa3db315840341d",
+    "config_sha256": "0b7e7e9326d16a5d070adea30c4e4247cd65137832a8544352f581a2b71b64c9",
+    "evaluator_adapter_version": "stage-c-eval-adapter/1"
+  }
+}

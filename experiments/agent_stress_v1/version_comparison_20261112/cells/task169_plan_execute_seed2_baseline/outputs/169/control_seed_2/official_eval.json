@@ -1,0 +1,57 @@
+{
+  "task_id": 169,
+  "intent_template_id": 289,
+  "sites": [
+    "gitlab"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"For the current project 'empathy-prompts': Star count = 6, Project ID = 183 (confirmed on the project page header showing \\\"Project ID: 183\\\" and the stars link showing 6).\"\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "task_type": "retrieve",
+        "retrieved_data": [
+          "For the current project 'empathy-prompts': Star count = 6, Project ID = 183 (confirmed on the project page header showing \"Project ID: 183\" and the stars link showing 6)."
+        ],
+        "status": "success"
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          187.0,
+          183.0
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/2), Missing: 2, Extra: 1",
+            "Expected: [187.0, 183.0], Got: [For the current project 'empathy-prompts': Star count = 6, Project ID = 183 (confirmed on the project page header showing \"Project ID: 183\" and the stars link showing 6).]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false,
+  "_evaluation_binding": {
+    "agent_response_sha256": "d032b01fdcfa1b9f3afbc0e0d25306a165d57cf3fce953ed927832e698593100",
+    "network_har_sha256": "593256a6e8e13c6842d29e96fb04dd9577d75cf46571b2bb033456dd7aa4f793",
+    "config_sha256": "0b7e7e9326d16a5d070adea30c4e4247cd65137832a8544352f581a2b71b64c9",
+    "evaluator_adapter_version": "stage-c-eval-adapter/1"
+  }
+}

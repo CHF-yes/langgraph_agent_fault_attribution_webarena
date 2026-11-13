@@ -1,0 +1,1009 @@
+{
+  "schema": "agent_stress_version_comparison_plan/1",
+  "experiment_id": "agent-stress-v1-version-comparison",
+  "created_at": "2026-11-12T13:36:17.157026+00:00",
+  "model_profile": "qwen38_flash",
+  "max_steps": 20,
+  "schedule_seed": 20261112,
+  "tasks": {
+    "21": {
+      "task_id": 21,
+      "site": "shopping",
+      "start_url": "http://localhost:7770/6s-wireless-headphones-over-ear-noise-canceling-hi-fi-bass-foldable-stereo-wireless-kid-headsets-earbuds-with-built-in-mic-micro-sd-tf-fm-for-iphone-samsung-ipad-pc-black-gold.html",
+      "intent": "Get name(s) of reviewer(s) who mention ear cups being small for the product on the current page",
+      "intent_template_id": 222,
+      "results_schema": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "126": {
+      "task_id": 126,
+      "site": "shopping",
+      "start_url": "http://localhost:7770",
+      "intent": "What is the price range of Canon photo printer in the One Stop Market?. Return an object with keys \"min\" and \"max\" (as numbers, e.g., 10.99) only, without any additional details.",
+      "intent_template_id": 159,
+      "results_schema": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "min": {
+              "type": "number",
+              "format": "currency"
+            },
+            "max": {
+              "type": "number",
+              "format": "currency"
+            }
+          }
+        }
+      }
+    },
+    "132": {
+      "task_id": 132,
+      "site": "gitlab",
+      "start_url": "http://localhost:8023",
+      "intent": "How many commits did kilian make to a11yproject.com on March 5, 2023?",
+      "intent_template_id": 322,
+      "results_schema": {
+        "type": "array",
+        "items": {
+          "type": "number"
+        }
+      }
+    },
+    "169": {
+      "task_id": 169,
+      "site": "gitlab",
+      "start_url": "http://localhost:8023",
+      "intent": "Get the project ID(s) of my personal project(s) that received the most stars",
+      "intent_template_id": 289,
+      "results_schema": {
+        "type": "array",
+        "items": {
+          "type": "number"
+        }
+      }
+    },
+    "231": {
+      "task_id": 231,
+      "site": "shopping",
+      "start_url": "http://localhost:7770",
+      "intent": "Get the order number of my most recent cancelled order",
+      "intent_template_id": 213,
+      "results_schema": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "281": {
+      "task_id": 281,
+      "site": "shopping",
+      "start_url": "http://localhost:7770",
+      "intent": "Provide me with the full names of Oral B brush heads designed for children, and also share the price range for the available models. Return an object with keys \"names\" (list of product names), \"min\" and \"max\" (as numbers, e.g., 10.99) only, without any additional details.",
+      "intent_template_id": 204,
+      "results_schema": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "names": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "min": {
+              "type": "number",
+              "format": "currency"
+            },
+            "max": {
+              "type": "number",
+              "format": "currency"
+            }
+          }
+        }
+      }
+    }
+  },
+  "pairs": [
+    {
+      "pair_id": "task169_react_seed3",
+      "task_id": 169,
+      "architecture": "react",
+      "seed": 3
+    },
+    {
+      "pair_id": "task231_plan_execute_seed1",
+      "task_id": 231,
+      "architecture": "plan_execute",
+      "seed": 1
+    },
+    {
+      "pair_id": "task126_plan_execute_seed2",
+      "task_id": 126,
+      "architecture": "plan_execute",
+      "seed": 2
+    },
+    {
+      "pair_id": "task126_plan_execute_seed1",
+      "task_id": 126,
+      "architecture": "plan_execute",
+      "seed": 1
+    },
+    {
+      "pair_id": "task21_react_seed3",
+      "task_id": 21,
+      "architecture": "react",
+      "seed": 3
+    },
+    {
+      "pair_id": "task132_plan_execute_seed2",
+      "task_id": 132,
+      "architecture": "plan_execute",
+      "seed": 2
+    },
+    {
+      "pair_id": "task231_plan_execute_seed3",
+      "task_id": 231,
+      "architecture": "plan_execute",
+      "seed": 3
+    },
+    {
+      "pair_id": "task169_react_seed1",
+      "task_id": 169,
+      "architecture": "react",
+      "seed": 1
+    },
+    {
+      "pair_id": "task169_plan_execute_seed3",
+      "task_id": 169,
+      "architecture": "plan_execute",
+      "seed": 3
+    },
+    {
+      "pair_id": "task132_react_seed1",
+      "task_id": 132,
+      "architecture": "react",
+      "seed": 1
+    },
+    {
+      "pair_id": "task231_plan_execute_seed2",
+      "task_id": 231,
+      "architecture": "plan_execute",
+      "seed": 2
+    },
+    {
+      "pair_id": "task132_react_seed3",
+      "task_id": 132,
+      "architecture": "react",
+      "seed": 3
+    },
+    {
+      "pair_id": "task21_react_seed2",
+      "task_id": 21,
+      "architecture": "react",
+      "seed": 2
+    },
+    {
+      "pair_id": "task21_plan_execute_seed2",
+      "task_id": 21,
+      "architecture": "plan_execute",
+      "seed": 2
+    },
+    {
+      "pair_id": "task126_react_seed3",
+      "task_id": 126,
+      "architecture": "react",
+      "seed": 3
+    },
+    {
+      "pair_id": "task21_react_seed1",
+      "task_id": 21,
+      "architecture": "react",
+      "seed": 1
+    },
+    {
+      "pair_id": "task169_plan_execute_seed1",
+      "task_id": 169,
+      "architecture": "plan_execute",
+      "seed": 1
+    },
+    {
+      "pair_id": "task231_react_seed2",
+      "task_id": 231,
+      "architecture": "react",
+      "seed": 2
+    },
+    {
+      "pair_id": "task169_plan_execute_seed2",
+      "task_id": 169,
+      "architecture": "plan_execute",
+      "seed": 2
+    },
+    {
+      "pair_id": "task231_react_seed3",
+      "task_id": 231,
+      "architecture": "react",
+      "seed": 3
+    },
+    {
+      "pair_id": "task126_react_seed1",
+      "task_id": 126,
+      "architecture": "react",
+      "seed": 1
+    },
+    {
+      "pair_id": "task132_plan_execute_seed3",
+      "task_id": 132,
+      "architecture": "plan_execute",
+      "seed": 3
+    },
+    {
+      "pair_id": "task281_react_seed2",
+      "task_id": 281,
+      "architecture": "react",
+      "seed": 2
+    },
+    {
+      "pair_id": "task21_plan_execute_seed3",
+      "task_id": 21,
+      "architecture": "plan_execute",
+      "seed": 3
+    },
+    {
+      "pair_id": "task126_plan_execute_seed3",
+      "task_id": 126,
+      "architecture": "plan_execute",
+      "seed": 3
+    },
+    {
+      "pair_id": "task281_plan_execute_seed1",
+      "task_id": 281,
+      "architecture": "plan_execute",
+      "seed": 1
+    },
+    {
+      "pair_id": "task126_react_seed2",
+      "task_id": 126,
+      "architecture": "react",
+      "seed": 2
+    },
+    {
+      "pair_id": "task281_plan_execute_seed2",
+      "task_id": 281,
+      "architecture": "plan_execute",
+      "seed": 2
+    },
+    {
+      "pair_id": "task21_plan_execute_seed1",
+      "task_id": 21,
+      "architecture": "plan_execute",
+      "seed": 1
+    },
+    {
+      "pair_id": "task169_react_seed2",
+      "task_id": 169,
+      "architecture": "react",
+      "seed": 2
+    },
+    {
+      "pair_id": "task281_react_seed1",
+      "task_id": 281,
+      "architecture": "react",
+      "seed": 1
+    },
+    {
+      "pair_id": "task132_plan_execute_seed1",
+      "task_id": 132,
+      "architecture": "plan_execute",
+      "seed": 1
+    },
+    {
+      "pair_id": "task231_react_seed1",
+      "task_id": 231,
+      "architecture": "react",
+      "seed": 1
+    },
+    {
+      "pair_id": "task281_plan_execute_seed3",
+      "task_id": 281,
+      "architecture": "plan_execute",
+      "seed": 3
+    },
+    {
+      "pair_id": "task281_react_seed3",
+      "task_id": 281,
+      "architecture": "react",
+      "seed": 3
+    },
+    {
+      "pair_id": "task132_react_seed2",
+      "task_id": 132,
+      "architecture": "react",
+      "seed": 2
+    }
+  ],
+  "cells": [
+    {
+      "pair_id": "task169_react_seed3",
+      "task_id": 169,
+      "architecture": "react",
+      "seed": 3,
+      "version": "baseline",
+      "cell_key": "task169_react_seed3_baseline",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task169_react_seed3_baseline"
+    },
+    {
+      "pair_id": "task169_react_seed3",
+      "task_id": 169,
+      "architecture": "react",
+      "seed": 3,
+      "version": "improved",
+      "cell_key": "task169_react_seed3_improved",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task169_react_seed3_improved"
+    },
+    {
+      "pair_id": "task231_plan_execute_seed1",
+      "task_id": 231,
+      "architecture": "plan_execute",
+      "seed": 1,
+      "version": "improved",
+      "cell_key": "task231_plan_execute_seed1_improved",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task231_plan_execute_seed1_improved"
+    },
+    {
+      "pair_id": "task231_plan_execute_seed1",
+      "task_id": 231,
+      "architecture": "plan_execute",
+      "seed": 1,
+      "version": "baseline",
+      "cell_key": "task231_plan_execute_seed1_baseline",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task231_plan_execute_seed1_baseline"
+    },
+    {
+      "pair_id": "task126_plan_execute_seed2",
+      "task_id": 126,
+      "architecture": "plan_execute",
+      "seed": 2,
+      "version": "baseline",
+      "cell_key": "task126_plan_execute_seed2_baseline",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task126_plan_execute_seed2_baseline"
+    },
+    {
+      "pair_id": "task126_plan_execute_seed2",
+      "task_id": 126,
+      "architecture": "plan_execute",
+      "seed": 2,
+      "version": "improved",
+      "cell_key": "task126_plan_execute_seed2_improved",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task126_plan_execute_seed2_improved"
+    },
+    {
+      "pair_id": "task126_plan_execute_seed1",
+      "task_id": 126,
+      "architecture": "plan_execute",
+      "seed": 1,
+      "version": "improved",
+      "cell_key": "task126_plan_execute_seed1_improved",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task126_plan_execute_seed1_improved"
+    },
+    {
+      "pair_id": "task126_plan_execute_seed1",
+      "task_id": 126,
+      "architecture": "plan_execute",
+      "seed": 1,
+      "version": "baseline",
+      "cell_key": "task126_plan_execute_seed1_baseline",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task126_plan_execute_seed1_baseline"
+    },
+    {
+      "pair_id": "task21_react_seed3",
+      "task_id": 21,
+      "architecture": "react",
+      "seed": 3,
+      "version": "baseline",
+      "cell_key": "task21_react_seed3_baseline",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task21_react_seed3_baseline"
+    },
+    {
+      "pair_id": "task21_react_seed3",
+      "task_id": 21,
+      "architecture": "react",
+      "seed": 3,
+      "version": "improved",
+      "cell_key": "task21_react_seed3_improved",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task21_react_seed3_improved"
+    },
+    {
+      "pair_id": "task132_plan_execute_seed2",
+      "task_id": 132,
+      "architecture": "plan_execute",
+      "seed": 2,
+      "version": "improved",
+      "cell_key": "task132_plan_execute_seed2_improved",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task132_plan_execute_seed2_improved"
+    },
+    {
+      "pair_id": "task132_plan_execute_seed2",
+      "task_id": 132,
+      "architecture": "plan_execute",
+      "seed": 2,
+      "version": "baseline",
+      "cell_key": "task132_plan_execute_seed2_baseline",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task132_plan_execute_seed2_baseline"
+    },
+    {
+      "pair_id": "task231_plan_execute_seed3",
+      "task_id": 231,
+      "architecture": "plan_execute",
+      "seed": 3,
+      "version": "baseline",
+      "cell_key": "task231_plan_execute_seed3_baseline",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task231_plan_execute_seed3_baseline"
+    },
+    {
+      "pair_id": "task231_plan_execute_seed3",
+      "task_id": 231,
+      "architecture": "plan_execute",
+      "seed": 3,
+      "version": "improved",
+      "cell_key": "task231_plan_execute_seed3_improved",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task231_plan_execute_seed3_improved"
+    },
+    {
+      "pair_id": "task169_react_seed1",
+      "task_id": 169,
+      "architecture": "react",
+      "seed": 1,
+      "version": "improved",
+      "cell_key": "task169_react_seed1_improved",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task169_react_seed1_improved"
+    },
+    {
+      "pair_id": "task169_react_seed1",
+      "task_id": 169,
+      "architecture": "react",
+      "seed": 1,
+      "version": "baseline",
+      "cell_key": "task169_react_seed1_baseline",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task169_react_seed1_baseline"
+    },
+    {
+      "pair_id": "task169_plan_execute_seed3",
+      "task_id": 169,
+      "architecture": "plan_execute",
+      "seed": 3,
+      "version": "baseline",
+      "cell_key": "task169_plan_execute_seed3_baseline",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task169_plan_execute_seed3_baseline"
+    },
+    {
+      "pair_id": "task169_plan_execute_seed3",
+      "task_id": 169,
+      "architecture": "plan_execute",
+      "seed": 3,
+      "version": "improved",
+      "cell_key": "task169_plan_execute_seed3_improved",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task169_plan_execute_seed3_improved"
+    },
+    {
+      "pair_id": "task132_react_seed1",
+      "task_id": 132,
+      "architecture": "react",
+      "seed": 1,
+      "version": "improved",
+      "cell_key": "task132_react_seed1_improved",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task132_react_seed1_improved"
+    },
+    {
+      "pair_id": "task132_react_seed1",
+      "task_id": 132,
+      "architecture": "react",
+      "seed": 1,
+      "version": "baseline",
+      "cell_key": "task132_react_seed1_baseline",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task132_react_seed1_baseline"
+    },
+    {
+      "pair_id": "task231_plan_execute_seed2",
+      "task_id": 231,
+      "architecture": "plan_execute",
+      "seed": 2,
+      "version": "baseline",
+      "cell_key": "task231_plan_execute_seed2_baseline",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task231_plan_execute_seed2_baseline"
+    },
+    {
+      "pair_id": "task231_plan_execute_seed2",
+      "task_id": 231,
+      "architecture": "plan_execute",
+      "seed": 2,
+      "version": "improved",
+      "cell_key": "task231_plan_execute_seed2_improved",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task231_plan_execute_seed2_improved"
+    },
+    {
+      "pair_id": "task132_react_seed3",
+      "task_id": 132,
+      "architecture": "react",
+      "seed": 3,
+      "version": "improved",
+      "cell_key": "task132_react_seed3_improved",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task132_react_seed3_improved"
+    },
+    {
+      "pair_id": "task132_react_seed3",
+      "task_id": 132,
+      "architecture": "react",
+      "seed": 3,
+      "version": "baseline",
+      "cell_key": "task132_react_seed3_baseline",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task132_react_seed3_baseline"
+    },
+    {
+      "pair_id": "task21_react_seed2",
+      "task_id": 21,
+      "architecture": "react",
+      "seed": 2,
+      "version": "baseline",
+      "cell_key": "task21_react_seed2_baseline",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task21_react_seed2_baseline"
+    },
+    {
+      "pair_id": "task21_react_seed2",
+      "task_id": 21,
+      "architecture": "react",
+      "seed": 2,
+      "version": "improved",
+      "cell_key": "task21_react_seed2_improved",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task21_react_seed2_improved"
+    },
+    {
+      "pair_id": "task21_plan_execute_seed2",
+      "task_id": 21,
+      "architecture": "plan_execute",
+      "seed": 2,
+      "version": "improved",
+      "cell_key": "task21_plan_execute_seed2_improved",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task21_plan_execute_seed2_improved"
+    },
+    {
+      "pair_id": "task21_plan_execute_seed2",
+      "task_id": 21,
+      "architecture": "plan_execute",
+      "seed": 2,
+      "version": "baseline",
+      "cell_key": "task21_plan_execute_seed2_baseline",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task21_plan_execute_seed2_baseline"
+    },
+    {
+      "pair_id": "task126_react_seed3",
+      "task_id": 126,
+      "architecture": "react",
+      "seed": 3,
+      "version": "baseline",
+      "cell_key": "task126_react_seed3_baseline",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task126_react_seed3_baseline"
+    },
+    {
+      "pair_id": "task126_react_seed3",
+      "task_id": 126,
+      "architecture": "react",
+      "seed": 3,
+      "version": "improved",
+      "cell_key": "task126_react_seed3_improved",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task126_react_seed3_improved"
+    },
+    {
+      "pair_id": "task21_react_seed1",
+      "task_id": 21,
+      "architecture": "react",
+      "seed": 1,
+      "version": "improved",
+      "cell_key": "task21_react_seed1_improved",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task21_react_seed1_improved"
+    },
+    {
+      "pair_id": "task21_react_seed1",
+      "task_id": 21,
+      "architecture": "react",
+      "seed": 1,
+      "version": "baseline",
+      "cell_key": "task21_react_seed1_baseline",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task21_react_seed1_baseline"
+    },
+    {
+      "pair_id": "task169_plan_execute_seed1",
+      "task_id": 169,
+      "architecture": "plan_execute",
+      "seed": 1,
+      "version": "baseline",
+      "cell_key": "task169_plan_execute_seed1_baseline",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task169_plan_execute_seed1_baseline"
+    },
+    {
+      "pair_id": "task169_plan_execute_seed1",
+      "task_id": 169,
+      "architecture": "plan_execute",
+      "seed": 1,
+      "version": "improved",
+      "cell_key": "task169_plan_execute_seed1_improved",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task169_plan_execute_seed1_improved"
+    },
+    {
+      "pair_id": "task231_react_seed2",
+      "task_id": 231,
+      "architecture": "react",
+      "seed": 2,
+      "version": "improved",
+      "cell_key": "task231_react_seed2_improved",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task231_react_seed2_improved"
+    },
+    {
+      "pair_id": "task231_react_seed2",
+      "task_id": 231,
+      "architecture": "react",
+      "seed": 2,
+      "version": "baseline",
+      "cell_key": "task231_react_seed2_baseline",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task231_react_seed2_baseline"
+    },
+    {
+      "pair_id": "task169_plan_execute_seed2",
+      "task_id": 169,
+      "architecture": "plan_execute",
+      "seed": 2,
+      "version": "baseline",
+      "cell_key": "task169_plan_execute_seed2_baseline",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task169_plan_execute_seed2_baseline"
+    },
+    {
+      "pair_id": "task169_plan_execute_seed2",
+      "task_id": 169,
+      "architecture": "plan_execute",
+      "seed": 2,
+      "version": "improved",
+      "cell_key": "task169_plan_execute_seed2_improved",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task169_plan_execute_seed2_improved"
+    },
+    {
+      "pair_id": "task231_react_seed3",
+      "task_id": 231,
+      "architecture": "react",
+      "seed": 3,
+      "version": "improved",
+      "cell_key": "task231_react_seed3_improved",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task231_react_seed3_improved"
+    },
+    {
+      "pair_id": "task231_react_seed3",
+      "task_id": 231,
+      "architecture": "react",
+      "seed": 3,
+      "version": "baseline",
+      "cell_key": "task231_react_seed3_baseline",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task231_react_seed3_baseline"
+    },
+    {
+      "pair_id": "task126_react_seed1",
+      "task_id": 126,
+      "architecture": "react",
+      "seed": 1,
+      "version": "baseline",
+      "cell_key": "task126_react_seed1_baseline",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task126_react_seed1_baseline"
+    },
+    {
+      "pair_id": "task126_react_seed1",
+      "task_id": 126,
+      "architecture": "react",
+      "seed": 1,
+      "version": "improved",
+      "cell_key": "task126_react_seed1_improved",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task126_react_seed1_improved"
+    },
+    {
+      "pair_id": "task132_plan_execute_seed3",
+      "task_id": 132,
+      "architecture": "plan_execute",
+      "seed": 3,
+      "version": "improved",
+      "cell_key": "task132_plan_execute_seed3_improved",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task132_plan_execute_seed3_improved"
+    },
+    {
+      "pair_id": "task132_plan_execute_seed3",
+      "task_id": 132,
+      "architecture": "plan_execute",
+      "seed": 3,
+      "version": "baseline",
+      "cell_key": "task132_plan_execute_seed3_baseline",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task132_plan_execute_seed3_baseline"
+    },
+    {
+      "pair_id": "task281_react_seed2",
+      "task_id": 281,
+      "architecture": "react",
+      "seed": 2,
+      "version": "baseline",
+      "cell_key": "task281_react_seed2_baseline",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task281_react_seed2_baseline"
+    },
+    {
+      "pair_id": "task281_react_seed2",
+      "task_id": 281,
+      "architecture": "react",
+      "seed": 2,
+      "version": "improved",
+      "cell_key": "task281_react_seed2_improved",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task281_react_seed2_improved"
+    },
+    {
+      "pair_id": "task21_plan_execute_seed3",
+      "task_id": 21,
+      "architecture": "plan_execute",
+      "seed": 3,
+      "version": "improved",
+      "cell_key": "task21_plan_execute_seed3_improved",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task21_plan_execute_seed3_improved"
+    },
+    {
+      "pair_id": "task21_plan_execute_seed3",
+      "task_id": 21,
+      "architecture": "plan_execute",
+      "seed": 3,
+      "version": "baseline",
+      "cell_key": "task21_plan_execute_seed3_baseline",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task21_plan_execute_seed3_baseline"
+    },
+    {
+      "pair_id": "task126_plan_execute_seed3",
+      "task_id": 126,
+      "architecture": "plan_execute",
+      "seed": 3,
+      "version": "baseline",
+      "cell_key": "task126_plan_execute_seed3_baseline",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task126_plan_execute_seed3_baseline"
+    },
+    {
+      "pair_id": "task126_plan_execute_seed3",
+      "task_id": 126,
+      "architecture": "plan_execute",
+      "seed": 3,
+      "version": "improved",
+      "cell_key": "task126_plan_execute_seed3_improved",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task126_plan_execute_seed3_improved"
+    },
+    {
+      "pair_id": "task281_plan_execute_seed1",
+      "task_id": 281,
+      "architecture": "plan_execute",
+      "seed": 1,
+      "version": "improved",
+      "cell_key": "task281_plan_execute_seed1_improved",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task281_plan_execute_seed1_improved"
+    },
+    {
+      "pair_id": "task281_plan_execute_seed1",
+      "task_id": 281,
+      "architecture": "plan_execute",
+      "seed": 1,
+      "version": "baseline",
+      "cell_key": "task281_plan_execute_seed1_baseline",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task281_plan_execute_seed1_baseline"
+    },
+    {
+      "pair_id": "task126_react_seed2",
+      "task_id": 126,
+      "architecture": "react",
+      "seed": 2,
+      "version": "baseline",
+      "cell_key": "task126_react_seed2_baseline",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task126_react_seed2_baseline"
+    },
+    {
+      "pair_id": "task126_react_seed2",
+      "task_id": 126,
+      "architecture": "react",
+      "seed": 2,
+      "version": "improved",
+      "cell_key": "task126_react_seed2_improved",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task126_react_seed2_improved"
+    },
+    {
+      "pair_id": "task281_plan_execute_seed2",
+      "task_id": 281,
+      "architecture": "plan_execute",
+      "seed": 2,
+      "version": "improved",
+      "cell_key": "task281_plan_execute_seed2_improved",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task281_plan_execute_seed2_improved"
+    },
+    {
+      "pair_id": "task281_plan_execute_seed2",
+      "task_id": 281,
+      "architecture": "plan_execute",
+      "seed": 2,
+      "version": "baseline",
+      "cell_key": "task281_plan_execute_seed2_baseline",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task281_plan_execute_seed2_baseline"
+    },
+    {
+      "pair_id": "task21_plan_execute_seed1",
+      "task_id": 21,
+      "architecture": "plan_execute",
+      "seed": 1,
+      "version": "baseline",
+      "cell_key": "task21_plan_execute_seed1_baseline",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task21_plan_execute_seed1_baseline"
+    },
+    {
+      "pair_id": "task21_plan_execute_seed1",
+      "task_id": 21,
+      "architecture": "plan_execute",
+      "seed": 1,
+      "version": "improved",
+      "cell_key": "task21_plan_execute_seed1_improved",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task21_plan_execute_seed1_improved"
+    },
+    {
+      "pair_id": "task169_react_seed2",
+      "task_id": 169,
+      "architecture": "react",
+      "seed": 2,
+      "version": "improved",
+      "cell_key": "task169_react_seed2_improved",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task169_react_seed2_improved"
+    },
+    {
+      "pair_id": "task169_react_seed2",
+      "task_id": 169,
+      "architecture": "react",
+      "seed": 2,
+      "version": "baseline",
+      "cell_key": "task169_react_seed2_baseline",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task169_react_seed2_baseline"
+    },
+    {
+      "pair_id": "task281_react_seed1",
+      "task_id": 281,
+      "architecture": "react",
+      "seed": 1,
+      "version": "baseline",
+      "cell_key": "task281_react_seed1_baseline",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task281_react_seed1_baseline"
+    },
+    {
+      "pair_id": "task281_react_seed1",
+      "task_id": 281,
+      "architecture": "react",
+      "seed": 1,
+      "version": "improved",
+      "cell_key": "task281_react_seed1_improved",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task281_react_seed1_improved"
+    },
+    {
+      "pair_id": "task132_plan_execute_seed1",
+      "task_id": 132,
+      "architecture": "plan_execute",
+      "seed": 1,
+      "version": "improved",
+      "cell_key": "task132_plan_execute_seed1_improved",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task132_plan_execute_seed1_improved"
+    },
+    {
+      "pair_id": "task132_plan_execute_seed1",
+      "task_id": 132,
+      "architecture": "plan_execute",
+      "seed": 1,
+      "version": "baseline",
+      "cell_key": "task132_plan_execute_seed1_baseline",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task132_plan_execute_seed1_baseline"
+    },
+    {
+      "pair_id": "task231_react_seed1",
+      "task_id": 231,
+      "architecture": "react",
+      "seed": 1,
+      "version": "baseline",
+      "cell_key": "task231_react_seed1_baseline",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task231_react_seed1_baseline"
+    },
+    {
+      "pair_id": "task231_react_seed1",
+      "task_id": 231,
+      "architecture": "react",
+      "seed": 1,
+      "version": "improved",
+      "cell_key": "task231_react_seed1_improved",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task231_react_seed1_improved"
+    },
+    {
+      "pair_id": "task281_plan_execute_seed3",
+      "task_id": 281,
+      "architecture": "plan_execute",
+      "seed": 3,
+      "version": "improved",
+      "cell_key": "task281_plan_execute_seed3_improved",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task281_plan_execute_seed3_improved"
+    },
+    {
+      "pair_id": "task281_plan_execute_seed3",
+      "task_id": 281,
+      "architecture": "plan_execute",
+      "seed": 3,
+      "version": "baseline",
+      "cell_key": "task281_plan_execute_seed3_baseline",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task281_plan_execute_seed3_baseline"
+    },
+    {
+      "pair_id": "task281_react_seed3",
+      "task_id": 281,
+      "architecture": "react",
+      "seed": 3,
+      "version": "baseline",
+      "cell_key": "task281_react_seed3_baseline",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task281_react_seed3_baseline"
+    },
+    {
+      "pair_id": "task281_react_seed3",
+      "task_id": 281,
+      "architecture": "react",
+      "seed": 3,
+      "version": "improved",
+      "cell_key": "task281_react_seed3_improved",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task281_react_seed3_improved"
+    },
+    {
+      "pair_id": "task132_react_seed2",
+      "task_id": 132,
+      "architecture": "react",
+      "seed": 2,
+      "version": "improved",
+      "cell_key": "task132_react_seed2_improved",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task132_react_seed2_improved"
+    },
+    {
+      "pair_id": "task132_react_seed2",
+      "task_id": 132,
+      "architecture": "react",
+      "seed": 2,
+      "version": "baseline",
+      "cell_key": "task132_react_seed2_baseline",
+      "output_dir": "experiments/agent_stress_v1/version_comparison_20261112/cells/task132_react_seed2_baseline"
+    }
+  ],
+  "planned_trials": 72,
+  "versions": {
+    "baseline": {
+      "SUBMISSION_CONTRACT": "0",
+      "RETRIEVAL_REPAIR": "0"
+    },
+    "improved": {
+      "SUBMISSION_CONTRACT": "1",
+      "RETRIEVAL_REPAIR": "1"
+    }
+  },
+  "storage_state_sha256": {
+    "shopping": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+    "gitlab": "de5c518f8baab6a02dfba7296cbbf7935278c1c6fcc4b88d385b265741e9e3cd"
+  },
+  "storage_state_dir": "experiments/auth",
+  "code": {
+    "run_commit": "c7041a3d97b5c8ceedce147de01f93ea68956af8",
+    "freeze_commit": "d266de099c66efd74a69a3a5049451144e15493f",
+    "fingerprint_sha256": "e18fc8acb3ddcef7a67e48036fe2dbbade6e27156e7540200bf1c08aafeada6c"
+  },
+  "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "faults_enabled": false,
+  "conditions": [
+    "control"
+  ],
+  "plan_sha256": "30055aaf0de1500847117946b5b058fb26060346a3c4603ee441146625174df7"
+}

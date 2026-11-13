@@ -1,0 +1,56 @@
+{
+  "task_id": 231,
+  "intent_template_id": 213,
+  "sites": [
+    "shopping"
+  ],
+  "task_revision": 2,
+  "status": "failure",
+  "score": 0.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "failure",
+      "score": 0.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"The order number of your most recent cancelled order is 000000170 (dated 5/17/23, total $365.42, Status: Canceled).\"\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "task_type": "retrieve",
+        "retrieved_data": [
+          "the order number of your most recent cancelled order is 000000170 (dated 5/17/23, total $365.42, status: canceled)."
+        ],
+        "status": "success"
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          "^#?\\s*0*170$"
+        ]
+      },
+      "assertions": [
+        {
+          "assertion_name": "retrieved_data_array_values_mismatch",
+          "status": "failure",
+          "assertion_msgs": [
+            "Array value mismatch (unordered). Matched (0/1), Missing: 1, Extra: 1",
+            "Expected: [^#?\\s*0*170$], Got: [the order number of your most recent cancelled order is 000000170 (dated 5/17/23, total $365.42, status: canceled).]"
+          ],
+          "error_msg": null
+        }
+      ],
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": false,
+  "_evaluation_binding": {
+    "agent_response_sha256": "75115d344c785a712390296058a132122c3255fecf30b18c081e4489e875dad4",
+    "network_har_sha256": "188acd0713bca3234f863f2f87f0c44ffb7d1c5764322920f2d779672879442d",
+    "config_sha256": "0b7e7e9326d16a5d070adea30c4e4247cd65137832a8544352f581a2b71b64c9",
+    "evaluator_adapter_version": "stage-c-eval-adapter/1"
+  }
+}

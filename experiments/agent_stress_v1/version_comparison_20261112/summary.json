@@ -1,0 +1,2272 @@
+{
+  "trials": 72,
+  "by_version": {
+    "baseline": {
+      "trials": 36,
+      "successes": 9,
+      "success_rate": 0.25,
+      "steps_mean": 6.333333333333333,
+      "prompt_tokens": 3929222
+    },
+    "improved": {
+      "trials": 36,
+      "successes": 25,
+      "success_rate": 0.6944444444444444,
+      "steps_mean": 7.0,
+      "prompt_tokens": 4882373
+    }
+  },
+  "by_task": {
+    "21": {
+      "baseline": {
+        "trials": 6,
+        "successes": 0,
+        "success_rate": 0.0
+      },
+      "improved": {
+        "trials": 6,
+        "successes": 1,
+        "success_rate": 0.16666666666666666
+      }
+    },
+    "126": {
+      "baseline": {
+        "trials": 6,
+        "successes": 3,
+        "success_rate": 0.5
+      },
+      "improved": {
+        "trials": 6,
+        "successes": 5,
+        "success_rate": 0.8333333333333334
+      }
+    },
+    "132": {
+      "baseline": {
+        "trials": 6,
+        "successes": 2,
+        "success_rate": 0.3333333333333333
+      },
+      "improved": {
+        "trials": 6,
+        "successes": 6,
+        "success_rate": 1.0
+      }
+    },
+    "169": {
+      "baseline": {
+        "trials": 6,
+        "successes": 0,
+        "success_rate": 0.0
+      },
+      "improved": {
+        "trials": 6,
+        "successes": 4,
+        "success_rate": 0.6666666666666666
+      }
+    },
+    "231": {
+      "baseline": {
+        "trials": 6,
+        "successes": 0,
+        "success_rate": 0.0
+      },
+      "improved": {
+        "trials": 6,
+        "successes": 6,
+        "success_rate": 1.0
+      }
+    },
+    "281": {
+      "baseline": {
+        "trials": 6,
+        "successes": 4,
+        "success_rate": 0.6666666666666666
+      },
+      "improved": {
+        "trials": 6,
+        "successes": 3,
+        "success_rate": 0.5
+      }
+    }
+  },
+  "paired_effects": [
+    {
+      "pair_id": "task126_plan_execute_seed1",
+      "task_id": 126,
+      "architecture": "plan_execute",
+      "seed": 1,
+      "effect": 0
+    },
+    {
+      "pair_id": "task126_plan_execute_seed2",
+      "task_id": 126,
+      "architecture": "plan_execute",
+      "seed": 2,
+      "effect": 1
+    },
+    {
+      "pair_id": "task126_plan_execute_seed3",
+      "task_id": 126,
+      "architecture": "plan_execute",
+      "seed": 3,
+      "effect": 0
+    },
+    {
+      "pair_id": "task126_react_seed1",
+      "task_id": 126,
+      "architecture": "react",
+      "seed": 1,
+      "effect": 0
+    },
+    {
+      "pair_id": "task126_react_seed2",
+      "task_id": 126,
+      "architecture": "react",
+      "seed": 2,
+      "effect": 0
+    },
+    {
+      "pair_id": "task126_react_seed3",
+      "task_id": 126,
+      "architecture": "react",
+      "seed": 3,
+      "effect": 1
+    },
+    {
+      "pair_id": "task132_plan_execute_seed1",
+      "task_id": 132,
+      "architecture": "plan_execute",
+      "seed": 1,
+      "effect": 1
+    },
+    {
+      "pair_id": "task132_plan_execute_seed2",
+      "task_id": 132,
+      "architecture": "plan_execute",
+      "seed": 2,
+      "effect": 1
+    },
+    {
+      "pair_id": "task132_plan_execute_seed3",
+      "task_id": 132,
+      "architecture": "plan_execute",
+      "seed": 3,
+      "effect": 1
+    },
+    {
+      "pair_id": "task132_react_seed1",
+      "task_id": 132,
+      "architecture": "react",
+      "seed": 1,
+      "effect": 1
+    },
+    {
+      "pair_id": "task132_react_seed2",
+      "task_id": 132,
+      "architecture": "react",
+      "seed": 2,
+      "effect": 0
+    },
+    {
+      "pair_id": "task132_react_seed3",
+      "task_id": 132,
+      "architecture": "react",
+      "seed": 3,
+      "effect": 0
+    },
+    {
+      "pair_id": "task169_plan_execute_seed1",
+      "task_id": 169,
+      "architecture": "plan_execute",
+      "seed": 1,
+      "effect": 1
+    },
+    {
+      "pair_id": "task169_plan_execute_seed2",
+      "task_id": 169,
+      "architecture": "plan_execute",
+      "seed": 2,
+      "effect": 0
+    },
+    {
+      "pair_id": "task169_plan_execute_seed3",
+      "task_id": 169,
+      "architecture": "plan_execute",
+      "seed": 3,
+      "effect": 1
+    },
+    {
+      "pair_id": "task169_react_seed1",
+      "task_id": 169,
+      "architecture": "react",
+      "seed": 1,
+      "effect": 0
+    },
+    {
+      "pair_id": "task169_react_seed2",
+      "task_id": 169,
+      "architecture": "react",
+      "seed": 2,
+      "effect": 1
+    },
+    {
+      "pair_id": "task169_react_seed3",
+      "task_id": 169,
+      "architecture": "react",
+      "seed": 3,
+      "effect": 1
+    },
+    {
+      "pair_id": "task21_plan_execute_seed1",
+      "task_id": 21,
+      "architecture": "plan_execute",
+      "seed": 1,
+      "effect": 0
+    },
+    {
+      "pair_id": "task21_plan_execute_seed2",
+      "task_id": 21,
+      "architecture": "plan_execute",
+      "seed": 2,
+      "effect": 1
+    },
+    {
+      "pair_id": "task21_plan_execute_seed3",
+      "task_id": 21,
+      "architecture": "plan_execute",
+      "seed": 3,
+      "effect": 0
+    },
+    {
+      "pair_id": "task21_react_seed1",
+      "task_id": 21,
+      "architecture": "react",
+      "seed": 1,
+      "effect": 0
+    },
+    {
+      "pair_id": "task21_react_seed2",
+      "task_id": 21,
+      "architecture": "react",
+      "seed": 2,
+      "effect": 0
+    },
+    {
+      "pair_id": "task21_react_seed3",
+      "task_id": 21,
+      "architecture": "react",
+      "seed": 3,
+      "effect": 0
+    },
+    {
+      "pair_id": "task231_plan_execute_seed1",
+      "task_id": 231,
+      "architecture": "plan_execute",
+      "seed": 1,
+      "effect": 1
+    },
+    {
+      "pair_id": "task231_plan_execute_seed2",
+      "task_id": 231,
+      "architecture": "plan_execute",
+      "seed": 2,
+      "effect": 1
+    },
+    {
+      "pair_id": "task231_plan_execute_seed3",
+      "task_id": 231,
+      "architecture": "plan_execute",
+      "seed": 3,
+      "effect": 1
+    },
+    {
+      "pair_id": "task231_react_seed1",
+      "task_id": 231,
+      "architecture": "react",
+      "seed": 1,
+      "effect": 1
+    },
+    {
+      "pair_id": "task231_react_seed2",
+      "task_id": 231,
+      "architecture": "react",
+      "seed": 2,
+      "effect": 1
+    },
+    {
+      "pair_id": "task231_react_seed3",
+      "task_id": 231,
+      "architecture": "react",
+      "seed": 3,
+      "effect": 1
+    },
+    {
+      "pair_id": "task281_plan_execute_seed1",
+      "task_id": 281,
+      "architecture": "plan_execute",
+      "seed": 1,
+      "effect": -1
+    },
+    {
+      "pair_id": "task281_plan_execute_seed2",
+      "task_id": 281,
+      "architecture": "plan_execute",
+      "seed": 2,
+      "effect": 0
+    },
+    {
+      "pair_id": "task281_plan_execute_seed3",
+      "task_id": 281,
+      "architecture": "plan_execute",
+      "seed": 3,
+      "effect": 0
+    },
+    {
+      "pair_id": "task281_react_seed1",
+      "task_id": 281,
+      "architecture": "react",
+      "seed": 1,
+      "effect": 0
+    },
+    {
+      "pair_id": "task281_react_seed2",
+      "task_id": 281,
+      "architecture": "react",
+      "seed": 2,
+      "effect": -1
+    },
+    {
+      "pair_id": "task281_react_seed3",
+      "task_id": 281,
+      "architecture": "react",
+      "seed": 3,
+      "effect": 1
+    }
+  ],
+  "pairs_improved": 18,
+  "pairs_baseline": 2,
+  "pairs_tied": 16,
+  "mean_paired_effect": 0.4444444444444444,
+  "schema": "agent_stress_version_comparison_summary/1",
+  "recorded_at": "2026-11-12T14:32:34.809910+00:00",
+  "experiment_id": "agent-stress-v1-version-comparison",
+  "plan_sha256": "30055aaf0de1500847117946b5b058fb26060346a3c4603ee441146625174df7",
+  "code": {
+    "run_commit": "c7041a3d97b5c8ceedce147de01f93ea68956af8",
+    "freeze_commit": "d266de099c66efd74a69a3a5049451144e15493f",
+    "fingerprint_sha256": "e18fc8acb3ddcef7a67e48036fe2dbbade6e27156e7540200bf1c08aafeada6c"
+  },
+  "model_profile": "qwen38_flash",
+  "failures": [],
+  "complete": true,
+  "results": [
+    {
+      "cell_key": "task169_react_seed3_baseline",
+      "pair_id": "task169_react_seed3",
+      "task_id": 169,
+      "architecture": "react",
+      "seed": 3,
+      "version": "baseline",
+      "steps": 4,
+      "completed": true,
+      "official_success": false,
+      "official_status": "failure",
+      "official_score": 0.0,
+      "answer": [
+        "The personal project(s) with the most stars (6 stars each, tied) are:\n- empathy-prompts — Project ID: 183\n- millennials-to-snake-people — Project ID: 187"
+      ],
+      "prompt_tokens": 43463,
+      "time_sec": 38.011,
+      "submission_contract": false,
+      "retrieval_repair": false,
+      "storage_state_sha256": "de5c518f8baab6a02dfba7296cbbf7935278c1c6fcc4b88d385b265741e9e3cd",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T210806-353376/qwen38_flash__react__control__task169__seed3__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task169_react_seed3_baseline/outputs/169/control_seed_3/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task169_react_seed3_baseline/outputs/169/control_seed_3/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task169_react_seed3_baseline/outputs/169/control_seed_3/official_eval.json"
+    },
+    {
+      "cell_key": "task169_react_seed3_improved",
+      "pair_id": "task169_react_seed3",
+      "task_id": 169,
+      "architecture": "react",
+      "seed": 3,
+      "version": "improved",
+      "steps": 5,
+      "completed": true,
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "answer": [
+        187,
+        183
+      ],
+      "prompt_tokens": 62921,
+      "time_sec": 38.906,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "de5c518f8baab6a02dfba7296cbbf7935278c1c6fcc4b88d385b265741e9e3cd",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T210847-65d629/qwen38_flash__react__control__task169__seed3__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task169_react_seed3_improved/outputs/169/control_seed_3/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task169_react_seed3_improved/outputs/169/control_seed_3/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task169_react_seed3_improved/outputs/169/control_seed_3/official_eval.json"
+    },
+    {
+      "cell_key": "task231_plan_execute_seed1_improved",
+      "pair_id": "task231_plan_execute_seed1",
+      "task_id": 231,
+      "architecture": "plan_execute",
+      "seed": 1,
+      "version": "improved",
+      "steps": 3,
+      "completed": true,
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "answer": [
+        "000000170"
+      ],
+      "prompt_tokens": 25053,
+      "time_sec": 20.86,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T213618-bd4688/qwen38_flash__plan_execute__control__task231__seed1__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task231_plan_execute_seed1_improved/outputs/231/control_seed_1/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task231_plan_execute_seed1_improved/outputs/231/control_seed_1/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task231_plan_execute_seed1_improved/outputs/231/control_seed_1/official_eval.json"
+    },
+    {
+      "cell_key": "task231_plan_execute_seed1_baseline",
+      "pair_id": "task231_plan_execute_seed1",
+      "task_id": 231,
+      "architecture": "plan_execute",
+      "seed": 1,
+      "version": "baseline",
+      "steps": 5,
+      "completed": true,
+      "official_success": false,
+      "official_status": "failure",
+      "official_score": 0.0,
+      "answer": [
+        "Your most recent cancelled order is **Order # 000000170**, placed on 5/17/23 with an order total of $365.42.\n\nVerification details:\n- The My Orders history is sorted by date (most recent first).\n- On Page 1, the topmost order with status \"Canceled\" is 000000170 (5/17/23). Other cancelled orders on that page (000000156 on 2/24/23 and 000000158 on 2/11/23) are older.\n- On Page 2, all orders (000000148 through 000000176, spanning 10/22/22 to 1/29/23) have status \"Complete\" — no cancelled orders there, and they are all older than 5/17/23 anyway.\n\nTherefore, the most recent cancelled order number is **000000170**."
+      ],
+      "prompt_tokens": 53719,
+      "time_sec": 38.599,
+      "submission_contract": false,
+      "retrieval_repair": false,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T213643-f27e28/qwen38_flash__plan_execute__control__task231__seed1__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task231_plan_execute_seed1_baseline/outputs/231/control_seed_1/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task231_plan_execute_seed1_baseline/outputs/231/control_seed_1/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task231_plan_execute_seed1_baseline/outputs/231/control_seed_1/official_eval.json"
+    },
+    {
+      "cell_key": "task126_plan_execute_seed2_baseline",
+      "pair_id": "task126_plan_execute_seed2",
+      "task_id": 126,
+      "architecture": "plan_execute",
+      "seed": 2,
+      "version": "baseline",
+      "steps": 13,
+      "completed": true,
+      "official_success": false,
+      "official_status": "failure",
+      "official_score": 0.0,
+      "answer": [
+        "The category filter (Home & Kitchen) has been cleared. The 'Now Shopping by' section no longer shows 'Category: Home & Kitchen', and the product list now includes items from other categories such as furniture, wall art, and storage products."
+      ],
+      "prompt_tokens": 318641,
+      "time_sec": 97.893,
+      "submission_contract": false,
+      "retrieval_repair": false,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T213725-a61fcd/qwen38_flash__plan_execute__control__task126__seed2__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task126_plan_execute_seed2_baseline/outputs/126/control_seed_2/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task126_plan_execute_seed2_baseline/outputs/126/control_seed_2/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task126_plan_execute_seed2_baseline/outputs/126/control_seed_2/official_eval.json"
+    },
+    {
+      "cell_key": "task126_plan_execute_seed2_improved",
+      "pair_id": "task126_plan_execute_seed2",
+      "task_id": 126,
+      "architecture": "plan_execute",
+      "seed": 2,
+      "version": "improved",
+      "steps": 4,
+      "completed": true,
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "answer": [
+        {
+          "min": 2.56,
+          "max": 649.99
+        }
+      ],
+      "prompt_tokens": 49488,
+      "time_sec": 23.772,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T213906-f12a0c/qwen38_flash__plan_execute__control__task126__seed2__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task126_plan_execute_seed2_improved/outputs/126/control_seed_2/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task126_plan_execute_seed2_improved/outputs/126/control_seed_2/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task126_plan_execute_seed2_improved/outputs/126/control_seed_2/official_eval.json"
+    },
+    {
+      "cell_key": "task126_plan_execute_seed1_improved",
+      "pair_id": "task126_plan_execute_seed1",
+      "task_id": 126,
+      "architecture": "plan_execute",
+      "seed": 1,
+      "version": "improved",
+      "steps": 9,
+      "completed": true,
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "answer": [
+        {
+          "min": 2.56,
+          "max": 649.99
+        }
+      ],
+      "prompt_tokens": 170718,
+      "time_sec": 65.374,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T213933-8193bf/qwen38_flash__plan_execute__control__task126__seed1__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task126_plan_execute_seed1_improved/outputs/126/control_seed_1/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task126_plan_execute_seed1_improved/outputs/126/control_seed_1/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task126_plan_execute_seed1_improved/outputs/126/control_seed_1/official_eval.json"
+    },
+    {
+      "cell_key": "task126_plan_execute_seed1_baseline",
+      "pair_id": "task126_plan_execute_seed1",
+      "task_id": 126,
+      "architecture": "plan_execute",
+      "seed": 1,
+      "version": "baseline",
+      "steps": 10,
+      "completed": true,
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "answer": [
+        {
+          "min": 2.56,
+          "max": 649.99
+        }
+      ],
+      "prompt_tokens": 199235,
+      "time_sec": 68.901,
+      "submission_contract": false,
+      "retrieval_repair": false,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T214042-53188c/qwen38_flash__plan_execute__control__task126__seed1__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task126_plan_execute_seed1_baseline/outputs/126/control_seed_1/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task126_plan_execute_seed1_baseline/outputs/126/control_seed_1/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task126_plan_execute_seed1_baseline/outputs/126/control_seed_1/official_eval.json"
+    },
+    {
+      "cell_key": "task21_react_seed3_baseline",
+      "pair_id": "task21_react_seed3",
+      "task_id": 21,
+      "architecture": "react",
+      "seed": 3,
+      "version": "baseline",
+      "steps": 4,
+      "completed": true,
+      "official_success": false,
+      "official_status": "failure",
+      "official_score": 0.0,
+      "answer": [
+        "The reviewer who mentions the ear cups being small is **Dibbins**. Their review is titled \"Cup for ears very small\" and states: \"The ear cups MAY be ok for children... but for adult sized ears they are way too small - as such, they do very little to cancel any noise. Also, because they are so small, they tend to not be very comfortable to use for extended periods.\"\n\n(Note: Catso's review \"Too small, did not hold charge\" mentions the headphones are \"for people with very small ears,\" and Anglebert Dinkherhump notes \"These are NOT over the ear cups,\" but Dibbins is the one who specifically describes the ear cups themselves as being too small.)"
+      ],
+      "prompt_tokens": 27559,
+      "time_sec": 23.836,
+      "submission_contract": false,
+      "retrieval_repair": false,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T214154-80a2e3/qwen38_flash__react__control__task21__seed3__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task21_react_seed3_baseline/outputs/21/control_seed_3/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task21_react_seed3_baseline/outputs/21/control_seed_3/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task21_react_seed3_baseline/outputs/21/control_seed_3/official_eval.json"
+    },
+    {
+      "cell_key": "task21_react_seed3_improved",
+      "pair_id": "task21_react_seed3",
+      "task_id": 21,
+      "architecture": "react",
+      "seed": 3,
+      "version": "improved",
+      "steps": 5,
+      "completed": true,
+      "official_success": false,
+      "official_status": "failure",
+      "official_score": 0.0,
+      "answer": [
+        "Catso",
+        "Dibbins",
+        "Michelle Davis"
+      ],
+      "prompt_tokens": 36424,
+      "time_sec": 23.017,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T214221-f1adf4/qwen38_flash__react__control__task21__seed3__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task21_react_seed3_improved/outputs/21/control_seed_3/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task21_react_seed3_improved/outputs/21/control_seed_3/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task21_react_seed3_improved/outputs/21/control_seed_3/official_eval.json"
+    },
+    {
+      "cell_key": "task132_plan_execute_seed2_improved",
+      "pair_id": "task132_plan_execute_seed2",
+      "task_id": 132,
+      "architecture": "plan_execute",
+      "seed": 2,
+      "version": "improved",
+      "steps": 20,
+      "completed": true,
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "answer": [
+        1
+      ],
+      "prompt_tokens": 726667,
+      "time_sec": 220.667,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "de5c518f8baab6a02dfba7296cbbf7935278c1c6fcc4b88d385b265741e9e3cd",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T214247-3ed55f/qwen38_flash__plan_execute__control__task132__seed2__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task132_plan_execute_seed2_improved/outputs/132/control_seed_2/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task132_plan_execute_seed2_improved/outputs/132/control_seed_2/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task132_plan_execute_seed2_improved/outputs/132/control_seed_2/official_eval.json"
+    },
+    {
+      "cell_key": "task132_plan_execute_seed2_baseline",
+      "pair_id": "task132_plan_execute_seed2",
+      "task_id": 132,
+      "architecture": "plan_execute",
+      "seed": 2,
+      "version": "baseline",
+      "steps": 5,
+      "completed": true,
+      "official_success": false,
+      "official_status": "failure",
+      "official_score": 0.0,
+      "answer": [
+        {
+          "answer": "1"
+        }
+      ],
+      "prompt_tokens": 80311,
+      "time_sec": 58.907,
+      "submission_contract": false,
+      "retrieval_repair": false,
+      "storage_state_sha256": "de5c518f8baab6a02dfba7296cbbf7935278c1c6fcc4b88d385b265741e9e3cd",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T214632-c5f334/qwen38_flash__plan_execute__control__task132__seed2__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task132_plan_execute_seed2_baseline/outputs/132/control_seed_2/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task132_plan_execute_seed2_baseline/outputs/132/control_seed_2/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task132_plan_execute_seed2_baseline/outputs/132/control_seed_2/official_eval.json"
+    },
+    {
+      "cell_key": "task231_plan_execute_seed3_baseline",
+      "pair_id": "task231_plan_execute_seed3",
+      "task_id": 231,
+      "architecture": "plan_execute",
+      "seed": 3,
+      "version": "baseline",
+      "steps": 3,
+      "completed": true,
+      "official_success": false,
+      "official_status": "failure",
+      "official_score": 0.0,
+      "answer": [
+        "The most recent cancelled order is Order # 000000170, placed on 5/17/23 with a total of $365.42 and status \"Canceled\". Since the order list is sorted by date (most recent first), this is the latest cancelled order."
+      ],
+      "prompt_tokens": 24852,
+      "time_sec": 18.608,
+      "submission_contract": false,
+      "retrieval_repair": false,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T214734-79879a/qwen38_flash__plan_execute__control__task231__seed3__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task231_plan_execute_seed3_baseline/outputs/231/control_seed_3/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task231_plan_execute_seed3_baseline/outputs/231/control_seed_3/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task231_plan_execute_seed3_baseline/outputs/231/control_seed_3/official_eval.json"
+    },
+    {
+      "cell_key": "task231_plan_execute_seed3_improved",
+      "pair_id": "task231_plan_execute_seed3",
+      "task_id": 231,
+      "architecture": "plan_execute",
+      "seed": 3,
+      "version": "improved",
+      "steps": 2,
+      "completed": true,
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "answer": [
+        "000000170"
+      ],
+      "prompt_tokens": 16982,
+      "time_sec": 14.354,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T214756-ff1f9c/qwen38_flash__plan_execute__control__task231__seed3__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task231_plan_execute_seed3_improved/outputs/231/control_seed_3/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task231_plan_execute_seed3_improved/outputs/231/control_seed_3/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task231_plan_execute_seed3_improved/outputs/231/control_seed_3/official_eval.json"
+    },
+    {
+      "cell_key": "task169_react_seed1_improved",
+      "pair_id": "task169_react_seed1",
+      "task_id": 169,
+      "architecture": "react",
+      "seed": 1,
+      "version": "improved",
+      "steps": 3,
+      "completed": true,
+      "official_success": false,
+      "official_status": "failure",
+      "official_score": 0.0,
+      "answer": [],
+      "prompt_tokens": 30406,
+      "time_sec": 49.625,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "de5c518f8baab6a02dfba7296cbbf7935278c1c6fcc4b88d385b265741e9e3cd",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T214813-030ab3/qwen38_flash__react__control__task169__seed1__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task169_react_seed1_improved/outputs/169/control_seed_1/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task169_react_seed1_improved/outputs/169/control_seed_1/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task169_react_seed1_improved/outputs/169/control_seed_1/official_eval.json"
+    },
+    {
+      "cell_key": "task169_react_seed1_baseline",
+      "pair_id": "task169_react_seed1",
+      "task_id": 169,
+      "architecture": "react",
+      "seed": 1,
+      "version": "baseline",
+      "steps": 4,
+      "completed": true,
+      "official_success": false,
+      "official_status": "failure",
+      "official_score": 0.0,
+      "answer": [
+        "Your personal projects that received the most stars (tied at 6 stars each) are:\n\n1. **empathy-prompts** — Project ID: **183** (6 stars)\n2. **millennials-to-snake-people** — Project ID: **187** (6 stars)\n\nAll other personal projects had fewer stars (a11y-webring.club and ericwbailey.website had 2; a11y-syntax-highlighting and accessible-html-content-patterns had 1; the rest had 0). So the project IDs of your most-starred personal projects are **183 and 187**."
+      ],
+      "prompt_tokens": 43320,
+      "time_sec": 41.151,
+      "submission_contract": false,
+      "retrieval_repair": false,
+      "storage_state_sha256": "de5c518f8baab6a02dfba7296cbbf7935278c1c6fcc4b88d385b265741e9e3cd",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T214906-98b4b8/qwen38_flash__react__control__task169__seed1__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task169_react_seed1_baseline/outputs/169/control_seed_1/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task169_react_seed1_baseline/outputs/169/control_seed_1/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task169_react_seed1_baseline/outputs/169/control_seed_1/official_eval.json"
+    },
+    {
+      "cell_key": "task169_plan_execute_seed3_baseline",
+      "pair_id": "task169_plan_execute_seed3",
+      "task_id": 169,
+      "architecture": "plan_execute",
+      "seed": 3,
+      "version": "baseline",
+      "steps": 2,
+      "completed": true,
+      "official_success": false,
+      "official_status": "failure",
+      "official_score": 0.0,
+      "answer": [
+        "After filtering to Personal projects and sorting by Most stars, the highest star count is 6, shared by two personal projects: (1) Byte Blaze / millennials-to-snake-people [6 stars] and (2) Byte Blaze / empathy-prompts [6 stars]. All other personal projects have fewer stars (a11y-webring.club = 2, ericwbailey.website = 2, a11y-syntax-highlighting = 1, accessible-html-content-patterns = 1, others = 0). Next step: retrieve the numeric project IDs for these two projects from their project pages/URLs."
+      ],
+      "prompt_tokens": 17760,
+      "time_sec": 28.746,
+      "submission_contract": false,
+      "retrieval_repair": false,
+      "storage_state_sha256": "de5c518f8baab6a02dfba7296cbbf7935278c1c6fcc4b88d385b265741e9e3cd",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T214950-57c450/qwen38_flash__plan_execute__control__task169__seed3__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task169_plan_execute_seed3_baseline/outputs/169/control_seed_3/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task169_plan_execute_seed3_baseline/outputs/169/control_seed_3/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task169_plan_execute_seed3_baseline/outputs/169/control_seed_3/official_eval.json"
+    },
+    {
+      "cell_key": "task169_plan_execute_seed3_improved",
+      "pair_id": "task169_plan_execute_seed3",
+      "task_id": 169,
+      "architecture": "plan_execute",
+      "seed": 3,
+      "version": "improved",
+      "steps": 4,
+      "completed": true,
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "answer": [
+        183,
+        187
+      ],
+      "prompt_tokens": 63573,
+      "time_sec": 53.825,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "de5c518f8baab6a02dfba7296cbbf7935278c1c6fcc4b88d385b265741e9e3cd",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T215022-3075c4/qwen38_flash__plan_execute__control__task169__seed3__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task169_plan_execute_seed3_improved/outputs/169/control_seed_3/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task169_plan_execute_seed3_improved/outputs/169/control_seed_3/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task169_plan_execute_seed3_improved/outputs/169/control_seed_3/official_eval.json"
+    },
+    {
+      "cell_key": "task132_react_seed1_improved",
+      "pair_id": "task132_react_seed1",
+      "task_id": 132,
+      "architecture": "react",
+      "seed": 1,
+      "version": "improved",
+      "steps": 4,
+      "completed": true,
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "answer": [
+        1
+      ],
+      "prompt_tokens": 38079,
+      "time_sec": 29.952,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "de5c518f8baab6a02dfba7296cbbf7935278c1c6fcc4b88d385b265741e9e3cd",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T215119-f6c357/qwen38_flash__react__control__task132__seed1__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task132_react_seed1_improved/outputs/132/control_seed_1/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task132_react_seed1_improved/outputs/132/control_seed_1/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task132_react_seed1_improved/outputs/132/control_seed_1/official_eval.json"
+    },
+    {
+      "cell_key": "task132_react_seed1_baseline",
+      "pair_id": "task132_react_seed1",
+      "task_id": 132,
+      "architecture": "react",
+      "seed": 1,
+      "version": "baseline",
+      "steps": 3,
+      "completed": true,
+      "official_success": false,
+      "official_status": "failure",
+      "official_score": 0.0,
+      "answer": [
+        {
+          "answer": "Kilian (Kilian Valkhof) made 1 commit to a11yproject.com on March 5, 2023.",
+          "count": 1,
+          "commits": [
+            "Fix typos in the code examples (#1524)"
+          ]
+        }
+      ],
+      "prompt_tokens": 26748,
+      "time_sec": 27.278,
+      "submission_contract": false,
+      "retrieval_repair": false,
+      "storage_state_sha256": "de5c518f8baab6a02dfba7296cbbf7935278c1c6fcc4b88d385b265741e9e3cd",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T215152-80c3b2/qwen38_flash__react__control__task132__seed1__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task132_react_seed1_baseline/outputs/132/control_seed_1/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task132_react_seed1_baseline/outputs/132/control_seed_1/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task132_react_seed1_baseline/outputs/132/control_seed_1/official_eval.json"
+    },
+    {
+      "cell_key": "task231_plan_execute_seed2_baseline",
+      "pair_id": "task231_plan_execute_seed2",
+      "task_id": 231,
+      "architecture": "plan_execute",
+      "seed": 2,
+      "version": "baseline",
+      "steps": 3,
+      "completed": true,
+      "official_success": false,
+      "official_status": "failure",
+      "official_score": 0.0,
+      "answer": [
+        "The order number of your most recent cancelled order is 000000170 (dated 5/17/23, total $365.42, Status: Canceled)."
+      ],
+      "prompt_tokens": 27819,
+      "time_sec": 22.983,
+      "submission_contract": false,
+      "retrieval_repair": false,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T215223-2750c3/qwen38_flash__plan_execute__control__task231__seed2__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task231_plan_execute_seed2_baseline/outputs/231/control_seed_2/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task231_plan_execute_seed2_baseline/outputs/231/control_seed_2/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task231_plan_execute_seed2_baseline/outputs/231/control_seed_2/official_eval.json"
+    },
+    {
+      "cell_key": "task231_plan_execute_seed2_improved",
+      "pair_id": "task231_plan_execute_seed2",
+      "task_id": 231,
+      "architecture": "plan_execute",
+      "seed": 2,
+      "version": "improved",
+      "steps": 3,
+      "completed": true,
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "answer": [
+        "000000170"
+      ],
+      "prompt_tokens": 27836,
+      "time_sec": 20.172,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T215249-66f65e/qwen38_flash__plan_execute__control__task231__seed2__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task231_plan_execute_seed2_improved/outputs/231/control_seed_2/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task231_plan_execute_seed2_improved/outputs/231/control_seed_2/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task231_plan_execute_seed2_improved/outputs/231/control_seed_2/official_eval.json"
+    },
+    {
+      "cell_key": "task132_react_seed3_improved",
+      "pair_id": "task132_react_seed3",
+      "task_id": 132,
+      "architecture": "react",
+      "seed": 3,
+      "version": "improved",
+      "steps": 10,
+      "completed": true,
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "answer": [
+        1
+      ],
+      "prompt_tokens": 208114,
+      "time_sec": 63.8,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "de5c518f8baab6a02dfba7296cbbf7935278c1c6fcc4b88d385b265741e9e3cd",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T215312-0366c7/qwen38_flash__react__control__task132__seed3__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task132_react_seed3_improved/outputs/132/control_seed_3/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task132_react_seed3_improved/outputs/132/control_seed_3/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task132_react_seed3_improved/outputs/132/control_seed_3/official_eval.json"
+    },
+    {
+      "cell_key": "task132_react_seed3_baseline",
+      "pair_id": "task132_react_seed3",
+      "task_id": 132,
+      "architecture": "react",
+      "seed": 3,
+      "version": "baseline",
+      "steps": 13,
+      "completed": true,
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "answer": [
+        1
+      ],
+      "prompt_tokens": 320332,
+      "time_sec": 95.234,
+      "submission_contract": false,
+      "retrieval_repair": false,
+      "storage_state_sha256": "de5c518f8baab6a02dfba7296cbbf7935278c1c6fcc4b88d385b265741e9e3cd",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T215419-f2229b/qwen38_flash__react__control__task132__seed3__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task132_react_seed3_baseline/outputs/132/control_seed_3/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task132_react_seed3_baseline/outputs/132/control_seed_3/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task132_react_seed3_baseline/outputs/132/control_seed_3/official_eval.json"
+    },
+    {
+      "cell_key": "task21_react_seed2_baseline",
+      "pair_id": "task21_react_seed2",
+      "task_id": 21,
+      "architecture": "react",
+      "seed": 2,
+      "version": "baseline",
+      "steps": 3,
+      "completed": true,
+      "official_success": false,
+      "official_status": "failure",
+      "official_score": 0.0,
+      "answer": [
+        "Reviewers who mention the ear cups being small:\n1. Dibbins — \"Cup for ears very small... for adult sized ears they are way too small.\"\n2. Catso — \"Too small, did not hold charge... they really are for people with very small ears.\"\n3. Michelle Davis — notes the padding only goes over small (kids') ears, not her adult-sized ears."
+      ],
+      "prompt_tokens": 18294,
+      "time_sec": 18.439,
+      "submission_contract": false,
+      "retrieval_repair": false,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T215558-9ab521/qwen38_flash__react__control__task21__seed2__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task21_react_seed2_baseline/outputs/21/control_seed_2/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task21_react_seed2_baseline/outputs/21/control_seed_2/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task21_react_seed2_baseline/outputs/21/control_seed_2/official_eval.json"
+    },
+    {
+      "cell_key": "task21_react_seed2_improved",
+      "pair_id": "task21_react_seed2",
+      "task_id": 21,
+      "architecture": "react",
+      "seed": 2,
+      "version": "improved",
+      "steps": 4,
+      "completed": true,
+      "official_success": false,
+      "official_status": "failure",
+      "official_score": 0.0,
+      "answer": [
+        "Dibbins"
+      ],
+      "prompt_tokens": 28022,
+      "time_sec": 19.734,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T215619-f7d799/qwen38_flash__react__control__task21__seed2__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task21_react_seed2_improved/outputs/21/control_seed_2/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task21_react_seed2_improved/outputs/21/control_seed_2/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task21_react_seed2_improved/outputs/21/control_seed_2/official_eval.json"
+    },
+    {
+      "cell_key": "task21_plan_execute_seed2_improved",
+      "pair_id": "task21_plan_execute_seed2",
+      "task_id": 21,
+      "architecture": "plan_execute",
+      "seed": 2,
+      "version": "improved",
+      "steps": 4,
+      "completed": true,
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "answer": [
+        "Dibbins",
+        "Catso",
+        "Anglebert Dinkherhump",
+        "Michelle Davis"
+      ],
+      "prompt_tokens": 34715,
+      "time_sec": 34.808,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T215642-1db29e/qwen38_flash__plan_execute__control__task21__seed2__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task21_plan_execute_seed2_improved/outputs/21/control_seed_2/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task21_plan_execute_seed2_improved/outputs/21/control_seed_2/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task21_plan_execute_seed2_improved/outputs/21/control_seed_2/official_eval.json"
+    },
+    {
+      "cell_key": "task21_plan_execute_seed2_baseline",
+      "pair_id": "task21_plan_execute_seed2",
+      "task_id": 21,
+      "architecture": "plan_execute",
+      "seed": 2,
+      "version": "baseline",
+      "steps": 3,
+      "completed": true,
+      "official_success": false,
+      "official_status": "failure",
+      "official_score": 0.0,
+      "answer": [
+        "The reviewer(s) who mention the ear cups being small for this product are:\n\n1. **Dibbins** – Review titled \"Cup for ears very small\": states the ear cups \"MAY be ok for children... but for adult sized ears they are way too small,\" and that because they are so small they don't cancel noise well or stay comfortable.\n\n2. **Catso** – Review titled \"Too small, did not hold charge\": notes \"they really are for people with very small ears.\"\n\n(Note: Michelle Davis on page 2 mentions the padding only fits over kids' small ears and not her adult-sized ears, which relates to the same sizing issue, but Dibbins and Catso are the ones whose reviews directly frame the ear cups as being small.)"
+      ],
+      "prompt_tokens": 21971,
+      "time_sec": 29.286,
+      "submission_contract": false,
+      "retrieval_repair": false,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T215720-4ef50c/qwen38_flash__plan_execute__control__task21__seed2__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task21_plan_execute_seed2_baseline/outputs/21/control_seed_2/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task21_plan_execute_seed2_baseline/outputs/21/control_seed_2/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task21_plan_execute_seed2_baseline/outputs/21/control_seed_2/official_eval.json"
+    },
+    {
+      "cell_key": "task126_react_seed3_baseline",
+      "pair_id": "task126_react_seed3",
+      "task_id": 126,
+      "architecture": "react",
+      "seed": 3,
+      "version": "baseline",
+      "steps": 20,
+      "completed": false,
+      "official_success": false,
+      "official_status": "failure",
+      "official_score": 0.0,
+      "answer": null,
+      "prompt_tokens": 499555,
+      "time_sec": 60.601,
+      "submission_contract": false,
+      "retrieval_repair": false,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T215752-a5f31f/qwen38_flash__react__control__task126__seed3__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task126_react_seed3_baseline/outputs/126/control_seed_3/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task126_react_seed3_baseline/outputs/126/control_seed_3/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task126_react_seed3_baseline/outputs/126/control_seed_3/official_eval.json"
+    },
+    {
+      "cell_key": "task126_react_seed3_improved",
+      "pair_id": "task126_react_seed3",
+      "task_id": 126,
+      "architecture": "react",
+      "seed": 3,
+      "version": "improved",
+      "steps": 16,
+      "completed": true,
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "answer": [
+        {
+          "min": 2.56,
+          "max": 649.99
+        }
+      ],
+      "prompt_tokens": 365708,
+      "time_sec": 62.313,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T215856-4bf03d/qwen38_flash__react__control__task126__seed3__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task126_react_seed3_improved/outputs/126/control_seed_3/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task126_react_seed3_improved/outputs/126/control_seed_3/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task126_react_seed3_improved/outputs/126/control_seed_3/official_eval.json"
+    },
+    {
+      "cell_key": "task21_react_seed1_improved",
+      "pair_id": "task21_react_seed1",
+      "task_id": 21,
+      "architecture": "react",
+      "seed": 1,
+      "version": "improved",
+      "steps": 6,
+      "completed": true,
+      "official_success": false,
+      "official_status": "failure",
+      "official_score": 0.0,
+      "answer": [
+        "Dibbins"
+      ],
+      "prompt_tokens": 48768,
+      "time_sec": 25.837,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T220002-291938/qwen38_flash__react__control__task21__seed1__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task21_react_seed1_improved/outputs/21/control_seed_1/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task21_react_seed1_improved/outputs/21/control_seed_1/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task21_react_seed1_improved/outputs/21/control_seed_1/official_eval.json"
+    },
+    {
+      "cell_key": "task21_react_seed1_baseline",
+      "pair_id": "task21_react_seed1",
+      "task_id": 21,
+      "architecture": "react",
+      "seed": 1,
+      "version": "baseline",
+      "steps": 4,
+      "completed": true,
+      "official_success": false,
+      "official_status": "failure",
+      "official_score": 0.0,
+      "answer": [
+        "The reviewer who explicitly mentions the ear cups being small is **Dibbins**, whose review is titled \"Cup for ears very small\" and states \"The ear cups MAY be ok for children... but for adult sized ears they are way too small.\"\n\nA second reviewer, **Catso**, also references smallness in relation to ears (\"Too small, did not hold charge... they really are for people with very small ears\"), though not specifically the \"ear cups.\"\n\nPrimary answer: **Dibbins**."
+      ],
+      "prompt_tokens": 27501,
+      "time_sec": 22.657,
+      "submission_contract": false,
+      "retrieval_repair": false,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T220031-347b4f/qwen38_flash__react__control__task21__seed1__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task21_react_seed1_baseline/outputs/21/control_seed_1/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task21_react_seed1_baseline/outputs/21/control_seed_1/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task21_react_seed1_baseline/outputs/21/control_seed_1/official_eval.json"
+    },
+    {
+      "cell_key": "task169_plan_execute_seed1_baseline",
+      "pair_id": "task169_plan_execute_seed1",
+      "task_id": 169,
+      "architecture": "plan_execute",
+      "seed": 1,
+      "version": "baseline",
+      "steps": 5,
+      "completed": true,
+      "official_success": false,
+      "official_status": "failure",
+      "official_score": 0.0,
+      "answer": [
+        "Among my personal projects, two projects tie for the most stars (6 stars each):\n\n1. **millennials-to-snake-people** — Project ID: **187** (6 stars)\n2. **empathy-prompts** — Project ID: **183** (6 stars)\n\nAll other personal projects have fewer stars (a11y-webring.club: 2, ericwbailey.website: 2, a11y-syntax-highlighting: 1, accessible-html-content-patterns: 1, others: 0).\n\nSo the project IDs of the personal project(s) with the most stars are: **187 and 183**."
+      ],
+      "prompt_tokens": 78907,
+      "time_sec": 63.255,
+      "submission_contract": false,
+      "retrieval_repair": false,
+      "storage_state_sha256": "de5c518f8baab6a02dfba7296cbbf7935278c1c6fcc4b88d385b265741e9e3cd",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T220057-ff08d8/qwen38_flash__plan_execute__control__task169__seed1__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task169_plan_execute_seed1_baseline/outputs/169/control_seed_1/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task169_plan_execute_seed1_baseline/outputs/169/control_seed_1/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task169_plan_execute_seed1_baseline/outputs/169/control_seed_1/official_eval.json"
+    },
+    {
+      "cell_key": "task169_plan_execute_seed1_improved",
+      "pair_id": "task169_plan_execute_seed1",
+      "task_id": 169,
+      "architecture": "plan_execute",
+      "seed": 1,
+      "version": "improved",
+      "steps": 7,
+      "completed": true,
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "answer": [
+        187,
+        183
+      ],
+      "prompt_tokens": 120926,
+      "time_sec": 78.136,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "de5c518f8baab6a02dfba7296cbbf7935278c1c6fcc4b88d385b265741e9e3cd",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T220204-0b1211/qwen38_flash__plan_execute__control__task169__seed1__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task169_plan_execute_seed1_improved/outputs/169/control_seed_1/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task169_plan_execute_seed1_improved/outputs/169/control_seed_1/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task169_plan_execute_seed1_improved/outputs/169/control_seed_1/official_eval.json"
+    },
+    {
+      "cell_key": "task231_react_seed2_improved",
+      "pair_id": "task231_react_seed2",
+      "task_id": 231,
+      "architecture": "react",
+      "seed": 2,
+      "version": "improved",
+      "steps": 3,
+      "completed": true,
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "answer": [
+        "000000170"
+      ],
+      "prompt_tokens": 20859,
+      "time_sec": 14.165,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T220325-291ea0/qwen38_flash__react__control__task231__seed2__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task231_react_seed2_improved/outputs/231/control_seed_2/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task231_react_seed2_improved/outputs/231/control_seed_2/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task231_react_seed2_improved/outputs/231/control_seed_2/official_eval.json"
+    },
+    {
+      "cell_key": "task231_react_seed2_baseline",
+      "pair_id": "task231_react_seed2",
+      "task_id": 231,
+      "architecture": "react",
+      "seed": 2,
+      "version": "baseline",
+      "steps": 3,
+      "completed": true,
+      "official_success": false,
+      "official_status": "failure",
+      "official_score": 0.0,
+      "answer": [
+        "Your most recent cancelled order is Order #000000170 (dated 5/17/23, total $365.42). It appears at the top of your order history with status \"Canceled,\" making it the latest cancelled order."
+      ],
+      "prompt_tokens": 20750,
+      "time_sec": 14.201,
+      "submission_contract": false,
+      "retrieval_repair": false,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T220343-108b31/qwen38_flash__react__control__task231__seed2__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task231_react_seed2_baseline/outputs/231/control_seed_2/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task231_react_seed2_baseline/outputs/231/control_seed_2/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task231_react_seed2_baseline/outputs/231/control_seed_2/official_eval.json"
+    },
+    {
+      "cell_key": "task169_plan_execute_seed2_baseline",
+      "pair_id": "task169_plan_execute_seed2",
+      "task_id": 169,
+      "architecture": "plan_execute",
+      "seed": 2,
+      "version": "baseline",
+      "steps": 4,
+      "completed": true,
+      "official_success": false,
+      "official_status": "failure",
+      "official_score": 0.0,
+      "answer": [
+        "For the current project 'empathy-prompts': Star count = 6, Project ID = 183 (confirmed on the project page header showing \"Project ID: 183\" and the stars link showing 6)."
+      ],
+      "prompt_tokens": 63296,
+      "time_sec": 57.74,
+      "submission_contract": false,
+      "retrieval_repair": false,
+      "storage_state_sha256": "de5c518f8baab6a02dfba7296cbbf7935278c1c6fcc4b88d385b265741e9e3cd",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T220400-fed853/qwen38_flash__plan_execute__control__task169__seed2__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task169_plan_execute_seed2_baseline/outputs/169/control_seed_2/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task169_plan_execute_seed2_baseline/outputs/169/control_seed_2/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task169_plan_execute_seed2_baseline/outputs/169/control_seed_2/official_eval.json"
+    },
+    {
+      "cell_key": "task169_plan_execute_seed2_improved",
+      "pair_id": "task169_plan_execute_seed2",
+      "task_id": 169,
+      "architecture": "plan_execute",
+      "seed": 2,
+      "version": "improved",
+      "steps": 3,
+      "completed": true,
+      "official_success": false,
+      "official_status": "failure",
+      "official_score": 0.0,
+      "answer": [],
+      "prompt_tokens": 30928,
+      "time_sec": 40.468,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "de5c518f8baab6a02dfba7296cbbf7935278c1c6fcc4b88d385b265741e9e3cd",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T220501-5a504d/qwen38_flash__plan_execute__control__task169__seed2__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task169_plan_execute_seed2_improved/outputs/169/control_seed_2/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task169_plan_execute_seed2_improved/outputs/169/control_seed_2/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task169_plan_execute_seed2_improved/outputs/169/control_seed_2/official_eval.json"
+    },
+    {
+      "cell_key": "task231_react_seed3_improved",
+      "pair_id": "task231_react_seed3",
+      "task_id": 231,
+      "architecture": "react",
+      "seed": 3,
+      "version": "improved",
+      "steps": 3,
+      "completed": true,
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "answer": [
+        "000000170"
+      ],
+      "prompt_tokens": 20850,
+      "time_sec": 13.079,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T220545-99ed56/qwen38_flash__react__control__task231__seed3__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task231_react_seed3_improved/outputs/231/control_seed_3/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task231_react_seed3_improved/outputs/231/control_seed_3/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task231_react_seed3_improved/outputs/231/control_seed_3/official_eval.json"
+    },
+    {
+      "cell_key": "task231_react_seed3_baseline",
+      "pair_id": "task231_react_seed3",
+      "task_id": 231,
+      "architecture": "react",
+      "seed": 3,
+      "version": "baseline",
+      "steps": 3,
+      "completed": true,
+      "official_success": false,
+      "official_status": "failure",
+      "official_score": 0.0,
+      "answer": [
+        "Your most recent cancelled order is Order # 000000170 (dated 5/17/23, total $365.42, status Canceled)."
+      ],
+      "prompt_tokens": 20700,
+      "time_sec": 13.345,
+      "submission_contract": false,
+      "retrieval_repair": false,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T220601-77c08a/qwen38_flash__react__control__task231__seed3__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task231_react_seed3_baseline/outputs/231/control_seed_3/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task231_react_seed3_baseline/outputs/231/control_seed_3/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task231_react_seed3_baseline/outputs/231/control_seed_3/official_eval.json"
+    },
+    {
+      "cell_key": "task126_react_seed1_baseline",
+      "pair_id": "task126_react_seed1",
+      "task_id": 126,
+      "architecture": "react",
+      "seed": 1,
+      "version": "baseline",
+      "steps": 20,
+      "completed": false,
+      "official_success": false,
+      "official_status": "failure",
+      "official_score": 0.0,
+      "answer": null,
+      "prompt_tokens": 531822,
+      "time_sec": 81.94,
+      "submission_contract": false,
+      "retrieval_repair": false,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T220618-c99ece/qwen38_flash__react__control__task126__seed1__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task126_react_seed1_baseline/outputs/126/control_seed_1/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task126_react_seed1_baseline/outputs/126/control_seed_1/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task126_react_seed1_baseline/outputs/126/control_seed_1/official_eval.json"
+    },
+    {
+      "cell_key": "task126_react_seed1_improved",
+      "pair_id": "task126_react_seed1",
+      "task_id": 126,
+      "architecture": "react",
+      "seed": 1,
+      "version": "improved",
+      "steps": 20,
+      "completed": false,
+      "official_success": false,
+      "official_status": "failure",
+      "official_score": 0.0,
+      "answer": null,
+      "prompt_tokens": 530566,
+      "time_sec": 64.477,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T220744-904f1f/qwen38_flash__react__control__task126__seed1__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task126_react_seed1_improved/outputs/126/control_seed_1/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task126_react_seed1_improved/outputs/126/control_seed_1/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task126_react_seed1_improved/outputs/126/control_seed_1/official_eval.json"
+    },
+    {
+      "cell_key": "task132_plan_execute_seed3_improved",
+      "pair_id": "task132_plan_execute_seed3",
+      "task_id": 132,
+      "architecture": "plan_execute",
+      "seed": 3,
+      "version": "improved",
+      "steps": 6,
+      "completed": true,
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "answer": [
+        1
+      ],
+      "prompt_tokens": 99620,
+      "time_sec": 62.521,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "de5c518f8baab6a02dfba7296cbbf7935278c1c6fcc4b88d385b265741e9e3cd",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T220852-131948/qwen38_flash__plan_execute__control__task132__seed3__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task132_plan_execute_seed3_improved/outputs/132/control_seed_3/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task132_plan_execute_seed3_improved/outputs/132/control_seed_3/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task132_plan_execute_seed3_improved/outputs/132/control_seed_3/official_eval.json"
+    },
+    {
+      "cell_key": "task132_plan_execute_seed3_baseline",
+      "pair_id": "task132_plan_execute_seed3",
+      "task_id": 132,
+      "architecture": "plan_execute",
+      "seed": 3,
+      "version": "baseline",
+      "steps": 6,
+      "completed": true,
+      "official_success": false,
+      "official_status": "failure",
+      "official_score": 0.0,
+      "answer": [
+        {
+          "commits": 1
+        }
+      ],
+      "prompt_tokens": 99363,
+      "time_sec": 67.013,
+      "submission_contract": false,
+      "retrieval_repair": false,
+      "storage_state_sha256": "de5c518f8baab6a02dfba7296cbbf7935278c1c6fcc4b88d385b265741e9e3cd",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T220958-cdbf26/qwen38_flash__plan_execute__control__task132__seed3__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task132_plan_execute_seed3_baseline/outputs/132/control_seed_3/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task132_plan_execute_seed3_baseline/outputs/132/control_seed_3/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task132_plan_execute_seed3_baseline/outputs/132/control_seed_3/official_eval.json"
+    },
+    {
+      "cell_key": "task281_react_seed2_baseline",
+      "pair_id": "task281_react_seed2",
+      "task_id": 281,
+      "architecture": "react",
+      "seed": 2,
+      "version": "baseline",
+      "steps": 6,
+      "completed": true,
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "answer": [
+        {
+          "names": [
+            "Oral-B Kids Extra Soft Replacement Brush Heads featuring STAR WARS, 2 count",
+            "Kids By Oral-b Stages Power Star Wars Replacement Heads 4 Pack"
+          ],
+          "min": 12.99,
+          "max": 14.98
+        }
+      ],
+      "prompt_tokens": 71793,
+      "time_sec": 20.457,
+      "submission_contract": false,
+      "retrieval_repair": false,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T221108-d60688/qwen38_flash__react__control__task281__seed2__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task281_react_seed2_baseline/outputs/281/control_seed_2/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task281_react_seed2_baseline/outputs/281/control_seed_2/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task281_react_seed2_baseline/outputs/281/control_seed_2/official_eval.json"
+    },
+    {
+      "cell_key": "task281_react_seed2_improved",
+      "pair_id": "task281_react_seed2",
+      "task_id": 281,
+      "architecture": "react",
+      "seed": 2,
+      "version": "improved",
+      "steps": 20,
+      "completed": false,
+      "official_success": false,
+      "official_status": "failure",
+      "official_score": 0.0,
+      "answer": null,
+      "prompt_tokens": 507380,
+      "time_sec": 88.201,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T221132-86ffd8/qwen38_flash__react__control__task281__seed2__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task281_react_seed2_improved/outputs/281/control_seed_2/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task281_react_seed2_improved/outputs/281/control_seed_2/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task281_react_seed2_improved/outputs/281/control_seed_2/official_eval.json"
+    },
+    {
+      "cell_key": "task21_plan_execute_seed3_improved",
+      "pair_id": "task21_plan_execute_seed3",
+      "task_id": 21,
+      "architecture": "plan_execute",
+      "seed": 3,
+      "version": "improved",
+      "steps": 3,
+      "completed": true,
+      "official_success": false,
+      "official_status": "failure",
+      "official_score": 0.0,
+      "answer": [
+        "Dibbins",
+        "Catso",
+        "Michelle Davis"
+      ],
+      "prompt_tokens": 22494,
+      "time_sec": 24.992,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T221304-3ebf56/qwen38_flash__plan_execute__control__task21__seed3__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task21_plan_execute_seed3_improved/outputs/21/control_seed_3/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task21_plan_execute_seed3_improved/outputs/21/control_seed_3/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task21_plan_execute_seed3_improved/outputs/21/control_seed_3/official_eval.json"
+    },
+    {
+      "cell_key": "task21_plan_execute_seed3_baseline",
+      "pair_id": "task21_plan_execute_seed3",
+      "task_id": 21,
+      "architecture": "plan_execute",
+      "seed": 3,
+      "version": "baseline",
+      "steps": 3,
+      "completed": true,
+      "official_success": false,
+      "official_status": "failure",
+      "official_score": 0.0,
+      "answer": [
+        "The reviewer who explicitly mentions the ear cups being small is **Dibbins**, whose review is titled \"Cup for ears very small\" and states that the ear cups \"for adult sized ears they are way too small.\"\n\nA related mention comes from **Michelle Davis**, who notes the ear padding only goes over children's/small ears and \"won't go over mine as I'm an adult with adult sized ears,\" though she does not describe the cups themselves as small.\n\nAll 12 reviews were checked; no other reviewers mention ear cup size."
+      ],
+      "prompt_tokens": 21052,
+      "time_sec": 33.333,
+      "submission_contract": false,
+      "retrieval_repair": false,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T221332-f8dd55/qwen38_flash__plan_execute__control__task21__seed3__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task21_plan_execute_seed3_baseline/outputs/21/control_seed_3/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task21_plan_execute_seed3_baseline/outputs/21/control_seed_3/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task21_plan_execute_seed3_baseline/outputs/21/control_seed_3/official_eval.json"
+    },
+    {
+      "cell_key": "task126_plan_execute_seed3_baseline",
+      "pair_id": "task126_plan_execute_seed3",
+      "task_id": 126,
+      "architecture": "plan_execute",
+      "seed": 3,
+      "version": "baseline",
+      "steps": 4,
+      "completed": true,
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "answer": [
+        {
+          "min": 2.56,
+          "max": 649.99
+        }
+      ],
+      "prompt_tokens": 45706,
+      "time_sec": 20.603,
+      "submission_contract": false,
+      "retrieval_repair": false,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T221409-c8ca58/qwen38_flash__plan_execute__control__task126__seed3__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task126_plan_execute_seed3_baseline/outputs/126/control_seed_3/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task126_plan_execute_seed3_baseline/outputs/126/control_seed_3/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task126_plan_execute_seed3_baseline/outputs/126/control_seed_3/official_eval.json"
+    },
+    {
+      "cell_key": "task126_plan_execute_seed3_improved",
+      "pair_id": "task126_plan_execute_seed3",
+      "task_id": 126,
+      "architecture": "plan_execute",
+      "seed": 3,
+      "version": "improved",
+      "steps": 4,
+      "completed": true,
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "answer": [
+        {
+          "min": 2.56,
+          "max": 649.99
+        }
+      ],
+      "prompt_tokens": 46241,
+      "time_sec": 19.574,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T221432-96bcc0/qwen38_flash__plan_execute__control__task126__seed3__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task126_plan_execute_seed3_improved/outputs/126/control_seed_3/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task126_plan_execute_seed3_improved/outputs/126/control_seed_3/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task126_plan_execute_seed3_improved/outputs/126/control_seed_3/official_eval.json"
+    },
+    {
+      "cell_key": "task281_plan_execute_seed1_improved",
+      "pair_id": "task281_plan_execute_seed1",
+      "task_id": 281,
+      "architecture": "plan_execute",
+      "seed": 1,
+      "version": "improved",
+      "steps": 20,
+      "completed": false,
+      "official_success": false,
+      "official_status": "failure",
+      "official_score": 0.0,
+      "answer": null,
+      "prompt_tokens": 624611,
+      "time_sec": 153.571,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T221455-010f24/qwen38_flash__plan_execute__control__task281__seed1__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task281_plan_execute_seed1_improved/outputs/281/control_seed_1/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task281_plan_execute_seed1_improved/outputs/281/control_seed_1/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task281_plan_execute_seed1_improved/outputs/281/control_seed_1/official_eval.json"
+    },
+    {
+      "cell_key": "task281_plan_execute_seed1_baseline",
+      "pair_id": "task281_plan_execute_seed1",
+      "task_id": 281,
+      "architecture": "plan_execute",
+      "seed": 1,
+      "version": "baseline",
+      "steps": 12,
+      "completed": true,
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "answer": [
+        {
+          "names": [
+            "Oral-B Kids Extra Soft Replacement Brush Heads featuring STAR WARS, 2 count",
+            "Kids By Oral-b Stages Power Star Wars Replacement Heads 4 Pack"
+          ],
+          "min": 12.99,
+          "max": 14.98
+        }
+      ],
+      "prompt_tokens": 258291,
+      "time_sec": 84.864,
+      "submission_contract": false,
+      "retrieval_repair": false,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T221733-23601f/qwen38_flash__plan_execute__control__task281__seed1__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task281_plan_execute_seed1_baseline/outputs/281/control_seed_1/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task281_plan_execute_seed1_baseline/outputs/281/control_seed_1/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task281_plan_execute_seed1_baseline/outputs/281/control_seed_1/official_eval.json"
+    },
+    {
+      "cell_key": "task126_react_seed2_baseline",
+      "pair_id": "task126_react_seed2",
+      "task_id": 126,
+      "architecture": "react",
+      "seed": 2,
+      "version": "baseline",
+      "steps": 8,
+      "completed": true,
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "answer": [
+        {
+          "min": 2.56,
+          "max": 649.99
+        }
+      ],
+      "prompt_tokens": 116308,
+      "time_sec": 28.047,
+      "submission_contract": false,
+      "retrieval_repair": false,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T221901-cb3ce9/qwen38_flash__react__control__task126__seed2__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task126_react_seed2_baseline/outputs/126/control_seed_2/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task126_react_seed2_baseline/outputs/126/control_seed_2/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task126_react_seed2_baseline/outputs/126/control_seed_2/official_eval.json"
+    },
+    {
+      "cell_key": "task126_react_seed2_improved",
+      "pair_id": "task126_react_seed2",
+      "task_id": 126,
+      "architecture": "react",
+      "seed": 2,
+      "version": "improved",
+      "steps": 6,
+      "completed": true,
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "answer": [
+        {
+          "min": 2.56,
+          "max": 649.99
+        }
+      ],
+      "prompt_tokens": 73238,
+      "time_sec": 23.083,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T221933-850803/qwen38_flash__react__control__task126__seed2__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task126_react_seed2_improved/outputs/126/control_seed_2/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task126_react_seed2_improved/outputs/126/control_seed_2/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task126_react_seed2_improved/outputs/126/control_seed_2/official_eval.json"
+    },
+    {
+      "cell_key": "task281_plan_execute_seed2_improved",
+      "pair_id": "task281_plan_execute_seed2",
+      "task_id": 281,
+      "architecture": "plan_execute",
+      "seed": 2,
+      "version": "improved",
+      "steps": 4,
+      "completed": true,
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "answer": [
+        {
+          "names": [
+            "Oral-B Kids Extra Soft Replacement Brush Heads featuring STAR WARS, 2 count",
+            "Kids By Oral-b Stages Power Star Wars Replacement Heads 4 Pack"
+          ],
+          "min": 12.99,
+          "max": 14.98
+        }
+      ],
+      "prompt_tokens": 42421,
+      "time_sec": 23.005,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T221959-02df5c/qwen38_flash__plan_execute__control__task281__seed2__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task281_plan_execute_seed2_improved/outputs/281/control_seed_2/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task281_plan_execute_seed2_improved/outputs/281/control_seed_2/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task281_plan_execute_seed2_improved/outputs/281/control_seed_2/official_eval.json"
+    },
+    {
+      "cell_key": "task281_plan_execute_seed2_baseline",
+      "pair_id": "task281_plan_execute_seed2",
+      "task_id": 281,
+      "architecture": "plan_execute",
+      "seed": 2,
+      "version": "baseline",
+      "steps": 6,
+      "completed": true,
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "answer": [
+        {
+          "names": [
+            "Oral-B Kids Extra Soft Replacement Brush Heads featuring STAR WARS, 2 count",
+            "Kids By Oral-b Stages Power Star Wars Replacement Heads 4 Pack"
+          ],
+          "min": 12.99,
+          "max": 14.98
+        }
+      ],
+      "prompt_tokens": 86041,
+      "time_sec": 36.241,
+      "submission_contract": false,
+      "retrieval_repair": false,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T222025-5ebf2a/qwen38_flash__plan_execute__control__task281__seed2__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task281_plan_execute_seed2_baseline/outputs/281/control_seed_2/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task281_plan_execute_seed2_baseline/outputs/281/control_seed_2/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task281_plan_execute_seed2_baseline/outputs/281/control_seed_2/official_eval.json"
+    },
+    {
+      "cell_key": "task21_plan_execute_seed1_baseline",
+      "pair_id": "task21_plan_execute_seed1",
+      "task_id": 21,
+      "architecture": "plan_execute",
+      "seed": 1,
+      "version": "baseline",
+      "steps": 3,
+      "completed": true,
+      "official_success": false,
+      "official_status": "failure",
+      "official_score": 0.0,
+      "answer": [
+        "The reviewer(s) who mention ear cups being small are: **Dibbins** (review titled \"Cup for ears very small\" — states \"for adult sized ears they are way too small\") and **Catso** (review titled \"Too small, did not hold charge\" — states \"they really are for people with very small ears\"). All 12 reviews have been examined across both pages."
+      ],
+      "prompt_tokens": 21127,
+      "time_sec": 24.789,
+      "submission_contract": false,
+      "retrieval_repair": false,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T222105-79658c/qwen38_flash__plan_execute__control__task21__seed1__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task21_plan_execute_seed1_baseline/outputs/21/control_seed_1/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task21_plan_execute_seed1_baseline/outputs/21/control_seed_1/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task21_plan_execute_seed1_baseline/outputs/21/control_seed_1/official_eval.json"
+    },
+    {
+      "cell_key": "task21_plan_execute_seed1_improved",
+      "pair_id": "task21_plan_execute_seed1",
+      "task_id": 21,
+      "architecture": "plan_execute",
+      "seed": 1,
+      "version": "improved",
+      "steps": 3,
+      "completed": true,
+      "official_success": false,
+      "official_status": "failure",
+      "official_score": 0.0,
+      "answer": [
+        "Dibbins",
+        "Michelle Davis"
+      ],
+      "prompt_tokens": 22355,
+      "time_sec": 25.498,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T222133-fae002/qwen38_flash__plan_execute__control__task21__seed1__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task21_plan_execute_seed1_improved/outputs/21/control_seed_1/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task21_plan_execute_seed1_improved/outputs/21/control_seed_1/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task21_plan_execute_seed1_improved/outputs/21/control_seed_1/official_eval.json"
+    },
+    {
+      "cell_key": "task169_react_seed2_improved",
+      "pair_id": "task169_react_seed2",
+      "task_id": 169,
+      "architecture": "react",
+      "seed": 2,
+      "version": "improved",
+      "steps": 4,
+      "completed": true,
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "answer": [
+        187,
+        183
+      ],
+      "prompt_tokens": 44193,
+      "time_sec": 41.623,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "de5c518f8baab6a02dfba7296cbbf7935278c1c6fcc4b88d385b265741e9e3cd",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T222201-0444f1/qwen38_flash__react__control__task169__seed2__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task169_react_seed2_improved/outputs/169/control_seed_2/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task169_react_seed2_improved/outputs/169/control_seed_2/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task169_react_seed2_improved/outputs/169/control_seed_2/official_eval.json"
+    },
+    {
+      "cell_key": "task169_react_seed2_baseline",
+      "pair_id": "task169_react_seed2",
+      "task_id": 169,
+      "architecture": "react",
+      "seed": 2,
+      "version": "baseline",
+      "steps": 4,
+      "completed": true,
+      "official_success": false,
+      "official_status": "failure",
+      "official_score": 0.0,
+      "answer": [
+        "Among my personal projects, two are tied for the most stars (6 each):\n\n1. **empathy-prompts** — Project ID: **183** (6 stars)\n2. **millennials-to-snake-people** — Project ID: **187** (6 stars)\n\nSo the project IDs of the personal project(s) that received the most stars are **183 and 187**."
+      ],
+      "prompt_tokens": 43360,
+      "time_sec": 40.705,
+      "submission_contract": false,
+      "retrieval_repair": false,
+      "storage_state_sha256": "de5c518f8baab6a02dfba7296cbbf7935278c1c6fcc4b88d385b265741e9e3cd",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T222246-1fa018/qwen38_flash__react__control__task169__seed2__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task169_react_seed2_baseline/outputs/169/control_seed_2/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task169_react_seed2_baseline/outputs/169/control_seed_2/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task169_react_seed2_baseline/outputs/169/control_seed_2/official_eval.json"
+    },
+    {
+      "cell_key": "task281_react_seed1_baseline",
+      "pair_id": "task281_react_seed1",
+      "task_id": 281,
+      "architecture": "react",
+      "seed": 1,
+      "version": "baseline",
+      "steps": 15,
+      "completed": true,
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "answer": [
+        {
+          "names": [
+            "Kids By Oral-b Stages Power Star Wars Replacement Heads 4 Pack",
+            "Oral-B Kids Extra Soft Replacement Brush Heads featuring STAR WARS, 2 count"
+          ],
+          "min": 12.99,
+          "max": 14.98
+        }
+      ],
+      "prompt_tokens": 345974,
+      "time_sec": 58.666,
+      "submission_contract": false,
+      "retrieval_repair": false,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T222330-1a1dfe/qwen38_flash__react__control__task281__seed1__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task281_react_seed1_baseline/outputs/281/control_seed_1/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task281_react_seed1_baseline/outputs/281/control_seed_1/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task281_react_seed1_baseline/outputs/281/control_seed_1/official_eval.json"
+    },
+    {
+      "cell_key": "task281_react_seed1_improved",
+      "pair_id": "task281_react_seed1",
+      "task_id": 281,
+      "architecture": "react",
+      "seed": 1,
+      "version": "improved",
+      "steps": 10,
+      "completed": true,
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "answer": [
+        {
+          "names": [
+            "Oral-B Kids Extra Soft Replacement Brush Heads featuring STAR WARS, 2 count",
+            "Kids By Oral-b Stages Power Star Wars Replacement Heads 4 Pack"
+          ],
+          "min": 12.99,
+          "max": 14.98
+        }
+      ],
+      "prompt_tokens": 171813,
+      "time_sec": 37.389,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T222432-98ffaa/qwen38_flash__react__control__task281__seed1__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task281_react_seed1_improved/outputs/281/control_seed_1/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task281_react_seed1_improved/outputs/281/control_seed_1/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task281_react_seed1_improved/outputs/281/control_seed_1/official_eval.json"
+    },
+    {
+      "cell_key": "task132_plan_execute_seed1_improved",
+      "pair_id": "task132_plan_execute_seed1",
+      "task_id": 132,
+      "architecture": "plan_execute",
+      "seed": 1,
+      "version": "improved",
+      "steps": 6,
+      "completed": true,
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "answer": [
+        1
+      ],
+      "prompt_tokens": 97810,
+      "time_sec": 64.596,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "de5c518f8baab6a02dfba7296cbbf7935278c1c6fcc4b88d385b265741e9e3cd",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T222513-0da522/qwen38_flash__plan_execute__control__task132__seed1__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task132_plan_execute_seed1_improved/outputs/132/control_seed_1/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task132_plan_execute_seed1_improved/outputs/132/control_seed_1/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task132_plan_execute_seed1_improved/outputs/132/control_seed_1/official_eval.json"
+    },
+    {
+      "cell_key": "task132_plan_execute_seed1_baseline",
+      "pair_id": "task132_plan_execute_seed1",
+      "task_id": 132,
+      "architecture": "plan_execute",
+      "seed": 1,
+      "version": "baseline",
+      "steps": 6,
+      "completed": true,
+      "official_success": false,
+      "official_status": "failure",
+      "official_score": 0.0,
+      "answer": [
+        {
+          "count": 1
+        }
+      ],
+      "prompt_tokens": 99563,
+      "time_sec": 70.602,
+      "submission_contract": false,
+      "retrieval_repair": false,
+      "storage_state_sha256": "de5c518f8baab6a02dfba7296cbbf7935278c1c6fcc4b88d385b265741e9e3cd",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T222621-a50db9/qwen38_flash__plan_execute__control__task132__seed1__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task132_plan_execute_seed1_baseline/outputs/132/control_seed_1/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task132_plan_execute_seed1_baseline/outputs/132/control_seed_1/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task132_plan_execute_seed1_baseline/outputs/132/control_seed_1/official_eval.json"
+    },
+    {
+      "cell_key": "task231_react_seed1_baseline",
+      "pair_id": "task231_react_seed1",
+      "task_id": 231,
+      "architecture": "react",
+      "seed": 1,
+      "version": "baseline",
+      "steps": 4,
+      "completed": true,
+      "official_success": false,
+      "official_status": "failure",
+      "official_score": 0.0,
+      "answer": [
+        "Your most recent cancelled order is Order #000000170 (dated 5/17/23, total $365.42, status Canceled)."
+      ],
+      "prompt_tokens": 30589,
+      "time_sec": 13.825,
+      "submission_contract": false,
+      "retrieval_repair": false,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T222735-6bf9b6/qwen38_flash__react__control__task231__seed1__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task231_react_seed1_baseline/outputs/231/control_seed_1/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task231_react_seed1_baseline/outputs/231/control_seed_1/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task231_react_seed1_baseline/outputs/231/control_seed_1/official_eval.json"
+    },
+    {
+      "cell_key": "task231_react_seed1_improved",
+      "pair_id": "task231_react_seed1",
+      "task_id": 231,
+      "architecture": "react",
+      "seed": 1,
+      "version": "improved",
+      "steps": 3,
+      "completed": true,
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "answer": [
+        "000000170"
+      ],
+      "prompt_tokens": 20875,
+      "time_sec": 13.25,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T222752-bb5405/qwen38_flash__react__control__task231__seed1__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task231_react_seed1_improved/outputs/231/control_seed_1/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task231_react_seed1_improved/outputs/231/control_seed_1/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task231_react_seed1_improved/outputs/231/control_seed_1/official_eval.json"
+    },
+    {
+      "cell_key": "task281_plan_execute_seed3_improved",
+      "pair_id": "task281_plan_execute_seed3",
+      "task_id": 281,
+      "architecture": "plan_execute",
+      "seed": 3,
+      "version": "improved",
+      "steps": 5,
+      "completed": true,
+      "official_success": false,
+      "official_status": "failure",
+      "official_score": 0.0,
+      "answer": [
+        {
+          "names": [
+            "Kids Toothbrush Replacement Heads for Oral B Kids Replaced Brush Heads Soft Precision Bristles Children Professional Care 16 Pack (16)",
+            "Oral-B Kids Extra Soft Replacement Brush Heads featuring STAR WARS, 2 count",
+            "Kids By Oral-b Stages Power Star Wars Replacement Heads 4 Pack"
+          ],
+          "min": 12.99,
+          "max": 18.99
+        }
+      ],
+      "prompt_tokens": 62545,
+      "time_sec": 29.702,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T222808-85add1/qwen38_flash__plan_execute__control__task281__seed3__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task281_plan_execute_seed3_improved/outputs/281/control_seed_3/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task281_plan_execute_seed3_improved/outputs/281/control_seed_3/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task281_plan_execute_seed3_improved/outputs/281/control_seed_3/official_eval.json"
+    },
+    {
+      "cell_key": "task281_plan_execute_seed3_baseline",
+      "pair_id": "task281_plan_execute_seed3",
+      "task_id": 281,
+      "architecture": "plan_execute",
+      "seed": 3,
+      "version": "baseline",
+      "steps": 7,
+      "completed": true,
+      "official_success": false,
+      "official_status": "failure",
+      "official_score": 0.0,
+      "answer": [
+        {
+          "names": [
+            "Oral-B Kids Extra Soft Replacement Brush Heads featuring STAR WARS, 2 count",
+            "Kids By Oral-b Stages Power Star Wars Replacement Heads 4 Pack",
+            "Kids Toothbrush Replacement Heads for Oral B Kids Replaced Brush Heads Soft Precision Bristles Children Professional Care 16 Pack (16)"
+          ],
+          "min": 12.99,
+          "max": 18.99
+        }
+      ],
+      "prompt_tokens": 104180,
+      "time_sec": 49.621,
+      "submission_contract": false,
+      "retrieval_repair": false,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T222841-4da17a/qwen38_flash__plan_execute__control__task281__seed3__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task281_plan_execute_seed3_baseline/outputs/281/control_seed_3/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task281_plan_execute_seed3_baseline/outputs/281/control_seed_3/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task281_plan_execute_seed3_baseline/outputs/281/control_seed_3/official_eval.json"
+    },
+    {
+      "cell_key": "task281_react_seed3_baseline",
+      "pair_id": "task281_react_seed3",
+      "task_id": 281,
+      "architecture": "react",
+      "seed": 3,
+      "version": "baseline",
+      "steps": 7,
+      "completed": true,
+      "official_success": false,
+      "official_status": "failure",
+      "official_score": 0.0,
+      "answer": [
+        {
+          "names": [
+            "Kids Toothbrush Replacement Heads for Oral B Kids Replaced Brush Heads Soft Precision Bristles Children Professional Care 16 Pack (16)",
+            "Oral-B Kids Extra Soft Replacement Brush Heads featuring STAR WARS, 2 count",
+            "Kids By Oral-b Stages Power Star Wars Replacement Heads 4 Pack"
+          ],
+          "min": 12.99,
+          "max": 18.99
+        }
+      ],
+      "prompt_tokens": 92531,
+      "time_sec": 31.099,
+      "submission_contract": false,
+      "retrieval_repair": false,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T222934-2c12ea/qwen38_flash__react__control__task281__seed3__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task281_react_seed3_baseline/outputs/281/control_seed_3/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task281_react_seed3_baseline/outputs/281/control_seed_3/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task281_react_seed3_baseline/outputs/281/control_seed_3/official_eval.json"
+    },
+    {
+      "cell_key": "task281_react_seed3_improved",
+      "pair_id": "task281_react_seed3",
+      "task_id": 281,
+      "architecture": "react",
+      "seed": 3,
+      "version": "improved",
+      "steps": 9,
+      "completed": true,
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "answer": [
+        {
+          "names": [
+            "Oral-B Kids Extra Soft Replacement Brush Heads featuring STAR WARS, 2 count",
+            "Kids By Oral-b Stages Power Star Wars Replacement Heads 4 Pack"
+          ],
+          "min": 12.99,
+          "max": 14.98
+        }
+      ],
+      "prompt_tokens": 143779,
+      "time_sec": 33.682,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T223009-142e7e/qwen38_flash__react__control__task281__seed3__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task281_react_seed3_improved/outputs/281/control_seed_3/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task281_react_seed3_improved/outputs/281/control_seed_3/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task281_react_seed3_improved/outputs/281/control_seed_3/official_eval.json"
+    },
+    {
+      "cell_key": "task132_react_seed2_improved",
+      "pair_id": "task132_react_seed2",
+      "task_id": 132,
+      "architecture": "react",
+      "seed": 2,
+      "version": "improved",
+      "steps": 11,
+      "completed": true,
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "answer": [
+        1
+      ],
+      "prompt_tokens": 245395,
+      "time_sec": 77.431,
+      "submission_contract": true,
+      "retrieval_repair": true,
+      "storage_state_sha256": "de5c518f8baab6a02dfba7296cbbf7935278c1c6fcc4b88d385b265741e9e3cd",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T223046-ba11c2/qwen38_flash__react__control__task132__seed2__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task132_react_seed2_improved/outputs/132/control_seed_2/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task132_react_seed2_improved/outputs/132/control_seed_2/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task132_react_seed2_improved/outputs/132/control_seed_2/official_eval.json"
+    },
+    {
+      "cell_key": "task132_react_seed2_baseline",
+      "pair_id": "task132_react_seed2",
+      "task_id": 132,
+      "architecture": "react",
+      "seed": 2,
+      "version": "baseline",
+      "steps": 3,
+      "completed": true,
+      "official_success": true,
+      "official_status": "success",
+      "official_score": 1.0,
+      "answer": [
+        "1"
+      ],
+      "prompt_tokens": 26789,
+      "time_sec": 25.894,
+      "submission_contract": false,
+      "retrieval_repair": false,
+      "storage_state_sha256": "de5c518f8baab6a02dfba7296cbbf7935278c1c6fcc4b88d385b265741e9e3cd",
+      "trace": "/data/webarena/langgraph_agent_fault_attribution_webarena/traces/20261112T223207-ddf31a/qwen38_flash__react__control__task132__seed2__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task132_react_seed2_baseline/outputs/132/control_seed_2/agent_response.json",
+      "network_har": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task132_react_seed2_baseline/outputs/132/control_seed_2/network.har",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/version_comparison_20261112/cells/task132_react_seed2_baseline/outputs/132/control_seed_2/official_eval.json"
+    }
+  ]
+}

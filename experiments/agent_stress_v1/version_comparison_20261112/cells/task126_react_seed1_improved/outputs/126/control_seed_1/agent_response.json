@@ -1,0 +1,6 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "UNKNOWN_ERROR",
+  "retrieved_data": null,
+  "error_details": "max_steps exhausted after 20 steps; no answer produced"
+}

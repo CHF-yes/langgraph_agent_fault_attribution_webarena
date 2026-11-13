@@ -1,0 +1,8 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "The order number of your most recent cancelled order is 000000170 (dated 5/17/23, total $365.42, Status: Canceled)."
+  ],
+  "error_details": null
+}
