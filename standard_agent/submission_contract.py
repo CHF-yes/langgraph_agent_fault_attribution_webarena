@@ -1,10 +1,17 @@
-"""Schema-driven final-answer validation shared by both agent architectures.
+"""Retrieval submission convention shared by both agent architectures.
 
-The official WebArena-Verified evaluator scores ``retrieved_data`` against the
-task's ``results_schema``.  A prose answer in an array- or object-schema task
-(historically task 231) is therefore unscoreable even when the content is
-correct.  This module validates only the *shape* of the answer -- never the
-expected value -- so the agent can repair its submission before the trial ends.
+The model must be able to submit what it found without learning the evaluator's
+answer.  The dataset ``results_schema`` is derived from ground truth (every
+``type: null`` task expects ``retrieved_data: null``), so neither the prompt nor
+the validator reads it.  Instead both use one public convention:
+
+- valid JSON is accepted as a non-empty result,
+- an explicit "no matching result" statement (or a JSON empty value) is accepted
+  as an empty result,
+- anything else costs one correction; a second invalid submission ends the trial
+  as ``submission_contract_failed``.
+
+Whether a submitted result is correct is decided only by the official evaluator.
 
 Enablement is explicit: the caller must set ``SUBMISSION_CONTRACT=1`` (the
 baseline arm leaves it off).  The module itself is dependency-free.
@@ -63,177 +70,53 @@ def parse_answer(answer: str) -> tuple[Any, str | None]:
         return None, f"the answer is not valid JSON ({exc.msg} at line {exc.lineno})"
 
 
-def _type_ok(value: Any, expected: Any) -> bool:
-    expected_types = expected if isinstance(expected, list) else [expected]
-    for name in expected_types:
-        if name == "null" and value is None:
-            return True
-        if name == "array" and isinstance(value, list):
-            return True
-        if name == "object" and isinstance(value, dict):
-            return True
-        if name == "string" and isinstance(value, str):
-            return True
-        if name == "boolean" and isinstance(value, bool):
-            return True
-        if name == "number" and isinstance(value, (int, float)) and not isinstance(value, bool):
-            return True
-        if name == "integer" and isinstance(value, int) and not isinstance(value, bool):
-            return True
-    return False
+def validate_submission(answer: str, *, task_type: str | None) -> SubmissionResult:
+    """Check only the public retrieval submission convention.
 
-
-PLURAL_TYPES = {
-    "string": "strings", "number": "numbers", "integer": "integers",
-    "object": "objects", "boolean": "booleans", "array": "arrays",
-}
-
-
-def _describe_type(schema: dict | None) -> str:
-    if not schema:
-        return "a value"
-    schema_type = schema.get("type")
-    if isinstance(schema_type, list):
-        return " or ".join(str(item) for item in schema_type)
-    if schema_type == "array":
-        item = (schema.get("items") or {}).get("type")
-        return f"array of {PLURAL_TYPES.get(str(item), item or 'values')}"
-    return str(schema_type or "value")
-
-
-def _validate(value: Any, schema: dict | None, path: str, errors: list[str]) -> None:
-    if not isinstance(schema, dict) or not schema:
-        return
-    expected = schema.get("type")
-    if expected is not None and not _type_ok(value, expected):
-        errors.append(f"{path} must be {_describe_type(schema)}, got {type(value).__name__}")
-        return
-    if isinstance(value, dict):
-        properties = schema.get("properties") or {}
-        required = schema.get("required") or list(properties)
-        for key in required:
-            if key not in value:
-                errors.append(f"{path}.{key} is required")
-        for key, child in properties.items():
-            if key in value:
-                _validate(value[key], child, f"{path}.{key}", errors)
-    elif isinstance(value, list):
-        items = schema.get("items")
-        if isinstance(items, dict):
-            for index, item in enumerate(value):
-                _validate(item, items, f"{path}[{index}]", errors)
-
-
-def _schema_keys(schema: dict | None) -> list[str]:
-    if not isinstance(schema, dict):
-        return []
-    if schema.get("type") == "object":
-        return list((schema.get("properties") or {}).keys())
-    if schema.get("type") == "array":
-        items = schema.get("items") or {}
-        if isinstance(items, dict) and items.get("type") == "object":
-            return list((items.get("properties") or {}).keys())
-    return []
-
-
-def validate_submission(answer: str, *, results_schema: dict | None,
-                        task_type: str | None) -> SubmissionResult:
-    """Check only the public output shape of a final answer.
-
-    ``results_schema`` is the task's dataset schema, which contains no expected
-    values.  Return a canonical JSON string on success so the response writer
-    and the score binding see exactly the structure that was validated.
+    No dataset schema, expected value, or task id is consulted, so changing the
+    evaluator's empty-result field cannot change what the model sees or whether
+    its submission is accepted.
     """
     task_type = str(task_type or "RETRIEVE").upper()
     if task_type != "RETRIEVE":
         return SubmissionResult(True, str(answer or ""))
 
-    schema_type = str((results_schema or {}).get("type") or "").casefold()
-    if schema_type == "null":
-        if _is_not_found(str(answer or "")):
-            return SubmissionResult(True, str(answer or ""))
-        parsed, parse_error = parse_answer(answer)
-        # Do not name the expected empty result here: the dataset's null schema
-        # is derived from ground truth, so rejection feedback must stay generic.
-        shape_error = ("the answer does not match the official response shape; "
-                       "submit only a value that your browser investigation supports")
-        if parse_error:
-            return SubmissionResult(False, str(answer or ""), shape_error)
-        if parsed is None:
-            return SubmissionResult(True, "null")
-        return SubmissionResult(False, str(answer or ""), shape_error)
+    text = str(answer or "").strip()
+    if not text:
+        return SubmissionResult(
+            False, "",
+            "the answer is empty; submit your findings as JSON or state that no "
+            "matching result was found",
+        )
+    if _is_not_found(text):
+        return SubmissionResult(True, text)
 
-    parsed, parse_error = parse_answer(answer)
+    parsed, parse_error = parse_answer(text)
     if parse_error:
-        expected = _describe_type(results_schema)
         return SubmissionResult(
-            False, str(answer or ""),
-            f"expected a JSON {expected} but {parse_error}. Call stop again with only valid JSON",
+            False, text,
+            f"{parse_error}. Submit only valid JSON, or state explicitly that no "
+            "matching result was found",
         )
-    errors: list[str] = []
-    _validate(parsed, results_schema, "answer", errors)
-    if errors:
-        expected = _describe_type(results_schema)
-        keys = _schema_keys(results_schema)
-        key_hint = f" with keys {', '.join(keys)}" if keys else ""
-        return SubmissionResult(
-            False, str(answer or ""),
-            f"expected a JSON {expected}{key_hint}; problems: {'; '.join(errors[:4])}. "
-            "Call stop again with only valid JSON",
-        )
-    normalized = json.dumps(parsed, ensure_ascii=False, separators=(",", ":"))
-    return SubmissionResult(True, normalized)
+    if parsed is None or parsed == []:
+        return SubmissionResult(True, "No matching result found.")
+    return SubmissionResult(
+        True, json.dumps(parsed, ensure_ascii=False, separators=(",", ":")))
 
 
-def contract_context(results_schema: dict | None, task_type: str | None) -> str:
-    """Short, schema-specific instruction for the agent prompts.
+def contract_context(task_type: str | None) -> str:
+    """The same public submission convention for every retrieval task.
 
-    This is intentionally shape-only and contains no expected values.
+    Deliberately independent of the task definition: the prompt cannot reveal
+    whether the evaluator expects a non-empty result or an empty one.
     """
-    if str(task_type or "RETRIEVE").upper() != "RETRIEVE" or not results_schema:
+    if str(task_type or "RETRIEVE").upper() != "RETRIEVE":
         return ""
-    schema_type = str(results_schema.get("type") or "").casefold()
-    keys = _schema_keys(results_schema)
-    if schema_type == "null":
-        # The dataset uses type null only when the ground-truth retrieved_data is
-        # null (verified across all 514 such tasks), so naming the expected shape
-        # here would leak whether the answer is empty.  Give the public convention
-        # for reporting an exhaustive search that found nothing instead.
-        return (
-            "\n## Final Answer Format\n"
-            "Report only what your browser investigation establishes. If the "
-            "inspection is exhaustive and finds no matching result, call stop with "
-            "an explicit statement that no matching result was found; do not invent "
-            "values.\n"
-        )
-    if schema_type == "array":
-        items = results_schema.get("items") or {}
-        item_type = str((items or {}).get("type") or "").casefold()
-        if item_type == "object":
-            described = f"objects with keys: {', '.join(keys)}" if keys else "objects"
-            return (
-                "\n## Official Response Schema\n"
-                f"The official scoring contract requires a JSON array of {described}. "
-                "Use the exact requested key names and JSON types for every field. "
-                "Put ONLY the JSON array in stop(answer); no prose or Markdown.\n"
-            )
-        described = PLURAL_TYPES.get(item_type, item_type or "values")
-        return (
-            "\n## Official Response Schema\n"
-            f"The official scoring contract requires a JSON array of {described}. "
-            "Put ONLY the JSON array in stop(answer); no prose or Markdown. "
-            "If there are multiple matches, include every match as a separate element.\n"
-        )
-    if schema_type == "object":
-        described = f"keys: {', '.join(keys)}" if keys else "the requested keys"
-        return (
-            "\n## Official Response Schema\n"
-            f"The official scoring contract requires a JSON object with {described}. "
-            "Use JSON numbers for numeric fields and put ONLY the JSON object in "
-            "stop(answer); no prose or Markdown.\n"
-        )
     return (
-        "\n## Official Response Schema\n"
-        f"The official scoring contract requires a JSON {schema_type or 'value'}. "
-        "Put ONLY that JSON value in stop(answer); no prose or Markdown.\n"
+        "\n## Final Answer Format\n"
+        "Submit only valid JSON. Report every matching item as an element of a "
+        "JSON array; when the task asks for a single object, number, or string, "
+        "a one-element array containing it is valid. If the inspection is "
+        "exhaustive and finds no matching result, call stop with an explicit "
+        "statement that no matching result was found; do not invent values.\n"
     )

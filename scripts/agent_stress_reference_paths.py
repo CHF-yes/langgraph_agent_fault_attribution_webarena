@@ -605,7 +605,68 @@ def write_login_states(state_dir: Path, accounts: dict, *, headless: bool = True
     return manifest
 
 
+def reference_task_118(page: Page, recorder: Recorder, accounts: dict) -> tuple[object, dict, list[str]]:
+    """Task 118: reach a product page for a jaw-bruxism aid.
+
+    Normal path uses the shopping search endpoint that the HTTP acceptance
+    faults; the alternative path reaches the same product page directly
+    without touching that endpoint.  The official task type is NAVIGATE, so
+    the recorded answer is the reached page, not a retrieval payload.
+    """
+    query = "night guard"
+    goto(page, recorder, f"{SHOPPING}/catalogsearch/result/?q=night+guard",
+         note="normal path: shopping search endpoint")
+    recorder.snapshot(page, "search_results", html=True)
+    links = page.eval_on_selector_all(
+        "li.product-item a.product-item-link, a.product-item-link",
+        """els => els.map(a => ({
+            text: (a.innerText || '').replace(/\s+/g, ' ').trim(),
+            href: a.href,
+        })).filter(item => item.href)""",
+    )
+    if not links:
+        raise RuntimeError("search returned no product links")
+    markers = ("night guard", "mouth guard", "bruxism", "dental guard", "bite guard")
+    selected = next((item for item in links
+                     if any(marker in item["text"].casefold() for marker in markers)), links[0])
+    page.goto(selected["href"], wait_until="domcontentloaded")
+    page.wait_for_load_state("domcontentloaded")
+    recorder.action(page, "click", {"href": selected["href"], "text": selected["text"]},
+                    note="open selected product from search results")
+    recorder.snapshot(page, "product_from_search", html=True)
+    normal_url = page.url
+    title = page.title()
+
+    # Legal alternative: direct navigation to the same product page, without
+    # issuing a request to /catalogsearch/result.
+    goto(page, recorder, normal_url, note="alternative path: direct product URL")
+    recorder.snapshot(page, "product_direct", html=True)
+    alternative_url = page.url
+
+    evidence = {
+        "normal_path": {
+            "search_url": f"{SHOPPING}/catalogsearch/result/?q=night+guard",
+            "candidate_links": len(links),
+            "selected": selected,
+            "final_url": normal_url,
+            "title": title,
+        },
+        "alternative_path": {
+            "method": "direct product URL without the search endpoint",
+            "final_url": alternative_url,
+        },
+        "task_type": "NAVIGATE",
+    }
+    answer = f"Opened the product page for {selected['text']} at {alternative_url}"
+    notes = [
+        "Task 118 is NAVIGATE; success is a completed response with null retrieved_data.",
+        "Normal path used the catalogsearch endpoint; the alternative path avoided it.",
+    ]
+    return answer, evidence, notes
+
+
 TASKS = {
+    118: ("I have a jaw bruxism problem, go to the product page for something that could alleviate the problem.", "shopping", reference_task_118),
     231: ("Get the order number of my most recent cancelled order", "shopping", reference_task_231),
     169: ("Get the project ID(s) of my personal project(s) that received the most stars", "gitlab", reference_task_169),
     281: ("Provide the full names of Oral B brush heads designed for children and the price range", "shopping", reference_task_281),

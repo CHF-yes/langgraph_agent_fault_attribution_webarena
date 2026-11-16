@@ -212,6 +212,8 @@ def build_http_plan(out: Path) -> dict:
                 "fault_intensity": intensity,
                 "fault_enabled": condition != "control",
                 "fault_seed": 1,
+                "experiment_id": "ep-http-service-v1",
+                "fault_type": "web_http_error",
                 "max_steps": MAX_STEPS,
                 "window_steps": WINDOW_STEPS if condition != "control" else None,
                 "output_dir": str((out / "cells" / key).relative_to(ROOT)),
@@ -263,6 +265,7 @@ def build_screening_plan(out: Path) -> dict:
             for seed in (1, 2, 3):
                 key = f"{profile}_task{task['task_id']}_{architecture}_seed{seed}"
                 output_root = out / "cells" / key / "outputs"
+                arm = output_root / str(task["task_id"]) / f"control_seed_{seed}"
                 command = [
                     python_cmd(), "main.py", "--benchmark", "--condition", "control",
                     "--site", task["site"], "--url", task["start_url"],
@@ -284,7 +287,9 @@ def build_screening_plan(out: Path) -> dict:
                     "seed": seed,
                     "max_steps": MAX_STEPS,
                     "condition": "control",
+                    "experiment_id": "stage-c",
                     "output_dir": str((out / "cells" / key).relative_to(ROOT)),
+                    "arm_dir": str(arm.relative_to(ROOT)),
                     "command": command,
                 })
     random.Random(SCHEDULE_SEED).shuffle(cells)
