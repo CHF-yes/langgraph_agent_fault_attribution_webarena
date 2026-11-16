@@ -1,0 +1,99 @@
+{
+  "schema": "agent_stress_reference_path/1",
+  "task_id": 118,
+  "intent": "I have a jaw bruxism problem, go to the product page for something that could alleviate the problem.",
+  "recorded_at": "2026-11-16T08:58:44.353983+00:00",
+  "steps": 3,
+  "actions": [
+    {
+      "step": 1,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:7770/catalogsearch/result/?q=night+guard"
+      },
+      "url_before": "about:blank",
+      "url_after": "http://localhost:7770/catalogsearch/result/?q=night+guard",
+      "note": "normal path: shopping search endpoint"
+    },
+    {
+      "step": 2,
+      "action": "click",
+      "args": {
+        "href": "http://localhost:7770/remi-at-home-custom-night-guard-kit-create-the-best-fitting-dental-grade-top-and-bottom-2-mouth-guards-for-grinding-teeth-bruxism-tmj-relief-night-guard.html",
+        "text": "Remi At-Home Custom Night Guard Kit - Create The Best Fitting Dental Grade Top And Bottom (2) Mouth Guards for Grinding Teeth (Bruxism) & TMJ Relief Night Guard"
+      },
+      "url_before": "http://localhost:7770/remi-at-home-custom-night-guard-kit-create-the-best-fitting-dental-grade-top-and-bottom-2-mouth-guards-for-grinding-teeth-bruxism-tmj-relief-night-guard.html",
+      "url_after": "http://localhost:7770/remi-at-home-custom-night-guard-kit-create-the-best-fitting-dental-grade-top-and-bottom-2-mouth-guards-for-grinding-teeth-bruxism-tmj-relief-night-guard.html",
+      "note": "open selected product from search results"
+    },
+    {
+      "step": 3,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:7770/remi-at-home-custom-night-guard-kit-create-the-best-fitting-dental-grade-top-and-bottom-2-mouth-guards-for-grinding-teeth-bruxism-tmj-relief-night-guard.html"
+      },
+      "url_before": "http://localhost:7770/remi-at-home-custom-night-guard-kit-create-the-best-fitting-dental-grade-top-and-bottom-2-mouth-guards-for-grinding-teeth-bruxism-tmj-relief-night-guard.html",
+      "url_after": "http://localhost:7770/remi-at-home-custom-night-guard-kit-create-the-best-fitting-dental-grade-top-and-bottom-2-mouth-guards-for-grinding-teeth-bruxism-tmj-relief-night-guard.html",
+      "note": "alternative path: direct product URL"
+    }
+  ],
+  "pages": [
+    {
+      "step": 2,
+      "name": "search_results",
+      "url": "http://localhost:7770/catalogsearch/result/?q=night+guard",
+      "text": "pages/02_search_results.txt",
+      "html": "pages/02_search_results.html"
+    },
+    {
+      "step": 3,
+      "name": "product_from_search",
+      "url": "http://localhost:7770/remi-at-home-custom-night-guard-kit-create-the-best-fitting-dental-grade-top-and-bottom-2-mouth-guards-for-grinding-teeth-bruxism-tmj-relief-night-guard.html",
+      "text": "pages/03_product_from_search.txt",
+      "html": "pages/03_product_from_search.html"
+    },
+    {
+      "step": 4,
+      "name": "product_direct",
+      "url": "http://localhost:7770/remi-at-home-custom-night-guard-kit-create-the-best-fitting-dental-grade-top-and-bottom-2-mouth-guards-for-grinding-teeth-bruxism-tmj-relief-night-guard.html",
+      "text": "pages/04_product_direct.txt",
+      "html": "pages/04_product_direct.html"
+    }
+  ],
+  "answer": "Opened the product page for Remi At-Home Custom Night Guard Kit - Create The Best Fitting Dental Grade Top And Bottom (2) Mouth Guards for Grinding Teeth (Bruxism) & TMJ Relief Night Guard at http://localhost:7770/remi-at-home-custom-night-guard-kit-create-the-best-fitting-dental-grade-top-and-bottom-2-mouth-guards-for-grinding-teeth-bruxism-tmj-relief-night-guard.html",
+  "source_evidence": {
+    "normal_path": {
+      "search_url": "http://localhost:7770/catalogsearch/result/?q=night+guard",
+      "candidate_links": 12,
+      "selected": {
+        "text": "Remi At-Home Custom Night Guard Kit - Create The Best Fitting Dental Grade Top And Bottom (2) Mouth Guards for Grinding Teeth (Bruxism) & TMJ Relief Night Guard",
+        "href": "http://localhost:7770/remi-at-home-custom-night-guard-kit-create-the-best-fitting-dental-grade-top-and-bottom-2-mouth-guards-for-grinding-teeth-bruxism-tmj-relief-night-guard.html"
+      },
+      "final_url": "http://localhost:7770/remi-at-home-custom-night-guard-kit-create-the-best-fitting-dental-grade-top-and-bottom-2-mouth-guards-for-grinding-teeth-bruxism-tmj-relief-night-guard.html",
+      "title": "Remi At-Home Custom Night Guard Kit - Create The Best Fitting Dental Grade Top And Bottom (2) Mouth Guards for Grinding Teeth (Bruxism) & TMJ Relief Night Guard"
+    },
+    "alternative_path": {
+      "method": "direct product URL without the search endpoint",
+      "final_url": "http://localhost:7770/remi-at-home-custom-night-guard-kit-create-the-best-fitting-dental-grade-top-and-bottom-2-mouth-guards-for-grinding-teeth-bruxism-tmj-relief-night-guard.html"
+    },
+    "task_type": "NAVIGATE"
+  },
+  "notes": [
+    "Task 118 is NAVIGATE; success is a completed response with null retrieved_data.",
+    "Normal path used the catalogsearch endpoint; the alternative path avoided it."
+  ],
+  "site": "shopping",
+  "public_output": {
+    "task_type": "NAVIGATE",
+    "status": "SUCCESS",
+    "retrieved_data": null,
+    "error_details": null
+  },
+  "official_success": true,
+  "official_status": "success",
+  "official_score": 1.0,
+  "official_eval": "official_eval.json",
+  "agent_response": "agent_response.json",
+  "network_har": "network.har",
+  "network_har_redacted": true
+}

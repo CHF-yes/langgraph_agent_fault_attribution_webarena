@@ -1,14 +1,18 @@
 {
   "schema": "agent_stress_next_stage_freeze/1",
   "status": "frozen_for_http_acceptance_and_screening_plans",
-  "created_at": "2026-11-16T08:32:00.467168+00:00",
+  "created_at": "2026-11-16T09:00:19.184615+00:00",
   "approved_for_paid_runs": false,
-  "approval_note": "Plan generation and zero-model checks only. Each paid batch still needs its own frozen authorization and token stop line.",
+  "approval_note": "Plan generation and zero-model checks only. Paid batches use separate authorization files; the 12-trial HTTP acceptance is approved, the 480-trial screening is still a candidate.",
   "code": {
     "branch": "codex/agent-stress-preparation",
-    "commit": "1364605e2a857a053c8f6ce07cccadc4c07a1c1e",
-    "fingerprint_sha256": "13bd3dcc398a92ba48a9f8df9f8e7b75bbfacc4b31b72b1e9547fa6ab4df1694",
+    "commit": "8029eb9cf247fc1fc47b1ebb6c80d67da31d6ddc",
+    "fingerprint_sha256": "8b8a471557d3227f4d005f779fdd0461f1614a183d77d37bb82547b653291619",
     "dirty": false
+  },
+  "history": {
+    "superseded_plan_commit": "b887c77",
+    "note": "The b887c77 plans predate the public-contract fix and the validated runner; they remain in git history and were not executed."
   },
   "dataset": {
     "path": "/data/webarena/webarena-dataset/webarena-verified.json",
@@ -68,14 +72,14 @@
   "plans": {
     "http_acceptance": {
       "path": "experiments/http_acceptance_v1/plan_20261116/plan.json",
-      "plan_sha256": "62be674c1bb9d4fa9a42dc58af2ddfb806ab396139b5f067f9e21645b860a84c",
+      "plan_sha256": "d9b47f0710929daa50783daf3ddc0014e80fc024e9b886345975ee2e2f296310",
       "planned_trials": 12,
       "preflight": "experiments/http_acceptance_v1/plan_20261116/preflight.json",
       "preflight_sha256": "eb9e81f40b4a2ecf512b08d198ed63a5b1db05ea7f6e32220dabb530306dab17"
     },
     "screening_480": {
       "path": "experiments/agent_stress_v1/screening_480_plan_20261116/plan.json",
-      "plan_sha256": "883f0997ca35b4b39353e299b1f95246ec2b952d5bab3c37d4b6fc87b1d76ddf",
+      "plan_sha256": "765ecc47d8e5db03c4a41bc9012ac7a8d938444afa9ecc7227c49151e4829efb",
       "planned_trials": 480,
       "preflight": "experiments/agent_stress_v1/screening_480_plan_20261116/preflight.json",
       "preflight_sha256": "7dae8a0343b093cd6b2acd893acd0d783a4683ca1d5dc7b270bce774690e9a64"
@@ -85,11 +89,13 @@
     "preflight_qwen38_flash": "experiments/agent_stress_v1/execution_prep_20261116/preflight_qwen38_flash.json",
     "preflight_deepseek_v41_flash": "experiments/agent_stress_v1/execution_prep_20261116/preflight_deepseek_v41_flash.json",
     "pytest_log": "experiments/agent_stress_v1/execution_prep_20261116/pytest_20261116.log",
-    "pytest_summary": "396 passed, 1 warning, 4 subtests passed"
+    "pytest_summary": "398 passed, 1 warning, 17 subtests passed in 14.70s",
+    "task118_reference_path": "experiments/agent_stress_v1/reference_paths_20261116/task118/reference_path.json",
+    "task118_reference_success": true
   },
   "notes": [
-    "HTTP acceptance uses the frozen ep-http-service-v1 protocol with an independent output root; protocol code is not aliased to a new id.",
-    "task 118 normal-path recheck and sustained-window acceptance remain to be executed before a paid batch.",
+    "HTTP acceptance uses the frozen ep-http-service-v1 protocol with an independent output root.",
+    "task 118 normal and direct-product reference paths pass native scoring.",
     "Screening candidates are the 40 holdout_candidate contracts; eligibility and the 24-task/12-template selection are applied after clean results."
   ]
 }
