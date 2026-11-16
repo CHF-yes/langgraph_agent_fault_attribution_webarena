@@ -219,8 +219,12 @@ def _endpoint(base_url: str) -> str:
     return base_url.rstrip("/") + "/chat/completions"
 
 
-def chat(profile: dict, messages: list, timeout: float = 180.0, max_tokens: int = 64) -> dict:
+def chat(profile: dict, messages: list, timeout: float = 180.0, max_tokens: int = 512) -> dict:
     """One non-streaming completion.  Returns the parsed body plus measured latency.
+
+    ``max_tokens`` must leave room for reasoning content on reasoning models:
+    DeepSeek Flash spent ~56 reasoning tokens on the arithmetic probe, and a
+    64-token cap returned empty content while still passing the other items.
 
     Raises ``RuntimeError`` with the status and body on an HTTP error -- the body
     is what distinguishes "wrong model id" from "bad key" from "endpoint moved",
