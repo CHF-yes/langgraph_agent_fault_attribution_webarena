@@ -258,6 +258,15 @@ def check_authorization(plan: dict, path: Path) -> tuple[dict, list[str]]:
     return auth, errors
 
 
+def cell_task_id(cell: dict, plan: dict) -> int:
+    task_id = cell.get("task_id")
+    if task_id is None:
+        task_id = (plan.get("task") or {}).get("task_id")
+    if task_id is None:
+        raise ValueError(f"cell {cell.get('cell_key')} has no task id")
+    return task_id
+
+
 def arm_dir(cell: dict) -> Path:
     if not cell.get("arm_dir"):
         raise ValueError(f"cell {cell.get('cell_key')} has no arm_dir")
@@ -301,8 +310,9 @@ def verify_completed(cell: dict, plan: dict) -> tuple[dict | None, list[str]]:
     response_path = required["agent_response.json"]
     har_path = required["network.har"]
     evaluation = load(arm / "official_eval.json")
+    task_id = cell_task_id(cell, plan)
     expected = {
-        "task_id": cell["task_id"],
+        "task_id": task_id,
         "model_profile": cell["model_profile"],
         "architecture": cell["architecture"],
         "fault_seed": cell.get("seed", cell.get("fault_seed")),
@@ -341,7 +351,7 @@ def verify_completed(cell: dict, plan: dict) -> tuple[dict | None, list[str]]:
         return None, errors
     response = load(response_path)
     return {
-        "cell_key": cell["cell_key"], "task_id": cell["task_id"],
+        "cell_key": cell["cell_key"], "task_id": task_id,
         "model_profile": cell["model_profile"], "architecture": cell["architecture"],
         "seed": cell.get("seed", cell.get("fault_seed")),
         "condition": cell["condition"],
@@ -371,7 +381,7 @@ def evaluate_and_verify(cell: dict, plan: dict, *, reevaluate: bool) -> tuple[di
         if not response_path.is_file():
             return None, ["missing agent_response.json"]
         evaluation = evaluate_task_safe(
-            cell["task_id"], agent_response_path=response_path,
+            cell_task_id(cell, plan), agent_response_path=response_path,
             network_trace_path=har_path if har_path.is_file() else None,
             config_path=CONFIG)
         evaluation["_evaluation_binding"] = {
