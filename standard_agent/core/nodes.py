@@ -26,7 +26,11 @@ from standard_agent.core.plan_decision import normalize_decision
 from standard_agent.core.state import AgentState
 from standard_agent.core.trace import append_event, append_trace, make_entry
 from standard_agent.config import settings
-from standard_agent.submission_contract import contract_context, validate_submission
+from standard_agent.submission_contract import (
+    MAX_SUBMISSION_ATTEMPTS,
+    contract_context,
+    validate_submission,
+)
 from standard_agent.llm.provider import (
     create_llm,
     extract_served_metadata,
@@ -873,6 +877,7 @@ def run_tools(state: AgentState, config: RunnableConfig) -> dict:
 
     history_entries = []
     done = False
+    protocol_failed = False
     answer = ""
     # 一条 AI message 可能携带多个 tool_call，LangGraph 按顺序返回 ToolMessage
     for index, (tc, tm) in enumerate(zip(tool_calls, tool_msgs)):
@@ -892,10 +897,18 @@ def run_tools(state: AgentState, config: RunnableConfig) -> dict:
             if not check.ok:
                 rejected = True
                 rejections += 1
-                obs_text = (
-                    f"[Error] Submission rejected: {check.error}. "
-                    "The task is NOT complete. Call stop again with a corrected answer."
-                )
+                if rejections >= MAX_SUBMISSION_ATTEMPTS:
+                    protocol_failed = True
+                    obs_text = (
+                        f"[Error] Submission protocol failure: {check.error}. "
+                        f"The corrected submission was still invalid after "
+                        f"{rejections} attempts; the trial is ending."
+                    )
+                else:
+                    obs_text = (
+                        f"[Error] Submission rejected: {check.error}. "
+                        "The task is NOT complete. Call stop again with a corrected answer."
+                    )
                 error = True
                 if tm is not None:
                     try:
@@ -918,6 +931,18 @@ def run_tools(state: AgentState, config: RunnableConfig) -> dict:
                         "error": check.error,
                     },
                 )
+                if protocol_failed:
+                    append_event(
+                        thread_id, event="submission_contract_failed",
+                        step=step_count, task=task, url=url,
+                        data={
+                            "architecture": architecture,
+                            "phase": "executor",
+                            "attempt": rejections,
+                            "answer": candidate,
+                            "error": check.error,
+                        },
+                    )
             else:
                 answer = check.normalized
 
@@ -954,7 +979,13 @@ def run_tools(state: AgentState, config: RunnableConfig) -> dict:
     }
     if rejections != int(state.get("submission_rejections", 0) or 0):
         update["submission_rejections"] = rejections
-    if done:
+    if protocol_failed:
+        # The second invalid submission terminates the trial as an explicit
+        # protocol failure; it is not a valid answer and must not be scored.
+        update["done"] = True
+        update["answer"] = ""
+        update["error"] = "submission_contract_failed"
+    elif done:
         update["done"] = True
         update["answer"] = answer
     return update

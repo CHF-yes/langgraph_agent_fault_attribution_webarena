@@ -736,12 +736,18 @@ def run_benchmark(args):
 
             # 先统一计算完成状态；是否正确由 BenchmarkRunner 的 evaluator 决定。
             completed, _ = evaluate_answer(done, answer, [])
-            success = completed
             # 步数耗尽：答案串是 harness 合成的诊断，必须走 error_details，
             # 不能当成检索答案提交（否则预算产物会被评分成检索结果）。
             cap_exhausted = is_cap_exhausted(done, answer)
-            diagnostic = (f"max_steps exhausted after {steps} steps; "
-                          f"no answer produced" if cap_exhausted else None)
+            contract_failed = result.get("error") == "submission_contract_failed"
+            if contract_failed:
+                completed = False
+            success = completed
+            diagnostic = (
+                f"max_steps exhausted after {steps} steps; no answer produced"
+                if cap_exhausted else
+                ("submission protocol failure: corrected stop(answer) was still "
+                 "invalid after the allowed retry" if contract_failed else None))
 
             log = proxy.get_injection_log()
             total_delay = sum(

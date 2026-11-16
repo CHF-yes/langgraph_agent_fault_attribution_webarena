@@ -92,6 +92,14 @@ class TestValidateSubmission(unittest.TestCase):
             "Opened the requested page.", results_schema=None, task_type="NAVIGATE")
         self.assertTrue(result.ok)
 
+    def test_null_schema_rejection_does_not_state_the_expected_empty_result(self):
+        result = validate_submission(
+            '["candidate value"]', results_schema=NULL_SCHEMA,
+            task_type="RETRIEVE")
+        self.assertFalse(result.ok)
+        self.assertNotIn("expects no result", result.error)
+        self.assertNotIn("no matching result", result.error)
+
     def test_null_schema_accepts_explicit_not_found(self):
         self.assertTrue(validate_submission(
             "No matching reviewer found.", results_schema=NULL_SCHEMA,
@@ -147,11 +155,43 @@ class TestRunToolsSubmissionLoop(unittest.TestCase):
         self.assertEqual(out.get("submission_rejections"), 1)
         self.assertTrue(out["messages"][-1].content.startswith("[Error] Submission rejected"))
 
+    def test_second_invalid_submission_ends_as_protocol_failure(self):
+        state = _tool_state("The order is 170.")
+        state["submission_rejections"] = 1
+        with patch.dict(os.environ, {"SUBMISSION_CONTRACT": "1"}):
+            out = self._run(state)
+        self.assertTrue(out.get("done"))
+        self.assertEqual(out.get("answer"), "")
+        self.assertEqual(out.get("error"), "submission_contract_failed")
+        self.assertEqual(out.get("submission_rejections"), 2)
+        self.assertTrue(
+            out["messages"][-1].content.startswith("[Error] Submission protocol failure"))
+
+    def test_valid_correction_after_rejection_finishes(self):
+        state = _tool_state('["170"]')
+        state["submission_rejections"] = 1
+        with patch.dict(os.environ, {"SUBMISSION_CONTRACT": "1"}):
+            out = self._run(state)
+        self.assertTrue(out.get("done"))
+        self.assertEqual(out.get("answer"), '["170"]')
+        self.assertNotEqual(out.get("error"), "submission_contract_failed")
+
     def test_accepts_valid_json_and_finishes(self):
         with patch.dict(os.environ, {"SUBMISSION_CONTRACT": "1"}):
             out = self._run(_tool_state('["170"]'))
         self.assertTrue(out.get("done"))
         self.assertEqual(out.get("answer"), '["170"]')
+
+    def test_null_schema_rejection_feedback_is_generic(self):
+        state = _tool_state('["candidate value"]')
+        state["submission_schema"] = NULL_SCHEMA
+        with patch.dict(os.environ, {"SUBMISSION_CONTRACT": "1"}):
+            out = self._run(state)
+        self.assertFalse(out.get("done", False))
+        feedback = out["messages"][-1].content
+        self.assertTrue(feedback.startswith("[Error] Submission rejected"))
+        self.assertNotIn("expects no result", feedback)
+        self.assertNotIn("no matching result", feedback)
 
     def test_baseline_with_flag_off_keeps_old_behavior(self):
         with patch.dict(os.environ, {"SUBMISSION_CONTRACT": "0"}):
@@ -169,6 +209,19 @@ class TestPromptContexts(unittest.TestCase):
             )
         self.assertIn("JSON array", context)
         self.assertIn("stop(answer)", context)
+
+    def test_null_schema_prompt_does_not_assert_the_answer_is_empty(self):
+        with patch.dict(os.environ, {"SUBMISSION_CONTRACT": "1"}):
+            context = nodes._output_format_context(
+                "Find reviews that mention this product", NULL_SCHEMA, "RETRIEVE")
+        self.assertNotIn("expects NO matching result", context)
+        self.assertNotIn("This task expects", context)
+        self.assertIn("If the inspection is exhaustive", context)
+        # Same public contract regardless of which null-schema task is used.
+        with patch.dict(os.environ, {"SUBMISSION_CONTRACT": "1"}):
+            other = nodes._output_format_context(
+                "List all orders from last week", NULL_SCHEMA, "RETRIEVE")
+        self.assertEqual(context, other)
 
     def test_baseline_has_no_schema_context_when_flag_off(self):
         with patch.dict(os.environ, {"SUBMISSION_CONTRACT": "0"}):
@@ -228,8 +281,10 @@ class TestContractContext(unittest.TestCase):
         for key in ("names", "min", "max"):
             self.assertIn(key, context)
 
-    def test_null_schema_explains_no_result(self):
-        self.assertIn("NO matching result", contract_context(NULL_SCHEMA, "RETRIEVE"))
+    def test_null_schema_states_only_the_general_empty_result_convention(self):
+        context = contract_context(NULL_SCHEMA, "RETRIEVE")
+        self.assertIn("If the inspection is exhaustive", context)
+        self.assertNotIn("expects NO matching result", context)
 
 
 if __name__ == "__main__":

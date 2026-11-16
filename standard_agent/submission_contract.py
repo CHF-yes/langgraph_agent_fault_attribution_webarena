@@ -15,6 +15,8 @@ import json
 from dataclasses import dataclass
 from typing import Any
 
+MAX_SUBMISSION_ATTEMPTS = 2
+
 NOT_FOUND_MARKERS = (
     "no reviewer", "no matching", "no match", "none found",
     "nothing found", "not found", "no result", "no results",
@@ -151,13 +153,15 @@ def validate_submission(answer: str, *, results_schema: dict | None,
         if _is_not_found(str(answer or "")):
             return SubmissionResult(True, str(answer or ""))
         parsed, parse_error = parse_answer(answer)
+        # Do not name the expected empty result here: the dataset's null schema
+        # is derived from ground truth, so rejection feedback must stay generic.
+        shape_error = ("the answer does not match the official response shape; "
+                       "submit only a value that your browser investigation supports")
         if parse_error:
-            return SubmissionResult(False, str(answer or ""),
-                                    "this task expects no result; state that no matching result was found")
+            return SubmissionResult(False, str(answer or ""), shape_error)
         if parsed is None:
             return SubmissionResult(True, "null")
-        return SubmissionResult(False, str(answer or ""),
-                                "this task expects no result; state that no matching result was found")
+        return SubmissionResult(False, str(answer or ""), shape_error)
 
     parsed, parse_error = parse_answer(answer)
     if parse_error:
@@ -191,10 +195,16 @@ def contract_context(results_schema: dict | None, task_type: str | None) -> str:
     schema_type = str(results_schema.get("type") or "").casefold()
     keys = _schema_keys(results_schema)
     if schema_type == "null":
+        # The dataset uses type null only when the ground-truth retrieved_data is
+        # null (verified across all 514 such tasks), so naming the expected shape
+        # here would leak whether the answer is empty.  Give the public convention
+        # for reporting an exhaustive search that found nothing instead.
         return (
-            "\n## Official Response Schema\n"
-            "This task expects NO matching result. Call stop with an explicit "
-            "statement that no matching result was found; leave retrieved_data null.\n"
+            "\n## Final Answer Format\n"
+            "Report only what your browser investigation establishes. If the "
+            "inspection is exhaustive and finds no matching result, call stop with "
+            "an explicit statement that no matching result was found; do not invent "
+            "values.\n"
         )
     if schema_type == "array":
         items = results_schema.get("items") or {}
