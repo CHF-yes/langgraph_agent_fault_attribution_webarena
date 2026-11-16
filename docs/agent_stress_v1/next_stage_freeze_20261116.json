@@ -1,0 +1,95 @@
+{
+  "schema": "agent_stress_next_stage_freeze/1",
+  "status": "frozen_for_http_acceptance_and_screening_plans",
+  "created_at": "2026-11-16T08:32:00.467168+00:00",
+  "approved_for_paid_runs": false,
+  "approval_note": "Plan generation and zero-model checks only. Each paid batch still needs its own frozen authorization and token stop line.",
+  "code": {
+    "branch": "codex/agent-stress-preparation",
+    "commit": "1364605e2a857a053c8f6ce07cccadc4c07a1c1e",
+    "fingerprint_sha256": "13bd3dcc398a92ba48a9f8df9f8e7b75bbfacc4b31b72b1e9547fa6ab4df1694",
+    "dirty": false
+  },
+  "dataset": {
+    "path": "/data/webarena/webarena-dataset/webarena-verified.json",
+    "sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30"
+  },
+  "evaluator": {
+    "adapter": "stage-c-eval-adapter/1",
+    "distribution": "1.2.3.post1.dev0",
+    "package_sources": 74,
+    "package_sha256": "41334a7a30567811b3c42fc125b64140e64069b08ff7793643c0ed68931a68d8"
+  },
+  "budget": {
+    "max_steps": 20,
+    "http_window_steps": 10
+  },
+  "switches": {
+    "SUBMISSION_CONTRACT": "1",
+    "RETRIEVAL_REPAIR": "1"
+  },
+  "storage_states": {
+    "dir": "experiments/auth",
+    "sha256": {
+      "shopping": "b9b68ba5f0d8105b287e1e70d8d15d41c207d883ff5e5ac3b52497916e3abee2",
+      "gitlab": "de5c518f8baab6a02dfba7296cbbf7935278c1c6fcc4b88d385b265741e9e3cd"
+    },
+    "paths": {
+      "shopping": "experiments/auth/shopping.json",
+      "gitlab": "experiments/auth/gitlab.json"
+    }
+  },
+  "model_identity": {
+    "report": "experiments/agent_stress_v1/execution_prep_20261116/model_provenance.json",
+    "report_sha256": "833d7cf201adf2685f5453324b9c0a61b2d5b36989b8d2498e89638a5b42c6fa",
+    "profiles": {
+      "qwen38_flash": {
+        "requested_model": "qwen3.8-flash",
+        "served_models": [
+          "qwen3.8-flash"
+        ],
+        "system_fingerprints": [],
+        "probe_report": "experiments/agent_stress_v1/execution_prep_20261116/model_provenance.json",
+        "probe_report_sha256": "833d7cf201adf2685f5453324b9c0a61b2d5b36989b8d2498e89638a5b42c6fa"
+      },
+      "deepseek_v41_flash": {
+        "requested_model": "deepseek-flash",
+        "served_models": [
+          "deepseek-flash"
+        ],
+        "system_fingerprints": [
+          "bc19ba97cbe016479903222bb1578db6"
+        ],
+        "probe_report": "experiments/agent_stress_v1/execution_prep_20261116/model_provenance.json",
+        "probe_report_sha256": "833d7cf201adf2685f5453324b9c0a61b2d5b36989b8d2498e89638a5b42c6fa"
+      }
+    }
+  },
+  "plans": {
+    "http_acceptance": {
+      "path": "experiments/http_acceptance_v1/plan_20261116/plan.json",
+      "plan_sha256": "62be674c1bb9d4fa9a42dc58af2ddfb806ab396139b5f067f9e21645b860a84c",
+      "planned_trials": 12,
+      "preflight": "experiments/http_acceptance_v1/plan_20261116/preflight.json",
+      "preflight_sha256": "eb9e81f40b4a2ecf512b08d198ed63a5b1db05ea7f6e32220dabb530306dab17"
+    },
+    "screening_480": {
+      "path": "experiments/agent_stress_v1/screening_480_plan_20261116/plan.json",
+      "plan_sha256": "883f0997ca35b4b39353e299b1f95246ec2b952d5bab3c37d4b6fc87b1d76ddf",
+      "planned_trials": 480,
+      "preflight": "experiments/agent_stress_v1/screening_480_plan_20261116/preflight.json",
+      "preflight_sha256": "7dae8a0343b093cd6b2acd893acd0d783a4683ca1d5dc7b270bce774690e9a64"
+    }
+  },
+  "evidence": {
+    "preflight_qwen38_flash": "experiments/agent_stress_v1/execution_prep_20261116/preflight_qwen38_flash.json",
+    "preflight_deepseek_v41_flash": "experiments/agent_stress_v1/execution_prep_20261116/preflight_deepseek_v41_flash.json",
+    "pytest_log": "experiments/agent_stress_v1/execution_prep_20261116/pytest_20261116.log",
+    "pytest_summary": "396 passed, 1 warning, 4 subtests passed"
+  },
+  "notes": [
+    "HTTP acceptance uses the frozen ep-http-service-v1 protocol with an independent output root; protocol code is not aliased to a new id.",
+    "task 118 normal-path recheck and sustained-window acceptance remain to be executed before a paid batch.",
+    "Screening candidates are the 40 holdout_candidate contracts; eligibility and the 24-task/12-template selection are applied after clean results."
+  ]
+}

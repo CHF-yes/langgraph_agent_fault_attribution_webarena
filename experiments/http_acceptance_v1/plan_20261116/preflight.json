@@ -1,0 +1,16 @@
+{
+  "dataset_bound": true,
+  "dataset_path": "/data/webarena/webarena-dataset/webarena-verified.json",
+  "code_fingerprint": true,
+  "evaluator_config_readable": true,
+  "storage_states": true,
+  "model_identities": true,
+  "paid_trials_executed": 0,
+  "evaluator_dataset_binding": true,
+  "evaluator_sites": true,
+  "site:shopping": true,
+  "endpoint_host_reachable": true,
+  "model:qwen38_flash": true,
+  "model:deepseek_v41_flash": true,
+  "ok": true
+}
