@@ -1,0 +1,13 @@
+{
+  "dataset_bound": true,
+  "evaluator_config_readable": true,
+  "storage_states": true,
+  "provenance_report": true,
+  "paid_trials_executed": 0,
+  "evaluator_dataset_binding": true,
+  "site:shopping": true,
+  "model:qwen38_flash": true,
+  "model:deepseek_v41_flash": true,
+  "endpoint_host_reachable": true,
+  "blockers": []
+}

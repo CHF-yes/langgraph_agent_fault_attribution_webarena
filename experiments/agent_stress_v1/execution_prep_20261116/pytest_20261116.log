@@ -13,4 +13,4 @@
     from _pytest.python import CallSpec2
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-398 passed, 1 warning, 17 subtests passed in 14.70s
+398 passed, 1 warning, 17 subtests passed in 16.26s

@@ -1,0 +1,349 @@
+{
+  "schema": "agent_stress_http_acceptance/1",
+  "plan_sha256": "e722f8833e042f88bba852b0458c7064c8921c639d6487b889cf3fc28d54840f",
+  "run_root": "experiments/http_acceptance_v1/run_20261116b",
+  "trials": 12,
+  "control_zero_injection": true,
+  "sustained_window_steps": 10,
+  "coverage_issues": [
+    "deepseek_v41_flash/react: sustained not repeated (1 exposure, once)"
+  ],
+  "cells": [
+    {
+      "cell_key": "deepseek_v41_flash_react_control",
+      "model": "deepseek_v41_flash",
+      "architecture": "react",
+      "condition": "control",
+      "official_success": true,
+      "steps": 5,
+      "injections": 0,
+      "record_injection_count": 0,
+      "exposure_class": "not_triggered",
+      "injection_steps": [],
+      "queries": [],
+      "error_types": [],
+      "window": [
+        null,
+        null
+      ],
+      "control_contaminated": false,
+      "prompt_tokens": 46514,
+      "answer": null,
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/http_acceptance_v1/plan_20261116/cells/deepseek_v41_flash_react_control/outputs/web_http_error_task118_seed1/118/control_seed_1/agent_response.json",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/http_acceptance_v1/plan_20261116/cells/deepseek_v41_flash_react_control/outputs/web_http_error_task118_seed1/118/control_seed_1/official_eval.json"
+    },
+    {
+      "cell_key": "deepseek_v41_flash_react_single",
+      "model": "deepseek_v41_flash",
+      "architecture": "react",
+      "condition": "single",
+      "official_success": true,
+      "steps": 6,
+      "injections": 1,
+      "record_injection_count": 1,
+      "exposure_class": "once",
+      "injection_steps": [
+        4
+      ],
+      "queries": [
+        "q=mouth+guard"
+      ],
+      "error_types": [
+        "500"
+      ],
+      "window": [
+        4,
+        13
+      ],
+      "control_contaminated": false,
+      "prompt_tokens": 50342,
+      "answer": null,
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/http_acceptance_v1/plan_20261116/cells/deepseek_v41_flash_react_single/outputs/web_http_error_task118_seed1/118/web_http_error_seed_1/agent_response.json",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/http_acceptance_v1/plan_20261116/cells/deepseek_v41_flash_react_single/outputs/web_http_error_task118_seed1/118/web_http_error_seed_1/official_eval.json"
+    },
+    {
+      "cell_key": "deepseek_v41_flash_react_sustained",
+      "model": "deepseek_v41_flash",
+      "architecture": "react",
+      "condition": "sustained",
+      "official_success": true,
+      "steps": 11,
+      "injections": 1,
+      "record_injection_count": 1,
+      "exposure_class": "once",
+      "injection_steps": [
+        4
+      ],
+      "queries": [
+        "q=night+guard+bruxism"
+      ],
+      "error_types": [
+        "500"
+      ],
+      "window": [
+        4,
+        13
+      ],
+      "control_contaminated": false,
+      "prompt_tokens": 135063,
+      "answer": null,
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/http_acceptance_v1/plan_20261116/cells/deepseek_v41_flash_react_sustained/outputs/web_http_error_task118_seed1/118/web_http_error_seed_1/agent_response.json",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/http_acceptance_v1/plan_20261116/cells/deepseek_v41_flash_react_sustained/outputs/web_http_error_task118_seed1/118/web_http_error_seed_1/official_eval.json"
+    },
+    {
+      "cell_key": "deepseek_v41_flash_plan_execute_control",
+      "model": "deepseek_v41_flash",
+      "architecture": "plan_execute",
+      "condition": "control",
+      "official_success": true,
+      "steps": 4,
+      "injections": 0,
+      "record_injection_count": 0,
+      "exposure_class": "not_triggered",
+      "injection_steps": [],
+      "queries": [],
+      "error_types": [],
+      "window": [
+        null,
+        null
+      ],
+      "control_contaminated": false,
+      "prompt_tokens": 37211,
+      "answer": null,
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/http_acceptance_v1/plan_20261116/cells/deepseek_v41_flash_plan_execute_control/outputs/web_http_error_task118_seed1/118/control_seed_1/agent_response.json",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/http_acceptance_v1/plan_20261116/cells/deepseek_v41_flash_plan_execute_control/outputs/web_http_error_task118_seed1/118/control_seed_1/official_eval.json"
+    },
+    {
+      "cell_key": "deepseek_v41_flash_plan_execute_single",
+      "model": "deepseek_v41_flash",
+      "architecture": "plan_execute",
+      "condition": "single",
+      "official_success": true,
+      "steps": 8,
+      "injections": 1,
+      "record_injection_count": 1,
+      "exposure_class": "once",
+      "injection_steps": [
+        4
+      ],
+      "queries": [
+        "q=night+guard+bruxism"
+      ],
+      "error_types": [
+        "500"
+      ],
+      "window": [
+        4,
+        13
+      ],
+      "control_contaminated": false,
+      "prompt_tokens": 95779,
+      "answer": null,
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/http_acceptance_v1/plan_20261116/cells/deepseek_v41_flash_plan_execute_single/outputs/web_http_error_task118_seed1/118/web_http_error_seed_1/agent_response.json",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/http_acceptance_v1/plan_20261116/cells/deepseek_v41_flash_plan_execute_single/outputs/web_http_error_task118_seed1/118/web_http_error_seed_1/official_eval.json"
+    },
+    {
+      "cell_key": "deepseek_v41_flash_plan_execute_sustained",
+      "model": "deepseek_v41_flash",
+      "architecture": "plan_execute",
+      "condition": "sustained",
+      "official_success": false,
+      "steps": 9,
+      "injections": 2,
+      "record_injection_count": 2,
+      "exposure_class": "repeated",
+      "injection_steps": [
+        4,
+        8
+      ],
+      "queries": [
+        "q=night+guard+bruxism",
+        "q=mouth+guard"
+      ],
+      "error_types": [
+        "500",
+        "500"
+      ],
+      "window": [
+        4,
+        13
+      ],
+      "control_contaminated": false,
+      "prompt_tokens": 108666,
+      "answer": null,
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/http_acceptance_v1/plan_20261116/cells/deepseek_v41_flash_plan_execute_sustained/outputs/web_http_error_task118_seed1/118/web_http_error_seed_1/agent_response.json",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/http_acceptance_v1/plan_20261116/cells/deepseek_v41_flash_plan_execute_sustained/outputs/web_http_error_task118_seed1/118/web_http_error_seed_1/official_eval.json"
+    },
+    {
+      "cell_key": "qwen38_flash_react_control",
+      "model": "qwen38_flash",
+      "architecture": "react",
+      "condition": "control",
+      "official_success": true,
+      "steps": 5,
+      "injections": 0,
+      "record_injection_count": 0,
+      "exposure_class": "not_triggered",
+      "injection_steps": [],
+      "queries": [],
+      "error_types": [],
+      "window": [
+        null,
+        null
+      ],
+      "control_contaminated": false,
+      "prompt_tokens": 49800,
+      "answer": null,
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/http_acceptance_v1/plan_20261116/cells/qwen38_flash_react_control/outputs/web_http_error_task118_seed1/118/control_seed_1/agent_response.json",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/http_acceptance_v1/plan_20261116/cells/qwen38_flash_react_control/outputs/web_http_error_task118_seed1/118/control_seed_1/official_eval.json"
+    },
+    {
+      "cell_key": "qwen38_flash_react_single",
+      "model": "qwen38_flash",
+      "architecture": "react",
+      "condition": "single",
+      "official_success": true,
+      "steps": 6,
+      "injections": 1,
+      "record_injection_count": 1,
+      "exposure_class": "once",
+      "injection_steps": [
+        4
+      ],
+      "queries": [
+        "q=+mouth+guard+bruxism"
+      ],
+      "error_types": [
+        "500"
+      ],
+      "window": [
+        4,
+        13
+      ],
+      "control_contaminated": false,
+      "prompt_tokens": 60543,
+      "answer": null,
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/http_acceptance_v1/plan_20261116/cells/qwen38_flash_react_single/outputs/web_http_error_task118_seed1/118/web_http_error_seed_1/agent_response.json",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/http_acceptance_v1/plan_20261116/cells/qwen38_flash_react_single/outputs/web_http_error_task118_seed1/118/web_http_error_seed_1/official_eval.json"
+    },
+    {
+      "cell_key": "qwen38_flash_react_sustained",
+      "model": "qwen38_flash",
+      "architecture": "react",
+      "condition": "sustained",
+      "official_success": false,
+      "steps": 17,
+      "injections": 3,
+      "record_injection_count": 3,
+      "exposure_class": "repeated",
+      "injection_steps": [
+        4,
+        5,
+        9
+      ],
+      "queries": [
+        "q=+mouth+guard+for+teeth+grinding",
+        "q=mouth+guard",
+        "q=mouth+guard"
+      ],
+      "error_types": [
+        "500",
+        "500",
+        "500"
+      ],
+      "window": [
+        4,
+        13
+      ],
+      "control_contaminated": false,
+      "prompt_tokens": 349453,
+      "answer": null,
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/http_acceptance_v1/plan_20261116/cells/qwen38_flash_react_sustained/outputs/web_http_error_task118_seed1/118/web_http_error_seed_1/agent_response.json",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/http_acceptance_v1/plan_20261116/cells/qwen38_flash_react_sustained/outputs/web_http_error_task118_seed1/118/web_http_error_seed_1/official_eval.json"
+    },
+    {
+      "cell_key": "qwen38_flash_plan_execute_control",
+      "model": "qwen38_flash",
+      "architecture": "plan_execute",
+      "condition": "control",
+      "official_success": true,
+      "steps": 4,
+      "injections": 0,
+      "record_injection_count": 0,
+      "exposure_class": "not_triggered",
+      "injection_steps": [],
+      "queries": [],
+      "error_types": [],
+      "window": [
+        null,
+        null
+      ],
+      "control_contaminated": false,
+      "prompt_tokens": 46467,
+      "answer": null,
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/http_acceptance_v1/plan_20261116/cells/qwen38_flash_plan_execute_control/outputs/web_http_error_task118_seed1/118/control_seed_1/agent_response.json",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/http_acceptance_v1/plan_20261116/cells/qwen38_flash_plan_execute_control/outputs/web_http_error_task118_seed1/118/control_seed_1/official_eval.json"
+    },
+    {
+      "cell_key": "qwen38_flash_plan_execute_single",
+      "model": "qwen38_flash",
+      "architecture": "plan_execute",
+      "condition": "single",
+      "official_success": true,
+      "steps": 6,
+      "injections": 1,
+      "record_injection_count": 1,
+      "exposure_class": "once",
+      "injection_steps": [
+        4
+      ],
+      "queries": [
+        "q=+night+guard+bruxism"
+      ],
+      "error_types": [
+        "500"
+      ],
+      "window": [
+        4,
+        13
+      ],
+      "control_contaminated": false,
+      "prompt_tokens": 67228,
+      "answer": null,
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/http_acceptance_v1/plan_20261116/cells/qwen38_flash_plan_execute_single/outputs/web_http_error_task118_seed1/118/web_http_error_seed_1/agent_response.json",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/http_acceptance_v1/plan_20261116/cells/qwen38_flash_plan_execute_single/outputs/web_http_error_task118_seed1/118/web_http_error_seed_1/official_eval.json"
+    },
+    {
+      "cell_key": "qwen38_flash_plan_execute_sustained",
+      "model": "qwen38_flash",
+      "architecture": "plan_execute",
+      "condition": "sustained",
+      "official_success": true,
+      "steps": 14,
+      "injections": 2,
+      "record_injection_count": 2,
+      "exposure_class": "repeated",
+      "injection_steps": [
+        4,
+        8
+      ],
+      "queries": [
+        "q=+mouth+guard+bruxism",
+        "q=mouth+guard"
+      ],
+      "error_types": [
+        "500",
+        "500"
+      ],
+      "window": [
+        4,
+        13
+      ],
+      "control_contaminated": false,
+      "prompt_tokens": 266949,
+      "answer": null,
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/http_acceptance_v1/plan_20261116/cells/qwen38_flash_plan_execute_sustained/outputs/web_http_error_task118_seed1/118/web_http_error_seed_1/agent_response.json",
+      "official_eval": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/http_acceptance_v1/plan_20261116/cells/qwen38_flash_plan_execute_sustained/outputs/web_http_error_task118_seed1/118/web_http_error_seed_1/official_eval.json"
+    }
+  ]
+}

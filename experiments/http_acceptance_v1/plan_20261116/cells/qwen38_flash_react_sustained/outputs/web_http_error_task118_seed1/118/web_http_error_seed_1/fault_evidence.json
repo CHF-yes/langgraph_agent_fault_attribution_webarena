@@ -1,0 +1,876 @@
+{
+  "experiment_id": "ep-http-service-v1",
+  "variant": "persistent",
+  "window_steps": 10,
+  "injections": [
+    {
+      "event": "injection",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "injection_index": 1,
+      "proxy_step": 4,
+      "action_uid": "click:4",
+      "target": {
+        "kind": "endpoint",
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "error_type": "500",
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "query": "q=+mouth+guard+for+teeth+grinding"
+      },
+      "timestamp": 1794820172.4612927
+    },
+    {
+      "event": "injection",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "injection_index": 2,
+      "proxy_step": 5,
+      "action_uid": "goto:5",
+      "target": {
+        "kind": "endpoint",
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "error_type": "500",
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "query": "q=mouth+guard"
+      },
+      "timestamp": 1794820175.5198722
+    },
+    {
+      "event": "injection",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "injection_index": 3,
+      "proxy_step": 9,
+      "action_uid": "click:9",
+      "target": {
+        "kind": "endpoint",
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "error_type": "500",
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "query": "q=mouth+guard"
+      },
+      "timestamp": 1794820187.5507853
+    }
+  ],
+  "snapshot": {
+    "experiment_id": "ep-http-service-v1",
+    "variant": "persistent",
+    "target_policy_version": "endpoint-path-segment-v1",
+    "armed": true,
+    "armed_after_step": 1,
+    "target": {
+      "kind": "endpoint",
+      "scheme": "http",
+      "host": "localhost",
+      "port": 7770,
+      "path": "/catalogsearch/result",
+      "target_policy_version": "endpoint-path-segment-v1"
+    },
+    "t0": 4,
+    "window_steps": 10,
+    "window_end": 13,
+    "injections": 3,
+    "released": "window_expired",
+    "exposure_class": "repeated"
+  },
+  "events": [
+    {
+      "event": "skip",
+      "proxy_step": 1,
+      "action_uid": "goto:1",
+      "reason": "not_armed",
+      "detail": {
+        "raw_url": "http://localhost:7770/",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/",
+          "query": ""
+        }
+      }
+    },
+    {
+      "event": "skip",
+      "proxy_step": 2,
+      "action_uid": "click:2",
+      "reason": "not_navigation",
+      "detail": {
+        "raw_url": "http://localhost:7770/",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/",
+          "query": ""
+        }
+      }
+    },
+    {
+      "event": "skip",
+      "proxy_step": 3,
+      "action_uid": "type_text:3",
+      "reason": "not_navigation",
+      "detail": {
+        "raw_url": "http://localhost:7770/",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/",
+          "query": ""
+        }
+      }
+    },
+    {
+      "event": "injection",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "injection_index": 1,
+      "proxy_step": 4,
+      "action_uid": "click:4",
+      "target": {
+        "kind": "endpoint",
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "error_type": "500",
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "query": "q=+mouth+guard+for+teeth+grinding"
+      },
+      "timestamp": 1794820172.4612927
+    },
+    {
+      "event": "injection",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "injection_index": 2,
+      "proxy_step": 5,
+      "action_uid": "goto:5",
+      "target": {
+        "kind": "endpoint",
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "error_type": "500",
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "query": "q=mouth+guard"
+      },
+      "timestamp": 1794820175.5198722
+    },
+    {
+      "event": "skip",
+      "proxy_step": 6,
+      "action_uid": "goto:6",
+      "reason": "off_endpoint",
+      "detail": {
+        "raw_url": "http://localhost:7770/",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/",
+          "query": ""
+        }
+      }
+    },
+    {
+      "event": "skip",
+      "proxy_step": 7,
+      "action_uid": "click:7",
+      "reason": "off_endpoint",
+      "detail": {
+        "raw_url": "http://localhost:7770/",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/",
+          "query": ""
+        }
+      }
+    },
+    {
+      "event": "skip",
+      "proxy_step": 8,
+      "action_uid": "type_text:8",
+      "reason": "off_endpoint",
+      "detail": {
+        "raw_url": "http://localhost:7770/",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/",
+          "query": ""
+        }
+      }
+    },
+    {
+      "event": "injection",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "injection_index": 3,
+      "proxy_step": 9,
+      "action_uid": "click:9",
+      "target": {
+        "kind": "endpoint",
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "error_type": "500",
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "query": "q=mouth+guard"
+      },
+      "timestamp": 1794820187.5507853
+    },
+    {
+      "event": "skip",
+      "proxy_step": 10,
+      "action_uid": "click:10",
+      "reason": "off_endpoint",
+      "detail": {
+        "raw_url": "http://localhost:7770/health-household.html",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/health-household.html",
+          "query": ""
+        }
+      }
+    },
+    {
+      "event": "skip",
+      "proxy_step": 11,
+      "action_uid": "click:11",
+      "reason": "off_endpoint",
+      "detail": {
+        "raw_url": "http://localhost:7770/health-household.html?cat=47",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/health-household.html",
+          "query": "cat=47"
+        }
+      }
+    },
+    {
+      "event": "skip",
+      "proxy_step": 12,
+      "action_uid": "select_option:12",
+      "reason": "off_endpoint",
+      "detail": {
+        "raw_url": "http://localhost:7770/health-household.html?cat=47&product_list_order=name",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/health-household.html",
+          "query": "cat=47&product_list_order=name"
+        }
+      }
+    },
+    {
+      "event": "skip",
+      "proxy_step": 13,
+      "action_uid": "click:13",
+      "reason": "off_endpoint",
+      "detail": {
+        "raw_url": "http://localhost:7770/health-household.html?cat=47&p=3&product_list_order=name",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/health-household.html",
+          "query": "cat=47&p=3&product_list_order=name"
+        }
+      }
+    },
+    {
+      "event": "release",
+      "proxy_step": 14,
+      "reason": "window_expired"
+    },
+    {
+      "event": "skip",
+      "proxy_step": 14,
+      "action_uid": "click:14",
+      "reason": "off_endpoint",
+      "detail": {
+        "raw_url": "http://localhost:7770/health-household.html?cat=47&p=4&product_list_order=name",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/health-household.html",
+          "query": "cat=47&p=4&product_list_order=name"
+        }
+      }
+    },
+    {
+      "event": "skip",
+      "proxy_step": 15,
+      "action_uid": "click:15",
+      "reason": "off_endpoint",
+      "detail": {
+        "raw_url": "http://localhost:7770/health-household.html?cat=47&p=3&product_list_order=name",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/health-household.html",
+          "query": "cat=47&p=3&product_list_order=name"
+        }
+      }
+    },
+    {
+      "event": "skip",
+      "proxy_step": 16,
+      "action_uid": "goto:16",
+      "reason": "off_endpoint",
+      "detail": {
+        "raw_url": "http://localhost:7770/health-household.html?cat=47&p=5&product_list_order=name",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/health-household.html",
+          "query": "cat=47&p=5&product_list_order=name"
+        }
+      }
+    },
+    {
+      "event": "skip",
+      "proxy_step": 17,
+      "action_uid": "click:17",
+      "reason": "off_endpoint",
+      "detail": {
+        "raw_url": "http://localhost:7770/pressure-positive-co-the-myofree-solution.html",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/pressure-positive-co-the-myofree-solution.html",
+          "query": ""
+        }
+      }
+    }
+  ],
+  "exposures": [
+    {
+      "observation_uid": "goto:1#1",
+      "source_action_uid": "goto:1",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 1,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/",
+        "query": ""
+      },
+      "reason": "not_armed",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "click:2#2",
+      "source_action_uid": "click:2",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 2,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/",
+        "query": ""
+      },
+      "reason": "not_navigation",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "type_text:3#3",
+      "source_action_uid": "type_text:3",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 3,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/",
+        "query": ""
+      },
+      "reason": "not_navigation",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "click:4#4",
+      "source_action_uid": "click:4",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 4,
+      "faults_delivered": [
+        "web_http_error"
+      ],
+      "delivered": true,
+      "raw_url": "http://localhost:7770/catalogsearch/result/?q=+mouth+guard+for+teeth+grinding",
+      "matched_endpoint": true,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "query": "q=+mouth+guard+for+teeth+grinding"
+      },
+      "reason": "injected_or_same_action_replay",
+      "fault_delivered": true
+    },
+    {
+      "observation_uid": "goto:5#5",
+      "source_action_uid": "goto:5",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 5,
+      "faults_delivered": [
+        "web_http_error"
+      ],
+      "delivered": true,
+      "raw_url": "http://localhost:7770/catalogsearch/result/?q=mouth+guard",
+      "matched_endpoint": true,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "query": "q=mouth+guard"
+      },
+      "reason": "injected_or_same_action_replay",
+      "fault_delivered": true
+    },
+    {
+      "observation_uid": "goto:6#6",
+      "source_action_uid": "goto:6",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 6,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/",
+        "query": ""
+      },
+      "reason": "off_endpoint",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "click:7#7",
+      "source_action_uid": "click:7",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 7,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/",
+        "query": ""
+      },
+      "reason": "off_endpoint",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "type_text:8#8",
+      "source_action_uid": "type_text:8",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 8,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/",
+        "query": ""
+      },
+      "reason": "off_endpoint",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "click:9#9",
+      "source_action_uid": "click:9",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 9,
+      "faults_delivered": [
+        "web_http_error"
+      ],
+      "delivered": true,
+      "raw_url": "http://localhost:7770/catalogsearch/result/?q=mouth+guard",
+      "matched_endpoint": true,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "query": "q=mouth+guard"
+      },
+      "reason": "injected_or_same_action_replay",
+      "fault_delivered": true
+    },
+    {
+      "observation_uid": "click:10#10",
+      "source_action_uid": "click:10",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 10,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/health-household.html",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/health-household.html",
+        "query": ""
+      },
+      "reason": "off_endpoint",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "click:11#11",
+      "source_action_uid": "click:11",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 11,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/health-household.html?cat=47",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/health-household.html",
+        "query": "cat=47"
+      },
+      "reason": "off_endpoint",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "select_option:12#12",
+      "source_action_uid": "select_option:12",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 12,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/health-household.html?cat=47&product_list_order=name",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/health-household.html",
+        "query": "cat=47&product_list_order=name"
+      },
+      "reason": "off_endpoint",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "click:13#13",
+      "source_action_uid": "click:13",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 13,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/health-household.html?cat=47&p=3&product_list_order=name",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/health-household.html",
+        "query": "cat=47&p=3&product_list_order=name"
+      },
+      "reason": "off_endpoint",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "click:14#14",
+      "source_action_uid": "click:14",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 14,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/health-household.html?cat=47&p=4&product_list_order=name",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/health-household.html",
+        "query": "cat=47&p=4&product_list_order=name"
+      },
+      "reason": "off_endpoint",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "click:15#15",
+      "source_action_uid": "click:15",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 15,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/health-household.html?cat=47&p=3&product_list_order=name",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/health-household.html",
+        "query": "cat=47&p=3&product_list_order=name"
+      },
+      "reason": "off_endpoint",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "goto:16#16",
+      "source_action_uid": "goto:16",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 16,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/health-household.html?cat=47&p=5&product_list_order=name",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/health-household.html",
+        "query": "cat=47&p=5&product_list_order=name"
+      },
+      "reason": "off_endpoint",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "click:17#17",
+      "source_action_uid": "click:17",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 17,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/pressure-positive-co-the-myofree-solution.html",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/pressure-positive-co-the-myofree-solution.html",
+        "query": ""
+      },
+      "reason": "off_endpoint",
+      "fault_delivered": false
+    }
+  ]
+}

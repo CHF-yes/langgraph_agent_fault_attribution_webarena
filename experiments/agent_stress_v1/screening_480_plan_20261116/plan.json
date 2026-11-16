@@ -1,7 +1,7 @@
 {
   "schema": "agent_stress_screening_plan/3",
   "experiment_id": "agent-stress-v1-screening-480",
-  "created_at": "2026-11-16T09:00:21.327671+00:00",
+  "created_at": "2026-11-16T09:04:56.199081+00:00",
   "status": "plan_only",
   "approved_for_paid_runs": false,
   "stage": "four-combination-screening",
@@ -22342,8 +22342,8 @@
     }
   },
   "code": {
-    "head": "8029eb9cf247fc1fc47b1ebb6c80d67da31d6ddc",
-    "fingerprint_sha256": "8b8a471557d3227f4d005f779fdd0461f1614a183d77d37bb82547b653291619"
+    "head": "c88237b593dca4dbc196cbea330fbb6301587858",
+    "fingerprint_sha256": "5c7ff4462ba8a21c1e2ddcb0ff9ec26f971f4386ea4205197024ed27ed8007d7"
   },
   "dataset_path": "/data/webarena/webarena-dataset/webarena-verified.json",
   "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
@@ -22354,5 +22354,5 @@
     "package_sha256": "41334a7a30567811b3c42fc125b64140e64069b08ff7793643c0ed68931a68d8"
   },
   "faults_enabled": false,
-  "plan_sha256": "765ecc47d8e5db03c4a41bc9012ac7a8d938444afa9ecc7227c49151e4829efb"
+  "plan_sha256": "298845699d8742d4defd7fe2867565bcc5a9279530ab0ea931862f90ead77aad"
 }

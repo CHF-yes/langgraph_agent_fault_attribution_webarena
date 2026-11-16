@@ -1,0 +1,86 @@
+{
+  "schema": "agent_stress_plan_summary/1",
+  "experiment_id": "agent-stress-http-acceptance-v1",
+  "plan_sha256": "e722f8833e042f88bba852b0458c7064c8921c639d6487b889cf3fc28d54840f",
+  "completed": 12,
+  "planned": 12,
+  "failures": [],
+  "by_condition": {
+    "deepseek_v41_flash|react|control": {
+      "trials": 1,
+      "successes": 1,
+      "prompt_tokens": 46514,
+      "injections": 0
+    },
+    "deepseek_v41_flash|react|single": {
+      "trials": 1,
+      "successes": 1,
+      "prompt_tokens": 50342,
+      "injections": 1
+    },
+    "deepseek_v41_flash|react|sustained": {
+      "trials": 1,
+      "successes": 1,
+      "prompt_tokens": 135063,
+      "injections": 1
+    },
+    "deepseek_v41_flash|plan_execute|control": {
+      "trials": 1,
+      "successes": 1,
+      "prompt_tokens": 37211,
+      "injections": 0
+    },
+    "deepseek_v41_flash|plan_execute|single": {
+      "trials": 1,
+      "successes": 1,
+      "prompt_tokens": 95779,
+      "injections": 1
+    },
+    "deepseek_v41_flash|plan_execute|sustained": {
+      "trials": 1,
+      "successes": 0,
+      "prompt_tokens": 108666,
+      "injections": 2
+    },
+    "qwen38_flash|react|control": {
+      "trials": 1,
+      "successes": 1,
+      "prompt_tokens": 49800,
+      "injections": 0
+    },
+    "qwen38_flash|react|single": {
+      "trials": 1,
+      "successes": 1,
+      "prompt_tokens": 60543,
+      "injections": 1
+    },
+    "qwen38_flash|react|sustained": {
+      "trials": 1,
+      "successes": 0,
+      "prompt_tokens": 349453,
+      "injections": 3
+    },
+    "qwen38_flash|plan_execute|control": {
+      "trials": 1,
+      "successes": 1,
+      "prompt_tokens": 46467,
+      "injections": 0
+    },
+    "qwen38_flash|plan_execute|single": {
+      "trials": 1,
+      "successes": 1,
+      "prompt_tokens": 67228,
+      "injections": 1
+    },
+    "qwen38_flash|plan_execute|sustained": {
+      "trials": 1,
+      "successes": 1,
+      "prompt_tokens": 266949,
+      "injections": 2
+    }
+  },
+  "prompt_tokens_total": 1314015,
+  "prompt_token_stop_before_next_trial": 4000000,
+  "stop_reason": null,
+  "resume_rejections": []
+}

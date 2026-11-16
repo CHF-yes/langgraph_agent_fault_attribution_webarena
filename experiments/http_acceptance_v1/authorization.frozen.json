@@ -5,7 +5,7 @@
   "approved_for_paid_runs": true,
   "approval_scope": "12-cell service-level HTTP development acceptance: task 118, 2 models x 2 architectures x control/single/sustained",
   "plan_path": "experiments/http_acceptance_v1/plan_20261116/plan.json",
-  "plan_sha256": "d9b47f0710929daa50783daf3ddc0014e80fc024e9b886345975ee2e2f296310",
+  "plan_sha256": "e722f8833e042f88bba852b0458c7064c8921c639d6487b889cf3fc28d54840f",
   "cells": 12,
   "cell_keys": [
     "deepseek_v41_flash_react_control",
@@ -21,10 +21,10 @@
     "qwen38_flash_plan_execute_single",
     "qwen38_flash_plan_execute_sustained"
   ],
-  "code_fingerprint_sha256": "8b8a471557d3227f4d005f779fdd0461f1614a183d77d37bb82547b653291619",
+  "code_fingerprint_sha256": "5c7ff4462ba8a21c1e2ddcb0ff9ec26f971f4386ea4205197024ed27ed8007d7",
   "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
   "prompt_token_stop_before_next_trial": 4000000,
   "max_steps": 20,
   "window_steps": 10,
-  "created_at": "2026-11-16T09:00:19.184615+00:00"
+  "created_at": "2026-11-16T09:04:54.154387+00:00"
 }

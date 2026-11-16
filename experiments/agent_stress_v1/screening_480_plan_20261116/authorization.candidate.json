@@ -5,7 +5,7 @@
   "approved_for_paid_runs": false,
   "approval_scope": "480-cell four-combination clean screening candidate; not approved for paid runs",
   "plan_path": "experiments/agent_stress_v1/screening_480_plan_20261116/plan.json",
-  "plan_sha256": "765ecc47d8e5db03c4a41bc9012ac7a8d938444afa9ecc7227c49151e4829efb",
+  "plan_sha256": "298845699d8742d4defd7fe2867565bcc5a9279530ab0ea931862f90ead77aad",
   "cells": 480,
   "cell_keys": [
     "qwen38_flash_task315_react_seed3",
@@ -489,9 +489,9 @@
     "qwen38_flash_task163_react_seed2",
     "deepseek_v41_flash_task228_plan_execute_seed3"
   ],
-  "code_fingerprint_sha256": "8b8a471557d3227f4d005f779fdd0461f1614a183d77d37bb82547b653291619",
+  "code_fingerprint_sha256": "5c7ff4462ba8a21c1e2ddcb0ff9ec26f971f4386ea4205197024ed27ed8007d7",
   "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
   "prompt_token_stop_before_next_trial": null,
   "max_steps": 20,
-  "created_at": "2026-11-16T09:00:21.327671+00:00"
+  "created_at": "2026-11-16T09:04:56.199081+00:00"
 }
