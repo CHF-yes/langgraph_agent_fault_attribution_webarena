@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
-"""Offline plan generators for the two next Agent Stress batches.
+"""Offline plan generators for the next Agent Stress batches.
 
 Stages (plan only; no model calls, no browser trials):
 - ``http-acceptance``: 1 task x 2 models x 2 architectures x 3 conditions = 12.
   Task 118, service-level HTTP fault, 10-step sustained window, 20-step budget.
 - ``screening-480``: 40 holdout candidates x 2 models x 2 architectures x 3 seeds
   = 480 clean trials with the frozen improved execution version.
+- ``screening-qwen-240``: the 240 Qwen cells in the same relative order.
 
-Both plans bind the task definitions, dataset/evaluator, shared login states,
+The plans bind the task definitions, dataset/evaluator, shared login states,
 model identities and the current code fingerprint, and are written to a fresh
 directory. Execution is deliberately not implemented here.
 """
@@ -45,6 +46,7 @@ AUTH_DIR = ROOT / "experiments" / "auth"
 EVIDENCE = ROOT / "experiments" / "agent_stress_v1" / "execution_prep_20261116"
 PROVENANCE = EVIDENCE / "model_provenance.json"
 MODEL_PROFILES = ("qwen38_flash", "deepseek_v41_flash")
+QWEN_SCREENING_SCHEMA = "agent_stress_screening_qwen_plan/1"
 ARCHITECTURES = ("react", "plan_execute")
 PORTS = {"shopping": 7770, "gitlab": 8023, "reddit": 9999}
 ENDPOINT = "http://localhost:7770/catalogsearch/result"
@@ -95,11 +97,11 @@ def login_states() -> dict:
     return states
 
 
-def model_identity() -> dict:
+def model_identity(profiles=MODEL_PROFILES) -> dict:
     report = json.loads(PROVENANCE.read_text(encoding="utf-8"))
     by_profile = {item["profile"]: item for item in report}
     identities = {}
-    for profile in MODEL_PROFILES:
+    for profile in profiles:
         item = by_profile.get(profile)
         if item is None or not item.get("verdict_ok"):
             raise ValueError(f"{profile}: provenance report is missing or not OK")
@@ -255,8 +257,9 @@ def build_http_plan(out: Path) -> dict:
     return plan
 
 
-def build_screening_plan(out: Path) -> dict:
+def build_screening_plan(out: Path, *, qwen_only: bool = False) -> dict:
     tasks = holdout_candidates()
+    profiles = MODEL_PROFILES[:1] if qwen_only else MODEL_PROFILES
     combos = [(profile, architecture) for profile in MODEL_PROFILES
               for architecture in ARCHITECTURES]
     cells = []
@@ -293,30 +296,38 @@ def build_screening_plan(out: Path) -> dict:
                     "command": command,
                 })
     random.Random(SCHEDULE_SEED).shuffle(cells)
+    if qwen_only:
+        cells = [cell for cell in cells if cell["model_profile"] in profiles]
     plan = {
-        "schema": "agent_stress_screening_plan/3",
-        "experiment_id": "agent-stress-v1-screening-480",
+        "schema": QWEN_SCREENING_SCHEMA if qwen_only else "agent_stress_screening_plan/3",
+        "experiment_id": "agent-stress-v1-screening-qwen-240" if qwen_only else "agent-stress-v1-screening-480",
         "created_at": datetime.now(timezone.utc).isoformat(),
         "status": "plan_only",
         "approved_for_paid_runs": False,
-        "stage": "four-combination-screening",
+        "stage": "qwen-first-screening" if qwen_only else "four-combination-screening",
         "candidate_source": str(CONTRACTS.relative_to(ROOT)),
         "candidate_count": len(tasks),
         "candidate_ids": [task["task_id"] for task in tasks],
         "tasks": {str(task["task_id"]): task for task in tasks},
-        "model_profiles": list(MODEL_PROFILES),
+        "model_profiles": list(profiles),
         "architectures": list(ARCHITECTURES),
         "seeds": [1, 2, 3],
         "max_steps": MAX_STEPS,
         "cells": cells,
         "planned_trials": len(cells),
-        "eligibility_rule": "each model x architecture combination needs >= 2/3 clean successes on a task",
-        "selection_rule": "24 tasks, 12 templates, at most 2 tasks per template; frozen before fault results",
+        "eligibility_rule": (
+            "both Qwen architectures need >= 2/3 clean successes; DeepSeek eligibility remains pending"
+            if qwen_only else "each model x architecture combination needs >= 2/3 clean successes on a task"
+        ),
+        "selection_rule": (
+            "report the Qwen shortlist and template coverage; no final enrollment"
+            if qwen_only else "24 tasks, 12 templates, at most 2 tasks per template; frozen before fault results"
+        ),
         "switches": SWITCHES,
         "storage_state_sha256": {item["site"]: item["state_sha256"]
                                  for item in json.loads(LOGIN.read_text())["states"]},
         "storage_state_dir": str(AUTH_DIR.relative_to(ROOT)),
-        "model_identity": model_identity(),
+        "model_identity": model_identity(profiles),
         "code": {"head": git_head(), "fingerprint_sha256": code_fingerprint()},
         "dataset_path": str(DATASET),
         "dataset_sha256": file_sha(DATASET),
@@ -373,19 +384,36 @@ def preflight(plan: dict) -> dict:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("stage", choices=["http-acceptance", "screening-480"])
+    parser.add_argument("stage", choices=["http-acceptance", "screening-480", "screening-qwen-240"])
     parser.add_argument("--out", required=True)
     args = parser.parse_args()
     out = Path(args.out).resolve()
     out.mkdir(parents=True, exist_ok=True)
     if (out / "plan.json").exists():
         raise SystemExit(f"refusing to overwrite existing plan: {out / 'plan.json'}")
-    plan = build_http_plan(out) if args.stage == "http-acceptance" else build_screening_plan(out)
+    plan = (build_http_plan(out) if args.stage == "http-acceptance"
+            else build_screening_plan(out, qwen_only=args.stage == "screening-qwen-240"))
     checks = preflight(plan)
     (out / "plan.json").write_text(json.dumps(plan, ensure_ascii=False, indent=2) + "\n",
                                    encoding="utf-8")
     (out / "preflight.json").write_text(json.dumps(checks, ensure_ascii=False, indent=2) + "\n",
                                         encoding="utf-8")
+    if args.stage == "screening-qwen-240":
+        candidate = {
+            "schema": "agent_stress_batch_authorization/1",
+            "experiment_id": plan["experiment_id"],
+            "status": "candidate",
+            "approved_for_paid_runs": False,
+            "plan_path": str((out / "plan.json").relative_to(ROOT)),
+            "plan_sha256": plan["plan_sha256"],
+            "cells": plan["planned_trials"],
+            "cell_keys": [cell["cell_key"] for cell in plan["cells"]],
+            "code_fingerprint_sha256": plan["code"]["fingerprint_sha256"],
+            "dataset_sha256": plan["dataset_sha256"],
+            "prompt_token_stop_before_next_trial": None,
+        }
+        (out / "authorization.candidate.json").write_text(
+            json.dumps(candidate, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({"stage": args.stage, "planned_trials": plan["planned_trials"],
                       "plan_sha256": plan["plan_sha256"], "preflight_ok": checks["ok"],
                       "out": str(out)}, ensure_ascii=False))
