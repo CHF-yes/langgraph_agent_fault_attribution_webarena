@@ -16,6 +16,15 @@
       "state_sha256": "de5c518f8baab6a02dfba7296cbbf7935278c1c6fcc4b88d385b265741e9e3cd",
       "verified_url": "http://localhost:8023/dashboard/projects",
       "verified": true
+    },
+    {
+      "site": "reddit",
+      "state_path": "experiments/auth/reddit.json",
+      "state_sha256": "f31148c22e6995d154d6b4277849c4131849af834b6fc44f445607c11170803b",
+      "verified_url": "http://localhost:9999/",
+      "verified": true,
+      "note": "no-login empty state; reddit tasks use the public site"
     }
-  ]
+  ],
+  "note": "reddit added as an explicit empty no-login state for the four-combination screening."
 }

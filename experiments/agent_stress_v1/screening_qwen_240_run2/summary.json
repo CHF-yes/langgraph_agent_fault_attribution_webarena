@@ -1,0 +1,651 @@
+{
+  "schema": "agent_stress_plan_summary/1",
+  "experiment_id": "agent-stress-v1-screening-qwen-240",
+  "plan_sha256": "920a947ff777c71415ae9e2b99c08176741bd173231394cc7ae9d651e97fc21f",
+  "completed": 240,
+  "planned": 240,
+  "failures": [],
+  "by_condition": {
+    "qwen38_flash|react|control": {
+      "trials": 120,
+      "successes": 59,
+      "prompt_tokens": 26152127,
+      "injections": 0
+    },
+    "qwen38_flash|plan_execute|control": {
+      "trials": 120,
+      "successes": 46,
+      "prompt_tokens": 26948292,
+      "injections": 0
+    }
+  },
+  "qwen_screening": {
+    "by_task": {
+      "27": {
+        "site": "reddit",
+        "template_id": 33,
+        "architectures": {
+          "react": {
+            "trials": 3,
+            "successes": 3
+          },
+          "plan_execute": {
+            "trials": 3,
+            "successes": 3
+          }
+        },
+        "qwen_qualified": true
+      },
+      "28": {
+        "site": "reddit",
+        "template_id": 33,
+        "architectures": {
+          "react": {
+            "trials": 3,
+            "successes": 3
+          },
+          "plan_execute": {
+            "trials": 3,
+            "successes": 1
+          }
+        },
+        "qwen_qualified": false
+      },
+      "29": {
+        "site": "reddit",
+        "template_id": 33,
+        "architectures": {
+          "react": {
+            "trials": 3,
+            "successes": 3
+          },
+          "plan_execute": {
+            "trials": 3,
+            "successes": 2
+          }
+        },
+        "qwen_qualified": true
+      },
+      "66": {
+        "site": "reddit",
+        "template_id": 17,
+        "architectures": {
+          "react": {
+            "trials": 3,
+            "successes": 3
+          },
+          "plan_execute": {
+            "trials": 3,
+            "successes": 1
+          }
+        },
+        "qwen_qualified": false
+      },
+      "67": {
+        "site": "reddit",
+        "template_id": 17,
+        "architectures": {
+          "react": {
+            "trials": 3,
+            "successes": 1
+          },
+          "plan_execute": {
+            "trials": 3,
+            "successes": 0
+          }
+        },
+        "qwen_qualified": false
+      },
+      "68": {
+        "site": "reddit",
+        "template_id": 17,
+        "architectures": {
+          "react": {
+            "trials": 3,
+            "successes": 0
+          },
+          "plan_execute": {
+            "trials": 3,
+            "successes": 0
+          }
+        },
+        "qwen_qualified": false
+      },
+      "226": {
+        "site": "shopping",
+        "template_id": 370,
+        "architectures": {
+          "react": {
+            "trials": 3,
+            "successes": 0
+          },
+          "plan_execute": {
+            "trials": 3,
+            "successes": 0
+          }
+        },
+        "qwen_qualified": false
+      },
+      "227": {
+        "site": "shopping",
+        "template_id": 370,
+        "architectures": {
+          "react": {
+            "trials": 3,
+            "successes": 3
+          },
+          "plan_execute": {
+            "trials": 3,
+            "successes": 0
+          }
+        },
+        "qwen_qualified": false
+      },
+      "228": {
+        "site": "shopping",
+        "template_id": 370,
+        "architectures": {
+          "react": {
+            "trials": 3,
+            "successes": 3
+          },
+          "plan_execute": {
+            "trials": 3,
+            "successes": 0
+          }
+        },
+        "qwen_qualified": false
+      },
+      "163": {
+        "site": "shopping",
+        "template_id": 136,
+        "architectures": {
+          "react": {
+            "trials": 3,
+            "successes": 1
+          },
+          "plan_execute": {
+            "trials": 3,
+            "successes": 3
+          }
+        },
+        "qwen_qualified": false
+      },
+      "164": {
+        "site": "shopping",
+        "template_id": 136,
+        "architectures": {
+          "react": {
+            "trials": 3,
+            "successes": 3
+          },
+          "plan_execute": {
+            "trials": 3,
+            "successes": 3
+          }
+        },
+        "qwen_qualified": true
+      },
+      "165": {
+        "site": "shopping",
+        "template_id": 136,
+        "architectures": {
+          "react": {
+            "trials": 3,
+            "successes": 3
+          },
+          "plan_execute": {
+            "trials": 3,
+            "successes": 3
+          }
+        },
+        "qwen_qualified": true
+      },
+      "384": {
+        "site": "shopping",
+        "template_id": 666,
+        "architectures": {
+          "react": {
+            "trials": 3,
+            "successes": 0
+          },
+          "plan_execute": {
+            "trials": 3,
+            "successes": 2
+          }
+        },
+        "qwen_qualified": false
+      },
+      "385": {
+        "site": "shopping",
+        "template_id": 666,
+        "architectures": {
+          "react": {
+            "trials": 3,
+            "successes": 0
+          },
+          "plan_execute": {
+            "trials": 3,
+            "successes": 0
+          }
+        },
+        "qwen_qualified": false
+      },
+      "387": {
+        "site": "shopping",
+        "template_id": 1356,
+        "architectures": {
+          "react": {
+            "trials": 3,
+            "successes": 0
+          },
+          "plan_execute": {
+            "trials": 3,
+            "successes": 0
+          }
+        },
+        "qwen_qualified": false
+      },
+      "388": {
+        "site": "shopping",
+        "template_id": 1356,
+        "architectures": {
+          "react": {
+            "trials": 3,
+            "successes": 0
+          },
+          "plan_execute": {
+            "trials": 3,
+            "successes": 0
+          }
+        },
+        "qwen_qualified": false
+      },
+      "308": {
+        "site": "gitlab",
+        "template_id": 323,
+        "architectures": {
+          "react": {
+            "trials": 3,
+            "successes": 0
+          },
+          "plan_execute": {
+            "trials": 3,
+            "successes": 0
+          }
+        },
+        "qwen_qualified": false
+      },
+      "309": {
+        "site": "gitlab",
+        "template_id": 323,
+        "architectures": {
+          "react": {
+            "trials": 3,
+            "successes": 0
+          },
+          "plan_execute": {
+            "trials": 3,
+            "successes": 0
+          }
+        },
+        "qwen_qualified": false
+      },
+      "310": {
+        "site": "gitlab",
+        "template_id": 323,
+        "architectures": {
+          "react": {
+            "trials": 3,
+            "successes": 0
+          },
+          "plan_execute": {
+            "trials": 3,
+            "successes": 0
+          }
+        },
+        "qwen_qualified": false
+      },
+      "314": {
+        "site": "gitlab",
+        "template_id": 324,
+        "architectures": {
+          "react": {
+            "trials": 3,
+            "successes": 3
+          },
+          "plan_execute": {
+            "trials": 3,
+            "successes": 3
+          }
+        },
+        "qwen_qualified": true
+      },
+      "315": {
+        "site": "gitlab",
+        "template_id": 324,
+        "architectures": {
+          "react": {
+            "trials": 3,
+            "successes": 3
+          },
+          "plan_execute": {
+            "trials": 3,
+            "successes": 3
+          }
+        },
+        "qwen_qualified": true
+      },
+      "316": {
+        "site": "gitlab",
+        "template_id": 324,
+        "architectures": {
+          "react": {
+            "trials": 3,
+            "successes": 2
+          },
+          "plan_execute": {
+            "trials": 3,
+            "successes": 1
+          }
+        },
+        "qwen_qualified": false
+      },
+      "303": {
+        "site": "gitlab",
+        "template_id": 321,
+        "architectures": {
+          "react": {
+            "trials": 3,
+            "successes": 0
+          },
+          "plan_execute": {
+            "trials": 3,
+            "successes": 1
+          }
+        },
+        "qwen_qualified": false
+      },
+      "304": {
+        "site": "gitlab",
+        "template_id": 321,
+        "architectures": {
+          "react": {
+            "trials": 3,
+            "successes": 0
+          },
+          "plan_execute": {
+            "trials": 3,
+            "successes": 0
+          }
+        },
+        "qwen_qualified": false
+      },
+      "305": {
+        "site": "gitlab",
+        "template_id": 321,
+        "architectures": {
+          "react": {
+            "trials": 3,
+            "successes": 2
+          },
+          "plan_execute": {
+            "trials": 3,
+            "successes": 0
+          }
+        },
+        "qwen_qualified": false
+      },
+      "293": {
+        "site": "gitlab",
+        "template_id": 329,
+        "architectures": {
+          "react": {
+            "trials": 3,
+            "successes": 0
+          },
+          "plan_execute": {
+            "trials": 3,
+            "successes": 1
+          }
+        },
+        "qwen_qualified": false
+      },
+      "294": {
+        "site": "gitlab",
+        "template_id": 329,
+        "architectures": {
+          "react": {
+            "trials": 3,
+            "successes": 0
+          },
+          "plan_execute": {
+            "trials": 3,
+            "successes": 3
+          }
+        },
+        "qwen_qualified": false
+      },
+      "295": {
+        "site": "gitlab",
+        "template_id": 329,
+        "architectures": {
+          "react": {
+            "trials": 3,
+            "successes": 0
+          },
+          "plan_execute": {
+            "trials": 3,
+            "successes": 2
+          }
+        },
+        "qwen_qualified": false
+      },
+      "47": {
+        "site": "shopping",
+        "template_id": 197,
+        "architectures": {
+          "react": {
+            "trials": 3,
+            "successes": 0
+          },
+          "plan_execute": {
+            "trials": 3,
+            "successes": 0
+          }
+        },
+        "qwen_qualified": false
+      },
+      "48": {
+        "site": "shopping",
+        "template_id": 197,
+        "architectures": {
+          "react": {
+            "trials": 3,
+            "successes": 3
+          },
+          "plan_execute": {
+            "trials": 3,
+            "successes": 3
+          }
+        },
+        "qwen_qualified": true
+      },
+      "49": {
+        "site": "shopping",
+        "template_id": 197,
+        "architectures": {
+          "react": {
+            "trials": 3,
+            "successes": 3
+          },
+          "plan_execute": {
+            "trials": 3,
+            "successes": 2
+          }
+        },
+        "qwen_qualified": true
+      },
+      "146": {
+        "site": "shopping",
+        "template_id": 155,
+        "architectures": {
+          "react": {
+            "trials": 3,
+            "successes": 0
+          },
+          "plan_execute": {
+            "trials": 3,
+            "successes": 0
+          }
+        },
+        "qwen_qualified": false
+      },
+      "147": {
+        "site": "shopping",
+        "template_id": 155,
+        "architectures": {
+          "react": {
+            "trials": 3,
+            "successes": 0
+          },
+          "plan_execute": {
+            "trials": 3,
+            "successes": 0
+          }
+        },
+        "qwen_qualified": false
+      },
+      "148": {
+        "site": "shopping",
+        "template_id": 155,
+        "architectures": {
+          "react": {
+            "trials": 3,
+            "successes": 3
+          },
+          "plan_execute": {
+            "trials": 3,
+            "successes": 2
+          }
+        },
+        "qwen_qualified": true
+      },
+      "784": {
+        "site": "gitlab",
+        "template_id": 316,
+        "architectures": {
+          "react": {
+            "trials": 3,
+            "successes": 3
+          },
+          "plan_execute": {
+            "trials": 3,
+            "successes": 0
+          }
+        },
+        "qwen_qualified": false
+      },
+      "785": {
+        "site": "gitlab",
+        "template_id": 316,
+        "architectures": {
+          "react": {
+            "trials": 3,
+            "successes": 2
+          },
+          "plan_execute": {
+            "trials": 3,
+            "successes": 1
+          }
+        },
+        "qwen_qualified": false
+      },
+      "786": {
+        "site": "gitlab",
+        "template_id": 316,
+        "architectures": {
+          "react": {
+            "trials": 3,
+            "successes": 1
+          },
+          "plan_execute": {
+            "trials": 3,
+            "successes": 0
+          }
+        },
+        "qwen_qualified": false
+      },
+      "188": {
+        "site": "shopping",
+        "template_id": 214,
+        "architectures": {
+          "react": {
+            "trials": 3,
+            "successes": 3
+          },
+          "plan_execute": {
+            "trials": 3,
+            "successes": 1
+          }
+        },
+        "qwen_qualified": false
+      },
+      "189": {
+        "site": "shopping",
+        "template_id": 214,
+        "architectures": {
+          "react": {
+            "trials": 3,
+            "successes": 3
+          },
+          "plan_execute": {
+            "trials": 3,
+            "successes": 2
+          }
+        },
+        "qwen_qualified": true
+      },
+      "190": {
+        "site": "shopping",
+        "template_id": 214,
+        "architectures": {
+          "react": {
+            "trials": 3,
+            "successes": 2
+          },
+          "plan_execute": {
+            "trials": 3,
+            "successes": 3
+          }
+        },
+        "qwen_qualified": true
+      }
+    },
+    "qualified_task_ids": [
+      27,
+      29,
+      164,
+      165,
+      314,
+      315,
+      48,
+      49,
+      148,
+      189,
+      190
+    ],
+    "qualified_template_ids": [
+      33,
+      136,
+      155,
+      197,
+      214,
+      324
+    ]
+  },
+  "prompt_tokens_total": 53100419,
+  "prompt_token_stop_before_next_trial": 56000000,
+  "stop_reason": null,
+  "resume_rejections": []
+}
