@@ -1,0 +1,317 @@
+{
+ "schema": "agent_stress_deepseek_core_controls_breakdown/1",
+ "model_profile": "deepseek_v41_flash",
+ "served_via": "https://maas.qianwenaiapi.com/compatible-mode/v1",
+ "plan_sha256": {
+  "run_1": "e91a7c2aac25f6648cd1c29bd233a42131960155bee28b2c585a563063bfed31",
+  "run_2": "e115dfd4065e43fc07decc9ef1e4890f0b0287218d0d6b384289ed7403f4f83f",
+  "run_3": "a6aa98f2c17ecefa57b59acd60cc9b43dbd52dd6ed02f1051ee31bc86f51ea97"
+ },
+ "planned_trials": 120,
+ "completed": 120,
+ "execution_failures": 0,
+ "cap_exhausted": 24,
+ "prompt_tokens_total": 17158567,
+ "overall": {
+  "trials": 120,
+  "successes": 48,
+  "success_rate": 0.4,
+  "prompt_tokens": 17158567
+ },
+ "by_run": {
+  "run_1": {
+   "trials": 40,
+   "successes": 20,
+   "success_rate": 0.5,
+   "prompt_tokens": 5490749
+  },
+  "run_2": {
+   "trials": 40,
+   "successes": 16,
+   "success_rate": 0.4,
+   "prompt_tokens": 5917660
+  },
+  "run_3": {
+   "trials": 40,
+   "successes": 12,
+   "success_rate": 0.3,
+   "prompt_tokens": 5750158
+  }
+ },
+ "architectures": {
+  "plan_execute": {
+   "trials": 60,
+   "successes": 21,
+   "success_rate": 0.35,
+   "prompt_tokens": 6701577,
+   "injections": 0
+  },
+  "react": {
+   "trials": 60,
+   "successes": 27,
+   "success_rate": 0.45,
+   "prompt_tokens": 10456990,
+   "injections": 0
+  }
+ },
+ "sites": {
+  "gitlab": {
+   "trials": 42,
+   "successes": 20,
+   "success_rate": 0.47619047619047616,
+   "prompt_tokens": 6497493
+  },
+  "reddit": {
+   "trials": 18,
+   "successes": 16,
+   "success_rate": 0.8888888888888888,
+   "prompt_tokens": 4076302
+  },
+  "shopping": {
+   "trials": 60,
+   "successes": 12,
+   "success_rate": 0.2,
+   "prompt_tokens": 6584772
+  }
+ },
+ "seeds": {
+  "1": {
+   "trials": 40,
+   "successes": 16,
+   "success_rate": 0.4,
+   "prompt_tokens": 5429936
+  },
+  "2": {
+   "trials": 40,
+   "successes": 16,
+   "success_rate": 0.4,
+   "prompt_tokens": 6182493
+  },
+  "3": {
+   "trials": 40,
+   "successes": 16,
+   "success_rate": 0.4,
+   "prompt_tokens": 5546138
+  }
+ },
+ "architecture_by_site": {
+  "react|gitlab": {
+   "trials": 21,
+   "successes": 11,
+   "success_rate": 0.5238095238095238,
+   "prompt_tokens": 3920051
+  },
+  "react|shopping": {
+   "trials": 30,
+   "successes": 9,
+   "success_rate": 0.3,
+   "prompt_tokens": 4196007
+  },
+  "react|reddit": {
+   "trials": 9,
+   "successes": 7,
+   "success_rate": 0.7777777777777778,
+   "prompt_tokens": 2340932
+  },
+  "plan_execute|gitlab": {
+   "trials": 21,
+   "successes": 9,
+   "success_rate": 0.42857142857142855,
+   "prompt_tokens": 2577442
+  },
+  "plan_execute|shopping": {
+   "trials": 30,
+   "successes": 3,
+   "success_rate": 0.1,
+   "prompt_tokens": 2388765
+  },
+  "plan_execute|reddit": {
+   "trials": 9,
+   "successes": 9,
+   "success_rate": 1.0,
+   "prompt_tokens": 1735370
+  }
+ },
+ "tasks": [
+  {
+   "task_id": 27,
+   "site": "reddit",
+   "template_id": 33,
+   "react_successes": 3,
+   "react_trials": 3,
+   "plan_execute_successes": 3,
+   "plan_execute_trials": 3
+  },
+  {
+   "task_id": 28,
+   "site": "reddit",
+   "template_id": 33,
+   "react_successes": 3,
+   "react_trials": 3,
+   "plan_execute_successes": 3,
+   "plan_execute_trials": 3
+  },
+  {
+   "task_id": 48,
+   "site": "shopping",
+   "template_id": 197,
+   "react_successes": 1,
+   "react_trials": 3,
+   "plan_execute_successes": 0,
+   "plan_execute_trials": 3
+  },
+  {
+   "task_id": 49,
+   "site": "shopping",
+   "template_id": 197,
+   "react_successes": 0,
+   "react_trials": 3,
+   "plan_execute_successes": 0,
+   "plan_execute_trials": 3
+  },
+  {
+   "task_id": 66,
+   "site": "reddit",
+   "template_id": 17,
+   "react_successes": 1,
+   "react_trials": 3,
+   "plan_execute_successes": 3,
+   "plan_execute_trials": 3
+  },
+  {
+   "task_id": 148,
+   "site": "shopping",
+   "template_id": 155,
+   "react_successes": 0,
+   "react_trials": 3,
+   "plan_execute_successes": 0,
+   "plan_execute_trials": 3
+  },
+  {
+   "task_id": 163,
+   "site": "shopping",
+   "template_id": 136,
+   "react_successes": 0,
+   "react_trials": 3,
+   "plan_execute_successes": 0,
+   "plan_execute_trials": 3
+  },
+  {
+   "task_id": 164,
+   "site": "shopping",
+   "template_id": 136,
+   "react_successes": 0,
+   "react_trials": 3,
+   "plan_execute_successes": 0,
+   "plan_execute_trials": 3
+  },
+  {
+   "task_id": 188,
+   "site": "shopping",
+   "template_id": 214,
+   "react_successes": 0,
+   "react_trials": 3,
+   "plan_execute_successes": 0,
+   "plan_execute_trials": 3
+  },
+  {
+   "task_id": 190,
+   "site": "shopping",
+   "template_id": 214,
+   "react_successes": 0,
+   "react_trials": 3,
+   "plan_execute_successes": 0,
+   "plan_execute_trials": 3
+  },
+  {
+   "task_id": 227,
+   "site": "shopping",
+   "template_id": 370,
+   "react_successes": 3,
+   "react_trials": 3,
+   "plan_execute_successes": 0,
+   "plan_execute_trials": 3
+  },
+  {
+   "task_id": 228,
+   "site": "shopping",
+   "template_id": 370,
+   "react_successes": 3,
+   "react_trials": 3,
+   "plan_execute_successes": 3,
+   "plan_execute_trials": 3
+  },
+  {
+   "task_id": 294,
+   "site": "gitlab",
+   "template_id": 329,
+   "react_successes": 3,
+   "react_trials": 3,
+   "plan_execute_successes": 1,
+   "plan_execute_trials": 3
+  },
+  {
+   "task_id": 295,
+   "site": "gitlab",
+   "template_id": 329,
+   "react_successes": 2,
+   "react_trials": 3,
+   "plan_execute_successes": 2,
+   "plan_execute_trials": 3
+  },
+  {
+   "task_id": 305,
+   "site": "gitlab",
+   "template_id": 321,
+   "react_successes": 3,
+   "react_trials": 3,
+   "plan_execute_successes": 3,
+   "plan_execute_trials": 3
+  },
+  {
+   "task_id": 314,
+   "site": "gitlab",
+   "template_id": 324,
+   "react_successes": 3,
+   "react_trials": 3,
+   "plan_execute_successes": 2,
+   "plan_execute_trials": 3
+  },
+  {
+   "task_id": 316,
+   "site": "gitlab",
+   "template_id": 324,
+   "react_successes": 0,
+   "react_trials": 3,
+   "plan_execute_successes": 1,
+   "plan_execute_trials": 3
+  },
+  {
+   "task_id": 384,
+   "site": "shopping",
+   "template_id": 666,
+   "react_successes": 2,
+   "react_trials": 3,
+   "plan_execute_successes": 0,
+   "plan_execute_trials": 3
+  },
+  {
+   "task_id": 784,
+   "site": "gitlab",
+   "template_id": 316,
+   "react_successes": 0,
+   "react_trials": 3,
+   "plan_execute_successes": 0,
+   "plan_execute_trials": 3
+  },
+  {
+   "task_id": 785,
+   "site": "gitlab",
+   "template_id": 316,
+   "react_successes": 0,
+   "react_trials": 3,
+   "plan_execute_successes": 0,
+   "plan_execute_trials": 3
+  }
+ ]
+}
