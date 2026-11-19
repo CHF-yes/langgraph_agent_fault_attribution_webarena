@@ -1,0 +1,600 @@
+{
+ "28": [
+  {
+   "method": "GET",
+   "host": "localhost:9999",
+   "path": "/",
+   "n": 2
+  },
+  {
+   "method": "GET",
+   "host": "localhost:9999",
+   "path": "/f/Worcester",
+   "n": 1
+  },
+  {
+   "method": "GET",
+   "host": "localhost:9999",
+   "path": "/forums",
+   "n": 1
+  },
+  {
+   "method": "GET",
+   "host": "localhost:9999",
+   "path": "/forums/all",
+   "n": 1
+  },
+  {
+   "method": "GET",
+   "host": "localhost:9999",
+   "path": "/f/WorcesterMA",
+   "n": 1
+  }
+ ],
+ "66": [
+  {
+   "method": "GET",
+   "host": "localhost:9999",
+   "path": "/f/books",
+   "n": 7
+  },
+  {
+   "method": "GET",
+   "host": "localhost:9999",
+   "path": "/",
+   "n": 1
+  },
+  {
+   "method": "GET",
+   "host": "localhost:9999",
+   "path": "/forums",
+   "n": 1
+  },
+  {
+   "method": "GET",
+   "host": "localhost:9999",
+   "path": "/f/books/17445/i-just-finished-reading-the-hobbit-to-my-6-year-old-daughter",
+   "n": 1
+  },
+  {
+   "method": "GET",
+   "host": "localhost:9999",
+   "path": "/f/books/59478/the-simple-greatness-of-agatha-christie",
+   "n": 1
+  }
+ ],
+ "163": [
+  {
+   "method": "GET",
+   "host": "localhost:7770",
+   "path": "/review/product/listAjax/id/38805/",
+   "n": 2
+  },
+  {
+   "method": "GET",
+   "host": "localhost:7770",
+   "path": "/ostent-16gb-memory-card-stick-storage-for-sony-ps-vita-psv1000-2000-pch-z081-z161-z321-z641.html",
+   "n": 1
+  }
+ ],
+ "188": [
+  {
+   "method": "GET",
+   "host": "localhost:7770",
+   "path": "/sales/order/history/",
+   "n": 3
+  },
+  {
+   "method": "GET",
+   "host": "localhost:7770",
+   "path": "/",
+   "n": 1
+  },
+  {
+   "method": "GET",
+   "host": "localhost:7770",
+   "path": "/customer/account/login/",
+   "n": 1
+  },
+  {
+   "method": "POST",
+   "host": "localhost:7770",
+   "path": "/customer/account/loginPost/",
+   "n": 1
+  },
+  {
+   "method": "GET",
+   "host": "localhost:7770",
+   "path": "/customer/account/index/",
+   "n": 1
+  }
+ ],
+ "227": [
+  {
+   "method": "GET",
+   "host": "localhost:7770",
+   "path": "/catalogsearch/result/",
+   "n": 4
+  },
+  {
+   "method": "GET",
+   "host": "localhost:7770",
+   "path": "/catalogsearch/searchTermsLog/save/",
+   "n": 4
+  },
+  {
+   "method": "GET",
+   "host": "localhost:7770",
+   "path": "/",
+   "n": 1
+  },
+  {
+   "method": "GET",
+   "host": "localhost:7770",
+   "path": "/search/ajax/suggest/",
+   "n": 1
+  },
+  {
+   "method": "GET",
+   "host": "localhost:7770",
+   "path": "/eyzutak-electroplated-magnetic-ring-holder-case-360-degree-with-rotation-metal-finger-ring-holder-magnet-car-holder-soft-silicone-shockproof-cover-for-iphone-7-iphone-8-iphone-se-2020-drak-green.html",
+   "n": 1
+  }
+ ],
+ "228": [
+  {
+   "method": "GET",
+   "host": "localhost:7770",
+   "path": "/",
+   "n": 1
+  },
+  {
+   "method": "GET",
+   "host": "localhost:7770",
+   "path": "/search/ajax/suggest/",
+   "n": 1
+  },
+  {
+   "method": "GET",
+   "host": "localhost:7770",
+   "path": "/catalogsearch/result/",
+   "n": 1
+  },
+  {
+   "method": "GET",
+   "host": "localhost:7770",
+   "path": "/catalogsearch/searchTermsLog/save/",
+   "n": 1
+  }
+ ],
+ "294": [
+  {
+   "method": "GET",
+   "host": "localhost:8023",
+   "path": "/",
+   "n": 2
+  },
+  {
+   "method": "GET",
+   "host": "localhost:8023",
+   "path": "/byteblaze/cloud-to-butt/-/avatar",
+   "n": 2
+  },
+  {
+   "method": "GET",
+   "host": "localhost:8023",
+   "path": "/explore",
+   "n": 2
+  },
+  {
+   "method": "POST",
+   "host": "localhost:8023",
+   "path": "/api/graphql",
+   "n": 2
+  },
+  {
+   "method": "GET",
+   "host": "localhost:8023",
+   "path": "/dashboard/projects",
+   "n": 1
+  }
+ ],
+ "316": [
+  {
+   "method": "GET",
+   "host": "localhost:8023",
+   "path": "/search/count",
+   "n": 4
+  },
+  {
+   "method": "POST",
+   "host": "localhost:8023",
+   "path": "/api/graphql",
+   "n": 2
+  },
+  {
+   "method": "GET",
+   "host": "localhost:8023",
+   "path": "/facebook/create-react-app/-/graphs/main",
+   "n": 2
+  },
+  {
+   "method": "GET",
+   "host": "localhost:8023",
+   "path": "/",
+   "n": 1
+  },
+  {
+   "method": "GET",
+   "host": "localhost:8023",
+   "path": "/byteblaze/cloud-to-butt/-/avatar",
+   "n": 1
+  }
+ ],
+ "784": [
+  {
+   "method": "POST",
+   "host": "localhost:8023",
+   "path": "/api/graphql",
+   "n": 2
+  },
+  {
+   "method": "GET",
+   "host": "localhost:8023",
+   "path": "/CellularPrivacy/Android-IMSI-Catcher-Detector/-/graphs/master",
+   "n": 2
+  },
+  {
+   "method": "GET",
+   "host": "localhost:8023",
+   "path": "/CellularPrivacy/Android-IMSI-Catcher-Detector",
+   "n": 1
+  },
+  {
+   "method": "GET",
+   "host": "localhost:8023",
+   "path": "/CellularPrivacy/Android-IMSI-Catcher-Detector/-/refs/development/logs_tree/",
+   "n": 1
+  },
+  {
+   "method": "GET",
+   "host": "localhost:8023",
+   "path": "/CellularPrivacy/Android-IMSI-Catcher-Detector/-/blob/development/README.md",
+   "n": 1
+  }
+ ],
+ "785": [
+  {
+   "method": "POST",
+   "host": "localhost:8023",
+   "path": "/api/graphql",
+   "n": 8
+  },
+  {
+   "method": "GET",
+   "host": "localhost:8023",
+   "path": "/CellularPrivacy/Android-IMSI-Catcher-Detector/-/refs/development/logs_tree/",
+   "n": 3
+  },
+  {
+   "method": "GET",
+   "host": "localhost:8023",
+   "path": "/CellularPrivacy/Android-IMSI-Catcher-Detector/-/blob/development/README.md",
+   "n": 3
+  },
+  {
+   "method": "GET",
+   "host": "localhost:8023",
+   "path": "/api/v4/projects/61/repository/branches",
+   "n": 3
+  },
+  {
+   "method": "GET",
+   "host": "localhost:8023",
+   "path": "/api/v4/projects/61/repository/tags",
+   "n": 3
+  }
+ ],
+ "295": [
+  {
+   "method": "GET",
+   "host": "localhost:8023",
+   "path": "/search/count",
+   "n": 4
+  },
+  {
+   "method": "GET",
+   "host": "localhost:8023",
+   "path": "/search/autocomplete",
+   "n": 2
+  },
+  {
+   "method": "POST",
+   "host": "localhost:8023",
+   "path": "/api/graphql",
+   "n": 2
+  },
+  {
+   "method": "GET",
+   "host": "localhost:8023",
+   "path": "/",
+   "n": 1
+  },
+  {
+   "method": "GET",
+   "host": "localhost:8023",
+   "path": "/byteblaze/cloud-to-butt/-/avatar",
+   "n": 1
+  }
+ ],
+ "305": [
+  {
+   "method": "GET",
+   "host": "localhost:8023",
+   "path": "/api/v4/projects/174/repository/branches",
+   "n": 5
+  },
+  {
+   "method": "GET",
+   "host": "localhost:8023",
+   "path": "/api/v4/projects/174/repository/tags",
+   "n": 5
+  },
+  {
+   "method": "GET",
+   "host": "localhost:8023",
+   "path": "/a11yproject/a11yproject.com/-/commits/main",
+   "n": 4
+  },
+  {
+   "method": "GET",
+   "host": "localhost:8023",
+   "path": "/a11yproject/a11yproject.com/-/commits/main/signatures",
+   "n": 4
+  },
+  {
+   "method": "POST",
+   "host": "localhost:8023",
+   "path": "/api/graphql",
+   "n": 2
+  }
+ ],
+ "384": [
+  {
+   "method": "GET",
+   "host": "localhost:7770",
+   "path": "/",
+   "n": 1
+  },
+  {
+   "method": "GET",
+   "host": "localhost:7770",
+   "path": "/search/ajax/suggest/",
+   "n": 1
+  },
+  {
+   "method": "GET",
+   "host": "localhost:7770",
+   "path": "/catalogsearch/result/",
+   "n": 1
+  },
+  {
+   "method": "GET",
+   "host": "localhost:7770",
+   "path": "/catalogsearch/searchTermsLog/save/",
+   "n": 1
+  },
+  {
+   "method": "GET",
+   "host": "localhost:7770",
+   "path": "/eyzutak-electroplated-magnetic-ring-holder-case-360-degree-with-rotation-metal-finger-ring-holder-magnet-car-holder-soft-silicone-shockproof-cover-for-iphone-7-iphone-8-iphone-se-2020-drak-green.html",
+   "n": 1
+  }
+ ],
+ "27": [
+  {
+   "method": "GET",
+   "host": "localhost:9999",
+   "path": "/",
+   "n": 1
+  },
+  {
+   "method": "GET",
+   "host": "localhost:9999",
+   "path": "/forums",
+   "n": 1
+  },
+  {
+   "method": "GET",
+   "host": "localhost:9999",
+   "path": "/f/personalfinance",
+   "n": 1
+  },
+  {
+   "method": "GET",
+   "host": "localhost:9999",
+   "path": "/f/personalfinance/new",
+   "n": 1
+  },
+  {
+   "method": "GET",
+   "host": "localhost:9999",
+   "path": "/f/personalfinance/130948/56-year-old-mom-has-no-retirement-where-do-i-even-start-on",
+   "n": 1
+  }
+ ],
+ "164": [
+  {
+   "method": "GET",
+   "host": "localhost:7770",
+   "path": "/mineralogie-all-natural-lip-gloss-ruby-rose.html",
+   "n": 1
+  },
+  {
+   "method": "GET",
+   "host": "localhost:7770",
+   "path": "/review/product/listAjax/id/6523/",
+   "n": 1
+  }
+ ],
+ "314": [
+  {
+   "method": "POST",
+   "host": "localhost:8023",
+   "path": "/api/graphql",
+   "n": 6
+  },
+  {
+   "method": "GET",
+   "host": "localhost:8023",
+   "path": "/primer/design/-/refs/main/logs_tree/",
+   "n": 2
+  },
+  {
+   "method": "GET",
+   "host": "localhost:8023",
+   "path": "/primer/design/-/blob/main/README.md",
+   "n": 2
+  },
+  {
+   "method": "GET",
+   "host": "localhost:8023",
+   "path": "/api/v4/projects/180/repository/branches",
+   "n": 2
+  },
+  {
+   "method": "GET",
+   "host": "localhost:8023",
+   "path": "/api/v4/projects/180/repository/tags",
+   "n": 2
+  }
+ ],
+ "48": [
+  {
+   "method": "GET",
+   "host": "localhost:7770",
+   "path": "/sales/order/history/",
+   "n": 2
+  },
+  {
+   "method": "GET",
+   "host": "localhost:7770",
+   "path": "/",
+   "n": 1
+  },
+  {
+   "method": "GET",
+   "host": "localhost:7770",
+   "path": "/customer/account/login/",
+   "n": 1
+  },
+  {
+   "method": "POST",
+   "host": "localhost:7770",
+   "path": "/customer/account/loginPost/",
+   "n": 1
+  },
+  {
+   "method": "GET",
+   "host": "localhost:7770",
+   "path": "/customer/account/index/",
+   "n": 1
+  }
+ ],
+ "49": [
+  {
+   "method": "GET",
+   "host": "localhost:7770",
+   "path": "/sales/order/history/",
+   "n": 2
+  },
+  {
+   "method": "GET",
+   "host": "localhost:7770",
+   "path": "/",
+   "n": 1
+  },
+  {
+   "method": "GET",
+   "host": "localhost:7770",
+   "path": "/wishlist/",
+   "n": 1
+  },
+  {
+   "method": "GET",
+   "host": "localhost:7770",
+   "path": "/customer/account/login/",
+   "n": 1
+  },
+  {
+   "method": "POST",
+   "host": "localhost:7770",
+   "path": "/customer/account/loginPost/",
+   "n": 1
+  }
+ ],
+ "148": [
+  {
+   "method": "GET",
+   "host": "localhost:7770",
+   "path": "/sales/order/history/",
+   "n": 4
+  },
+  {
+   "method": "GET",
+   "host": "localhost:7770",
+   "path": "/",
+   "n": 1
+  },
+  {
+   "method": "GET",
+   "host": "localhost:7770",
+   "path": "/customer/account/login/",
+   "n": 1
+  },
+  {
+   "method": "POST",
+   "host": "localhost:7770",
+   "path": "/customer/account/loginPost/",
+   "n": 1
+  },
+  {
+   "method": "GET",
+   "host": "localhost:7770",
+   "path": "/customer/account/index/",
+   "n": 1
+  }
+ ],
+ "190": [
+  {
+   "method": "GET",
+   "host": "localhost:7770",
+   "path": "/",
+   "n": 1
+  },
+  {
+   "method": "GET",
+   "host": "localhost:7770",
+   "path": "/customer/account/",
+   "n": 1
+  },
+  {
+   "method": "GET",
+   "host": "localhost:7770",
+   "path": "/customer/account/login/",
+   "n": 1
+  },
+  {
+   "method": "POST",
+   "host": "localhost:7770",
+   "path": "/customer/account/loginPost/",
+   "n": 1
+  },
+  {
+   "method": "GET",
+   "host": "localhost:7770",
+   "path": "/customer/account/index/",
+   "n": 1
+  }
+ ]
+}

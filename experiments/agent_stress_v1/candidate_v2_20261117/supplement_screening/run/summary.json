@@ -1,0 +1,8 @@
+{
+  "schema": "agent_stress_probe_summary/1",
+  "experiment_id": "agent-stress-v1-candidate-supplement-qwen",
+  "planned": 48,
+  "completed": 48,
+  "failures": [],
+  "prompt_tokens_total": 9876218
+}

@@ -1,0 +1,271 @@
+{
+  "schema": "agent_stress_candidate_selection_v2/1",
+  "rule": {
+    "tiers": {
+      "easy": "5-6/6",
+      "medium": "3-4/6",
+      "hard": "2/6",
+      "exploratory": "1/6",
+      "diagnose": "0/6"
+    },
+    "target": {
+      "tasks": 24,
+      "easy": 8,
+      "medium": 10,
+      "hard": 6,
+      "templates_min": 12,
+      "per_template_max": 2
+    }
+  },
+  "primary": [
+    {
+      "task_id": 28,
+      "site": "reddit",
+      "template_id": 33,
+      "operation": "评论统计",
+      "combined_success": 4,
+      "tier": "medium",
+      "note": "plan_execute 两次答案内容不符（计数/用户名），ReAct 全对"
+    },
+    {
+      "task_id": 66,
+      "site": "reddit",
+      "template_id": 17,
+      "operation": "帖子筛选/提取",
+      "combined_success": 4,
+      "tier": "medium",
+      "note": "两次输出契约：对象套数组，应为标题字符串列表"
+    },
+    {
+      "task_id": 163,
+      "site": "shopping",
+      "template_id": 136,
+      "operation": "评论提取",
+      "combined_success": 4,
+      "tier": "medium",
+      "note": "2 次步数耗尽 + 检索遗漏，4/6 通过"
+    },
+    {
+      "task_id": 188,
+      "site": "shopping",
+      "template_id": 214,
+      "operation": "订单统计/订单信息",
+      "combined_success": 4,
+      "tier": "medium",
+      "note": "2 次返回空列表，期望金额字符串（365.42）"
+    },
+    {
+      "task_id": 227,
+      "site": "shopping",
+      "template_id": 370,
+      "operation": "商品聚合",
+      "combined_success": 3,
+      "tier": "medium",
+      "note": "3 次返回空列表，期望范围内 min/max 字符串"
+    },
+    {
+      "task_id": 228,
+      "site": "shopping",
+      "template_id": 370,
+      "operation": "商品聚合",
+      "combined_success": 3,
+      "tier": "medium",
+      "note": "检索覆盖不足，min 值与期望不符"
+    },
+    {
+      "task_id": 294,
+      "site": "gitlab",
+      "template_id": 329,
+      "operation": "仓库信息检索",
+      "combined_success": 3,
+      "tier": "medium",
+      "note": "3 次步数耗尽；克隆地址未取到"
+    },
+    {
+      "task_id": 316,
+      "site": "gitlab",
+      "template_id": 324,
+      "operation": "贡献者检索",
+      "combined_success": 3,
+      "tier": "medium",
+      "note": "2 次步数耗尽 + 检索遗漏，3/6 通过"
+    },
+    {
+      "task_id": 784,
+      "site": "gitlab",
+      "template_id": 316,
+      "operation": "贡献者检索",
+      "combined_success": 3,
+      "tier": "medium",
+      "note": "3 次把邮箱包成对象，期望纯字符串"
+    },
+    {
+      "task_id": 785,
+      "site": "gitlab",
+      "template_id": 316,
+      "operation": "贡献者检索",
+      "combined_success": 3,
+      "tier": "medium",
+      "note": "一次步数耗尽 + 2 次输出契约"
+    },
+    {
+      "task_id": 295,
+      "site": "gitlab",
+      "template_id": 329,
+      "operation": "仓库信息检索",
+      "combined_success": 2,
+      "tier": "hard",
+      "note": "4 次步数耗尽；克隆地址检索不完整"
+    },
+    {
+      "task_id": 305,
+      "site": "gitlab",
+      "template_id": 321,
+      "operation": "代码提交统计",
+      "combined_success": 2,
+      "tier": "hard",
+      "note": "2 次工具错误/未找到 + 输出契约失败；2/6 通过"
+    },
+    {
+      "task_id": 384,
+      "site": "shopping",
+      "template_id": 666,
+      "operation": "评论提取",
+      "combined_success": 2,
+      "tier": "hard",
+      "note": "4 次 20 步耗尽 + 检索覆盖 33%；2/6 通过"
+    },
+    {
+      "task_id": 27,
+      "site": "reddit",
+      "template_id": 33,
+      "operation": "评论统计",
+      "combined_success": 6,
+      "tier": "easy",
+      "note": "无系统性失败"
+    },
+    {
+      "task_id": 164,
+      "site": "shopping",
+      "template_id": 136,
+      "operation": "评论提取",
+      "combined_success": 6,
+      "tier": "easy",
+      "note": "无系统性失败"
+    },
+    {
+      "task_id": 314,
+      "site": "gitlab",
+      "template_id": 324,
+      "operation": "贡献者检索",
+      "combined_success": 6,
+      "tier": "easy",
+      "note": "无系统性失败"
+    },
+    {
+      "task_id": 48,
+      "site": "shopping",
+      "template_id": 197,
+      "operation": "订单统计/订单信息",
+      "combined_success": 6,
+      "tier": "easy",
+      "note": "无系统性失败"
+    },
+    {
+      "task_id": 49,
+      "site": "shopping",
+      "template_id": 197,
+      "operation": "订单统计/订单信息",
+      "combined_success": 5,
+      "tier": "easy",
+      "note": "一次工具错误后返回空列表；其余通过"
+    },
+    {
+      "task_id": 148,
+      "site": "shopping",
+      "template_id": 155,
+      "operation": "订单统计/订单信息",
+      "combined_success": 5,
+      "tier": "easy",
+      "note": "一次把订单号包进对象/字符串，期望纯颜色值"
+    },
+    {
+      "task_id": 190,
+      "site": "shopping",
+      "template_id": 214,
+      "operation": "订单统计/订单信息",
+      "combined_success": 5,
+      "tier": "easy",
+      "note": "一次返回空列表 + 一次工具错误"
+    }
+  ],
+  "primary_task_ids": [
+    28,
+    66,
+    163,
+    188,
+    227,
+    228,
+    294,
+    316,
+    784,
+    785,
+    295,
+    305,
+    384,
+    27,
+    164,
+    314,
+    48,
+    49,
+    148,
+    190
+  ],
+  "counts": {
+    "medium": 10,
+    "hard": 3,
+    "easy": 7
+  },
+  "template_ids": [
+    17,
+    33,
+    136,
+    155,
+    197,
+    214,
+    316,
+    321,
+    324,
+    329,
+    370,
+    666
+  ],
+  "site_counts": {
+    "reddit": 3,
+    "shopping": 10,
+    "gitlab": 7
+  },
+  "gaps": {
+    "easy": 1,
+    "medium": 0,
+    "hard": 3,
+    "tasks": 4,
+    "templates": 0
+  },
+  "easy_backups": [
+    165,
+    315,
+    29,
+    189
+  ],
+  "supplement_candidates": [
+    69,
+    141,
+    149,
+    205,
+    206,
+    306,
+    311,
+    168
+  ]
+}
