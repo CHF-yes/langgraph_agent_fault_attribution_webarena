@@ -1,0 +1,525 @@
+{
+  "schema": "agent_stress_http_pilot_report/1",
+  "experiment_id": "agent-stress-v1-http-pilot-18",
+  "completed": 18,
+  "failures": [],
+  "totals": {
+    "control": {
+      "trials": 6,
+      "successes": 6,
+      "extra_steps_vs_clean": 0,
+      "repeat_exposures": 0,
+      "triggered": 0
+    },
+    "single": {
+      "trials": 6,
+      "successes": 6,
+      "extra_steps_vs_clean": 4,
+      "repeat_exposures": 0,
+      "triggered": 6
+    },
+    "sustained": {
+      "trials": 6,
+      "successes": 5,
+      "extra_steps_vs_clean": 49,
+      "repeat_exposures": 6,
+      "triggered": 6
+    }
+  },
+  "paired": [
+    {
+      "task_id": 28,
+      "site": "reddit",
+      "seed": 1,
+      "conditions": {
+        "control": {
+          "official_success": true,
+          "official_status": "success",
+          "injection_steps": [],
+          "injection_proxy_steps": [],
+          "injection_count": 0,
+          "steps": 9,
+          "detour_candidate": false,
+          "error_types": [],
+          "trace": "traces/20261120T183727-e0271f/ep-http-service-v1__single__qwen38_flash__react__web_http_error__task28__seed1__control__rep0.jsonl",
+          "official_eval": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task28_react_seed1_control/outputs/web_http_error_task28_seed1/28/control_seed_1/official_eval.json"
+        },
+        "single": {
+          "official_success": true,
+          "official_status": "success",
+          "injection_steps": [
+            5
+          ],
+          "injection_proxy_steps": [
+            6
+          ],
+          "injection_count": 1,
+          "steps": 10,
+          "detour_candidate": false,
+          "error_types": [
+            "500"
+          ],
+          "trace": "traces/20261120T183648-9e5970/ep-http-service-v1__single__qwen38_flash__react__web_http_error__task28__seed1__fault__rep0.jsonl",
+          "official_eval": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task28_react_seed1_single/outputs/web_http_error_task28_seed1/28/web_http_error_seed_1/official_eval.json"
+        },
+        "sustained": {
+          "official_success": true,
+          "official_status": "success",
+          "injection_steps": [
+            5,
+            6,
+            7,
+            8,
+            9,
+            11,
+            12,
+            13
+          ],
+          "injection_proxy_steps": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            12,
+            13,
+            14
+          ],
+          "injection_count": 8,
+          "steps": 17,
+          "detour_candidate": true,
+          "error_types": [
+            "500"
+          ],
+          "trace": "traces/20261120T183801-6dbd61/ep-http-service-v1__persistent__qwen38_flash__react__web_http_error__task28__seed1__fault__rep0.jsonl",
+          "official_eval": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task28_react_seed1_sustained/outputs/web_http_error_task28_seed1/28/web_http_error_seed_1/official_eval.json"
+        }
+      },
+      "extra_steps": {
+        "single": 1,
+        "sustained": 8
+      },
+      "clean_success_to_fault_fail": [],
+      "fault_success_clean_fail": []
+    },
+    {
+      "task_id": 28,
+      "site": "reddit",
+      "seed": 2,
+      "conditions": {
+        "control": {
+          "official_success": true,
+          "official_status": "success",
+          "injection_steps": [],
+          "injection_proxy_steps": [],
+          "injection_count": 0,
+          "steps": 9,
+          "detour_candidate": false,
+          "error_types": [],
+          "trace": "traces/20261120T183900-c8dd5e/ep-http-service-v1__single__qwen38_flash__react__web_http_error__task28__seed2__control__rep0.jsonl",
+          "official_eval": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task28_react_seed2_control/outputs/web_http_error_task28_seed2/28/control_seed_2/official_eval.json"
+        },
+        "single": {
+          "official_success": true,
+          "official_status": "success",
+          "injection_steps": [
+            6
+          ],
+          "injection_proxy_steps": [
+            7
+          ],
+          "injection_count": 1,
+          "steps": 10,
+          "detour_candidate": false,
+          "error_types": [
+            "500"
+          ],
+          "trace": "traces/20261120T183932-2630ca/ep-http-service-v1__single__qwen38_flash__react__web_http_error__task28__seed2__fault__rep0.jsonl",
+          "official_eval": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task28_react_seed2_single/outputs/web_http_error_task28_seed2/28/web_http_error_seed_2/official_eval.json"
+        },
+        "sustained": {
+          "official_success": true,
+          "official_status": "success",
+          "injection_steps": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ],
+          "injection_proxy_steps": [
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          "injection_count": 10,
+          "steps": 20,
+          "detour_candidate": false,
+          "error_types": [
+            "500"
+          ],
+          "trace": "traces/20261120T184004-6e45a6/ep-http-service-v1__persistent__qwen38_flash__react__web_http_error__task28__seed2__fault__rep0.jsonl",
+          "official_eval": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task28_react_seed2_sustained/outputs/web_http_error_task28_seed2/28/web_http_error_seed_2/official_eval.json"
+        }
+      },
+      "extra_steps": {
+        "single": 1,
+        "sustained": 11
+      },
+      "clean_success_to_fault_fail": [],
+      "fault_success_clean_fail": []
+    },
+    {
+      "task_id": 228,
+      "site": "shopping",
+      "seed": 1,
+      "conditions": {
+        "control": {
+          "official_success": true,
+          "official_status": "success",
+          "injection_steps": [],
+          "injection_proxy_steps": [],
+          "injection_count": 0,
+          "steps": 5,
+          "detour_candidate": false,
+          "error_types": [],
+          "trace": "traces/20261120T183528-941fa5/ep-http-service-v1__single__qwen38_flash__react__web_http_error__task228__seed1__control__rep0.jsonl",
+          "official_eval": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task228_react_seed1_control/outputs/web_http_error_task228_seed1/228/control_seed_1/official_eval.json"
+        },
+        "single": {
+          "official_success": true,
+          "official_status": "success",
+          "injection_steps": [
+            3
+          ],
+          "injection_proxy_steps": [
+            4
+          ],
+          "injection_count": 1,
+          "steps": 5,
+          "detour_candidate": false,
+          "error_types": [
+            "500"
+          ],
+          "trace": "traces/20261120T183510-e0920a/ep-http-service-v1__single__qwen38_flash__react__web_http_error__task228__seed1__fault__rep0.jsonl",
+          "official_eval": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task228_react_seed1_single/outputs/web_http_error_task228_seed1/228/web_http_error_seed_1/official_eval.json"
+        },
+        "sustained": {
+          "official_success": true,
+          "official_status": "success",
+          "injection_steps": [
+            3,
+            4
+          ],
+          "injection_proxy_steps": [
+            4,
+            5
+          ],
+          "injection_count": 2,
+          "steps": 10,
+          "detour_candidate": true,
+          "error_types": [
+            "500"
+          ],
+          "trace": "traces/20261120T183550-b4a8a3/ep-http-service-v1__persistent__qwen38_flash__react__web_http_error__task228__seed1__fault__rep0.jsonl",
+          "official_eval": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task228_react_seed1_sustained/outputs/web_http_error_task228_seed1/228/web_http_error_seed_1/official_eval.json"
+        }
+      },
+      "extra_steps": {
+        "single": 0,
+        "sustained": 5
+      },
+      "clean_success_to_fault_fail": [],
+      "fault_success_clean_fail": []
+    },
+    {
+      "task_id": 228,
+      "site": "shopping",
+      "seed": 2,
+      "conditions": {
+        "control": {
+          "official_success": true,
+          "official_status": "success",
+          "injection_steps": [],
+          "injection_proxy_steps": [],
+          "injection_count": 0,
+          "steps": 4,
+          "detour_candidate": false,
+          "error_types": [],
+          "trace": "traces/20261120T184753-7e2bd4/ep-http-service-v1__single__qwen38_flash__react__web_http_error__task228__seed2__control__rep0.jsonl",
+          "official_eval": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task228_react_seed2_control/outputs/web_http_error_task228_seed2/228/control_seed_2/official_eval.json"
+        },
+        "single": {
+          "official_success": true,
+          "official_status": "success",
+          "injection_steps": [
+            3
+          ],
+          "injection_proxy_steps": [
+            4
+          ],
+          "injection_count": 1,
+          "steps": 7,
+          "detour_candidate": true,
+          "error_types": [
+            "500"
+          ],
+          "trace": "traces/20261120T184843-4e6ff4/ep-http-service-v1__single__qwen38_flash__react__web_http_error__task228__seed2__fault__rep0.jsonl",
+          "official_eval": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task228_react_seed2_single/outputs/web_http_error_task228_seed2/228/web_http_error_seed_2/official_eval.json"
+        },
+        "sustained": {
+          "official_success": true,
+          "official_status": "success",
+          "injection_steps": [
+            3,
+            4
+          ],
+          "injection_proxy_steps": [
+            4,
+            5
+          ],
+          "injection_count": 2,
+          "steps": 9,
+          "detour_candidate": true,
+          "error_types": [
+            "500"
+          ],
+          "trace": "traces/20261120T184813-695090/ep-http-service-v1__persistent__qwen38_flash__react__web_http_error__task228__seed2__fault__rep0.jsonl",
+          "official_eval": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task228_react_seed2_sustained/outputs/web_http_error_task228_seed2/228/web_http_error_seed_2/official_eval.json"
+        }
+      },
+      "extra_steps": {
+        "single": 3,
+        "sustained": 5
+      },
+      "clean_success_to_fault_fail": [],
+      "fault_success_clean_fail": []
+    },
+    {
+      "task_id": 314,
+      "site": "gitlab",
+      "seed": 1,
+      "conditions": {
+        "control": {
+          "official_success": true,
+          "official_status": "success",
+          "injection_steps": [],
+          "injection_proxy_steps": [],
+          "injection_count": 0,
+          "steps": 7,
+          "detour_candidate": false,
+          "error_types": [],
+          "trace": "traces/20261120T184702-1eff4c/ep-http-service-v1__single__qwen38_flash__react__web_http_error__task314__seed1__control__rep0.jsonl",
+          "official_eval": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task314_react_seed1_control/outputs/web_http_error_task314_seed1/314/control_seed_1/official_eval.json"
+        },
+        "single": {
+          "official_success": true,
+          "official_status": "success",
+          "injection_steps": [
+            3
+          ],
+          "injection_proxy_steps": [
+            4
+          ],
+          "injection_count": 1,
+          "steps": 5,
+          "detour_candidate": false,
+          "error_types": [
+            "500"
+          ],
+          "trace": "traces/20261120T184616-5d92f3/ep-http-service-v1__single__qwen38_flash__react__web_http_error__task314__seed1__fault__rep0.jsonl",
+          "official_eval": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task314_react_seed1_single/outputs/web_http_error_task314_seed1/314/web_http_error_seed_1/official_eval.json"
+        },
+        "sustained": {
+          "official_success": true,
+          "official_status": "success",
+          "injection_steps": [
+            3,
+            4,
+            8,
+            10
+          ],
+          "injection_proxy_steps": [
+            4,
+            5,
+            9,
+            11
+          ],
+          "injection_count": 4,
+          "steps": 17,
+          "detour_candidate": true,
+          "error_types": [
+            "500"
+          ],
+          "trace": "traces/20261120T184418-f07559/ep-http-service-v1__persistent__qwen38_flash__react__web_http_error__task314__seed1__fault__rep0.jsonl",
+          "official_eval": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task314_react_seed1_sustained/outputs/web_http_error_task314_seed1/314/web_http_error_seed_1/official_eval.json"
+        }
+      },
+      "extra_steps": {
+        "single": -2,
+        "sustained": 10
+      },
+      "clean_success_to_fault_fail": [],
+      "fault_success_clean_fail": []
+    },
+    {
+      "task_id": 314,
+      "site": "gitlab",
+      "seed": 2,
+      "conditions": {
+        "control": {
+          "official_success": true,
+          "official_status": "success",
+          "injection_steps": [],
+          "injection_proxy_steps": [],
+          "injection_count": 0,
+          "steps": 4,
+          "detour_candidate": false,
+          "error_types": [],
+          "trace": "traces/20261120T184341-6f158d/ep-http-service-v1__single__qwen38_flash__react__web_http_error__task314__seed2__control__rep0.jsonl",
+          "official_eval": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task314_react_seed2_control/outputs/web_http_error_task314_seed2/314/control_seed_2/official_eval.json"
+        },
+        "single": {
+          "official_success": true,
+          "official_status": "success",
+          "injection_steps": [
+            2
+          ],
+          "injection_proxy_steps": [
+            3
+          ],
+          "injection_count": 1,
+          "steps": 5,
+          "detour_candidate": true,
+          "error_types": [
+            "500"
+          ],
+          "trace": "traces/20261120T184105-ed0fa4/ep-http-service-v1__single__qwen38_flash__react__web_http_error__task314__seed2__fault__rep0.jsonl",
+          "official_eval": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task314_react_seed2_single/outputs/web_http_error_task314_seed2/314/web_http_error_seed_2/official_eval.json"
+        },
+        "sustained": {
+          "official_success": false,
+          "official_status": "failure",
+          "injection_steps": [
+            3,
+            4,
+            5,
+            7,
+            11
+          ],
+          "injection_proxy_steps": [
+            4,
+            5,
+            6,
+            8,
+            12
+          ],
+          "injection_count": 5,
+          "steps": 14,
+          "detour_candidate": true,
+          "error_types": [
+            "500"
+          ],
+          "trace": "traces/20261120T184150-aa7b59/ep-http-service-v1__persistent__qwen38_flash__react__web_http_error__task314__seed2__fault__rep0.jsonl",
+          "official_eval": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task314_react_seed2_sustained/outputs/web_http_error_task314_seed2/314/web_http_error_seed_2/official_eval.json"
+        }
+      },
+      "extra_steps": {
+        "single": 1,
+        "sustained": 10
+      },
+      "clean_success_to_fault_fail": [
+        "sustained"
+      ],
+      "fault_success_clean_fail": []
+    }
+  ],
+  "clean_to_fault_fail_blocks": 1,
+  "fault_to_clean_fail_blocks": 0,
+  "sustained_repeat_exposure_cells": [
+    "qwen38_flash_task228_react_seed1_sustained",
+    "qwen38_flash_task28_react_seed1_sustained",
+    "qwen38_flash_task28_react_seed2_sustained",
+    "qwen38_flash_task314_react_seed2_sustained",
+    "qwen38_flash_task314_react_seed1_sustained",
+    "qwen38_flash_task228_react_seed2_sustained"
+  ],
+  "extra_step_share": {
+    "single": [
+      {
+        "task_id": 228,
+        "seed": 2,
+        "extra_steps": 3
+      },
+      {
+        "task_id": 28,
+        "seed": 1,
+        "extra_steps": 1
+      },
+      {
+        "task_id": 28,
+        "seed": 2,
+        "extra_steps": 1
+      },
+      {
+        "task_id": 314,
+        "seed": 2,
+        "extra_steps": 1
+      },
+      {
+        "task_id": 228,
+        "seed": 1,
+        "extra_steps": 0
+      },
+      {
+        "task_id": 314,
+        "seed": 1,
+        "extra_steps": -2
+      }
+    ],
+    "sustained": [
+      {
+        "task_id": 28,
+        "seed": 2,
+        "extra_steps": 11
+      },
+      {
+        "task_id": 314,
+        "seed": 1,
+        "extra_steps": 10
+      },
+      {
+        "task_id": 314,
+        "seed": 2,
+        "extra_steps": 10
+      },
+      {
+        "task_id": 28,
+        "seed": 1,
+        "extra_steps": 8
+      },
+      {
+        "task_id": 228,
+        "seed": 1,
+        "extra_steps": 5
+      },
+      {
+        "task_id": 228,
+        "seed": 2,
+        "extra_steps": 5
+      }
+    ]
+  }
+}

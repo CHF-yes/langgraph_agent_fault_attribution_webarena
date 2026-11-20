@@ -1,0 +1,602 @@
+{
+  "experiment_id": "ep-http-service-v1",
+  "task_id": 228,
+  "condition": "control",
+  "endpoint": {
+    "scheme": "http",
+    "host": "localhost",
+    "port": 7770,
+    "path": "/catalogsearch/result",
+    "target_policy_version": "endpoint-path-segment-v1"
+  },
+  "window_steps": 10,
+  "variant": "single",
+  "intensity": "off",
+  "steps": [
+    {
+      "label": "bootstrap",
+      "url": "http://localhost:7770/",
+      "step": 0,
+      "fault_page": false,
+      "chars": 6899
+    },
+    {
+      "label": "target_first",
+      "url": "http://localhost:7770/catalogsearch/result/?q=sephora",
+      "step": 1,
+      "fault_page": false,
+      "chars": 5760
+    },
+    {
+      "label": "target_changed",
+      "url": "http://localhost:7770/catalogsearch/result/?q=sephora&p=2",
+      "step": 2,
+      "fault_page": false,
+      "chars": 2262
+    },
+    {
+      "label": "other_endpoint",
+      "url": "http://localhost:7770/customer/account/",
+      "step": 3,
+      "fault_page": false,
+      "chars": 5477
+    },
+    {
+      "label": "filler_1",
+      "url": "http://localhost:7770/beauty-personal-care.html",
+      "step": 4,
+      "fault_page": false,
+      "chars": 8859
+    },
+    {
+      "label": "filler_2",
+      "url": "http://localhost:7770/",
+      "step": 5,
+      "fault_page": false,
+      "chars": 6899
+    },
+    {
+      "label": "filler_3",
+      "url": "http://localhost:7770/customer/account/",
+      "step": 6,
+      "fault_page": false,
+      "chars": 5477
+    },
+    {
+      "label": "filler_4",
+      "url": "http://localhost:7770/beauty-personal-care.html",
+      "step": 7,
+      "fault_page": false,
+      "chars": 8859
+    },
+    {
+      "label": "filler_5",
+      "url": "http://localhost:7770/",
+      "step": 8,
+      "fault_page": false,
+      "chars": 6899
+    },
+    {
+      "label": "filler_6",
+      "url": "http://localhost:7770/customer/account/",
+      "step": 9,
+      "fault_page": false,
+      "chars": 5477
+    },
+    {
+      "label": "filler_7",
+      "url": "http://localhost:7770/beauty-personal-care.html",
+      "step": 10,
+      "fault_page": false,
+      "chars": 8859
+    },
+    {
+      "label": "target_after_window",
+      "url": "http://localhost:7770/catalogsearch/result/?q=sephora",
+      "step": 11,
+      "fault_page": false,
+      "chars": 5648
+    }
+  ],
+  "exposures": [
+    {
+      "observation_uid": "goto:1#1",
+      "source_action_uid": "goto:1",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "single",
+      "step": 1,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/catalogsearch/result/?q=sephora",
+      "matched_endpoint": true,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "query": "q=sephora"
+      },
+      "reason": "control_or_disabled",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "goto:2#2",
+      "source_action_uid": "goto:2",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "single",
+      "step": 2,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/catalogsearch/result/?q=sephora&p=2",
+      "matched_endpoint": true,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "query": "q=sephora&p=2"
+      },
+      "reason": "control_or_disabled",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "goto:3#3",
+      "source_action_uid": "goto:3",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "single",
+      "step": 3,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/customer/account/",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/customer/account",
+        "query": ""
+      },
+      "reason": "control_or_disabled",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "goto:4#4",
+      "source_action_uid": "goto:4",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "single",
+      "step": 4,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/beauty-personal-care.html",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/beauty-personal-care.html",
+        "query": ""
+      },
+      "reason": "control_or_disabled",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "goto:5#5",
+      "source_action_uid": "goto:5",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "single",
+      "step": 5,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/",
+        "query": ""
+      },
+      "reason": "control_or_disabled",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "goto:6#6",
+      "source_action_uid": "goto:6",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "single",
+      "step": 6,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/customer/account/",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/customer/account",
+        "query": ""
+      },
+      "reason": "control_or_disabled",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "goto:7#7",
+      "source_action_uid": "goto:7",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "single",
+      "step": 7,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/beauty-personal-care.html",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/beauty-personal-care.html",
+        "query": ""
+      },
+      "reason": "control_or_disabled",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "goto:8#8",
+      "source_action_uid": "goto:8",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "single",
+      "step": 8,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/",
+        "query": ""
+      },
+      "reason": "control_or_disabled",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "goto:9#9",
+      "source_action_uid": "goto:9",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "single",
+      "step": 9,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/customer/account/",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/customer/account",
+        "query": ""
+      },
+      "reason": "control_or_disabled",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "goto:10#10",
+      "source_action_uid": "goto:10",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "single",
+      "step": 10,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/beauty-personal-care.html",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/beauty-personal-care.html",
+        "query": ""
+      },
+      "reason": "control_or_disabled",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "goto:11#11",
+      "source_action_uid": "goto:11",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "single",
+      "step": 11,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:7770/catalogsearch/result/?q=sephora",
+      "matched_endpoint": true,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 7770,
+        "path": "/catalogsearch/result",
+        "query": "q=sephora"
+      },
+      "reason": "control_or_disabled",
+      "fault_delivered": false
+    }
+  ],
+  "episode": {
+    "snapshot": {
+      "experiment_id": "ep-http-service-v1",
+      "variant": "single",
+      "target_policy_version": "endpoint-path-segment-v1",
+      "armed": true,
+      "armed_after_step": 0,
+      "target": null,
+      "t0": null,
+      "window_steps": 10,
+      "window_end": null,
+      "injections": 0,
+      "released": null,
+      "exposure_class": "not_triggered"
+    },
+    "injections": [],
+    "events": [
+      {
+        "event": "skip",
+        "proxy_step": 1,
+        "action_uid": "goto:1",
+        "reason": "control_or_disabled",
+        "detail": {
+          "raw_url": "http://localhost:7770/catalogsearch/result/?q=sephora",
+          "match": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 7770,
+            "path": "/catalogsearch/result",
+            "query": "q=sephora"
+          }
+        }
+      },
+      {
+        "event": "skip",
+        "proxy_step": 2,
+        "action_uid": "goto:2",
+        "reason": "control_or_disabled",
+        "detail": {
+          "raw_url": "http://localhost:7770/catalogsearch/result/?q=sephora&p=2",
+          "match": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 7770,
+            "path": "/catalogsearch/result",
+            "query": "q=sephora&p=2"
+          }
+        }
+      },
+      {
+        "event": "skip",
+        "proxy_step": 3,
+        "action_uid": "goto:3",
+        "reason": "control_or_disabled",
+        "detail": {
+          "raw_url": "http://localhost:7770/customer/account/",
+          "match": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 7770,
+            "path": "/customer/account",
+            "query": ""
+          }
+        }
+      },
+      {
+        "event": "skip",
+        "proxy_step": 4,
+        "action_uid": "goto:4",
+        "reason": "control_or_disabled",
+        "detail": {
+          "raw_url": "http://localhost:7770/beauty-personal-care.html",
+          "match": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 7770,
+            "path": "/beauty-personal-care.html",
+            "query": ""
+          }
+        }
+      },
+      {
+        "event": "skip",
+        "proxy_step": 5,
+        "action_uid": "goto:5",
+        "reason": "control_or_disabled",
+        "detail": {
+          "raw_url": "http://localhost:7770/",
+          "match": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 7770,
+            "path": "/",
+            "query": ""
+          }
+        }
+      },
+      {
+        "event": "skip",
+        "proxy_step": 6,
+        "action_uid": "goto:6",
+        "reason": "control_or_disabled",
+        "detail": {
+          "raw_url": "http://localhost:7770/customer/account/",
+          "match": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 7770,
+            "path": "/customer/account",
+            "query": ""
+          }
+        }
+      },
+      {
+        "event": "skip",
+        "proxy_step": 7,
+        "action_uid": "goto:7",
+        "reason": "control_or_disabled",
+        "detail": {
+          "raw_url": "http://localhost:7770/beauty-personal-care.html",
+          "match": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 7770,
+            "path": "/beauty-personal-care.html",
+            "query": ""
+          }
+        }
+      },
+      {
+        "event": "skip",
+        "proxy_step": 8,
+        "action_uid": "goto:8",
+        "reason": "control_or_disabled",
+        "detail": {
+          "raw_url": "http://localhost:7770/",
+          "match": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 7770,
+            "path": "/",
+            "query": ""
+          }
+        }
+      },
+      {
+        "event": "skip",
+        "proxy_step": 9,
+        "action_uid": "goto:9",
+        "reason": "control_or_disabled",
+        "detail": {
+          "raw_url": "http://localhost:7770/customer/account/",
+          "match": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 7770,
+            "path": "/customer/account",
+            "query": ""
+          }
+        }
+      },
+      {
+        "event": "skip",
+        "proxy_step": 10,
+        "action_uid": "goto:10",
+        "reason": "control_or_disabled",
+        "detail": {
+          "raw_url": "http://localhost:7770/beauty-personal-care.html",
+          "match": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 7770,
+            "path": "/beauty-personal-care.html",
+            "query": ""
+          }
+        }
+      },
+      {
+        "event": "skip",
+        "proxy_step": 11,
+        "action_uid": "goto:11",
+        "reason": "control_or_disabled",
+        "detail": {
+          "raw_url": "http://localhost:7770/catalogsearch/result/?q=sephora",
+          "match": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 7770,
+            "path": "/catalogsearch/result",
+            "query": "q=sephora"
+          }
+        }
+      }
+    ]
+  },
+  "injection_log": [],
+  "verdict": {
+    "valid": true,
+    "errors": [],
+    "count": 0,
+    "variant": "single"
+  }
+}

@@ -1,0 +1,1257 @@
+{
+  "experiment_id": "ep-http-service-v1",
+  "variant": "persistent",
+  "window_steps": 10,
+  "injections": [
+    {
+      "event": "injection",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "injection_index": 1,
+      "proxy_step": 7,
+      "action_uid": "click:7",
+      "target": {
+        "kind": "endpoint",
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "error_type": "500",
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "query": ""
+      },
+      "timestamp": 1795171224.2193658
+    },
+    {
+      "event": "injection",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "injection_index": 2,
+      "proxy_step": 8,
+      "action_uid": "goto:8",
+      "target": {
+        "kind": "endpoint",
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "error_type": "500",
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA/new",
+        "query": ""
+      },
+      "timestamp": 1795171227.137134
+    },
+    {
+      "event": "injection",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "injection_index": 3,
+      "proxy_step": 9,
+      "action_uid": "goto:9",
+      "target": {
+        "kind": "endpoint",
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "error_type": "500",
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "query": ""
+      },
+      "timestamp": 1795171229.4846268
+    },
+    {
+      "event": "injection",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "injection_index": 4,
+      "proxy_step": 10,
+      "action_uid": "goto:10",
+      "target": {
+        "kind": "endpoint",
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "error_type": "500",
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA/submissions",
+        "query": ""
+      },
+      "timestamp": 1795171231.3605762
+    },
+    {
+      "event": "injection",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "injection_index": 5,
+      "proxy_step": 11,
+      "action_uid": "goto:11",
+      "target": {
+        "kind": "endpoint",
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "error_type": "500",
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA/new",
+        "query": ""
+      },
+      "timestamp": 1795171233.8479066
+    },
+    {
+      "event": "injection",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "injection_index": 6,
+      "proxy_step": 12,
+      "action_uid": "goto:12",
+      "target": {
+        "kind": "endpoint",
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "error_type": "500",
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "query": ""
+      },
+      "timestamp": 1795171235.8635547
+    },
+    {
+      "event": "injection",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "injection_index": 7,
+      "proxy_step": 13,
+      "action_uid": "goto:13",
+      "target": {
+        "kind": "endpoint",
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "error_type": "500",
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "query": ""
+      },
+      "timestamp": 1795171237.9716222
+    },
+    {
+      "event": "injection",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "injection_index": 8,
+      "proxy_step": 14,
+      "action_uid": "goto:14",
+      "target": {
+        "kind": "endpoint",
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "error_type": "500",
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA/new",
+        "query": ""
+      },
+      "timestamp": 1795171240.1073616
+    },
+    {
+      "event": "injection",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "injection_index": 9,
+      "proxy_step": 15,
+      "action_uid": "goto:15",
+      "target": {
+        "kind": "endpoint",
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "error_type": "500",
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA/new",
+        "query": ""
+      },
+      "timestamp": 1795171242.317764
+    },
+    {
+      "event": "injection",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "injection_index": 10,
+      "proxy_step": 16,
+      "action_uid": "goto:16",
+      "target": {
+        "kind": "endpoint",
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "error_type": "500",
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA/new",
+        "query": ""
+      },
+      "timestamp": 1795171245.0921566
+    }
+  ],
+  "snapshot": {
+    "experiment_id": "ep-http-service-v1",
+    "variant": "persistent",
+    "target_policy_version": "endpoint-path-segment-v1",
+    "armed": true,
+    "armed_after_step": 1,
+    "target": {
+      "kind": "endpoint",
+      "scheme": "http",
+      "host": "localhost",
+      "port": 9999,
+      "path": "/f/WorcesterMA",
+      "target_policy_version": "endpoint-path-segment-v1"
+    },
+    "t0": 7,
+    "window_steps": 10,
+    "window_end": 16,
+    "injections": 10,
+    "released": "window_expired",
+    "exposure_class": "repeated"
+  },
+  "events": [
+    {
+      "event": "skip",
+      "proxy_step": 1,
+      "action_uid": "goto:1",
+      "reason": "not_armed",
+      "detail": {
+        "raw_url": "http://localhost:9999/",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 9999,
+          "path": "/",
+          "query": ""
+        }
+      }
+    },
+    {
+      "event": "skip",
+      "proxy_step": 2,
+      "action_uid": "goto:2",
+      "reason": "outside_endpoint",
+      "detail": {
+        "raw_url": "http://localhost:9999/f/Worcester",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 9999,
+          "path": "/f/Worcester",
+          "query": ""
+        }
+      }
+    },
+    {
+      "event": "skip",
+      "proxy_step": 3,
+      "action_uid": "goto:3",
+      "reason": "outside_endpoint",
+      "detail": {
+        "raw_url": "http://localhost:9999/f/worcester",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 9999,
+          "path": "/f/worcester",
+          "query": ""
+        }
+      }
+    },
+    {
+      "event": "skip",
+      "proxy_step": 4,
+      "action_uid": "goto:4",
+      "reason": "outside_endpoint",
+      "detail": {
+        "raw_url": "http://localhost:9999/",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 9999,
+          "path": "/",
+          "query": ""
+        }
+      }
+    },
+    {
+      "event": "skip",
+      "proxy_step": 5,
+      "action_uid": "click:5",
+      "reason": "outside_endpoint",
+      "detail": {
+        "raw_url": "http://localhost:9999/forums",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 9999,
+          "path": "/forums",
+          "query": ""
+        }
+      }
+    },
+    {
+      "event": "skip",
+      "proxy_step": 6,
+      "action_uid": "click:6",
+      "reason": "outside_endpoint",
+      "detail": {
+        "raw_url": "http://localhost:9999/forums/all",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 9999,
+          "path": "/forums/all",
+          "query": ""
+        }
+      }
+    },
+    {
+      "event": "injection",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "injection_index": 1,
+      "proxy_step": 7,
+      "action_uid": "click:7",
+      "target": {
+        "kind": "endpoint",
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "error_type": "500",
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "query": ""
+      },
+      "timestamp": 1795171224.2193658
+    },
+    {
+      "event": "injection",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "injection_index": 2,
+      "proxy_step": 8,
+      "action_uid": "goto:8",
+      "target": {
+        "kind": "endpoint",
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "error_type": "500",
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA/new",
+        "query": ""
+      },
+      "timestamp": 1795171227.137134
+    },
+    {
+      "event": "injection",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "injection_index": 3,
+      "proxy_step": 9,
+      "action_uid": "goto:9",
+      "target": {
+        "kind": "endpoint",
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "error_type": "500",
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "query": ""
+      },
+      "timestamp": 1795171229.4846268
+    },
+    {
+      "event": "injection",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "injection_index": 4,
+      "proxy_step": 10,
+      "action_uid": "goto:10",
+      "target": {
+        "kind": "endpoint",
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "error_type": "500",
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA/submissions",
+        "query": ""
+      },
+      "timestamp": 1795171231.3605762
+    },
+    {
+      "event": "injection",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "injection_index": 5,
+      "proxy_step": 11,
+      "action_uid": "goto:11",
+      "target": {
+        "kind": "endpoint",
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "error_type": "500",
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA/new",
+        "query": ""
+      },
+      "timestamp": 1795171233.8479066
+    },
+    {
+      "event": "injection",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "injection_index": 6,
+      "proxy_step": 12,
+      "action_uid": "goto:12",
+      "target": {
+        "kind": "endpoint",
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "error_type": "500",
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "query": ""
+      },
+      "timestamp": 1795171235.8635547
+    },
+    {
+      "event": "injection",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "injection_index": 7,
+      "proxy_step": 13,
+      "action_uid": "goto:13",
+      "target": {
+        "kind": "endpoint",
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "error_type": "500",
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "query": ""
+      },
+      "timestamp": 1795171237.9716222
+    },
+    {
+      "event": "injection",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "injection_index": 8,
+      "proxy_step": 14,
+      "action_uid": "goto:14",
+      "target": {
+        "kind": "endpoint",
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "error_type": "500",
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA/new",
+        "query": ""
+      },
+      "timestamp": 1795171240.1073616
+    },
+    {
+      "event": "injection",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "injection_index": 9,
+      "proxy_step": 15,
+      "action_uid": "goto:15",
+      "target": {
+        "kind": "endpoint",
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "error_type": "500",
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA/new",
+        "query": ""
+      },
+      "timestamp": 1795171242.317764
+    },
+    {
+      "event": "injection",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "injection_index": 10,
+      "proxy_step": 16,
+      "action_uid": "goto:16",
+      "target": {
+        "kind": "endpoint",
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "error_type": "500",
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA/new",
+        "query": ""
+      },
+      "timestamp": 1795171245.0921566
+    },
+    {
+      "event": "release",
+      "proxy_step": 17,
+      "reason": "window_expired"
+    },
+    {
+      "event": "skip",
+      "proxy_step": 17,
+      "action_uid": "goto:17",
+      "reason": "window_expired",
+      "detail": {
+        "raw_url": "http://localhost:9999/f/WorcesterMA/new",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 9999,
+          "path": "/f/WorcesterMA/new",
+          "query": ""
+        }
+      }
+    },
+    {
+      "event": "skip",
+      "proxy_step": 18,
+      "action_uid": "click:18",
+      "reason": "window_expired",
+      "detail": {
+        "raw_url": "http://localhost:9999/f/WorcesterMA/123052/best-place-for-a-foot-rub",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 9999,
+          "path": "/f/WorcesterMA/123052/best-place-for-a-foot-rub",
+          "query": ""
+        }
+      }
+    },
+    {
+      "event": "skip",
+      "proxy_step": 19,
+      "action_uid": "click:19",
+      "reason": "window_expired",
+      "detail": {
+        "raw_url": "http://localhost:9999/f/WorcesterMA/123052/best-place-for-a-foot-rub/linear",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 9999,
+          "path": "/f/WorcesterMA/123052/best-place-for-a-foot-rub/linear",
+          "query": ""
+        }
+      }
+    },
+    {
+      "event": "skip",
+      "proxy_step": 20,
+      "action_uid": "goto:20",
+      "reason": "window_expired",
+      "detail": {
+        "raw_url": "http://localhost:9999/f/WorcesterMA/new",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 9999,
+          "path": "/f/WorcesterMA/new",
+          "query": ""
+        }
+      }
+    }
+  ],
+  "exposures": [
+    {
+      "observation_uid": "goto:1#1",
+      "source_action_uid": "goto:1",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 1,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:9999/",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/",
+        "query": ""
+      },
+      "reason": "not_armed",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "goto:2#2",
+      "source_action_uid": "goto:2",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 2,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:9999/f/Worcester",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/Worcester",
+        "query": ""
+      },
+      "reason": "outside_endpoint",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "goto:3#3",
+      "source_action_uid": "goto:3",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 3,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:9999/f/worcester",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/worcester",
+        "query": ""
+      },
+      "reason": "outside_endpoint",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "goto:4#4",
+      "source_action_uid": "goto:4",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 4,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:9999/",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/",
+        "query": ""
+      },
+      "reason": "outside_endpoint",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "click:5#5",
+      "source_action_uid": "click:5",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 5,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:9999/forums",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/forums",
+        "query": ""
+      },
+      "reason": "outside_endpoint",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "click:6#6",
+      "source_action_uid": "click:6",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 6,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:9999/forums/all",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/forums/all",
+        "query": ""
+      },
+      "reason": "outside_endpoint",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "click:7#7",
+      "source_action_uid": "click:7",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 7,
+      "faults_delivered": [
+        "web_http_error"
+      ],
+      "delivered": true,
+      "raw_url": "http://localhost:9999/f/WorcesterMA",
+      "matched_endpoint": true,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "query": ""
+      },
+      "reason": "injected_or_same_action_replay",
+      "fault_delivered": true
+    },
+    {
+      "observation_uid": "goto:8#8",
+      "source_action_uid": "goto:8",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 8,
+      "faults_delivered": [
+        "web_http_error"
+      ],
+      "delivered": true,
+      "raw_url": "http://localhost:9999/f/WorcesterMA/new",
+      "matched_endpoint": true,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA/new",
+        "query": ""
+      },
+      "reason": "injected_or_same_action_replay",
+      "fault_delivered": true
+    },
+    {
+      "observation_uid": "goto:9#9",
+      "source_action_uid": "goto:9",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 9,
+      "faults_delivered": [
+        "web_http_error"
+      ],
+      "delivered": true,
+      "raw_url": "http://localhost:9999/f/WorcesterMA",
+      "matched_endpoint": true,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "query": ""
+      },
+      "reason": "injected_or_same_action_replay",
+      "fault_delivered": true
+    },
+    {
+      "observation_uid": "goto:10#10",
+      "source_action_uid": "goto:10",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 10,
+      "faults_delivered": [
+        "web_http_error"
+      ],
+      "delivered": true,
+      "raw_url": "http://localhost:9999/f/WorcesterMA/submissions",
+      "matched_endpoint": true,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA/submissions",
+        "query": ""
+      },
+      "reason": "injected_or_same_action_replay",
+      "fault_delivered": true
+    },
+    {
+      "observation_uid": "goto:11#11",
+      "source_action_uid": "goto:11",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 11,
+      "faults_delivered": [
+        "web_http_error"
+      ],
+      "delivered": true,
+      "raw_url": "http://localhost:9999/f/WorcesterMA/new",
+      "matched_endpoint": true,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA/new",
+        "query": ""
+      },
+      "reason": "injected_or_same_action_replay",
+      "fault_delivered": true
+    },
+    {
+      "observation_uid": "goto:12#12",
+      "source_action_uid": "goto:12",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 12,
+      "faults_delivered": [
+        "web_http_error"
+      ],
+      "delivered": true,
+      "raw_url": "http://localhost:9999/f/WorcesterMA",
+      "matched_endpoint": true,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "query": ""
+      },
+      "reason": "injected_or_same_action_replay",
+      "fault_delivered": true
+    },
+    {
+      "observation_uid": "goto:13#13",
+      "source_action_uid": "goto:13",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 13,
+      "faults_delivered": [
+        "web_http_error"
+      ],
+      "delivered": true,
+      "raw_url": "http://localhost:9999/f/WorcesterMA",
+      "matched_endpoint": true,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "query": ""
+      },
+      "reason": "injected_or_same_action_replay",
+      "fault_delivered": true
+    },
+    {
+      "observation_uid": "goto:14#14",
+      "source_action_uid": "goto:14",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 14,
+      "faults_delivered": [
+        "web_http_error"
+      ],
+      "delivered": true,
+      "raw_url": "http://localhost:9999/f/WorcesterMA/new",
+      "matched_endpoint": true,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA/new",
+        "query": ""
+      },
+      "reason": "injected_or_same_action_replay",
+      "fault_delivered": true
+    },
+    {
+      "observation_uid": "goto:15#15",
+      "source_action_uid": "goto:15",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 15,
+      "faults_delivered": [
+        "web_http_error"
+      ],
+      "delivered": true,
+      "raw_url": "http://localhost:9999/f/WorcesterMA/new",
+      "matched_endpoint": true,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA/new",
+        "query": ""
+      },
+      "reason": "injected_or_same_action_replay",
+      "fault_delivered": true
+    },
+    {
+      "observation_uid": "goto:16#16",
+      "source_action_uid": "goto:16",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 16,
+      "faults_delivered": [
+        "web_http_error"
+      ],
+      "delivered": true,
+      "raw_url": "http://localhost:9999/f/WorcesterMA/new",
+      "matched_endpoint": true,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA/new",
+        "query": ""
+      },
+      "reason": "injected_or_same_action_replay",
+      "fault_delivered": true
+    },
+    {
+      "observation_uid": "goto:17#17",
+      "source_action_uid": "goto:17",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 17,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:9999/f/WorcesterMA/new",
+      "matched_endpoint": true,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA/new",
+        "query": ""
+      },
+      "reason": "window_expired",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "click:18#18",
+      "source_action_uid": "click:18",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 18,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:9999/f/WorcesterMA/123052/best-place-for-a-foot-rub",
+      "matched_endpoint": true,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA/123052/best-place-for-a-foot-rub",
+        "query": ""
+      },
+      "reason": "window_expired",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "click:19#19",
+      "source_action_uid": "click:19",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 19,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:9999/f/WorcesterMA/123052/best-place-for-a-foot-rub/linear",
+      "matched_endpoint": true,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA/123052/best-place-for-a-foot-rub/linear",
+        "query": ""
+      },
+      "reason": "window_expired",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "goto:20#20",
+      "source_action_uid": "goto:20",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 20,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:9999/f/WorcesterMA/new",
+      "matched_endpoint": true,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA/new",
+        "query": ""
+      },
+      "reason": "window_expired",
+      "fault_delivered": false
+    }
+  ]
+}

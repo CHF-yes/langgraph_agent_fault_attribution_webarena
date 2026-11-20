@@ -1,0 +1,140 @@
+{
+  "schema": "agent_stress_http_pilot_probe_summary/1",
+  "rows": [
+    {
+      "task_id": 28,
+      "condition": "control",
+      "injections": 0,
+      "first_fault_page": false,
+      "changed_query_fault_page": false,
+      "other_endpoint_clean": true,
+      "post_window_clean": true,
+      "verdict": {
+        "valid": true,
+        "errors": [],
+        "count": 0,
+        "variant": "single"
+      }
+    },
+    {
+      "task_id": 28,
+      "condition": "single",
+      "injections": 1,
+      "first_fault_page": true,
+      "changed_query_fault_page": false,
+      "other_endpoint_clean": true,
+      "post_window_clean": true,
+      "verdict": {
+        "valid": true,
+        "errors": [],
+        "count": 1,
+        "variant": "single"
+      }
+    },
+    {
+      "task_id": 28,
+      "condition": "sustained",
+      "injections": 2,
+      "first_fault_page": true,
+      "changed_query_fault_page": true,
+      "other_endpoint_clean": true,
+      "post_window_clean": true,
+      "verdict": {
+        "valid": true,
+        "errors": [],
+        "count": 2,
+        "variant": "persistent"
+      }
+    },
+    {
+      "task_id": 228,
+      "condition": "control",
+      "injections": 0,
+      "first_fault_page": false,
+      "changed_query_fault_page": false,
+      "other_endpoint_clean": true,
+      "post_window_clean": true,
+      "verdict": {
+        "valid": true,
+        "errors": [],
+        "count": 0,
+        "variant": "single"
+      }
+    },
+    {
+      "task_id": 228,
+      "condition": "single",
+      "injections": 1,
+      "first_fault_page": true,
+      "changed_query_fault_page": false,
+      "other_endpoint_clean": true,
+      "post_window_clean": true,
+      "verdict": {
+        "valid": true,
+        "errors": [],
+        "count": 1,
+        "variant": "single"
+      }
+    },
+    {
+      "task_id": 228,
+      "condition": "sustained",
+      "injections": 2,
+      "first_fault_page": true,
+      "changed_query_fault_page": true,
+      "other_endpoint_clean": true,
+      "post_window_clean": true,
+      "verdict": {
+        "valid": true,
+        "errors": [],
+        "count": 2,
+        "variant": "persistent"
+      }
+    },
+    {
+      "task_id": 314,
+      "condition": "control",
+      "injections": 0,
+      "first_fault_page": false,
+      "changed_query_fault_page": false,
+      "other_endpoint_clean": true,
+      "post_window_clean": true,
+      "verdict": {
+        "valid": true,
+        "errors": [],
+        "count": 0,
+        "variant": "single"
+      }
+    },
+    {
+      "task_id": 314,
+      "condition": "single",
+      "injections": 1,
+      "first_fault_page": true,
+      "changed_query_fault_page": false,
+      "other_endpoint_clean": true,
+      "post_window_clean": true,
+      "verdict": {
+        "valid": true,
+        "errors": [],
+        "count": 1,
+        "variant": "single"
+      }
+    },
+    {
+      "task_id": 314,
+      "condition": "sustained",
+      "injections": 2,
+      "first_fault_page": true,
+      "changed_query_fault_page": true,
+      "other_endpoint_clean": true,
+      "post_window_clean": true,
+      "verdict": {
+        "valid": true,
+        "errors": [],
+        "count": 2,
+        "variant": "persistent"
+      }
+    }
+  ]
+}

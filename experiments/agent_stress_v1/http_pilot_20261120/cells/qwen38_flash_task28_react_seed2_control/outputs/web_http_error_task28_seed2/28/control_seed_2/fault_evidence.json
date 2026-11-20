@@ -1,0 +1,411 @@
+{
+  "experiment_id": "ep-http-service-v1",
+  "variant": "single",
+  "window_steps": 10,
+  "injections": [],
+  "snapshot": {
+    "experiment_id": "ep-http-service-v1",
+    "variant": "single",
+    "target_policy_version": "endpoint-path-segment-v1",
+    "armed": true,
+    "armed_after_step": 1,
+    "target": null,
+    "t0": null,
+    "window_steps": 10,
+    "window_end": null,
+    "injections": 0,
+    "released": null,
+    "exposure_class": "not_triggered"
+  },
+  "events": [
+    {
+      "event": "skip",
+      "proxy_step": 1,
+      "action_uid": "goto:1",
+      "reason": "control_or_disabled",
+      "detail": {
+        "raw_url": "http://localhost:9999/",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 9999,
+          "path": "/",
+          "query": ""
+        }
+      }
+    },
+    {
+      "event": "skip",
+      "proxy_step": 2,
+      "action_uid": "goto:2",
+      "reason": "control_or_disabled",
+      "detail": {
+        "raw_url": "http://localhost:9999/f/Worcester",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 9999,
+          "path": "/f/Worcester",
+          "query": ""
+        }
+      }
+    },
+    {
+      "event": "skip",
+      "proxy_step": 3,
+      "action_uid": "goto:3",
+      "reason": "control_or_disabled",
+      "detail": {
+        "raw_url": "http://localhost:9999/",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 9999,
+          "path": "/",
+          "query": ""
+        }
+      }
+    },
+    {
+      "event": "skip",
+      "proxy_step": 4,
+      "action_uid": "click:4",
+      "reason": "control_or_disabled",
+      "detail": {
+        "raw_url": "http://localhost:9999/forums",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 9999,
+          "path": "/forums",
+          "query": ""
+        }
+      }
+    },
+    {
+      "event": "skip",
+      "proxy_step": 5,
+      "action_uid": "click:5",
+      "reason": "control_or_disabled",
+      "detail": {
+        "raw_url": "http://localhost:9999/forums/all",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 9999,
+          "path": "/forums/all",
+          "query": ""
+        }
+      }
+    },
+    {
+      "event": "skip",
+      "proxy_step": 6,
+      "action_uid": "click:6",
+      "reason": "control_or_disabled",
+      "detail": {
+        "raw_url": "http://localhost:9999/f/WorcesterMA",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 9999,
+          "path": "/f/WorcesterMA",
+          "query": ""
+        }
+      }
+    },
+    {
+      "event": "skip",
+      "proxy_step": 7,
+      "action_uid": "click:7",
+      "reason": "control_or_disabled",
+      "detail": {
+        "raw_url": "http://localhost:9999/f/WorcesterMA",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 9999,
+          "path": "/f/WorcesterMA",
+          "query": ""
+        }
+      }
+    },
+    {
+      "event": "skip",
+      "proxy_step": 8,
+      "action_uid": "click:8",
+      "reason": "control_or_disabled",
+      "detail": {
+        "raw_url": "http://localhost:9999/f/WorcesterMA/new",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 9999,
+          "path": "/f/WorcesterMA/new",
+          "query": ""
+        }
+      }
+    },
+    {
+      "event": "skip",
+      "proxy_step": 9,
+      "action_uid": "click:9",
+      "reason": "control_or_disabled",
+      "detail": {
+        "raw_url": "http://localhost:9999/f/WorcesterMA/123052/best-place-for-a-foot-rub",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 9999,
+          "path": "/f/WorcesterMA/123052/best-place-for-a-foot-rub",
+          "query": ""
+        }
+      }
+    }
+  ],
+  "exposures": [
+    {
+      "observation_uid": "goto:1#1",
+      "source_action_uid": "goto:1",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "single",
+      "step": 1,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:9999/",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/",
+        "query": ""
+      },
+      "reason": "control_or_disabled",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "goto:2#2",
+      "source_action_uid": "goto:2",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "single",
+      "step": 2,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:9999/f/Worcester",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/Worcester",
+        "query": ""
+      },
+      "reason": "control_or_disabled",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "goto:3#3",
+      "source_action_uid": "goto:3",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "single",
+      "step": 3,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:9999/",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/",
+        "query": ""
+      },
+      "reason": "control_or_disabled",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "click:4#4",
+      "source_action_uid": "click:4",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "single",
+      "step": 4,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:9999/forums",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/forums",
+        "query": ""
+      },
+      "reason": "control_or_disabled",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "click:5#5",
+      "source_action_uid": "click:5",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "single",
+      "step": 5,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:9999/forums/all",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/forums/all",
+        "query": ""
+      },
+      "reason": "control_or_disabled",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "click:6#6",
+      "source_action_uid": "click:6",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "single",
+      "step": 6,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:9999/f/WorcesterMA",
+      "matched_endpoint": true,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "query": ""
+      },
+      "reason": "control_or_disabled",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "click:7#7",
+      "source_action_uid": "click:7",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "single",
+      "step": 7,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:9999/f/WorcesterMA",
+      "matched_endpoint": true,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "query": ""
+      },
+      "reason": "control_or_disabled",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "click:8#8",
+      "source_action_uid": "click:8",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "single",
+      "step": 8,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:9999/f/WorcesterMA/new",
+      "matched_endpoint": true,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA/new",
+        "query": ""
+      },
+      "reason": "control_or_disabled",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "click:9#9",
+      "source_action_uid": "click:9",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "single",
+      "step": 9,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:9999/f/WorcesterMA/123052/best-place-for-a-foot-rub",
+      "matched_endpoint": true,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 9999,
+        "path": "/f/WorcesterMA/123052/best-place-for-a-foot-rub",
+        "query": ""
+      },
+      "reason": "control_or_disabled",
+      "fault_delivered": false
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "task_id": 228,
+  "intent_template_id": 370,
+  "sites": [
+    "shopping"
+  ],
+  "task_revision": 2,
+  "status": "success",
+  "score": 1.0,
+  "evaluators_results": [
+    {
+      "evaluator_name": "AgentResponseEvaluator",
+      "status": "success",
+      "score": 1.0,
+      "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    {\n      \"min\": 18.18,\n      \"max\": 94.99\n    }\n  ],\n  \"error_details\": null\n}\n",
+      "actual_normalized": {
+        "task_type": "retrieve",
+        "retrieved_data": [
+          {
+            "min": "18.18",
+            "max": "94.99"
+          }
+        ],
+        "status": "success"
+      },
+      "expected": {
+        "task_type": "retrieve",
+        "status": "success",
+        "retrieved_data": [
+          {
+            "min": "18.18",
+            "max": "94.99"
+          }
+        ]
+      },
+      "assertions": null,
+      "error_msg": null,
+      "should_not_exist": null
+    }
+  ],
+  "error_msg": null,
+  "webarena_verified_version": "1.2.3.post1.dev0",
+  "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+  "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+  "official_success": true,
+  "_evaluation_binding": {
+    "agent_response_sha256": "1ef38e766e3fb2b3e8e37d3c5675fae6b469683764315a2764176e1d16d28a1e",
+    "network_har_sha256": "95c5a0d312c85194685f514ae4d8e64b0e05b6ff5fd99fd37a05649162477382",
+    "config_sha256": "0b7e7e9326d16a5d070adea30c4e4247cd65137832a8544352f581a2b71b64c9",
+    "evaluator_adapter_version": "stage-c-eval-adapter/1"
+  }
+}

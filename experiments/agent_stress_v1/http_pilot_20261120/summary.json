@@ -1,0 +1,773 @@
+{
+  "schema": "agent_stress_http_pilot_summary/1",
+  "experiment_id": "agent-stress-v1-http-pilot-18",
+  "planned": 18,
+  "completed": 18,
+  "failures": [],
+  "results": [
+    {
+      "cell_key": "qwen38_flash_task228_react_seed1_single",
+      "block": 1,
+      "order_in_block": 1,
+      "task_id": 228,
+      "site": "shopping",
+      "seed": 1,
+      "condition": "single",
+      "steps": 5,
+      "completed": true,
+      "cap_exhausted": false,
+      "official_success": true,
+      "official_status": "success",
+      "injection_count": 1,
+      "injection_steps": [
+        4
+      ],
+      "error_types": [
+        "500"
+      ],
+      "target_urls": [
+        "http://localhost:7770/catalogsearch/result/?q=sephora"
+      ],
+      "fault_triggered": true,
+      "fault_episode_valid": true,
+      "protocol_errors": [],
+      "duration_sec": 17.5,
+      "detour_candidate": false,
+      "post_injection_urls": [],
+      "trace": "traces/20261120T183510-e0920a/ep-http-service-v1__single__qwen38_flash__react__web_http_error__task228__seed1__fault__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task228_react_seed1_single/outputs/web_http_error_task228_seed1/228/web_http_error_seed_1/agent_response.json",
+      "official_eval": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task228_react_seed1_single/outputs/web_http_error_task228_seed1/228/web_http_error_seed_1/official_eval.json",
+      "trial_record": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task228_react_seed1_single/outputs/web_http_error_task228_seed1/228/web_http_error_seed_1/trial_record.json",
+      "fault_evidence": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task228_react_seed1_single/outputs/web_http_error_task228_seed1/228/web_http_error_seed_1/fault_evidence.json",
+      "log": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task228_react_seed1_single/trial.log"
+    },
+    {
+      "cell_key": "qwen38_flash_task228_react_seed1_control",
+      "block": 1,
+      "order_in_block": 2,
+      "task_id": 228,
+      "site": "shopping",
+      "seed": 1,
+      "condition": "control",
+      "steps": 5,
+      "completed": true,
+      "cap_exhausted": false,
+      "official_success": true,
+      "official_status": "success",
+      "injection_count": 0,
+      "injection_steps": [],
+      "error_types": [],
+      "target_urls": [],
+      "fault_triggered": false,
+      "fault_episode_valid": true,
+      "protocol_errors": [],
+      "duration_sec": 20.5,
+      "detour_candidate": false,
+      "post_injection_urls": [],
+      "trace": "traces/20261120T183528-941fa5/ep-http-service-v1__single__qwen38_flash__react__web_http_error__task228__seed1__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task228_react_seed1_control/outputs/web_http_error_task228_seed1/228/control_seed_1/agent_response.json",
+      "official_eval": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task228_react_seed1_control/outputs/web_http_error_task228_seed1/228/control_seed_1/official_eval.json",
+      "trial_record": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task228_react_seed1_control/outputs/web_http_error_task228_seed1/228/control_seed_1/trial_record.json",
+      "fault_evidence": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task228_react_seed1_control/outputs/web_http_error_task228_seed1/228/control_seed_1/fault_evidence.json",
+      "log": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task228_react_seed1_control/trial.log"
+    },
+    {
+      "cell_key": "qwen38_flash_task228_react_seed1_sustained",
+      "block": 1,
+      "order_in_block": 3,
+      "task_id": 228,
+      "site": "shopping",
+      "seed": 1,
+      "condition": "sustained",
+      "steps": 10,
+      "completed": true,
+      "cap_exhausted": false,
+      "official_success": true,
+      "official_status": "success",
+      "injection_count": 2,
+      "injection_steps": [
+        4,
+        5
+      ],
+      "error_types": [
+        "500"
+      ],
+      "target_urls": [
+        "http://localhost:7770/catalogsearch/result/?q=sephora"
+      ],
+      "fault_triggered": true,
+      "fault_episode_valid": true,
+      "protocol_errors": [],
+      "duration_sec": 30.8,
+      "detour_candidate": true,
+      "post_injection_urls": [
+        {
+          "step": 6,
+          "url": "http://localhost:7770/"
+        },
+        {
+          "step": 7,
+          "url": "http://localhost:7770/catalogsearch/advanced/"
+        },
+        {
+          "step": 8,
+          "url": "http://localhost:7770/catalogsearch/advanced/"
+        },
+        {
+          "step": 9,
+          "url": "http://localhost:7770/catalogsearch/advanced/"
+        },
+        {
+          "step": 10,
+          "url": "http://localhost:7770/catalogsearch/advanced/result/?name=sephora&sku=&description=&short_description=&price%5Bfrom%5D=&price%5Bto%5D=&price%5Bcurrency%5D=USD"
+        }
+      ],
+      "trace": "traces/20261120T183550-b4a8a3/ep-http-service-v1__persistent__qwen38_flash__react__web_http_error__task228__seed1__fault__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task228_react_seed1_sustained/outputs/web_http_error_task228_seed1/228/web_http_error_seed_1/agent_response.json",
+      "official_eval": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task228_react_seed1_sustained/outputs/web_http_error_task228_seed1/228/web_http_error_seed_1/official_eval.json",
+      "trial_record": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task228_react_seed1_sustained/outputs/web_http_error_task228_seed1/228/web_http_error_seed_1/trial_record.json",
+      "fault_evidence": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task228_react_seed1_sustained/outputs/web_http_error_task228_seed1/228/web_http_error_seed_1/fault_evidence.json",
+      "log": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task228_react_seed1_sustained/trial.log"
+    },
+    {
+      "cell_key": "qwen38_flash_task28_react_seed1_single",
+      "block": 2,
+      "order_in_block": 1,
+      "task_id": 28,
+      "site": "reddit",
+      "seed": 1,
+      "condition": "single",
+      "steps": 10,
+      "completed": true,
+      "cap_exhausted": false,
+      "official_success": true,
+      "official_status": "success",
+      "injection_count": 1,
+      "injection_steps": [
+        6
+      ],
+      "error_types": [
+        "500"
+      ],
+      "target_urls": [
+        "http://localhost:9999/f/WorcesterMA"
+      ],
+      "fault_triggered": true,
+      "fault_episode_valid": true,
+      "protocol_errors": [],
+      "duration_sec": 37.6,
+      "detour_candidate": false,
+      "post_injection_urls": [],
+      "trace": "traces/20261120T183648-9e5970/ep-http-service-v1__single__qwen38_flash__react__web_http_error__task28__seed1__fault__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task28_react_seed1_single/outputs/web_http_error_task28_seed1/28/web_http_error_seed_1/agent_response.json",
+      "official_eval": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task28_react_seed1_single/outputs/web_http_error_task28_seed1/28/web_http_error_seed_1/official_eval.json",
+      "trial_record": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task28_react_seed1_single/outputs/web_http_error_task28_seed1/28/web_http_error_seed_1/trial_record.json",
+      "fault_evidence": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task28_react_seed1_single/outputs/web_http_error_task28_seed1/28/web_http_error_seed_1/fault_evidence.json",
+      "log": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task28_react_seed1_single/trial.log"
+    },
+    {
+      "cell_key": "qwen38_flash_task28_react_seed1_control",
+      "block": 2,
+      "order_in_block": 2,
+      "task_id": 28,
+      "site": "reddit",
+      "seed": 1,
+      "condition": "control",
+      "steps": 9,
+      "completed": true,
+      "cap_exhausted": false,
+      "official_success": true,
+      "official_status": "success",
+      "injection_count": 0,
+      "injection_steps": [],
+      "error_types": [],
+      "target_urls": [],
+      "fault_triggered": false,
+      "fault_episode_valid": true,
+      "protocol_errors": [],
+      "duration_sec": 33.1,
+      "detour_candidate": false,
+      "post_injection_urls": [],
+      "trace": "traces/20261120T183727-e0271f/ep-http-service-v1__single__qwen38_flash__react__web_http_error__task28__seed1__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task28_react_seed1_control/outputs/web_http_error_task28_seed1/28/control_seed_1/agent_response.json",
+      "official_eval": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task28_react_seed1_control/outputs/web_http_error_task28_seed1/28/control_seed_1/official_eval.json",
+      "trial_record": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task28_react_seed1_control/outputs/web_http_error_task28_seed1/28/control_seed_1/trial_record.json",
+      "fault_evidence": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task28_react_seed1_control/outputs/web_http_error_task28_seed1/28/control_seed_1/fault_evidence.json",
+      "log": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task28_react_seed1_control/trial.log"
+    },
+    {
+      "cell_key": "qwen38_flash_task28_react_seed1_sustained",
+      "block": 2,
+      "order_in_block": 3,
+      "task_id": 28,
+      "site": "reddit",
+      "seed": 1,
+      "condition": "sustained",
+      "steps": 17,
+      "completed": true,
+      "cap_exhausted": false,
+      "official_success": true,
+      "official_status": "success",
+      "injection_count": 8,
+      "injection_steps": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        12,
+        13,
+        14
+      ],
+      "error_types": [
+        "500"
+      ],
+      "target_urls": [
+        "http://localhost:9999/f/WorcesterMA",
+        "http://localhost:9999/f/WorcesterMA/comments",
+        "http://localhost:9999/f/WorcesterMA/new",
+        "http://localhost:9999/f/WorcesterMA/submissions/new",
+        "http://localhost:9999/f/WorcesterMA?order=new"
+      ],
+      "fault_triggered": true,
+      "fault_episode_valid": true,
+      "protocol_errors": [],
+      "duration_sec": 57.7,
+      "detour_candidate": true,
+      "post_injection_urls": [
+        {
+          "step": 11,
+          "url": "http://localhost:9999/search?q=WorcesterMA"
+        },
+        {
+          "step": 15,
+          "url": "http://localhost:9999/search?q=worcester&order=new"
+        }
+      ],
+      "trace": "traces/20261120T183801-6dbd61/ep-http-service-v1__persistent__qwen38_flash__react__web_http_error__task28__seed1__fault__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task28_react_seed1_sustained/outputs/web_http_error_task28_seed1/28/web_http_error_seed_1/agent_response.json",
+      "official_eval": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task28_react_seed1_sustained/outputs/web_http_error_task28_seed1/28/web_http_error_seed_1/official_eval.json",
+      "trial_record": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task28_react_seed1_sustained/outputs/web_http_error_task28_seed1/28/web_http_error_seed_1/trial_record.json",
+      "fault_evidence": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task28_react_seed1_sustained/outputs/web_http_error_task28_seed1/28/web_http_error_seed_1/fault_evidence.json",
+      "log": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task28_react_seed1_sustained/trial.log"
+    },
+    {
+      "cell_key": "qwen38_flash_task28_react_seed2_control",
+      "block": 3,
+      "order_in_block": 1,
+      "task_id": 28,
+      "site": "reddit",
+      "seed": 2,
+      "condition": "control",
+      "steps": 9,
+      "completed": true,
+      "cap_exhausted": false,
+      "official_success": true,
+      "official_status": "success",
+      "injection_count": 0,
+      "injection_steps": [],
+      "error_types": [],
+      "target_urls": [],
+      "fault_triggered": false,
+      "fault_episode_valid": true,
+      "protocol_errors": [],
+      "duration_sec": 31.4,
+      "detour_candidate": false,
+      "post_injection_urls": [],
+      "trace": "traces/20261120T183900-c8dd5e/ep-http-service-v1__single__qwen38_flash__react__web_http_error__task28__seed2__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task28_react_seed2_control/outputs/web_http_error_task28_seed2/28/control_seed_2/agent_response.json",
+      "official_eval": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task28_react_seed2_control/outputs/web_http_error_task28_seed2/28/control_seed_2/official_eval.json",
+      "trial_record": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task28_react_seed2_control/outputs/web_http_error_task28_seed2/28/control_seed_2/trial_record.json",
+      "fault_evidence": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task28_react_seed2_control/outputs/web_http_error_task28_seed2/28/control_seed_2/fault_evidence.json",
+      "log": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task28_react_seed2_control/trial.log"
+    },
+    {
+      "cell_key": "qwen38_flash_task28_react_seed2_single",
+      "block": 3,
+      "order_in_block": 2,
+      "task_id": 28,
+      "site": "reddit",
+      "seed": 2,
+      "condition": "single",
+      "steps": 10,
+      "completed": true,
+      "cap_exhausted": false,
+      "official_success": true,
+      "official_status": "success",
+      "injection_count": 1,
+      "injection_steps": [
+        7
+      ],
+      "error_types": [
+        "500"
+      ],
+      "target_urls": [
+        "http://localhost:9999/f/WorcesterMA"
+      ],
+      "fault_triggered": true,
+      "fault_episode_valid": true,
+      "protocol_errors": [],
+      "duration_sec": 31.3,
+      "detour_candidate": false,
+      "post_injection_urls": [],
+      "trace": "traces/20261120T183932-2630ca/ep-http-service-v1__single__qwen38_flash__react__web_http_error__task28__seed2__fault__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task28_react_seed2_single/outputs/web_http_error_task28_seed2/28/web_http_error_seed_2/agent_response.json",
+      "official_eval": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task28_react_seed2_single/outputs/web_http_error_task28_seed2/28/web_http_error_seed_2/official_eval.json",
+      "trial_record": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task28_react_seed2_single/outputs/web_http_error_task28_seed2/28/web_http_error_seed_2/trial_record.json",
+      "fault_evidence": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task28_react_seed2_single/outputs/web_http_error_task28_seed2/28/web_http_error_seed_2/fault_evidence.json",
+      "log": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task28_react_seed2_single/trial.log"
+    },
+    {
+      "cell_key": "qwen38_flash_task28_react_seed2_sustained",
+      "block": 3,
+      "order_in_block": 3,
+      "task_id": 28,
+      "site": "reddit",
+      "seed": 2,
+      "condition": "sustained",
+      "steps": 20,
+      "completed": true,
+      "cap_exhausted": false,
+      "official_success": true,
+      "official_status": "success",
+      "injection_count": 10,
+      "injection_steps": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "error_types": [
+        "500"
+      ],
+      "target_urls": [
+        "http://localhost:9999/f/WorcesterMA",
+        "http://localhost:9999/f/WorcesterMA/new",
+        "http://localhost:9999/f/WorcesterMA/submissions"
+      ],
+      "fault_triggered": true,
+      "fault_episode_valid": true,
+      "protocol_errors": [],
+      "duration_sec": 59.3,
+      "detour_candidate": false,
+      "post_injection_urls": [],
+      "trace": "traces/20261120T184004-6e45a6/ep-http-service-v1__persistent__qwen38_flash__react__web_http_error__task28__seed2__fault__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task28_react_seed2_sustained/outputs/web_http_error_task28_seed2/28/web_http_error_seed_2/agent_response.json",
+      "official_eval": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task28_react_seed2_sustained/outputs/web_http_error_task28_seed2/28/web_http_error_seed_2/official_eval.json",
+      "trial_record": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task28_react_seed2_sustained/outputs/web_http_error_task28_seed2/28/web_http_error_seed_2/trial_record.json",
+      "fault_evidence": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task28_react_seed2_sustained/outputs/web_http_error_task28_seed2/28/web_http_error_seed_2/fault_evidence.json",
+      "log": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task28_react_seed2_sustained/trial.log"
+    },
+    {
+      "cell_key": "qwen38_flash_task314_react_seed2_single",
+      "block": 4,
+      "order_in_block": 1,
+      "task_id": 314,
+      "site": "gitlab",
+      "seed": 2,
+      "condition": "single",
+      "steps": 5,
+      "completed": true,
+      "cap_exhausted": false,
+      "official_success": true,
+      "official_status": "success",
+      "injection_count": 1,
+      "injection_steps": [
+        3
+      ],
+      "error_types": [
+        "500"
+      ],
+      "target_urls": [
+        "http://localhost:8023/primer/design/-/graphs/main"
+      ],
+      "fault_triggered": true,
+      "fault_episode_valid": true,
+      "protocol_errors": [],
+      "duration_sec": 44.0,
+      "detour_candidate": true,
+      "post_injection_urls": [
+        {
+          "step": 4,
+          "url": "http://localhost:8023/primer/design/-/tree/main"
+        }
+      ],
+      "trace": "traces/20261120T184105-ed0fa4/ep-http-service-v1__single__qwen38_flash__react__web_http_error__task314__seed2__fault__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task314_react_seed2_single/outputs/web_http_error_task314_seed2/314/web_http_error_seed_2/agent_response.json",
+      "official_eval": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task314_react_seed2_single/outputs/web_http_error_task314_seed2/314/web_http_error_seed_2/official_eval.json",
+      "trial_record": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task314_react_seed2_single/outputs/web_http_error_task314_seed2/314/web_http_error_seed_2/trial_record.json",
+      "fault_evidence": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task314_react_seed2_single/outputs/web_http_error_task314_seed2/314/web_http_error_seed_2/fault_evidence.json",
+      "log": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task314_react_seed2_single/trial.log"
+    },
+    {
+      "cell_key": "qwen38_flash_task314_react_seed2_sustained",
+      "block": 4,
+      "order_in_block": 2,
+      "task_id": 314,
+      "site": "gitlab",
+      "seed": 2,
+      "condition": "sustained",
+      "steps": 14,
+      "completed": true,
+      "cap_exhausted": false,
+      "official_success": false,
+      "official_status": "failure",
+      "injection_count": 5,
+      "injection_steps": [
+        4,
+        5,
+        6,
+        8,
+        12
+      ],
+      "error_types": [
+        "500"
+      ],
+      "target_urls": [
+        "http://localhost:8023/primer/design/-/graphs/main",
+        "http://localhost:8023/primer/design/-/graphs/main/charts",
+        "http://localhost:8023/primer/design/-/graphs/main?format=json"
+      ],
+      "fault_triggered": true,
+      "fault_episode_valid": true,
+      "protocol_errors": [],
+      "duration_sec": 109.9,
+      "detour_candidate": true,
+      "post_injection_urls": [
+        {
+          "step": 7,
+          "url": "http://localhost:8023/primer/design/-/analytics/repository_analytics"
+        },
+        {
+          "step": 9,
+          "url": "http://localhost:8023/primer/design/-/analytics"
+        },
+        {
+          "step": 10,
+          "url": "http://localhost:8023/primer/design"
+        },
+        {
+          "step": 11,
+          "url": "http://localhost:8023/primer/design/-/value_stream_analytics?created_after=2026-10-22&created_before=2026-11-20&stage_id=issue&sort=end_event&direction=desc&page=1"
+        },
+        {
+          "step": 13,
+          "url": "http://localhost:8023/primer/design/-/commits/main"
+        }
+      ],
+      "trace": "traces/20261120T184150-aa7b59/ep-http-service-v1__persistent__qwen38_flash__react__web_http_error__task314__seed2__fault__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task314_react_seed2_sustained/outputs/web_http_error_task314_seed2/314/web_http_error_seed_2/agent_response.json",
+      "official_eval": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task314_react_seed2_sustained/outputs/web_http_error_task314_seed2/314/web_http_error_seed_2/official_eval.json",
+      "trial_record": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task314_react_seed2_sustained/outputs/web_http_error_task314_seed2/314/web_http_error_seed_2/trial_record.json",
+      "fault_evidence": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task314_react_seed2_sustained/outputs/web_http_error_task314_seed2/314/web_http_error_seed_2/fault_evidence.json",
+      "log": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task314_react_seed2_sustained/trial.log"
+    },
+    {
+      "cell_key": "qwen38_flash_task314_react_seed2_control",
+      "block": 4,
+      "order_in_block": 3,
+      "task_id": 314,
+      "site": "gitlab",
+      "seed": 2,
+      "condition": "control",
+      "steps": 4,
+      "completed": true,
+      "cap_exhausted": false,
+      "official_success": true,
+      "official_status": "success",
+      "injection_count": 0,
+      "injection_steps": [],
+      "error_types": [],
+      "target_urls": [],
+      "fault_triggered": false,
+      "fault_episode_valid": true,
+      "protocol_errors": [],
+      "duration_sec": 36.2,
+      "detour_candidate": false,
+      "post_injection_urls": [],
+      "trace": "traces/20261120T184341-6f158d/ep-http-service-v1__single__qwen38_flash__react__web_http_error__task314__seed2__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task314_react_seed2_control/outputs/web_http_error_task314_seed2/314/control_seed_2/agent_response.json",
+      "official_eval": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task314_react_seed2_control/outputs/web_http_error_task314_seed2/314/control_seed_2/official_eval.json",
+      "trial_record": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task314_react_seed2_control/outputs/web_http_error_task314_seed2/314/control_seed_2/trial_record.json",
+      "fault_evidence": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task314_react_seed2_control/outputs/web_http_error_task314_seed2/314/control_seed_2/fault_evidence.json",
+      "log": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task314_react_seed2_control/trial.log"
+    },
+    {
+      "cell_key": "qwen38_flash_task314_react_seed1_sustained",
+      "block": 5,
+      "order_in_block": 1,
+      "task_id": 314,
+      "site": "gitlab",
+      "seed": 1,
+      "condition": "sustained",
+      "steps": 17,
+      "completed": true,
+      "cap_exhausted": false,
+      "official_success": true,
+      "official_status": "success",
+      "injection_count": 4,
+      "injection_steps": [
+        4,
+        5,
+        9,
+        11
+      ],
+      "error_types": [
+        "500"
+      ],
+      "target_urls": [
+        "http://localhost:8023/primer/design/-/graphs/main"
+      ],
+      "fault_triggered": true,
+      "fault_episode_valid": true,
+      "protocol_errors": [],
+      "duration_sec": 117.1,
+      "detour_candidate": true,
+      "post_injection_urls": [
+        {
+          "step": 6,
+          "url": "http://localhost:8023/primer/design/-/commits/main"
+        },
+        {
+          "step": 7,
+          "url": "http://localhost:8023/primer/design/-/commits/main"
+        },
+        {
+          "step": 8,
+          "url": "http://localhost:8023/primer/design/-/commits/main"
+        },
+        {
+          "step": 10,
+          "url": "http://localhost:8023/primer/design/-/commits/main?offset=260e840e"
+        },
+        {
+          "step": 12,
+          "url": "http://localhost:8023/primer/design/-/analytics/repository"
+        },
+        {
+          "step": 13,
+          "url": "http://localhost:8023/primer/design/-/commits/main"
+        },
+        {
+          "step": 14,
+          "url": "http://localhost:8023/primer/design/-/commits/main"
+        },
+        {
+          "step": 15,
+          "url": "http://localhost:8023/api/v4/projects/180/repository/contributors"
+        }
+      ],
+      "trace": "traces/20261120T184418-f07559/ep-http-service-v1__persistent__qwen38_flash__react__web_http_error__task314__seed1__fault__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task314_react_seed1_sustained/outputs/web_http_error_task314_seed1/314/web_http_error_seed_1/agent_response.json",
+      "official_eval": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task314_react_seed1_sustained/outputs/web_http_error_task314_seed1/314/web_http_error_seed_1/official_eval.json",
+      "trial_record": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task314_react_seed1_sustained/outputs/web_http_error_task314_seed1/314/web_http_error_seed_1/trial_record.json",
+      "fault_evidence": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task314_react_seed1_sustained/outputs/web_http_error_task314_seed1/314/web_http_error_seed_1/fault_evidence.json",
+      "log": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task314_react_seed1_sustained/trial.log"
+    },
+    {
+      "cell_key": "qwen38_flash_task314_react_seed1_single",
+      "block": 5,
+      "order_in_block": 2,
+      "task_id": 314,
+      "site": "gitlab",
+      "seed": 1,
+      "condition": "single",
+      "steps": 5,
+      "completed": true,
+      "cap_exhausted": false,
+      "official_success": true,
+      "official_status": "success",
+      "injection_count": 1,
+      "injection_steps": [
+        4
+      ],
+      "error_types": [
+        "500"
+      ],
+      "target_urls": [
+        "http://localhost:8023/primer/design/-/graphs/main"
+      ],
+      "fault_triggered": true,
+      "fault_episode_valid": true,
+      "protocol_errors": [],
+      "duration_sec": 44.7,
+      "detour_candidate": false,
+      "post_injection_urls": [],
+      "trace": "traces/20261120T184616-5d92f3/ep-http-service-v1__single__qwen38_flash__react__web_http_error__task314__seed1__fault__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task314_react_seed1_single/outputs/web_http_error_task314_seed1/314/web_http_error_seed_1/agent_response.json",
+      "official_eval": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task314_react_seed1_single/outputs/web_http_error_task314_seed1/314/web_http_error_seed_1/official_eval.json",
+      "trial_record": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task314_react_seed1_single/outputs/web_http_error_task314_seed1/314/web_http_error_seed_1/trial_record.json",
+      "fault_evidence": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task314_react_seed1_single/outputs/web_http_error_task314_seed1/314/web_http_error_seed_1/fault_evidence.json",
+      "log": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task314_react_seed1_single/trial.log"
+    },
+    {
+      "cell_key": "qwen38_flash_task314_react_seed1_control",
+      "block": 5,
+      "order_in_block": 3,
+      "task_id": 314,
+      "site": "gitlab",
+      "seed": 1,
+      "condition": "control",
+      "steps": 7,
+      "completed": true,
+      "cap_exhausted": false,
+      "official_success": true,
+      "official_status": "success",
+      "injection_count": 0,
+      "injection_steps": [],
+      "error_types": [],
+      "target_urls": [],
+      "fault_triggered": false,
+      "fault_episode_valid": true,
+      "protocol_errors": [],
+      "duration_sec": 50.5,
+      "detour_candidate": false,
+      "post_injection_urls": [],
+      "trace": "traces/20261120T184702-1eff4c/ep-http-service-v1__single__qwen38_flash__react__web_http_error__task314__seed1__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task314_react_seed1_control/outputs/web_http_error_task314_seed1/314/control_seed_1/agent_response.json",
+      "official_eval": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task314_react_seed1_control/outputs/web_http_error_task314_seed1/314/control_seed_1/official_eval.json",
+      "trial_record": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task314_react_seed1_control/outputs/web_http_error_task314_seed1/314/control_seed_1/trial_record.json",
+      "fault_evidence": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task314_react_seed1_control/outputs/web_http_error_task314_seed1/314/control_seed_1/fault_evidence.json",
+      "log": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task314_react_seed1_control/trial.log"
+    },
+    {
+      "cell_key": "qwen38_flash_task228_react_seed2_control",
+      "block": 6,
+      "order_in_block": 1,
+      "task_id": 228,
+      "site": "shopping",
+      "seed": 2,
+      "condition": "control",
+      "steps": 4,
+      "completed": true,
+      "cap_exhausted": false,
+      "official_success": true,
+      "official_status": "success",
+      "injection_count": 0,
+      "injection_steps": [],
+      "error_types": [],
+      "target_urls": [],
+      "fault_triggered": false,
+      "fault_episode_valid": true,
+      "protocol_errors": [],
+      "duration_sec": 18.4,
+      "detour_candidate": false,
+      "post_injection_urls": [],
+      "trace": "traces/20261120T184753-7e2bd4/ep-http-service-v1__single__qwen38_flash__react__web_http_error__task228__seed2__control__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task228_react_seed2_control/outputs/web_http_error_task228_seed2/228/control_seed_2/agent_response.json",
+      "official_eval": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task228_react_seed2_control/outputs/web_http_error_task228_seed2/228/control_seed_2/official_eval.json",
+      "trial_record": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task228_react_seed2_control/outputs/web_http_error_task228_seed2/228/control_seed_2/trial_record.json",
+      "fault_evidence": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task228_react_seed2_control/outputs/web_http_error_task228_seed2/228/control_seed_2/fault_evidence.json",
+      "log": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task228_react_seed2_control/trial.log"
+    },
+    {
+      "cell_key": "qwen38_flash_task228_react_seed2_sustained",
+      "block": 6,
+      "order_in_block": 2,
+      "task_id": 228,
+      "site": "shopping",
+      "seed": 2,
+      "condition": "sustained",
+      "steps": 9,
+      "completed": true,
+      "cap_exhausted": false,
+      "official_success": true,
+      "official_status": "success",
+      "injection_count": 2,
+      "injection_steps": [
+        4,
+        5
+      ],
+      "error_types": [
+        "500"
+      ],
+      "target_urls": [
+        "http://localhost:7770/catalogsearch/result/?q=sephora"
+      ],
+      "fault_triggered": true,
+      "fault_episode_valid": true,
+      "protocol_errors": [],
+      "duration_sec": 29.4,
+      "detour_candidate": true,
+      "post_injection_urls": [
+        {
+          "step": 6,
+          "url": "http://localhost:7770/catalogsearch/advanced/"
+        },
+        {
+          "step": 7,
+          "url": "http://localhost:7770/catalogsearch/advanced/"
+        },
+        {
+          "step": 8,
+          "url": "http://localhost:7770/catalogsearch/advanced/"
+        },
+        {
+          "step": 9,
+          "url": "http://localhost:7770/catalogsearch/advanced/result/?name=sephora&sku=&description=&short_description=&price%5Bfrom%5D=&price%5Bto%5D=&price%5Bcurrency%5D=USD"
+        }
+      ],
+      "trace": "traces/20261120T184813-695090/ep-http-service-v1__persistent__qwen38_flash__react__web_http_error__task228__seed2__fault__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task228_react_seed2_sustained/outputs/web_http_error_task228_seed2/228/web_http_error_seed_2/agent_response.json",
+      "official_eval": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task228_react_seed2_sustained/outputs/web_http_error_task228_seed2/228/web_http_error_seed_2/official_eval.json",
+      "trial_record": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task228_react_seed2_sustained/outputs/web_http_error_task228_seed2/228/web_http_error_seed_2/trial_record.json",
+      "fault_evidence": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task228_react_seed2_sustained/outputs/web_http_error_task228_seed2/228/web_http_error_seed_2/fault_evidence.json",
+      "log": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task228_react_seed2_sustained/trial.log"
+    },
+    {
+      "cell_key": "qwen38_flash_task228_react_seed2_single",
+      "block": 6,
+      "order_in_block": 3,
+      "task_id": 228,
+      "site": "shopping",
+      "seed": 2,
+      "condition": "single",
+      "steps": 7,
+      "completed": true,
+      "cap_exhausted": false,
+      "official_success": true,
+      "official_status": "success",
+      "injection_count": 1,
+      "injection_steps": [
+        4
+      ],
+      "error_types": [
+        "500"
+      ],
+      "target_urls": [
+        "http://localhost:7770/catalogsearch/result/?q=sephora"
+      ],
+      "fault_triggered": true,
+      "fault_episode_valid": true,
+      "protocol_errors": [],
+      "duration_sec": 23.1,
+      "detour_candidate": true,
+      "post_injection_urls": [
+        {
+          "step": 5,
+          "url": "http://localhost:7770/catalogsearch/advanced/"
+        },
+        {
+          "step": 6,
+          "url": "http://localhost:7770/catalogsearch/advanced/"
+        },
+        {
+          "step": 7,
+          "url": "http://localhost:7770/catalogsearch/advanced/result/?name=sephora&sku=&description=&short_description=&price%5Bfrom%5D=&price%5Bto%5D=&price%5Bcurrency%5D=USD"
+        }
+      ],
+      "trace": "traces/20261120T184843-4e6ff4/ep-http-service-v1__single__qwen38_flash__react__web_http_error__task228__seed2__fault__rep0.jsonl",
+      "agent_response": "/data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task228_react_seed2_single/outputs/web_http_error_task228_seed2/228/web_http_error_seed_2/agent_response.json",
+      "official_eval": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task228_react_seed2_single/outputs/web_http_error_task228_seed2/228/web_http_error_seed_2/official_eval.json",
+      "trial_record": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task228_react_seed2_single/outputs/web_http_error_task228_seed2/228/web_http_error_seed_2/trial_record.json",
+      "fault_evidence": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task228_react_seed2_single/outputs/web_http_error_task228_seed2/228/web_http_error_seed_2/fault_evidence.json",
+      "log": "experiments/agent_stress_v1/http_pilot_20261120/cells/qwen38_flash_task228_react_seed2_single/trial.log"
+    }
+  ]
+}

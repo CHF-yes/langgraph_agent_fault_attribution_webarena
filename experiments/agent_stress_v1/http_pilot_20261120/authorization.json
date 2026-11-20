@@ -1,0 +1,27 @@
+{
+  "schema": "agent_stress_http_pilot_authorization/1",
+  "experiment_id": "agent-stress-v1-http-pilot-18",
+  "approved_for_paid_runs": true,
+  "approved_at": "2026-11-20T10:36:42.460970+00:00",
+  "approved_by": "user request in session",
+  "scope": {
+    "tasks": [
+      28,
+      228,
+      314
+    ],
+    "seeds": [
+      1,
+      2
+    ],
+    "conditions": [
+      "control",
+      "single",
+      "sustained"
+    ],
+    "max_steps": 20,
+    "window_steps": 10,
+    "trials": 18
+  },
+  "plan_sha256": "2bce513e7869f5d03fe16989686f36abfc838c5510a32fb294e0441d64dd24f2"
+}
