@@ -161,7 +161,7 @@ def test_both_nodes_send_system_human_history_in_same_order(monkeypatch):
     monkeypatch.setattr(nodes, "create_llm", lambda **kw: fake)
     monkeypatch.setattr(nodes, "get_current_observation",
                         lambda: {"url": URL, "page_content": "AX"})
-    react_state = _state(messages=list(history), architecture="react")
+    react_state = _state(messages=list(history), architecture="react", plan="")
     pe_state = _state(messages=list(history), architecture="plan_execute")
 
     nodes.agent_node(react_state, {"configurable": {"thread_id": "t-react"}})
@@ -174,9 +174,12 @@ def test_both_nodes_send_system_human_history_in_same_order(monkeypatch):
     pe_system = fake.calls[1][0].content
     assert execution.BROWSER_PROTOCOL in react_system
     assert execution.BROWSER_PROTOCOL in pe_system
-    assert nodes._execution_context(
+    context = nodes._execution_context(
         {"goal": "open the orders page", "success_condition": "order list is visible"}
-    ) in pe_system
+    )
+    assert context in pe_system
+    assert pe_system.replace(context, "", 1) == react_system
+    assert fake.calls[0][1:] == fake.calls[1][1:]
 
 
 # ---------------------------------------------------------------------------
@@ -436,6 +439,37 @@ def test_nineteenth_turn_is_the_last_execution_turn(monkeypatch, architecture):
     assert out["step_count"] == 20
     assert not out.get("done", False)
     assert len(fake.calls) == 1
+
+
+@pytest.mark.parametrize("architecture", ["react", "plan_execute"])
+@pytest.mark.parametrize("submit_on_last_turn", [False, True])
+def test_graph_honors_the_last_execution_turn(
+        monkeypatch, tmp_path, architecture, submit_on_last_turn):
+    monkeypatch.setenv("SUBMISSION_CONTRACT", "1")
+    monkeypatch.setenv("TRACE_DIR", str(tmp_path))
+    monkeypatch.setattr("langgraph.prebuilt.ToolNode", FakeToolNode)
+    monkeypatch.setattr(nodes, "get_current_observation",
+                        lambda: {"url": URL, "page_content": "AX"})
+    last_reply = _stop('["42"]') if submit_on_last_turn else _tool_call()
+    replies = [last_reply]
+    if architecture == "plan_execute":
+        replies.insert(0, AIMessage(content='{"steps":[{"id":1,"goal":"open orders",'
+                                           '"success_condition":"list visible"}]}'))
+    fake = FakeLLM(replies)
+    monkeypatch.setattr(nodes, "create_llm", lambda **kwargs: fake)
+
+    out = build_graph(architecture).invoke(
+        _state(architecture=architecture, step_count=19, plan=""),
+        {"configurable": {"thread_id": "graph-last-turn"}})
+
+    assert out["done"] is True
+    assert out["step_count"] == 20
+    assert out["executor_calls"] == 1
+    assert out["replanning_calls"] == 0
+    assert out["planning_calls"] == (1 if architecture == "plan_execute" else 0)
+    assert out["termination"] == ("stop" if submit_on_last_turn else "cap_exhausted")
+    if submit_on_last_turn:
+        assert out["answer"] == '["42"]'
 
 
 def test_planning_and_replanning_do_not_consume_execution_turns(monkeypatch, tmp_path):

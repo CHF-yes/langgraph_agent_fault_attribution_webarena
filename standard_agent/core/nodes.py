@@ -245,7 +245,7 @@ def agent_node(state: AgentState, config: RunnableConfig) -> dict:
         }
     if step_count >= max_steps:
         return _force_stop(
-            messages, step_count, max_steps, thread_id, task, url, architecture
+            messages, step_count, max_steps, thread_id, task, current_url, architecture
         )
 
     system_prompt = _react_system_prompt(

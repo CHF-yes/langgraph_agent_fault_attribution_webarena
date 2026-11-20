@@ -34,10 +34,11 @@ def route_after_executor(state: AgentState) -> str:
 
 
 def route_after_pe_tools(state: AgentState) -> str:
-    """Completion ends; a rejected submission goes straight back to the executor."""
+    """Let the executor handle corrections and an exhausted execution budget."""
     if state.get("done", False):
         return "end"
-    if state.get("submission_correction_pending", False):
+    if (state.get("submission_correction_pending", False)
+            or state.get("step_count", 0) >= state.get("max_steps", 30)):
         return "executor"
     return "replanner"
 
