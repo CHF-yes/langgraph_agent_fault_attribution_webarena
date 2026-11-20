@@ -1,7 +1,7 @@
 {
   "schema": "agent_stress_unified_acceptance_plan/1",
   "experiment_id": "agent-stress-v1-unified-acceptance-36",
-  "created_at": "2026-11-20T13:04:12.333301+00:00",
+  "created_at": "2026-11-20T14:24:12.472591+00:00",
   "status": "plan_only",
   "approved_for_paid_runs": false,
   "approval_note": "Plan only. No trial may run until the unified execution contract is reviewed and this plan is authorized.",
@@ -2592,7 +2592,7 @@
     "shared_turn": "standard_agent/core/execution.py:run_executor_turn",
     "offline_acceptance": {
       "test_file": "tests/test_unified_execution.py",
-      "sha256": "6599e3e6fbdda2dbe4e4f77fecf757e196ca22af7ddfbeb5a90116d9bd6dc762",
+      "sha256": "97ac554929ad894bba75d018d4f5b22daacf013925b2764f8cf528fdc0d46589",
       "command": "python -m pytest tests -q"
     },
     "plan_execute_only_fields": [
@@ -2642,13 +2642,13 @@
     "package_sha256": "41334a7a30567811b3c42fc125b64140e64069b08ff7793643c0ed68931a68d8"
   },
   "code": {
-    "head": "7b414626ef58fc777c6480c5ebed1dddb91e95ed",
-    "fingerprint_sha256": "135cdaabd3e38306b503fdd107f60ce313fdaf99b131dd4d21db65b26f3bd6ed"
+    "head": "9bddd6e7414a0ae3deb0e0a5cbccf061e580fcbf",
+    "fingerprint_sha256": "2b10b670ad55b060aedf1de91ae2334c59faf9264a33c38acf16dcc78babacb1"
   },
   "prior_evidence": {
     "pilot_18": "experiments/agent_stress_v1/http_pilot_20261120/report.md",
     "qwen_clean_screening": "experiments/agent_stress_v1/qwen_seed_verify_20261120/summary.json",
     "note": "Prior artifacts keep their original code/version; this plan is the first unified comparison."
   },
-  "plan_sha256": "781bee2af2202dbddfeaf4282e3d8daaa2237c391d7b6fac5e42487157f9ef86"
+  "plan_sha256": "21fff9f72427df1a4a53fcb290975d310e4cee3e92dddf4673ae21b5aaac2fc0"
 }
