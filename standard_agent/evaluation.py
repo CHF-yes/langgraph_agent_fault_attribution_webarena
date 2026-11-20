@@ -19,6 +19,53 @@ def is_completed(done: bool, answer: str) -> bool:
     return bool(done) and not is_cap_exhausted(done, answer)
 
 
+PROTOCOL_FAILURES = {"no_tool_call", "submission_contract_failed"}
+
+
+def termination_status(done: bool, answer: str, error: str | None,
+                       task_type: str | None = None) -> str:
+    """Classify how a trial ended, independent of the official score.
+
+    The categories are deliberately distinct so a record can tell an empty
+    submission from an unfinished run, a protocol failure and a real stop.
+    """
+    if error in PROTOCOL_FAILURES:
+        return str(error)
+    if is_cap_exhausted(done, answer):
+        return "cap_exhausted"
+    if not done:
+        return "incomplete"
+    if (str(task_type or "").upper() == "RETRIEVE"
+            and not str(answer or "").strip()):
+        return "empty_submission"
+    return "stop"
+
+
+def is_protocol_failure(error: str | None) -> bool:
+    return error in PROTOCOL_FAILURES
+
+
+def terminal_diagnostic(termination: str | None, steps: int | None = None) -> str | None:
+    """Human-readable diagnostic for a non-answer terminal state.
+
+    This is what separates a protocol failure or an empty submission from a
+    legitimate stop in the official response artifact.
+    """
+    if termination == "cap_exhausted":
+        return f"max_steps exhausted after {steps} steps; no answer produced"
+    if termination == "no_tool_call":
+        return ("protocol failure: no tool call after the one allowed retry; "
+                "no answer submitted")
+    if termination == "submission_contract_failed":
+        return ("submission protocol failure: corrected stop(answer) was still "
+                "invalid after the allowed retry")
+    if termination == "empty_submission":
+        return "empty submission: stop(answer) contained no answer"
+    if termination == "incomplete":
+        return "incomplete run: the agent ended without stop(answer)"
+    return None
+
+
 def answer_matches(answer: str, expected: list) -> bool:
     """使用与 Baseline/Benchmark 一致的大小写不敏感子串匹配。"""
     normalized_answer = str(answer or "").casefold()

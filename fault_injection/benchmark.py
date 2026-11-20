@@ -42,6 +42,16 @@ class TrialResult:
     planning_calls: int = 0
     executor_calls: int = 0
     replanning_calls: int = 0
+    retry_calls: int = 0
+    planning_tokens: int = 0
+    executor_tokens: int = 0
+    replanning_tokens: int = 0
+    planning_time_sec: float = 0.0
+    executor_time_sec: float = 0.0
+    replanning_time_sec: float = 0.0
+    termination: str = ""
+    protocol_failure: bool = False
+    empty_submission: bool = False
     answer: str = ""
     injection_count: int = 0
     total_delay_sec: float = 0.0

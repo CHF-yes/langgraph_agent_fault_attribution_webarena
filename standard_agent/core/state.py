@@ -58,6 +58,15 @@ class AgentState(TypedDict):
     # 导致 main.py 的 result.get("error") 永远为 None。
     error: str | None
 
+    # 统一终止状态：stop / cap_exhausted / no_tool_call /
+    # submission_contract_failed / incomplete。
+    termination: str | None
+    cap_exhausted: bool
+
+    # 计划层状态：finish 只请求收尾，真正的完成仍须 stop(answer) 提交。
+    finish_requested: bool
+    submission_correction_pending: bool
+
     # ---- 追踪字段 ----
     # 动作历史列表: [{"step": 1, "thought": "...", "action": "click(123)", "result": "..."}, ...]
     action_history: Annotated[list[dict], add_action_history]
@@ -74,8 +83,16 @@ class AgentState(TypedDict):
     plan_revision: int
     replan_required: bool
 
-    # LLM accounting for fair architecture comparisons.
+    # LLM accounting for fair architecture comparisons. Planning and
+    # replanning never consume execution turns or the fault window.
     llm_calls: int
     planning_calls: int
     executor_calls: int
     replanning_calls: int
+    retry_calls: int
+    planning_tokens: int
+    executor_tokens: int
+    replanning_tokens: int
+    planning_time_sec: float
+    executor_time_sec: float
+    replanning_time_sec: float

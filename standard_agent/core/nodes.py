@@ -40,109 +40,35 @@ from standard_agent.tools.web_tools import ALL_TOOLS, get_current_observation
 
 
 # System prompt 模板（标准 ReAct 格式）
-SYSTEM_PROMPT = """You are a standard ReAct (Reasoning + Acting) web automation agent completing tasks on real websites.
-
-## Your Task
-{task}
-
-## Current Page
-- URL: {url}
-- Accessibility Tree (AX Tree):
-{page_content}
-{plan_context}
-{retrieval_context}
-{output_format_context}
-
-## Available Actions
-You can use the following tools to interact with the page:
-- **click(element_id)**: Click an element by its [id=xxx] from the AX Tree.
-- **type_text(element_id, text)**: Type text into an input field (click it first).
-- **scroll(direction)**: Scroll "up" or "down" to reveal more content.
-- **goto(url)**: Navigate to a different URL.
-- **go_back()**: Go back to the previous page.
-- **go_forward()**: Go forward to the next page.
-- **select_option(element_id, option)**: Select an option from a dropdown.
-- **hover(element_id)**: Hover over an element.
-- **stop(answer)**: Call this when you have completed the task. Provide the answer.
-
-## ReAct Protocol (MANDATORY)
-You MUST follow this exact loop on EVERY step:
-
-1. **THOUGHT (REQUIRED, NEVER SKIP)**: Before calling any tool, you MUST
-   write your reasoning as the text content of your reply. The text content
-   must begin with "THOUGHT:" and explain:
-   - what you currently know about the page,
-   - what you are looking for,
-   - which action you will take and why.
-   Calling a tool with EMPTY text content is a PROTOCOL VIOLATION.
-2. **ACTION (REQUIRED)**: Call exactly ONE tool with the required arguments.
-3. You will then receive an **OBSERVATION** (the updated page content).
-   Repeat the loop until the task is complete.
-
-### Example (one step)
-User task: find the price of a product on the page.
-- THOUGHT: The product "Stove Top" is visible on this page with price text [100] text '$8.49'. I can answer directly.
-- ACTION: stop(answer="The price is $8.49.")
-
-### Example (search step)
-- THOUGHT: The product is not on the homepage. I will use the search box [25] to search for it.
-- ACTION: click(element_id="25")
-
-## Instructions
-1. Analyze the AX Tree carefully. Element IDs are the [id=xxx] numbers.
-2. Do NOT click plain text elements (role "text", "paragraph", "heading",
-   "strong", "listitem"). Their content is ALREADY visible in the AX tree;
-   read it directly. Only click interactive elements such as link, button,
-   tab, checkbox, radio, menuitem, combobox.
-3. If the target element is not visible, try scroll(direction) or goto(url).
-4. Do NOT repeat the same failed action more than twice; change strategy.
-5. When the task is complete, call **stop(answer)** with a clear summary.
-6. If the page content is truncated, scroll or use a more specific search.
-
-## Important
-- ALWAYS use element IDs from the AX Tree (the [id=xxx] notation).
-- Write your thought in natural language; it will be recorded for analysis.
-- Be concise in your thinking, focus on action.
-"""
-
-MAX_STEPS_WARNING = """
-You have reached the maximum number of steps ({max_steps}).
-Call stop() with your best answer based on what you have found so far.
-"""
-
-# 运行时提醒：放在每条 LLM 输入末尾，强制模型先输出 THOUGHT 再调用工具
-THOUGHT_REMINDER_TEXT = (
-    "REMINDER: Your reply MUST begin with 'THOUGHT:' followed by "
-    "your reasoning, and ONLY THEN call a tool. "
-    "Calling a tool with empty text content is a protocol violation."
+from standard_agent.core.execution import (
+    MAX_STEPS_WARNING,
+    THOUGHT_REMINDER_TEXT,
+    build_system_prompt,
+    has_thought_prefix,
+    looks_like_action_intent,
+    no_tool_call_update,
+    resolve_observation,
+    run_executor_turn,
+    usage_delta,
 )
-THOUGHT_REMINDER = SystemMessage(content=THOUGHT_REMINDER_TEXT)
 
 
 def _with_thought_reminder(system_prompt: str) -> str:
-    """把 THOUGHT 提醒并入 **system prompt**。
-
-    绝不能把它作为尾部 SystemMessage 追加在 HumanMessage 之后：实测
-    deepseek-flash 在该消息序列下会返回 finish_reason=stop、tool_calls=[] 的纯文本
-    （"I'll click …"），把行动意图当成最终答案；同一 prompt 去掉尾部 system 消息
-    后会正常返回 tool call。这是 harness 的消息组装问题，不是模型不会用工具。
-    """
-    return f"{system_prompt}\n\n{THOUGHT_REMINDER_TEXT}"
-
-
-_ACTION_INTENT = re.compile(
-    r"(?i)\b(?:i'?ll|i will|i'm going to|i am going to|let me|i need to|i should)\b"
-    r"[^.]{0,120}\b(?:click|type|scroll|navigate|goto|go to|open|select|hover|search|read|check)\b")
+    """Backward-compatible wrapper around the shared prompt helper."""
+    from standard_agent.core.execution import with_thought_reminder
+    return with_thought_reminder(system_prompt)
 
 
 def _looks_like_action_intent(text: str) -> bool:
-    return bool(_ACTION_INTENT.search(str(text or "")))
+    return looks_like_action_intent(text)
 
 
 def _react_full_messages(system_prompt: str, task: str, url: str, messages) -> list:
-    """ReAct 消息序列：system + human + 历史（**不追加尾部 SystemMessage**）。"""
+    """System + human + history; never a trailing SystemMessage."""
+    content = (system_prompt if THOUGHT_REMINDER_TEXT in system_prompt
+               else _with_thought_reminder(system_prompt))
     return [
-        SystemMessage(content=_with_thought_reminder(system_prompt)),
+        SystemMessage(content=content),
         HumanMessage(content=(f"Please continue completing this task: {task}\n"
                               f"Current page: {url}")),
         *list(messages),
@@ -175,11 +101,7 @@ def _retrieval_completeness_context(task: str) -> str:
 
 def _output_format_context(task: str,
                            submission_task_type: str | None = None) -> str:
-    """Require JSON only when the task requests it, or under the shared contract.
-
-    The dataset schema is intentionally not consulted: it encodes whether the
-    evaluator's expected result is empty.
-    """
+    """Require JSON only when the task requests it, or under the shared contract."""
     if os.getenv("SUBMISSION_CONTRACT", "0") == "1":
         return contract_context(submission_task_type)
     text = str(task or "").casefold()
@@ -200,13 +122,7 @@ def _output_format_context(task: str,
 
 def _answer_contract_context(task: str,
                              submission_task_type: str | None = None) -> str:
-    """两个架构**必须**拿到的同一段作答契约（检索完整性 + 输出格式）。
-
-    react 与 plan-and-execute 的作答要求若不一致，架构对比就会被提示词差异污染：
-    此前 ``_output_format_context`` 与 ``_retrieval_completeness_context`` 只注入 react，
-    PE 执行器反而被告知"只执行当前子目标"，于是倾向汇报进度式散文，在 array-schema
-    检索任务上系统性失分。这里把契约收敛成单一来源，两个 prompt 组装函数共用。
-    """
+    """The one answer contract both architectures receive."""
     return (_retrieval_completeness_context(task)
             + _output_format_context(task, submission_task_type))
 
@@ -214,29 +130,39 @@ def _answer_contract_context(task: str,
 def _react_system_prompt(task: str, url: str, page_content: str,
                          plan_context: str = "",
                          submission_task_type: str | None = None) -> str:
-    """react 臂的系统提示（含共享作答契约）。"""
-    return SYSTEM_PROMPT.format(
-        task=task, url=url, page_content=page_content, plan_context=plan_context,
-        retrieval_context=_retrieval_completeness_context(task),
-        output_format_context=_output_format_context(task, submission_task_type),
-    )
+    """ReAct prompt: the shared browser contract plus an optional plan context."""
+    return build_system_prompt(
+        task, url, page_content, context=plan_context,
+        submission_task_type=submission_task_type,
+        answer_contract=_answer_contract_context(task, submission_task_type))
+
+
+def _execution_context(current_step: dict,
+                       finish_requested: bool = False) -> str:
+    """The only executor-specific prompt fields: sub-goal and success condition."""
+    if finish_requested:
+        goal = "Finalise the task"
+        success = ("The plan owner signalled completion. You must still call "
+                   "stop(answer) with the final answer; the trial is not complete "
+                   "until that submission is accepted.")
+    else:
+        goal = str(current_step.get("goal", ""))
+        success = str(current_step.get("success_condition", ""))
+    return ("\n## Execution Context\n"
+            f"Current sub-goal: {goal}\n"
+            f"Success condition: {success}\n")
 
 
 def _plan_executor_prompt(task: str, current_step: dict, url: str,
                           page_content: str,
-                          submission_task_type: str | None = None) -> str:
-    """plan-execute 执行器的系统提示（**与 react 相同的作答契约**）。"""
-    return (
-        "You are the executor in a plan-and-execute web agent.\n"
-        "Execute ONLY the current sub-goal below. Use exactly one tool call, "
-        "or call stop when the overall task is complete. Do not redesign the "
-        "whole plan; the replanner will do that after the observation.\n\n"
-        f"Overall task: {task}\nCurrent sub-goal: {current_step['goal']}\n"
-        f"Success condition: {current_step.get('success_condition', '')}\n"
-        f"URL: {url}\nAccessibility Tree:\n{page_content}\n"
-        "Your response must begin with THOUGHT:."
-        + _answer_contract_context(task, submission_task_type)
-    )
+                          submission_task_type: str | None = None,
+                          finish_requested: bool = False) -> str:
+    """Plan-and-execute executor prompt: same contract, only sub-goal differs."""
+    return build_system_prompt(
+        task, url, page_content,
+        context=_execution_context(current_step, finish_requested),
+        submission_task_type=submission_task_type,
+        answer_contract=_answer_contract_context(task, submission_task_type))
 
 
 def _thread_id(config: RunnableConfig | None) -> str:
@@ -281,12 +207,7 @@ def _trace_provenance(thread_id: str, step: int, task: str, url: str,
 
 
 def agent_node(state: AgentState, config: RunnableConfig) -> dict:
-    """
-    ReAct agent 节点：读取当前状态 → LLM 决策 → 返回 tool_call 或最终回复。
-
-    此节点会被反复调用（自循环），每次调用代表 ReAct 的一个推理步骤。
-    当 LLM 不再产出 tool_call 时（或达到 max_steps / stop 被调用），图结束。
-    """
+    """ReAct executor: one shared execution turn per graph visit."""
     task = state.get("task", "")
     model_profile = state.get("model_profile", "")
     url = state.get("url", "about:blank")
@@ -294,12 +215,8 @@ def agent_node(state: AgentState, config: RunnableConfig) -> dict:
     max_steps = state.get("max_steps", 30)
     messages = state.get("messages", [])
     thread_id = _thread_id(config)
-
-    # ---- 同步页面状态 ----
-    # 优先从 BrowserEnv 获取真实页面观测，fallback 到模拟 PageState
     obs = get_current_observation()
-    current_url = obs["url"] if obs["url"] and obs["url"] != "about:blank" else url
-    page_content = obs["page_content"] or state.get("page_content", "(empty page)")
+    current_url, page_content = resolve_observation(obs, state)
     plan = state.get("plan", "")
     architecture = state.get("architecture", "react")
     submission_task_type = state.get("submission_task_type")
@@ -309,9 +226,6 @@ def agent_node(state: AgentState, config: RunnableConfig) -> dict:
         f"{plan}\n"
         if plan else ""
     )
-    # ---- 检查 stop 是否已调用（优先级最高，避免 max_steps 覆盖正确结果）----
-    # `done` 属于 LangGraph task state，不能依赖模块级页面状态；否则连续
-    # benchmark trial 会把前一个任务的终止信号泄漏到下一个任务。
     if state.get("done", False):
         answer = state.get("answer", "")
         append_trace(thread_id, make_entry(
@@ -329,184 +243,46 @@ def agent_node(state: AgentState, config: RunnableConfig) -> dict:
             "url": current_url,
             "page_content": page_content,
         }
-
-    # ---- 步数检查 ----
-    # step_count 只统计 executor LLM 调用；达到上限后不再发起新的调用。
     if step_count >= max_steps:
         return _force_stop(
             messages, step_count, max_steps, thread_id, task, url, architecture
         )
+
+    system_prompt = _react_system_prompt(
+        task, current_url, page_content, plan_context=plan_context,
+        submission_task_type=submission_task_type)
+    turn_state = dict(state)
+    turn_state.update(url=current_url, page_content=page_content,
+                      step_count=step_count)
+    turn = run_executor_turn(
+        state=turn_state, config=config, system_prompt=system_prompt,
+        label="ReAct", phase="executor",
+        extra_trace={"plan_revision": state.get("plan_revision", 0)},
+        llm_factory=create_llm)
     new_step_count = step_count + 1
-
-    # ---- 构建消息 ----
-    # 每轮重新注入任务、最新观测和工具协议。系统消息没有写入 state，避免
-    # 状态膨胀；但也不能只在首轮注入，否则多步任务会丢失任务约束。
-    full_messages = _react_full_messages(
-        _react_system_prompt(
-            task, current_url, page_content, plan_context=plan_context,
-            submission_task_type=submission_task_type),
-        task, current_url, messages)
-
-    if settings.TRACE_CONSOLE:
-        print(f"[ReAct][step={new_step_count}] QUESTION task={task}")
-        print(f"[ReAct][step={new_step_count}] OBSERVATION url={current_url} ax_chars={len(page_content)}")
-
-    if settings.TRACE_LLM_IO:
-        request_data = {
-            "message_roles": [getattr(message, "type", "unknown") for message in full_messages],
-            "message_count": len(full_messages),
-            **get_llm_metadata(model_profile),
+    if turn.no_tool_call:
+        update = no_tool_call_update(
+            state=turn_state, config=config, turn=turn, label="ReAct",
+            extra_trace={"plan_revision": state.get("plan_revision", 0)})
+        update.update({
             "architecture": architecture,
-            "phase": "executor",
-        }
-        if settings.TRACE_PROMPTS:
-            request_data["messages"] = [
-                {"role": getattr(message, "type", "unknown"),
-                 "content": str(getattr(message, "content", ""))}
-                for message in full_messages
-            ]
-        append_event(thread_id, event="llm_request", step=new_step_count,
-                     task=task, url=current_url, data=request_data)
-
-    # ---- LLM 推理 ----
-    llm = create_llm(profile_name=model_profile)
-    llm_with_tools = llm.bind_tools(ALL_TOOLS)
-    _t0 = time.time()
-    try:
-        response = llm_with_tools.invoke(full_messages)
-    except Exception as exc:
-        append_event(
-            thread_id,
-            event="llm_error",
-            step=new_step_count,
-            task=task,
-            url=current_url,
-            data={
-                "architecture": architecture,
-                "phase": "executor",
-                "error": str(exc),
-                **get_llm_metadata(model_profile),
-            },
-        )
-        if settings.TRACE_CONSOLE:
-            print(f"[ReAct][step={new_step_count}] ERROR {exc}")
-        raise
-
-    _trace_provenance(thread_id, new_step_count, task, current_url, response,
-                      model_profile, architecture, "executor", time.time() - _t0)
-
-    llm_calls = state.get("llm_calls", 0) + 1
-    executor_calls = state.get("executor_calls", 0) + 1
-
-    if not (getattr(response, "tool_calls", None) or []):
-        # 纯文本且无工具调用：先记录，再用一条 HumanMessage 要求"现在必须调用一个工具"。
-        # 不用尾部 SystemMessage（那正是根因），也不静默当作最终答案。
-        append_event(thread_id, event="no_tool_call", step=new_step_count,
-                     task=task, url=current_url,
-                     data={"architecture": architecture, "phase": "executor",
-                           "content": str(getattr(response, "content", "")),
-                           "finish_reason": (getattr(response, "response_metadata", {}) or {}).get("finish_reason"),
-                           "intent_like": _looks_like_action_intent(getattr(response, "content", ""))})
-        nudge = HumanMessage(content=(
-            "Your previous reply did not call a tool. Call exactly ONE tool now. "
-            "If the task is finished, call stop(answer)."))
-        retry = llm_with_tools.invoke([*full_messages, response, nudge])
-        _trace_provenance(thread_id, new_step_count, task, current_url, retry,
-                          model_profile, architecture, "executor_retry", time.time() - _t0)
-        llm_calls += 1
-        append_event(thread_id, event="llm_retry", step=new_step_count,
-                     task=task, url=current_url,
-                     data={"architecture": architecture, "phase": "executor",
-                           "content": str(getattr(retry, "content", "")),
-                           "tool_calls": len(getattr(retry, "tool_calls", None) or [])})
-        response = retry
-
-    if settings.TRACE_LLM_IO:
-        append_event(
-            thread_id,
-            event="llm_response",
-            step=new_step_count,
-            task=task,
-            url=current_url,
-            data={
-                "content": str(getattr(response, "content", "")),
-                "tool_calls": getattr(response, "tool_calls", []) or [],
-                "architecture": architecture,
-                "phase": "executor",
-                **get_llm_metadata(model_profile),
-            },
-        )
-
-    thought = str(getattr(response, "content", "") or "")
-    protocol_violation = bool(getattr(response, "tool_calls", None)) and not thought.lstrip().startswith("THOUGHT:")
-    if settings.TRACE_CONSOLE:
-        print(f"[ReAct][step={new_step_count}] THOUGHT {thought[:1000]}")
-        if protocol_violation:
-            print(f"[ReAct][step={new_step_count}] PROTOCOL_VIOLATION missing THOUGHT prefix")
-    if protocol_violation:
-        append_event(
-            thread_id,
-            event="protocol_violation",
-            step=new_step_count,
-            task=task,
-            url=current_url,
-            data={
-                "architecture": architecture,
-                "phase": "executor",
-                "rule": "tool_call_requires_THOUGHT_prefix",
-                "content": thought,
-            },
-        )
-
-    # ---- 检查是否有 tool_calls ----
-    has_tool_calls = hasattr(response, "tool_calls") and response.tool_calls
-    if has_tool_calls and len(response.tool_calls) > 1:
-        # A browser observation is invalidated after each action. Execute one
-        # action per ReAct turn so later calls cannot use stale element IDs.
-        response = response.model_copy(update={"tool_calls": response.tool_calls[:1]})
-        has_tool_calls = response.tool_calls
-
-    # ---- 构建更新 ----
-    update = {
-        "messages": [response],
+            "page_content": page_content,
+            "step_count": new_step_count,
+        })
+        return update
+    return {
+        "messages": [turn.response],
         "step_count": new_step_count,
         "url": current_url,
-            "page_content": page_content,
-            "architecture": architecture,
-        "llm_calls": llm_calls,
-        "executor_calls": executor_calls,
+        "page_content": page_content,
+        "architecture": architecture,
+        "llm_calls": turn.llm_calls,
+        "executor_calls": turn.executor_calls,
+        "retry_calls": turn.retry_calls,
+        "executor_tokens": int(state.get("executor_tokens", 0) or 0) + turn.total_tokens,
+        "executor_time_sec": round(
+            float(state.get("executor_time_sec", 0) or 0) + turn.duration_sec, 3),
     }
-
-    if not has_tool_calls:
-        # 重试后仍无 tool_call：这是协议失败，而不是"最终答案"。保留原文本用于排查，
-        # 但提交答案为**空**，使 completion 判为未完成，避免把行动意图计为成功。
-        raw_text = str(getattr(response, "content", "") or "")
-        intent_like = _looks_like_action_intent(raw_text)
-        append_event(thread_id, event="protocol_violation", step=new_step_count,
-                     task=task, url=current_url,
-                     data={"architecture": architecture, "phase": "executor",
-                           "rule": "tool_call_required", "intent_like": intent_like,
-                           "content": raw_text, "retried": True})
-        update["done"] = True
-        update["answer"] = ""
-        update["error"] = "no_tool_call"
-        update["action_history"] = [{
-            "step": new_step_count,
-            "thought": raw_text,
-            "action": "final_answer",
-            "args": {},
-            "observation": "",
-            "error": True,
-        }]
-        append_trace(thread_id, make_entry(
-            thread_id, step=new_step_count, task=task, url=current_url,
-            thought=raw_text, action="final_answer", args={},
-            observation="", error=True, done=True, answer="",
-            extra={"architecture": architecture, "phase": "executor",
-                   "no_tool_call": True, "intent_like": intent_like},
-        ))
-
-    return update
 
 
 def planner_node(state: AgentState, config: RunnableConfig) -> dict:
@@ -571,8 +347,10 @@ def planner_node(state: AgentState, config: RunnableConfig) -> dict:
             },
         )
         raise
+    planning_time = time.time() - _t0
     _trace_provenance(thread_id, request_step, task, url, plan_response,
-                      model_profile, "plan_execute", "planner", time.time() - _t0)
+                      model_profile, "plan_execute", "planner", planning_time)
+    planning_tokens = usage_delta(plan_response)
     raw_plan = str(getattr(plan_response, "content", "") or "").strip()
     plan_steps = _parse_plan_steps(raw_plan)
     plan = json.dumps({"steps": plan_steps}, ensure_ascii=False)
@@ -613,6 +391,10 @@ def planner_node(state: AgentState, config: RunnableConfig) -> dict:
         "replan_required": False,
         "llm_calls": state.get("llm_calls", 0) + 1,
         "planning_calls": state.get("planning_calls", 0) + 1,
+        "planning_tokens": int(state.get("planning_tokens", 0) or 0)
+        + planning_tokens["total_tokens"],
+        "planning_time_sec": round(
+            float(state.get("planning_time_sec", 0) or 0) + planning_time, 3),
     }
 
 
@@ -643,7 +425,7 @@ def _parse_plan_steps(raw_plan: str) -> list[dict]:
 
 
 def plan_executor_node(state: AgentState, config: RunnableConfig) -> dict:
-    """Execute exactly one action toward the current planner-owned sub-goal."""
+    """Plan-and-execute executor: the same turn contract as ReAct."""
     task = state.get("task", "")
     model_profile = state.get("model_profile", "")
     architecture = state.get("architecture", "plan_execute")
@@ -652,103 +434,55 @@ def plan_executor_node(state: AgentState, config: RunnableConfig) -> dict:
     messages = state.get("messages", [])
     thread_id = _thread_id(config)
     obs = get_current_observation()
-    url = obs.get("url") or state.get("url", "about:blank")
-    page_content = obs.get("page_content") or state.get("page_content", "(empty page)")
+    url, page_content = resolve_observation(obs, state)
     plan_steps = state.get("plan_steps", [])
     current = state.get("current_plan_step", 0)
     submission_task_type = state.get("submission_task_type")
+    finish_requested = bool(state.get("finish_requested", False))
     current_step = plan_steps[current] if current < len(plan_steps) else {
-        "id": current + 1, "goal": "Complete the task", "success_condition": "Task is complete"
+        "id": current + 1, "goal": "Complete the task",
+        "success_condition": "Task is complete",
     }
     if state.get("done", False):
         return {"done": True}
     if step_count >= max_steps:
-        return _force_stop(messages, step_count, max_steps, thread_id, task, url, architecture)
+        return _force_stop(
+            messages, step_count, max_steps, thread_id, task, url, architecture
+        )
 
-    prompt = SystemMessage(content=_with_thought_reminder(_plan_executor_prompt(
+    system_prompt = _plan_executor_prompt(
         task, current_step, url, page_content,
         submission_task_type=submission_task_type,
-    )))
-    full_messages = [prompt, *list(messages)]
-    llm = create_llm(profile_name=model_profile).bind_tools(ALL_TOOLS)
-    _t0 = time.time()
-    response = llm.invoke(full_messages)
+        finish_requested=finish_requested)
+    turn_state = dict(state)
+    turn_state.update(url=url, page_content=page_content, step_count=step_count)
+    turn = run_executor_turn(
+        state=turn_state, config=config, system_prompt=system_prompt,
+        label="Plan-Execute", phase="executor",
+        extra_trace={"plan_step": current, "plan_revision": state.get("plan_revision", 0),
+                     "finish_requested": finish_requested},
+        llm_factory=create_llm)
     new_step = step_count + 1
-    _trace_provenance(thread_id, new_step, task, url, response,
-                      model_profile, "plan_execute", "executor", time.time() - _t0)
-    llm_calls = state.get("llm_calls", 0) + 1
-    executor_calls = state.get("executor_calls", 0) + 1
-    # Same protocol instrumentation as the ReAct arm (agent_node). Without it
-    # the two architectures are not measured on the same rubric, so a format
-    # deviation in one arm cannot be told apart from an architecture deficit.
-    executor_thought = str(getattr(response, "content", "") or "")
-    if getattr(response, "tool_calls", None) and not executor_thought.lstrip().startswith("THOUGHT:"):
-        append_event(
-            thread_id,
-            event="protocol_violation",
-            step=new_step,
-            task=task,
-            url=url,
-            data={
-                "architecture": architecture,
-                "phase": "executor",
-                "rule": "tool_call_requires_THOUGHT_prefix",
-                "content": executor_thought,
-            },
-        )
-    if not (getattr(response, "tool_calls", None) or []):
-        # 与 ReAct 臂完全一致：先记录，再用 HumanMessage 重试一次；不用尾部 SystemMessage。
-        append_event(thread_id, event="no_tool_call", step=new_step,
-                     task=task, url=url,
-                     data={"architecture": architecture, "phase": "executor",
-                           "content": str(getattr(response, "content", "")),
-                           "finish_reason": (getattr(response, "response_metadata", {}) or {}).get("finish_reason"),
-                           "intent_like": _looks_like_action_intent(getattr(response, "content", ""))})
-        nudge = HumanMessage(content=(
-            "Your previous reply did not call a tool. Call exactly ONE tool now. "
-            "If the task is finished, call stop(answer)."))
-        retry = llm.invoke([*full_messages, response, nudge])
-        _trace_provenance(thread_id, new_step, task, url, retry,
-                          model_profile, "plan_execute", "executor_retry", time.time() - _t0)
-        llm_calls += 1
-        append_event(thread_id, event="llm_retry", step=new_step,
-                     task=task, url=url,
-                     data={"architecture": architecture, "phase": "executor",
-                           "content": str(getattr(retry, "content", "")),
-                           "tool_calls": len(getattr(retry, "tool_calls", None) or [])})
-        response = retry
-
-    tool_calls = getattr(response, "tool_calls", []) or []
-    if len(tool_calls) > 1:
-        response = response.model_copy(update={"tool_calls": tool_calls[:1]})
-    if not getattr(response, "tool_calls", None):
-        # 重试后仍无 tool_call：协议失败，而不是最终答案（提交答案置空）。
-        raw_text = str(getattr(response, "content", "") or "")
-        intent_like = _looks_like_action_intent(raw_text)
-        append_event(thread_id, event="protocol_violation", step=new_step,
-                     task=task, url=url,
-                     data={"architecture": architecture, "phase": "executor",
-                           "rule": "tool_call_required", "intent_like": intent_like,
-                           "content": raw_text, "retried": True,
-                           "plan_step": current})
-        append_trace(thread_id, make_entry(
-            thread_id, step=new_step, task=task, url=url,
-            thought=raw_text, action="final_answer", args={}, observation="",
-            error=True, done=True, answer="",
-            extra={"architecture": architecture, "phase": "executor",
-                   "plan_step": current, "no_tool_call": True,
-                   "intent_like": intent_like},
-        ))
-        return {
-            "messages": [response], "step_count": new_step, "done": True,
-            "answer": "", "error": "no_tool_call",
-            "url": url, "page_content": page_content,
-            "llm_calls": llm_calls, "executor_calls": executor_calls,
-        }
+    if turn.no_tool_call:
+        update = no_tool_call_update(
+            state=turn_state, config=config, turn=turn, label="Plan-Execute",
+            extra_trace={"plan_step": current,
+                         "plan_revision": state.get("plan_revision", 0)})
+        update.update({"architecture": architecture, "step_count": new_step,
+                       "page_content": page_content})
+        return update
     return {
-        "messages": [response], "step_count": new_step,
-        "url": url, "page_content": page_content,
-        "llm_calls": llm_calls, "executor_calls": executor_calls,
+        "messages": [turn.response],
+        "step_count": new_step,
+        "url": url,
+        "page_content": page_content,
+        "architecture": architecture,
+        "llm_calls": turn.llm_calls,
+        "executor_calls": turn.executor_calls,
+        "retry_calls": turn.retry_calls,
+        "executor_tokens": int(state.get("executor_tokens", 0) or 0) + turn.total_tokens,
+        "executor_time_sec": round(
+            float(state.get("executor_time_sec", 0) or 0) + turn.duration_sec, 3),
     }
 
 
@@ -779,9 +513,11 @@ def replanner_node(state: AgentState, config: RunnableConfig) -> dict:
     llm = create_llm(profile_name=model_profile)
     _t0 = time.time()
     response = llm.invoke([prompt])
+    replanning_time = time.time() - _t0
     _trace_provenance(thread_id, step_count, task, state.get("url", "about:blank"),
                       response, model_profile, architecture, "replanner",
-                      time.time() - _t0)
+                      replanning_time)
+    replanning_tokens = usage_delta(response)
     raw = str(getattr(response, "content", "") or "")
     # Normalise before routing. Reading the field verbatim meant a model that
     # answered "next" instead of "continue" fell through to an unconditional
@@ -817,21 +553,26 @@ def replanner_node(state: AgentState, config: RunnableConfig) -> dict:
         )
     calls = state.get("llm_calls", 0) + 1
     replanning_calls = state.get("replanning_calls", 0) + 1
-    if decision == "finish" and latest.startswith("[Error] Submission rejected"):
-        # A rejected stop is feedback, not completion; never let the replanner
-        # convert it into a finished trial. Route straight back to the executor
-        # with the rejection message so the format fix costs one turn, not a
-        # full re-plan.
-        return {"replan_required": False, "llm_calls": calls,
-                "replanning_calls": replanning_calls}
+    accounting = {
+        "llm_calls": calls,
+        "replanning_calls": replanning_calls,
+        "replanning_tokens": int(state.get("replanning_tokens", 0) or 0)
+        + replanning_tokens["total_tokens"],
+        "replanning_time_sec": round(
+            float(state.get("replanning_time_sec", 0) or 0) + replanning_time, 3),
+    }
+    if latest.startswith("[Error] Submission rejected"):
+        # A rejected stop is feedback, not completion. Stay on the atomic goal
+        # so the executor can correct the format without a replan or advance.
+        return {"replan_required": False, "finish_requested": False, **accounting}
     if decision == "finish":
-        return {"done": True, "replan_required": "end", "llm_calls": calls,
-                "replanning_calls": replanning_calls}
+        # The replanner may only request wrap-up. Completion still requires a
+        # valid stop(answer) submission from the executor.
+        return {"finish_requested": True, "replan_required": False, **accounting}
     if decision == "continue":
         return {"current_plan_step": current + 1, "replan_required": False,
-                "llm_calls": calls, "replanning_calls": replanning_calls}
-    return {"replan_required": True, "llm_calls": calls,
-            "replanning_calls": replanning_calls}
+                "finish_requested": False, **accounting}
+    return {"replan_required": True, "finish_requested": False, **accounting}
 
 
 def run_tools(state: AgentState, config: RunnableConfig) -> dict:
@@ -862,6 +603,10 @@ def run_tools(state: AgentState, config: RunnableConfig) -> dict:
     contract_enabled = os.getenv("SUBMISSION_CONTRACT", "0") == "1"
     submission_task_type = state.get("submission_task_type")
     rejections = int(state.get("submission_rejections", 0) or 0)
+    previous_rejections = rejections
+    correction_pending = False
+    thought_present = has_thought_prefix(getattr(ai_msg, "content", ""))
+    plan_step = state.get("current_plan_step", 0)
     new_tool_msgs = list(tool_msgs)
 
     history_entries = []
@@ -891,9 +636,11 @@ def run_tools(state: AgentState, config: RunnableConfig) -> dict:
                         f"{rejections} attempts; the trial is ending."
                     )
                 else:
+                    correction_pending = True
                     obs_text = (
                         f"[Error] Submission rejected: {check.error}. "
-                        "The task is NOT complete. Call stop again with a corrected answer."
+                        "The task is NOT complete. Call stop again with a corrected answer. "
+                        "The current plan step has not advanced."
                     )
                 error = True
                 if tm is not None:
@@ -935,10 +682,12 @@ def run_tools(state: AgentState, config: RunnableConfig) -> dict:
         history_entries.append({
             "step": step_count,
             "thought": getattr(ai_msg, "content", "") or "",
+            "thought_present": thought_present,
             "action": action_name,
             "args": args,
             "observation": str(obs_text)[:2000],
             "error": error,
+            "plan_step": plan_step,
         })
 
         if settings.TRACE_CONSOLE:
@@ -950,7 +699,10 @@ def run_tools(state: AgentState, config: RunnableConfig) -> dict:
             thought=getattr(ai_msg, "content", "") or "",
             action=action_name, args=args,
             observation=str(obs_text), error=error,
-            extra={"architecture": architecture, "phase": "executor"},
+            extra={"architecture": architecture, "phase": "executor",
+                   "thought_present": thought_present,
+                   "plan_step": plan_step,
+                   "submission_rejections": rejections},
         ))
 
         if action_name == "stop" and not rejected:
@@ -971,9 +723,19 @@ def run_tools(state: AgentState, config: RunnableConfig) -> dict:
         update["done"] = True
         update["answer"] = ""
         update["error"] = "submission_contract_failed"
+        update["termination"] = "submission_contract_failed"
+        update["submission_correction_pending"] = False
+        update["finish_requested"] = False
     elif done:
         update["done"] = True
         update["answer"] = answer
+        update["termination"] = "stop"
+        update["submission_correction_pending"] = False
+        update["finish_requested"] = False
+    else:
+        update["submission_correction_pending"] = correction_pending
+        if rejections == previous_rejections:
+            update["finish_requested"] = False
     return update
 
 
@@ -997,4 +759,8 @@ def _force_stop(messages: list, step: int, max_steps: int, thread_id: str,
         "step_count": step,
         "done": True,
         "answer": answer,
+        "termination": "cap_exhausted",
+        "cap_exhausted": True,
+        "finish_requested": False,
+        "submission_correction_pending": False,
     }

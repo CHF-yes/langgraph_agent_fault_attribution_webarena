@@ -26,7 +26,10 @@ import time
 from pathlib import Path
 
 from standard_agent.config import settings
-from standard_agent.evaluation import evaluate_answer, is_cap_exhausted
+from standard_agent.evaluation import (
+    evaluate_answer, is_cap_exhausted, is_protocol_failure, terminal_diagnostic,
+    termination_status,
+)
 from standard_agent.core.graph import build_graph
 from standard_agent.tools.web_tools import (
     use_browser, use_simulation, reset_page_state, set_page_state,
@@ -353,6 +356,17 @@ def run_browser_mode(args):
             "planning_calls": 0,
             "executor_calls": 0,
             "replanning_calls": 0,
+            "retry_calls": 0,
+            "planning_tokens": 0,
+            "executor_tokens": 0,
+            "replanning_tokens": 0,
+            "planning_time_sec": 0.0,
+            "executor_time_sec": 0.0,
+            "replanning_time_sec": 0.0,
+            "finish_requested": False,
+            "submission_correction_pending": False,
+            "termination": None,
+            "cap_exhausted": False,
         }, {"configurable": {"thread_id": tid}})
 
         # 输出结果
@@ -419,6 +433,17 @@ def run_simulation_task(app, args):
         "planning_calls": 0,
         "executor_calls": 0,
         "replanning_calls": 0,
+        "retry_calls": 0,
+        "planning_tokens": 0,
+        "executor_tokens": 0,
+        "replanning_tokens": 0,
+        "planning_time_sec": 0.0,
+        "executor_time_sec": 0.0,
+        "replanning_time_sec": 0.0,
+        "finish_requested": False,
+        "submission_correction_pending": False,
+        "termination": None,
+        "cap_exhausted": False,
     }, {"configurable": {"thread_id": str(uuid.uuid4())[:8]}})
 
     _print_result(result)
@@ -530,6 +555,17 @@ def run_interactive(app, architecture="react"):
                 "planning_calls": 0,
                 "executor_calls": 0,
                 "replanning_calls": 0,
+                "retry_calls": 0,
+                "planning_tokens": 0,
+                "executor_tokens": 0,
+                "replanning_tokens": 0,
+                "planning_time_sec": 0.0,
+                "executor_time_sec": 0.0,
+                "replanning_time_sec": 0.0,
+                "finish_requested": False,
+                "submission_correction_pending": False,
+                "termination": None,
+                "cap_exhausted": False,
             }, config)
             _print_result(result)
             continue
@@ -727,6 +763,17 @@ def run_benchmark(args):
                 "planning_calls": 0,
                 "executor_calls": 0,
                 "replanning_calls": 0,
+                "retry_calls": 0,
+                "planning_tokens": 0,
+                "executor_tokens": 0,
+                "replanning_tokens": 0,
+                "planning_time_sec": 0.0,
+                "executor_time_sec": 0.0,
+                "replanning_time_sec": 0.0,
+                "finish_requested": False,
+                "submission_correction_pending": False,
+                "termination": None,
+                "cap_exhausted": False,
             }, {"configurable": {"thread_id": stem}})
 
             elapsed = time.time() - t0
@@ -739,15 +786,19 @@ def run_benchmark(args):
             # 步数耗尽：答案串是 harness 合成的诊断，必须走 error_details，
             # 不能当成检索答案提交（否则预算产物会被评分成检索结果）。
             cap_exhausted = is_cap_exhausted(done, answer)
-            contract_failed = result.get("error") == "submission_contract_failed"
-            if contract_failed:
+            protocol_failure = is_protocol_failure(result.get("error"))
+            empty_submission = (
+                bool(done) and not str(answer or "").strip()
+                and not cap_exhausted and not protocol_failure
+                and str(submission_task_type or "").upper() == "RETRIEVE")
+            if protocol_failure or empty_submission:
                 completed = False
             success = completed
-            diagnostic = (
-                f"max_steps exhausted after {steps} steps; no answer produced"
-                if cap_exhausted else
-                ("submission protocol failure: corrected stop(answer) was still "
-                 "invalid after the allowed retry" if contract_failed else None))
+            termination = termination_status(
+                done, answer, result.get("error"), submission_task_type)
+            if result.get("termination"):
+                termination = result["termination"]
+            diagnostic = terminal_diagnostic(termination, steps)
 
             log = proxy.get_injection_log()
             total_delay = sum(
@@ -796,6 +847,16 @@ def run_benchmark(args):
                 planning_calls=result.get("planning_calls", 0),
                 executor_calls=result.get("executor_calls", 0),
                 replanning_calls=result.get("replanning_calls", 0),
+                retry_calls=result.get("retry_calls", 0),
+                planning_tokens=result.get("planning_tokens", 0),
+                executor_tokens=result.get("executor_tokens", 0),
+                replanning_tokens=result.get("replanning_tokens", 0),
+                planning_time_sec=result.get("planning_time_sec", 0.0),
+                executor_time_sec=result.get("executor_time_sec", 0.0),
+                replanning_time_sec=result.get("replanning_time_sec", 0.0),
+                termination=termination,
+                protocol_failure=protocol_failure,
+                empty_submission=empty_submission,
                 steps=steps,
                 time_sec=elapsed,
                 answer=answer,
@@ -865,6 +926,20 @@ def run_benchmark(args):
                     injection_count=len(log), error=result.get("error"),
                     steps=steps, cap_exhausted=cap_exhausted,
                     llm_calls=result.get("llm_calls", 0),
+                    planning_calls=result.get("planning_calls", 0),
+                    executor_calls=result.get("executor_calls", 0),
+                    replanning_calls=result.get("replanning_calls", 0),
+                    retry_calls=result.get("retry_calls", 0),
+                    planning_tokens=result.get("planning_tokens", 0),
+                    executor_tokens=result.get("executor_tokens", 0),
+                    replanning_tokens=result.get("replanning_tokens", 0),
+                    planning_time_sec=result.get("planning_time_sec", 0.0),
+                    executor_time_sec=result.get("executor_time_sec", 0.0),
+                    replanning_time_sec=result.get("replanning_time_sec", 0.0),
+                    termination=termination,
+                    protocol_failure=protocol_failure,
+                    empty_submission=empty_submission,
+                    answer_empty=not str(answer or "").strip(),
                     time_sec=elapsed,
                     experiment_id=getattr(fault_config, "experiment_id", "stage-c"),
                     fault_variant=getattr(fault_config, "fault_variant", "single"),

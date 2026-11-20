@@ -1,10 +1,12 @@
 """
-StateGraph 构建 - ReAct 单节点自循环。
+StateGraph 构建 - ReAct 与 plan-and-execute 共用一个执行器契约。
 
 图拓扑：
-    __start__ → agent (LLM + tool_calling)
-                   ↻ tools → agent (未完成)
-                   → END (无 tool_call / done / max_steps)
+    react:         __start__ → agent ↻ tools → agent → END
+    plan_execute:  __start__ → planner → executor ↻ tools → replanner
+                              ↖__________________________|
+
+两个架构只在计划层不同；执行、工具、预算和终止规则由 nodes.py 的共享实现保证。
 """
 
 from langgraph.graph import StateGraph, END
@@ -21,14 +23,42 @@ from standard_agent.core.nodes import (
 )
 
 
+def route_after_react_tools(state: AgentState) -> str:
+    return "end" if state.get("done", False) else "agent"
+
+
+def route_after_executor(state: AgentState) -> str:
+    if state.get("done", False):
+        return "end"
+    return tools_condition(state)
+
+
+def route_after_pe_tools(state: AgentState) -> str:
+    """Completion ends; a rejected submission goes straight back to the executor."""
+    if state.get("done", False):
+        return "end"
+    if state.get("submission_correction_pending", False):
+        return "executor"
+    return "replanner"
+
+
+def route_after_replanner(state: AgentState) -> str:
+    if state.get("done", False):
+        return "end"
+    if state.get("finish_requested", False):
+        return "executor"
+    if state.get("replan_required"):
+        return "planner"
+    return "executor"
+
+
 def build_graph(architecture: str = "react") -> StateGraph:
     """
     构建并编译指定架构的 Agent StateGraph。
 
-    简化版 ReAct 结构：
     - react：agent → tools → agent 的标准工具调用循环
-    - plan_execute：planner → executor → tools → replanner；必要时回到 planner
-    - 两种架构共用相同的工具、浏览器环境、状态和 trace 机制
+    - plan_execute：planner → executor → tools → replanner
+    - 两种架构共用相同的工具、浏览器环境、状态、执行回合、提交与 trace 机制
 
     使用 MemorySaver checkpointer 实现多轮状态持久化。
     """
@@ -37,53 +67,39 @@ def build_graph(architecture: str = "react") -> StateGraph:
 
     workflow = StateGraph(AgentState)
 
-    # ---- 添加节点 ----
     if architecture == "react":
         workflow.add_node("agent", agent_node)
     else:
         workflow.add_node("planner", planner_node)
         workflow.add_node("executor", plan_executor_node)
         workflow.add_node("replanner", replanner_node)
-    # run_tools 包装内置 ToolNode，额外记录 action_history + JSONL trace
     workflow.add_node("tools", run_tools)
 
-    # ---- 入口 ----
     workflow.set_entry_point("planner" if architecture == "plan_execute" else "agent")
     if architecture == "plan_execute":
         workflow.add_edge("planner", "executor")
 
-    # ---- 条件路由 ----
-    # tools_condition: 如果最后一条 AIMessage 有 tool_calls → "tools"，否则 → END
     if architecture == "plan_execute":
         workflow.add_conditional_edges(
-            "executor",
-            tools_condition,
+            "executor", route_after_executor,
+            {"tools": "tools", "end": END},
         )
-    else:
         workflow.add_conditional_edges(
-            "agent",
-            tools_condition,
+            "tools", route_after_pe_tools,
+            {"replanner": "replanner", "executor": "executor", "end": END},
         )
-
-    # stop 工具会在 run_tools 中设置 done。完成后直接结束，避免额外
-    # 调用一次 agent 节点并把 step_count/trace 重复增加。
-    if architecture == "react":
         workflow.add_conditional_edges(
-            "tools",
-            lambda state: "end" if state.get("done", False) else "agent",
-            {"agent": "agent", "end": END},
-        )
-    else:
-        workflow.add_edge("tools", "replanner")
-        workflow.add_conditional_edges(
-            "replanner",
-            lambda state: "end" if state.get("done", False) or state.get("replan_required") == "end"
-            else ("planner" if state.get("replan_required") else "executor"),
+            "replanner", route_after_replanner,
             {"planner": "planner", "executor": "executor", "end": END},
         )
+    else:
+        workflow.add_conditional_edges(
+            "agent", tools_condition, {"tools": "tools", END: END},
+        )
+        workflow.add_conditional_edges(
+            "tools", route_after_react_tools,
+            {"agent": "agent", "end": END},
+        )
 
-    # ---- 编译 ----
     memory = MemorySaver()
-    app = workflow.compile(checkpointer=memory)
-
-    return app
+    return workflow.compile(checkpointer=memory)
