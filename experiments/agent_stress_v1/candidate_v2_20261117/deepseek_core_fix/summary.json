@@ -1,0 +1,31 @@
+{
+ "schema": "agent_stress_probe_summary/1",
+ "experiment_id": "agent-stress-v1-candidate-deepseek-core-fix",
+ "model_profile": "deepseek_v41_flash",
+ "model_identity": {
+  "requested_model": "deepseek-v4.1-flash",
+  "served_models": [
+   "deepseek-v4.1-flash"
+  ],
+  "system_fingerprints": [],
+  "probe_report_sha256": "655537c66400db552ce03d34f35c64aecc9d7f29d674b70a0db614f47b1bca2d",
+  "probed_at": "2026-11-20T00:07:17.349592+00:00"
+ },
+ "planned": 91,
+ "completed": 91,
+ "failures": 0,
+ "successes": 79,
+ "success_rate": 0.8681318681318682,
+ "cap_exhausted": 2,
+ "prompt_tokens_total": 8040905,
+ "plan_sha256": {
+  "run_1": "6d11d143c7310f8bf49ff3bfc4cffb7c66552e6e8487d85d276fcb0270176d5c",
+  "run_2": "d5a17676090aad956bc4278dc7bcb645ef3b3780bec69ad7e33dad87e8ed5fb0",
+  "run_3": "a7b77a8b3ce00958f649ec4a70ab7e5b11f0861551f2bae54e6c75a6206695a4"
+ },
+ "runs": {
+  "run_1": "agent-stress-v1-candidate-deepseek-core-fix-1",
+  "run_2": "agent-stress-v1-candidate-deepseek-core-fix-2",
+  "run_3": "agent-stress-v1-candidate-deepseek-core-fix-3"
+ }
+}
