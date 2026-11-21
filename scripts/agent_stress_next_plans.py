@@ -78,9 +78,20 @@ def git_head() -> str:
 
 
 def code_fingerprint() -> str:
-    paths = [ROOT / "main.py", ROOT / "run_baseline.py", ROOT / "requirements.txt"]
-    for directory in ("standard_agent", "fault_injection", "scripts"):
-        paths.extend((ROOT / directory).rglob("*.py"))
+    """Fingerprint the committed code under test, not untracked run artifacts.
+
+    ``git ls-files`` keeps the fingerprint reproducible from a clean checkout:
+    untracked experiment helpers must not silently change the plan's code
+    binding.  Tracked content is hashed from disk, so uncommitted edits are
+    still visible to the preflight gate.
+    """
+    tracked = subprocess.check_output(
+        ["git", "-C", str(ROOT), "ls-files", "--", "main.py", "run_baseline.py",
+         "requirements.txt", "standard_agent", "fault_injection", "scripts"],
+        text=True).splitlines()
+    paths = [ROOT / rel for rel in tracked]
+    paths = [path for path in paths if path.is_file()
+             and (path.suffix == ".py" or path.name in {"requirements.txt"})]
     return digest({str(path.relative_to(ROOT)): file_sha(path) for path in sorted(paths)})
 
 
@@ -97,8 +108,9 @@ def login_states() -> dict:
     return states
 
 
-def model_identity(profiles=MODEL_PROFILES) -> dict:
-    report = json.loads(PROVENANCE.read_text(encoding="utf-8"))
+def model_identity(profiles=MODEL_PROFILES, provenance: Path | None = None) -> dict:
+    report_path = Path(provenance) if provenance else PROVENANCE
+    report = json.loads(report_path.read_text(encoding="utf-8"))
     by_profile = {item["profile"]: item for item in report}
     identities = {}
     for profile in profiles:
@@ -111,8 +123,8 @@ def model_identity(profiles=MODEL_PROFILES) -> dict:
             "served_models": sorted({run["served_model"] for run in runs if run.get("served_model")}),
             "system_fingerprints": sorted({run["system_fingerprint"] for run in runs
                                            if run.get("system_fingerprint")}),
-            "probe_report": str(PROVENANCE.relative_to(ROOT)),
-            "probe_report_sha256": file_sha(PROVENANCE),
+            "probe_report": str(report_path.relative_to(ROOT)),
+            "probe_report_sha256": file_sha(report_path),
         }
     return identities
 

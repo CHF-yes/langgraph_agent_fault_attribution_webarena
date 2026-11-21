@@ -38,6 +38,8 @@ load_dotenv(ROOT / ".env")
 DATASET = Path(os.getenv("WEBARENA_DATASET",
                          "/data/webarena/webarena-dataset/webarena-verified.json"))
 AUTH_DIR = ROOT / "experiments/auth_20261120"
+PROVENANCE = (ROOT / "experiments/agent_stress_v1/execution_prep_20261120"
+              / "model_provenance.json")
 OUT = ROOT / "experiments/agent_stress_v1/unified_acceptance_plan_20261120"
 MODELS = ("qwen38_flash", "deepseek_v41_flash")
 ARCHITECTURES = ("react", "plan_execute")
@@ -119,8 +121,7 @@ def build_plan(out: Path = OUT) -> dict:
             key = f"{model}_task{tid}_{architecture}_seed{SEED}_{condition}"
             output_root = out / "cells" / key / "outputs"
             arm_label = "control" if condition == "control" else "web_http_error"
-            arm = (output_root / f"web_http_error_task{tid}_seed{SEED}" / str(tid)
-                   / f"{arm_label}_seed_{SEED}")
+            arm = output_root / str(tid) / f"{arm_label}_seed_{SEED}"
             command = [
                 python_cmd(), "main.py", "--benchmark",
                 "--site", task["site"], "--url", task["start_url"],
@@ -209,7 +210,7 @@ def build_plan(out: Path = OUT) -> dict:
             "gitlab": "logged in (dashboard projects verified)",
             "reddit": "anonymous by design (no-login empty state)",
         },
-        "model_identity": model_identity(MODELS),
+        "model_identity": model_identity(MODELS, provenance=PROVENANCE),
         "dataset_path": str(DATASET),
         "dataset_sha256": file_sha(DATASET),
         "evaluator": current_evaluator_version(),

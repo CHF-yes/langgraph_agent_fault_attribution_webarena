@@ -1,0 +1,198 @@
+[
+  {
+    "verdict_ok": true,
+    "notes": [],
+    "profile": "deepseek_v41_flash",
+    "requested_model": "deepseek-v4.1-flash",
+    "base_url": "https://maas.qianwenaiapi.com/compatible-mode/v1",
+    "runs": [
+      {
+        "probes": [
+          {
+            "name": "arithmetic",
+            "expect": "248171",
+            "ok": true,
+            "reply": "248171",
+            "error": ""
+          },
+          {
+            "name": "instruction",
+            "expect": "PONG",
+            "ok": true,
+            "reply": "PONG",
+            "error": ""
+          },
+          {
+            "name": "multistep",
+            "expect": "1/7",
+            "ok": true,
+            "reply": "1/7",
+            "error": ""
+          },
+          {
+            "name": "json_shape",
+            "expect": "{\"ok\": true}",
+            "ok": true,
+            "reply": "{\"ok\": true}",
+            "error": ""
+          },
+          {
+            "name": "long_context",
+            "expect": "XK-4471-QZ",
+            "ok": true,
+            "reply": "XK-4471-QZ",
+            "error": ""
+          }
+        ],
+        "served_model": "deepseek-v4.1-flash",
+        "system_fingerprint": "",
+        "latency_s": 0.79,
+        "prompt_tokens": 44,
+        "completion_tokens": 67
+      },
+      {
+        "probes": [
+          {
+            "name": "arithmetic",
+            "expect": "248171",
+            "ok": true,
+            "reply": "248171",
+            "error": ""
+          },
+          {
+            "name": "instruction",
+            "expect": "PONG",
+            "ok": true,
+            "reply": "PONG",
+            "error": ""
+          },
+          {
+            "name": "multistep",
+            "expect": "1/7",
+            "ok": true,
+            "reply": "1/7",
+            "error": ""
+          },
+          {
+            "name": "json_shape",
+            "expect": "{\"ok\": true}",
+            "ok": true,
+            "reply": "{\"ok\": true}",
+            "error": ""
+          },
+          {
+            "name": "long_context",
+            "expect": "XK-4471-QZ",
+            "ok": true,
+            "reply": "XK-4471-QZ",
+            "error": ""
+          }
+        ],
+        "served_model": "deepseek-v4.1-flash",
+        "system_fingerprint": "",
+        "latency_s": 0.66,
+        "prompt_tokens": 44,
+        "completion_tokens": 63
+      }
+    ],
+    "error": ""
+  },
+  {
+    "verdict_ok": true,
+    "notes": [],
+    "profile": "qwen38_flash",
+    "requested_model": "qwen3.8-flash",
+    "base_url": "https://maas.qianwenaiapi.com/compatible-mode/v1",
+    "runs": [
+      {
+        "probes": [
+          {
+            "name": "arithmetic",
+            "expect": "248171",
+            "ok": true,
+            "reply": "248171",
+            "error": ""
+          },
+          {
+            "name": "instruction",
+            "expect": "PONG",
+            "ok": true,
+            "reply": "PONG",
+            "error": ""
+          },
+          {
+            "name": "multistep",
+            "expect": "1/7",
+            "ok": true,
+            "reply": "1/7",
+            "error": ""
+          },
+          {
+            "name": "json_shape",
+            "expect": "{\"ok\": true}",
+            "ok": true,
+            "reply": "{\"ok\": true}",
+            "error": ""
+          },
+          {
+            "name": "long_context",
+            "expect": "XK-4471-QZ",
+            "ok": true,
+            "reply": "XK-4471-QZ",
+            "error": ""
+          }
+        ],
+        "served_model": "qwen3.8-flash",
+        "system_fingerprint": "",
+        "latency_s": 1.89,
+        "prompt_tokens": 79,
+        "completion_tokens": 136
+      },
+      {
+        "probes": [
+          {
+            "name": "arithmetic",
+            "expect": "248171",
+            "ok": true,
+            "reply": "248171",
+            "error": ""
+          },
+          {
+            "name": "instruction",
+            "expect": "PONG",
+            "ok": true,
+            "reply": "PONG",
+            "error": ""
+          },
+          {
+            "name": "multistep",
+            "expect": "1/7",
+            "ok": true,
+            "reply": "1/7",
+            "error": ""
+          },
+          {
+            "name": "json_shape",
+            "expect": "{\"ok\": true}",
+            "ok": true,
+            "reply": "{\"ok\": true}",
+            "error": ""
+          },
+          {
+            "name": "long_context",
+            "expect": "XK-4471-QZ",
+            "ok": true,
+            "reply": "XK-4471-QZ",
+            "error": ""
+          }
+        ],
+        "served_model": "qwen3.8-flash",
+        "system_fingerprint": "",
+        "latency_s": 2.54,
+        "prompt_tokens": 79,
+        "completion_tokens": 144
+      }
+    ],
+    "error": ""
+  }
+]

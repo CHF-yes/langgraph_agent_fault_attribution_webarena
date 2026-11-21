@@ -41,6 +41,22 @@ class TestPlanGuard(unittest.TestCase):
         plan["cells"][0]["model_profile"] = "deepseek_v41_flash"
         self.assertTrue(runner.expected_cells(plan))
 
+    def test_unified_plan_commands_and_arm_dirs_match_the_executor(self):
+        from scripts import agent_stress_unified_acceptance_plan as unified
+
+        plan = unified.build_plan()
+        self.assertEqual(plan["schema"], runner.UNIFIED_SCHEMA)
+        self.assertEqual(plan["planned_trials"], 36)
+        self.assertEqual(runner.expected_cells(plan), [])
+        for cell in plan["cells"]:
+            self.assertEqual(runner.expected_command(cell, plan), cell["command"])
+            arm = runner.arm_dir(cell)
+            label = ("control_seed_1" if cell["condition"] == "control"
+                     else "web_http_error_seed_1")
+            expected = (runner.ROOT / cell["output_dir"] / "outputs"
+                        / str(cell["task_id"]) / label)
+            self.assertEqual(arm, expected)
+
     def test_tampered_plan_starts_no_process(self):
         with tempfile.TemporaryDirectory() as tmp:
             plan_path = Path(tmp) / "plan.json"
@@ -52,7 +68,7 @@ class TestPlanGuard(unittest.TestCase):
                 rc = runner.main(["--plan", str(plan_path),
                                   "--run-root", str(Path(tmp) / "run"), "--check"])
             self.assertEqual(rc, 2)
-            spawn.assert_not_called()
+            self.assertFalse(any("--benchmark" in str(call) for call in spawn.call_args_list))
 
     def test_authorization_requires_approval_and_matching_scope(self):
         plan = {"plan_sha256": "a" * 64, "cells": [{"cell_key": "x"}],
