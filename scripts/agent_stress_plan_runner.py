@@ -709,6 +709,10 @@ def main(argv=None) -> int:
     parser.add_argument("--execute", action="store_true")
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--limit", type=int)
+    parser.add_argument("--cell-key", action="append", default=None,
+                        help="run only these cell keys (repeatable); plan order is preserved")
+    parser.add_argument("--block", action="append", type=int, default=None,
+                        help="run only these plan blocks (repeatable); plan order is preserved")
     parser.add_argument("--reevaluate", action="store_true")
     parser.add_argument("--job-timeout-minutes", type=float, default=45)
     args = parser.parse_args(argv)
@@ -774,6 +778,22 @@ def main(argv=None) -> int:
     stop_before = auth["prompt_token_stop_before_next_trial"]
     stop_reason = None
     queue = [cell for cell in plan["cells"] if cell["cell_key"] not in completed]
+    if args.cell_key:
+        known = {cell["cell_key"] for cell in plan["cells"]}
+        unknown = sorted(set(args.cell_key) - known)
+        if unknown:
+            print(json.dumps({"ok": False, "blockers": [f"unknown cell keys: {unknown}"]}))
+            return 2
+        wanted = set(args.cell_key)
+        queue = [cell for cell in queue if cell["cell_key"] in wanted]
+    if args.block:
+        known_blocks = {cell["block"] for cell in plan["cells"]}
+        unknown = sorted(set(args.block) - known_blocks)
+        if unknown:
+            print(json.dumps({"ok": False, "blockers": [f"unknown blocks: {unknown}"]}))
+            return 2
+        wanted = set(args.block)
+        queue = [cell for cell in queue if cell["block"] in wanted]
     if args.limit:
         queue = queue[:args.limit]
     for index, cell in enumerate(queue, 1):
