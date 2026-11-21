@@ -55,6 +55,13 @@ def load(path: Path) -> dict:
     return json.loads(Path(path).read_text(encoding="utf-8"))
 
 
+def storage_state_dir(plan: dict) -> Path:
+    """Resolve the plan's login-state directory, falling back to the legacy one."""
+    if plan.get("storage_state_dir"):
+        return ROOT / plan["storage_state_dir"]
+    return AUTH_DIR
+
+
 def file_sha(path: Path) -> str | None:
     try:
         return hashlib.sha256(Path(path).read_bytes()).hexdigest()
@@ -120,7 +127,7 @@ def expected_command(cell: dict, plan: dict) -> list[str]:
             "--fault-target-endpoint", cell["endpoint"],
             "--condition", cell["run_condition"],
             "--webarena-output-dir", str(ROOT / cell["output_dir"] / "outputs"),
-            "--storage-state-dir", str(ROOT / plan["storage_state_dir"]),
+            "--storage-state-dir", str(storage_state_dir(plan)),
         ]
     else:
         command += [
@@ -134,7 +141,7 @@ def expected_command(cell: dict, plan: dict) -> list[str]:
             "--webarena-output-dir", str(ROOT / cell["output_dir"] / "outputs"),
         ]
     if stage != "unified-acceptance":
-        command += ["--storage-state-dir", str(AUTH_DIR)]
+        command += ["--storage-state-dir", str(storage_state_dir(plan))]
     command += ["--submission-contract"]
     return command
 
@@ -254,7 +261,7 @@ def validate_plan(plan: dict) -> list[str]:
     if plan.get("evaluator") != current_evaluator_version():
         errors.append("native evaluator fingerprint differs")
     for site, expected in (plan.get("storage_state_sha256") or {}).items():
-        actual = file_sha(AUTH_DIR / f"{site}.json")
+        actual = file_sha(storage_state_dir(plan) / f"{site}.json")
         if actual != expected:
             errors.append(f"{site} storage state hash differs")
     for profile, identity in (plan.get("model_identity") or {}).items():
@@ -292,7 +299,7 @@ def preflight(plan: dict) -> dict:
     checks = {
         "dataset_bound": plan.get("dataset_sha256") == file_sha(DATASET),
         "evaluator_config_readable": CONFIG.is_file(),
-        "storage_states": all(file_sha(AUTH_DIR / f"{site}.json") == expected
+        "storage_states": all(file_sha(storage_state_dir(plan) / f"{site}.json") == expected
                               for site, expected in (plan.get("storage_state_sha256") or {}).items()),
         "provenance_report": PROVENANCE.is_file(),
         "paid_trials_executed": 0,
