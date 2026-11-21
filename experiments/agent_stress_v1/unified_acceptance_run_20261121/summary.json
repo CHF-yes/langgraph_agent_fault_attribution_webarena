@@ -1,0 +1,173 @@
+{
+  "schema": "agent_stress_plan_summary/1",
+  "experiment_id": "agent-stress-v1-unified-acceptance-36",
+  "plan_sha256": "13496a19116c6700841ae7e190d10eae59bc0ec0d883dcbedcef22014e9f6737",
+  "completed": 36,
+  "planned": 36,
+  "failures": [],
+  "by_condition": {
+    "qwen38_flash|react|control": {
+      "trials": 3,
+      "successes": 3,
+      "prompt_tokens": 202802,
+      "injections": 0,
+      "steps": 19,
+      "total_tokens": 204291,
+      "planning_tokens": 0,
+      "executor_tokens": 204291,
+      "replanning_tokens": 0
+    },
+    "qwen38_flash|react|single": {
+      "trials": 3,
+      "successes": 3,
+      "prompt_tokens": 289006,
+      "injections": 3,
+      "steps": 24,
+      "total_tokens": 290716,
+      "planning_tokens": 0,
+      "executor_tokens": 290716,
+      "replanning_tokens": 0
+    },
+    "qwen38_flash|react|sustained": {
+      "trials": 3,
+      "successes": 3,
+      "prompt_tokens": 673482,
+      "injections": 16,
+      "steps": 49,
+      "total_tokens": 676665,
+      "planning_tokens": 0,
+      "executor_tokens": 676665,
+      "replanning_tokens": 0
+    },
+    "qwen38_flash|plan_execute|control": {
+      "trials": 3,
+      "successes": 2,
+      "prompt_tokens": 240105,
+      "injections": 0,
+      "steps": 18,
+      "total_tokens": 244180,
+      "planning_tokens": 21901,
+      "executor_tokens": 200186,
+      "replanning_tokens": 22093
+    },
+    "qwen38_flash|plan_execute|sustained": {
+      "trials": 3,
+      "successes": 3,
+      "prompt_tokens": 754913,
+      "injections": 14,
+      "steps": 51,
+      "total_tokens": 766714,
+      "planning_tokens": 52694,
+      "executor_tokens": 667663,
+      "replanning_tokens": 46357
+    },
+    "qwen38_flash|plan_execute|single": {
+      "trials": 3,
+      "successes": 3,
+      "prompt_tokens": 339120,
+      "injections": 3,
+      "steps": 25,
+      "total_tokens": 344766,
+      "planning_tokens": 24579,
+      "executor_tokens": 291007,
+      "replanning_tokens": 29180
+    },
+    "deepseek_v41_flash|react|single": {
+      "trials": 3,
+      "successes": 3,
+      "prompt_tokens": 255312,
+      "injections": 3,
+      "steps": 22,
+      "total_tokens": 257908,
+      "planning_tokens": 0,
+      "executor_tokens": 257908,
+      "replanning_tokens": 0
+    },
+    "deepseek_v41_flash|react|control": {
+      "trials": 3,
+      "successes": 2,
+      "prompt_tokens": 198406,
+      "injections": 0,
+      "steps": 18,
+      "total_tokens": 200383,
+      "planning_tokens": 0,
+      "executor_tokens": 200383,
+      "replanning_tokens": 0
+    },
+    "deepseek_v41_flash|react|sustained": {
+      "trials": 3,
+      "successes": 1,
+      "prompt_tokens": 620157,
+      "injections": 14,
+      "steps": 50,
+      "total_tokens": 625983,
+      "planning_tokens": 0,
+      "executor_tokens": 625983,
+      "replanning_tokens": 0
+    },
+    "deepseek_v41_flash|plan_execute|single": {
+      "trials": 3,
+      "successes": 3,
+      "prompt_tokens": 384687,
+      "injections": 3,
+      "steps": 24,
+      "total_tokens": 453865,
+      "planning_tokens": 112871,
+      "executor_tokens": 289887,
+      "replanning_tokens": 51107
+    },
+    "deepseek_v41_flash|plan_execute|control": {
+      "trials": 3,
+      "successes": 3,
+      "prompt_tokens": 352449,
+      "injections": 0,
+      "steps": 22,
+      "total_tokens": 423287,
+      "planning_tokens": 124080,
+      "executor_tokens": 257331,
+      "replanning_tokens": 41876
+    },
+    "deepseek_v41_flash|plan_execute|sustained": {
+      "trials": 3,
+      "successes": 3,
+      "prompt_tokens": 569625,
+      "injections": 12,
+      "steps": 41,
+      "total_tokens": 657513,
+      "planning_tokens": 136718,
+      "executor_tokens": 454156,
+      "replanning_tokens": 66639
+    }
+  },
+  "unified_acceptance": {
+    "max_steps": 20,
+    "all_within_budget": true,
+    "control_injections": 0,
+    "single_untriggered": [],
+    "sustained_single_exposure": [],
+    "sustained_untriggered": [],
+    "repeated_exposure_tasks": [
+      28,
+      228,
+      314
+    ],
+    "repeated_exposure_cells": [
+      "qwen38_flash_task228_react_seed1_sustained",
+      "qwen38_flash_task228_plan_execute_seed1_sustained",
+      "deepseek_v41_flash_task228_react_seed1_sustained",
+      "deepseek_v41_flash_task314_plan_execute_seed1_sustained",
+      "deepseek_v41_flash_task228_plan_execute_seed1_sustained",
+      "deepseek_v41_flash_task314_react_seed1_sustained",
+      "qwen38_flash_task28_plan_execute_seed1_sustained",
+      "qwen38_flash_task28_react_seed1_sustained",
+      "deepseek_v41_flash_task28_react_seed1_sustained",
+      "qwen38_flash_task314_react_seed1_sustained",
+      "qwen38_flash_task314_plan_execute_seed1_sustained",
+      "deepseek_v41_flash_task28_plan_execute_seed1_sustained"
+    ]
+  },
+  "prompt_tokens_total": 4880064,
+  "prompt_token_stop_before_next_trial": 8000000,
+  "stop_reason": null,
+  "resume_rejections": []
+}

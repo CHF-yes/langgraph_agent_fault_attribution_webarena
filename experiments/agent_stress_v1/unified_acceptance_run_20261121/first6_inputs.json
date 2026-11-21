@@ -1,0 +1,221 @@
+{
+  "diff_fields": [],
+  "pairs": {
+    "control": {
+      "task_id": {
+        "react": 228,
+        "plan_execute": 228,
+        "equal": true
+      },
+      "site": {
+        "react": "shopping",
+        "plan_execute": "shopping",
+        "equal": true
+      },
+      "start_url": {
+        "react": "http://localhost:7770",
+        "plan_execute": "http://localhost:7770",
+        "equal": true
+      },
+      "intent": {
+        "react": "What is the price range for products from sephora?. Return an object with keys \"min\" and \"max\" (as numbers, e.g., 10.99) only, without any additional details.",
+        "plan_execute": "What is the price range for products from sephora?. Return an object with keys \"min\" and \"max\" (as numbers, e.g., 10.99) only, without any additional details.",
+        "equal": true
+      },
+      "model_profile": {
+        "react": "qwen38_flash",
+        "plan_execute": "qwen38_flash",
+        "equal": true
+      },
+      "max_steps": {
+        "react": 20,
+        "plan_execute": 20,
+        "equal": true
+      },
+      "fault_type": {
+        "react": "web_http_error",
+        "plan_execute": "web_http_error",
+        "equal": true
+      },
+      "fault_intensity": {
+        "react": "off",
+        "plan_execute": "off",
+        "equal": true
+      },
+      "fault_variant": {
+        "react": "single",
+        "plan_execute": "single",
+        "equal": true
+      },
+      "seed": {
+        "react": 1,
+        "plan_execute": 1,
+        "equal": true
+      },
+      "fault_seed": {
+        "react": 1,
+        "plan_execute": 1,
+        "equal": true
+      },
+      "experiment_id": {
+        "react": "ep-http-service-v1",
+        "plan_execute": "ep-http-service-v1",
+        "equal": true
+      },
+      "endpoint": {
+        "react": "http://localhost:7770/catalogsearch/result",
+        "plan_execute": "http://localhost:7770/catalogsearch/result",
+        "equal": true
+      },
+      "window_steps": {
+        "react": null,
+        "plan_execute": null,
+        "equal": true
+      }
+    },
+    "single": {
+      "task_id": {
+        "react": 228,
+        "plan_execute": 228,
+        "equal": true
+      },
+      "site": {
+        "react": "shopping",
+        "plan_execute": "shopping",
+        "equal": true
+      },
+      "start_url": {
+        "react": "http://localhost:7770",
+        "plan_execute": "http://localhost:7770",
+        "equal": true
+      },
+      "intent": {
+        "react": "What is the price range for products from sephora?. Return an object with keys \"min\" and \"max\" (as numbers, e.g., 10.99) only, without any additional details.",
+        "plan_execute": "What is the price range for products from sephora?. Return an object with keys \"min\" and \"max\" (as numbers, e.g., 10.99) only, without any additional details.",
+        "equal": true
+      },
+      "model_profile": {
+        "react": "qwen38_flash",
+        "plan_execute": "qwen38_flash",
+        "equal": true
+      },
+      "max_steps": {
+        "react": 20,
+        "plan_execute": 20,
+        "equal": true
+      },
+      "fault_type": {
+        "react": "web_http_error",
+        "plan_execute": "web_http_error",
+        "equal": true
+      },
+      "fault_intensity": {
+        "react": "high",
+        "plan_execute": "high",
+        "equal": true
+      },
+      "fault_variant": {
+        "react": "single",
+        "plan_execute": "single",
+        "equal": true
+      },
+      "seed": {
+        "react": 1,
+        "plan_execute": 1,
+        "equal": true
+      },
+      "fault_seed": {
+        "react": 1,
+        "plan_execute": 1,
+        "equal": true
+      },
+      "experiment_id": {
+        "react": "ep-http-service-v1",
+        "plan_execute": "ep-http-service-v1",
+        "equal": true
+      },
+      "endpoint": {
+        "react": "http://localhost:7770/catalogsearch/result",
+        "plan_execute": "http://localhost:7770/catalogsearch/result",
+        "equal": true
+      },
+      "window_steps": {
+        "react": 10,
+        "plan_execute": 10,
+        "equal": true
+      }
+    },
+    "sustained": {
+      "task_id": {
+        "react": 228,
+        "plan_execute": 228,
+        "equal": true
+      },
+      "site": {
+        "react": "shopping",
+        "plan_execute": "shopping",
+        "equal": true
+      },
+      "start_url": {
+        "react": "http://localhost:7770",
+        "plan_execute": "http://localhost:7770",
+        "equal": true
+      },
+      "intent": {
+        "react": "What is the price range for products from sephora?. Return an object with keys \"min\" and \"max\" (as numbers, e.g., 10.99) only, without any additional details.",
+        "plan_execute": "What is the price range for products from sephora?. Return an object with keys \"min\" and \"max\" (as numbers, e.g., 10.99) only, without any additional details.",
+        "equal": true
+      },
+      "model_profile": {
+        "react": "qwen38_flash",
+        "plan_execute": "qwen38_flash",
+        "equal": true
+      },
+      "max_steps": {
+        "react": 20,
+        "plan_execute": 20,
+        "equal": true
+      },
+      "fault_type": {
+        "react": "web_http_error",
+        "plan_execute": "web_http_error",
+        "equal": true
+      },
+      "fault_intensity": {
+        "react": "high",
+        "plan_execute": "high",
+        "equal": true
+      },
+      "fault_variant": {
+        "react": "persistent",
+        "plan_execute": "persistent",
+        "equal": true
+      },
+      "seed": {
+        "react": 1,
+        "plan_execute": 1,
+        "equal": true
+      },
+      "fault_seed": {
+        "react": 1,
+        "plan_execute": 1,
+        "equal": true
+      },
+      "experiment_id": {
+        "react": "ep-http-service-v1",
+        "plan_execute": "ep-http-service-v1",
+        "equal": true
+      },
+      "endpoint": {
+        "react": "http://localhost:7770/catalogsearch/result",
+        "plan_execute": "http://localhost:7770/catalogsearch/result",
+        "equal": true
+      },
+      "window_steps": {
+        "react": 10,
+        "plan_execute": 10,
+        "equal": true
+      }
+    }
+  }
+}

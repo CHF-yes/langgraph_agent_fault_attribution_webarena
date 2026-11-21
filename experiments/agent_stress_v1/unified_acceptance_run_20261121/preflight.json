@@ -1,0 +1,14 @@
+{
+  "dataset_bound": true,
+  "evaluator_config_readable": true,
+  "storage_states": true,
+  "provenance_report": true,
+  "paid_trials_executed": 0,
+  "evaluator_dataset_binding": true,
+  "site:gitlab": true,
+  "site:shopping": true,
+  "site:reddit": true,
+  "model:qwen38_flash": true,
+  "model:deepseek_v41_flash": true,
+  "blockers": []
+}
