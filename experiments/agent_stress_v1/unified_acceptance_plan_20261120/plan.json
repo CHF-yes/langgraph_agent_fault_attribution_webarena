@@ -1,7 +1,7 @@
 {
   "schema": "agent_stress_unified_acceptance_plan/1",
   "experiment_id": "agent-stress-v1-unified-acceptance-36",
-  "created_at": "2026-11-20T14:24:12.472591+00:00",
+  "created_at": "2026-11-21T06:20:12.073831+00:00",
   "status": "plan_only",
   "approved_for_paid_runs": false,
   "approval_note": "Plan only. No trial may run until the unified execution contract is reviewed and this plan is authorized.",
@@ -225,7 +225,7 @@
       "window_steps": 10,
       "endpoint": "http://localhost:7770/catalogsearch/result",
       "output_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task228_react_seed1_single",
-      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task228_react_seed1_single/outputs/web_http_error_task228_seed1/228/web_http_error_seed_1",
+      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task228_react_seed1_single/outputs/228/web_http_error_seed_1",
       "command": [
         "/data/webarena/langgraph_agent_fault_attribution_webarena/.venv311/bin/python",
         "main.py",
@@ -291,7 +291,7 @@
       "window_steps": null,
       "endpoint": "http://localhost:7770/catalogsearch/result",
       "output_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task228_react_seed1_control",
-      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task228_react_seed1_control/outputs/web_http_error_task228_seed1/228/control_seed_1",
+      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task228_react_seed1_control/outputs/228/control_seed_1",
       "command": [
         "/data/webarena/langgraph_agent_fault_attribution_webarena/.venv311/bin/python",
         "main.py",
@@ -357,7 +357,7 @@
       "window_steps": 10,
       "endpoint": "http://localhost:7770/catalogsearch/result",
       "output_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task228_react_seed1_sustained",
-      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task228_react_seed1_sustained/outputs/web_http_error_task228_seed1/228/web_http_error_seed_1",
+      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task228_react_seed1_sustained/outputs/228/web_http_error_seed_1",
       "command": [
         "/data/webarena/langgraph_agent_fault_attribution_webarena/.venv311/bin/python",
         "main.py",
@@ -423,7 +423,7 @@
       "window_steps": 10,
       "endpoint": "http://localhost:8023/primer/design/-/graphs",
       "output_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task314_plan_execute_seed1_single",
-      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task314_plan_execute_seed1_single/outputs/web_http_error_task314_seed1/314/web_http_error_seed_1",
+      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task314_plan_execute_seed1_single/outputs/314/web_http_error_seed_1",
       "command": [
         "/data/webarena/langgraph_agent_fault_attribution_webarena/.venv311/bin/python",
         "main.py",
@@ -489,7 +489,7 @@
       "window_steps": null,
       "endpoint": "http://localhost:8023/primer/design/-/graphs",
       "output_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task314_plan_execute_seed1_control",
-      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task314_plan_execute_seed1_control/outputs/web_http_error_task314_seed1/314/control_seed_1",
+      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task314_plan_execute_seed1_control/outputs/314/control_seed_1",
       "command": [
         "/data/webarena/langgraph_agent_fault_attribution_webarena/.venv311/bin/python",
         "main.py",
@@ -555,7 +555,7 @@
       "window_steps": 10,
       "endpoint": "http://localhost:8023/primer/design/-/graphs",
       "output_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task314_plan_execute_seed1_sustained",
-      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task314_plan_execute_seed1_sustained/outputs/web_http_error_task314_seed1/314/web_http_error_seed_1",
+      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task314_plan_execute_seed1_sustained/outputs/314/web_http_error_seed_1",
       "command": [
         "/data/webarena/langgraph_agent_fault_attribution_webarena/.venv311/bin/python",
         "main.py",
@@ -621,7 +621,7 @@
       "window_steps": null,
       "endpoint": "http://localhost:7770/catalogsearch/result",
       "output_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task228_react_seed1_control",
-      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task228_react_seed1_control/outputs/web_http_error_task228_seed1/228/control_seed_1",
+      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task228_react_seed1_control/outputs/228/control_seed_1",
       "command": [
         "/data/webarena/langgraph_agent_fault_attribution_webarena/.venv311/bin/python",
         "main.py",
@@ -687,7 +687,7 @@
       "window_steps": 10,
       "endpoint": "http://localhost:7770/catalogsearch/result",
       "output_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task228_react_seed1_single",
-      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task228_react_seed1_single/outputs/web_http_error_task228_seed1/228/web_http_error_seed_1",
+      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task228_react_seed1_single/outputs/228/web_http_error_seed_1",
       "command": [
         "/data/webarena/langgraph_agent_fault_attribution_webarena/.venv311/bin/python",
         "main.py",
@@ -753,7 +753,7 @@
       "window_steps": 10,
       "endpoint": "http://localhost:7770/catalogsearch/result",
       "output_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task228_react_seed1_sustained",
-      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task228_react_seed1_sustained/outputs/web_http_error_task228_seed1/228/web_http_error_seed_1",
+      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task228_react_seed1_sustained/outputs/228/web_http_error_seed_1",
       "command": [
         "/data/webarena/langgraph_agent_fault_attribution_webarena/.venv311/bin/python",
         "main.py",
@@ -819,7 +819,7 @@
       "window_steps": 10,
       "endpoint": "http://localhost:7770/catalogsearch/result",
       "output_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task228_plan_execute_seed1_single",
-      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task228_plan_execute_seed1_single/outputs/web_http_error_task228_seed1/228/web_http_error_seed_1",
+      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task228_plan_execute_seed1_single/outputs/228/web_http_error_seed_1",
       "command": [
         "/data/webarena/langgraph_agent_fault_attribution_webarena/.venv311/bin/python",
         "main.py",
@@ -885,7 +885,7 @@
       "window_steps": 10,
       "endpoint": "http://localhost:7770/catalogsearch/result",
       "output_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task228_plan_execute_seed1_sustained",
-      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task228_plan_execute_seed1_sustained/outputs/web_http_error_task228_seed1/228/web_http_error_seed_1",
+      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task228_plan_execute_seed1_sustained/outputs/228/web_http_error_seed_1",
       "command": [
         "/data/webarena/langgraph_agent_fault_attribution_webarena/.venv311/bin/python",
         "main.py",
@@ -951,7 +951,7 @@
       "window_steps": null,
       "endpoint": "http://localhost:7770/catalogsearch/result",
       "output_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task228_plan_execute_seed1_control",
-      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task228_plan_execute_seed1_control/outputs/web_http_error_task228_seed1/228/control_seed_1",
+      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task228_plan_execute_seed1_control/outputs/228/control_seed_1",
       "command": [
         "/data/webarena/langgraph_agent_fault_attribution_webarena/.venv311/bin/python",
         "main.py",
@@ -1017,7 +1017,7 @@
       "window_steps": 10,
       "endpoint": "http://localhost:8023/primer/design/-/graphs",
       "output_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task314_react_seed1_sustained",
-      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task314_react_seed1_sustained/outputs/web_http_error_task314_seed1/314/web_http_error_seed_1",
+      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task314_react_seed1_sustained/outputs/314/web_http_error_seed_1",
       "command": [
         "/data/webarena/langgraph_agent_fault_attribution_webarena/.venv311/bin/python",
         "main.py",
@@ -1083,7 +1083,7 @@
       "window_steps": 10,
       "endpoint": "http://localhost:8023/primer/design/-/graphs",
       "output_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task314_react_seed1_single",
-      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task314_react_seed1_single/outputs/web_http_error_task314_seed1/314/web_http_error_seed_1",
+      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task314_react_seed1_single/outputs/314/web_http_error_seed_1",
       "command": [
         "/data/webarena/langgraph_agent_fault_attribution_webarena/.venv311/bin/python",
         "main.py",
@@ -1149,7 +1149,7 @@
       "window_steps": null,
       "endpoint": "http://localhost:8023/primer/design/-/graphs",
       "output_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task314_react_seed1_control",
-      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task314_react_seed1_control/outputs/web_http_error_task314_seed1/314/control_seed_1",
+      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task314_react_seed1_control/outputs/314/control_seed_1",
       "command": [
         "/data/webarena/langgraph_agent_fault_attribution_webarena/.venv311/bin/python",
         "main.py",
@@ -1215,7 +1215,7 @@
       "window_steps": null,
       "endpoint": "http://localhost:7770/catalogsearch/result",
       "output_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task228_plan_execute_seed1_control",
-      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task228_plan_execute_seed1_control/outputs/web_http_error_task228_seed1/228/control_seed_1",
+      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task228_plan_execute_seed1_control/outputs/228/control_seed_1",
       "command": [
         "/data/webarena/langgraph_agent_fault_attribution_webarena/.venv311/bin/python",
         "main.py",
@@ -1281,7 +1281,7 @@
       "window_steps": 10,
       "endpoint": "http://localhost:7770/catalogsearch/result",
       "output_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task228_plan_execute_seed1_sustained",
-      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task228_plan_execute_seed1_sustained/outputs/web_http_error_task228_seed1/228/web_http_error_seed_1",
+      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task228_plan_execute_seed1_sustained/outputs/228/web_http_error_seed_1",
       "command": [
         "/data/webarena/langgraph_agent_fault_attribution_webarena/.venv311/bin/python",
         "main.py",
@@ -1347,7 +1347,7 @@
       "window_steps": 10,
       "endpoint": "http://localhost:7770/catalogsearch/result",
       "output_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task228_plan_execute_seed1_single",
-      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task228_plan_execute_seed1_single/outputs/web_http_error_task228_seed1/228/web_http_error_seed_1",
+      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task228_plan_execute_seed1_single/outputs/228/web_http_error_seed_1",
       "command": [
         "/data/webarena/langgraph_agent_fault_attribution_webarena/.venv311/bin/python",
         "main.py",
@@ -1413,7 +1413,7 @@
       "window_steps": 10,
       "endpoint": "http://localhost:9999/f/WorcesterMA",
       "output_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task28_plan_execute_seed1_sustained",
-      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task28_plan_execute_seed1_sustained/outputs/web_http_error_task28_seed1/28/web_http_error_seed_1",
+      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task28_plan_execute_seed1_sustained/outputs/28/web_http_error_seed_1",
       "command": [
         "/data/webarena/langgraph_agent_fault_attribution_webarena/.venv311/bin/python",
         "main.py",
@@ -1479,7 +1479,7 @@
       "window_steps": 10,
       "endpoint": "http://localhost:9999/f/WorcesterMA",
       "output_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task28_plan_execute_seed1_single",
-      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task28_plan_execute_seed1_single/outputs/web_http_error_task28_seed1/28/web_http_error_seed_1",
+      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task28_plan_execute_seed1_single/outputs/28/web_http_error_seed_1",
       "command": [
         "/data/webarena/langgraph_agent_fault_attribution_webarena/.venv311/bin/python",
         "main.py",
@@ -1545,7 +1545,7 @@
       "window_steps": null,
       "endpoint": "http://localhost:9999/f/WorcesterMA",
       "output_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task28_plan_execute_seed1_control",
-      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task28_plan_execute_seed1_control/outputs/web_http_error_task28_seed1/28/control_seed_1",
+      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task28_plan_execute_seed1_control/outputs/28/control_seed_1",
       "command": [
         "/data/webarena/langgraph_agent_fault_attribution_webarena/.venv311/bin/python",
         "main.py",
@@ -1611,7 +1611,7 @@
       "window_steps": 10,
       "endpoint": "http://localhost:9999/f/WorcesterMA",
       "output_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task28_react_seed1_sustained",
-      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task28_react_seed1_sustained/outputs/web_http_error_task28_seed1/28/web_http_error_seed_1",
+      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task28_react_seed1_sustained/outputs/28/web_http_error_seed_1",
       "command": [
         "/data/webarena/langgraph_agent_fault_attribution_webarena/.venv311/bin/python",
         "main.py",
@@ -1677,7 +1677,7 @@
       "window_steps": null,
       "endpoint": "http://localhost:9999/f/WorcesterMA",
       "output_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task28_react_seed1_control",
-      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task28_react_seed1_control/outputs/web_http_error_task28_seed1/28/control_seed_1",
+      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task28_react_seed1_control/outputs/28/control_seed_1",
       "command": [
         "/data/webarena/langgraph_agent_fault_attribution_webarena/.venv311/bin/python",
         "main.py",
@@ -1743,7 +1743,7 @@
       "window_steps": 10,
       "endpoint": "http://localhost:9999/f/WorcesterMA",
       "output_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task28_react_seed1_single",
-      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task28_react_seed1_single/outputs/web_http_error_task28_seed1/28/web_http_error_seed_1",
+      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task28_react_seed1_single/outputs/28/web_http_error_seed_1",
       "command": [
         "/data/webarena/langgraph_agent_fault_attribution_webarena/.venv311/bin/python",
         "main.py",
@@ -1809,7 +1809,7 @@
       "window_steps": 10,
       "endpoint": "http://localhost:9999/f/WorcesterMA",
       "output_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task28_react_seed1_sustained",
-      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task28_react_seed1_sustained/outputs/web_http_error_task28_seed1/28/web_http_error_seed_1",
+      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task28_react_seed1_sustained/outputs/28/web_http_error_seed_1",
       "command": [
         "/data/webarena/langgraph_agent_fault_attribution_webarena/.venv311/bin/python",
         "main.py",
@@ -1875,7 +1875,7 @@
       "window_steps": 10,
       "endpoint": "http://localhost:9999/f/WorcesterMA",
       "output_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task28_react_seed1_single",
-      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task28_react_seed1_single/outputs/web_http_error_task28_seed1/28/web_http_error_seed_1",
+      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task28_react_seed1_single/outputs/28/web_http_error_seed_1",
       "command": [
         "/data/webarena/langgraph_agent_fault_attribution_webarena/.venv311/bin/python",
         "main.py",
@@ -1941,7 +1941,7 @@
       "window_steps": null,
       "endpoint": "http://localhost:9999/f/WorcesterMA",
       "output_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task28_react_seed1_control",
-      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task28_react_seed1_control/outputs/web_http_error_task28_seed1/28/control_seed_1",
+      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task28_react_seed1_control/outputs/28/control_seed_1",
       "command": [
         "/data/webarena/langgraph_agent_fault_attribution_webarena/.venv311/bin/python",
         "main.py",
@@ -2007,7 +2007,7 @@
       "window_steps": 10,
       "endpoint": "http://localhost:8023/primer/design/-/graphs",
       "output_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task314_react_seed1_single",
-      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task314_react_seed1_single/outputs/web_http_error_task314_seed1/314/web_http_error_seed_1",
+      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task314_react_seed1_single/outputs/314/web_http_error_seed_1",
       "command": [
         "/data/webarena/langgraph_agent_fault_attribution_webarena/.venv311/bin/python",
         "main.py",
@@ -2073,7 +2073,7 @@
       "window_steps": 10,
       "endpoint": "http://localhost:8023/primer/design/-/graphs",
       "output_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task314_react_seed1_sustained",
-      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task314_react_seed1_sustained/outputs/web_http_error_task314_seed1/314/web_http_error_seed_1",
+      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task314_react_seed1_sustained/outputs/314/web_http_error_seed_1",
       "command": [
         "/data/webarena/langgraph_agent_fault_attribution_webarena/.venv311/bin/python",
         "main.py",
@@ -2139,7 +2139,7 @@
       "window_steps": null,
       "endpoint": "http://localhost:8023/primer/design/-/graphs",
       "output_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task314_react_seed1_control",
-      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task314_react_seed1_control/outputs/web_http_error_task314_seed1/314/control_seed_1",
+      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task314_react_seed1_control/outputs/314/control_seed_1",
       "command": [
         "/data/webarena/langgraph_agent_fault_attribution_webarena/.venv311/bin/python",
         "main.py",
@@ -2205,7 +2205,7 @@
       "window_steps": null,
       "endpoint": "http://localhost:8023/primer/design/-/graphs",
       "output_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task314_plan_execute_seed1_control",
-      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task314_plan_execute_seed1_control/outputs/web_http_error_task314_seed1/314/control_seed_1",
+      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task314_plan_execute_seed1_control/outputs/314/control_seed_1",
       "command": [
         "/data/webarena/langgraph_agent_fault_attribution_webarena/.venv311/bin/python",
         "main.py",
@@ -2271,7 +2271,7 @@
       "window_steps": 10,
       "endpoint": "http://localhost:8023/primer/design/-/graphs",
       "output_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task314_plan_execute_seed1_sustained",
-      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task314_plan_execute_seed1_sustained/outputs/web_http_error_task314_seed1/314/web_http_error_seed_1",
+      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task314_plan_execute_seed1_sustained/outputs/314/web_http_error_seed_1",
       "command": [
         "/data/webarena/langgraph_agent_fault_attribution_webarena/.venv311/bin/python",
         "main.py",
@@ -2337,7 +2337,7 @@
       "window_steps": 10,
       "endpoint": "http://localhost:8023/primer/design/-/graphs",
       "output_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task314_plan_execute_seed1_single",
-      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task314_plan_execute_seed1_single/outputs/web_http_error_task314_seed1/314/web_http_error_seed_1",
+      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/qwen38_flash_task314_plan_execute_seed1_single/outputs/314/web_http_error_seed_1",
       "command": [
         "/data/webarena/langgraph_agent_fault_attribution_webarena/.venv311/bin/python",
         "main.py",
@@ -2403,7 +2403,7 @@
       "window_steps": 10,
       "endpoint": "http://localhost:9999/f/WorcesterMA",
       "output_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task28_plan_execute_seed1_sustained",
-      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task28_plan_execute_seed1_sustained/outputs/web_http_error_task28_seed1/28/web_http_error_seed_1",
+      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task28_plan_execute_seed1_sustained/outputs/28/web_http_error_seed_1",
       "command": [
         "/data/webarena/langgraph_agent_fault_attribution_webarena/.venv311/bin/python",
         "main.py",
@@ -2469,7 +2469,7 @@
       "window_steps": null,
       "endpoint": "http://localhost:9999/f/WorcesterMA",
       "output_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task28_plan_execute_seed1_control",
-      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task28_plan_execute_seed1_control/outputs/web_http_error_task28_seed1/28/control_seed_1",
+      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task28_plan_execute_seed1_control/outputs/28/control_seed_1",
       "command": [
         "/data/webarena/langgraph_agent_fault_attribution_webarena/.venv311/bin/python",
         "main.py",
@@ -2535,7 +2535,7 @@
       "window_steps": 10,
       "endpoint": "http://localhost:9999/f/WorcesterMA",
       "output_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task28_plan_execute_seed1_single",
-      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task28_plan_execute_seed1_single/outputs/web_http_error_task28_seed1/28/web_http_error_seed_1",
+      "arm_dir": "experiments/agent_stress_v1/unified_acceptance_plan_20261120/cells/deepseek_v41_flash_task28_plan_execute_seed1_single/outputs/28/web_http_error_seed_1",
       "command": [
         "/data/webarena/langgraph_agent_fault_attribution_webarena/.venv311/bin/python",
         "main.py",
@@ -2618,19 +2618,17 @@
         "qwen3.8-flash"
       ],
       "system_fingerprints": [],
-      "probe_report": "experiments/agent_stress_v1/execution_prep_20261116/model_provenance.json",
-      "probe_report_sha256": "833d7cf201adf2685f5453324b9c0a61b2d5b36989b8d2498e89638a5b42c6fa"
+      "probe_report": "experiments/agent_stress_v1/execution_prep_20261120/model_provenance.json",
+      "probe_report_sha256": "4cf40e0208c1adb3f52e577e32233d73043f0440c0e3f1b0d3a93b56f9b4ef5d"
     },
     "deepseek_v41_flash": {
-      "requested_model": "deepseek-flash",
+      "requested_model": "deepseek-v4.1-flash",
       "served_models": [
-        "deepseek-flash"
+        "deepseek-v4.1-flash"
       ],
-      "system_fingerprints": [
-        "bc19ba97cbe016479903222bb1578db6"
-      ],
-      "probe_report": "experiments/agent_stress_v1/execution_prep_20261116/model_provenance.json",
-      "probe_report_sha256": "833d7cf201adf2685f5453324b9c0a61b2d5b36989b8d2498e89638a5b42c6fa"
+      "system_fingerprints": [],
+      "probe_report": "experiments/agent_stress_v1/execution_prep_20261120/model_provenance.json",
+      "probe_report_sha256": "4cf40e0208c1adb3f52e577e32233d73043f0440c0e3f1b0d3a93b56f9b4ef5d"
     }
   },
   "dataset_path": "/data/webarena/webarena-dataset/webarena-verified.json",
@@ -2642,13 +2640,13 @@
     "package_sha256": "41334a7a30567811b3c42fc125b64140e64069b08ff7793643c0ed68931a68d8"
   },
   "code": {
-    "head": "9bddd6e7414a0ae3deb0e0a5cbccf061e580fcbf",
-    "fingerprint_sha256": "2b10b670ad55b060aedf1de91ae2334c59faf9264a33c38acf16dcc78babacb1"
+    "head": "32e969a56dc0051c5dc9e551bf187607e6d4237e",
+    "fingerprint_sha256": "3d4d0e4d0762bac8b816cde54a65c54b5608a66b355d4e939df4d73c969b47b1"
   },
   "prior_evidence": {
     "pilot_18": "experiments/agent_stress_v1/http_pilot_20261120/report.md",
     "qwen_clean_screening": "experiments/agent_stress_v1/qwen_seed_verify_20261120/summary.json",
     "note": "Prior artifacts keep their original code/version; this plan is the first unified comparison."
   },
-  "plan_sha256": "21fff9f72427df1a4a53fcb290975d310e4cee3e92dddf4673ae21b5aaac2fc0"
+  "plan_sha256": "13496a19116c6700841ae7e190d10eae59bc0ec0d883dcbedcef22014e9f6737"
 }
