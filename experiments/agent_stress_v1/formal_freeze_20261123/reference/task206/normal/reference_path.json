@@ -1,0 +1,199 @@
+{
+  "schema": "agent_stress_frozen_reference_path/1",
+  "task_id": 206,
+  "arm": "normal",
+  "recorded_at": "2026-11-23T09:26:01.451346+00:00",
+  "site": "gitlab",
+  "start_url": "http://localhost:8023/a11yproject/a11yproject.com",
+  "intent": "How many commits did Eric make on March 2, 2023 for the current project?",
+  "intent_template_id": 320,
+  "endpoint": "http://localhost:8023/a11yproject/a11yproject.com/-/commits/main",
+  "steps": 2,
+  "actions": [
+    {
+      "step": 1,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/a11yproject/a11yproject.com"
+      },
+      "url_before": "about:blank",
+      "url_after": "http://localhost:8023/a11yproject/a11yproject.com",
+      "note": "task start URL / shared login state"
+    },
+    {
+      "step": 2,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/a11yproject/a11yproject.com/-/commits/main?author=Eric+Bailey"
+      },
+      "url_before": "http://localhost:8023/a11yproject/a11yproject.com",
+      "url_after": "http://localhost:8023/a11yproject/a11yproject.com/-/commits/main?author=Eric+Bailey",
+      "note": "author-filtered commit history"
+    }
+  ],
+  "pages": [
+    {
+      "step": 2,
+      "name": "commits",
+      "url": "http://localhost:8023/a11yproject/a11yproject.com/-/commits/main?author=Eric+Bailey",
+      "text": "pages/02_commits.txt",
+      "html": "pages/02_commits.html"
+    }
+  ],
+  "answer": [
+    2
+  ],
+  "evidence": {
+    "url": "http://localhost:8023/a11yproject/a11yproject.com/-/commits/main?author=Eric+Bailey",
+    "author": "Eric Bailey",
+    "target": "02 Mar, 2023",
+    "groups": [
+      [
+        "14 Mar, 2023",
+        2
+      ],
+      [
+        "12 Mar, 2023",
+        1
+      ],
+      [
+        "07 Mar, 2023",
+        1
+      ],
+      [
+        "02 Mar, 2023",
+        2
+      ],
+      [
+        "28 Feb, 2023",
+        2
+      ],
+      [
+        "14 Feb, 2023",
+        2
+      ],
+      [
+        "12 Feb, 2023",
+        2
+      ],
+      [
+        "05 Feb, 2023",
+        1
+      ],
+      [
+        "02 Feb, 2023",
+        1
+      ],
+      [
+        "18 Jan, 2023",
+        1
+      ],
+      [
+        "15 Jan, 2023",
+        3
+      ],
+      [
+        "05 Jan, 2023",
+        2
+      ],
+      [
+        "04 Jan, 2023",
+        2
+      ],
+      [
+        "03 Jan, 2023",
+        1
+      ],
+      [
+        "15 Dec, 2022",
+        1
+      ],
+      [
+        "07 Dec, 2022",
+        1
+      ],
+      [
+        "23 Nov, 2022",
+        2
+      ],
+      [
+        "26 Oct, 2022",
+        1
+      ],
+      [
+        "18 Oct, 2022",
+        1
+      ],
+      [
+        "12 Oct, 2022",
+        1
+      ],
+      [
+        "02 Oct, 2022",
+        1
+      ],
+      [
+        "22 Sep, 2022",
+        3
+      ],
+      [
+        "16 Aug, 2022",
+        2
+      ],
+      [
+        "08 Aug, 2022",
+        1
+      ],
+      [
+        "02 Aug, 2022",
+        3
+      ]
+    ],
+    "selection_rule": "sum GitLab date groups for the target period"
+  },
+  "notes": [
+    "Counts come from the author-filtered commit page."
+  ],
+  "error": null,
+  "official_eval": {
+    "task_id": 206,
+    "intent_template_id": 320,
+    "sites": [
+      "gitlab"
+    ],
+    "task_revision": 2,
+    "status": "success",
+    "score": 1.0,
+    "evaluators_results": [
+      {
+        "evaluator_name": "AgentResponseEvaluator",
+        "status": "success",
+        "score": 1.0,
+        "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    2\n  ],\n  \"error_details\": null\n}\n",
+        "actual_normalized": {
+          "retrieved_data": [
+            2.0
+          ],
+          "task_type": "retrieve",
+          "status": "success"
+        },
+        "expected": {
+          "task_type": "retrieve",
+          "status": "success",
+          "retrieved_data": [
+            2.0
+          ]
+        },
+        "assertions": null,
+        "error_msg": null,
+        "should_not_exist": null
+      }
+    ],
+    "error_msg": null,
+    "webarena_verified_version": "1.2.3.post1.dev0",
+    "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+    "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "official_success": true
+  },
+  "official_success": true
+}

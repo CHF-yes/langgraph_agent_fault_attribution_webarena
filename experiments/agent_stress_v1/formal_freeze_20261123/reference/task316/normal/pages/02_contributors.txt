@@ -1,0 +1,2572 @@
+Skip to content
+GitLab
+/
+13
+8
+5
+Help
+C
+create-react-app
+Project information
+Repository
+Files
+Commits
+Branches
+Tags
+Contributors
+Graph
+Compare
+Issues
+1,547
+Merge requests
+417
+CI/CD
+Deployments
+Packages and registries
+Monitor
+Analytics
+Wiki
+Snippets
+Collapse sidebar
+Meta
+create-react-app
+Contributors
+main
+History
+Commits to main
+Excluding merge commits. Limited to 6,000 commits.
+Number of commits
+0
+10
+20
+30
+40
+50
+60
+70
+Sep
+Mar
+Jun
+Sep
+Mar
+Jun
+Sep
+Mar
+Jun
+Sep
+Mar
+Jun
+Sep
+Mar
+Jun
+Sep
+Mar
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.23 · Max: 62
+Dan Abramov
+
+634 commits (dan.abramov@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 283m · Max: 29
+Joe Haddad
+
+292 commits (timer150@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 130m · Max: 14
+Ian Sutherland
+
+153 commits (ian@iansutherland.ca)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 68.2m · Max: 9
+Ian Schmitz
+
+85 commits (ianschmitz@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 37.9m · Max: 5
+Kristofer Selbekk
+
+65 commits (selbeezy@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 29m · Max: 53
+Ville Immonen
+
+49 commits (ville.immonen@iki.fi)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 21.8m · Max: 6
+Brody McKee
+
+28 commits (mrmckeb@users.noreply.github.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 12.5m · Max: 1
+Christopher Chedeau
+
+25 commits (vjeux@fb.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 11.1m · Max: 23
+Ade Viankakrisna Fadlil
+
+23 commits (viankakrisna@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 10.2m · Max: 2
+Dan Abramov
+
+19 commits (gaearon@fb.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 8.47m · Max: 3
+Michaël De Boey
+
+18 commits (info@michaeldeboey.be)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 8.02m · Max: 4
+Andreas Cederström
+
+17 commits (andriijas@users.noreply.github.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 7.58m · Max: 4
+Kristofer Selbekk
+
+14 commits (kristofer.selbekk@sparebank1.no)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 6.24m · Max: 7
+Jack Zhao
+
+13 commits (jzhao@fb.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 5.79m · Max: 3
+Jeffrey Posnick
+
+11 commits (jeffy@google.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 4.9m · Max: 1
+Tharaka Wijebandara
+
+10 commits (tharaka.nw@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 4.46m · Max: 2
+Bruno Lemos
+
+9 commits (brunolemos@users.noreply.github.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 4.01m · Max: 3
+Maël Nison
+
+8 commits (nison.mael@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 3.57m · Max: 2
+Alex Guerra
+
+8 commits (alex@heyimalex.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 3.57m · Max: 2
+Fabrizio Castellarin
+
+8 commits (f.castellarin@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 3.57m · Max: 1
+Max
+
+8 commits (contact@mstoiber.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 3.57m · Max: 4
+Jirat Ki
+
+7 commits (saakyz@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 3.12m · Max: 2
+ZHAO Jinxiang
+
+7 commits (xiaoxiangmoe@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 3.12m · Max: 2
+Kristofer Selbekk
+
+7 commits (selbekk@users.noreply.github.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 3.12m · Max: 5
+Ro Savage
+
+7 commits (rowan.savage@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 3.12m · Max: 2
+Brian Ng
+
+7 commits (bng412@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 3.12m · Max: 1
+Morten N.O. Nørgaard Henriksen
+
+6 commits (morten.n.o.henriksen@icloud.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 2.67m · Max: 3
+James George
+
+6 commits (jamesgeorge998001@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 2.67m · Max: 1
+Amy Lam
+
+6 commits (alam@fastly.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 2.67m · Max: 3
+Bond
+
+6 commits (bondz@users.noreply.github.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 2.67m · Max: 3
+Siddharth Doshi
+
+6 commits (sidoshi510@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 2.67m · Max: 1
+Jonathan
+
+6 commits (jonathan@xgecko.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 2.67m · Max: 2
+Ryan Sullivan
+
+6 commits (ryansully@users.noreply.github.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 2.67m · Max: 2
+Valerii Sorokobatko
+
+6 commits (valeriy.sorokobatko@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 2.67m · Max: 2
+Luke Karrys
+
+5 commits (luke@lukekarrys.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 2.23m · Max: 2
+dependabot[bot]
+
+5 commits (49699333+dependabot[bot]@users.noreply.github.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 2.23m · Max: 2
+Simen Bekkhus
+
+5 commits (sbekkhus91@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 2.23m · Max: 1
+Kent C. Dodds
+
+5 commits (kent+github@doddsfamily.us)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 2.23m · Max: 1
+Jack Zhao
+
+5 commits (yzhao@grailbio.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 2.23m · Max: 3
+Marek Suscak
+
+5 commits (marek.suscak@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 2.23m · Max: 1
+bradfordlemley
+
+5 commits (bradfordlemley@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 2.23m · Max: 2
+Johann Hubert Sonntagbauer
+
+5 commits (johann.sonntagbauer@gmx.at)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 2.23m · Max: 4
+Max Stoiber
+
+5 commits (contact@mxstbr.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 2.23m · Max: 4
+Kevin Lacker
+
+5 commits (lacker@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 2.23m · Max: 3
+Ernesto García
+
+4 commits (gnapse@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.78m · Max: 1
+Kanitkorn Sujautra
+
+4 commits (lukyth@users.noreply.github.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.78m · Max: 1
+Lewis Llobera
+
+4 commits (billobera@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.78m · Max: 1
+Andrew Luca
+
+4 commits (thendrluca@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.78m · Max: 1
+Endi
+
+4 commits (endiliey@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.78m · Max: 1
+Pete Nykänen
+
+4 commits (pete.a.nykanen@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.78m · Max: 1
+Trevor Brindle
+
+4 commits (tabrindle@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.78m · Max: 1
+XiaoYan Li
+
+4 commits (lxy.lixiaoyan@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.78m · Max: 2
+Mario Nebl
+
+4 commits (marionebl@users.noreply.github.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.78m · Max: 2
+Eli Perelman
+
+4 commits (eli@eliperelman.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.78m · Max: 2
+Joe Lim
+
+4 commits (xjlim@users.noreply.github.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.78m · Max: 1
+Jonny Buchanan
+
+4 commits (jonathan.buchanan@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.78m · Max: 3
+Konstantin Tarkus
+
+4 commits (koistya@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.78m · Max: 2
+Forbes Lindesay
+
+4 commits (forbes@lindesay.co.uk)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.78m · Max: 1
+Gabriel Aumala
+
+4 commits (gaumala@espol.edu.ec)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.78m · Max: 1
+Dave Ceddia
+
+4 commits (dceddia@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.78m · Max: 1
+Héliton Nordt
+
+4 commits (hnordt@hnordt.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.78m · Max: 3
+Keyan Zhang
+
+4 commits (root@keyanzhang.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.78m · Max: 2
+eanplatter
+
+4 commits (eanplatter@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.78m · Max: 2
+Leo Lamprecht
+
+3 commits (mindrun@icloud.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.34m · Max: 1
+Konrad Stepniak
+
+3 commits (stepnkon@amazon.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.34m · Max: 2
+Justin Grant
+
+3 commits (justingrant@users.noreply.github.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.34m · Max: 1
+Tobias Büschel
+
+3 commits (13087421+tobiasbueschel@users.noreply.github.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.34m · Max: 1
+Timothy
+
+3 commits (1695613+timothyis@users.noreply.github.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.34m · Max: 1
+Cory House
+
+3 commits (housecor@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.34m · Max: 1
+Reece Dunham
+
+3 commits (me@rdil.rocks)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.34m · Max: 1
+Robert van Steen
+
+3 commits (hello@rovansteen.nl)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.34m · Max: 1
+Orta
+
+3 commits (orta.therox@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.34m · Max: 1
+Tomáš Szabo
+
+3 commits (tomas.szabo@deftomat.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.34m · Max: 1
+Dallon Feldner
+
+3 commits (dallonf@users.noreply.github.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.34m · Max: 1
+Jason Laster
+
+3 commits (jason.laster.11@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.34m · Max: 1
+Noel Yoo
+
+3 commits (innovation.noel@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.34m · Max: 1
+Nima Shahri
+
+3 commits (nshahri@users.noreply.github.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.34m · Max: 1
+Kévin Dunglas
+
+3 commits (dunglas@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.34m · Max: 1
+David Gilbertson
+
+3 commits (gilbertson.david@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.34m · Max: 1
+Marco Fugaro
+
+3 commits (marco.fugaro@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.34m · Max: 1
+Mikhail Osher
+
+3 commits (yo@miraage.io)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.34m · Max: 2
+Jih-Chi Lee
+
+3 commits (jihchi@users.noreply.github.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.34m · Max: 1
+Levin Rickert
+
+3 commits (me@levrik.io)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.34m · Max: 1
+Lorenzo Palmes
+
+3 commits (lpalmes@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.34m · Max: 1
+themre
+
+3 commits (mtrebizan@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.34m · Max: 1
+Brian Vaughn
+
+3 commits (brian.david.vaughn@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.34m · Max: 3
+anraka
+
+3 commits (anilreddykatta@hotmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.34m · Max: 2
+pd4d10
+
+3 commits (pd4d10@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.34m · Max: 1
+Fatih
+
+3 commits (frontsideair@users.noreply.github.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.34m · Max: 1
+Stefan
+
+3 commits (bebbi@users.noreply.github.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.34m · Max: 2
+Nazim Hajidin
+
+3 commits (nhajidin@users.noreply.github.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.34m · Max: 3
+Vesa Laakso
+
+3 commits (laakso.vesa@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.34m · Max: 2
+Christopher Chedeau
+
+3 commits (vjeuxx@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.34m · Max: 2
+Jimmy Miller
+
+3 commits (jimmy.miller@nextgearcapital.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.34m · Max: 3
+Kristóf Poduszló
+
+3 commits (kripod@protonmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.34m · Max: 2
+Alex Zherdev
+
+3 commits (alex.zherdev@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 1.34m · Max: 1
+Hung Viet Nguyen
+
+2 commits (nguyenviethunghl00@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 891μ · Max: 1
+Hasan Ayan
+
+2 commits (hasanayan@me.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 891μ · Max: 1
+Kristoffer K
+
+2 commits (merceyz@users.noreply.github.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 891μ · Max: 1
+Huáng Jùnliàng
+
+2 commits (jlhwung@gmail.com)
+
+Commits
+0
+10
+20
+30
+40
+50
+Jun
+Jun
+Jun
+Jun
+Jun
+Jun
+Dec
+Dec
+Dec
+Dec
+Dec
+Dec
+Commits
+Avg: 891μ · Max: 1

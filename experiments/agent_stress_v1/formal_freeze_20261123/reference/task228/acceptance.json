@@ -1,0 +1,45 @@
+{
+  "schema": "agent_stress_frozen_acceptance/1",
+  "task_id": 228,
+  "site": "shopping",
+  "template_id": 370,
+  "endpoint": "http://localhost:7770/catalogsearch/result",
+  "supplement": false,
+  "fault_pilot": true,
+  "normal": {
+    "passed": true,
+    "steps": 3,
+    "official_success": true,
+    "answer": [
+      {
+        "min": 18.18,
+        "max": 94.99
+      }
+    ],
+    "error": null,
+    "evidence": "task228/normal/reference_path.json"
+  },
+  "trigger": {
+    "passed": true,
+    "injections": 1,
+    "first_exposure_step": 2,
+    "error_type": "500",
+    "evidence": "task228/recovery/fault_evidence.json"
+  },
+  "recovery": {
+    "passed": true,
+    "steps": 13,
+    "window_steps": 10,
+    "released": "window_expired",
+    "official_success": true,
+    "answer": [
+      {
+        "min": 18.18,
+        "max": 94.99
+      }
+    ],
+    "error": null,
+    "evidence": "task228/recovery/reference_path.json"
+  },
+  "passed": true
+}

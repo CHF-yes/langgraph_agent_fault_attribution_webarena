@@ -1,0 +1,696 @@
+{
+  "schema": "agent_stress_frozen_fault_recovery/1",
+  "task_id": 314,
+  "endpoint": {
+    "scheme": "http",
+    "host": "localhost",
+    "port": 8023,
+    "path": "/primer/design/-/graphs",
+    "target_policy_version": "endpoint-path-segment-v1"
+  },
+  "variant": "persistent",
+  "window_steps": 10,
+  "steps": [
+    {
+      "label": "trigger",
+      "url": "http://localhost:8023/primer/design/-/graphs/main",
+      "fault_page": true,
+      "proxy_step": 2
+    },
+    {
+      "label": "filler_1",
+      "url": "http://localhost:8023/explore",
+      "fault_page": false,
+      "proxy_step": 3
+    },
+    {
+      "label": "filler_2",
+      "url": "http://localhost:8023/dashboard/projects",
+      "fault_page": false,
+      "proxy_step": 4
+    },
+    {
+      "label": "filler_3",
+      "url": "http://localhost:8023/",
+      "fault_page": false,
+      "proxy_step": 5
+    },
+    {
+      "label": "filler_4",
+      "url": "http://localhost:8023/explore",
+      "fault_page": false,
+      "proxy_step": 6
+    },
+    {
+      "label": "filler_5",
+      "url": "http://localhost:8023/dashboard/projects",
+      "fault_page": false,
+      "proxy_step": 7
+    },
+    {
+      "label": "filler_6",
+      "url": "http://localhost:8023/",
+      "fault_page": false,
+      "proxy_step": 8
+    },
+    {
+      "label": "filler_7",
+      "url": "http://localhost:8023/explore",
+      "fault_page": false,
+      "proxy_step": 9
+    },
+    {
+      "label": "filler_8",
+      "url": "http://localhost:8023/dashboard/projects",
+      "fault_page": false,
+      "proxy_step": 10
+    },
+    {
+      "label": "filler_9",
+      "url": "http://localhost:8023/",
+      "fault_page": false,
+      "proxy_step": 11
+    },
+    {
+      "label": "normal_after_window",
+      "url": "http://localhost:8023/primer/design/-/graphs/main",
+      "proxy_step": 12
+    }
+  ],
+  "exposures": [
+    {
+      "observation_uid": "goto:1#1",
+      "source_action_uid": "goto:1",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 1,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:8023/",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 8023,
+        "path": "/primer/design/-/graphs",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 8023,
+        "path": "/",
+        "query": ""
+      },
+      "reason": "not_armed",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "goto:2#2",
+      "source_action_uid": "goto:2",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 2,
+      "faults_delivered": [
+        "web_http_error"
+      ],
+      "delivered": true,
+      "raw_url": "http://localhost:8023/primer/design/-/graphs/main",
+      "matched_endpoint": true,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 8023,
+        "path": "/primer/design/-/graphs",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 8023,
+        "path": "/primer/design/-/graphs/main",
+        "query": ""
+      },
+      "reason": "injected_or_same_action_replay",
+      "fault_delivered": true
+    },
+    {
+      "observation_uid": "goto:3#3",
+      "source_action_uid": "goto:3",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 3,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:8023/explore",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 8023,
+        "path": "/primer/design/-/graphs",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 8023,
+        "path": "/explore",
+        "query": ""
+      },
+      "reason": "off_endpoint",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "goto:4#4",
+      "source_action_uid": "goto:4",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 4,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:8023/dashboard/projects",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 8023,
+        "path": "/primer/design/-/graphs",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 8023,
+        "path": "/dashboard/projects",
+        "query": ""
+      },
+      "reason": "off_endpoint",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "goto:5#5",
+      "source_action_uid": "goto:5",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 5,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:8023/",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 8023,
+        "path": "/primer/design/-/graphs",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 8023,
+        "path": "/",
+        "query": ""
+      },
+      "reason": "off_endpoint",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "goto:6#6",
+      "source_action_uid": "goto:6",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 6,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:8023/explore",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 8023,
+        "path": "/primer/design/-/graphs",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 8023,
+        "path": "/explore",
+        "query": ""
+      },
+      "reason": "off_endpoint",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "goto:7#7",
+      "source_action_uid": "goto:7",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 7,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:8023/dashboard/projects",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 8023,
+        "path": "/primer/design/-/graphs",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 8023,
+        "path": "/dashboard/projects",
+        "query": ""
+      },
+      "reason": "off_endpoint",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "goto:8#8",
+      "source_action_uid": "goto:8",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 8,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:8023/",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 8023,
+        "path": "/primer/design/-/graphs",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 8023,
+        "path": "/",
+        "query": ""
+      },
+      "reason": "off_endpoint",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "goto:9#9",
+      "source_action_uid": "goto:9",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 9,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:8023/explore",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 8023,
+        "path": "/primer/design/-/graphs",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 8023,
+        "path": "/explore",
+        "query": ""
+      },
+      "reason": "off_endpoint",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "goto:10#10",
+      "source_action_uid": "goto:10",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 10,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:8023/dashboard/projects",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 8023,
+        "path": "/primer/design/-/graphs",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 8023,
+        "path": "/dashboard/projects",
+        "query": ""
+      },
+      "reason": "off_endpoint",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "goto:11#11",
+      "source_action_uid": "goto:11",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 11,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:8023/",
+      "matched_endpoint": false,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 8023,
+        "path": "/primer/design/-/graphs",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 8023,
+        "path": "/",
+        "query": ""
+      },
+      "reason": "off_endpoint",
+      "fault_delivered": false
+    },
+    {
+      "observation_uid": "goto:12#12",
+      "source_action_uid": "goto:12",
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "step": 12,
+      "faults_delivered": [],
+      "delivered": false,
+      "raw_url": "http://localhost:8023/primer/design/-/graphs/main",
+      "matched_endpoint": true,
+      "endpoint": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 8023,
+        "path": "/primer/design/-/graphs",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "match": {
+        "scheme": "http",
+        "host": "localhost",
+        "port": 8023,
+        "path": "/primer/design/-/graphs/main",
+        "query": ""
+      },
+      "reason": "window_expired",
+      "fault_delivered": false
+    }
+  ],
+  "episode": {
+    "snapshot": {
+      "experiment_id": "ep-http-service-v1",
+      "variant": "persistent",
+      "target_policy_version": "endpoint-path-segment-v1",
+      "armed": true,
+      "armed_after_step": 1,
+      "target": {
+        "kind": "endpoint",
+        "scheme": "http",
+        "host": "localhost",
+        "port": 8023,
+        "path": "/primer/design/-/graphs",
+        "target_policy_version": "endpoint-path-segment-v1"
+      },
+      "t0": 2,
+      "window_steps": 10,
+      "window_end": 11,
+      "injections": 1,
+      "released": "window_expired",
+      "exposure_class": "once"
+    },
+    "injections": [
+      {
+        "event": "injection",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "injection_index": 1,
+        "proxy_step": 2,
+        "action_uid": "goto:2",
+        "target": {
+          "kind": "endpoint",
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/primer/design/-/graphs",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "error_type": "500",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/primer/design/-/graphs/main",
+          "query": ""
+        },
+        "timestamp": 1795426125.0530124
+      }
+    ],
+    "events": [
+      {
+        "event": "skip",
+        "proxy_step": 1,
+        "action_uid": "goto:1",
+        "reason": "not_armed",
+        "detail": {
+          "raw_url": "http://localhost:8023/",
+          "match": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 8023,
+            "path": "/",
+            "query": ""
+          }
+        }
+      },
+      {
+        "event": "injection",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "injection_index": 1,
+        "proxy_step": 2,
+        "action_uid": "goto:2",
+        "target": {
+          "kind": "endpoint",
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/primer/design/-/graphs",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "error_type": "500",
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/primer/design/-/graphs/main",
+          "query": ""
+        },
+        "timestamp": 1795426125.0530124
+      },
+      {
+        "event": "skip",
+        "proxy_step": 3,
+        "action_uid": "goto:3",
+        "reason": "off_endpoint",
+        "detail": {
+          "raw_url": "http://localhost:8023/explore",
+          "match": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 8023,
+            "path": "/explore",
+            "query": ""
+          }
+        }
+      },
+      {
+        "event": "skip",
+        "proxy_step": 4,
+        "action_uid": "goto:4",
+        "reason": "off_endpoint",
+        "detail": {
+          "raw_url": "http://localhost:8023/dashboard/projects",
+          "match": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 8023,
+            "path": "/dashboard/projects",
+            "query": ""
+          }
+        }
+      },
+      {
+        "event": "skip",
+        "proxy_step": 5,
+        "action_uid": "goto:5",
+        "reason": "off_endpoint",
+        "detail": {
+          "raw_url": "http://localhost:8023/",
+          "match": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 8023,
+            "path": "/",
+            "query": ""
+          }
+        }
+      },
+      {
+        "event": "skip",
+        "proxy_step": 6,
+        "action_uid": "goto:6",
+        "reason": "off_endpoint",
+        "detail": {
+          "raw_url": "http://localhost:8023/explore",
+          "match": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 8023,
+            "path": "/explore",
+            "query": ""
+          }
+        }
+      },
+      {
+        "event": "skip",
+        "proxy_step": 7,
+        "action_uid": "goto:7",
+        "reason": "off_endpoint",
+        "detail": {
+          "raw_url": "http://localhost:8023/dashboard/projects",
+          "match": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 8023,
+            "path": "/dashboard/projects",
+            "query": ""
+          }
+        }
+      },
+      {
+        "event": "skip",
+        "proxy_step": 8,
+        "action_uid": "goto:8",
+        "reason": "off_endpoint",
+        "detail": {
+          "raw_url": "http://localhost:8023/",
+          "match": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 8023,
+            "path": "/",
+            "query": ""
+          }
+        }
+      },
+      {
+        "event": "skip",
+        "proxy_step": 9,
+        "action_uid": "goto:9",
+        "reason": "off_endpoint",
+        "detail": {
+          "raw_url": "http://localhost:8023/explore",
+          "match": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 8023,
+            "path": "/explore",
+            "query": ""
+          }
+        }
+      },
+      {
+        "event": "skip",
+        "proxy_step": 10,
+        "action_uid": "goto:10",
+        "reason": "off_endpoint",
+        "detail": {
+          "raw_url": "http://localhost:8023/dashboard/projects",
+          "match": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 8023,
+            "path": "/dashboard/projects",
+            "query": ""
+          }
+        }
+      },
+      {
+        "event": "skip",
+        "proxy_step": 11,
+        "action_uid": "goto:11",
+        "reason": "off_endpoint",
+        "detail": {
+          "raw_url": "http://localhost:8023/",
+          "match": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 8023,
+            "path": "/",
+            "query": ""
+          }
+        }
+      },
+      {
+        "event": "release",
+        "proxy_step": 12,
+        "reason": "window_expired"
+      },
+      {
+        "event": "skip",
+        "proxy_step": 12,
+        "action_uid": "goto:12",
+        "reason": "window_expired",
+        "detail": {
+          "raw_url": "http://localhost:8023/primer/design/-/graphs/main",
+          "match": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 8023,
+            "path": "/primer/design/-/graphs/main",
+            "query": ""
+          }
+        }
+      }
+    ]
+  },
+  "injection_log": [
+    {
+      "fault": "web_http_error",
+      "fault_layer": "observation",
+      "fault_seed": 1,
+      "step": 2,
+      "parameter_action_index": null,
+      "injection_index": 1,
+      "timestamp": 1795426125.0530176,
+      "detail": {
+        "mechanism": "synthetic_http_observation_replacement",
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/primer/design/-/graphs",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "error_type": "500",
+        "action_uid": "goto:2",
+        "proxy_step": 2
+      }
+    }
+  ],
+  "verdict": {
+    "valid": true,
+    "errors": [],
+    "count": 1,
+    "variant": "persistent"
+  }
+}

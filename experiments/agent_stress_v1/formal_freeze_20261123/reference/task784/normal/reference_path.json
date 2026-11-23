@@ -1,0 +1,533 @@
+{
+  "schema": "agent_stress_frozen_reference_path/1",
+  "task_id": 784,
+  "arm": "normal",
+  "recorded_at": "2026-11-23T09:32:00.992371+00:00",
+  "site": "gitlab",
+  "start_url": "http://localhost:8023/CellularPrivacy/Android-IMSI-Catcher-Detector",
+  "intent": "Get the email address of the contributor who has the most commits to branch master in the current repository",
+  "intent_template_id": 316,
+  "endpoint": "http://localhost:8023/CellularPrivacy/Android-IMSI-Catcher-Detector/-/graphs",
+  "steps": 2,
+  "actions": [
+    {
+      "step": 1,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/CellularPrivacy/Android-IMSI-Catcher-Detector"
+      },
+      "url_before": "about:blank",
+      "url_after": "http://localhost:8023/CellularPrivacy/Android-IMSI-Catcher-Detector",
+      "note": "task start URL / shared login state"
+    },
+    {
+      "step": 2,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/CellularPrivacy/Android-IMSI-Catcher-Detector/-/graphs/master"
+      },
+      "url_before": "http://localhost:8023/CellularPrivacy/Android-IMSI-Catcher-Detector",
+      "url_after": "http://localhost:8023/CellularPrivacy/Android-IMSI-Catcher-Detector/-/graphs/master",
+      "note": "contributor graph on the task-critical endpoint"
+    }
+  ],
+  "pages": [
+    {
+      "step": 2,
+      "name": "contributors",
+      "url": "http://localhost:8023/CellularPrivacy/Android-IMSI-Catcher-Detector/-/graphs/master",
+      "text": "pages/02_contributors.txt",
+      "html": "pages/02_contributors.html"
+    }
+  ],
+  "answer": [
+    "secupwn@users.noreply.github.com"
+  ],
+  "evidence": {
+    "url": "http://localhost:8023/CellularPrivacy/Android-IMSI-Catcher-Detector/-/graphs/master",
+    "contributors": [
+      {
+        "name": "SecUpwN",
+        "commits": 381,
+        "email": "secupwn@users.noreply.github.com"
+      },
+      {
+        "name": "Security: Pwned",
+        "commits": 232,
+        "email": "secupwn@z1p.biz"
+      },
+      {
+        "name": "Lars Grefer",
+        "commits": 231,
+        "email": "github@larsgrefer.de"
+      },
+      {
+        "name": "Security: PWNED",
+        "commits": 156,
+        "email": "secupwn@protonmail.ch"
+      },
+      {
+        "name": "xLaMbChOpSx",
+        "commits": 120,
+        "email": "ryanskungfu@me.com"
+      },
+      {
+        "name": "Paul Kinsella",
+        "commits": 113,
+        "email": "paulkinsella29@yahoo.ie"
+      },
+      {
+        "name": "E:V:A",
+        "commits": 93,
+        "email": "xdae3v3a@gmail.com"
+      },
+      {
+        "name": "tobykurien",
+        "commits": 88,
+        "email": "toby@tobykurien.com"
+      },
+      {
+        "name": "E:V:A",
+        "commits": 55,
+        "email": "vonankh@gmail.com"
+      },
+      {
+        "name": "agilob",
+        "commits": 46,
+        "email": "info@agilob.net"
+      },
+      {
+        "name": "SecUpwN",
+        "commits": 39,
+        "email": "freddy@glados"
+      },
+      {
+        "name": "Tor Henning Ueland",
+        "commits": 33,
+        "email": "tor.henning@gmail.com"
+      },
+      {
+        "name": "DJaeger",
+        "commits": 32,
+        "email": "daniel-jaeger@online.de"
+      },
+      {
+        "name": "SecUpwN",
+        "commits": 32,
+        "email": "perfect-privacy@secure-mail.biz"
+      },
+      {
+        "name": "DimaKoz",
+        "commits": 31,
+        "email": "kozhevin.dima@gmail.com"
+      },
+      {
+        "name": "E:V:A",
+        "commits": 25,
+        "email": "e3v3a@users.noreply.github.com"
+      },
+      {
+        "name": "Vlad Todosin",
+        "commits": 20,
+        "email": "vladtodosin@gmail.com"
+      },
+      {
+        "name": "naofum",
+        "commits": 19,
+        "email": "naofum@gmail.com"
+      },
+      {
+        "name": "Nordlenningen",
+        "commits": 16,
+        "email": "lsannes@start.no"
+      },
+      {
+        "name": "Marek Sebera",
+        "commits": 14,
+        "email": "marek.sebera@gmail.com"
+      },
+      {
+        "name": "Justin Bull",
+        "commits": 13,
+        "email": "me@justinbull.ca"
+      },
+      {
+        "name": "SecUpwN",
+        "commits": 13,
+        "email": "freddy@glados.home"
+      },
+      {
+        "name": "Marvin Arnold",
+        "commits": 11,
+        "email": "marvinmarnold@gmail.com"
+      },
+      {
+        "name": "tt3mm",
+        "commits": 10,
+        "email": "tot3m@sigaint.org"
+      },
+      {
+        "name": "MPR",
+        "commits": 10,
+        "email": "he3556@users.noreply.github.com"
+      },
+      {
+        "name": "Stephen Erickson",
+        "commits": 10,
+        "email": "stericson.g1@gmail.com"
+      },
+      {
+        "name": "ziem",
+        "commits": 9,
+        "email": "zprzemek@vp.pl"
+      },
+      {
+        "name": "dd721411",
+        "commits": 8,
+        "email": "dd721411@tutanota.de"
+      },
+      {
+        "name": "Olexandr Nesterenko",
+        "commits": 7,
+        "email": "olexn@ukr.net"
+      },
+      {
+        "name": "mimi89999",
+        "commits": 7,
+        "email": "michel@lebihan.pl"
+      },
+      {
+        "name": "wvengen",
+        "commits": 7,
+        "email": "dev-android@willem.engen.nl"
+      },
+      {
+        "name": "Nnabueze",
+        "commits": 6,
+        "email": "nuhiara@gmail.com"
+      },
+      {
+        "name": "Dave Mariano",
+        "commits": 6,
+        "email": "dave.mariano1991@gmail.com"
+      },
+      {
+        "name": "gusfl@free.fr",
+        "commits": 5,
+        "email": "gusfl@free.fr"
+      },
+      {
+        "name": "Kai Renken",
+        "commits": 5,
+        "email": "code@koffeinsucht.de"
+      },
+      {
+        "name": "andr3jx",
+        "commits": 5,
+        "email": "9414f52d@opayq.com"
+      },
+      {
+        "name": "SgtObst",
+        "commits": 5,
+        "email": "obst1603@web.de"
+      },
+      {
+        "name": "YFdyh000",
+        "commits": 4,
+        "email": "yfdyh000@gmail.com"
+      },
+      {
+        "name": "Petter Reinholdtsen",
+        "commits": 4,
+        "email": "pere-weblate@hungry.com"
+      },
+      {
+        "name": "Michal Čihař",
+        "commits": 4,
+        "email": "michal@cihar.com"
+      },
+      {
+        "name": "lucastracq",
+        "commits": 3,
+        "email": "lucastracquadanio@gmail.com"
+      },
+      {
+        "name": "Adam Magnier",
+        "commits": 3,
+        "email": "adam@magnier.io"
+      },
+      {
+        "name": "Éfrit",
+        "commits": 3,
+        "email": "link.i@hotmail.fr"
+      },
+      {
+        "name": "johanw666",
+        "commits": 3,
+        "email": "johanw@xs4all.nl"
+      },
+      {
+        "name": "Simon Marquis",
+        "commits": 2,
+        "email": "contact@simon-marquis.fr"
+      },
+      {
+        "name": "Fernando Messias da Silva",
+        "commits": 2,
+        "email": "fmessias.fms@gmail.com"
+      },
+      {
+        "name": "gaich",
+        "commits": 2,
+        "email": "gaich@chita.ru"
+      },
+      {
+        "name": "RENAUD-GOUD Arnaud",
+        "commits": 2,
+        "email": "arnaud.renaudgoud@gmail.com"
+      },
+      {
+        "name": "jens stein",
+        "commits": 2,
+        "email": "jens.s.stein@gmail.com"
+      },
+      {
+        "name": "jjurjjen",
+        "commits": 2,
+        "email": "jdejonge@protonmail.ch"
+      },
+      {
+        "name": "Kir Vaznitcky",
+        "commits": 2,
+        "email": "dober@dobergroup.org.ua"
+      },
+      {
+        "name": "Victor Hackeridze",
+        "commits": 2,
+        "email": "russianbruteforce@gmail.com"
+      },
+      {
+        "name": "ikmaak",
+        "commits": 2,
+        "email": "info@ikmaak.nl"
+      },
+      {
+        "name": "agilob",
+        "commits": 2,
+        "email": "weblate@agilob.net"
+      },
+      {
+        "name": "tba342",
+        "commits": 2,
+        "email": "gith@tuta.io"
+      },
+      {
+        "name": "Denis Jukni",
+        "commits": 2,
+        "email": "deblenden8@gmail.com"
+      },
+      {
+        "name": "laurent",
+        "commits": 2,
+        "email": "65c02@orange.fr"
+      },
+      {
+        "name": "Maciej Soltysiak",
+        "commits": 2,
+        "email": "maciej@soltysiak.com"
+      },
+      {
+        "name": "Joey Hewitt",
+        "commits": 2,
+        "email": "joey@joeyhewitt.com"
+      },
+      {
+        "name": "He3556",
+        "commits": 2,
+        "email": "info@eventgroup-kl.de"
+      },
+      {
+        "name": "Dan Buch",
+        "commits": 2,
+        "email": "dan@meatballhat.com"
+      },
+      {
+        "name": "Pavel Ruzicka",
+        "commits": 1,
+        "email": "ruza@ruza.eu"
+      },
+      {
+        "name": "Wouazo",
+        "commits": 1,
+        "email": "ulphace@tutanota.com"
+      },
+      {
+        "name": "Paul Schaub",
+        "commits": 1,
+        "email": "paul.schaub@wwu.de"
+      },
+      {
+        "name": "amilopowers",
+        "commits": 1,
+        "email": "amilopowers@u-cloud.ch"
+      },
+      {
+        "name": "licaon-kter",
+        "commits": 1,
+        "email": "licaon-kter@users.noreply.github.com"
+      },
+      {
+        "name": "artank",
+        "commits": 1,
+        "email": "a.rellensmann@gmx.net"
+      },
+      {
+        "name": "Arian Sameni",
+        "commits": 1,
+        "email": "arian.sameni@gmail.com"
+      },
+      {
+        "name": "tom",
+        "commits": 1,
+        "email": "anonpress@inbox.lt"
+      },
+      {
+        "name": "ageru",
+        "commits": 1,
+        "email": "ageru@tokyoite.mobi"
+      },
+      {
+        "name": "schlowmo",
+        "commits": 1,
+        "email": "morten@fwd.io"
+      },
+      {
+        "name": "Dovydas",
+        "commits": 1,
+        "email": "dovy.buz@gmail.com"
+      },
+      {
+        "name": "AtomiKe",
+        "commits": 1,
+        "email": "atomike@atomike.ninja"
+      },
+      {
+        "name": "Kai-Chun Lin",
+        "commits": 1,
+        "email": "kaichun.lin@gmail.com"
+      },
+      {
+        "name": "Christian Schuhmann",
+        "commits": 1,
+        "email": "christianschuhmann1999@web.de"
+      },
+      {
+        "name": "Inderjeet Singh",
+        "commits": 1,
+        "email": "inderjeetuiet@gmail.com"
+      },
+      {
+        "name": "Robert Martinez",
+        "commits": 1,
+        "email": "ntttq@inboxen.org"
+      },
+      {
+        "name": "agilob",
+        "commits": 1,
+        "email": "agilob@users.noreply.github.com"
+      },
+      {
+        "name": "jawz101",
+        "commits": 1,
+        "email": "jordanwms@hotmail.com"
+      },
+      {
+        "name": "darken",
+        "commits": 1,
+        "email": "d4rken@gmail.com"
+      },
+      {
+        "name": "Chad Miller",
+        "commits": 1,
+        "email": "chad.miller@canonical.com"
+      },
+      {
+        "name": "rwzy",
+        "commits": 1,
+        "email": "rwzy@archlinux.info"
+      },
+      {
+        "name": "ligi",
+        "commits": 1,
+        "email": "ligi@ligi.de"
+      },
+      {
+        "name": "Rene Treffer",
+        "commits": 1,
+        "email": "treffer@measite.de"
+      },
+      {
+        "name": "Alexey Illarionov",
+        "commits": 1,
+        "email": "littlesavage@rambler.ru"
+      },
+      {
+        "name": "SecUpwN",
+        "commits": 1,
+        "email": "freddy@glados.fritz.box"
+      },
+      {
+        "name": "SecUpwN",
+        "commits": 1,
+        "email": "tabeakeckschen@tabea-kreglingers-macbook.local"
+      }
+    ],
+    "mode": "email",
+    "selection_rule": "contributor graph order (commit count, merge commits excluded)"
+  },
+  "notes": [
+    "The graph page already orders contributors by commit count."
+  ],
+  "error": null,
+  "official_eval": {
+    "task_id": 784,
+    "intent_template_id": 316,
+    "sites": [
+      "gitlab"
+    ],
+    "task_revision": 2,
+    "status": "success",
+    "score": 1.0,
+    "evaluators_results": [
+      {
+        "evaluator_name": "AgentResponseEvaluator",
+        "status": "success",
+        "score": 1.0,
+        "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"secupwn@users.noreply.github.com\"\n  ],\n  \"error_details\": null\n}\n",
+        "actual_normalized": {
+          "retrieved_data": [
+            "secupwn@users.noreply.github.com"
+          ],
+          "task_type": "retrieve",
+          "status": "success"
+        },
+        "expected": {
+          "task_type": "retrieve",
+          "status": "success",
+          "retrieved_data": [
+            "secupwn@users.noreply.github.com"
+          ]
+        },
+        "assertions": null,
+        "error_msg": null,
+        "should_not_exist": null
+      }
+    ],
+    "error_msg": null,
+    "webarena_verified_version": "1.2.3.post1.dev0",
+    "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+    "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "official_success": true
+  },
+  "official_success": true
+}

@@ -1,0 +1,10 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    "dan.abramov@gmail.com",
+    "timer150@gmail.com",
+    "ian@iansutherland.ca"
+  ],
+  "error_details": null
+}

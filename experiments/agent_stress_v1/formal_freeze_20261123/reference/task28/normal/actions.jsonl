@@ -1,0 +1,3 @@
+{"step": 1, "action": "goto", "args": {"url": "http://localhost:9999"}, "url_before": "about:blank", "url_after": "http://localhost:9999/", "note": "task start URL / shared login state"}
+{"step": 2, "action": "goto", "args": {"url": "http://localhost:9999/f/WorcesterMA/new"}, "url_before": "http://localhost:9999/", "url_after": "http://localhost:9999/f/WorcesterMA/new", "note": "newest listing on the task-critical forum endpoint"}
+{"step": 3, "action": "goto", "args": {"url": "http://localhost:9999/f/WorcesterMA/123052/best-place-for-a-foot-rub"}, "url_before": "http://localhost:9999/f/WorcesterMA/new", "url_after": "http://localhost:9999/f/WorcesterMA/123052/best-place-for-a-foot-rub", "note": "open the most recent self post"}

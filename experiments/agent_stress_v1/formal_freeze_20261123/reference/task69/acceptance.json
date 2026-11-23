@@ -1,0 +1,39 @@
+{
+  "schema": "agent_stress_frozen_acceptance/1",
+  "task_id": 69,
+  "site": "reddit",
+  "template_id": 17,
+  "endpoint": "http://localhost:9999/f/books",
+  "supplement": true,
+  "fault_pilot": false,
+  "normal": {
+    "passed": true,
+    "steps": 3,
+    "official_success": true,
+    "answer": [
+      "bookshop.org"
+    ],
+    "error": null,
+    "evidence": "task69/normal/reference_path.json"
+  },
+  "trigger": {
+    "passed": true,
+    "injections": 1,
+    "first_exposure_step": 2,
+    "error_type": "500",
+    "evidence": "task69/recovery/fault_evidence.json"
+  },
+  "recovery": {
+    "passed": true,
+    "steps": 13,
+    "window_steps": 10,
+    "released": "window_expired",
+    "official_success": true,
+    "answer": [
+      "bookshop.org"
+    ],
+    "error": null,
+    "evidence": "task69/recovery/reference_path.json"
+  },
+  "passed": true
+}

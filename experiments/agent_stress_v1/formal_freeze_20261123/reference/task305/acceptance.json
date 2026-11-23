@@ -1,0 +1,39 @@
+{
+  "schema": "agent_stress_frozen_acceptance/1",
+  "task_id": 305,
+  "site": "gitlab",
+  "template_id": 321,
+  "endpoint": "http://localhost:8023/a11yproject/a11yproject.com/-/commits/main",
+  "supplement": false,
+  "fault_pilot": false,
+  "normal": {
+    "passed": true,
+    "steps": 2,
+    "official_success": true,
+    "answer": [
+      0
+    ],
+    "error": null,
+    "evidence": "task305/normal/reference_path.json"
+  },
+  "trigger": {
+    "passed": true,
+    "injections": 1,
+    "first_exposure_step": 2,
+    "error_type": "500",
+    "evidence": "task305/recovery/fault_evidence.json"
+  },
+  "recovery": {
+    "passed": true,
+    "steps": 12,
+    "window_steps": 10,
+    "released": "window_expired",
+    "official_success": true,
+    "answer": [
+      0
+    ],
+    "error": null,
+    "evidence": "task305/recovery/reference_path.json"
+  },
+  "passed": true
+}

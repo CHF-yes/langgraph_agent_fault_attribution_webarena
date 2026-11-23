@@ -1,0 +1,163 @@
+{
+  "schema": "agent_stress_frozen_reference_path/1",
+  "task_id": 168,
+  "arm": "normal",
+  "recorded_at": "2026-11-23T09:24:37.489965+00:00",
+  "site": "gitlab",
+  "start_url": "http://localhost:8023",
+  "intent": "Get the project ID(s) of my personal project(s) that received more than 100 stars",
+  "intent_template_id": 289,
+  "endpoint": "http://localhost:8023/dashboard/projects",
+  "steps": 2,
+  "actions": [
+    {
+      "step": 1,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023"
+      },
+      "url_before": "about:blank",
+      "url_after": "http://localhost:8023/",
+      "note": "task start URL / shared login state"
+    },
+    {
+      "step": 2,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/dashboard/projects"
+      },
+      "url_before": "http://localhost:8023/",
+      "url_after": "http://localhost:8023/dashboard/projects",
+      "note": "personal project list"
+    }
+  ],
+  "pages": [
+    {
+      "step": 2,
+      "name": "dashboard_projects",
+      "url": "http://localhost:8023/dashboard/projects",
+      "text": "pages/02_dashboard_projects.txt",
+      "html": "pages/02_dashboard_projects.html"
+    }
+  ],
+  "answer": "No matching result found: none of my personal projects has more than 100 stars.",
+  "evidence": {
+    "personal_projects": [
+      {
+        "href": "/byteblaze/millennials-to-snake-people",
+        "name": "Byte Blaze / millennials-to-snake-people",
+        "stars": 6,
+        "role": "Owner"
+      },
+      {
+        "href": "/byteblaze/empathy-prompts",
+        "name": "Byte Blaze / empathy-prompts",
+        "stars": 6,
+        "role": "Owner"
+      },
+      {
+        "href": "/byteblaze/a11y-webring.club",
+        "name": "Byte Blaze / a11y-webring.club",
+        "stars": 2,
+        "role": "Owner"
+      },
+      {
+        "href": "/byteblaze/ericwbailey.website",
+        "name": "Byte Blaze / ericwbailey.website",
+        "stars": 2,
+        "role": "Owner"
+      },
+      {
+        "href": "/byteblaze/accessible-html-content-patterns",
+        "name": "Byte Blaze / accessible-html-content-patterns",
+        "stars": 1,
+        "role": "Owner"
+      },
+      {
+        "href": "/byteblaze/a11y-syntax-highlighting",
+        "name": "Byte Blaze / a11y-syntax-highlighting",
+        "stars": 1,
+        "role": "Owner"
+      },
+      {
+        "href": "/byteblaze/dotfiles",
+        "name": "Byte Blaze / dotfiles",
+        "stars": 0,
+        "role": "Owner"
+      },
+      {
+        "href": "/byteblaze/remove-board-movement-events-from-the-github-issue-timeline",
+        "name": "Byte Blaze / remove-board-movement-events-from-the-github-issue-timeline",
+        "stars": 0,
+        "role": "Owner"
+      },
+      {
+        "href": "/byteblaze/solarized-prism-theme",
+        "name": "Byte Blaze / solarized-prism-theme",
+        "stars": 0,
+        "role": "Owner"
+      },
+      {
+        "href": "/byteblaze/cloud-to-butt",
+        "name": "Byte Blaze / cloud-to-butt",
+        "stars": 0,
+        "role": "Owner"
+      },
+      {
+        "href": "/byteblaze/timeit",
+        "name": "Byte Blaze / timeit",
+        "stars": 0,
+        "role": "Owner"
+      },
+      {
+        "href": "/byteblaze/gimmiethat.space",
+        "name": "Byte Blaze / gimmiethat.space",
+        "stars": 0,
+        "role": "Owner"
+      }
+    ],
+    "high_star": [],
+    "selection_rule": "role Owner; star count > 100"
+  },
+  "notes": [
+    "The personal project list was read in full."
+  ],
+  "error": null,
+  "official_eval": {
+    "task_id": 168,
+    "intent_template_id": 289,
+    "sites": [
+      "gitlab"
+    ],
+    "task_revision": 2,
+    "status": "success",
+    "score": 1.0,
+    "evaluators_results": [
+      {
+        "evaluator_name": "AgentResponseEvaluator",
+        "status": "success",
+        "score": 1.0,
+        "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"NOT_FOUND_ERROR\",\n  \"retrieved_data\": null,\n  \"error_details\": \"No matching result found: none of my personal projects has more than 100 stars.\"\n}\n",
+        "actual_normalized": {
+          "retrieved_data": null,
+          "task_type": "retrieve",
+          "status": "not_found_error"
+        },
+        "expected": {
+          "task_type": "retrieve",
+          "status": "not_found_error",
+          "retrieved_data": null
+        },
+        "assertions": null,
+        "error_msg": null,
+        "should_not_exist": null
+      }
+    ],
+    "error_msg": null,
+    "webarena_verified_version": "1.2.3.post1.dev0",
+    "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+    "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "official_success": true
+  },
+  "official_success": true
+}

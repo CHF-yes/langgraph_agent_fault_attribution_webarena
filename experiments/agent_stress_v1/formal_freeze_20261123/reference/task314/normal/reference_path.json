@@ -1,0 +1,459 @@
+{
+  "schema": "agent_stress_frozen_reference_path/1",
+  "task_id": 314,
+  "arm": "normal",
+  "recorded_at": "2026-11-23T09:28:36.444568+00:00",
+  "site": "gitlab",
+  "start_url": "http://localhost:8023",
+  "intent": "Get the full names of the top 3 contributors (by commit count) to primer/design repo",
+  "intent_template_id": 324,
+  "endpoint": "http://localhost:8023/primer/design/-/graphs",
+  "steps": 2,
+  "actions": [
+    {
+      "step": 1,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023"
+      },
+      "url_before": "about:blank",
+      "url_after": "http://localhost:8023/",
+      "note": "task start URL / shared login state"
+    },
+    {
+      "step": 2,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/primer/design/-/graphs/main"
+      },
+      "url_before": "http://localhost:8023/",
+      "url_after": "http://localhost:8023/primer/design/-/graphs/main",
+      "note": "contributor graph on the task-critical endpoint"
+    }
+  ],
+  "pages": [
+    {
+      "step": 2,
+      "name": "contributors",
+      "url": "http://localhost:8023/primer/design/-/graphs/main",
+      "text": "pages/02_contributors.txt",
+      "html": "pages/02_contributors.html"
+    }
+  ],
+  "answer": [
+    "Shawn Allen",
+    "Inayaili León",
+    "Aurora Pleguezuelo"
+  ],
+  "evidence": {
+    "url": "http://localhost:8023/primer/design/-/graphs/main",
+    "contributors": [
+      {
+        "name": "Shawn Allen",
+        "commits": 95,
+        "email": "shawn.allen@github.com"
+      },
+      {
+        "name": "Inayaili León",
+        "commits": 77,
+        "email": "yaili@github.com"
+      },
+      {
+        "name": "Aurora Pleguezuelo",
+        "commits": 66,
+        "email": "auareyou@github.com"
+      },
+      {
+        "name": "Joshua Shao",
+        "commits": 54,
+        "email": "jhuashao@github.com"
+      },
+      {
+        "name": "Emily Brick",
+        "commits": 38,
+        "email": "emilybrick@github.com"
+      },
+      {
+        "name": "Cole Bemis",
+        "commits": 35,
+        "email": "colebemis@github.com"
+      },
+      {
+        "name": "Chelsea Adelman",
+        "commits": 29,
+        "email": "40274682+ichelsea@users.noreply.github.com"
+      },
+      {
+        "name": "dependabot[bot]",
+        "commits": 27,
+        "email": "49699333+dependabot[bot]@users.noreply.github.com"
+      },
+      {
+        "name": "Mike Perrotti",
+        "commits": 26,
+        "email": "mperrotti@github.com"
+      },
+      {
+        "name": "Vinicius Depizzol",
+        "commits": 26,
+        "email": "vdepizzol@gmail.com"
+      },
+      {
+        "name": "Zain Khoja",
+        "commits": 26,
+        "email": "zainkho@users.noreply.github.com"
+      },
+      {
+        "name": "Zain Khoja",
+        "commits": 23,
+        "email": "zainkho@github.com"
+      },
+      {
+        "name": "Maxime De Greve",
+        "commits": 21,
+        "email": "maximedegreve@github.com"
+      },
+      {
+        "name": "Ash Guillaume",
+        "commits": 21,
+        "email": "10384315+ashygee@users.noreply.github.com"
+      },
+      {
+        "name": "Michelle Tilley",
+        "commits": 19,
+        "email": "michelle@michelletilley.net"
+      },
+      {
+        "name": "Diana Mounter",
+        "commits": 19,
+        "email": "broccolini@github.com"
+      },
+      {
+        "name": "Chelsea Adelman",
+        "commits": 18,
+        "email": "chadelma@microsoft.com"
+      },
+      {
+        "name": "Emily",
+        "commits": 16,
+        "email": "emplums@github.com"
+      },
+      {
+        "name": "simurai",
+        "commits": 15,
+        "email": "simurai@github.com"
+      },
+      {
+        "name": "Josep Martins",
+        "commits": 12,
+        "email": "josepmartins@github.com"
+      },
+      {
+        "name": "Lukas Oppermann",
+        "commits": 11,
+        "email": "lukasoppermann@github.com"
+      },
+      {
+        "name": "Kate Higa",
+        "commits": 9,
+        "email": "16447748+khiga8@users.noreply.github.com"
+      },
+      {
+        "name": "Joyce Lau",
+        "commits": 9,
+        "email": "ohjoycelau@github.com"
+      },
+      {
+        "name": "Siddharth Kshetrapal",
+        "commits": 7,
+        "email": "siddharthkp@github.com"
+      },
+      {
+        "name": "Vinicius Depizzol",
+        "commits": 7,
+        "email": "vdepizzol@github.com"
+      },
+      {
+        "name": "Darby Thomas",
+        "commits": 7,
+        "email": "66705495+dthoma1@users.noreply.github.com"
+      },
+      {
+        "name": "Brijesh Wawdhane",
+        "commits": 6,
+        "email": "brijesh@wawdhane.com"
+      },
+      {
+        "name": "Armağan",
+        "commits": 5,
+        "email": "broccolinisoup@github.com"
+      },
+      {
+        "name": "Inayaili Leon",
+        "commits": 5,
+        "email": "inayaili@gmail.com"
+      },
+      {
+        "name": "Dylan Smith",
+        "commits": 4,
+        "email": "dylanatsmith@github.com"
+      },
+      {
+        "name": "Vinicius Depizzol",
+        "commits": 4,
+        "email": "293280+vdepizzol@users.noreply.github.com"
+      },
+      {
+        "name": "Reza Rahman",
+        "commits": 4,
+        "email": "rezrah@github.com"
+      },
+      {
+        "name": "Katie Langerman",
+        "commits": 3,
+        "email": "langermank@github.com"
+      },
+      {
+        "name": "Lukas Oppermann",
+        "commits": 3,
+        "email": "oppermann.lukas@gmail.com"
+      },
+      {
+        "name": "Clay Miller",
+        "commits": 3,
+        "email": "clay@smockle.com"
+      },
+      {
+        "name": "Jon Rohan",
+        "commits": 3,
+        "email": "yes@jonrohan.codes"
+      },
+      {
+        "name": "Maya Kaczorowski",
+        "commits": 3,
+        "email": "15946341+mayakacz@users.noreply.github.com"
+      },
+      {
+        "name": "Adrian Mato",
+        "commits": 3,
+        "email": "adrianmg@github.com"
+      },
+      {
+        "name": "Ash Guillaume",
+        "commits": 3,
+        "email": "ashygee@github.com"
+      },
+      {
+        "name": "Katie Langerman",
+        "commits": 2,
+        "email": "18661030+langermank@users.noreply.github.com"
+      },
+      {
+        "name": "Natalya Shelburne",
+        "commits": 2,
+        "email": "tallys@users.noreply.github.com"
+      },
+      {
+        "name": "Lindsey Wild",
+        "commits": 2,
+        "email": "35239154+lindseywild@users.noreply.github.com"
+      },
+      {
+        "name": "Serena",
+        "commits": 2,
+        "email": "47256527+sezhan1229@users.noreply.github.com"
+      },
+      {
+        "name": "Christophe Coevoet",
+        "commits": 2,
+        "email": "stof@notk.org"
+      },
+      {
+        "name": "Catherine Bui",
+        "commits": 2,
+        "email": "gladwearefriends@github.com"
+      },
+      {
+        "name": "eaccmk",
+        "commits": 1,
+        "email": "eaccmk@users.noreply.github.com"
+      },
+      {
+        "name": "Katherine Kinnaman",
+        "commits": 1,
+        "email": "kkinnaman@anaconda.com"
+      },
+      {
+        "name": "Jörn Depenbrock",
+        "commits": 1,
+        "email": "github@j-d-pictures.de"
+      },
+      {
+        "name": "Josh Black",
+        "commits": 1,
+        "email": "joshblack@github.com"
+      },
+      {
+        "name": "Keith Cirkel",
+        "commits": 1,
+        "email": "keithamus@users.noreply.github.com"
+      },
+      {
+        "name": "Alexis Lucio",
+        "commits": 1,
+        "email": "alexislucio@github.com"
+      },
+      {
+        "name": "Adrián Bolonio",
+        "commits": 1,
+        "email": "bolonio85@gmail.com"
+      },
+      {
+        "name": "Andri Alexandrou",
+        "commits": 1,
+        "email": "andrialexandrou@github.com"
+      },
+      {
+        "name": "João Henrique Santana",
+        "commits": 1,
+        "email": "74738661+jenrykster@users.noreply.github.com"
+      },
+      {
+        "name": "Mujahid Bappai",
+        "commits": 1,
+        "email": "mujahid.bappai@yahoo.com"
+      },
+      {
+        "name": "Javier Domingo Cansino",
+        "commits": 1,
+        "email": "javierdo1@gmail.com"
+      },
+      {
+        "name": "Dejan Ćebetarević",
+        "commits": 1,
+        "email": "dejan.cebetarevic@gmail.com"
+      },
+      {
+        "name": "Ben Allen",
+        "commits": 1,
+        "email": "benjiallen@github.com"
+      },
+      {
+        "name": "Adrián Bolonio",
+        "commits": 1,
+        "email": "bolonio@github.com"
+      },
+      {
+        "name": "Josh Soref",
+        "commits": 1,
+        "email": "2119212+jsoref@users.noreply.github.com"
+      },
+      {
+        "name": "SaintMalik",
+        "commits": 1,
+        "email": "37118134+saintmalik@users.noreply.github.com"
+      },
+      {
+        "name": "Hidde de Vries",
+        "commits": 1,
+        "email": "hidde@hiddedevries.nl"
+      },
+      {
+        "name": "Manuel Munoz Solera",
+        "commits": 1,
+        "email": "mamuso@github.com"
+      },
+      {
+        "name": "Michelle Tilley",
+        "commits": 1,
+        "email": "binarymuse@github.com"
+      },
+      {
+        "name": "Amandeep Singh",
+        "commits": 1,
+        "email": "amandeepsingh.bajwa@gmail.com"
+      },
+      {
+        "name": "Phoebe",
+        "commits": 1,
+        "email": "femmebot@users.noreply.github.com"
+      },
+      {
+        "name": "Lars Klopstra",
+        "commits": 1,
+        "email": "larsklopstra@gmail.com"
+      },
+      {
+        "name": "helios88",
+        "commits": 1,
+        "email": "38557414+helios88@users.noreply.github.com"
+      },
+      {
+        "name": "Amanda Pinsker",
+        "commits": 1,
+        "email": "ampinsk@github.com"
+      },
+      {
+        "name": "Adolfo Jayme-Barrientos",
+        "commits": 1,
+        "email": "fitojb@ubuntu.com"
+      },
+      {
+        "name": "Kyle J. Roux",
+        "commits": 1,
+        "email": "jstacoder@gmail.com"
+      }
+    ],
+    "mode": "names",
+    "selection_rule": "contributor graph order (commit count, merge commits excluded)"
+  },
+  "notes": [
+    "The graph page already orders contributors by commit count."
+  ],
+  "error": null,
+  "official_eval": {
+    "task_id": 314,
+    "intent_template_id": 324,
+    "sites": [
+      "gitlab"
+    ],
+    "task_revision": 2,
+    "status": "success",
+    "score": 1.0,
+    "evaluators_results": [
+      {
+        "evaluator_name": "AgentResponseEvaluator",
+        "status": "success",
+        "score": 1.0,
+        "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"Shawn Allen\",\n    \"Inayaili León\",\n    \"Aurora Pleguezuelo\"\n  ],\n  \"error_details\": null\n}\n",
+        "actual_normalized": {
+          "retrieved_data": [
+            "shawn allen",
+            "inayaili leon",
+            "aurora pleguezuelo"
+          ],
+          "task_type": "retrieve",
+          "status": "success"
+        },
+        "expected": {
+          "task_type": "retrieve",
+          "status": "success",
+          "retrieved_data": [
+            "shawn allen",
+            "inayaili leon",
+            "aurora pleguezuelo"
+          ]
+        },
+        "assertions": null,
+        "error_msg": null,
+        "should_not_exist": null
+      }
+    ],
+    "error_msg": null,
+    "webarena_verified_version": "1.2.3.post1.dev0",
+    "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+    "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "official_success": true
+  },
+  "official_success": true
+}

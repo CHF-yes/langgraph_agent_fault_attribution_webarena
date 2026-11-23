@@ -1,0 +1,1290 @@
+{
+  "schema": "agent_stress_frozen_reference_path/1",
+  "task_id": 314,
+  "arm": "recovery",
+  "recorded_at": "2026-11-23T09:29:05.308750+00:00",
+  "site": "gitlab",
+  "endpoint": "http://localhost:8023/primer/design/-/graphs",
+  "trigger_url": "http://localhost:8023/primer/design/-/graphs/main",
+  "window_steps": 10,
+  "steps": 12,
+  "actions": [
+    {
+      "step": 1,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023"
+      },
+      "url_before": "about:blank",
+      "url_after": "http://localhost:8023/",
+      "note": "bootstrap on the task start URL (not armed)",
+      "proxy_step": 1,
+      "fault_page": false,
+      "observation_chars": 9254
+    },
+    {
+      "step": 2,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/primer/design/-/graphs/main"
+      },
+      "url_before": "http://localhost:8023/",
+      "url_after": "http://localhost:8023/primer/design/-/graphs/main",
+      "note": "first qualified navigation to the fault endpoint",
+      "proxy_step": 2,
+      "fault_page": true,
+      "observation_chars": 89
+    },
+    {
+      "step": 3,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/explore"
+      },
+      "url_before": "http://localhost:8023/primer/design/-/graphs/main",
+      "url_after": "http://localhost:8023/explore",
+      "note": "window filler 1/9",
+      "proxy_step": 3,
+      "fault_page": false,
+      "observation_chars": 12834
+    },
+    {
+      "step": 4,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/dashboard/projects"
+      },
+      "url_before": "http://localhost:8023/explore",
+      "url_after": "http://localhost:8023/dashboard/projects",
+      "note": "window filler 2/9",
+      "proxy_step": 4,
+      "fault_page": false,
+      "observation_chars": 9254
+    },
+    {
+      "step": 5,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/"
+      },
+      "url_before": "http://localhost:8023/dashboard/projects",
+      "url_after": "http://localhost:8023/",
+      "note": "window filler 3/9",
+      "proxy_step": 5,
+      "fault_page": false,
+      "observation_chars": 9254
+    },
+    {
+      "step": 6,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/explore"
+      },
+      "url_before": "http://localhost:8023/",
+      "url_after": "http://localhost:8023/explore",
+      "note": "window filler 4/9",
+      "proxy_step": 6,
+      "fault_page": false,
+      "observation_chars": 12834
+    },
+    {
+      "step": 7,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/dashboard/projects"
+      },
+      "url_before": "http://localhost:8023/explore",
+      "url_after": "http://localhost:8023/dashboard/projects",
+      "note": "window filler 5/9",
+      "proxy_step": 7,
+      "fault_page": false,
+      "observation_chars": 9254
+    },
+    {
+      "step": 8,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/"
+      },
+      "url_before": "http://localhost:8023/dashboard/projects",
+      "url_after": "http://localhost:8023/",
+      "note": "window filler 6/9",
+      "proxy_step": 8,
+      "fault_page": false,
+      "observation_chars": 9254
+    },
+    {
+      "step": 9,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/explore"
+      },
+      "url_before": "http://localhost:8023/",
+      "url_after": "http://localhost:8023/explore",
+      "note": "window filler 7/9",
+      "proxy_step": 9,
+      "fault_page": false,
+      "observation_chars": 12834
+    },
+    {
+      "step": 10,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/dashboard/projects"
+      },
+      "url_before": "http://localhost:8023/explore",
+      "url_after": "http://localhost:8023/dashboard/projects",
+      "note": "window filler 8/9",
+      "proxy_step": 10,
+      "fault_page": false,
+      "observation_chars": 9254
+    },
+    {
+      "step": 11,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/"
+      },
+      "url_before": "http://localhost:8023/dashboard/projects",
+      "url_after": "http://localhost:8023/",
+      "note": "window filler 9/9",
+      "proxy_step": 11,
+      "fault_page": false,
+      "observation_chars": 9254
+    },
+    {
+      "step": 12,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/primer/design/-/graphs/main"
+      },
+      "url_before": "http://localhost:8023/",
+      "url_after": "http://localhost:8023/primer/design/-/graphs/main",
+      "note": "contributor graph on the task-critical endpoint",
+      "proxy_step": 12,
+      "fault_page": false,
+      "observation_chars": 23534
+    }
+  ],
+  "pages": [
+    {
+      "step": 12,
+      "name": "contributors",
+      "url": "http://localhost:8023/primer/design/-/graphs/main",
+      "text": "pages/12_contributors.txt",
+      "html": "pages/12_contributors.html"
+    }
+  ],
+  "answer": [
+    "Shawn Allen",
+    "Inayaili León",
+    "Aurora Pleguezuelo"
+  ],
+  "evidence": {
+    "url": "http://localhost:8023/primer/design/-/graphs/main",
+    "contributors": [
+      {
+        "name": "Shawn Allen",
+        "commits": 95,
+        "email": "shawn.allen@github.com"
+      },
+      {
+        "name": "Inayaili León",
+        "commits": 77,
+        "email": "yaili@github.com"
+      },
+      {
+        "name": "Aurora Pleguezuelo",
+        "commits": 66,
+        "email": "auareyou@github.com"
+      },
+      {
+        "name": "Joshua Shao",
+        "commits": 54,
+        "email": "jhuashao@github.com"
+      },
+      {
+        "name": "Emily Brick",
+        "commits": 38,
+        "email": "emilybrick@github.com"
+      },
+      {
+        "name": "Cole Bemis",
+        "commits": 35,
+        "email": "colebemis@github.com"
+      },
+      {
+        "name": "Chelsea Adelman",
+        "commits": 29,
+        "email": "40274682+ichelsea@users.noreply.github.com"
+      },
+      {
+        "name": "dependabot[bot]",
+        "commits": 27,
+        "email": "49699333+dependabot[bot]@users.noreply.github.com"
+      },
+      {
+        "name": "Mike Perrotti",
+        "commits": 26,
+        "email": "mperrotti@github.com"
+      },
+      {
+        "name": "Vinicius Depizzol",
+        "commits": 26,
+        "email": "vdepizzol@gmail.com"
+      },
+      {
+        "name": "Zain Khoja",
+        "commits": 26,
+        "email": "zainkho@users.noreply.github.com"
+      },
+      {
+        "name": "Zain Khoja",
+        "commits": 23,
+        "email": "zainkho@github.com"
+      },
+      {
+        "name": "Maxime De Greve",
+        "commits": 21,
+        "email": "maximedegreve@github.com"
+      },
+      {
+        "name": "Ash Guillaume",
+        "commits": 21,
+        "email": "10384315+ashygee@users.noreply.github.com"
+      },
+      {
+        "name": "Michelle Tilley",
+        "commits": 19,
+        "email": "michelle@michelletilley.net"
+      },
+      {
+        "name": "Diana Mounter",
+        "commits": 19,
+        "email": "broccolini@github.com"
+      },
+      {
+        "name": "Chelsea Adelman",
+        "commits": 18,
+        "email": "chadelma@microsoft.com"
+      },
+      {
+        "name": "Emily",
+        "commits": 16,
+        "email": "emplums@github.com"
+      },
+      {
+        "name": "simurai",
+        "commits": 15,
+        "email": "simurai@github.com"
+      },
+      {
+        "name": "Josep Martins",
+        "commits": 12,
+        "email": "josepmartins@github.com"
+      },
+      {
+        "name": "Lukas Oppermann",
+        "commits": 11,
+        "email": "lukasoppermann@github.com"
+      },
+      {
+        "name": "Kate Higa",
+        "commits": 9,
+        "email": "16447748+khiga8@users.noreply.github.com"
+      },
+      {
+        "name": "Joyce Lau",
+        "commits": 9,
+        "email": "ohjoycelau@github.com"
+      },
+      {
+        "name": "Siddharth Kshetrapal",
+        "commits": 7,
+        "email": "siddharthkp@github.com"
+      },
+      {
+        "name": "Vinicius Depizzol",
+        "commits": 7,
+        "email": "vdepizzol@github.com"
+      },
+      {
+        "name": "Darby Thomas",
+        "commits": 7,
+        "email": "66705495+dthoma1@users.noreply.github.com"
+      },
+      {
+        "name": "Brijesh Wawdhane",
+        "commits": 6,
+        "email": "brijesh@wawdhane.com"
+      },
+      {
+        "name": "Armağan",
+        "commits": 5,
+        "email": "broccolinisoup@github.com"
+      },
+      {
+        "name": "Inayaili Leon",
+        "commits": 5,
+        "email": "inayaili@gmail.com"
+      },
+      {
+        "name": "Dylan Smith",
+        "commits": 4,
+        "email": "dylanatsmith@github.com"
+      },
+      {
+        "name": "Vinicius Depizzol",
+        "commits": 4,
+        "email": "293280+vdepizzol@users.noreply.github.com"
+      },
+      {
+        "name": "Reza Rahman",
+        "commits": 4,
+        "email": "rezrah@github.com"
+      },
+      {
+        "name": "Katie Langerman",
+        "commits": 3,
+        "email": "langermank@github.com"
+      },
+      {
+        "name": "Lukas Oppermann",
+        "commits": 3,
+        "email": "oppermann.lukas@gmail.com"
+      },
+      {
+        "name": "Clay Miller",
+        "commits": 3,
+        "email": "clay@smockle.com"
+      },
+      {
+        "name": "Jon Rohan",
+        "commits": 3,
+        "email": "yes@jonrohan.codes"
+      },
+      {
+        "name": "Maya Kaczorowski",
+        "commits": 3,
+        "email": "15946341+mayakacz@users.noreply.github.com"
+      },
+      {
+        "name": "Adrian Mato",
+        "commits": 3,
+        "email": "adrianmg@github.com"
+      },
+      {
+        "name": "Ash Guillaume",
+        "commits": 3,
+        "email": "ashygee@github.com"
+      },
+      {
+        "name": "Katie Langerman",
+        "commits": 2,
+        "email": "18661030+langermank@users.noreply.github.com"
+      },
+      {
+        "name": "Natalya Shelburne",
+        "commits": 2,
+        "email": "tallys@users.noreply.github.com"
+      },
+      {
+        "name": "Lindsey Wild",
+        "commits": 2,
+        "email": "35239154+lindseywild@users.noreply.github.com"
+      },
+      {
+        "name": "Serena",
+        "commits": 2,
+        "email": "47256527+sezhan1229@users.noreply.github.com"
+      },
+      {
+        "name": "Christophe Coevoet",
+        "commits": 2,
+        "email": "stof@notk.org"
+      },
+      {
+        "name": "Catherine Bui",
+        "commits": 2,
+        "email": "gladwearefriends@github.com"
+      },
+      {
+        "name": "eaccmk",
+        "commits": 1,
+        "email": "eaccmk@users.noreply.github.com"
+      },
+      {
+        "name": "Katherine Kinnaman",
+        "commits": 1,
+        "email": "kkinnaman@anaconda.com"
+      },
+      {
+        "name": "Jörn Depenbrock",
+        "commits": 1,
+        "email": "github@j-d-pictures.de"
+      },
+      {
+        "name": "Josh Black",
+        "commits": 1,
+        "email": "joshblack@github.com"
+      },
+      {
+        "name": "Keith Cirkel",
+        "commits": 1,
+        "email": "keithamus@users.noreply.github.com"
+      },
+      {
+        "name": "Alexis Lucio",
+        "commits": 1,
+        "email": "alexislucio@github.com"
+      },
+      {
+        "name": "Adrián Bolonio",
+        "commits": 1,
+        "email": "bolonio85@gmail.com"
+      },
+      {
+        "name": "Andri Alexandrou",
+        "commits": 1,
+        "email": "andrialexandrou@github.com"
+      },
+      {
+        "name": "João Henrique Santana",
+        "commits": 1,
+        "email": "74738661+jenrykster@users.noreply.github.com"
+      },
+      {
+        "name": "Mujahid Bappai",
+        "commits": 1,
+        "email": "mujahid.bappai@yahoo.com"
+      },
+      {
+        "name": "Javier Domingo Cansino",
+        "commits": 1,
+        "email": "javierdo1@gmail.com"
+      },
+      {
+        "name": "Dejan Ćebetarević",
+        "commits": 1,
+        "email": "dejan.cebetarevic@gmail.com"
+      },
+      {
+        "name": "Ben Allen",
+        "commits": 1,
+        "email": "benjiallen@github.com"
+      },
+      {
+        "name": "Adrián Bolonio",
+        "commits": 1,
+        "email": "bolonio@github.com"
+      },
+      {
+        "name": "Josh Soref",
+        "commits": 1,
+        "email": "2119212+jsoref@users.noreply.github.com"
+      },
+      {
+        "name": "SaintMalik",
+        "commits": 1,
+        "email": "37118134+saintmalik@users.noreply.github.com"
+      },
+      {
+        "name": "Hidde de Vries",
+        "commits": 1,
+        "email": "hidde@hiddedevries.nl"
+      },
+      {
+        "name": "Manuel Munoz Solera",
+        "commits": 1,
+        "email": "mamuso@github.com"
+      },
+      {
+        "name": "Michelle Tilley",
+        "commits": 1,
+        "email": "binarymuse@github.com"
+      },
+      {
+        "name": "Amandeep Singh",
+        "commits": 1,
+        "email": "amandeepsingh.bajwa@gmail.com"
+      },
+      {
+        "name": "Phoebe",
+        "commits": 1,
+        "email": "femmebot@users.noreply.github.com"
+      },
+      {
+        "name": "Lars Klopstra",
+        "commits": 1,
+        "email": "larsklopstra@gmail.com"
+      },
+      {
+        "name": "helios88",
+        "commits": 1,
+        "email": "38557414+helios88@users.noreply.github.com"
+      },
+      {
+        "name": "Amanda Pinsker",
+        "commits": 1,
+        "email": "ampinsk@github.com"
+      },
+      {
+        "name": "Adolfo Jayme-Barrientos",
+        "commits": 1,
+        "email": "fitojb@ubuntu.com"
+      },
+      {
+        "name": "Kyle J. Roux",
+        "commits": 1,
+        "email": "jstacoder@gmail.com"
+      }
+    ],
+    "mode": "names",
+    "selection_rule": "contributor graph order (commit count, merge commits excluded)"
+  },
+  "notes": [
+    "The graph page already orders contributors by commit count."
+  ],
+  "error": null,
+  "fault_evidence": {
+    "schema": "agent_stress_frozen_fault_recovery/1",
+    "task_id": 314,
+    "endpoint": {
+      "scheme": "http",
+      "host": "localhost",
+      "port": 8023,
+      "path": "/primer/design/-/graphs",
+      "target_policy_version": "endpoint-path-segment-v1"
+    },
+    "variant": "persistent",
+    "window_steps": 10,
+    "steps": [
+      {
+        "label": "trigger",
+        "url": "http://localhost:8023/primer/design/-/graphs/main",
+        "fault_page": true,
+        "proxy_step": 2
+      },
+      {
+        "label": "filler_1",
+        "url": "http://localhost:8023/explore",
+        "fault_page": false,
+        "proxy_step": 3
+      },
+      {
+        "label": "filler_2",
+        "url": "http://localhost:8023/dashboard/projects",
+        "fault_page": false,
+        "proxy_step": 4
+      },
+      {
+        "label": "filler_3",
+        "url": "http://localhost:8023/",
+        "fault_page": false,
+        "proxy_step": 5
+      },
+      {
+        "label": "filler_4",
+        "url": "http://localhost:8023/explore",
+        "fault_page": false,
+        "proxy_step": 6
+      },
+      {
+        "label": "filler_5",
+        "url": "http://localhost:8023/dashboard/projects",
+        "fault_page": false,
+        "proxy_step": 7
+      },
+      {
+        "label": "filler_6",
+        "url": "http://localhost:8023/",
+        "fault_page": false,
+        "proxy_step": 8
+      },
+      {
+        "label": "filler_7",
+        "url": "http://localhost:8023/explore",
+        "fault_page": false,
+        "proxy_step": 9
+      },
+      {
+        "label": "filler_8",
+        "url": "http://localhost:8023/dashboard/projects",
+        "fault_page": false,
+        "proxy_step": 10
+      },
+      {
+        "label": "filler_9",
+        "url": "http://localhost:8023/",
+        "fault_page": false,
+        "proxy_step": 11
+      },
+      {
+        "label": "normal_after_window",
+        "url": "http://localhost:8023/primer/design/-/graphs/main",
+        "proxy_step": 12
+      }
+    ],
+    "exposures": [
+      {
+        "observation_uid": "goto:1#1",
+        "source_action_uid": "goto:1",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 1,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:8023/",
+        "matched_endpoint": false,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/primer/design/-/graphs",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/",
+          "query": ""
+        },
+        "reason": "not_armed",
+        "fault_delivered": false
+      },
+      {
+        "observation_uid": "goto:2#2",
+        "source_action_uid": "goto:2",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 2,
+        "faults_delivered": [
+          "web_http_error"
+        ],
+        "delivered": true,
+        "raw_url": "http://localhost:8023/primer/design/-/graphs/main",
+        "matched_endpoint": true,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/primer/design/-/graphs",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/primer/design/-/graphs/main",
+          "query": ""
+        },
+        "reason": "injected_or_same_action_replay",
+        "fault_delivered": true
+      },
+      {
+        "observation_uid": "goto:3#3",
+        "source_action_uid": "goto:3",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 3,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:8023/explore",
+        "matched_endpoint": false,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/primer/design/-/graphs",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/explore",
+          "query": ""
+        },
+        "reason": "off_endpoint",
+        "fault_delivered": false
+      },
+      {
+        "observation_uid": "goto:4#4",
+        "source_action_uid": "goto:4",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 4,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:8023/dashboard/projects",
+        "matched_endpoint": false,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/primer/design/-/graphs",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/dashboard/projects",
+          "query": ""
+        },
+        "reason": "off_endpoint",
+        "fault_delivered": false
+      },
+      {
+        "observation_uid": "goto:5#5",
+        "source_action_uid": "goto:5",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 5,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:8023/",
+        "matched_endpoint": false,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/primer/design/-/graphs",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/",
+          "query": ""
+        },
+        "reason": "off_endpoint",
+        "fault_delivered": false
+      },
+      {
+        "observation_uid": "goto:6#6",
+        "source_action_uid": "goto:6",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 6,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:8023/explore",
+        "matched_endpoint": false,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/primer/design/-/graphs",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/explore",
+          "query": ""
+        },
+        "reason": "off_endpoint",
+        "fault_delivered": false
+      },
+      {
+        "observation_uid": "goto:7#7",
+        "source_action_uid": "goto:7",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 7,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:8023/dashboard/projects",
+        "matched_endpoint": false,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/primer/design/-/graphs",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/dashboard/projects",
+          "query": ""
+        },
+        "reason": "off_endpoint",
+        "fault_delivered": false
+      },
+      {
+        "observation_uid": "goto:8#8",
+        "source_action_uid": "goto:8",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 8,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:8023/",
+        "matched_endpoint": false,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/primer/design/-/graphs",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/",
+          "query": ""
+        },
+        "reason": "off_endpoint",
+        "fault_delivered": false
+      },
+      {
+        "observation_uid": "goto:9#9",
+        "source_action_uid": "goto:9",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 9,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:8023/explore",
+        "matched_endpoint": false,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/primer/design/-/graphs",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/explore",
+          "query": ""
+        },
+        "reason": "off_endpoint",
+        "fault_delivered": false
+      },
+      {
+        "observation_uid": "goto:10#10",
+        "source_action_uid": "goto:10",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 10,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:8023/dashboard/projects",
+        "matched_endpoint": false,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/primer/design/-/graphs",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/dashboard/projects",
+          "query": ""
+        },
+        "reason": "off_endpoint",
+        "fault_delivered": false
+      },
+      {
+        "observation_uid": "goto:11#11",
+        "source_action_uid": "goto:11",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 11,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:8023/",
+        "matched_endpoint": false,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/primer/design/-/graphs",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/",
+          "query": ""
+        },
+        "reason": "off_endpoint",
+        "fault_delivered": false
+      },
+      {
+        "observation_uid": "goto:12#12",
+        "source_action_uid": "goto:12",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 12,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:8023/primer/design/-/graphs/main",
+        "matched_endpoint": true,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/primer/design/-/graphs",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/primer/design/-/graphs/main",
+          "query": ""
+        },
+        "reason": "window_expired",
+        "fault_delivered": false
+      }
+    ],
+    "episode": {
+      "snapshot": {
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "target_policy_version": "endpoint-path-segment-v1",
+        "armed": true,
+        "armed_after_step": 1,
+        "target": {
+          "kind": "endpoint",
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/primer/design/-/graphs",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "t0": 2,
+        "window_steps": 10,
+        "window_end": 11,
+        "injections": 1,
+        "released": "window_expired",
+        "exposure_class": "once"
+      },
+      "injections": [
+        {
+          "event": "injection",
+          "experiment_id": "ep-http-service-v1",
+          "variant": "persistent",
+          "injection_index": 1,
+          "proxy_step": 2,
+          "action_uid": "goto:2",
+          "target": {
+            "kind": "endpoint",
+            "scheme": "http",
+            "host": "localhost",
+            "port": 8023,
+            "path": "/primer/design/-/graphs",
+            "target_policy_version": "endpoint-path-segment-v1"
+          },
+          "error_type": "500",
+          "match": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 8023,
+            "path": "/primer/design/-/graphs/main",
+            "query": ""
+          },
+          "timestamp": 1795426125.0530124
+        }
+      ],
+      "events": [
+        {
+          "event": "skip",
+          "proxy_step": 1,
+          "action_uid": "goto:1",
+          "reason": "not_armed",
+          "detail": {
+            "raw_url": "http://localhost:8023/",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 8023,
+              "path": "/",
+              "query": ""
+            }
+          }
+        },
+        {
+          "event": "injection",
+          "experiment_id": "ep-http-service-v1",
+          "variant": "persistent",
+          "injection_index": 1,
+          "proxy_step": 2,
+          "action_uid": "goto:2",
+          "target": {
+            "kind": "endpoint",
+            "scheme": "http",
+            "host": "localhost",
+            "port": 8023,
+            "path": "/primer/design/-/graphs",
+            "target_policy_version": "endpoint-path-segment-v1"
+          },
+          "error_type": "500",
+          "match": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 8023,
+            "path": "/primer/design/-/graphs/main",
+            "query": ""
+          },
+          "timestamp": 1795426125.0530124
+        },
+        {
+          "event": "skip",
+          "proxy_step": 3,
+          "action_uid": "goto:3",
+          "reason": "off_endpoint",
+          "detail": {
+            "raw_url": "http://localhost:8023/explore",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 8023,
+              "path": "/explore",
+              "query": ""
+            }
+          }
+        },
+        {
+          "event": "skip",
+          "proxy_step": 4,
+          "action_uid": "goto:4",
+          "reason": "off_endpoint",
+          "detail": {
+            "raw_url": "http://localhost:8023/dashboard/projects",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 8023,
+              "path": "/dashboard/projects",
+              "query": ""
+            }
+          }
+        },
+        {
+          "event": "skip",
+          "proxy_step": 5,
+          "action_uid": "goto:5",
+          "reason": "off_endpoint",
+          "detail": {
+            "raw_url": "http://localhost:8023/",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 8023,
+              "path": "/",
+              "query": ""
+            }
+          }
+        },
+        {
+          "event": "skip",
+          "proxy_step": 6,
+          "action_uid": "goto:6",
+          "reason": "off_endpoint",
+          "detail": {
+            "raw_url": "http://localhost:8023/explore",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 8023,
+              "path": "/explore",
+              "query": ""
+            }
+          }
+        },
+        {
+          "event": "skip",
+          "proxy_step": 7,
+          "action_uid": "goto:7",
+          "reason": "off_endpoint",
+          "detail": {
+            "raw_url": "http://localhost:8023/dashboard/projects",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 8023,
+              "path": "/dashboard/projects",
+              "query": ""
+            }
+          }
+        },
+        {
+          "event": "skip",
+          "proxy_step": 8,
+          "action_uid": "goto:8",
+          "reason": "off_endpoint",
+          "detail": {
+            "raw_url": "http://localhost:8023/",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 8023,
+              "path": "/",
+              "query": ""
+            }
+          }
+        },
+        {
+          "event": "skip",
+          "proxy_step": 9,
+          "action_uid": "goto:9",
+          "reason": "off_endpoint",
+          "detail": {
+            "raw_url": "http://localhost:8023/explore",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 8023,
+              "path": "/explore",
+              "query": ""
+            }
+          }
+        },
+        {
+          "event": "skip",
+          "proxy_step": 10,
+          "action_uid": "goto:10",
+          "reason": "off_endpoint",
+          "detail": {
+            "raw_url": "http://localhost:8023/dashboard/projects",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 8023,
+              "path": "/dashboard/projects",
+              "query": ""
+            }
+          }
+        },
+        {
+          "event": "skip",
+          "proxy_step": 11,
+          "action_uid": "goto:11",
+          "reason": "off_endpoint",
+          "detail": {
+            "raw_url": "http://localhost:8023/",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 8023,
+              "path": "/",
+              "query": ""
+            }
+          }
+        },
+        {
+          "event": "release",
+          "proxy_step": 12,
+          "reason": "window_expired"
+        },
+        {
+          "event": "skip",
+          "proxy_step": 12,
+          "action_uid": "goto:12",
+          "reason": "window_expired",
+          "detail": {
+            "raw_url": "http://localhost:8023/primer/design/-/graphs/main",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 8023,
+              "path": "/primer/design/-/graphs/main",
+              "query": ""
+            }
+          }
+        }
+      ]
+    },
+    "injection_log": [
+      {
+        "fault": "web_http_error",
+        "fault_layer": "observation",
+        "fault_seed": 1,
+        "step": 2,
+        "parameter_action_index": null,
+        "injection_index": 1,
+        "timestamp": 1795426125.0530176,
+        "detail": {
+          "mechanism": "synthetic_http_observation_replacement",
+          "endpoint": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 8023,
+            "path": "/primer/design/-/graphs",
+            "target_policy_version": "endpoint-path-segment-v1"
+          },
+          "error_type": "500",
+          "action_uid": "goto:2",
+          "proxy_step": 2
+        }
+      }
+    ],
+    "verdict": {
+      "valid": true,
+      "errors": [],
+      "count": 1,
+      "variant": "persistent"
+    }
+  },
+  "official_eval": {
+    "task_id": 314,
+    "intent_template_id": 324,
+    "sites": [
+      "gitlab"
+    ],
+    "task_revision": 2,
+    "status": "success",
+    "score": 1.0,
+    "evaluators_results": [
+      {
+        "evaluator_name": "AgentResponseEvaluator",
+        "status": "success",
+        "score": 1.0,
+        "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"Shawn Allen\",\n    \"Inayaili León\",\n    \"Aurora Pleguezuelo\"\n  ],\n  \"error_details\": null\n}\n",
+        "actual_normalized": {
+          "retrieved_data": [
+            "shawn allen",
+            "inayaili leon",
+            "aurora pleguezuelo"
+          ],
+          "task_type": "retrieve",
+          "status": "success"
+        },
+        "expected": {
+          "task_type": "retrieve",
+          "status": "success",
+          "retrieved_data": [
+            "shawn allen",
+            "inayaili leon",
+            "aurora pleguezuelo"
+          ]
+        },
+        "assertions": null,
+        "error_msg": null,
+        "should_not_exist": null
+      }
+    ],
+    "error_msg": null,
+    "webarena_verified_version": "1.2.3.post1.dev0",
+    "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+    "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "official_success": true
+  },
+  "official_success": true
+}

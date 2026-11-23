@@ -1,0 +1,161 @@
+{
+  "schema": "agent_stress_frozen_reference_path/1",
+  "task_id": 384,
+  "arm": "normal",
+  "recorded_at": "2026-11-23T09:29:52.268253+00:00",
+  "site": "shopping",
+  "start_url": "http://localhost:7770",
+  "intent": "List the customer names who complain about the quality of EYZUTAK phone cases",
+  "intent_template_id": 666,
+  "endpoint": "http://localhost:7770/catalogsearch/result",
+  "steps": 4,
+  "actions": [
+    {
+      "step": 1,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:7770"
+      },
+      "url_before": "about:blank",
+      "url_after": "http://localhost:7770/",
+      "note": "task start URL / shared login state"
+    },
+    {
+      "step": 2,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:7770/catalogsearch/result/?q=EYZUTAK+phone+case"
+      },
+      "url_before": "http://localhost:7770/",
+      "url_after": "http://localhost:7770/catalogsearch/result/?q=EYZUTAK+phone+case",
+      "note": "case search on the task-critical search endpoint"
+    },
+    {
+      "step": 3,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:7770/eyzutak-electroplated-magnetic-ring-holder-case-360-degree-with-rotation-metal-finger-ring-holder-magnet-car-holder-soft-silicone-shockproof-cover-for-iphone-7-iphone-8-iphone-se-2020-drak-green.html"
+      },
+      "url_before": "http://localhost:7770/catalogsearch/result/?q=EYZUTAK+phone+case",
+      "url_after": "http://localhost:7770/eyzutak-electroplated-magnetic-ring-holder-case-360-degree-with-rotation-metal-finger-ring-holder-magnet-car-holder-soft-silicone-shockproof-cover-for-iphone-7-iphone-8-iphone-se-2020-drak-green.html",
+      "note": "open the EYZUTAK phone case"
+    },
+    {
+      "step": 4,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:7770/review/product/listAjax/id/38560/"
+      },
+      "url_before": "http://localhost:7770/eyzutak-electroplated-magnetic-ring-holder-case-360-degree-with-rotation-metal-finger-ring-holder-magnet-car-holder-soft-silicone-shockproof-cover-for-iphone-7-iphone-8-iphone-se-2020-drak-green.html",
+      "url_after": "http://localhost:7770/review/product/listAjax/id/38560/",
+      "note": "load the case reviews"
+    }
+  ],
+  "pages": [
+    {
+      "step": 2,
+      "name": "case_search",
+      "url": "http://localhost:7770/catalogsearch/result/?q=EYZUTAK+phone+case",
+      "text": "pages/02_case_search.txt",
+      "html": "pages/02_case_search.html"
+    },
+    {
+      "step": 3,
+      "name": "case_product",
+      "url": "http://localhost:7770/eyzutak-electroplated-magnetic-ring-holder-case-360-degree-with-rotation-metal-finger-ring-holder-magnet-car-holder-soft-silicone-shockproof-cover-for-iphone-7-iphone-8-iphone-se-2020-drak-green.html",
+      "text": "pages/03_case_product.txt",
+      "html": "pages/03_case_product.html"
+    },
+    {
+      "step": 4,
+      "name": "case_reviews",
+      "url": "http://localhost:7770/review/product/listAjax/id/38560/",
+      "text": "pages/04_case_reviews.txt",
+      "html": "pages/04_case_reviews.html"
+    }
+  ],
+  "answer": [
+    "Lisa Lee",
+    "Evelyn Kurver",
+    "Amanda",
+    "N Randall"
+  ],
+  "evidence": {
+    "product": {
+      "name": "EYZUTAK Electroplated Magnetic Ring Holder Case, 360 Degree with Rotation Metal Finger Ring Holder Magnet Car Holder Soft Silicone Shockproof Cover for iPhone 7 iPhone 8 iPhone SE 2020 - Drak Green",
+      "href": "http://localhost:7770/eyzutak-electroplated-magnetic-ring-holder-case-360-degree-with-rotation-metal-finger-ring-holder-magnet-car-holder-soft-silicone-shockproof-cover-for-iphone-7-iphone-8-iphone-se-2020-drak-green.html"
+    },
+    "product_id": "38560",
+    "reviews_seen": 10,
+    "matched": [
+      {
+        "author": "Lisa Lee",
+        "content": "The case is really cute and I’ve received compliments on it. The only thing that bothers me is the ring is broken already and I’ve only been using the case for less than a month."
+      },
+      {
+        "author": "Evelyn Kurver",
+        "content": "The gold is already peeling out and I’ve only had it for 3 weeks"
+      },
+      {
+        "author": "Amanda",
+        "content": "This case looks really nice. I get a lot of compliments. The ring can be spun into many different positions which is really convenient for holding it different ways and propping it up. My only complaint is the gold on the edges started to rub away within the first week."
+      },
+      {
+        "author": "N Randall",
+        "content": "Do not buy this. Trust me! I wanted to ignore the negative reviews and hope it would work at least for a couple months but it didn’t. It started chipping right away. The ring holder was too tight and first, then it was nice for a while, then it loosened completely and just dangled from my phone so I had to immediately replace it. Don’t waste your money."
+      }
+    ],
+    "selection_rule": "review text states a durability/quality defect"
+  },
+  "notes": [
+    "Customer names are taken from quality-complaint reviews."
+  ],
+  "error": null,
+  "official_eval": {
+    "task_id": 384,
+    "intent_template_id": 666,
+    "sites": [
+      "shopping"
+    ],
+    "task_revision": 2,
+    "status": "success",
+    "score": 1.0,
+    "evaluators_results": [
+      {
+        "evaluator_name": "AgentResponseEvaluator",
+        "status": "success",
+        "score": 1.0,
+        "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"Lisa Lee\",\n    \"Evelyn Kurver\",\n    \"Amanda\",\n    \"N Randall\"\n  ],\n  \"error_details\": null\n}\n",
+        "actual_normalized": {
+          "retrieved_data": [
+            "lisa lee",
+            "evelyn kurver",
+            "amanda",
+            "n randall"
+          ],
+          "task_type": "retrieve",
+          "status": "success"
+        },
+        "expected": {
+          "task_type": "retrieve",
+          "status": "success",
+          "retrieved_data": [
+            "lisa lee",
+            "evelyn kurver",
+            "amanda",
+            "n randall"
+          ]
+        },
+        "assertions": null,
+        "error_msg": null,
+        "should_not_exist": null
+      }
+    ],
+    "error_msg": null,
+    "webarena_verified_version": "1.2.3.post1.dev0",
+    "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+    "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "official_success": true
+  },
+  "official_success": true
+}

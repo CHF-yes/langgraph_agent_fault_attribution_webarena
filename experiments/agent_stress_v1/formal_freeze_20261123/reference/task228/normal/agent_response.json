@@ -1,0 +1,11 @@
+{
+  "task_type": "RETRIEVE",
+  "status": "SUCCESS",
+  "retrieved_data": [
+    {
+      "min": 18.18,
+      "max": 94.99
+    }
+  ],
+  "error_details": null
+}

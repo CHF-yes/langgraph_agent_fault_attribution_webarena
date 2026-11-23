@@ -1,0 +1,1444 @@
+{
+  "schema": "agent_stress_frozen_reference_path/1",
+  "task_id": 49,
+  "arm": "recovery",
+  "recorded_at": "2026-11-23T09:22:00.594001+00:00",
+  "site": "shopping",
+  "endpoint": "http://localhost:7770/sales/order/history",
+  "trigger_url": "http://localhost:7770/sales/order/history/",
+  "window_steps": 10,
+  "steps": 15,
+  "actions": [
+    {
+      "step": 1,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:7770"
+      },
+      "url_before": "about:blank",
+      "url_after": "http://localhost:7770/",
+      "note": "bootstrap on the task start URL (not armed)",
+      "proxy_step": 1,
+      "fault_page": false,
+      "observation_chars": 6787
+    },
+    {
+      "step": 2,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:7770/sales/order/history/"
+      },
+      "url_before": "http://localhost:7770/",
+      "url_after": "http://localhost:7770/sales/order/history/",
+      "note": "first qualified navigation to the fault endpoint",
+      "proxy_step": 2,
+      "fault_page": true,
+      "observation_chars": 89
+    },
+    {
+      "step": 3,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:7770/"
+      },
+      "url_before": "http://localhost:7770/sales/order/history/",
+      "url_after": "http://localhost:7770/",
+      "note": "window filler 1/9",
+      "proxy_step": 3,
+      "fault_page": false,
+      "observation_chars": 6787
+    },
+    {
+      "step": 4,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:7770/customer/account/"
+      },
+      "url_before": "http://localhost:7770/",
+      "url_after": "http://localhost:7770/customer/account/",
+      "note": "window filler 2/9",
+      "proxy_step": 4,
+      "fault_page": false,
+      "observation_chars": 5477
+    },
+    {
+      "step": 5,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:7770/beauty-personal-care.html"
+      },
+      "url_before": "http://localhost:7770/customer/account/",
+      "url_after": "http://localhost:7770/beauty-personal-care.html",
+      "note": "window filler 3/9",
+      "proxy_step": 5,
+      "fault_page": false,
+      "observation_chars": 8859
+    },
+    {
+      "step": 6,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:7770/"
+      },
+      "url_before": "http://localhost:7770/beauty-personal-care.html",
+      "url_after": "http://localhost:7770/",
+      "note": "window filler 4/9",
+      "proxy_step": 6,
+      "fault_page": false,
+      "observation_chars": 6787
+    },
+    {
+      "step": 7,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:7770/customer/account/"
+      },
+      "url_before": "http://localhost:7770/",
+      "url_after": "http://localhost:7770/customer/account/",
+      "note": "window filler 5/9",
+      "proxy_step": 7,
+      "fault_page": false,
+      "observation_chars": 5477
+    },
+    {
+      "step": 8,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:7770/beauty-personal-care.html"
+      },
+      "url_before": "http://localhost:7770/customer/account/",
+      "url_after": "http://localhost:7770/beauty-personal-care.html",
+      "note": "window filler 6/9",
+      "proxy_step": 8,
+      "fault_page": false,
+      "observation_chars": 8859
+    },
+    {
+      "step": 9,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:7770/"
+      },
+      "url_before": "http://localhost:7770/beauty-personal-care.html",
+      "url_after": "http://localhost:7770/",
+      "note": "window filler 7/9",
+      "proxy_step": 9,
+      "fault_page": false,
+      "observation_chars": 6787
+    },
+    {
+      "step": 10,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:7770/customer/account/"
+      },
+      "url_before": "http://localhost:7770/",
+      "url_after": "http://localhost:7770/customer/account/",
+      "note": "window filler 8/9",
+      "proxy_step": 10,
+      "fault_page": false,
+      "observation_chars": 5477
+    },
+    {
+      "step": 11,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:7770/beauty-personal-care.html"
+      },
+      "url_before": "http://localhost:7770/customer/account/",
+      "url_after": "http://localhost:7770/beauty-personal-care.html",
+      "note": "window filler 9/9",
+      "proxy_step": 11,
+      "fault_page": false,
+      "observation_chars": 8859
+    },
+    {
+      "step": 12,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:7770/sales/order/history/"
+      },
+      "url_before": "http://localhost:7770/beauty-personal-care.html",
+      "url_after": "http://localhost:7770/sales/order/history/",
+      "note": "order history page 1",
+      "proxy_step": 12,
+      "fault_page": false,
+      "observation_chars": 6375
+    },
+    {
+      "step": 13,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:7770/sales/order/history/?p=2"
+      },
+      "url_before": "http://localhost:7770/sales/order/history/",
+      "url_after": "http://localhost:7770/sales/order/history/?p=2",
+      "note": "order history page 2",
+      "proxy_step": 13,
+      "fault_page": false,
+      "observation_chars": 6444
+    },
+    {
+      "step": 14,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:7770/sales/order/history/?p=3"
+      },
+      "url_before": "http://localhost:7770/sales/order/history/?p=2",
+      "url_after": "http://localhost:7770/sales/order/history/?p=3",
+      "note": "order history page 3",
+      "proxy_step": 14,
+      "fault_page": false,
+      "observation_chars": 6436
+    },
+    {
+      "step": 15,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:7770/sales/order/history/?p=4"
+      },
+      "url_before": "http://localhost:7770/sales/order/history/?p=3",
+      "url_after": "http://localhost:7770/sales/order/history/?p=4",
+      "note": "order history page 4",
+      "proxy_step": 15,
+      "fault_page": false,
+      "observation_chars": 5490
+    }
+  ],
+  "pages": [],
+  "answer": [
+    {
+      "order_count": 3,
+      "amount": 845.49
+    }
+  ],
+  "evidence": {
+    "pages": [
+      {
+        "page": 1,
+        "url": "http://localhost:7770/sales/order/history/",
+        "rows": 10
+      },
+      {
+        "page": 2,
+        "url": "http://localhost:7770/sales/order/history/?p=2",
+        "rows": 10
+      },
+      {
+        "page": 3,
+        "url": "http://localhost:7770/sales/order/history/?p=3",
+        "rows": 10
+      },
+      {
+        "page": 4,
+        "url": "http://localhost:7770/sales/order/history/?p=4",
+        "rows": 7
+      }
+    ],
+    "rows": [
+      {
+        "order": "000000170",
+        "date": "5/17/23",
+        "total": 365.42,
+        "status": "Canceled",
+        "href": "http://localhost:7770/sales/order/view/order_id/170/",
+        "text": "000000170 5/17/23 $365.42 Canceled View Order Reorder"
+      },
+      {
+        "order": "000000189",
+        "date": "5/2/23",
+        "total": 754.99,
+        "status": "Pending",
+        "href": "http://localhost:7770/sales/order/view/order_id/189/",
+        "text": "000000189 5/2/23 $754.99 Pending View Order Reorder"
+      },
+      {
+        "order": "000000188",
+        "date": "5/2/23",
+        "total": 2004.99,
+        "status": "Pending",
+        "href": "http://localhost:7770/sales/order/view/order_id/188/",
+        "text": "000000188 5/2/23 $2,004.99 Pending View Order Reorder"
+      },
+      {
+        "order": "000000187",
+        "date": "5/2/23",
+        "total": 1004.99,
+        "status": "Pending",
+        "href": "http://localhost:7770/sales/order/view/order_id/187/",
+        "text": "000000187 5/2/23 $1,004.99 Pending View Order Reorder"
+      },
+      {
+        "order": "000000180",
+        "date": "3/11/23",
+        "total": 65.32,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/180/",
+        "text": "000000180 3/11/23 $65.32 Complete View Order Reorder"
+      },
+      {
+        "order": "000000166",
+        "date": "3/10/23",
+        "total": 17.99,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/166/",
+        "text": "000000166 3/10/23 $17.99 Complete View Order Reorder"
+      },
+      {
+        "order": "000000161",
+        "date": "2/27/23",
+        "total": 762.18,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/161/",
+        "text": "000000161 2/27/23 $762.18 Complete View Order Reorder"
+      },
+      {
+        "order": "000000156",
+        "date": "2/24/23",
+        "total": 231.54,
+        "status": "Canceled",
+        "href": "http://localhost:7770/sales/order/view/order_id/156/",
+        "text": "000000156 2/24/23 $231.54 Canceled View Order Reorder"
+      },
+      {
+        "order": "000000158",
+        "date": "2/11/23",
+        "total": 174.99,
+        "status": "Canceled",
+        "href": "http://localhost:7770/sales/order/view/order_id/158/",
+        "text": "000000158 2/11/23 $174.99 Canceled View Order Reorder"
+      },
+      {
+        "order": "000000157",
+        "date": "2/9/23",
+        "total": 185.32,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/157/",
+        "text": "000000157 2/9/23 $185.32 Complete View Order Reorder"
+      },
+      {
+        "order": "000000148",
+        "date": "1/29/23",
+        "total": 440.64,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/148/",
+        "text": "000000148 1/29/23 $440.64 Complete View Order Reorder"
+      },
+      {
+        "order": "000000163",
+        "date": "1/16/23",
+        "total": 132.24,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/163/",
+        "text": "000000163 1/16/23 $132.24 Complete View Order Reorder"
+      },
+      {
+        "order": "000000154",
+        "date": "12/18/22",
+        "total": 97.15,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/154/",
+        "text": "000000154 12/18/22 $97.15 Complete View Order Reorder"
+      },
+      {
+        "order": "000000184",
+        "date": "12/14/22",
+        "total": 20.49,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/184/",
+        "text": "000000184 12/14/22 $20.49 Complete View Order Reorder"
+      },
+      {
+        "order": "000000162",
+        "date": "12/12/22",
+        "total": 53.29,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/162/",
+        "text": "000000162 12/12/22 $53.29 Complete View Order Reorder"
+      },
+      {
+        "order": "000000174",
+        "date": "12/4/22",
+        "total": 32.47,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/174/",
+        "text": "000000174 12/4/22 $32.47 Complete View Order Reorder"
+      },
+      {
+        "order": "000000164",
+        "date": "11/26/22",
+        "total": 218.17,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/164/",
+        "text": "000000164 11/26/22 $218.17 Complete View Order Reorder"
+      },
+      {
+        "order": "000000171",
+        "date": "11/20/22",
+        "total": 133.07,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/171/",
+        "text": "000000171 11/20/22 $133.07 Complete View Order Reorder"
+      },
+      {
+        "order": "000000183",
+        "date": "11/11/22",
+        "total": 51.94,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/183/",
+        "text": "000000183 11/11/22 $51.94 Complete View Order Reorder"
+      },
+      {
+        "order": "000000176",
+        "date": "10/22/22",
+        "total": 845.07,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/176/",
+        "text": "000000176 10/22/22 $845.07 Complete View Order Reorder"
+      },
+      {
+        "order": "000000178",
+        "date": "10/21/22",
+        "total": 345.84,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/178/",
+        "text": "000000178 10/21/22 $345.84 Complete View Order Reorder"
+      },
+      {
+        "order": "000000177",
+        "date": "10/18/22",
+        "total": 2126.32,
+        "status": "Canceled",
+        "href": "http://localhost:7770/sales/order/view/order_id/177/",
+        "text": "000000177 10/18/22 $2,126.32 Canceled View Order Reorder"
+      },
+      {
+        "order": "000000185",
+        "date": "10/3/22",
+        "total": 18.99,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/185/",
+        "text": "000000185 10/3/22 $18.99 Complete View Order Reorder"
+      },
+      {
+        "order": "000000179",
+        "date": "9/29/22",
+        "total": 2890.53,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/179/",
+        "text": "000000179 9/29/22 $2,890.53 Complete View Order Reorder"
+      },
+      {
+        "order": "000000175",
+        "date": "9/1/22",
+        "total": 133.85,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/175/",
+        "text": "000000175 9/1/22 $133.85 Complete View Order Reorder"
+      },
+      {
+        "order": "000000172",
+        "date": "8/12/22",
+        "total": 77.66,
+        "status": "Canceled",
+        "href": "http://localhost:7770/sales/order/view/order_id/172/",
+        "text": "000000172 8/12/22 $77.66 Canceled View Order Reorder"
+      },
+      {
+        "order": "000000155",
+        "date": "8/10/22",
+        "total": 38.99,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/155/",
+        "text": "000000155 8/10/22 $38.99 Complete View Order Reorder"
+      },
+      {
+        "order": "000000165",
+        "date": "8/4/22",
+        "total": 36.99,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/165/",
+        "text": "000000165 8/4/22 $36.99 Complete View Order Reorder"
+      },
+      {
+        "order": "000000149",
+        "date": "7/25/22",
+        "total": 354.66,
+        "status": "Canceled",
+        "href": "http://localhost:7770/sales/order/view/order_id/149/",
+        "text": "000000149 7/25/22 $354.66 Canceled View Order Reorder"
+      },
+      {
+        "order": "000000167",
+        "date": "7/8/22",
+        "total": 40.16,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/167/",
+        "text": "000000167 7/8/22 $40.16 Complete View Order Reorder"
+      },
+      {
+        "order": "000000182",
+        "date": "6/30/22",
+        "total": 173.56,
+        "status": "Canceled",
+        "href": "http://localhost:7770/sales/order/view/order_id/182/",
+        "text": "000000182 6/30/22 $173.56 Canceled View Order Reorder"
+      },
+      {
+        "order": "000000181",
+        "date": "5/22/22",
+        "total": 298.65,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/181/",
+        "text": "000000181 5/22/22 $298.65 Complete View Order Reorder"
+      },
+      {
+        "order": "000000168",
+        "date": "4/27/22",
+        "total": 24.86,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/168/",
+        "text": "000000168 4/27/22 $24.86 Complete View Order Reorder"
+      },
+      {
+        "order": "000000159",
+        "date": "4/5/22",
+        "total": 77.96,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/159/",
+        "text": "000000159 4/5/22 $77.96 Complete View Order Reorder"
+      },
+      {
+        "order": "000000173",
+        "date": "3/10/22",
+        "total": 206.59,
+        "status": "Canceled",
+        "href": "http://localhost:7770/sales/order/view/order_id/173/",
+        "text": "000000173 3/10/22 $206.59 Canceled View Order Reorder"
+      },
+      {
+        "order": "000000160",
+        "date": "3/2/22",
+        "total": 115.18,
+        "status": "Canceled",
+        "href": "http://localhost:7770/sales/order/view/order_id/160/",
+        "text": "000000160 3/2/22 $115.18 Canceled View Order Reorder"
+      },
+      {
+        "order": "000000169",
+        "date": "3/2/22",
+        "total": 52.35,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/169/",
+        "text": "000000169 3/2/22 $52.35 Complete View Order Reorder"
+      }
+    ],
+    "window": [
+      "2023-02-12",
+      "2023-06-12"
+    ],
+    "complete_orders": [
+      {
+        "order": "000000180",
+        "date": "3/11/23",
+        "total": 65.32,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/180/",
+        "text": "000000180 3/11/23 $65.32 Complete View Order Reorder"
+      },
+      {
+        "order": "000000166",
+        "date": "3/10/23",
+        "total": 17.99,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/166/",
+        "text": "000000166 3/10/23 $17.99 Complete View Order Reorder"
+      },
+      {
+        "order": "000000161",
+        "date": "2/27/23",
+        "total": 762.18,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/161/",
+        "text": "000000161 2/27/23 $762.18 Complete View Order Reorder"
+      }
+    ],
+    "selection_rule": "status Complete and date inside the stated window"
+  },
+  "notes": [
+    "Only complete orders inside the date window are summed."
+  ],
+  "error": null,
+  "fault_evidence": {
+    "schema": "agent_stress_frozen_fault_recovery/1",
+    "task_id": 49,
+    "endpoint": {
+      "scheme": "http",
+      "host": "localhost",
+      "port": 7770,
+      "path": "/sales/order/history",
+      "target_policy_version": "endpoint-path-segment-v1"
+    },
+    "variant": "persistent",
+    "window_steps": 10,
+    "steps": [
+      {
+        "label": "trigger",
+        "url": "http://localhost:7770/sales/order/history/",
+        "fault_page": true,
+        "proxy_step": 2
+      },
+      {
+        "label": "filler_1",
+        "url": "http://localhost:7770/",
+        "fault_page": false,
+        "proxy_step": 3
+      },
+      {
+        "label": "filler_2",
+        "url": "http://localhost:7770/customer/account/",
+        "fault_page": false,
+        "proxy_step": 4
+      },
+      {
+        "label": "filler_3",
+        "url": "http://localhost:7770/beauty-personal-care.html",
+        "fault_page": false,
+        "proxy_step": 5
+      },
+      {
+        "label": "filler_4",
+        "url": "http://localhost:7770/",
+        "fault_page": false,
+        "proxy_step": 6
+      },
+      {
+        "label": "filler_5",
+        "url": "http://localhost:7770/customer/account/",
+        "fault_page": false,
+        "proxy_step": 7
+      },
+      {
+        "label": "filler_6",
+        "url": "http://localhost:7770/beauty-personal-care.html",
+        "fault_page": false,
+        "proxy_step": 8
+      },
+      {
+        "label": "filler_7",
+        "url": "http://localhost:7770/",
+        "fault_page": false,
+        "proxy_step": 9
+      },
+      {
+        "label": "filler_8",
+        "url": "http://localhost:7770/customer/account/",
+        "fault_page": false,
+        "proxy_step": 10
+      },
+      {
+        "label": "filler_9",
+        "url": "http://localhost:7770/beauty-personal-care.html",
+        "fault_page": false,
+        "proxy_step": 11
+      },
+      {
+        "label": "normal_after_window",
+        "url": "http://localhost:7770/sales/order/history/?p=4",
+        "proxy_step": 15
+      }
+    ],
+    "exposures": [
+      {
+        "observation_uid": "goto:1#1",
+        "source_action_uid": "goto:1",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 1,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:7770/",
+        "matched_endpoint": false,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/sales/order/history",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/",
+          "query": ""
+        },
+        "reason": "not_armed",
+        "fault_delivered": false
+      },
+      {
+        "observation_uid": "goto:2#2",
+        "source_action_uid": "goto:2",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 2,
+        "faults_delivered": [
+          "web_http_error"
+        ],
+        "delivered": true,
+        "raw_url": "http://localhost:7770/sales/order/history/",
+        "matched_endpoint": true,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/sales/order/history",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/sales/order/history",
+          "query": ""
+        },
+        "reason": "injected_or_same_action_replay",
+        "fault_delivered": true
+      },
+      {
+        "observation_uid": "goto:3#3",
+        "source_action_uid": "goto:3",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 3,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:7770/",
+        "matched_endpoint": false,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/sales/order/history",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/",
+          "query": ""
+        },
+        "reason": "off_endpoint",
+        "fault_delivered": false
+      },
+      {
+        "observation_uid": "goto:4#4",
+        "source_action_uid": "goto:4",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 4,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:7770/customer/account/",
+        "matched_endpoint": false,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/sales/order/history",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/customer/account",
+          "query": ""
+        },
+        "reason": "off_endpoint",
+        "fault_delivered": false
+      },
+      {
+        "observation_uid": "goto:5#5",
+        "source_action_uid": "goto:5",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 5,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:7770/beauty-personal-care.html",
+        "matched_endpoint": false,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/sales/order/history",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/beauty-personal-care.html",
+          "query": ""
+        },
+        "reason": "off_endpoint",
+        "fault_delivered": false
+      },
+      {
+        "observation_uid": "goto:6#6",
+        "source_action_uid": "goto:6",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 6,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:7770/",
+        "matched_endpoint": false,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/sales/order/history",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/",
+          "query": ""
+        },
+        "reason": "off_endpoint",
+        "fault_delivered": false
+      },
+      {
+        "observation_uid": "goto:7#7",
+        "source_action_uid": "goto:7",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 7,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:7770/customer/account/",
+        "matched_endpoint": false,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/sales/order/history",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/customer/account",
+          "query": ""
+        },
+        "reason": "off_endpoint",
+        "fault_delivered": false
+      },
+      {
+        "observation_uid": "goto:8#8",
+        "source_action_uid": "goto:8",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 8,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:7770/beauty-personal-care.html",
+        "matched_endpoint": false,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/sales/order/history",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/beauty-personal-care.html",
+          "query": ""
+        },
+        "reason": "off_endpoint",
+        "fault_delivered": false
+      },
+      {
+        "observation_uid": "goto:9#9",
+        "source_action_uid": "goto:9",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 9,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:7770/",
+        "matched_endpoint": false,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/sales/order/history",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/",
+          "query": ""
+        },
+        "reason": "off_endpoint",
+        "fault_delivered": false
+      },
+      {
+        "observation_uid": "goto:10#10",
+        "source_action_uid": "goto:10",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 10,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:7770/customer/account/",
+        "matched_endpoint": false,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/sales/order/history",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/customer/account",
+          "query": ""
+        },
+        "reason": "off_endpoint",
+        "fault_delivered": false
+      },
+      {
+        "observation_uid": "goto:11#11",
+        "source_action_uid": "goto:11",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 11,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:7770/beauty-personal-care.html",
+        "matched_endpoint": false,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/sales/order/history",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/beauty-personal-care.html",
+          "query": ""
+        },
+        "reason": "off_endpoint",
+        "fault_delivered": false
+      },
+      {
+        "observation_uid": "goto:12#12",
+        "source_action_uid": "goto:12",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 12,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:7770/sales/order/history/",
+        "matched_endpoint": true,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/sales/order/history",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/sales/order/history",
+          "query": ""
+        },
+        "reason": "window_expired",
+        "fault_delivered": false
+      },
+      {
+        "observation_uid": "goto:13#13",
+        "source_action_uid": "goto:13",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 13,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:7770/sales/order/history/?p=2",
+        "matched_endpoint": true,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/sales/order/history",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/sales/order/history",
+          "query": "p=2"
+        },
+        "reason": "window_expired",
+        "fault_delivered": false
+      },
+      {
+        "observation_uid": "goto:14#14",
+        "source_action_uid": "goto:14",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 14,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:7770/sales/order/history/?p=3",
+        "matched_endpoint": true,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/sales/order/history",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/sales/order/history",
+          "query": "p=3"
+        },
+        "reason": "window_expired",
+        "fault_delivered": false
+      },
+      {
+        "observation_uid": "goto:15#15",
+        "source_action_uid": "goto:15",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 15,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:7770/sales/order/history/?p=4",
+        "matched_endpoint": true,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/sales/order/history",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/sales/order/history",
+          "query": "p=4"
+        },
+        "reason": "window_expired",
+        "fault_delivered": false
+      }
+    ],
+    "episode": {
+      "snapshot": {
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "target_policy_version": "endpoint-path-segment-v1",
+        "armed": true,
+        "armed_after_step": 1,
+        "target": {
+          "kind": "endpoint",
+          "scheme": "http",
+          "host": "localhost",
+          "port": 7770,
+          "path": "/sales/order/history",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "t0": 2,
+        "window_steps": 10,
+        "window_end": 11,
+        "injections": 1,
+        "released": "window_expired",
+        "exposure_class": "once"
+      },
+      "injections": [
+        {
+          "event": "injection",
+          "experiment_id": "ep-http-service-v1",
+          "variant": "persistent",
+          "injection_index": 1,
+          "proxy_step": 2,
+          "action_uid": "goto:2",
+          "target": {
+            "kind": "endpoint",
+            "scheme": "http",
+            "host": "localhost",
+            "port": 7770,
+            "path": "/sales/order/history",
+            "target_policy_version": "endpoint-path-segment-v1"
+          },
+          "error_type": "500",
+          "match": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 7770,
+            "path": "/sales/order/history",
+            "query": ""
+          },
+          "timestamp": 1795425698.5296912
+        }
+      ],
+      "events": [
+        {
+          "event": "skip",
+          "proxy_step": 1,
+          "action_uid": "goto:1",
+          "reason": "not_armed",
+          "detail": {
+            "raw_url": "http://localhost:7770/",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 7770,
+              "path": "/",
+              "query": ""
+            }
+          }
+        },
+        {
+          "event": "injection",
+          "experiment_id": "ep-http-service-v1",
+          "variant": "persistent",
+          "injection_index": 1,
+          "proxy_step": 2,
+          "action_uid": "goto:2",
+          "target": {
+            "kind": "endpoint",
+            "scheme": "http",
+            "host": "localhost",
+            "port": 7770,
+            "path": "/sales/order/history",
+            "target_policy_version": "endpoint-path-segment-v1"
+          },
+          "error_type": "500",
+          "match": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 7770,
+            "path": "/sales/order/history",
+            "query": ""
+          },
+          "timestamp": 1795425698.5296912
+        },
+        {
+          "event": "skip",
+          "proxy_step": 3,
+          "action_uid": "goto:3",
+          "reason": "off_endpoint",
+          "detail": {
+            "raw_url": "http://localhost:7770/",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 7770,
+              "path": "/",
+              "query": ""
+            }
+          }
+        },
+        {
+          "event": "skip",
+          "proxy_step": 4,
+          "action_uid": "goto:4",
+          "reason": "off_endpoint",
+          "detail": {
+            "raw_url": "http://localhost:7770/customer/account/",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 7770,
+              "path": "/customer/account",
+              "query": ""
+            }
+          }
+        },
+        {
+          "event": "skip",
+          "proxy_step": 5,
+          "action_uid": "goto:5",
+          "reason": "off_endpoint",
+          "detail": {
+            "raw_url": "http://localhost:7770/beauty-personal-care.html",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 7770,
+              "path": "/beauty-personal-care.html",
+              "query": ""
+            }
+          }
+        },
+        {
+          "event": "skip",
+          "proxy_step": 6,
+          "action_uid": "goto:6",
+          "reason": "off_endpoint",
+          "detail": {
+            "raw_url": "http://localhost:7770/",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 7770,
+              "path": "/",
+              "query": ""
+            }
+          }
+        },
+        {
+          "event": "skip",
+          "proxy_step": 7,
+          "action_uid": "goto:7",
+          "reason": "off_endpoint",
+          "detail": {
+            "raw_url": "http://localhost:7770/customer/account/",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 7770,
+              "path": "/customer/account",
+              "query": ""
+            }
+          }
+        },
+        {
+          "event": "skip",
+          "proxy_step": 8,
+          "action_uid": "goto:8",
+          "reason": "off_endpoint",
+          "detail": {
+            "raw_url": "http://localhost:7770/beauty-personal-care.html",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 7770,
+              "path": "/beauty-personal-care.html",
+              "query": ""
+            }
+          }
+        },
+        {
+          "event": "skip",
+          "proxy_step": 9,
+          "action_uid": "goto:9",
+          "reason": "off_endpoint",
+          "detail": {
+            "raw_url": "http://localhost:7770/",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 7770,
+              "path": "/",
+              "query": ""
+            }
+          }
+        },
+        {
+          "event": "skip",
+          "proxy_step": 10,
+          "action_uid": "goto:10",
+          "reason": "off_endpoint",
+          "detail": {
+            "raw_url": "http://localhost:7770/customer/account/",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 7770,
+              "path": "/customer/account",
+              "query": ""
+            }
+          }
+        },
+        {
+          "event": "skip",
+          "proxy_step": 11,
+          "action_uid": "goto:11",
+          "reason": "off_endpoint",
+          "detail": {
+            "raw_url": "http://localhost:7770/beauty-personal-care.html",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 7770,
+              "path": "/beauty-personal-care.html",
+              "query": ""
+            }
+          }
+        },
+        {
+          "event": "release",
+          "proxy_step": 12,
+          "reason": "window_expired"
+        },
+        {
+          "event": "skip",
+          "proxy_step": 12,
+          "action_uid": "goto:12",
+          "reason": "window_expired",
+          "detail": {
+            "raw_url": "http://localhost:7770/sales/order/history/",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 7770,
+              "path": "/sales/order/history",
+              "query": ""
+            }
+          }
+        },
+        {
+          "event": "skip",
+          "proxy_step": 13,
+          "action_uid": "goto:13",
+          "reason": "window_expired",
+          "detail": {
+            "raw_url": "http://localhost:7770/sales/order/history/?p=2",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 7770,
+              "path": "/sales/order/history",
+              "query": "p=2"
+            }
+          }
+        },
+        {
+          "event": "skip",
+          "proxy_step": 14,
+          "action_uid": "goto:14",
+          "reason": "window_expired",
+          "detail": {
+            "raw_url": "http://localhost:7770/sales/order/history/?p=3",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 7770,
+              "path": "/sales/order/history",
+              "query": "p=3"
+            }
+          }
+        },
+        {
+          "event": "skip",
+          "proxy_step": 15,
+          "action_uid": "goto:15",
+          "reason": "window_expired",
+          "detail": {
+            "raw_url": "http://localhost:7770/sales/order/history/?p=4",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 7770,
+              "path": "/sales/order/history",
+              "query": "p=4"
+            }
+          }
+        }
+      ]
+    },
+    "injection_log": [
+      {
+        "fault": "web_http_error",
+        "fault_layer": "observation",
+        "fault_seed": 1,
+        "step": 2,
+        "parameter_action_index": null,
+        "injection_index": 1,
+        "timestamp": 1795425698.5297015,
+        "detail": {
+          "mechanism": "synthetic_http_observation_replacement",
+          "endpoint": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 7770,
+            "path": "/sales/order/history",
+            "target_policy_version": "endpoint-path-segment-v1"
+          },
+          "error_type": "500",
+          "action_uid": "goto:2",
+          "proxy_step": 2
+        }
+      }
+    ],
+    "verdict": {
+      "valid": true,
+      "errors": [],
+      "count": 1,
+      "variant": "persistent"
+    }
+  },
+  "official_eval": {
+    "task_id": 49,
+    "intent_template_id": 197,
+    "sites": [
+      "shopping"
+    ],
+    "task_revision": 2,
+    "status": "success",
+    "score": 1.0,
+    "evaluators_results": [
+      {
+        "evaluator_name": "AgentResponseEvaluator",
+        "status": "success",
+        "score": 1.0,
+        "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    {\n      \"order_count\": 3,\n      \"amount\": 845.49\n    }\n  ],\n  \"error_details\": null\n}\n",
+        "actual_normalized": {
+          "retrieved_data": [
+            {
+              "order_count": 3.0,
+              "amount": "845.49"
+            }
+          ],
+          "task_type": "retrieve",
+          "status": "success"
+        },
+        "expected": {
+          "task_type": "retrieve",
+          "status": "success",
+          "retrieved_data": [
+            {
+              "order_count": 3.0,
+              "amount": "845.49"
+            }
+          ]
+        },
+        "assertions": null,
+        "error_msg": null,
+        "should_not_exist": null
+      }
+    ],
+    "error_msg": null,
+    "webarena_verified_version": "1.2.3.post1.dev0",
+    "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+    "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "official_success": true
+  },
+  "official_success": true
+}

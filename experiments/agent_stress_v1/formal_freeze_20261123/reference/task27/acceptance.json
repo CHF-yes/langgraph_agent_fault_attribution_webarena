@@ -1,0 +1,47 @@
+{
+  "schema": "agent_stress_frozen_acceptance/1",
+  "task_id": 27,
+  "site": "reddit",
+  "template_id": 33,
+  "endpoint": "http://localhost:9999/f/personalfinance",
+  "supplement": false,
+  "fault_pilot": false,
+  "normal": {
+    "passed": true,
+    "steps": 3,
+    "official_success": true,
+    "answer": [
+      {
+        "username": "Hammer94",
+        "post_title": "56 year old mom has no retirement. Where do I even start on her behalf?",
+        "count": 0
+      }
+    ],
+    "error": null,
+    "evidence": "task27/normal/reference_path.json"
+  },
+  "trigger": {
+    "passed": true,
+    "injections": 1,
+    "first_exposure_step": 2,
+    "error_type": "500",
+    "evidence": "task27/recovery/fault_evidence.json"
+  },
+  "recovery": {
+    "passed": true,
+    "steps": 13,
+    "window_steps": 10,
+    "released": "window_expired",
+    "official_success": true,
+    "answer": [
+      {
+        "username": "Hammer94",
+        "post_title": "56 year old mom has no retirement. Where do I even start on her behalf?",
+        "count": 0
+      }
+    ],
+    "error": null,
+    "evidence": "task27/recovery/reference_path.json"
+  },
+  "passed": true
+}

@@ -1,0 +1,3 @@
+{"step": 1, "action": "goto", "args": {"url": "http://localhost:8023"}, "url_before": "about:blank", "url_after": "http://localhost:8023/", "note": "task start URL / shared login state"}
+{"step": 2, "action": "goto", "args": {"url": "http://localhost:8023/search?search=metaseq&nav_source=navbar"}, "url_before": "http://localhost:8023/", "url_after": "http://localhost:8023/search?search=metaseq&nav_source=navbar", "note": "project search on the task-critical GitLab search endpoint"}
+{"step": 3, "action": "goto", "args": {"url": "http://localhost:8023/api/v4/projects/root%2Fmetaseq"}, "url_before": "http://localhost:8023/search?search=metaseq&nav_source=navbar", "url_after": "http://localhost:8023/api/v4/projects/root%2Fmetaseq", "note": "project identity and clone URL"}

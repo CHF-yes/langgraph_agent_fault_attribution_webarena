@@ -1,0 +1,43 @@
+{
+  "schema": "agent_stress_frozen_acceptance/1",
+  "task_id": 316,
+  "site": "gitlab",
+  "template_id": 324,
+  "endpoint": "http://localhost:8023/facebook/create-react-app/-/graphs",
+  "supplement": false,
+  "fault_pilot": false,
+  "normal": {
+    "passed": true,
+    "steps": 2,
+    "official_success": true,
+    "answer": [
+      "dan.abramov@gmail.com",
+      "timer150@gmail.com",
+      "ian@iansutherland.ca"
+    ],
+    "error": null,
+    "evidence": "task316/normal/reference_path.json"
+  },
+  "trigger": {
+    "passed": true,
+    "injections": 1,
+    "first_exposure_step": 2,
+    "error_type": "500",
+    "evidence": "task316/recovery/fault_evidence.json"
+  },
+  "recovery": {
+    "passed": true,
+    "steps": 12,
+    "window_steps": 10,
+    "released": "window_expired",
+    "official_success": true,
+    "answer": [
+      "dan.abramov@gmail.com",
+      "timer150@gmail.com",
+      "ian@iansutherland.ca"
+    ],
+    "error": null,
+    "evidence": "task316/recovery/reference_path.json"
+  },
+  "passed": true
+}

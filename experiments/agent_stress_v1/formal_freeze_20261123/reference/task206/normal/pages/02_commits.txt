@@ -1,0 +1,203 @@
+Skip to content
+GitLab
+/
+13
+8
+5
+Help
+A
+a11yproject.com
+Project information
+Repository
+Files
+Commits
+Branches
+Tags
+Contributors
+Graph
+Compare
+Issues
+40
+Merge requests
+10
+CI/CD
+Security & Compliance
+Deployments
+Packages and registries
+Infrastructure
+Monitor
+Analytics
+Wiki
+Snippets
+Settings
+Collapse sidebar
+The A11Y Project
+a11yproject.com
+Commits
+main
+a11yproject.com
+Eric Bailey
+14 Mar, 2023 2 commits
+Update... 
+Eric Bailey authored 3 years ago
+Unverified
+ed37a2f2
+Add The power of ChatGPT as a cognitive accessibility assistive technology for... 
+Eric Bailey authored 3 years ago
+Unverified
+4a50e046
+12 Mar, 2023 1 commit
+Add resources (#1528)
+Eric Bailey authored 3 years ago
+Unverified
+b6f694b0
+07 Mar, 2023 1 commit
+Update post date (#1525)
+Eric Bailey authored 3 years ago
+Unverified
+7fa12466
+02 Mar, 2023 2 commits
+Copy tweaks (#1523)
+Eric Bailey authored 3 years ago
+Unverified
+a323cbb6
+Add Are you making these five mistakes when writing alt text? post (#1522)
+Eric Bailey authored 3 years ago
+Unverified
+9bf4ae35
+28 Feb, 2023 2 commits
+Update README.md
+Eric Bailey authored 3 years ago
+Unverified
+b32809f2
+Update resources (#1520) 
+Eric Bailey authored 3 years ago
+Unverified
+c114c84e
+14 Feb, 2023 2 commits
+Fix broken `<strong>` tags
+Eric Bailey authored 3 years ago
+0b6aea43
+Add A guide to troublesome UI components (#1512) 
+Eric Bailey authored 3 years ago
+Unverified
+a69c3ebd
+12 Feb, 2023 2 commits
+Replace LinkedIn with Mastodon
+Eric Bailey authored 3 years ago
+fd423abb
+Add Translation subsection (#1511)
+Eric Bailey authored 3 years ago
+Unverified
+76f8642d
+05 Feb, 2023 1 commit
+Add a11y-webring.club
+Eric Bailey authored 3 years ago
+25f871c1
+02 Feb, 2023 1 commit
+Fix GOV.UK link
+Eric Bailey authored 3 years ago
+d02a54c3
+18 Jan, 2023 1 commit
+Add Invisible Strengths resource
+Eric Bailey authored 3 years ago
+cdffae7f
+15 Jan, 2023 3 commits
+Add Gertrude Nyenyeshi to the Spotlight (#1506)
+Eric Bailey authored 3 years ago
+Unverified
+5cf2c659
+Add files via upload
+Eric Bailey authored 3 years ago
+Unverified
+22986311
+Add files via upload
+Eric Bailey authored 3 years ago
+Unverified
+2497e23a
+05 Jan, 2023 2 commits
+Add employment icon (#1503)
+Eric Bailey authored 3 years ago
+Unverified
+5bff869a
+Add employment Resource section (#1502) 
+Eric Bailey authored 3 years ago
+Unverified
+c7ecbdd9
+04 Jan, 2023 2 commits
+Add rel="me" to Mastodon
+Eric Bailey authored 3 years ago
+4295b0de
+Update footer links (#1498)
+Eric Bailey authored 3 years ago
+Unverified
+67d2b6e2
+03 Jan, 2023 1 commit
+Add resource (#1496) 
+Eric Bailey authored 3 years ago
+Unverified
+458ae3c7
+15 Dec, 2022 1 commit
+Fix Spotlight detail page table of contents (#1495) 
+Eric Bailey authored 3 years ago
+Unverified
+33cff23f
+07 Dec, 2022 1 commit
+Add resources (#1492) 
+Eric Bailey authored 3 years ago
+Unverified
+febb4ac9
+23 Nov, 2022 2 commits
+Update resource URL
+Eric Bailey authored 4 years ago
+b4e12fde
+Update course resources
+Eric Bailey authored 4 years ago
+4bcc9dae
+26 Oct, 2022 1 commit
+Add Hello Access as a sponsor (#1486) 
+Eric Bailey authored 4 years ago
+bdfa838b
+18 Oct, 2022 1 commit
+Various fixes (#1484) 
+Eric Bailey authored 4 years ago
+0c6515de
+12 Oct, 2022 1 commit
+Add Rachele DiTullio to the Spotlight (#1479) 
+Eric Bailey authored 4 years ago
+85f2e168
+02 Oct, 2022 1 commit
+Update straw test URL
+Eric Bailey authored 4 years ago
+ceeecb0d
+22 Sep, 2022 3 commits
+Copy tweaks (#1476)
+Eric Bailey authored 4 years ago
+fcfce9de
+Remove filename (#1475)
+Eric Bailey authored 4 years ago
+4bf0cb4a
+Add Blind people need to be considered more when making data visualizations (#1474) 
+Eric Bailey authored 4 years ago
+a1f26105
+16 Aug, 2022 2 commits
+Add Color & Contrast (#1466)
+Eric Bailey authored 4 years ago
+edad3e5b
+Update do/don't colors (#1461)
+Eric Bailey authored 4 years ago
+f74b1795
+08 Aug, 2022 1 commit
+Add resource, remove broken link (#1458)
+Eric Bailey authored 4 years ago
+4e6786f4
+02 Aug, 2022 3 commits
+Add alt text
+Eric Bailey authored 4 years ago
+a9d58bb8
+Tweak avatar image placement
+Eric Bailey authored 4 years ago
+859e8705
+Add hero image
+Eric Bailey authored 4 years ago
+f0e5eab0

@@ -1,0 +1,39 @@
+{
+  "schema": "agent_stress_frozen_acceptance/1",
+  "task_id": 163,
+  "site": "shopping",
+  "template_id": 136,
+  "endpoint": "http://localhost:7770/review/product/listAjax/id/38805",
+  "supplement": false,
+  "fault_pilot": false,
+  "normal": {
+    "passed": true,
+    "steps": 2,
+    "official_success": true,
+    "answer": [
+      "Memory Card Came Defective"
+    ],
+    "error": null,
+    "evidence": "task163/normal/reference_path.json"
+  },
+  "trigger": {
+    "passed": true,
+    "injections": 1,
+    "first_exposure_step": 2,
+    "error_type": "500",
+    "evidence": "task163/recovery/fault_evidence.json"
+  },
+  "recovery": {
+    "passed": true,
+    "steps": 12,
+    "window_steps": 10,
+    "released": "window_expired",
+    "official_success": true,
+    "answer": [
+      "Memory Card Came Defective"
+    ],
+    "error": null,
+    "evidence": "task163/recovery/reference_path.json"
+  },
+  "passed": true
+}

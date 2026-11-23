@@ -1,0 +1,39 @@
+{
+  "schema": "agent_stress_frozen_acceptance/1",
+  "task_id": 784,
+  "site": "gitlab",
+  "template_id": 316,
+  "endpoint": "http://localhost:8023/CellularPrivacy/Android-IMSI-Catcher-Detector/-/graphs",
+  "supplement": false,
+  "fault_pilot": false,
+  "normal": {
+    "passed": true,
+    "steps": 2,
+    "official_success": true,
+    "answer": [
+      "secupwn@users.noreply.github.com"
+    ],
+    "error": null,
+    "evidence": "task784/normal/reference_path.json"
+  },
+  "trigger": {
+    "passed": true,
+    "injections": 1,
+    "first_exposure_step": 2,
+    "error_type": "500",
+    "evidence": "task784/recovery/fault_evidence.json"
+  },
+  "recovery": {
+    "passed": true,
+    "steps": 12,
+    "window_steps": 10,
+    "released": "window_expired",
+    "official_success": true,
+    "answer": [
+      "secupwn@users.noreply.github.com"
+    ],
+    "error": null,
+    "evidence": "task784/recovery/reference_path.json"
+  },
+  "passed": true
+}

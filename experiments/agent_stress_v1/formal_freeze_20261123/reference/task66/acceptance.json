@@ -1,0 +1,41 @@
+{
+  "schema": "agent_stress_frozen_acceptance/1",
+  "task_id": 66,
+  "site": "reddit",
+  "template_id": 17,
+  "endpoint": "http://localhost:9999/f/books",
+  "supplement": false,
+  "fault_pilot": false,
+  "normal": {
+    "passed": true,
+    "steps": 2,
+    "official_success": true,
+    "answer": [
+      "I just finished reading The Hobbit to my 6 year old daughter, and she loved it!",
+      "Apple Books has a free audiobook of A Christmas Carol narrated by LeVar Burton!"
+    ],
+    "error": null,
+    "evidence": "task66/normal/reference_path.json"
+  },
+  "trigger": {
+    "passed": true,
+    "injections": 1,
+    "first_exposure_step": 2,
+    "error_type": "500",
+    "evidence": "task66/recovery/fault_evidence.json"
+  },
+  "recovery": {
+    "passed": true,
+    "steps": 12,
+    "window_steps": 10,
+    "released": "window_expired",
+    "official_success": true,
+    "answer": [
+      "I just finished reading The Hobbit to my 6 year old daughter, and she loved it!",
+      "Apple Books has a free audiobook of A Christmas Carol narrated by LeVar Burton!"
+    ],
+    "error": null,
+    "evidence": "task66/recovery/reference_path.json"
+  },
+  "passed": true
+}

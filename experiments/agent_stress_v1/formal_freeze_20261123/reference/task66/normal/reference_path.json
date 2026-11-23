@@ -1,0 +1,174 @@
+{
+  "schema": "agent_stress_frozen_reference_path/1",
+  "task_id": 66,
+  "arm": "normal",
+  "recorded_at": "2026-11-23T09:22:02.313755+00:00",
+  "site": "reddit",
+  "start_url": "http://localhost:9999",
+  "intent": "Among the top 10 hottest posts in the \"Books\" forum, get the post titles from those that recommend exactly one book.",
+  "intent_template_id": 17,
+  "endpoint": "http://localhost:9999/f/books",
+  "steps": 2,
+  "actions": [
+    {
+      "step": 1,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:9999"
+      },
+      "url_before": "about:blank",
+      "url_after": "http://localhost:9999/",
+      "note": "task start URL / shared login state"
+    },
+    {
+      "step": 2,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:9999/f/books"
+      },
+      "url_before": "http://localhost:9999/",
+      "url_after": "http://localhost:9999/f/books",
+      "note": "top-10 hot listing on /f/books"
+    }
+  ],
+  "pages": [
+    {
+      "step": 2,
+      "name": "books_hot",
+      "url": "http://localhost:9999/f/books",
+      "text": "pages/02_books_hot.txt",
+      "html": "pages/02_books_hot.html"
+    }
+  ],
+  "answer": [
+    "I just finished reading The Hobbit to my 6 year old daughter, and she loved it!",
+    "Apple Books has a free audiobook of A Christmas Carol narrated by LeVar Burton!"
+  ],
+  "evidence": {
+    "listing_url": "http://localhost:9999/f/books",
+    "top10": [
+      {
+        "title": "The letters of T. S. Eliot to Emily Hale that were kept sealed from 1956 to 2020 have been released for free online",
+        "href": "https://tseliot.com/the-eliot-hale-letters",
+        "username": "RunDNA",
+        "time": "2023-01-30T17:11:46+00:00"
+      },
+      {
+        "title": "Friendly reminder bookshop.org exists.",
+        "href": "http://localhost:9999/f/books/59421/friendly-reminder-bookshop-org-exists",
+        "username": "smita16",
+        "time": "2022-12-31T14:40:19+00:00"
+      },
+      {
+        "title": "Appalachian prison book project seeks notebook donations: \"The books can help inmates learn new skills, broaden their worldviews and obtain college credits through the West Virginia University Higher Education in Prison Initiative\"",
+        "href": "https://www.timeswv.com/news/monday_news/appalachian-prison-book-project-seeks-notebook-donations/article_1b2d021a-c8c6-509a-9a01-185e71d54448.html",
+        "username": "SAT0725",
+        "time": "2022-12-05T13:08:47+00:00"
+      },
+      {
+        "title": "After Two Decades And 38 Children’s Books Lin Oliver Continues Her Thriving Collaboration With Henry Winkler",
+        "href": "https://www.forbes.com/sites/jerylbrunner/2023/02/26/after-two-decades-and-38-childrens-books-lin-oliver-continues-her-thriving-collaboration-with-henry-winkler/?sh=7fd671c16e63",
+        "username": "drak0bsidian",
+        "time": "2023-02-27T15:43:55+00:00"
+      },
+      {
+        "title": "Museum issues appeal to save famed \"Misty of Chincoteague\" ranch from being sold to developers",
+        "href": "https://www.delmarvanow.com/story/news/local/virginia/2023/03/01/museum-issues-appeal-to-help-save-home-of-misty-of-chincoteague/69950922007/",
+        "username": "ZebZ",
+        "time": "2023-03-03T02:12:11+00:00"
+      },
+      {
+        "title": "How Ukrainian publishers are fighting to survive",
+        "href": "https://www.publishersweekly.com/pw/by-topic/international/international-book-news/article/91178-ukrainian-publishers-fight-on.html",
+        "username": "livingmybestestlyfe",
+        "time": "2022-12-27T15:42:13+00:00"
+      },
+      {
+        "title": "The simple greatness of Agatha Christie",
+        "href": "http://localhost:9999/f/books/59478/the-simple-greatness-of-agatha-christie",
+        "username": "-something_something",
+        "time": "2022-12-26T16:49:57+00:00"
+      },
+      {
+        "title": "I just finished reading The Hobbit to my 6 year old daughter, and she loved it!",
+        "href": "http://localhost:9999/f/books/17445/i-just-finished-reading-the-hobbit-to-my-6-year-old-daughter",
+        "username": "Shaosil",
+        "time": "2022-10-25T20:27:33+00:00"
+      },
+      {
+        "title": "Apple Books has a free audiobook of A Christmas Carol narrated by LeVar Burton!",
+        "href": "http://localhost:9999/f/books/59396/apple-books-has-a-free-audiobook-of-a-christmas-carol",
+        "username": "ancienthippo",
+        "time": "2022-12-22T00:02:08+00:00"
+      },
+      {
+        "title": "What Is It That Makes Used Bookstores So Wonderful?",
+        "href": "https://crimereads.com/what-is-it-that-makes-used-bookstores-so-wonderful/",
+        "username": "zsreport",
+        "time": "2023-02-25T18:38:36+00:00"
+      }
+    ],
+    "selected": [
+      {
+        "title": "I just finished reading The Hobbit to my 6 year old daughter, and she loved it!",
+        "href": "http://localhost:9999/f/books/17445/i-just-finished-reading-the-hobbit-to-my-6-year-old-daughter",
+        "username": "Shaosil",
+        "time": "2022-10-25T20:27:33+00:00"
+      },
+      {
+        "title": "Apple Books has a free audiobook of A Christmas Carol narrated by LeVar Burton!",
+        "href": "http://localhost:9999/f/books/59396/apple-books-has-a-free-audiobook-of-a-christmas-carol",
+        "username": "ancienthippo",
+        "time": "2022-12-22T00:02:08+00:00"
+      }
+    ],
+    "selection_rule": "title states a single reading/audiobook recommendation (finished reading / audiobook of)"
+  },
+  "notes": [
+    "Only the top 10 hot posts are read; each selected post names one book."
+  ],
+  "error": null,
+  "official_eval": {
+    "task_id": 66,
+    "intent_template_id": 17,
+    "sites": [
+      "reddit"
+    ],
+    "task_revision": 2,
+    "status": "success",
+    "score": 1.0,
+    "evaluators_results": [
+      {
+        "evaluator_name": "AgentResponseEvaluator",
+        "status": "success",
+        "score": 1.0,
+        "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"I just finished reading The Hobbit to my 6 year old daughter, and she loved it!\",\n    \"Apple Books has a free audiobook of A Christmas Carol narrated by LeVar Burton!\"\n  ],\n  \"error_details\": null\n}\n",
+        "actual_normalized": {
+          "retrieved_data": [
+            "i just finished reading the hobbit to my 6 year old daughter, and she loved it!",
+            "apple books has a free audiobook of a christmas carol narrated by levar burton!"
+          ],
+          "task_type": "retrieve",
+          "status": "success"
+        },
+        "expected": {
+          "task_type": "retrieve",
+          "status": "success",
+          "retrieved_data": [
+            "i just finished reading the hobbit to my 6 year old daughter, and she loved it!",
+            "apple books has a free audiobook of a christmas carol narrated by levar burton!"
+          ]
+        },
+        "assertions": null,
+        "error_msg": null,
+        "should_not_exist": null
+      }
+    ],
+    "error_msg": null,
+    "webarena_verified_version": "1.2.3.post1.dev0",
+    "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+    "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "official_success": true
+  },
+  "official_success": true
+}

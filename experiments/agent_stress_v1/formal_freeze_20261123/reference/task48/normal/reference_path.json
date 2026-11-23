@@ -1,0 +1,450 @@
+{
+  "schema": "agent_stress_frozen_reference_path/1",
+  "task_id": 48,
+  "arm": "normal",
+  "recorded_at": "2026-11-23T09:21:03.704292+00:00",
+  "site": "shopping",
+  "start_url": "http://localhost:7770",
+  "intent": "Today is June 12, 2023. Get how many complete orders I have over the past three days, and the total amount of money I spent (including shipping and handling fees). Return an object with keys \"order_count\" (as integer) and \"amount\" (as number, e.g., 10.99) only, without any additional details.",
+  "intent_template_id": 197,
+  "endpoint": "http://localhost:7770/sales/order/history",
+  "steps": 5,
+  "actions": [
+    {
+      "step": 1,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:7770"
+      },
+      "url_before": "about:blank",
+      "url_after": "http://localhost:7770/",
+      "note": "task start URL / shared login state"
+    },
+    {
+      "step": 2,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:7770/sales/order/history/"
+      },
+      "url_before": "http://localhost:7770/",
+      "url_after": "http://localhost:7770/sales/order/history/",
+      "note": "order history page 1"
+    },
+    {
+      "step": 3,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:7770/sales/order/history/?p=2"
+      },
+      "url_before": "http://localhost:7770/sales/order/history/",
+      "url_after": "http://localhost:7770/sales/order/history/?p=2",
+      "note": "order history page 2"
+    },
+    {
+      "step": 4,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:7770/sales/order/history/?p=3"
+      },
+      "url_before": "http://localhost:7770/sales/order/history/?p=2",
+      "url_after": "http://localhost:7770/sales/order/history/?p=3",
+      "note": "order history page 3"
+    },
+    {
+      "step": 5,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:7770/sales/order/history/?p=4"
+      },
+      "url_before": "http://localhost:7770/sales/order/history/?p=3",
+      "url_after": "http://localhost:7770/sales/order/history/?p=4",
+      "note": "order history page 4"
+    }
+  ],
+  "pages": [],
+  "answer": [
+    {
+      "order_count": 0,
+      "amount": 0
+    }
+  ],
+  "evidence": {
+    "pages": [
+      {
+        "page": 1,
+        "url": "http://localhost:7770/sales/order/history/",
+        "rows": 10
+      },
+      {
+        "page": 2,
+        "url": "http://localhost:7770/sales/order/history/?p=2",
+        "rows": 10
+      },
+      {
+        "page": 3,
+        "url": "http://localhost:7770/sales/order/history/?p=3",
+        "rows": 10
+      },
+      {
+        "page": 4,
+        "url": "http://localhost:7770/sales/order/history/?p=4",
+        "rows": 7
+      }
+    ],
+    "rows": [
+      {
+        "order": "000000170",
+        "date": "5/17/23",
+        "total": 365.42,
+        "status": "Canceled",
+        "href": "http://localhost:7770/sales/order/view/order_id/170/",
+        "text": "000000170 5/17/23 $365.42 Canceled View Order Reorder"
+      },
+      {
+        "order": "000000189",
+        "date": "5/2/23",
+        "total": 754.99,
+        "status": "Pending",
+        "href": "http://localhost:7770/sales/order/view/order_id/189/",
+        "text": "000000189 5/2/23 $754.99 Pending View Order Reorder"
+      },
+      {
+        "order": "000000188",
+        "date": "5/2/23",
+        "total": 2004.99,
+        "status": "Pending",
+        "href": "http://localhost:7770/sales/order/view/order_id/188/",
+        "text": "000000188 5/2/23 $2,004.99 Pending View Order Reorder"
+      },
+      {
+        "order": "000000187",
+        "date": "5/2/23",
+        "total": 1004.99,
+        "status": "Pending",
+        "href": "http://localhost:7770/sales/order/view/order_id/187/",
+        "text": "000000187 5/2/23 $1,004.99 Pending View Order Reorder"
+      },
+      {
+        "order": "000000180",
+        "date": "3/11/23",
+        "total": 65.32,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/180/",
+        "text": "000000180 3/11/23 $65.32 Complete View Order Reorder"
+      },
+      {
+        "order": "000000166",
+        "date": "3/10/23",
+        "total": 17.99,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/166/",
+        "text": "000000166 3/10/23 $17.99 Complete View Order Reorder"
+      },
+      {
+        "order": "000000161",
+        "date": "2/27/23",
+        "total": 762.18,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/161/",
+        "text": "000000161 2/27/23 $762.18 Complete View Order Reorder"
+      },
+      {
+        "order": "000000156",
+        "date": "2/24/23",
+        "total": 231.54,
+        "status": "Canceled",
+        "href": "http://localhost:7770/sales/order/view/order_id/156/",
+        "text": "000000156 2/24/23 $231.54 Canceled View Order Reorder"
+      },
+      {
+        "order": "000000158",
+        "date": "2/11/23",
+        "total": 174.99,
+        "status": "Canceled",
+        "href": "http://localhost:7770/sales/order/view/order_id/158/",
+        "text": "000000158 2/11/23 $174.99 Canceled View Order Reorder"
+      },
+      {
+        "order": "000000157",
+        "date": "2/9/23",
+        "total": 185.32,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/157/",
+        "text": "000000157 2/9/23 $185.32 Complete View Order Reorder"
+      },
+      {
+        "order": "000000148",
+        "date": "1/29/23",
+        "total": 440.64,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/148/",
+        "text": "000000148 1/29/23 $440.64 Complete View Order Reorder"
+      },
+      {
+        "order": "000000163",
+        "date": "1/16/23",
+        "total": 132.24,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/163/",
+        "text": "000000163 1/16/23 $132.24 Complete View Order Reorder"
+      },
+      {
+        "order": "000000154",
+        "date": "12/18/22",
+        "total": 97.15,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/154/",
+        "text": "000000154 12/18/22 $97.15 Complete View Order Reorder"
+      },
+      {
+        "order": "000000184",
+        "date": "12/14/22",
+        "total": 20.49,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/184/",
+        "text": "000000184 12/14/22 $20.49 Complete View Order Reorder"
+      },
+      {
+        "order": "000000162",
+        "date": "12/12/22",
+        "total": 53.29,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/162/",
+        "text": "000000162 12/12/22 $53.29 Complete View Order Reorder"
+      },
+      {
+        "order": "000000174",
+        "date": "12/4/22",
+        "total": 32.47,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/174/",
+        "text": "000000174 12/4/22 $32.47 Complete View Order Reorder"
+      },
+      {
+        "order": "000000164",
+        "date": "11/26/22",
+        "total": 218.17,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/164/",
+        "text": "000000164 11/26/22 $218.17 Complete View Order Reorder"
+      },
+      {
+        "order": "000000171",
+        "date": "11/20/22",
+        "total": 133.07,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/171/",
+        "text": "000000171 11/20/22 $133.07 Complete View Order Reorder"
+      },
+      {
+        "order": "000000183",
+        "date": "11/11/22",
+        "total": 51.94,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/183/",
+        "text": "000000183 11/11/22 $51.94 Complete View Order Reorder"
+      },
+      {
+        "order": "000000176",
+        "date": "10/22/22",
+        "total": 845.07,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/176/",
+        "text": "000000176 10/22/22 $845.07 Complete View Order Reorder"
+      },
+      {
+        "order": "000000178",
+        "date": "10/21/22",
+        "total": 345.84,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/178/",
+        "text": "000000178 10/21/22 $345.84 Complete View Order Reorder"
+      },
+      {
+        "order": "000000177",
+        "date": "10/18/22",
+        "total": 2126.32,
+        "status": "Canceled",
+        "href": "http://localhost:7770/sales/order/view/order_id/177/",
+        "text": "000000177 10/18/22 $2,126.32 Canceled View Order Reorder"
+      },
+      {
+        "order": "000000185",
+        "date": "10/3/22",
+        "total": 18.99,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/185/",
+        "text": "000000185 10/3/22 $18.99 Complete View Order Reorder"
+      },
+      {
+        "order": "000000179",
+        "date": "9/29/22",
+        "total": 2890.53,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/179/",
+        "text": "000000179 9/29/22 $2,890.53 Complete View Order Reorder"
+      },
+      {
+        "order": "000000175",
+        "date": "9/1/22",
+        "total": 133.85,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/175/",
+        "text": "000000175 9/1/22 $133.85 Complete View Order Reorder"
+      },
+      {
+        "order": "000000172",
+        "date": "8/12/22",
+        "total": 77.66,
+        "status": "Canceled",
+        "href": "http://localhost:7770/sales/order/view/order_id/172/",
+        "text": "000000172 8/12/22 $77.66 Canceled View Order Reorder"
+      },
+      {
+        "order": "000000155",
+        "date": "8/10/22",
+        "total": 38.99,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/155/",
+        "text": "000000155 8/10/22 $38.99 Complete View Order Reorder"
+      },
+      {
+        "order": "000000165",
+        "date": "8/4/22",
+        "total": 36.99,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/165/",
+        "text": "000000165 8/4/22 $36.99 Complete View Order Reorder"
+      },
+      {
+        "order": "000000149",
+        "date": "7/25/22",
+        "total": 354.66,
+        "status": "Canceled",
+        "href": "http://localhost:7770/sales/order/view/order_id/149/",
+        "text": "000000149 7/25/22 $354.66 Canceled View Order Reorder"
+      },
+      {
+        "order": "000000167",
+        "date": "7/8/22",
+        "total": 40.16,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/167/",
+        "text": "000000167 7/8/22 $40.16 Complete View Order Reorder"
+      },
+      {
+        "order": "000000182",
+        "date": "6/30/22",
+        "total": 173.56,
+        "status": "Canceled",
+        "href": "http://localhost:7770/sales/order/view/order_id/182/",
+        "text": "000000182 6/30/22 $173.56 Canceled View Order Reorder"
+      },
+      {
+        "order": "000000181",
+        "date": "5/22/22",
+        "total": 298.65,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/181/",
+        "text": "000000181 5/22/22 $298.65 Complete View Order Reorder"
+      },
+      {
+        "order": "000000168",
+        "date": "4/27/22",
+        "total": 24.86,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/168/",
+        "text": "000000168 4/27/22 $24.86 Complete View Order Reorder"
+      },
+      {
+        "order": "000000159",
+        "date": "4/5/22",
+        "total": 77.96,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/159/",
+        "text": "000000159 4/5/22 $77.96 Complete View Order Reorder"
+      },
+      {
+        "order": "000000173",
+        "date": "3/10/22",
+        "total": 206.59,
+        "status": "Canceled",
+        "href": "http://localhost:7770/sales/order/view/order_id/173/",
+        "text": "000000173 3/10/22 $206.59 Canceled View Order Reorder"
+      },
+      {
+        "order": "000000160",
+        "date": "3/2/22",
+        "total": 115.18,
+        "status": "Canceled",
+        "href": "http://localhost:7770/sales/order/view/order_id/160/",
+        "text": "000000160 3/2/22 $115.18 Canceled View Order Reorder"
+      },
+      {
+        "order": "000000169",
+        "date": "3/2/22",
+        "total": 52.35,
+        "status": "Complete",
+        "href": "http://localhost:7770/sales/order/view/order_id/169/",
+        "text": "000000169 3/2/22 $52.35 Complete View Order Reorder"
+      }
+    ],
+    "window": [
+      "2023-06-10",
+      "2023-06-12"
+    ],
+    "complete_orders": [],
+    "selection_rule": "status Complete and date inside the stated window"
+  },
+  "notes": [
+    "Only complete orders inside the date window are summed."
+  ],
+  "error": null,
+  "official_eval": {
+    "task_id": 48,
+    "intent_template_id": 197,
+    "sites": [
+      "shopping"
+    ],
+    "task_revision": 2,
+    "status": "success",
+    "score": 1.0,
+    "evaluators_results": [
+      {
+        "evaluator_name": "AgentResponseEvaluator",
+        "status": "success",
+        "score": 1.0,
+        "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    {\n      \"order_count\": 0,\n      \"amount\": 0\n    }\n  ],\n  \"error_details\": null\n}\n",
+        "actual_normalized": {
+          "retrieved_data": [
+            {
+              "order_count": 0.0,
+              "amount": "0.0"
+            }
+          ],
+          "task_type": "retrieve",
+          "status": "success"
+        },
+        "expected": {
+          "task_type": "retrieve",
+          "status": "success",
+          "retrieved_data": [
+            {
+              "order_count": 0.0,
+              "amount": "0.0"
+            }
+          ]
+        },
+        "assertions": null,
+        "error_msg": null,
+        "should_not_exist": null
+      }
+    ],
+    "error_msg": null,
+    "webarena_verified_version": "1.2.3.post1.dev0",
+    "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+    "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "official_success": true
+  },
+  "official_success": true
+}

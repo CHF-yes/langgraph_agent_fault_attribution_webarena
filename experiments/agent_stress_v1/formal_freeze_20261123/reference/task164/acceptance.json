@@ -1,0 +1,39 @@
+{
+  "schema": "agent_stress_frozen_acceptance/1",
+  "task_id": 164,
+  "site": "shopping",
+  "template_id": 136,
+  "endpoint": "http://localhost:7770/review/product/listAjax/id/6523",
+  "supplement": false,
+  "fault_pilot": false,
+  "normal": {
+    "passed": true,
+    "steps": 2,
+    "official_success": true,
+    "answer": [
+      "Meh"
+    ],
+    "error": null,
+    "evidence": "task164/normal/reference_path.json"
+  },
+  "trigger": {
+    "passed": true,
+    "injections": 1,
+    "first_exposure_step": 2,
+    "error_type": "500",
+    "evidence": "task164/recovery/fault_evidence.json"
+  },
+  "recovery": {
+    "passed": true,
+    "steps": 12,
+    "window_steps": 10,
+    "released": "window_expired",
+    "official_success": true,
+    "answer": [
+      "Meh"
+    ],
+    "error": null,
+    "evidence": "task164/recovery/reference_path.json"
+  },
+  "passed": true
+}

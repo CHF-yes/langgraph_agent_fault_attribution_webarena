@@ -1,0 +1,39 @@
+{
+  "schema": "agent_stress_frozen_acceptance/1",
+  "task_id": 149,
+  "site": "shopping",
+  "template_id": 155,
+  "endpoint": "http://localhost:7770/sales/order/history",
+  "supplement": true,
+  "fault_pilot": false,
+  "normal": {
+    "passed": true,
+    "steps": 7,
+    "official_success": true,
+    "answer": [
+      "Green-vines"
+    ],
+    "error": null,
+    "evidence": "task149/normal/reference_path.json"
+  },
+  "trigger": {
+    "passed": true,
+    "injections": 1,
+    "first_exposure_step": 2,
+    "error_type": "500",
+    "evidence": "task149/recovery/fault_evidence.json"
+  },
+  "recovery": {
+    "passed": true,
+    "steps": 17,
+    "window_steps": 10,
+    "released": "window_expired",
+    "official_success": true,
+    "answer": [
+      "Green-vines"
+    ],
+    "error": null,
+    "evidence": "task149/recovery/reference_path.json"
+  },
+  "passed": true
+}

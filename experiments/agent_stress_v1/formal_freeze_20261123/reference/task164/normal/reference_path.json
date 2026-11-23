@@ -1,0 +1,104 @@
+{
+  "schema": "agent_stress_frozen_reference_path/1",
+  "task_id": 164,
+  "arm": "normal",
+  "recorded_at": "2026-11-23T09:24:14.807470+00:00",
+  "site": "shopping",
+  "start_url": "http://localhost:7770/mineralogie-all-natural-lip-gloss-ruby-rose.html",
+  "intent": "Get all review titles with 2 stars or below for the product on the current page.",
+  "intent_template_id": 136,
+  "endpoint": "http://localhost:7770/review/product/listAjax/id/6523",
+  "steps": 2,
+  "actions": [
+    {
+      "step": 1,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:7770/mineralogie-all-natural-lip-gloss-ruby-rose.html"
+      },
+      "url_before": "about:blank",
+      "url_after": "http://localhost:7770/mineralogie-all-natural-lip-gloss-ruby-rose.html",
+      "note": "task start URL / shared login state"
+    },
+    {
+      "step": 2,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:7770/review/product/listAjax/id/6523/"
+      },
+      "url_before": "http://localhost:7770/mineralogie-all-natural-lip-gloss-ruby-rose.html",
+      "url_after": "http://localhost:7770/review/product/listAjax/id/6523/",
+      "note": "all customer reviews for the current product"
+    }
+  ],
+  "pages": [
+    {
+      "step": 2,
+      "name": "reviews",
+      "url": "http://localhost:7770/review/product/listAjax/id/6523/",
+      "text": "pages/02_reviews.txt",
+      "html": "pages/02_reviews.html"
+    }
+  ],
+  "answer": [
+    "Meh"
+  ],
+  "evidence": {
+    "review_url": "http://localhost:7770/review/product/listAjax/id/6523/",
+    "reviews_seen": 3,
+    "matched": [
+      {
+        "title": "Meh",
+        "rating": "Rating\n20%",
+        "author": "catherine brown",
+        "content": "DryUneven color"
+      }
+    ],
+    "selection_rule": "displayed rating <= 40% (two stars or below)"
+  },
+  "notes": [
+    "Review titles are taken verbatim from the review list."
+  ],
+  "error": null,
+  "official_eval": {
+    "task_id": 164,
+    "intent_template_id": 136,
+    "sites": [
+      "shopping"
+    ],
+    "task_revision": 2,
+    "status": "success",
+    "score": 1.0,
+    "evaluators_results": [
+      {
+        "evaluator_name": "AgentResponseEvaluator",
+        "status": "success",
+        "score": 1.0,
+        "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"Meh\"\n  ],\n  \"error_details\": null\n}\n",
+        "actual_normalized": {
+          "retrieved_data": [
+            "meh"
+          ],
+          "task_type": "retrieve",
+          "status": "success"
+        },
+        "expected": {
+          "task_type": "retrieve",
+          "status": "success",
+          "retrieved_data": [
+            "meh"
+          ]
+        },
+        "assertions": null,
+        "error_msg": null,
+        "should_not_exist": null
+      }
+    ],
+    "error_msg": null,
+    "webarena_verified_version": "1.2.3.post1.dev0",
+    "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+    "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "official_success": true
+  },
+  "official_success": true
+}

@@ -1,0 +1,1435 @@
+{
+  "schema": "agent_stress_frozen_reference_path/1",
+  "task_id": 316,
+  "arm": "recovery",
+  "recorded_at": "2026-11-23T09:29:49.010612+00:00",
+  "site": "gitlab",
+  "endpoint": "http://localhost:8023/facebook/create-react-app/-/graphs",
+  "trigger_url": "http://localhost:8023/facebook/create-react-app/-/graphs/main",
+  "window_steps": 10,
+  "steps": 12,
+  "actions": [
+    {
+      "step": 1,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023"
+      },
+      "url_before": "about:blank",
+      "url_after": "http://localhost:8023/",
+      "note": "bootstrap on the task start URL (not armed)",
+      "proxy_step": 1,
+      "fault_page": false,
+      "observation_chars": 9254
+    },
+    {
+      "step": 2,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/facebook/create-react-app/-/graphs/main"
+      },
+      "url_before": "http://localhost:8023/",
+      "url_after": "http://localhost:8023/facebook/create-react-app/-/graphs/main",
+      "note": "first qualified navigation to the fault endpoint",
+      "proxy_step": 2,
+      "fault_page": true,
+      "observation_chars": 89
+    },
+    {
+      "step": 3,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/explore"
+      },
+      "url_before": "http://localhost:8023/facebook/create-react-app/-/graphs/main",
+      "url_after": "http://localhost:8023/explore",
+      "note": "window filler 1/9",
+      "proxy_step": 3,
+      "fault_page": false,
+      "observation_chars": 12834
+    },
+    {
+      "step": 4,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/dashboard/projects"
+      },
+      "url_before": "http://localhost:8023/explore",
+      "url_after": "http://localhost:8023/dashboard/projects",
+      "note": "window filler 2/9",
+      "proxy_step": 4,
+      "fault_page": false,
+      "observation_chars": 9254
+    },
+    {
+      "step": 5,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/"
+      },
+      "url_before": "http://localhost:8023/dashboard/projects",
+      "url_after": "http://localhost:8023/",
+      "note": "window filler 3/9",
+      "proxy_step": 5,
+      "fault_page": false,
+      "observation_chars": 9254
+    },
+    {
+      "step": 6,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/explore"
+      },
+      "url_before": "http://localhost:8023/",
+      "url_after": "http://localhost:8023/explore",
+      "note": "window filler 4/9",
+      "proxy_step": 6,
+      "fault_page": false,
+      "observation_chars": 12834
+    },
+    {
+      "step": 7,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/dashboard/projects"
+      },
+      "url_before": "http://localhost:8023/explore",
+      "url_after": "http://localhost:8023/dashboard/projects",
+      "note": "window filler 5/9",
+      "proxy_step": 7,
+      "fault_page": false,
+      "observation_chars": 9254
+    },
+    {
+      "step": 8,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/"
+      },
+      "url_before": "http://localhost:8023/dashboard/projects",
+      "url_after": "http://localhost:8023/",
+      "note": "window filler 6/9",
+      "proxy_step": 8,
+      "fault_page": false,
+      "observation_chars": 9254
+    },
+    {
+      "step": 9,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/explore"
+      },
+      "url_before": "http://localhost:8023/",
+      "url_after": "http://localhost:8023/explore",
+      "note": "window filler 7/9",
+      "proxy_step": 9,
+      "fault_page": false,
+      "observation_chars": 12834
+    },
+    {
+      "step": 10,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/dashboard/projects"
+      },
+      "url_before": "http://localhost:8023/explore",
+      "url_after": "http://localhost:8023/dashboard/projects",
+      "note": "window filler 8/9",
+      "proxy_step": 10,
+      "fault_page": false,
+      "observation_chars": 9254
+    },
+    {
+      "step": 11,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/"
+      },
+      "url_before": "http://localhost:8023/dashboard/projects",
+      "url_after": "http://localhost:8023/",
+      "note": "window filler 9/9",
+      "proxy_step": 11,
+      "fault_page": false,
+      "observation_chars": 9254
+    },
+    {
+      "step": 12,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/facebook/create-react-app/-/graphs/main"
+      },
+      "url_before": "http://localhost:8023/",
+      "url_after": "http://localhost:8023/facebook/create-react-app/-/graphs/main",
+      "note": "contributor graph on the task-critical endpoint",
+      "proxy_step": 12,
+      "fault_page": false,
+      "observation_chars": 31028
+    }
+  ],
+  "pages": [
+    {
+      "step": 12,
+      "name": "contributors",
+      "url": "http://localhost:8023/facebook/create-react-app/-/graphs/main",
+      "text": "pages/12_contributors.txt",
+      "html": "pages/12_contributors.html"
+    }
+  ],
+  "answer": [
+    "dan.abramov@gmail.com",
+    "timer150@gmail.com",
+    "ian@iansutherland.ca"
+  ],
+  "evidence": {
+    "url": "http://localhost:8023/facebook/create-react-app/-/graphs/main",
+    "contributors": [
+      {
+        "name": "Dan Abramov",
+        "commits": 634,
+        "email": "dan.abramov@gmail.com"
+      },
+      {
+        "name": "Joe Haddad",
+        "commits": 292,
+        "email": "timer150@gmail.com"
+      },
+      {
+        "name": "Ian Sutherland",
+        "commits": 153,
+        "email": "ian@iansutherland.ca"
+      },
+      {
+        "name": "Ian Schmitz",
+        "commits": 85,
+        "email": "ianschmitz@gmail.com"
+      },
+      {
+        "name": "Kristofer Selbekk",
+        "commits": 65,
+        "email": "selbeezy@gmail.com"
+      },
+      {
+        "name": "Ville Immonen",
+        "commits": 49,
+        "email": "ville.immonen@iki.fi"
+      },
+      {
+        "name": "Brody McKee",
+        "commits": 28,
+        "email": "mrmckeb@users.noreply.github.com"
+      },
+      {
+        "name": "Christopher Chedeau",
+        "commits": 25,
+        "email": "vjeux@fb.com"
+      },
+      {
+        "name": "Ade Viankakrisna Fadlil",
+        "commits": 23,
+        "email": "viankakrisna@gmail.com"
+      },
+      {
+        "name": "Dan Abramov",
+        "commits": 19,
+        "email": "gaearon@fb.com"
+      },
+      {
+        "name": "Michaël De Boey",
+        "commits": 18,
+        "email": "info@michaeldeboey.be"
+      },
+      {
+        "name": "Andreas Cederström",
+        "commits": 17,
+        "email": "andriijas@users.noreply.github.com"
+      },
+      {
+        "name": "Kristofer Selbekk",
+        "commits": 14,
+        "email": "kristofer.selbekk@sparebank1.no"
+      },
+      {
+        "name": "Jack Zhao",
+        "commits": 13,
+        "email": "jzhao@fb.com"
+      },
+      {
+        "name": "Jeffrey Posnick",
+        "commits": 11,
+        "email": "jeffy@google.com"
+      },
+      {
+        "name": "Tharaka Wijebandara",
+        "commits": 10,
+        "email": "tharaka.nw@gmail.com"
+      },
+      {
+        "name": "Bruno Lemos",
+        "commits": 9,
+        "email": "brunolemos@users.noreply.github.com"
+      },
+      {
+        "name": "Maël Nison",
+        "commits": 8,
+        "email": "nison.mael@gmail.com"
+      },
+      {
+        "name": "Alex Guerra",
+        "commits": 8,
+        "email": "alex@heyimalex.com"
+      },
+      {
+        "name": "Fabrizio Castellarin",
+        "commits": 8,
+        "email": "f.castellarin@gmail.com"
+      },
+      {
+        "name": "Max",
+        "commits": 8,
+        "email": "contact@mstoiber.com"
+      },
+      {
+        "name": "Jirat Ki",
+        "commits": 7,
+        "email": "saakyz@gmail.com"
+      },
+      {
+        "name": "ZHAO Jinxiang",
+        "commits": 7,
+        "email": "xiaoxiangmoe@gmail.com"
+      },
+      {
+        "name": "Kristofer Selbekk",
+        "commits": 7,
+        "email": "selbekk@users.noreply.github.com"
+      },
+      {
+        "name": "Ro Savage",
+        "commits": 7,
+        "email": "rowan.savage@gmail.com"
+      },
+      {
+        "name": "Brian Ng",
+        "commits": 7,
+        "email": "bng412@gmail.com"
+      },
+      {
+        "name": "Morten N.O. Nørgaard Henriksen",
+        "commits": 6,
+        "email": "morten.n.o.henriksen@icloud.com"
+      },
+      {
+        "name": "James George",
+        "commits": 6,
+        "email": "jamesgeorge998001@gmail.com"
+      },
+      {
+        "name": "Amy Lam",
+        "commits": 6,
+        "email": "alam@fastly.com"
+      },
+      {
+        "name": "Bond",
+        "commits": 6,
+        "email": "bondz@users.noreply.github.com"
+      },
+      {
+        "name": "Siddharth Doshi",
+        "commits": 6,
+        "email": "sidoshi510@gmail.com"
+      },
+      {
+        "name": "Jonathan",
+        "commits": 6,
+        "email": "jonathan@xgecko.com"
+      },
+      {
+        "name": "Ryan Sullivan",
+        "commits": 6,
+        "email": "ryansully@users.noreply.github.com"
+      },
+      {
+        "name": "Valerii Sorokobatko",
+        "commits": 6,
+        "email": "valeriy.sorokobatko@gmail.com"
+      },
+      {
+        "name": "Luke Karrys",
+        "commits": 5,
+        "email": "luke@lukekarrys.com"
+      },
+      {
+        "name": "dependabot[bot]",
+        "commits": 5,
+        "email": "49699333+dependabot[bot]@users.noreply.github.com"
+      },
+      {
+        "name": "Simen Bekkhus",
+        "commits": 5,
+        "email": "sbekkhus91@gmail.com"
+      },
+      {
+        "name": "Kent C. Dodds",
+        "commits": 5,
+        "email": "kent+github@doddsfamily.us"
+      },
+      {
+        "name": "Jack Zhao",
+        "commits": 5,
+        "email": "yzhao@grailbio.com"
+      },
+      {
+        "name": "Marek Suscak",
+        "commits": 5,
+        "email": "marek.suscak@gmail.com"
+      },
+      {
+        "name": "bradfordlemley",
+        "commits": 5,
+        "email": "bradfordlemley@gmail.com"
+      },
+      {
+        "name": "Johann Hubert Sonntagbauer",
+        "commits": 5,
+        "email": "johann.sonntagbauer@gmx.at"
+      },
+      {
+        "name": "Max Stoiber",
+        "commits": 5,
+        "email": "contact@mxstbr.com"
+      },
+      {
+        "name": "Kevin Lacker",
+        "commits": 5,
+        "email": "lacker@gmail.com"
+      },
+      {
+        "name": "Ernesto García",
+        "commits": 4,
+        "email": "gnapse@gmail.com"
+      },
+      {
+        "name": "Kanitkorn Sujautra",
+        "commits": 4,
+        "email": "lukyth@users.noreply.github.com"
+      },
+      {
+        "name": "Lewis Llobera",
+        "commits": 4,
+        "email": "billobera@gmail.com"
+      },
+      {
+        "name": "Andrew Luca",
+        "commits": 4,
+        "email": "thendrluca@gmail.com"
+      },
+      {
+        "name": "Endi",
+        "commits": 4,
+        "email": "endiliey@gmail.com"
+      },
+      {
+        "name": "Pete Nykänen",
+        "commits": 4,
+        "email": "pete.a.nykanen@gmail.com"
+      },
+      {
+        "name": "Trevor Brindle",
+        "commits": 4,
+        "email": "tabrindle@gmail.com"
+      },
+      {
+        "name": "XiaoYan Li",
+        "commits": 4,
+        "email": "lxy.lixiaoyan@gmail.com"
+      },
+      {
+        "name": "Mario Nebl",
+        "commits": 4,
+        "email": "marionebl@users.noreply.github.com"
+      },
+      {
+        "name": "Eli Perelman",
+        "commits": 4,
+        "email": "eli@eliperelman.com"
+      },
+      {
+        "name": "Joe Lim",
+        "commits": 4,
+        "email": "xjlim@users.noreply.github.com"
+      },
+      {
+        "name": "Jonny Buchanan",
+        "commits": 4,
+        "email": "jonathan.buchanan@gmail.com"
+      },
+      {
+        "name": "Konstantin Tarkus",
+        "commits": 4,
+        "email": "koistya@gmail.com"
+      },
+      {
+        "name": "Forbes Lindesay",
+        "commits": 4,
+        "email": "forbes@lindesay.co.uk"
+      },
+      {
+        "name": "Gabriel Aumala",
+        "commits": 4,
+        "email": "gaumala@espol.edu.ec"
+      },
+      {
+        "name": "Dave Ceddia",
+        "commits": 4,
+        "email": "dceddia@gmail.com"
+      },
+      {
+        "name": "Héliton Nordt",
+        "commits": 4,
+        "email": "hnordt@hnordt.com"
+      },
+      {
+        "name": "Keyan Zhang",
+        "commits": 4,
+        "email": "root@keyanzhang.com"
+      },
+      {
+        "name": "eanplatter",
+        "commits": 4,
+        "email": "eanplatter@gmail.com"
+      },
+      {
+        "name": "Leo Lamprecht",
+        "commits": 3,
+        "email": "mindrun@icloud.com"
+      },
+      {
+        "name": "Konrad Stepniak",
+        "commits": 3,
+        "email": "stepnkon@amazon.com"
+      },
+      {
+        "name": "Justin Grant",
+        "commits": 3,
+        "email": "justingrant@users.noreply.github.com"
+      },
+      {
+        "name": "Tobias Büschel",
+        "commits": 3,
+        "email": "13087421+tobiasbueschel@users.noreply.github.com"
+      },
+      {
+        "name": "Timothy",
+        "commits": 3,
+        "email": "1695613+timothyis@users.noreply.github.com"
+      },
+      {
+        "name": "Cory House",
+        "commits": 3,
+        "email": "housecor@gmail.com"
+      },
+      {
+        "name": "Reece Dunham",
+        "commits": 3,
+        "email": "me@rdil.rocks"
+      },
+      {
+        "name": "Robert van Steen",
+        "commits": 3,
+        "email": "hello@rovansteen.nl"
+      },
+      {
+        "name": "Orta",
+        "commits": 3,
+        "email": "orta.therox@gmail.com"
+      },
+      {
+        "name": "Tomáš Szabo",
+        "commits": 3,
+        "email": "tomas.szabo@deftomat.com"
+      },
+      {
+        "name": "Dallon Feldner",
+        "commits": 3,
+        "email": "dallonf@users.noreply.github.com"
+      },
+      {
+        "name": "Jason Laster",
+        "commits": 3,
+        "email": "jason.laster.11@gmail.com"
+      },
+      {
+        "name": "Noel Yoo",
+        "commits": 3,
+        "email": "innovation.noel@gmail.com"
+      },
+      {
+        "name": "Nima Shahri",
+        "commits": 3,
+        "email": "nshahri@users.noreply.github.com"
+      },
+      {
+        "name": "Kévin Dunglas",
+        "commits": 3,
+        "email": "dunglas@gmail.com"
+      },
+      {
+        "name": "David Gilbertson",
+        "commits": 3,
+        "email": "gilbertson.david@gmail.com"
+      },
+      {
+        "name": "Marco Fugaro",
+        "commits": 3,
+        "email": "marco.fugaro@gmail.com"
+      },
+      {
+        "name": "Mikhail Osher",
+        "commits": 3,
+        "email": "yo@miraage.io"
+      },
+      {
+        "name": "Jih-Chi Lee",
+        "commits": 3,
+        "email": "jihchi@users.noreply.github.com"
+      },
+      {
+        "name": "Levin Rickert",
+        "commits": 3,
+        "email": "me@levrik.io"
+      },
+      {
+        "name": "Lorenzo Palmes",
+        "commits": 3,
+        "email": "lpalmes@gmail.com"
+      },
+      {
+        "name": "themre",
+        "commits": 3,
+        "email": "mtrebizan@gmail.com"
+      },
+      {
+        "name": "Brian Vaughn",
+        "commits": 3,
+        "email": "brian.david.vaughn@gmail.com"
+      },
+      {
+        "name": "anraka",
+        "commits": 3,
+        "email": "anilreddykatta@hotmail.com"
+      },
+      {
+        "name": "pd4d10",
+        "commits": 3,
+        "email": "pd4d10@gmail.com"
+      },
+      {
+        "name": "Fatih",
+        "commits": 3,
+        "email": "frontsideair@users.noreply.github.com"
+      },
+      {
+        "name": "Stefan",
+        "commits": 3,
+        "email": "bebbi@users.noreply.github.com"
+      },
+      {
+        "name": "Nazim Hajidin",
+        "commits": 3,
+        "email": "nhajidin@users.noreply.github.com"
+      },
+      {
+        "name": "Vesa Laakso",
+        "commits": 3,
+        "email": "laakso.vesa@gmail.com"
+      },
+      {
+        "name": "Christopher Chedeau",
+        "commits": 3,
+        "email": "vjeuxx@gmail.com"
+      },
+      {
+        "name": "Jimmy Miller",
+        "commits": 3,
+        "email": "jimmy.miller@nextgearcapital.com"
+      },
+      {
+        "name": "Kristóf Poduszló",
+        "commits": 3,
+        "email": "kripod@protonmail.com"
+      },
+      {
+        "name": "Alex Zherdev",
+        "commits": 3,
+        "email": "alex.zherdev@gmail.com"
+      },
+      {
+        "name": "Hung Viet Nguyen",
+        "commits": 2,
+        "email": "nguyenviethunghl00@gmail.com"
+      },
+      {
+        "name": "Hasan Ayan",
+        "commits": 2,
+        "email": "hasanayan@me.com"
+      },
+      {
+        "name": "Kristoffer K",
+        "commits": 2,
+        "email": "merceyz@users.noreply.github.com"
+      },
+      {
+        "name": "Huáng Jùnliàng",
+        "commits": 2,
+        "email": "jlhwung@gmail.com"
+      }
+    ],
+    "mode": "emails",
+    "selection_rule": "contributor graph order (commit count, merge commits excluded)"
+  },
+  "notes": [
+    "The graph page already orders contributors by commit count."
+  ],
+  "error": null,
+  "fault_evidence": {
+    "schema": "agent_stress_frozen_fault_recovery/1",
+    "task_id": 316,
+    "endpoint": {
+      "scheme": "http",
+      "host": "localhost",
+      "port": 8023,
+      "path": "/facebook/create-react-app/-/graphs",
+      "target_policy_version": "endpoint-path-segment-v1"
+    },
+    "variant": "persistent",
+    "window_steps": 10,
+    "steps": [
+      {
+        "label": "trigger",
+        "url": "http://localhost:8023/facebook/create-react-app/-/graphs/main",
+        "fault_page": true,
+        "proxy_step": 2
+      },
+      {
+        "label": "filler_1",
+        "url": "http://localhost:8023/explore",
+        "fault_page": false,
+        "proxy_step": 3
+      },
+      {
+        "label": "filler_2",
+        "url": "http://localhost:8023/dashboard/projects",
+        "fault_page": false,
+        "proxy_step": 4
+      },
+      {
+        "label": "filler_3",
+        "url": "http://localhost:8023/",
+        "fault_page": false,
+        "proxy_step": 5
+      },
+      {
+        "label": "filler_4",
+        "url": "http://localhost:8023/explore",
+        "fault_page": false,
+        "proxy_step": 6
+      },
+      {
+        "label": "filler_5",
+        "url": "http://localhost:8023/dashboard/projects",
+        "fault_page": false,
+        "proxy_step": 7
+      },
+      {
+        "label": "filler_6",
+        "url": "http://localhost:8023/",
+        "fault_page": false,
+        "proxy_step": 8
+      },
+      {
+        "label": "filler_7",
+        "url": "http://localhost:8023/explore",
+        "fault_page": false,
+        "proxy_step": 9
+      },
+      {
+        "label": "filler_8",
+        "url": "http://localhost:8023/dashboard/projects",
+        "fault_page": false,
+        "proxy_step": 10
+      },
+      {
+        "label": "filler_9",
+        "url": "http://localhost:8023/",
+        "fault_page": false,
+        "proxy_step": 11
+      },
+      {
+        "label": "normal_after_window",
+        "url": "http://localhost:8023/facebook/create-react-app/-/graphs/main",
+        "proxy_step": 12
+      }
+    ],
+    "exposures": [
+      {
+        "observation_uid": "goto:1#1",
+        "source_action_uid": "goto:1",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 1,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:8023/",
+        "matched_endpoint": false,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/facebook/create-react-app/-/graphs",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/",
+          "query": ""
+        },
+        "reason": "not_armed",
+        "fault_delivered": false
+      },
+      {
+        "observation_uid": "goto:2#2",
+        "source_action_uid": "goto:2",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 2,
+        "faults_delivered": [
+          "web_http_error"
+        ],
+        "delivered": true,
+        "raw_url": "http://localhost:8023/facebook/create-react-app/-/graphs/main",
+        "matched_endpoint": true,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/facebook/create-react-app/-/graphs",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/facebook/create-react-app/-/graphs/main",
+          "query": ""
+        },
+        "reason": "injected_or_same_action_replay",
+        "fault_delivered": true
+      },
+      {
+        "observation_uid": "goto:3#3",
+        "source_action_uid": "goto:3",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 3,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:8023/explore",
+        "matched_endpoint": false,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/facebook/create-react-app/-/graphs",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/explore",
+          "query": ""
+        },
+        "reason": "off_endpoint",
+        "fault_delivered": false
+      },
+      {
+        "observation_uid": "goto:4#4",
+        "source_action_uid": "goto:4",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 4,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:8023/dashboard/projects",
+        "matched_endpoint": false,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/facebook/create-react-app/-/graphs",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/dashboard/projects",
+          "query": ""
+        },
+        "reason": "off_endpoint",
+        "fault_delivered": false
+      },
+      {
+        "observation_uid": "goto:5#5",
+        "source_action_uid": "goto:5",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 5,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:8023/",
+        "matched_endpoint": false,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/facebook/create-react-app/-/graphs",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/",
+          "query": ""
+        },
+        "reason": "off_endpoint",
+        "fault_delivered": false
+      },
+      {
+        "observation_uid": "goto:6#6",
+        "source_action_uid": "goto:6",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 6,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:8023/explore",
+        "matched_endpoint": false,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/facebook/create-react-app/-/graphs",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/explore",
+          "query": ""
+        },
+        "reason": "off_endpoint",
+        "fault_delivered": false
+      },
+      {
+        "observation_uid": "goto:7#7",
+        "source_action_uid": "goto:7",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 7,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:8023/dashboard/projects",
+        "matched_endpoint": false,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/facebook/create-react-app/-/graphs",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/dashboard/projects",
+          "query": ""
+        },
+        "reason": "off_endpoint",
+        "fault_delivered": false
+      },
+      {
+        "observation_uid": "goto:8#8",
+        "source_action_uid": "goto:8",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 8,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:8023/",
+        "matched_endpoint": false,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/facebook/create-react-app/-/graphs",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/",
+          "query": ""
+        },
+        "reason": "off_endpoint",
+        "fault_delivered": false
+      },
+      {
+        "observation_uid": "goto:9#9",
+        "source_action_uid": "goto:9",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 9,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:8023/explore",
+        "matched_endpoint": false,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/facebook/create-react-app/-/graphs",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/explore",
+          "query": ""
+        },
+        "reason": "off_endpoint",
+        "fault_delivered": false
+      },
+      {
+        "observation_uid": "goto:10#10",
+        "source_action_uid": "goto:10",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 10,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:8023/dashboard/projects",
+        "matched_endpoint": false,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/facebook/create-react-app/-/graphs",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/dashboard/projects",
+          "query": ""
+        },
+        "reason": "off_endpoint",
+        "fault_delivered": false
+      },
+      {
+        "observation_uid": "goto:11#11",
+        "source_action_uid": "goto:11",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 11,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:8023/",
+        "matched_endpoint": false,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/facebook/create-react-app/-/graphs",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/",
+          "query": ""
+        },
+        "reason": "off_endpoint",
+        "fault_delivered": false
+      },
+      {
+        "observation_uid": "goto:12#12",
+        "source_action_uid": "goto:12",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 12,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:8023/facebook/create-react-app/-/graphs/main",
+        "matched_endpoint": true,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/facebook/create-react-app/-/graphs",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/facebook/create-react-app/-/graphs/main",
+          "query": ""
+        },
+        "reason": "window_expired",
+        "fault_delivered": false
+      }
+    ],
+    "episode": {
+      "snapshot": {
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "target_policy_version": "endpoint-path-segment-v1",
+        "armed": true,
+        "armed_after_step": 1,
+        "target": {
+          "kind": "endpoint",
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/facebook/create-react-app/-/graphs",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "t0": 2,
+        "window_steps": 10,
+        "window_end": 11,
+        "injections": 1,
+        "released": "window_expired",
+        "exposure_class": "once"
+      },
+      "injections": [
+        {
+          "event": "injection",
+          "experiment_id": "ep-http-service-v1",
+          "variant": "persistent",
+          "injection_index": 1,
+          "proxy_step": 2,
+          "action_uid": "goto:2",
+          "target": {
+            "kind": "endpoint",
+            "scheme": "http",
+            "host": "localhost",
+            "port": 8023,
+            "path": "/facebook/create-react-app/-/graphs",
+            "target_policy_version": "endpoint-path-segment-v1"
+          },
+          "error_type": "500",
+          "match": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 8023,
+            "path": "/facebook/create-react-app/-/graphs/main",
+            "query": ""
+          },
+          "timestamp": 1795426165.0897136
+        }
+      ],
+      "events": [
+        {
+          "event": "skip",
+          "proxy_step": 1,
+          "action_uid": "goto:1",
+          "reason": "not_armed",
+          "detail": {
+            "raw_url": "http://localhost:8023/",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 8023,
+              "path": "/",
+              "query": ""
+            }
+          }
+        },
+        {
+          "event": "injection",
+          "experiment_id": "ep-http-service-v1",
+          "variant": "persistent",
+          "injection_index": 1,
+          "proxy_step": 2,
+          "action_uid": "goto:2",
+          "target": {
+            "kind": "endpoint",
+            "scheme": "http",
+            "host": "localhost",
+            "port": 8023,
+            "path": "/facebook/create-react-app/-/graphs",
+            "target_policy_version": "endpoint-path-segment-v1"
+          },
+          "error_type": "500",
+          "match": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 8023,
+            "path": "/facebook/create-react-app/-/graphs/main",
+            "query": ""
+          },
+          "timestamp": 1795426165.0897136
+        },
+        {
+          "event": "skip",
+          "proxy_step": 3,
+          "action_uid": "goto:3",
+          "reason": "off_endpoint",
+          "detail": {
+            "raw_url": "http://localhost:8023/explore",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 8023,
+              "path": "/explore",
+              "query": ""
+            }
+          }
+        },
+        {
+          "event": "skip",
+          "proxy_step": 4,
+          "action_uid": "goto:4",
+          "reason": "off_endpoint",
+          "detail": {
+            "raw_url": "http://localhost:8023/dashboard/projects",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 8023,
+              "path": "/dashboard/projects",
+              "query": ""
+            }
+          }
+        },
+        {
+          "event": "skip",
+          "proxy_step": 5,
+          "action_uid": "goto:5",
+          "reason": "off_endpoint",
+          "detail": {
+            "raw_url": "http://localhost:8023/",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 8023,
+              "path": "/",
+              "query": ""
+            }
+          }
+        },
+        {
+          "event": "skip",
+          "proxy_step": 6,
+          "action_uid": "goto:6",
+          "reason": "off_endpoint",
+          "detail": {
+            "raw_url": "http://localhost:8023/explore",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 8023,
+              "path": "/explore",
+              "query": ""
+            }
+          }
+        },
+        {
+          "event": "skip",
+          "proxy_step": 7,
+          "action_uid": "goto:7",
+          "reason": "off_endpoint",
+          "detail": {
+            "raw_url": "http://localhost:8023/dashboard/projects",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 8023,
+              "path": "/dashboard/projects",
+              "query": ""
+            }
+          }
+        },
+        {
+          "event": "skip",
+          "proxy_step": 8,
+          "action_uid": "goto:8",
+          "reason": "off_endpoint",
+          "detail": {
+            "raw_url": "http://localhost:8023/",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 8023,
+              "path": "/",
+              "query": ""
+            }
+          }
+        },
+        {
+          "event": "skip",
+          "proxy_step": 9,
+          "action_uid": "goto:9",
+          "reason": "off_endpoint",
+          "detail": {
+            "raw_url": "http://localhost:8023/explore",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 8023,
+              "path": "/explore",
+              "query": ""
+            }
+          }
+        },
+        {
+          "event": "skip",
+          "proxy_step": 10,
+          "action_uid": "goto:10",
+          "reason": "off_endpoint",
+          "detail": {
+            "raw_url": "http://localhost:8023/dashboard/projects",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 8023,
+              "path": "/dashboard/projects",
+              "query": ""
+            }
+          }
+        },
+        {
+          "event": "skip",
+          "proxy_step": 11,
+          "action_uid": "goto:11",
+          "reason": "off_endpoint",
+          "detail": {
+            "raw_url": "http://localhost:8023/",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 8023,
+              "path": "/",
+              "query": ""
+            }
+          }
+        },
+        {
+          "event": "release",
+          "proxy_step": 12,
+          "reason": "window_expired"
+        },
+        {
+          "event": "skip",
+          "proxy_step": 12,
+          "action_uid": "goto:12",
+          "reason": "window_expired",
+          "detail": {
+            "raw_url": "http://localhost:8023/facebook/create-react-app/-/graphs/main",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 8023,
+              "path": "/facebook/create-react-app/-/graphs/main",
+              "query": ""
+            }
+          }
+        }
+      ]
+    },
+    "injection_log": [
+      {
+        "fault": "web_http_error",
+        "fault_layer": "observation",
+        "fault_seed": 1,
+        "step": 2,
+        "parameter_action_index": null,
+        "injection_index": 1,
+        "timestamp": 1795426165.089719,
+        "detail": {
+          "mechanism": "synthetic_http_observation_replacement",
+          "endpoint": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 8023,
+            "path": "/facebook/create-react-app/-/graphs",
+            "target_policy_version": "endpoint-path-segment-v1"
+          },
+          "error_type": "500",
+          "action_uid": "goto:2",
+          "proxy_step": 2
+        }
+      }
+    ],
+    "verdict": {
+      "valid": true,
+      "errors": [],
+      "count": 1,
+      "variant": "persistent"
+    }
+  },
+  "official_eval": {
+    "task_id": 316,
+    "intent_template_id": 324,
+    "sites": [
+      "gitlab"
+    ],
+    "task_revision": 2,
+    "status": "success",
+    "score": 1.0,
+    "evaluators_results": [
+      {
+        "evaluator_name": "AgentResponseEvaluator",
+        "status": "success",
+        "score": 1.0,
+        "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    \"dan.abramov@gmail.com\",\n    \"timer150@gmail.com\",\n    \"ian@iansutherland.ca\"\n  ],\n  \"error_details\": null\n}\n",
+        "actual_normalized": {
+          "retrieved_data": [
+            "dan.abramov@gmail.com",
+            "timer150@gmail.com",
+            "ian@iansutherland.ca"
+          ],
+          "task_type": "retrieve",
+          "status": "success"
+        },
+        "expected": {
+          "task_type": "retrieve",
+          "status": "success",
+          "retrieved_data": [
+            "dan.abramov@gmail.com",
+            "timer150@gmail.com",
+            "ian@iansutherland.ca"
+          ]
+        },
+        "assertions": null,
+        "error_msg": null,
+        "should_not_exist": null
+      }
+    ],
+    "error_msg": null,
+    "webarena_verified_version": "1.2.3.post1.dev0",
+    "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+    "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "official_success": true
+  },
+  "official_success": true
+}

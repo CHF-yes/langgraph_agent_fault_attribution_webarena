@@ -1,0 +1,47 @@
+{
+  "schema": "agent_stress_frozen_acceptance/1",
+  "task_id": 28,
+  "site": "reddit",
+  "template_id": 33,
+  "endpoint": "http://localhost:9999/f/WorcesterMA",
+  "supplement": false,
+  "fault_pilot": true,
+  "normal": {
+    "passed": true,
+    "steps": 3,
+    "official_success": true,
+    "answer": [
+      {
+        "username": "mineinhusdson",
+        "post_title": "Best place for a foot rub?",
+        "count": 0
+      }
+    ],
+    "error": null,
+    "evidence": "task28/normal/reference_path.json"
+  },
+  "trigger": {
+    "passed": true,
+    "injections": 1,
+    "first_exposure_step": 2,
+    "error_type": "500",
+    "evidence": "task28/recovery/fault_evidence.json"
+  },
+  "recovery": {
+    "passed": true,
+    "steps": 13,
+    "window_steps": 10,
+    "released": "window_expired",
+    "official_success": true,
+    "answer": [
+      {
+        "username": "mineinhusdson",
+        "post_title": "Best place for a foot rub?",
+        "count": 0
+      }
+    ],
+    "error": null,
+    "evidence": "task28/recovery/reference_path.json"
+  },
+  "passed": true
+}

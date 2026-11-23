@@ -1,0 +1,1022 @@
+{
+  "schema": "agent_stress_frozen_reference_summary/1",
+  "created_at": "2026-11-23T12:09:27.483906+00:00",
+  "roster": [
+    27,
+    28,
+    48,
+    49,
+    66,
+    69,
+    148,
+    149,
+    163,
+    164,
+    168,
+    188,
+    190,
+    206,
+    227,
+    228,
+    294,
+    295,
+    305,
+    314,
+    316,
+    384,
+    784,
+    785
+  ],
+  "passed": 24,
+  "total": 24,
+  "rows": [
+    {
+      "schema": "agent_stress_frozen_acceptance/1",
+      "task_id": 27,
+      "site": "reddit",
+      "template_id": 33,
+      "endpoint": "http://localhost:9999/f/personalfinance",
+      "supplement": false,
+      "fault_pilot": false,
+      "normal": {
+        "passed": true,
+        "steps": 3,
+        "official_success": true,
+        "answer": [
+          {
+            "username": "Hammer94",
+            "post_title": "56 year old mom has no retirement. Where do I even start on her behalf?",
+            "count": 0
+          }
+        ],
+        "error": null,
+        "evidence": "task27/normal/reference_path.json"
+      },
+      "trigger": {
+        "passed": true,
+        "injections": 1,
+        "first_exposure_step": 2,
+        "error_type": "500",
+        "evidence": "task27/recovery/fault_evidence.json"
+      },
+      "recovery": {
+        "passed": true,
+        "steps": 13,
+        "window_steps": 10,
+        "released": "window_expired",
+        "official_success": true,
+        "answer": [
+          {
+            "username": "Hammer94",
+            "post_title": "56 year old mom has no retirement. Where do I even start on her behalf?",
+            "count": 0
+          }
+        ],
+        "error": null,
+        "evidence": "task27/recovery/reference_path.json"
+      },
+      "passed": true
+    },
+    {
+      "schema": "agent_stress_frozen_acceptance/1",
+      "task_id": 28,
+      "site": "reddit",
+      "template_id": 33,
+      "endpoint": "http://localhost:9999/f/WorcesterMA",
+      "supplement": false,
+      "fault_pilot": true,
+      "normal": {
+        "passed": true,
+        "steps": 3,
+        "official_success": true,
+        "answer": [
+          {
+            "username": "mineinhusdson",
+            "post_title": "Best place for a foot rub?",
+            "count": 0
+          }
+        ],
+        "error": null,
+        "evidence": "task28/normal/reference_path.json"
+      },
+      "trigger": {
+        "passed": true,
+        "injections": 1,
+        "first_exposure_step": 2,
+        "error_type": "500",
+        "evidence": "task28/recovery/fault_evidence.json"
+      },
+      "recovery": {
+        "passed": true,
+        "steps": 13,
+        "window_steps": 10,
+        "released": "window_expired",
+        "official_success": true,
+        "answer": [
+          {
+            "username": "mineinhusdson",
+            "post_title": "Best place for a foot rub?",
+            "count": 0
+          }
+        ],
+        "error": null,
+        "evidence": "task28/recovery/reference_path.json"
+      },
+      "passed": true
+    },
+    {
+      "schema": "agent_stress_frozen_acceptance/1",
+      "task_id": 48,
+      "site": "shopping",
+      "template_id": 197,
+      "endpoint": "http://localhost:7770/sales/order/history",
+      "supplement": false,
+      "fault_pilot": false,
+      "normal": {
+        "passed": true,
+        "steps": 5,
+        "official_success": true,
+        "answer": [
+          {
+            "order_count": 0,
+            "amount": 0
+          }
+        ],
+        "error": null,
+        "evidence": "task48/normal/reference_path.json"
+      },
+      "trigger": {
+        "passed": true,
+        "injections": 1,
+        "first_exposure_step": 2,
+        "error_type": "500",
+        "evidence": "task48/recovery/fault_evidence.json"
+      },
+      "recovery": {
+        "passed": true,
+        "steps": 15,
+        "window_steps": 10,
+        "released": "window_expired",
+        "official_success": true,
+        "answer": [
+          {
+            "order_count": 0,
+            "amount": 0
+          }
+        ],
+        "error": null,
+        "evidence": "task48/recovery/reference_path.json"
+      },
+      "passed": true
+    },
+    {
+      "schema": "agent_stress_frozen_acceptance/1",
+      "task_id": 49,
+      "site": "shopping",
+      "template_id": 197,
+      "endpoint": "http://localhost:7770/sales/order/history",
+      "supplement": false,
+      "fault_pilot": false,
+      "normal": {
+        "passed": true,
+        "steps": 5,
+        "official_success": true,
+        "answer": [
+          {
+            "order_count": 3,
+            "amount": 845.49
+          }
+        ],
+        "error": null,
+        "evidence": "task49/normal/reference_path.json"
+      },
+      "trigger": {
+        "passed": true,
+        "injections": 1,
+        "first_exposure_step": 2,
+        "error_type": "500",
+        "evidence": "task49/recovery/fault_evidence.json"
+      },
+      "recovery": {
+        "passed": true,
+        "steps": 15,
+        "window_steps": 10,
+        "released": "window_expired",
+        "official_success": true,
+        "answer": [
+          {
+            "order_count": 3,
+            "amount": 845.49
+          }
+        ],
+        "error": null,
+        "evidence": "task49/recovery/reference_path.json"
+      },
+      "passed": true
+    },
+    {
+      "schema": "agent_stress_frozen_acceptance/1",
+      "task_id": 66,
+      "site": "reddit",
+      "template_id": 17,
+      "endpoint": "http://localhost:9999/f/books",
+      "supplement": false,
+      "fault_pilot": false,
+      "normal": {
+        "passed": true,
+        "steps": 2,
+        "official_success": true,
+        "answer": [
+          "I just finished reading The Hobbit to my 6 year old daughter, and she loved it!",
+          "Apple Books has a free audiobook of A Christmas Carol narrated by LeVar Burton!"
+        ],
+        "error": null,
+        "evidence": "task66/normal/reference_path.json"
+      },
+      "trigger": {
+        "passed": true,
+        "injections": 1,
+        "first_exposure_step": 2,
+        "error_type": "500",
+        "evidence": "task66/recovery/fault_evidence.json"
+      },
+      "recovery": {
+        "passed": true,
+        "steps": 12,
+        "window_steps": 10,
+        "released": "window_expired",
+        "official_success": true,
+        "answer": [
+          "I just finished reading The Hobbit to my 6 year old daughter, and she loved it!",
+          "Apple Books has a free audiobook of A Christmas Carol narrated by LeVar Burton!"
+        ],
+        "error": null,
+        "evidence": "task66/recovery/reference_path.json"
+      },
+      "passed": true
+    },
+    {
+      "schema": "agent_stress_frozen_acceptance/1",
+      "task_id": 69,
+      "site": "reddit",
+      "template_id": 17,
+      "endpoint": "http://localhost:9999/f/books",
+      "supplement": true,
+      "fault_pilot": false,
+      "normal": {
+        "passed": true,
+        "steps": 3,
+        "official_success": true,
+        "answer": [
+          "bookshop.org"
+        ],
+        "error": null,
+        "evidence": "task69/normal/reference_path.json"
+      },
+      "trigger": {
+        "passed": true,
+        "injections": 1,
+        "first_exposure_step": 2,
+        "error_type": "500",
+        "evidence": "task69/recovery/fault_evidence.json"
+      },
+      "recovery": {
+        "passed": true,
+        "steps": 13,
+        "window_steps": 10,
+        "released": "window_expired",
+        "official_success": true,
+        "answer": [
+          "bookshop.org"
+        ],
+        "error": null,
+        "evidence": "task69/recovery/reference_path.json"
+      },
+      "passed": true
+    },
+    {
+      "schema": "agent_stress_frozen_acceptance/1",
+      "task_id": 148,
+      "site": "shopping",
+      "template_id": 155,
+      "endpoint": "http://localhost:7770/sales/order/history",
+      "supplement": false,
+      "fault_pilot": false,
+      "normal": {
+        "passed": true,
+        "steps": 7,
+        "official_success": true,
+        "answer": [
+          "Mist 16*24"
+        ],
+        "error": null,
+        "evidence": "task148/normal/reference_path.json"
+      },
+      "trigger": {
+        "passed": true,
+        "injections": 1,
+        "first_exposure_step": 2,
+        "error_type": "500",
+        "evidence": "task148/recovery/fault_evidence.json"
+      },
+      "recovery": {
+        "passed": true,
+        "steps": 17,
+        "window_steps": 10,
+        "released": "window_expired",
+        "official_success": true,
+        "answer": [
+          "Mist 16*24"
+        ],
+        "error": null,
+        "evidence": "task148/recovery/reference_path.json"
+      },
+      "passed": true
+    },
+    {
+      "schema": "agent_stress_frozen_acceptance/1",
+      "task_id": 149,
+      "site": "shopping",
+      "template_id": 155,
+      "endpoint": "http://localhost:7770/sales/order/history",
+      "supplement": true,
+      "fault_pilot": false,
+      "normal": {
+        "passed": true,
+        "steps": 7,
+        "official_success": true,
+        "answer": [
+          "Green-vines"
+        ],
+        "error": null,
+        "evidence": "task149/normal/reference_path.json"
+      },
+      "trigger": {
+        "passed": true,
+        "injections": 1,
+        "first_exposure_step": 2,
+        "error_type": "500",
+        "evidence": "task149/recovery/fault_evidence.json"
+      },
+      "recovery": {
+        "passed": true,
+        "steps": 17,
+        "window_steps": 10,
+        "released": "window_expired",
+        "official_success": true,
+        "answer": [
+          "Green-vines"
+        ],
+        "error": null,
+        "evidence": "task149/recovery/reference_path.json"
+      },
+      "passed": true
+    },
+    {
+      "schema": "agent_stress_frozen_acceptance/1",
+      "task_id": 163,
+      "site": "shopping",
+      "template_id": 136,
+      "endpoint": "http://localhost:7770/review/product/listAjax/id/38805",
+      "supplement": false,
+      "fault_pilot": false,
+      "normal": {
+        "passed": true,
+        "steps": 2,
+        "official_success": true,
+        "answer": [
+          "Memory Card Came Defective"
+        ],
+        "error": null,
+        "evidence": "task163/normal/reference_path.json"
+      },
+      "trigger": {
+        "passed": true,
+        "injections": 1,
+        "first_exposure_step": 2,
+        "error_type": "500",
+        "evidence": "task163/recovery/fault_evidence.json"
+      },
+      "recovery": {
+        "passed": true,
+        "steps": 12,
+        "window_steps": 10,
+        "released": "window_expired",
+        "official_success": true,
+        "answer": [
+          "Memory Card Came Defective"
+        ],
+        "error": null,
+        "evidence": "task163/recovery/reference_path.json"
+      },
+      "passed": true
+    },
+    {
+      "schema": "agent_stress_frozen_acceptance/1",
+      "task_id": 164,
+      "site": "shopping",
+      "template_id": 136,
+      "endpoint": "http://localhost:7770/review/product/listAjax/id/6523",
+      "supplement": false,
+      "fault_pilot": false,
+      "normal": {
+        "passed": true,
+        "steps": 2,
+        "official_success": true,
+        "answer": [
+          "Meh"
+        ],
+        "error": null,
+        "evidence": "task164/normal/reference_path.json"
+      },
+      "trigger": {
+        "passed": true,
+        "injections": 1,
+        "first_exposure_step": 2,
+        "error_type": "500",
+        "evidence": "task164/recovery/fault_evidence.json"
+      },
+      "recovery": {
+        "passed": true,
+        "steps": 12,
+        "window_steps": 10,
+        "released": "window_expired",
+        "official_success": true,
+        "answer": [
+          "Meh"
+        ],
+        "error": null,
+        "evidence": "task164/recovery/reference_path.json"
+      },
+      "passed": true
+    },
+    {
+      "schema": "agent_stress_frozen_acceptance/1",
+      "task_id": 168,
+      "site": "gitlab",
+      "template_id": 289,
+      "endpoint": "http://localhost:8023/dashboard/projects",
+      "supplement": true,
+      "fault_pilot": false,
+      "normal": {
+        "passed": true,
+        "steps": 2,
+        "official_success": true,
+        "answer": "No matching result found: none of my personal projects has more than 100 stars.",
+        "error": null,
+        "evidence": "task168/normal/reference_path.json"
+      },
+      "trigger": {
+        "passed": true,
+        "injections": 4,
+        "first_exposure_step": 2,
+        "error_type": "500",
+        "evidence": "task168/recovery/fault_evidence.json"
+      },
+      "recovery": {
+        "passed": true,
+        "steps": 12,
+        "window_steps": 10,
+        "released": "window_expired",
+        "official_success": true,
+        "answer": "No matching result found: none of my personal projects has more than 100 stars.",
+        "error": null,
+        "evidence": "task168/recovery/reference_path.json"
+      },
+      "passed": true
+    },
+    {
+      "schema": "agent_stress_frozen_acceptance/1",
+      "task_id": 188,
+      "site": "shopping",
+      "template_id": 214,
+      "endpoint": "http://localhost:7770/sales/order/history",
+      "supplement": false,
+      "fault_pilot": false,
+      "normal": {
+        "passed": true,
+        "steps": 5,
+        "official_success": true,
+        "answer": [
+          365.42
+        ],
+        "error": null,
+        "evidence": "task188/normal/reference_path.json"
+      },
+      "trigger": {
+        "passed": true,
+        "injections": 1,
+        "first_exposure_step": 2,
+        "error_type": "500",
+        "evidence": "task188/recovery/fault_evidence.json"
+      },
+      "recovery": {
+        "passed": true,
+        "steps": 15,
+        "window_steps": 10,
+        "released": "window_expired",
+        "official_success": true,
+        "answer": [
+          365.42
+        ],
+        "error": null,
+        "evidence": "task188/recovery/reference_path.json"
+      },
+      "passed": true
+    },
+    {
+      "schema": "agent_stress_frozen_acceptance/1",
+      "task_id": 190,
+      "site": "shopping",
+      "template_id": 214,
+      "endpoint": "http://localhost:7770/sales/order/history",
+      "supplement": false,
+      "fault_pilot": false,
+      "normal": {
+        "passed": true,
+        "steps": 5,
+        "official_success": true,
+        "answer": [
+          65.32
+        ],
+        "error": null,
+        "evidence": "task190/normal/reference_path.json"
+      },
+      "trigger": {
+        "passed": true,
+        "injections": 1,
+        "first_exposure_step": 2,
+        "error_type": "500",
+        "evidence": "task190/recovery/fault_evidence.json"
+      },
+      "recovery": {
+        "passed": true,
+        "steps": 15,
+        "window_steps": 10,
+        "released": "window_expired",
+        "official_success": true,
+        "answer": [
+          65.32
+        ],
+        "error": null,
+        "evidence": "task190/recovery/reference_path.json"
+      },
+      "passed": true
+    },
+    {
+      "schema": "agent_stress_frozen_acceptance/1",
+      "task_id": 206,
+      "site": "gitlab",
+      "template_id": 320,
+      "endpoint": "http://localhost:8023/a11yproject/a11yproject.com/-/commits/main",
+      "supplement": true,
+      "fault_pilot": false,
+      "normal": {
+        "passed": true,
+        "steps": 2,
+        "official_success": true,
+        "answer": [
+          2
+        ],
+        "error": null,
+        "evidence": "task206/normal/reference_path.json"
+      },
+      "trigger": {
+        "passed": true,
+        "injections": 1,
+        "first_exposure_step": 2,
+        "error_type": "500",
+        "evidence": "task206/recovery/fault_evidence.json"
+      },
+      "recovery": {
+        "passed": true,
+        "steps": 12,
+        "window_steps": 10,
+        "released": "window_expired",
+        "official_success": true,
+        "answer": [
+          2
+        ],
+        "error": null,
+        "evidence": "task206/recovery/reference_path.json"
+      },
+      "passed": true
+    },
+    {
+      "schema": "agent_stress_frozen_acceptance/1",
+      "task_id": 227,
+      "site": "shopping",
+      "template_id": 370,
+      "endpoint": "http://localhost:7770/catalogsearch/result",
+      "supplement": false,
+      "fault_pilot": false,
+      "normal": {
+        "passed": true,
+        "steps": 3,
+        "official_success": true,
+        "answer": [
+          {
+            "min": 9.99,
+            "max": 9.99
+          }
+        ],
+        "error": null,
+        "evidence": "task227/normal/reference_path.json"
+      },
+      "trigger": {
+        "passed": true,
+        "injections": 1,
+        "first_exposure_step": 2,
+        "error_type": "500",
+        "evidence": "task227/recovery/fault_evidence.json"
+      },
+      "recovery": {
+        "passed": true,
+        "steps": 13,
+        "window_steps": 10,
+        "released": "window_expired",
+        "official_success": true,
+        "answer": [
+          {
+            "min": 9.99,
+            "max": 9.99
+          }
+        ],
+        "error": null,
+        "evidence": "task227/recovery/reference_path.json"
+      },
+      "passed": true
+    },
+    {
+      "schema": "agent_stress_frozen_acceptance/1",
+      "task_id": 228,
+      "site": "shopping",
+      "template_id": 370,
+      "endpoint": "http://localhost:7770/catalogsearch/result",
+      "supplement": false,
+      "fault_pilot": true,
+      "normal": {
+        "passed": true,
+        "steps": 3,
+        "official_success": true,
+        "answer": [
+          {
+            "min": 18.18,
+            "max": 94.99
+          }
+        ],
+        "error": null,
+        "evidence": "task228/normal/reference_path.json"
+      },
+      "trigger": {
+        "passed": true,
+        "injections": 1,
+        "first_exposure_step": 2,
+        "error_type": "500",
+        "evidence": "task228/recovery/fault_evidence.json"
+      },
+      "recovery": {
+        "passed": true,
+        "steps": 13,
+        "window_steps": 10,
+        "released": "window_expired",
+        "official_success": true,
+        "answer": [
+          {
+            "min": 18.18,
+            "max": 94.99
+          }
+        ],
+        "error": null,
+        "evidence": "task228/recovery/reference_path.json"
+      },
+      "passed": true
+    },
+    {
+      "schema": "agent_stress_frozen_acceptance/1",
+      "task_id": 294,
+      "site": "gitlab",
+      "template_id": 329,
+      "endpoint": "http://localhost:8023/search",
+      "supplement": false,
+      "fault_pilot": false,
+      "normal": {
+        "passed": true,
+        "steps": 3,
+        "official_success": true,
+        "answer": [
+          "git@localhost:convexegg/chatgpt.git"
+        ],
+        "error": null,
+        "evidence": "task294/normal/reference_path.json"
+      },
+      "trigger": {
+        "passed": true,
+        "injections": 1,
+        "first_exposure_step": 2,
+        "error_type": "500",
+        "evidence": "task294/recovery/fault_evidence.json"
+      },
+      "recovery": {
+        "passed": true,
+        "steps": 13,
+        "window_steps": 10,
+        "released": "window_expired",
+        "official_success": true,
+        "answer": [
+          "git@localhost:convexegg/chatgpt.git"
+        ],
+        "error": null,
+        "evidence": "task294/recovery/reference_path.json"
+      },
+      "passed": true
+    },
+    {
+      "schema": "agent_stress_frozen_acceptance/1",
+      "task_id": 295,
+      "site": "gitlab",
+      "template_id": 329,
+      "endpoint": "http://localhost:8023/search",
+      "supplement": false,
+      "fault_pilot": false,
+      "normal": {
+        "passed": true,
+        "steps": 3,
+        "official_success": true,
+        "answer": [
+          "git@localhost:root/metaseq.git"
+        ],
+        "error": null,
+        "evidence": "task295/normal/reference_path.json"
+      },
+      "trigger": {
+        "passed": true,
+        "injections": 1,
+        "first_exposure_step": 2,
+        "error_type": "500",
+        "evidence": "task295/recovery/fault_evidence.json"
+      },
+      "recovery": {
+        "passed": true,
+        "steps": 13,
+        "window_steps": 10,
+        "released": "window_expired",
+        "official_success": true,
+        "answer": [
+          "git@localhost:root/metaseq.git"
+        ],
+        "error": null,
+        "evidence": "task295/recovery/reference_path.json"
+      },
+      "passed": true
+    },
+    {
+      "schema": "agent_stress_frozen_acceptance/1",
+      "task_id": 305,
+      "site": "gitlab",
+      "template_id": 321,
+      "endpoint": "http://localhost:8023/a11yproject/a11yproject.com/-/commits/main",
+      "supplement": false,
+      "fault_pilot": false,
+      "normal": {
+        "passed": true,
+        "steps": 2,
+        "official_success": true,
+        "answer": [
+          0
+        ],
+        "error": null,
+        "evidence": "task305/normal/reference_path.json"
+      },
+      "trigger": {
+        "passed": true,
+        "injections": 1,
+        "first_exposure_step": 2,
+        "error_type": "500",
+        "evidence": "task305/recovery/fault_evidence.json"
+      },
+      "recovery": {
+        "passed": true,
+        "steps": 12,
+        "window_steps": 10,
+        "released": "window_expired",
+        "official_success": true,
+        "answer": [
+          0
+        ],
+        "error": null,
+        "evidence": "task305/recovery/reference_path.json"
+      },
+      "passed": true
+    },
+    {
+      "schema": "agent_stress_frozen_acceptance/1",
+      "task_id": 314,
+      "site": "gitlab",
+      "template_id": 324,
+      "endpoint": "http://localhost:8023/primer/design/-/graphs",
+      "supplement": false,
+      "fault_pilot": true,
+      "normal": {
+        "passed": true,
+        "steps": 2,
+        "official_success": true,
+        "answer": [
+          "Shawn Allen",
+          "Inayaili León",
+          "Aurora Pleguezuelo"
+        ],
+        "error": null,
+        "evidence": "task314/normal/reference_path.json"
+      },
+      "trigger": {
+        "passed": true,
+        "injections": 1,
+        "first_exposure_step": 2,
+        "error_type": "500",
+        "evidence": "task314/recovery/fault_evidence.json"
+      },
+      "recovery": {
+        "passed": true,
+        "steps": 12,
+        "window_steps": 10,
+        "released": "window_expired",
+        "official_success": true,
+        "answer": [
+          "Shawn Allen",
+          "Inayaili León",
+          "Aurora Pleguezuelo"
+        ],
+        "error": null,
+        "evidence": "task314/recovery/reference_path.json"
+      },
+      "passed": true
+    },
+    {
+      "schema": "agent_stress_frozen_acceptance/1",
+      "task_id": 316,
+      "site": "gitlab",
+      "template_id": 324,
+      "endpoint": "http://localhost:8023/facebook/create-react-app/-/graphs",
+      "supplement": false,
+      "fault_pilot": false,
+      "normal": {
+        "passed": true,
+        "steps": 2,
+        "official_success": true,
+        "answer": [
+          "dan.abramov@gmail.com",
+          "timer150@gmail.com",
+          "ian@iansutherland.ca"
+        ],
+        "error": null,
+        "evidence": "task316/normal/reference_path.json"
+      },
+      "trigger": {
+        "passed": true,
+        "injections": 1,
+        "first_exposure_step": 2,
+        "error_type": "500",
+        "evidence": "task316/recovery/fault_evidence.json"
+      },
+      "recovery": {
+        "passed": true,
+        "steps": 12,
+        "window_steps": 10,
+        "released": "window_expired",
+        "official_success": true,
+        "answer": [
+          "dan.abramov@gmail.com",
+          "timer150@gmail.com",
+          "ian@iansutherland.ca"
+        ],
+        "error": null,
+        "evidence": "task316/recovery/reference_path.json"
+      },
+      "passed": true
+    },
+    {
+      "schema": "agent_stress_frozen_acceptance/1",
+      "task_id": 384,
+      "site": "shopping",
+      "template_id": 666,
+      "endpoint": "http://localhost:7770/catalogsearch/result",
+      "supplement": false,
+      "fault_pilot": false,
+      "normal": {
+        "passed": true,
+        "steps": 4,
+        "official_success": true,
+        "answer": [
+          "Lisa Lee",
+          "Evelyn Kurver",
+          "Amanda",
+          "N Randall"
+        ],
+        "error": null,
+        "evidence": "task384/normal/reference_path.json"
+      },
+      "trigger": {
+        "passed": true,
+        "injections": 1,
+        "first_exposure_step": 2,
+        "error_type": "500",
+        "evidence": "task384/recovery/fault_evidence.json"
+      },
+      "recovery": {
+        "passed": true,
+        "steps": 14,
+        "window_steps": 10,
+        "released": "window_expired",
+        "official_success": true,
+        "answer": [
+          "Lisa Lee",
+          "Evelyn Kurver",
+          "Amanda",
+          "N Randall"
+        ],
+        "error": null,
+        "evidence": "task384/recovery/reference_path.json"
+      },
+      "passed": true
+    },
+    {
+      "schema": "agent_stress_frozen_acceptance/1",
+      "task_id": 784,
+      "site": "gitlab",
+      "template_id": 316,
+      "endpoint": "http://localhost:8023/CellularPrivacy/Android-IMSI-Catcher-Detector/-/graphs",
+      "supplement": false,
+      "fault_pilot": false,
+      "normal": {
+        "passed": true,
+        "steps": 2,
+        "official_success": true,
+        "answer": [
+          "secupwn@users.noreply.github.com"
+        ],
+        "error": null,
+        "evidence": "task784/normal/reference_path.json"
+      },
+      "trigger": {
+        "passed": true,
+        "injections": 1,
+        "first_exposure_step": 2,
+        "error_type": "500",
+        "evidence": "task784/recovery/fault_evidence.json"
+      },
+      "recovery": {
+        "passed": true,
+        "steps": 12,
+        "window_steps": 10,
+        "released": "window_expired",
+        "official_success": true,
+        "answer": [
+          "secupwn@users.noreply.github.com"
+        ],
+        "error": null,
+        "evidence": "task784/recovery/reference_path.json"
+      },
+      "passed": true
+    },
+    {
+      "schema": "agent_stress_frozen_acceptance/1",
+      "task_id": 785,
+      "site": "gitlab",
+      "template_id": 316,
+      "endpoint": "http://localhost:8023/CellularPrivacy/Android-IMSI-Catcher-Detector/-/graphs",
+      "supplement": false,
+      "fault_pilot": false,
+      "normal": {
+        "passed": true,
+        "steps": 2,
+        "official_success": true,
+        "answer": [
+          "secupwn@users.noreply.github.com"
+        ],
+        "error": null,
+        "evidence": "task785/normal/reference_path.json"
+      },
+      "trigger": {
+        "passed": true,
+        "injections": 1,
+        "first_exposure_step": 2,
+        "error_type": "500",
+        "evidence": "task785/recovery/fault_evidence.json"
+      },
+      "recovery": {
+        "passed": true,
+        "steps": 12,
+        "window_steps": 10,
+        "released": "window_expired",
+        "official_success": true,
+        "answer": [
+          "secupwn@users.noreply.github.com"
+        ],
+        "error": null,
+        "evidence": "task785/recovery/reference_path.json"
+      },
+      "passed": true
+    }
+  ]
+}

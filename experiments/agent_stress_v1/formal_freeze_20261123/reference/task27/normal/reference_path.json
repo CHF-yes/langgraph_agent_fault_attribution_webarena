@@ -1,0 +1,134 @@
+{
+  "schema": "agent_stress_frozen_reference_path/1",
+  "task_id": 27,
+  "arm": "normal",
+  "recorded_at": "2026-11-23T09:20:21.673519+00:00",
+  "site": "reddit",
+  "start_url": "http://localhost:9999",
+  "intent": "In the personal finances forum, get the username and post title of the most recent post, and count the number of comments on that post that are not from the author and have more downvotes than upvotes. Return a list of objects with keys \"username\", \"post_title\", and \"count\".",
+  "intent_template_id": 33,
+  "endpoint": "http://localhost:9999/f/personalfinance",
+  "steps": 3,
+  "actions": [
+    {
+      "step": 1,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:9999"
+      },
+      "url_before": "about:blank",
+      "url_after": "http://localhost:9999/",
+      "note": "task start URL / shared login state"
+    },
+    {
+      "step": 2,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:9999/f/personalfinance/new"
+      },
+      "url_before": "http://localhost:9999/",
+      "url_after": "http://localhost:9999/f/personalfinance/new",
+      "note": "newest listing on the task-critical forum endpoint"
+    },
+    {
+      "step": 3,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:9999/f/personalfinance/130948/56-year-old-mom-has-no-retirement-where-do-i-even-start-on"
+      },
+      "url_before": "http://localhost:9999/f/personalfinance/new",
+      "url_after": "http://localhost:9999/f/personalfinance/130948/56-year-old-mom-has-no-retirement-where-do-i-even-start-on",
+      "note": "open the most recent self post"
+    }
+  ],
+  "pages": [
+    {
+      "step": 2,
+      "name": "personalfinance_new",
+      "url": "http://localhost:9999/f/personalfinance/new",
+      "text": "pages/02_personalfinance_new.txt",
+      "html": "pages/02_personalfinance_new.html"
+    },
+    {
+      "step": 3,
+      "name": "personalfinance_post",
+      "url": "http://localhost:9999/f/personalfinance/130948/56-year-old-mom-has-no-retirement-where-do-i-even-start-on",
+      "text": "pages/03_personalfinance_post.txt",
+      "html": "pages/03_personalfinance_post.html"
+    }
+  ],
+  "answer": [
+    {
+      "username": "Hammer94",
+      "post_title": "56 year old mom has no retirement. Where do I even start on her behalf?",
+      "count": 0
+    }
+  ],
+  "evidence": {
+    "listing_url": "http://localhost:9999/f/personalfinance/new",
+    "post_url": "http://localhost:9999/f/personalfinance/130948/56-year-old-mom-has-no-retirement-where-do-i-even-start-on",
+    "article_count": 25,
+    "selected": {
+      "title": "56 year old mom has no retirement. Where do I even start on her behalf?",
+      "href": "http://localhost:9999/f/personalfinance/130948/56-year-old-mom-has-no-retirement-where-do-i-even-start-on",
+      "username": "Hammer94",
+      "time": "2023-03-31T23:57:46+00:00"
+    },
+    "comments_seen": 0,
+    "comment_rule": "exclude the post author; count comments with a negative net score",
+    "negative_comment_authors": []
+  },
+  "notes": [
+    "Most recent post is the first item on the /new listing."
+  ],
+  "error": null,
+  "official_eval": {
+    "task_id": 27,
+    "intent_template_id": 33,
+    "sites": [
+      "reddit"
+    ],
+    "task_revision": 2,
+    "status": "success",
+    "score": 1.0,
+    "evaluators_results": [
+      {
+        "evaluator_name": "AgentResponseEvaluator",
+        "status": "success",
+        "score": 1.0,
+        "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"SUCCESS\",\n  \"retrieved_data\": [\n    {\n      \"username\": \"Hammer94\",\n      \"post_title\": \"56 year old mom has no retirement. Where do I even start on her behalf?\",\n      \"count\": 0\n    }\n  ],\n  \"error_details\": null\n}\n",
+        "actual_normalized": {
+          "retrieved_data": [
+            {
+              "username": "hammer94",
+              "post_title": "56 year old mom has no retirement. where do i even start on her behalf?",
+              "count": 0.0
+            }
+          ],
+          "task_type": "retrieve",
+          "status": "success"
+        },
+        "expected": {
+          "task_type": "retrieve",
+          "status": "success",
+          "retrieved_data": [
+            {
+              "username": "hammer94",
+              "post_title": "56 year old mom has no retirement. where do i even start on her behalf?",
+              "count": 0.0
+            }
+          ]
+        },
+        "assertions": null,
+        "error_msg": null,
+        "should_not_exist": null
+      }
+    ],
+    "error_msg": null,
+    "webarena_verified_version": "1.2.3.post1.dev0",
+    "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+    "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "official_success": true
+  },
+  "official_success": true
+}

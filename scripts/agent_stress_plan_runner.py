@@ -43,11 +43,13 @@ PROVENANCE = ROOT / "experiments" / "agent_stress_v1" / "execution_prep_20261116
 SWITCHES = {"SUBMISSION_CONTRACT": "1", "RETRIEVAL_REPAIR": "1"}
 PORTS = {"shopping": 7770, "gitlab": 8023, "reddit": 9999}
 UNIFIED_SCHEMA = "agent_stress_unified_acceptance_plan/1"
+FORMAL_SCHEMA = "agent_stress_formal_matrix_plan/1"
 EXPECTED = {
     "agent_stress_http_acceptance_plan/1": ("http-acceptance", 12),
     "agent_stress_screening_plan/3": ("screening-480", 480),
     QWEN_SCREENING_SCHEMA: ("screening-qwen-240", 240),
     UNIFIED_SCHEMA: ("unified-acceptance", 36),
+    FORMAL_SCHEMA: ("formal-matrix", 864),
 }
 
 
@@ -110,7 +112,7 @@ def expected_command(cell: dict, plan: dict) -> list[str]:
             "--webarena-output-dir", str(ROOT / cell["output_dir"] / "outputs"
                                           / "web_http_error_task118_seed1"),
         ]
-    elif stage == "unified-acceptance":
+    elif stage in ("unified-acceptance", "formal-matrix"):
         command += [
             "--site", cell["site"], "--url", cell["start_url"],
             "--task", cell["intent"], "--task-id", str(cell["task_id"]),
@@ -140,7 +142,7 @@ def expected_command(cell: dict, plan: dict) -> list[str]:
             "--max-steps", str(cell["max_steps"]),
             "--webarena-output-dir", str(ROOT / cell["output_dir"] / "outputs"),
         ]
-    if stage != "unified-acceptance":
+    if stage not in ("unified-acceptance", "formal-matrix"):
         command += ["--storage-state-dir", str(storage_state_dir(plan))]
     command += ["--submission-contract"]
     return command
@@ -170,6 +172,73 @@ def expected_cells(plan: dict) -> list[str]:
             block_cells = [c for c in cells if c["block"] == block]
             if len(block_cells) != 3 or {c["order_in_block"] for c in block_cells} != {1, 2, 3}:
                 errors.append(f"block {block} is not 3 ordered conditions")
+    elif stage == "formal-matrix":
+        tasks = plan.get("tasks") or {}
+        models = plan.get("models") or []
+        architectures = plan.get("architectures") or []
+        conditions = plan.get("conditions") or []
+        seeds = plan.get("seeds") or []
+        if set(models) != {"qwen38_flash", "deepseek_v41_flash"}:
+            errors.append("formal plan has unexpected model profiles")
+        if set(architectures) != {"react", "plan_execute"}:
+            errors.append("formal plan has unexpected architectures")
+        if set(conditions) != {"control", "single", "sustained"}:
+            errors.append("conditions must be control/single/sustained")
+        if sorted(seeds) != [1, 2, 3]:
+            errors.append("formal plan must use seeds 1, 2 and 3")
+        if len(tasks) != 24:
+            errors.append(f"formal plan must cover 24 tasks, got {len(tasks)}")
+        expected = {(int(task_id), model, architecture, condition, int(seed))
+                    for task_id in tasks for model in models
+                    for architecture in architectures for condition in conditions
+                    for seed in seeds}
+        actual = {(int(c["task_id"]), c["model_profile"], c["architecture"],
+                   c["condition"], int(c["seed"])) for c in cells}
+        if actual != expected:
+            errors.append("formal cells differ from the expected task/model/architecture/condition/seed grid")
+        if len(actual) != len(cells):
+            errors.append("formal plan contains duplicate cells")
+        blocks = {c["block"] for c in cells}
+        if len(blocks) != 288:
+            errors.append(f"expected 288 blocks, got {len(blocks)}")
+        for block in blocks:
+            block_cells = [c for c in cells if c["block"] == block]
+            if (len(block_cells) != 3
+                    or {c["order_in_block"] for c in block_cells} != {1, 2, 3}
+                    or {c["condition"] for c in block_cells} != set(conditions)):
+                errors.append(f"block {block} is not one task/model/architecture/seed with all conditions")
+                continue
+            combos = {(c["task_id"], c["model_profile"], c["architecture"], c["seed"])
+                      for c in block_cells}
+            if len(combos) != 1:
+                errors.append(f"block {block} mixes task/model/architecture/seed")
+        variants = {"control": ("control", "single", "off"),
+                    "single": ("fault", "single", "high"),
+                    "sustained": ("fault", "persistent", "high")}
+        for c in cells:
+            if c.get("max_steps") != plan.get("max_steps"):
+                errors.append(f"cell {c.get('cell_key')}: max_steps differs from the plan")
+            run_condition, variant, intensity = variants[c["condition"]]
+            if (c.get("run_condition") != run_condition
+                    or c.get("fault_variant") != variant
+                    or c.get("fault_intensity") != intensity):
+                errors.append(f"cell {c.get('cell_key')}: condition parameters are inconsistent")
+            if c.get("fault_seed") != c.get("seed"):
+                errors.append(f"cell {c.get('cell_key')}: fault seed differs from the trial seed")
+            expected_window = None if c["condition"] == "control" else plan.get("window_steps")
+            if c.get("window_steps") != expected_window:
+                errors.append(f"cell {c.get('cell_key')}: window_steps differs from the condition")
+            task = tasks.get(str(c["task_id"])) or {}
+            if task.get("endpoint") and c.get("endpoint") != task["endpoint"]:
+                errors.append(f"cell {c.get('cell_key')}: endpoint differs from the task")
+            if c.get("site") != task.get("site"):
+                errors.append(f"cell {c.get('cell_key')}: site differs from the task")
+            if c.get("cell_key") != (f"{c['model_profile']}_task{c['task_id']}_"
+                                     f"{c['architecture']}_seed{c['seed']}_{c['condition']}"):
+                errors.append(f"cell {c.get('cell_key')}: cell key is not canonical")
+        for block in plan.get("blocks") or []:
+            if block.get("condition_order") and sorted(block["condition_order"]) != sorted(conditions):
+                errors.append(f"block {block.get('block')}: condition order is not a permutation")
     elif stage == "unified-acceptance":
         tasks = plan.get("tasks") or {}
         models = plan.get("models") or []

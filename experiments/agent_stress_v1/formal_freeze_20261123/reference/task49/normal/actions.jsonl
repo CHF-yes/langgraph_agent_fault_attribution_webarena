@@ -1,0 +1,5 @@
+{"step": 1, "action": "goto", "args": {"url": "http://localhost:7770"}, "url_before": "about:blank", "url_after": "http://localhost:7770/", "note": "task start URL / shared login state"}
+{"step": 2, "action": "goto", "args": {"url": "http://localhost:7770/sales/order/history/"}, "url_before": "http://localhost:7770/", "url_after": "http://localhost:7770/sales/order/history/", "note": "order history page 1"}
+{"step": 3, "action": "goto", "args": {"url": "http://localhost:7770/sales/order/history/?p=2"}, "url_before": "http://localhost:7770/sales/order/history/", "url_after": "http://localhost:7770/sales/order/history/?p=2", "note": "order history page 2"}
+{"step": 4, "action": "goto", "args": {"url": "http://localhost:7770/sales/order/history/?p=3"}, "url_before": "http://localhost:7770/sales/order/history/?p=2", "url_after": "http://localhost:7770/sales/order/history/?p=3", "note": "order history page 3"}
+{"step": 5, "action": "goto", "args": {"url": "http://localhost:7770/sales/order/history/?p=4"}, "url_before": "http://localhost:7770/sales/order/history/?p=3", "url_after": "http://localhost:7770/sales/order/history/?p=4", "note": "order history page 4"}

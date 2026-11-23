@@ -1,0 +1,1168 @@
+{
+  "schema": "agent_stress_frozen_reference_path/1",
+  "task_id": 168,
+  "arm": "recovery",
+  "recorded_at": "2026-11-23T09:24:58.407291+00:00",
+  "site": "gitlab",
+  "endpoint": "http://localhost:8023/dashboard/projects",
+  "trigger_url": "http://localhost:8023/dashboard/projects",
+  "window_steps": 10,
+  "steps": 12,
+  "actions": [
+    {
+      "step": 1,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023"
+      },
+      "url_before": "about:blank",
+      "url_after": "http://localhost:8023/",
+      "note": "bootstrap on the task start URL (not armed)",
+      "proxy_step": 1,
+      "fault_page": false,
+      "observation_chars": 9254
+    },
+    {
+      "step": 2,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/dashboard/projects"
+      },
+      "url_before": "http://localhost:8023/",
+      "url_after": "http://localhost:8023/dashboard/projects",
+      "note": "first qualified navigation to the fault endpoint",
+      "proxy_step": 2,
+      "fault_page": true,
+      "observation_chars": 89
+    },
+    {
+      "step": 3,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/explore"
+      },
+      "url_before": "http://localhost:8023/dashboard/projects",
+      "url_after": "http://localhost:8023/explore",
+      "note": "window filler 1/9",
+      "proxy_step": 3,
+      "fault_page": false,
+      "observation_chars": 12834
+    },
+    {
+      "step": 4,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/dashboard/projects"
+      },
+      "url_before": "http://localhost:8023/explore",
+      "url_after": "http://localhost:8023/dashboard/projects",
+      "note": "window filler 2/9",
+      "proxy_step": 4,
+      "fault_page": true,
+      "observation_chars": 89
+    },
+    {
+      "step": 5,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/"
+      },
+      "url_before": "http://localhost:8023/dashboard/projects",
+      "url_after": "http://localhost:8023/",
+      "note": "window filler 3/9",
+      "proxy_step": 5,
+      "fault_page": false,
+      "observation_chars": 9254
+    },
+    {
+      "step": 6,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/explore"
+      },
+      "url_before": "http://localhost:8023/",
+      "url_after": "http://localhost:8023/explore",
+      "note": "window filler 4/9",
+      "proxy_step": 6,
+      "fault_page": false,
+      "observation_chars": 12834
+    },
+    {
+      "step": 7,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/dashboard/projects"
+      },
+      "url_before": "http://localhost:8023/explore",
+      "url_after": "http://localhost:8023/dashboard/projects",
+      "note": "window filler 5/9",
+      "proxy_step": 7,
+      "fault_page": true,
+      "observation_chars": 89
+    },
+    {
+      "step": 8,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/"
+      },
+      "url_before": "http://localhost:8023/dashboard/projects",
+      "url_after": "http://localhost:8023/",
+      "note": "window filler 6/9",
+      "proxy_step": 8,
+      "fault_page": false,
+      "observation_chars": 9254
+    },
+    {
+      "step": 9,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/explore"
+      },
+      "url_before": "http://localhost:8023/",
+      "url_after": "http://localhost:8023/explore",
+      "note": "window filler 7/9",
+      "proxy_step": 9,
+      "fault_page": false,
+      "observation_chars": 12834
+    },
+    {
+      "step": 10,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/dashboard/projects"
+      },
+      "url_before": "http://localhost:8023/explore",
+      "url_after": "http://localhost:8023/dashboard/projects",
+      "note": "window filler 8/9",
+      "proxy_step": 10,
+      "fault_page": true,
+      "observation_chars": 89
+    },
+    {
+      "step": 11,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/"
+      },
+      "url_before": "http://localhost:8023/dashboard/projects",
+      "url_after": "http://localhost:8023/",
+      "note": "window filler 9/9",
+      "proxy_step": 11,
+      "fault_page": false,
+      "observation_chars": 9254
+    },
+    {
+      "step": 12,
+      "action": "goto",
+      "args": {
+        "url": "http://localhost:8023/dashboard/projects"
+      },
+      "url_before": "http://localhost:8023/",
+      "url_after": "http://localhost:8023/dashboard/projects",
+      "note": "personal project list",
+      "proxy_step": 12,
+      "fault_page": false,
+      "observation_chars": 9254
+    }
+  ],
+  "pages": [
+    {
+      "step": 12,
+      "name": "dashboard_projects",
+      "url": "http://localhost:8023/dashboard/projects",
+      "text": "pages/12_dashboard_projects.txt",
+      "html": "pages/12_dashboard_projects.html"
+    }
+  ],
+  "answer": "No matching result found: none of my personal projects has more than 100 stars.",
+  "evidence": {
+    "personal_projects": [
+      {
+        "href": "/byteblaze/millennials-to-snake-people",
+        "name": "Byte Blaze / millennials-to-snake-people",
+        "stars": 6,
+        "role": "Owner"
+      },
+      {
+        "href": "/byteblaze/empathy-prompts",
+        "name": "Byte Blaze / empathy-prompts",
+        "stars": 6,
+        "role": "Owner"
+      },
+      {
+        "href": "/byteblaze/a11y-webring.club",
+        "name": "Byte Blaze / a11y-webring.club",
+        "stars": 2,
+        "role": "Owner"
+      },
+      {
+        "href": "/byteblaze/ericwbailey.website",
+        "name": "Byte Blaze / ericwbailey.website",
+        "stars": 2,
+        "role": "Owner"
+      },
+      {
+        "href": "/byteblaze/accessible-html-content-patterns",
+        "name": "Byte Blaze / accessible-html-content-patterns",
+        "stars": 1,
+        "role": "Owner"
+      },
+      {
+        "href": "/byteblaze/a11y-syntax-highlighting",
+        "name": "Byte Blaze / a11y-syntax-highlighting",
+        "stars": 1,
+        "role": "Owner"
+      },
+      {
+        "href": "/byteblaze/dotfiles",
+        "name": "Byte Blaze / dotfiles",
+        "stars": 0,
+        "role": "Owner"
+      },
+      {
+        "href": "/byteblaze/remove-board-movement-events-from-the-github-issue-timeline",
+        "name": "Byte Blaze / remove-board-movement-events-from-the-github-issue-timeline",
+        "stars": 0,
+        "role": "Owner"
+      },
+      {
+        "href": "/byteblaze/solarized-prism-theme",
+        "name": "Byte Blaze / solarized-prism-theme",
+        "stars": 0,
+        "role": "Owner"
+      },
+      {
+        "href": "/byteblaze/cloud-to-butt",
+        "name": "Byte Blaze / cloud-to-butt",
+        "stars": 0,
+        "role": "Owner"
+      },
+      {
+        "href": "/byteblaze/timeit",
+        "name": "Byte Blaze / timeit",
+        "stars": 0,
+        "role": "Owner"
+      },
+      {
+        "href": "/byteblaze/gimmiethat.space",
+        "name": "Byte Blaze / gimmiethat.space",
+        "stars": 0,
+        "role": "Owner"
+      }
+    ],
+    "high_star": [],
+    "selection_rule": "role Owner; star count > 100"
+  },
+  "notes": [
+    "The personal project list was read in full."
+  ],
+  "error": null,
+  "fault_evidence": {
+    "schema": "agent_stress_frozen_fault_recovery/1",
+    "task_id": 168,
+    "endpoint": {
+      "scheme": "http",
+      "host": "localhost",
+      "port": 8023,
+      "path": "/dashboard/projects",
+      "target_policy_version": "endpoint-path-segment-v1"
+    },
+    "variant": "persistent",
+    "window_steps": 10,
+    "steps": [
+      {
+        "label": "trigger",
+        "url": "http://localhost:8023/dashboard/projects",
+        "fault_page": true,
+        "proxy_step": 2
+      },
+      {
+        "label": "filler_1",
+        "url": "http://localhost:8023/explore",
+        "fault_page": false,
+        "proxy_step": 3
+      },
+      {
+        "label": "filler_2",
+        "url": "http://localhost:8023/dashboard/projects",
+        "fault_page": true,
+        "proxy_step": 4
+      },
+      {
+        "label": "filler_3",
+        "url": "http://localhost:8023/",
+        "fault_page": false,
+        "proxy_step": 5
+      },
+      {
+        "label": "filler_4",
+        "url": "http://localhost:8023/explore",
+        "fault_page": false,
+        "proxy_step": 6
+      },
+      {
+        "label": "filler_5",
+        "url": "http://localhost:8023/dashboard/projects",
+        "fault_page": true,
+        "proxy_step": 7
+      },
+      {
+        "label": "filler_6",
+        "url": "http://localhost:8023/",
+        "fault_page": false,
+        "proxy_step": 8
+      },
+      {
+        "label": "filler_7",
+        "url": "http://localhost:8023/explore",
+        "fault_page": false,
+        "proxy_step": 9
+      },
+      {
+        "label": "filler_8",
+        "url": "http://localhost:8023/dashboard/projects",
+        "fault_page": true,
+        "proxy_step": 10
+      },
+      {
+        "label": "filler_9",
+        "url": "http://localhost:8023/",
+        "fault_page": false,
+        "proxy_step": 11
+      },
+      {
+        "label": "normal_after_window",
+        "url": "http://localhost:8023/dashboard/projects",
+        "proxy_step": 12
+      }
+    ],
+    "exposures": [
+      {
+        "observation_uid": "goto:1#1",
+        "source_action_uid": "goto:1",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 1,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:8023/",
+        "matched_endpoint": false,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/dashboard/projects",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/",
+          "query": ""
+        },
+        "reason": "not_armed",
+        "fault_delivered": false
+      },
+      {
+        "observation_uid": "goto:2#2",
+        "source_action_uid": "goto:2",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 2,
+        "faults_delivered": [
+          "web_http_error"
+        ],
+        "delivered": true,
+        "raw_url": "http://localhost:8023/dashboard/projects",
+        "matched_endpoint": true,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/dashboard/projects",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/dashboard/projects",
+          "query": ""
+        },
+        "reason": "injected_or_same_action_replay",
+        "fault_delivered": true
+      },
+      {
+        "observation_uid": "goto:3#3",
+        "source_action_uid": "goto:3",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 3,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:8023/explore",
+        "matched_endpoint": false,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/dashboard/projects",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/explore",
+          "query": ""
+        },
+        "reason": "off_endpoint",
+        "fault_delivered": false
+      },
+      {
+        "observation_uid": "goto:4#4",
+        "source_action_uid": "goto:4",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 4,
+        "faults_delivered": [
+          "web_http_error"
+        ],
+        "delivered": true,
+        "raw_url": "http://localhost:8023/dashboard/projects",
+        "matched_endpoint": true,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/dashboard/projects",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/dashboard/projects",
+          "query": ""
+        },
+        "reason": "injected_or_same_action_replay",
+        "fault_delivered": true
+      },
+      {
+        "observation_uid": "goto:5#5",
+        "source_action_uid": "goto:5",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 5,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:8023/",
+        "matched_endpoint": false,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/dashboard/projects",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/",
+          "query": ""
+        },
+        "reason": "off_endpoint",
+        "fault_delivered": false
+      },
+      {
+        "observation_uid": "goto:6#6",
+        "source_action_uid": "goto:6",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 6,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:8023/explore",
+        "matched_endpoint": false,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/dashboard/projects",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/explore",
+          "query": ""
+        },
+        "reason": "off_endpoint",
+        "fault_delivered": false
+      },
+      {
+        "observation_uid": "goto:7#7",
+        "source_action_uid": "goto:7",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 7,
+        "faults_delivered": [
+          "web_http_error"
+        ],
+        "delivered": true,
+        "raw_url": "http://localhost:8023/dashboard/projects",
+        "matched_endpoint": true,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/dashboard/projects",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/dashboard/projects",
+          "query": ""
+        },
+        "reason": "injected_or_same_action_replay",
+        "fault_delivered": true
+      },
+      {
+        "observation_uid": "goto:8#8",
+        "source_action_uid": "goto:8",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 8,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:8023/",
+        "matched_endpoint": false,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/dashboard/projects",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/",
+          "query": ""
+        },
+        "reason": "off_endpoint",
+        "fault_delivered": false
+      },
+      {
+        "observation_uid": "goto:9#9",
+        "source_action_uid": "goto:9",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 9,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:8023/explore",
+        "matched_endpoint": false,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/dashboard/projects",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/explore",
+          "query": ""
+        },
+        "reason": "off_endpoint",
+        "fault_delivered": false
+      },
+      {
+        "observation_uid": "goto:10#10",
+        "source_action_uid": "goto:10",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 10,
+        "faults_delivered": [
+          "web_http_error"
+        ],
+        "delivered": true,
+        "raw_url": "http://localhost:8023/dashboard/projects",
+        "matched_endpoint": true,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/dashboard/projects",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/dashboard/projects",
+          "query": ""
+        },
+        "reason": "injected_or_same_action_replay",
+        "fault_delivered": true
+      },
+      {
+        "observation_uid": "goto:11#11",
+        "source_action_uid": "goto:11",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 11,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:8023/",
+        "matched_endpoint": false,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/dashboard/projects",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/",
+          "query": ""
+        },
+        "reason": "off_endpoint",
+        "fault_delivered": false
+      },
+      {
+        "observation_uid": "goto:12#12",
+        "source_action_uid": "goto:12",
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "step": 12,
+        "faults_delivered": [],
+        "delivered": false,
+        "raw_url": "http://localhost:8023/dashboard/projects",
+        "matched_endpoint": true,
+        "endpoint": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/dashboard/projects",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "match": {
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/dashboard/projects",
+          "query": ""
+        },
+        "reason": "window_expired",
+        "fault_delivered": false
+      }
+    ],
+    "episode": {
+      "snapshot": {
+        "experiment_id": "ep-http-service-v1",
+        "variant": "persistent",
+        "target_policy_version": "endpoint-path-segment-v1",
+        "armed": true,
+        "armed_after_step": 1,
+        "target": {
+          "kind": "endpoint",
+          "scheme": "http",
+          "host": "localhost",
+          "port": 8023,
+          "path": "/dashboard/projects",
+          "target_policy_version": "endpoint-path-segment-v1"
+        },
+        "t0": 2,
+        "window_steps": 10,
+        "window_end": 11,
+        "injections": 4,
+        "released": "window_expired",
+        "exposure_class": "repeated"
+      },
+      "injections": [
+        {
+          "event": "injection",
+          "experiment_id": "ep-http-service-v1",
+          "variant": "persistent",
+          "injection_index": 1,
+          "proxy_step": 2,
+          "action_uid": "goto:2",
+          "target": {
+            "kind": "endpoint",
+            "scheme": "http",
+            "host": "localhost",
+            "port": 8023,
+            "path": "/dashboard/projects",
+            "target_policy_version": "endpoint-path-segment-v1"
+          },
+          "error_type": "500",
+          "match": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 8023,
+            "path": "/dashboard/projects",
+            "query": ""
+          },
+          "timestamp": 1795425881.5801806
+        },
+        {
+          "event": "injection",
+          "experiment_id": "ep-http-service-v1",
+          "variant": "persistent",
+          "injection_index": 2,
+          "proxy_step": 4,
+          "action_uid": "goto:4",
+          "target": {
+            "kind": "endpoint",
+            "scheme": "http",
+            "host": "localhost",
+            "port": 8023,
+            "path": "/dashboard/projects",
+            "target_policy_version": "endpoint-path-segment-v1"
+          },
+          "error_type": "500",
+          "match": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 8023,
+            "path": "/dashboard/projects",
+            "query": ""
+          },
+          "timestamp": 1795425884.8050156
+        },
+        {
+          "event": "injection",
+          "experiment_id": "ep-http-service-v1",
+          "variant": "persistent",
+          "injection_index": 3,
+          "proxy_step": 7,
+          "action_uid": "goto:7",
+          "target": {
+            "kind": "endpoint",
+            "scheme": "http",
+            "host": "localhost",
+            "port": 8023,
+            "path": "/dashboard/projects",
+            "target_policy_version": "endpoint-path-segment-v1"
+          },
+          "error_type": "500",
+          "match": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 8023,
+            "path": "/dashboard/projects",
+            "query": ""
+          },
+          "timestamp": 1795425889.3405457
+        },
+        {
+          "event": "injection",
+          "experiment_id": "ep-http-service-v1",
+          "variant": "persistent",
+          "injection_index": 4,
+          "proxy_step": 10,
+          "action_uid": "goto:10",
+          "target": {
+            "kind": "endpoint",
+            "scheme": "http",
+            "host": "localhost",
+            "port": 8023,
+            "path": "/dashboard/projects",
+            "target_policy_version": "endpoint-path-segment-v1"
+          },
+          "error_type": "500",
+          "match": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 8023,
+            "path": "/dashboard/projects",
+            "query": ""
+          },
+          "timestamp": 1795425893.9276295
+        }
+      ],
+      "events": [
+        {
+          "event": "skip",
+          "proxy_step": 1,
+          "action_uid": "goto:1",
+          "reason": "not_armed",
+          "detail": {
+            "raw_url": "http://localhost:8023/",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 8023,
+              "path": "/",
+              "query": ""
+            }
+          }
+        },
+        {
+          "event": "injection",
+          "experiment_id": "ep-http-service-v1",
+          "variant": "persistent",
+          "injection_index": 1,
+          "proxy_step": 2,
+          "action_uid": "goto:2",
+          "target": {
+            "kind": "endpoint",
+            "scheme": "http",
+            "host": "localhost",
+            "port": 8023,
+            "path": "/dashboard/projects",
+            "target_policy_version": "endpoint-path-segment-v1"
+          },
+          "error_type": "500",
+          "match": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 8023,
+            "path": "/dashboard/projects",
+            "query": ""
+          },
+          "timestamp": 1795425881.5801806
+        },
+        {
+          "event": "skip",
+          "proxy_step": 3,
+          "action_uid": "goto:3",
+          "reason": "off_endpoint",
+          "detail": {
+            "raw_url": "http://localhost:8023/explore",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 8023,
+              "path": "/explore",
+              "query": ""
+            }
+          }
+        },
+        {
+          "event": "injection",
+          "experiment_id": "ep-http-service-v1",
+          "variant": "persistent",
+          "injection_index": 2,
+          "proxy_step": 4,
+          "action_uid": "goto:4",
+          "target": {
+            "kind": "endpoint",
+            "scheme": "http",
+            "host": "localhost",
+            "port": 8023,
+            "path": "/dashboard/projects",
+            "target_policy_version": "endpoint-path-segment-v1"
+          },
+          "error_type": "500",
+          "match": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 8023,
+            "path": "/dashboard/projects",
+            "query": ""
+          },
+          "timestamp": 1795425884.8050156
+        },
+        {
+          "event": "skip",
+          "proxy_step": 5,
+          "action_uid": "goto:5",
+          "reason": "off_endpoint",
+          "detail": {
+            "raw_url": "http://localhost:8023/",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 8023,
+              "path": "/",
+              "query": ""
+            }
+          }
+        },
+        {
+          "event": "skip",
+          "proxy_step": 6,
+          "action_uid": "goto:6",
+          "reason": "off_endpoint",
+          "detail": {
+            "raw_url": "http://localhost:8023/explore",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 8023,
+              "path": "/explore",
+              "query": ""
+            }
+          }
+        },
+        {
+          "event": "injection",
+          "experiment_id": "ep-http-service-v1",
+          "variant": "persistent",
+          "injection_index": 3,
+          "proxy_step": 7,
+          "action_uid": "goto:7",
+          "target": {
+            "kind": "endpoint",
+            "scheme": "http",
+            "host": "localhost",
+            "port": 8023,
+            "path": "/dashboard/projects",
+            "target_policy_version": "endpoint-path-segment-v1"
+          },
+          "error_type": "500",
+          "match": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 8023,
+            "path": "/dashboard/projects",
+            "query": ""
+          },
+          "timestamp": 1795425889.3405457
+        },
+        {
+          "event": "skip",
+          "proxy_step": 8,
+          "action_uid": "goto:8",
+          "reason": "off_endpoint",
+          "detail": {
+            "raw_url": "http://localhost:8023/",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 8023,
+              "path": "/",
+              "query": ""
+            }
+          }
+        },
+        {
+          "event": "skip",
+          "proxy_step": 9,
+          "action_uid": "goto:9",
+          "reason": "off_endpoint",
+          "detail": {
+            "raw_url": "http://localhost:8023/explore",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 8023,
+              "path": "/explore",
+              "query": ""
+            }
+          }
+        },
+        {
+          "event": "injection",
+          "experiment_id": "ep-http-service-v1",
+          "variant": "persistent",
+          "injection_index": 4,
+          "proxy_step": 10,
+          "action_uid": "goto:10",
+          "target": {
+            "kind": "endpoint",
+            "scheme": "http",
+            "host": "localhost",
+            "port": 8023,
+            "path": "/dashboard/projects",
+            "target_policy_version": "endpoint-path-segment-v1"
+          },
+          "error_type": "500",
+          "match": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 8023,
+            "path": "/dashboard/projects",
+            "query": ""
+          },
+          "timestamp": 1795425893.9276295
+        },
+        {
+          "event": "skip",
+          "proxy_step": 11,
+          "action_uid": "goto:11",
+          "reason": "off_endpoint",
+          "detail": {
+            "raw_url": "http://localhost:8023/",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 8023,
+              "path": "/",
+              "query": ""
+            }
+          }
+        },
+        {
+          "event": "release",
+          "proxy_step": 12,
+          "reason": "window_expired"
+        },
+        {
+          "event": "skip",
+          "proxy_step": 12,
+          "action_uid": "goto:12",
+          "reason": "window_expired",
+          "detail": {
+            "raw_url": "http://localhost:8023/dashboard/projects",
+            "match": {
+              "scheme": "http",
+              "host": "localhost",
+              "port": 8023,
+              "path": "/dashboard/projects",
+              "query": ""
+            }
+          }
+        }
+      ]
+    },
+    "injection_log": [
+      {
+        "fault": "web_http_error",
+        "fault_layer": "observation",
+        "fault_seed": 1,
+        "step": 2,
+        "parameter_action_index": null,
+        "injection_index": 1,
+        "timestamp": 1795425881.5801878,
+        "detail": {
+          "mechanism": "synthetic_http_observation_replacement",
+          "endpoint": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 8023,
+            "path": "/dashboard/projects",
+            "target_policy_version": "endpoint-path-segment-v1"
+          },
+          "error_type": "500",
+          "action_uid": "goto:2",
+          "proxy_step": 2
+        }
+      },
+      {
+        "fault": "web_http_error",
+        "fault_layer": "observation",
+        "fault_seed": 1,
+        "step": 4,
+        "parameter_action_index": null,
+        "injection_index": 2,
+        "timestamp": 1795425884.8050225,
+        "detail": {
+          "mechanism": "synthetic_http_observation_replacement",
+          "endpoint": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 8023,
+            "path": "/dashboard/projects",
+            "target_policy_version": "endpoint-path-segment-v1"
+          },
+          "error_type": "500",
+          "action_uid": "goto:4",
+          "proxy_step": 4
+        }
+      },
+      {
+        "fault": "web_http_error",
+        "fault_layer": "observation",
+        "fault_seed": 1,
+        "step": 7,
+        "parameter_action_index": null,
+        "injection_index": 3,
+        "timestamp": 1795425889.340552,
+        "detail": {
+          "mechanism": "synthetic_http_observation_replacement",
+          "endpoint": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 8023,
+            "path": "/dashboard/projects",
+            "target_policy_version": "endpoint-path-segment-v1"
+          },
+          "error_type": "500",
+          "action_uid": "goto:7",
+          "proxy_step": 7
+        }
+      },
+      {
+        "fault": "web_http_error",
+        "fault_layer": "observation",
+        "fault_seed": 1,
+        "step": 10,
+        "parameter_action_index": null,
+        "injection_index": 4,
+        "timestamp": 1795425893.9276352,
+        "detail": {
+          "mechanism": "synthetic_http_observation_replacement",
+          "endpoint": {
+            "scheme": "http",
+            "host": "localhost",
+            "port": 8023,
+            "path": "/dashboard/projects",
+            "target_policy_version": "endpoint-path-segment-v1"
+          },
+          "error_type": "500",
+          "action_uid": "goto:10",
+          "proxy_step": 10
+        }
+      }
+    ],
+    "verdict": {
+      "valid": true,
+      "errors": [],
+      "count": 4,
+      "variant": "persistent"
+    }
+  },
+  "official_eval": {
+    "task_id": 168,
+    "intent_template_id": 289,
+    "sites": [
+      "gitlab"
+    ],
+    "task_revision": 2,
+    "status": "success",
+    "score": 1.0,
+    "evaluators_results": [
+      {
+        "evaluator_name": "AgentResponseEvaluator",
+        "status": "success",
+        "score": 1.0,
+        "actual": "{\n  \"task_type\": \"RETRIEVE\",\n  \"status\": \"NOT_FOUND_ERROR\",\n  \"retrieved_data\": null,\n  \"error_details\": \"No matching result found: none of my personal projects has more than 100 stars.\"\n}\n",
+        "actual_normalized": {
+          "retrieved_data": null,
+          "task_type": "retrieve",
+          "status": "not_found_error"
+        },
+        "expected": {
+          "task_type": "retrieve",
+          "status": "not_found_error",
+          "retrieved_data": null
+        },
+        "assertions": null,
+        "error_msg": null,
+        "should_not_exist": null
+      }
+    ],
+    "error_msg": null,
+    "webarena_verified_version": "1.2.3.post1.dev0",
+    "webarena_verified_evaluator_checksum": "35c3385b1db4b3378657589f95f50defd4234bd36e5b93d44733fd561b01db4e",
+    "webarena_verified_data_checksum": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
+    "official_success": true
+  },
+  "official_success": true
+}

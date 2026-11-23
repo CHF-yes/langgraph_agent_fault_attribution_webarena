@@ -1,0 +1,3 @@
+{"step": 1, "action": "goto", "args": {"url": "http://localhost:9999"}, "url_before": "about:blank", "url_after": "http://localhost:9999/", "note": "task start URL / shared login state"}
+{"step": 2, "action": "goto", "args": {"url": "http://localhost:9999/f/books"}, "url_before": "http://localhost:9999/", "url_after": "http://localhost:9999/f/books", "note": "top-10 hot listing on /f/books"}
+{"step": 3, "action": "goto", "args": {"url": "http://localhost:9999/f/books/59421/friendly-reminder-bookshop-org-exists"}, "url_before": "http://localhost:9999/f/books", "url_after": "http://localhost:9999/f/books/59421/friendly-reminder-bookshop-org-exists", "note": "open the local-bookstore post"}

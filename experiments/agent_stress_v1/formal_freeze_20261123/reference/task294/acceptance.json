@@ -1,0 +1,39 @@
+{
+  "schema": "agent_stress_frozen_acceptance/1",
+  "task_id": 294,
+  "site": "gitlab",
+  "template_id": 329,
+  "endpoint": "http://localhost:8023/search",
+  "supplement": false,
+  "fault_pilot": false,
+  "normal": {
+    "passed": true,
+    "steps": 3,
+    "official_success": true,
+    "answer": [
+      "git@localhost:convexegg/chatgpt.git"
+    ],
+    "error": null,
+    "evidence": "task294/normal/reference_path.json"
+  },
+  "trigger": {
+    "passed": true,
+    "injections": 1,
+    "first_exposure_step": 2,
+    "error_type": "500",
+    "evidence": "task294/recovery/fault_evidence.json"
+  },
+  "recovery": {
+    "passed": true,
+    "steps": 13,
+    "window_steps": 10,
+    "released": "window_expired",
+    "official_success": true,
+    "answer": [
+      "git@localhost:convexegg/chatgpt.git"
+    ],
+    "error": null,
+    "evidence": "task294/recovery/reference_path.json"
+  },
+  "passed": true
+}
