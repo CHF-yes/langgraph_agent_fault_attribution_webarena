@@ -1,0 +1,23 @@
+{
+  "ok": true,
+  "stage": "agent_stress_formal_matrix_plan/1",
+  "planned_trials": 864,
+  "blockers": [],
+  "preflight": {
+    "dataset_bound": true,
+    "evaluator_config_readable": true,
+    "storage_states": true,
+    "provenance_report": true,
+    "paid_trials_executed": 0,
+    "evaluator_dataset_binding": true,
+    "site:reddit": true,
+    "site:shopping": true,
+    "site:gitlab": true,
+    "model:qwen38_flash": true,
+    "model:deepseek_v41_flash": true,
+    "blockers": []
+  },
+  "paids_started": 0,
+  "command": "/data/webarena/langgraph_agent_fault_attribution_webarena/.venv311/bin/python scripts/agent_stress_plan_runner.py --plan /data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/formal_freeze_20261123/plan.json --run-root /data/webarena/langgraph_agent_fault_attribution_webarena/experiments/agent_stress_v1/formal_freeze_20261123/run --check",
+  "exit_code": 0
+}

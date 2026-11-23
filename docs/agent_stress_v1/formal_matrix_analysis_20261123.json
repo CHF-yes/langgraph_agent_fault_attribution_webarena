@@ -1,0 +1,98 @@
+{
+  "schema": "agent_stress_formal_matrix_analysis/1",
+  "study_id": "agent-stress-v1-formal-matrix-864",
+  "status": "frozen_before_formal_trials",
+  "frozen_at": "2026-11-23",
+  "source_commit": "82d60b5",
+  "outcome": "native official binary success",
+  "conditions": {
+    "control": "matched endpoint observation, normal response; zero injected errors",
+    "single": "first qualified navigation to the endpoint receives one synthetic HTTP error",
+    "sustained": "first qualified navigation receives the error; the same endpoint keeps returning it for the following 9 proxy execution steps"
+  },
+  "primary_estimand": {
+    "name": "sustained fault effect",
+    "definition": "Delta_sustained[x] = mean(Y_sustained[x]) - mean(Y_control[x])",
+    "sign": "negative values mean the sustained fault lowers official success",
+    "x": "model x architecture combination",
+    "reporting": "absolute success rate for each arm and Delta_sustained for each of the four model/architecture cells"
+  },
+  "primary_test": {
+    "question": "does the sustained-fault effect differ by model and by architecture",
+    "interaction": "(Delta[react] - Delta[plan_execute]) and the same contrast within each model, reported with intervals",
+    "no_confirmatory_p_value": true,
+    "interval_method": "nonparametric whole-template cluster bootstrap"
+  },
+  "secondary": [
+    "single minus control fault effect for each model/architecture cell",
+    "sustained minus single difference",
+    "absolute arm success rates",
+    "injection count, first exposure, exposure coverage and recovery actions",
+    "execution steps, prompt/completion tokens, planning and replanning tokens",
+    "human-adjudicated budget-exhaustion cases"
+  ],
+  "population": {
+    "rule": "intention-to-treat over all allocated legal trials",
+    "retained_in_denominator": [
+      "legal non-trigger",
+      "legal detour that avoids the endpoint",
+      "wrong answer",
+      "early abstention",
+      "20-step budget exhaustion",
+      "official failure with a completed response"
+    ],
+    "excluded_from_outcome_denominator": [
+      "infrastructure error",
+      "evaluator error",
+      "code or binding mismatch",
+      "control-arm contamination"
+    ],
+    "missingness": "report planned denominator, scorable denominator and reason; never silently complete-case"
+  },
+  "aggregation": {
+    "within_task": "average the three seeds for the same task/model/architecture/condition",
+    "within_template": "average tasks in the same intent template with equal task weight",
+    "across_templates": "equal-weight mean over the 14 templates",
+    "shared_control": "the control trial in the same task/model/architecture/seed block is the contemporaneous control; never treat duplicated control rows as independent"
+  },
+  "uncertainty": {
+    "method": "whole-template cluster bootstrap",
+    "replicates": 10000,
+    "seed": 20261123,
+    "resample": "templates, preserving every task, seed, model, architecture and all three arms inside a resampled template",
+    "interval": [0.025, 0.975],
+    "also_report": [
+      "per-template effects",
+      "leave-one-template-out ranges",
+      "21-task sensitivity excluding 28, 228 and 314"
+    ]
+  },
+  "sensitivity": {
+    "full_roster": 24,
+    "excluded_from_sensitivity": [28, 228, 314],
+    "sensitivity_roster": 21,
+    "reason": "the three tasks participated in the accepted 36-trial fault pilot; the formal report keeps them and repeats the same estimator on the remaining 21 tasks",
+    "same_estimand": true
+  },
+  "mechanism": {
+    "injection_count": "service episode injections per fault arm",
+    "exposure": "first exposure step, window coverage and post-window release",
+    "recovery": "re-read, alternate path, retry and final official score",
+    "cost": "execution steps and token totals by arm",
+    "budget_exhaustion": "human-adjudicated cases; kept in the allocated arm denominator"
+  },
+  "reporting": {
+    "all_24_tasks": true,
+    "all_21_task_sensitivity": true,
+    "absolute_rates": true,
+    "fault_effects": true,
+    "model_architecture_interaction": true,
+    "per_template_table": true,
+    "artifact_paths": [
+      "experiments/agent_stress_v1/formal_freeze_20261123/plan.json",
+      "experiments/agent_stress_v1/formal_freeze_20261123/roster.json",
+      "experiments/agent_stress_v1/formal_freeze_20261123/reference/acceptance.json"
+    ]
+  },
+  "frozen_plan_sha256": "8c7ce38fec38224f805e9781c6e2bd6cf355cd9eb3ceb692efdadc4bebb917c0"
+}

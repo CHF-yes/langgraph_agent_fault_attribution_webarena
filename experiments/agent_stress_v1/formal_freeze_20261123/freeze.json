@@ -1,0 +1,85 @@
+{
+  "schema": "agent_stress_formal_freeze_record/1",
+  "frozen_at": "2026-11-23T12:11:25.661989+00:00",
+  "source_commit": "82d60b56a8f928cdcea58cd964c8fcc224363ff1",
+  "stage": "formal-matrix-frozen-readiness",
+  "decision": "ready_for_authorization_review",
+  "roster": {
+    "path": "roster.json",
+    "sha256": "5365e015521df520832fc226c6c229dcb85a73a1c055aeafbe2f22651110ac8e",
+    "tasks": 24,
+    "templates": 14,
+    "difficulty": {
+      "easy": 8,
+      "medium": 10,
+      "hard": 6
+    },
+    "supplements": [
+      69,
+      149,
+      168,
+      206
+    ],
+    "fault_pilot": [
+      28,
+      228,
+      314
+    ]
+  },
+  "reference_acceptance": {
+    "path": "reference/acceptance.json",
+    "sha256": "af37414363b6f3a7c61bbac99c881444cfecb4620724810144c28831e2a9213c",
+    "passed": 24,
+    "total": 24
+  },
+  "plan": {
+    "path": "plan.json",
+    "sha256": "8c7ce38fec38224f805e9781c6e2bd6cf355cd9eb3ceb692efdadc4bebb917c0",
+    "cells": 864,
+    "blocks": 288,
+    "seeds": [
+      1,
+      2,
+      3
+    ],
+    "max_steps": 20,
+    "window_steps": 10
+  },
+  "check": {
+    "path": "check.json",
+    "ok": true,
+    "blockers": []
+  },
+  "analysis": {
+    "plan": "analysis_plan.json",
+    "plan_sha256": "fda92a1af2063f76abb230888ada4d5c46c8c76e1af7e450a315d139629289c9",
+    "spec": "docs/agent_stress_v1/formal_matrix_analysis_20261123.json",
+    "spec_sha256": "fda92a1af2063f76abb230888ada4d5c46c8c76e1af7e450a315d139629289c9",
+    "legacy_spec": "docs/agent_stress_v1/analysis_spec.json",
+    "legacy_spec_sha256": "8d9cff06e32d728f0d8084e8a25c1ebeae055000adafca242f83196231f20d6e",
+    "primary": "official success; sustained minus control",
+    "interaction": "fault effect difference between models and architectures",
+    "itt": "all allocated legal trials retained, including non-trigger and detours",
+    "clustering": "template-level cluster bootstrap",
+    "sensitivity": "exclude 28, 228 and 314"
+  },
+  "usage_estimate": {
+    "basis": "36-trial unified acceptance (experiments/agent_stress_v1/unified_acceptance_run_20261121/summary.json)",
+    "observed_prompt_tokens": 4880064,
+    "per_condition_prompt_tokens_per_trial": {
+      "control": 82813.5,
+      "single": 105677.1,
+      "sustained": 218181.4
+    },
+    "trials_per_condition": 288,
+    "estimated_prompt_tokens": 117121536,
+    "estimated_prompt_tokens_range": [
+      93697229,
+      146401920
+    ],
+    "estimated_total_tokens": 124148828,
+    "note": "Sustained arms dominate the estimate; planner tokens are already included in the observed prompt totals."
+  },
+  "blockers": [],
+  "note": "No agent trial was started; authorization remains a candidate."
+}
