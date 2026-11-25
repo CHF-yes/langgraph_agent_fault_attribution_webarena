@@ -39,6 +39,8 @@ PROVENANCE = ROOT / "experiments/agent_stress_v1/execution_prep_20261120/model_p
 OUT = ROOT / "experiments" / "agent_stress_v1" / "formal_freeze_20261123"
 REFERENCE = OUT / "reference"
 PLAN_PATH = OUT / "plan.json"
+ANALYSIS_DOC = ROOT / "docs" / "agent_stress_v1" / "formal_matrix_analysis_20261123.json"
+ANALYSIS_COPY = OUT / "analysis_plan.json"
 MODELS = ("qwen38_flash", "deepseek_v41_flash")
 ARCHITECTURES = ("react", "plan_execute")
 SEEDS = (1, 2, 3)
@@ -547,6 +549,16 @@ def write_acceptance_markdown(roster: dict) -> None:
     (OUT / "acceptance.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
+def sync_analysis_doc(plan: dict) -> None:
+    """Keep the frozen analysis record aligned with the regenerated plan."""
+    data = load(ANALYSIS_DOC)
+    data["source_commit"] = plan["code"]["head"]
+    data["frozen_plan_sha256"] = plan["plan_sha256"]
+    data["frozen_at"] = plan["created_at"]
+    dump(ANALYSIS_DOC, data)
+    dump(ANALYSIS_COPY, data)
+
+
 def run_check() -> dict:
     command = [sys.executable, "scripts/agent_stress_plan_runner.py",
                "--plan", str(PLAN_PATH), "--run-root",
@@ -577,6 +589,7 @@ def main(argv=None) -> int:
     plan = build_plan(roster)
     dump(PLAN_PATH, plan)
     dump(out / "authorization.candidate.json", build_authorization(plan))
+    sync_analysis_doc(plan)
 
     check = run_check()
     dump(out / "check.json", check)
@@ -617,8 +630,12 @@ def main(argv=None) -> int:
             "blockers": check.get("blockers") or [],
         },
         "analysis": {
-            "spec": "docs/agent_stress_v1/analysis_spec.json",
-            "spec_sha256": file_sha(ROOT / "docs/agent_stress_v1/analysis_spec.json"),
+            "plan": "analysis_plan.json",
+            "plan_sha256": file_sha(ANALYSIS_COPY),
+            "spec": "docs/agent_stress_v1/formal_matrix_analysis_20261123.json",
+            "spec_sha256": file_sha(ANALYSIS_DOC),
+            "legacy_spec": "docs/agent_stress_v1/analysis_spec.json",
+            "legacy_spec_sha256": file_sha(ROOT / "docs/agent_stress_v1/analysis_spec.json"),
             "primary": "official success; sustained minus control",
             "interaction": "fault effect difference between models and architectures",
             "itt": "all allocated legal trials retained, including non-trigger and detours",

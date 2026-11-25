@@ -234,3 +234,171 @@ class TestQwenScreeningSummary(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestFormalMatrixStrictVerification(unittest.TestCase):
+    """The 864-cell formal schema must reuse the 36-trial strict checks."""
+
+    def _fixture(self, tmp: Path, *, condition="control", steps=2,
+                 injection_count=0, fault=None, evaluation=None,
+                 extra_events=None, termination="stop", cap_exhausted=False):
+        arm = tmp / "arm"
+        arm.mkdir()
+        storage_sha = "s" * 64
+        cell = {
+            "cell_key": f"m_task163_react_seed1_{condition}", "task_id": 163,
+            "site": "shopping", "model_profile": "m", "architecture": "react",
+            "seed": 1, "condition": condition,
+            "fault_variant": "persistent" if condition == "sustained" else "single",
+            "experiment_id": "ep-http-service-v1", "max_steps": 20,
+            "arm_dir": str(arm),
+        }
+        plan = {"schema": runner.FORMAL_SCHEMA, "storage_state_sha256": {"shopping": storage_sha},
+                "dataset_sha256": "d" * 64}
+        trace = arm / "trace.jsonl"
+        events = [{"event": "llm_provenance", "prompt_tokens": 10,
+                   "phase": "executor", "step": step}
+                  for step in range(1, steps + 1)]
+        events += list(extra_events or [])
+        trace.write_text("".join(json.dumps(event) + "\n" for event in events))
+        record = {
+            "task_id": 163, "model_profile": "m", "architecture": "react",
+            "fault_seed": 1,
+            "condition": "control" if condition == "control" else "fault",
+            "fault_variant": cell["fault_variant"],
+            "experiment_id": "ep-http-service-v1",
+            "injection_count": injection_count,
+            "steps": steps, "executor_calls": steps,
+            "termination": termination, "cap_exhausted": cap_exhausted,
+            "completed": not cap_exhausted,
+            "paths": {"trace": str(trace)},
+            "run_config": {"max_steps": 20, "submission_contract": True,
+                           "retrieval_repair": True, "storage_state_sha256": storage_sha},
+            "code": {"git_sha": "deadbeef"},
+        }
+        (arm / "trial_record.json").write_text(json.dumps(record))
+        (arm / "agent_response.json").write_text(json.dumps({"retrieved_data": ["x"]}))
+        (arm / "network.har").write_text("{}")
+        if fault is not None:
+            payload = {"variant": cell["fault_variant"], "window_steps": 10,
+                       "injections": [], "exposures": []}
+            payload.update(fault)
+            (arm / "fault_evidence.json").write_text(json.dumps(payload))
+        binding = {
+            "agent_response_sha256": _sha(arm / "agent_response.json"),
+            "network_har_sha256": _sha(arm / "network.har"),
+            "config_sha256": runner.file_sha(runner.CONFIG),
+        }
+        default_eval = {
+            "task_id": 163, "webarena_verified_data_checksum": plan["dataset_sha256"],
+            "official_success": True, "status": "success", "score": 1.0,
+            "evaluators_results": [{"evaluator_name": "AgentResponseEvaluator",
+                                    "status": "success"}],
+            "_evaluation_binding": binding,
+        }
+        if evaluation:
+            default_eval.update(evaluation)
+        (arm / "official_eval.json").write_text(json.dumps(default_eval))
+        return arm, cell, plan
+
+    def test_formal_plan_schema_is_strict(self):
+        self.assertIn(runner.FORMAL_SCHEMA, {runner.UNIFIED_SCHEMA, runner.FORMAL_SCHEMA})
+
+    def test_rejects_more_than_twenty_turns(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            _, cell, plan = self._fixture(Path(tmp), steps=21,
+                                          fault={"injections": [{"action_uid": "x"}],
+                                                 "exposures": []})
+            row, errors = runner.verify_completed(cell, plan)
+        self.assertIsNone(row)
+        self.assertTrue(any("exceeds the 20-turn budget" in error for error in errors))
+
+    def test_rejects_planner_call_after_budget_exhaustion(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            _, cell, plan = self._fixture(
+                Path(tmp), steps=20,
+                extra_events=[{"event": "llm_provenance", "prompt_tokens": 5,
+                               "phase": "planner", "step": 20}],
+                fault={"injections": [{"action_uid": "x"}], "exposures": []})
+            row, errors = runner.verify_completed(cell, plan)
+        self.assertIsNone(row)
+        self.assertTrue(any("planner made an LLM call after" in error for error in errors))
+
+    def test_rejects_fault_arm_without_fault_evidence(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            _, cell, plan = self._fixture(Path(tmp), condition="single",
+                                          injection_count=1, fault=None)
+            row, errors = runner.verify_completed(cell, plan)
+        self.assertIsNone(row)
+        self.assertIn("fault arm has no fault_evidence.json", errors)
+
+    def test_rejects_single_arm_with_more_than_one_injection(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            _, cell, plan = self._fixture(
+                Path(tmp), condition="single", injection_count=2,
+                fault={"injections": [{"action_uid": "a"}, {"action_uid": "b"}],
+                       "exposures": []})
+            row, errors = runner.verify_completed(cell, plan)
+        self.assertIsNone(row)
+        self.assertIn("single arm was injected more than once", errors)
+
+    def test_rejects_control_arm_injection(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            _, cell, plan = self._fixture(
+                Path(tmp), condition="control", injection_count=1,
+                fault={"injections": [{"action_uid": "a"}], "exposures": []})
+            row, errors = runner.verify_completed(cell, plan)
+        self.assertIsNone(row)
+        self.assertIn("control arm has injections", errors)
+        self.assertIn("control fault evidence records injections", errors)
+
+    def test_accepts_legal_zero_exposure_fault_arm(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            _, cell, plan = self._fixture(
+                Path(tmp), condition="single", injection_count=0,
+                fault={"injections": [], "exposures": [
+                    {"matched_endpoint": True, "delivered": False, "step": 1}]})
+            row, errors = runner.verify_completed(cell, plan)
+        self.assertEqual(errors, [])
+        self.assertIsNotNone(row)
+        self.assertEqual(row["injection_count"], 0)
+
+    def test_accepts_official_wrong_answer(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            _, cell, plan = self._fixture(
+                Path(tmp), condition="control", injection_count=0,
+                evaluation={"official_success": False, "status": "failure", "score": 0.0,
+                            "evaluators_results": [{"evaluator_name": "AgentResponseEvaluator",
+                                                    "status": "failure"}]},
+                fault={"injections": [], "exposures": []})
+            row, errors = runner.verify_completed(cell, plan)
+        self.assertEqual(errors, [])
+        self.assertIsNotNone(row)
+        self.assertFalse(row["official_success"])
+
+    def test_accepts_budget_exhaustion_with_complete_evidence(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            _, cell, plan = self._fixture(
+                Path(tmp), condition="single", steps=20, injection_count=1,
+                termination="cap_exhausted", cap_exhausted=True,
+                fault={"injections": [{"action_uid": "a"}], "exposures": []},
+                evaluation={"official_success": False, "status": "failure", "score": 0.0,
+                            "evaluators_result": [],
+                            "evaluators_results": [{"evaluator_name": "AgentResponseEvaluator",
+                                                    "status": "failure"}]})
+            row, errors = runner.verify_completed(cell, plan)
+        self.assertEqual(errors, [])
+        self.assertIsNotNone(row)
+        self.assertTrue(row["cap_exhausted"])
+
+    def test_formal_plan_grid_and_commands_match_the_runner(self):
+        path = ROOT / "experiments/agent_stress_v1/formal_freeze_20261123/plan.json"
+        if not path.is_file():
+            self.skipTest(f"formal plan not generated: {path}")
+        plan = json.loads(path.read_text())
+        self.assertEqual(plan["schema"], runner.FORMAL_SCHEMA)
+        self.assertEqual(plan["planned_trials"], 864)
+        self.assertEqual(plan["planned_blocks"], 288)
+        self.assertEqual(runner.expected_cells(plan), [])
+        for cell in plan["cells"][:6]:
+            self.assertEqual(runner.expected_command(cell, plan), cell["command"])

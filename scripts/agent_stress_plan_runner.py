@@ -590,7 +590,7 @@ def verify_completed(cell: dict, plan: dict) -> tuple[dict | None, list[str]]:
         errors.append("HAR hash is not bound to the evaluation")
     if binding.get("config_sha256") != file_sha(CONFIG):
         errors.append("evaluator config hash is not bound to the evaluation")
-    strict = plan.get("schema") == UNIFIED_SCHEMA
+    strict = plan.get("schema") in {UNIFIED_SCHEMA, FORMAL_SCHEMA}
     try:
         evidence = trace_evidence(record)
         tokens = evidence["prompt_tokens"]
