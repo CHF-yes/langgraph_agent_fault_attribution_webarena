@@ -3,10 +3,10 @@
   "experiment_id": "agent-stress-v1-formal-matrix-864",
   "status": "candidate",
   "approved_for_paid_runs": false,
-  "created_at": "2026-11-23T12:11:23.477838+00:00",
+  "created_at": "2026-11-25T12:02:43.515002+00:00",
   "note": "Candidate only. Set status=frozen and approved_for_paid_runs=true only after explicit user approval of the 24-task evidence and this plan.",
-  "plan_sha256": "8c7ce38fec38224f805e9781c6e2bd6cf355cd9eb3ceb692efdadc4bebb917c0",
-  "code_fingerprint_sha256": "c689183778e6692fc9bd984cafab04a94b530bd5446f7bebfe5148b19454a789",
+  "plan_sha256": "dd6fa60e58a09866b7dd7927b87a6177d5c5938c4d2ab294b8bcf53a9c12cd4d",
+  "code_fingerprint_sha256": "225c114fbb023fceebcf2ae2aca2097cd2d58aa0d063313cd4f4b4c33ccbcbcc",
   "dataset_sha256": "d65275660814663375028e9017e1f929e3c38321041b125795e2713b52243d30",
   "prompt_token_stop_before_next_trial": 117200000,
   "scope": {

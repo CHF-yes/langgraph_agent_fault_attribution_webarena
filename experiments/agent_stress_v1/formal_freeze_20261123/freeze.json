@@ -1,12 +1,12 @@
 {
   "schema": "agent_stress_formal_freeze_record/1",
-  "frozen_at": "2026-11-23T12:11:25.661989+00:00",
-  "source_commit": "82d60b56a8f928cdcea58cd964c8fcc224363ff1",
+  "frozen_at": "2026-11-25T12:02:48.694577+00:00",
+  "source_commit": "6a0a302e262f1053a8793f3ea0b05308b34e441f",
   "stage": "formal-matrix-frozen-readiness",
   "decision": "ready_for_authorization_review",
   "roster": {
     "path": "roster.json",
-    "sha256": "5365e015521df520832fc226c6c229dcb85a73a1c055aeafbe2f22651110ac8e",
+    "sha256": "ebe775254cac8bf89fca75fbe10edfd32348a4d7bc6769e32d2e0b3a0042fa25",
     "tasks": 24,
     "templates": 14,
     "difficulty": {
@@ -28,13 +28,13 @@
   },
   "reference_acceptance": {
     "path": "reference/acceptance.json",
-    "sha256": "af37414363b6f3a7c61bbac99c881444cfecb4620724810144c28831e2a9213c",
+    "sha256": "ee3eb3f773d039f8688e56111a748537a4552e44a42e7b8e0466ba659cee90bf",
     "passed": 24,
     "total": 24
   },
   "plan": {
     "path": "plan.json",
-    "sha256": "8c7ce38fec38224f805e9781c6e2bd6cf355cd9eb3ceb692efdadc4bebb917c0",
+    "sha256": "dd6fa60e58a09866b7dd7927b87a6177d5c5938c4d2ab294b8bcf53a9c12cd4d",
     "cells": 864,
     "blocks": 288,
     "seeds": [
@@ -52,9 +52,9 @@
   },
   "analysis": {
     "plan": "analysis_plan.json",
-    "plan_sha256": "fda92a1af2063f76abb230888ada4d5c46c8c76e1af7e450a315d139629289c9",
+    "plan_sha256": "dbb28b4ebd5e1aef0029c32f82e3e6785dc29f118c626ae3b3ff1bd97fd8531c",
     "spec": "docs/agent_stress_v1/formal_matrix_analysis_20261123.json",
-    "spec_sha256": "fda92a1af2063f76abb230888ada4d5c46c8c76e1af7e450a315d139629289c9",
+    "spec_sha256": "dbb28b4ebd5e1aef0029c32f82e3e6785dc29f118c626ae3b3ff1bd97fd8531c",
     "legacy_spec": "docs/agent_stress_v1/analysis_spec.json",
     "legacy_spec_sha256": "8d9cff06e32d728f0d8084e8a25c1ebeae055000adafca242f83196231f20d6e",
     "primary": "official success; sustained minus control",

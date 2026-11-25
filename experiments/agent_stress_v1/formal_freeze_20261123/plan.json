@@ -1,13 +1,13 @@
 {
   "schema": "agent_stress_formal_matrix_plan/1",
   "experiment_id": "agent-stress-v1-formal-matrix-864",
-  "created_at": "2026-11-23T12:11:23.373090+00:00",
+  "created_at": "2026-11-25T12:02:43.418495+00:00",
   "status": "plan_only",
   "approved_for_paid_runs": false,
   "approval_note": "Plan only. No formal trial may run until this plan, its authorization candidate and the 24-task acceptance evidence are reviewed and explicitly approved.",
   "stage": "formal-matrix",
   "protocol_experiment_id": "ep-http-service-v1",
-  "roster_sha256": "8708dbd1d27d3284852289350d665427e14bf4f6b09562cd7ce238a490208c46",
+  "roster_sha256": "476ba655d43e1ac429b9ebd4b5c7d6c859b69b5574f7119ff7b6c07c5d4b2172",
   "tasks": {
     "27": {
       "task_id": 27,
@@ -62633,12 +62633,12 @@
     "package_sha256": "41334a7a30567811b3c42fc125b64140e64069b08ff7793643c0ed68931a68d8"
   },
   "code": {
-    "head": "82d60b56a8f928cdcea58cd964c8fcc224363ff1",
-    "fingerprint_sha256": "c689183778e6692fc9bd984cafab04a94b530bd5446f7bebfe5148b19454a789"
+    "head": "6a0a302e262f1053a8793f3ea0b05308b34e441f",
+    "fingerprint_sha256": "225c114fbb023fceebcf2ae2aca2097cd2d58aa0d063313cd4f4b4c33ccbcbcc"
   },
   "reference_acceptance": {
     "path": "reference/acceptance.json",
-    "sha256": "af37414363b6f3a7c61bbac99c881444cfecb4620724810144c28831e2a9213c",
+    "sha256": "ee3eb3f773d039f8688e56111a748537a4552e44a42e7b8e0466ba659cee90bf",
     "passed_tasks": 24
   },
   "exclusions": {
@@ -62677,5 +62677,5 @@
     "arm_dir": "<cell_root>/outputs/<task_id>/<control|web_http_error>_seed_<seed>",
     "resume": "plan order + canonical cell_key + persisted per-cell trial_record/official_eval"
   },
-  "plan_sha256": "8c7ce38fec38224f805e9781c6e2bd6cf355cd9eb3ceb692efdadc4bebb917c0"
+  "plan_sha256": "dd6fa60e58a09866b7dd7927b87a6177d5c5938c4d2ab294b8bcf53a9c12cd4d"
 }

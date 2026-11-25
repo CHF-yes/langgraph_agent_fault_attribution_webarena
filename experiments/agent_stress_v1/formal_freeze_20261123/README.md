@@ -4,7 +4,7 @@
 - Difficulty: easy 8, medium 10, hard 6.
 - Supplements: 69, 149, 168, 206; fault pilot retained: 28, 228, 314.
 - Plan: **864** cells in **288** blocks (24 x 2 models x 2 architectures x 3 seeds x 3 conditions).
-- Plan SHA-256: `8c7ce38fec38224f805e9781c6e2bd6cf355cd9eb3ceb692efdadc4bebb917c0`
+- Plan SHA-256: `dd6fa60e58a09866b7dd7927b87a6177d5c5938c4d2ab294b8bcf53a9c12cd4d`
 - `--check`: **PASS** (no blockers).
 
 ## Reference acceptance

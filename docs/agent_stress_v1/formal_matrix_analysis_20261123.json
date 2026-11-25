@@ -2,8 +2,8 @@
   "schema": "agent_stress_formal_matrix_analysis/1",
   "study_id": "agent-stress-v1-formal-matrix-864",
   "status": "frozen_before_formal_trials",
-  "frozen_at": "2026-11-23",
-  "source_commit": "82d60b5",
+  "frozen_at": "2026-11-25T12:02:43.418495+00:00",
+  "source_commit": "6a0a302e262f1053a8793f3ea0b05308b34e441f",
   "outcome": "native official binary success",
   "conditions": {
     "control": "matched endpoint observation, normal response; zero injected errors",
@@ -60,7 +60,10 @@
     "replicates": 10000,
     "seed": 20261123,
     "resample": "templates, preserving every task, seed, model, architecture and all three arms inside a resampled template",
-    "interval": [0.025, 0.975],
+    "interval": [
+      0.025,
+      0.975
+    ],
     "also_report": [
       "per-template effects",
       "leave-one-template-out ranges",
@@ -69,7 +72,11 @@
   },
   "sensitivity": {
     "full_roster": 24,
-    "excluded_from_sensitivity": [28, 228, 314],
+    "excluded_from_sensitivity": [
+      28,
+      228,
+      314
+    ],
     "sensitivity_roster": 21,
     "reason": "the three tasks participated in the accepted 36-trial fault pilot; the formal report keeps them and repeats the same estimator on the remaining 21 tasks",
     "same_estimand": true
@@ -94,5 +101,5 @@
       "experiments/agent_stress_v1/formal_freeze_20261123/reference/acceptance.json"
     ]
   },
-  "frozen_plan_sha256": "8c7ce38fec38224f805e9781c6e2bd6cf355cd9eb3ceb692efdadc4bebb917c0"
+  "frozen_plan_sha256": "dd6fa60e58a09866b7dd7927b87a6177d5c5938c4d2ab294b8bcf53a9c12cd4d"
 }
